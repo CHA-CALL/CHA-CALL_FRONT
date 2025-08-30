@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./shared/styles/global.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p className="heading-sb-20">Hello World</p>
+      <p className="heading-sb-18">Hello World</p>
+      <p className="title-b-16">Hello World</p>
+      <p className="title-b-14">Hello World</p>
+      <p className="title-sb-16">Hello World</p>
+      <p className="title-sb-14">Hello World</p>
+      <p className="title-sb-12">Hello World</p>
+      <p className="body-m-16">Hello World</p>
+      <p className="body-m-14">Hello World</p>
+      <p className="caption-m-12">Hello World</p>
+      <p className="caption-r-12">Hello World</p>
+      <p className="scrollbar-hide">Hello World</p>
+      <p className="scrollbar-hide">Hello World</p>
+
+      <p className="bg-primary-25">Hello World</p>
+      <p className="bg-primary-50">Hello World</p>
+      <p className="bg-primary-100">Hello World</p>
+      <p className="bg-primary-300">Hello World</p>
+      <p className="bg-primary-500">Hello World</p>
+      <p className="bg-primary-700">Hello World</p>
+      <p className="bg-primary-900">Hello World</p>
+      <p className="bg-grayscale-50">Hello World</p>
+      <p className="bg-grayscale-100">Hello World</p>
+      <p className="bg-grayscale-200">Hello World</p>
+      <p className="bg-grayscale-300">Hello World</p>
+      <p className="bg-grayscale-500">Hello World</p>
+      <p className="bg-grayscale-700">Hello World</p>
+      <p className="bg-grayscale-900">Hello World</p>
+
+      <p className="bg-white">Hello World</p>
+      <p className="bg-black50">Hello World</p>
+      <p className="bg-black">Hello World</p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
