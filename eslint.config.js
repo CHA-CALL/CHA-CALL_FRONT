@@ -8,13 +8,13 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config([
   // 무시할 파일/폴더 설정
   {
-    ignores: ['dist', 'node_modules', '*.config.js', '*.config.ts'],
+    ignores: ['dist', 'node_modules'],
   },
 
   // 기본 설정 (모든 파일)
   {
-    files: ['**/*.{js,mjs,cjs,ts,tsx}'],
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{js,mjs,cjs}'],
+    extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
