@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 import './Badge.css';
 
 type Variant = 'neutral' | 'primary' | 'success' | 'warning' | 'danger';
