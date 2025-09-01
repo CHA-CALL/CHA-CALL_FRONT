@@ -1,0 +1,128 @@
+@theme {
+  --color-*: initial;
+
+  /* white ,black*/
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-black50: rgba(0, 0, 0, 0.5);
+
+  /* grayscale */
+  --color-grayscale-50: #f8fafb;
+  --color-grayscale-100: #f2f3f7;
+  --color-grayscale-200: #e7eaef;
+  --color-grayscale-300: #ccced5;
+  --color-grayscale-500: #838992;
+  --color-grayscale-700: #565b65;
+  --color-grayscale-900: #19212a;
+
+  /* primary */
+  --color-primary-25: #fff5f1;
+  --color-primary-50: #ffe1d5;
+  --color-primary-100: #fdc1ac;
+  --color-primary-300: #fc9476;
+  --color-primary-500: #fa502e;
+  --color-primary-700: #f83419;
+  --color-primary-900: #e91c10;
+
+  --heading-sb-20: 2rem;
+  --heading-sb-18: 1.8rem;
+  --title-b-16: 1.6rem;
+  --title-b-14: 1.4rem;
+  --title-sb-16: 1.6rem;
+  --title-sb-14: 1.4rem;
+  --title-sb-12: 12px;
+  --body-m-16: 1.6rem;
+  --body-m-14: 1.4rem;
+  --caption-m-12: 1.2rem;
+  --caption-r-12: 1.2rem;
+}
+
+@layer base {
+  html {
+    font-size: 62.5%;
+    line-height: 150%;
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  /* Heading */
+  .heading-sb-20 {
+    font-size: var(--heading-sb-20);
+    font-weight: 600;
+  }
+  .heading-sb-18 {
+    font-size: var(--heading-sb-18);
+    font-weight: 600;
+  }
+  /* Title */
+  .title-b-16 {
+    font-size: var(--title-b-16);
+    font-weight: 700;
+  }
+  .title-b-14 {
+    font-size: var(--title-b-14);
+    font-weight: 700;
+  }
+  .title-sb-16 {
+    font-size: var(--title-sb-16);
+    font-weight: 600;
+  }
+  .title-sb-14 {
+    font-size: var(--title-sb-14);
+    font-weight: 600;
+  }
+  .title-sb-12 {
+    font-size: var(--title-sb-12);
+    font-weight: 600;
+  }
+  /* Body */
+  .body-m-16 {
+    font-size: var(--body-m-16);
+    font-weight: 500;
+  }
+  .body-m-14 {
+    font-size: var(--body-m-14);
+    font-weight: 500;
+  }
+  /* Caption */
+  .caption-m-12 {
+    font-size: var(--caption-m-12);
+    font-weight: 500;
+  }
+  .caption-r-12 {
+    font-size: var(--caption-r-12);
+    font-weight: 500;
+  }
+
+  /* Hide scrollbar for Chrome, Safari, and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
