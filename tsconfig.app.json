@@ -21,7 +21,26 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Path */
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@pages/*": ["src/pages/*"],
+      "@assets/*": ["src/assets/*"],
+      "@shared/*":["src/shared/*"],
+      "@components/*": ["src/shared/components/*"],  
+      "@hooks/*": ["src/shared/hooks/*"],            
+      "@utils/*": ["src/shared/utils/*"],            
+      "@types/*": ["src/shared/types/*"],    
+      "@styles/*": ["./src/shared/styles/*"], 
+      "@router/*": ["./src/router/*"], 
+      "@img/*": ["./src/assets/img/*"], 
+      "@svg/*": ["./src/assets/svg/*"], 
+      "@/*": ["src/*"],
+    }   
+
   },
   "include": ["src", "*.tsx", "*.ts"]
 }
