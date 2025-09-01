@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.storybook.tsbuildinfo",
+    "allowJs": true,
+    "skipLibCheck": true
+  },
+  "include": [".storybook/**/*"],
+  "exclude": []
+}
