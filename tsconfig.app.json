@@ -26,7 +26,6 @@
     /* Path */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
       "@api/*": ["src/api/*"],
       "@pages/*": ["src/pages/*"],
       "@assets/*": ["src/assets/*"],
@@ -34,8 +33,14 @@
       "@components/*": ["src/shared/components/*"],  
       "@hooks/*": ["src/shared/hooks/*"],            
       "@utils/*": ["src/shared/utils/*"],            
-      "@types/*": ["src/shared/types/*"],             
+      "@types/*": ["src/shared/types/*"],    
+      "@styles/*": ["./src/shared/styles/*"], 
+      "@router/*": ["./src/router/*"], 
+      "@img/*": ["./src/assets/img/*"], 
+      "@svg/*": ["./src/assets/svg/*"], 
+      "@/*": ["src/*"],
     }   
+
   },
   "include": ["src"]
 }
