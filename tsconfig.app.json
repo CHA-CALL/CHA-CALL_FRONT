@@ -42,5 +42,5 @@
     }   
 
   },
-  "include": ["src"]
+  "include": ["src", "*.tsx", "*.ts"]
 }
