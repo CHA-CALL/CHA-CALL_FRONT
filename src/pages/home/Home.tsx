@@ -1,6 +1,9 @@
+import { Icon } from '@shared/components/Icon';
+
 const Home = () => {
   return (
     <div>
+      <Icon id='ic_search' />
       <p className='heading-sb-20'>Hello World</p>
       <p className='heading-sb-18'>Hello World</p>
       <p className='title-b-16'>Hello World</p>
