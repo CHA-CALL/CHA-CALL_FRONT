@@ -1,5 +1,5 @@
 // shared/ui/Icon.tsx
-import { forwardRef, useId } from 'react';
+import React, { forwardRef } from 'react';
 
 export type IconId =
   | 'ic_chat'
@@ -18,33 +18,34 @@ export type IconId =
   | 'ic_back'
   | 'ic_calender';
 
-export interface IconProps extends React.SVGProps<SVGSVGElement> {
+interface IconProps extends React.SVGProps<SVGSVGElement> {
   id: IconId;
-  size?: number | string;
+  width?: number;
+  height?: number;
   title?: string;
 }
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
-  ({ id, size = 22, title, className, style, ...rest }, ref) => {
-    const titleId = useId();
-
+  ({ id, width = 22, height = 22, title, className, style, ...rest }, ref) => {
     // size 숫자면 px 처리
-    const w = typeof size === 'number' ? `${size}px` : size;
-    const h = w;
+    const w = `${width}px`;
+    const h = `${height}px`;
 
     return (
       <svg
         ref={ref}
         width={w}
         height={h}
-        role='img'
+        role={title ? 'img' : undefined}
+        aria-labelledby={title ? title : undefined}
+        aria-hidden={title ? undefined : true}
         focusable='false'
         className={className}
+        style={style}
         {...rest}
       >
-        {title && <title id={titleId}>{title}</title>}
-        {/* eslint-disable-next-line react/no-unknown-property */}
-        <use href={`#${id}`} xlinkHref={`#${id}`} />
+        {title && <title id={title}>{title}</title>}
+        <use href={`#${id}`} />
       </svg>
     );
   }

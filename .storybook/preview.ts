@@ -3,7 +3,7 @@ import React from 'react';
 
 import SvgSprite from '../src/SvgSprite';
 
-const withSvgSprite = (Story: any) => {
+const withSvgSprite = Story => {
   return React.createElement(
     React.Fragment,
     null,

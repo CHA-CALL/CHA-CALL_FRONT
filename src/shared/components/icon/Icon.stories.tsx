@@ -25,7 +25,8 @@ const meta: Meta<typeof Icon> = {
   component: Icon,
   argTypes: {
     id: { control: 'select', options: iconIds },
-    size: { control: { type: 'range', min: 12, max: 64, step: 2 } },
+    width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
+    height: { control: { type: 'range', min: 12, max: 64, step: 2 } },
     title: { control: 'text' },
     className: { control: false },
     style: { control: false },
@@ -46,7 +47,8 @@ type Story = StoryObj<typeof Icon>;
 export const Playground: Story = {
   args: {
     id: 'ic_search',
-    size: 22,
+    width: 22,
+    height: 22,
     title: '검색',
   },
 };
@@ -73,7 +75,7 @@ export const AllIcons: Story = {
             borderRadius: 8,
           }}
         >
-          <Icon id={id} size={24} />
+          <Icon id={id} width={24} height={24} />
           <code style={{ fontSize: 12 }}>{id}</code>
         </div>
       ))}
@@ -87,7 +89,7 @@ export const Sizes: Story = {
     <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
       {[16, 20, 24, 32, 40, 48].map(s => (
         <div key={s} style={{ textAlign: 'center' }}>
-          <Icon id='ic_search' size={s} />
+          <Icon id='ic_search' width={s} height={s} />
           <div style={{ fontSize: 12, marginTop: 6 }}>{s}px</div>
         </div>
       ))}
