@@ -30,11 +30,13 @@
   --title-b-14: 1.4rem;
   --title-sb-16: 1.6rem;
   --title-sb-14: 1.4rem;
-  --title-sb-12: 12px;
+  --title-sb-12: 1.2rem;
   --body-m-16: 1.6rem;
   --body-m-14: 1.4rem;
   --caption-m-12: 1.2rem;
   --caption-r-12: 1.2rem;
+  --caption-m-11: 1.1rem;
+  --caption-m-10: 1.1rem;
 }
 
 @layer base {
@@ -110,6 +112,14 @@
   }
   .caption-r-12 {
     font-size: var(--caption-r-12);
+    font-weight: 400;
+  }
+  .caption-m-11 {
+    font-size: var(--caption-m-11);
+    font-weight: 500;
+  }
+  .caption-m-10 {
+    font-size: var(--caption-m-10);
     font-weight: 500;
   }
 
