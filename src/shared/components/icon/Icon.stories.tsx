@@ -17,14 +17,14 @@ const iconIds: IconId[] = [
   'ic_team',
   'ic_trash',
   'ic_back',
-  'ic_calender',
+  'ic_calendar',
 ];
 
 const meta: Meta<typeof Icon> = {
   title: 'Shared/Icon',
   component: Icon,
   argTypes: {
-    id: { control: 'select', options: iconIds },
+    name: { control: 'select', options: iconIds },
     width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
     height: { control: { type: 'range', min: 12, max: 64, step: 2 } },
     title: { control: 'text' },
@@ -46,7 +46,7 @@ type Story = StoryObj<typeof Icon>;
 
 export const Playground: Story = {
   args: {
-    id: 'ic_search',
+    name: 'ic_search',
     width: 22,
     height: 22,
     title: '검색',

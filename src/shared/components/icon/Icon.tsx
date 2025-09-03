@@ -1,4 +1,3 @@
-// shared/ui/Icon.tsx
 import React, { forwardRef, useId } from 'react';
 
 export type IconId =
@@ -16,7 +15,7 @@ export type IconId =
   | 'ic_team'
   | 'ic_trash'
   | 'ic_back'
-  | 'ic_calender';
+  | 'ic_calendar';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
