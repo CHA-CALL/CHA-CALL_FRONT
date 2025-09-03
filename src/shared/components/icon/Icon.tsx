@@ -19,14 +19,17 @@ export type IconId =
   | 'ic_calender';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
-  id: IconId;
+  name: IconId;
   width?: number;
   height?: number;
   title?: string;
 }
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
-  ({ id, width = 22, height = 22, title, className, style, ...rest }, ref) => {
+  (
+    { name, width = 22, height = 22, title, className, style, ...rest },
+    ref
+  ) => {
     // size 숫자면 px 처리
     const w = `${width}px`;
     const h = `${height}px`;
@@ -45,7 +48,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         {...rest}
       >
         {title && <title id={title}>{title}</title>}
-        <use href={`#${id}`} />
+        <use href={`#${name}`} />
       </svg>
     );
   }

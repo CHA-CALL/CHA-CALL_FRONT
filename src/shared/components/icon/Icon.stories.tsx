@@ -75,7 +75,7 @@ export const AllIcons: Story = {
             borderRadius: 8,
           }}
         >
-          <Icon id={id} width={24} height={24} />
+          <Icon name={id} width={24} height={24} />
           <code style={{ fontSize: 12 }}>{id}</code>
         </div>
       ))}
@@ -89,7 +89,7 @@ export const Sizes: Story = {
     <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
       {[16, 20, 24, 32, 40, 48].map(s => (
         <div key={s} style={{ textAlign: 'center' }}>
-          <Icon id='ic_search' width={s} height={s} />
+          <Icon name='ic_search' width={s} height={s} />
           <div style={{ fontSize: 12, marginTop: 6 }}>{s}px</div>
         </div>
       ))}
