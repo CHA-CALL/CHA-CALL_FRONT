@@ -1,5 +1,5 @@
 // shared/ui/Icon.tsx
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useId } from 'react';
 
 export type IconId =
   | 'ic_chat'
@@ -30,6 +30,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
     { name, width = 22, height = 22, title, className, style, ...rest },
     ref
   ) => {
+    const titleId = useId();
     // size 숫자면 px 처리
     const w = `${width}px`;
     const h = `${height}px`;
@@ -40,14 +41,14 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         width={w}
         height={h}
         role={title ? 'img' : undefined}
-        aria-labelledby={title ? title : undefined}
+        aria-labelledby={title ? titleId : undefined}
         aria-hidden={title ? undefined : true}
         focusable='false'
         className={className}
         style={style}
         {...rest}
       >
-        {title && <title id={title}>{title}</title>}
+        {title && <title id={titleId}>{title}</title>}
         <use href={`#${name}`} />
       </svg>
     );
