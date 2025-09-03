@@ -91,5 +91,5 @@ jobs:
             });
 
       - name: Fail job if any step failed
-        if: steps.check.outcome == 'failure' || steps.build.outcome == 'failure'
+        if: ${{ steps.status.outputs.result == 'failed' }}
         run: exit 1
