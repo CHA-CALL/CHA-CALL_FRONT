@@ -41,6 +41,7 @@ export default function Button({
   variant,
   buttonStyle,
   handleClick,
+  ...props
 }: ButtonProps) {
   const baseClasses = ButtonClasses[variant].base;
   const styleClasses =
@@ -49,7 +50,11 @@ export default function Button({
     ];
 
   return (
-    <button className={cn(baseClasses, styleClasses)} onClick={handleClick}>
+    <button
+      className={cn(baseClasses, styleClasses)}
+      onClick={handleClick}
+      {...props}
+    >
       {children}
     </button>
   );
