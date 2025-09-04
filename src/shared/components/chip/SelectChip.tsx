@@ -23,7 +23,7 @@ const RemoveableChip = ({ title, handleClickChip }: RemovableChipProps) => {
       className='flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-auto'
       onClick={handleClickChip}
     >
-      <div className='font-semibold text-xs text-primary-700'>{title}</div>
+      <div className='font-semibold title-sb-12 text-primary-700'>{title}</div>
       <Icon name={'ic_close'} className='text-primary-700 stroke-primary-700' />
     </button>
   );
@@ -38,7 +38,7 @@ export const SelectChip = ({
     <>
       {chips.length > 0 && (
         <div className='flex flex-col gap-[1rem] rounded-t-[1rem] px-[2rem] py-[1.1rem] bg-white'>
-          <span className='font-semibold text-xs leading-none'>
+          <span className='font-semibold title-sb-12 leading-none'>
             <span className='text-primary-700'>{chips.length} </span>
             <span className='text-black'>/ {totalCount}</span>
           </span>
