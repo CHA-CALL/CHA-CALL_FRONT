@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface NavigationProps {
   leftIcon?: React.ReactNode;
   handleLeftClick?: () => void;
