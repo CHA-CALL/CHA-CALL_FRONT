@@ -21,16 +21,25 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
   width?: number;
   height?: number;
+  color?: string;
   title?: string;
 }
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
   (
-    { name, width = 22, height = 22, title, className, style, ...rest },
+    {
+      name,
+      width = 22,
+      height = 22,
+      color = '#565B65',
+      title,
+      className,
+      style,
+      ...rest
+    },
     ref
   ) => {
     const titleId = useId();
-    // size 숫자면 px 처리
     const w = `${width}px`;
     const h = `${height}px`;
 
@@ -44,7 +53,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         aria-hidden={title ? undefined : true}
         focusable='false'
         className={className}
-        style={style}
+        style={{ color, ...style }}
         {...rest}
       >
         {title && <title id={titleId}>{title}</title>}
