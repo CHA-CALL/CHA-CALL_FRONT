@@ -8,7 +8,7 @@ const Home = () => {
     { title: '신사동' },
   ]);
   return (
-    <div>
+    <div className='bg-black'>
       <SelectChip
         totalCount={10}
         chips={chips}
