@@ -1,7 +1,19 @@
 import type { Preview } from '@storybook/react-vite';
-import '../src/shared/styles/global.css';
+import React from 'react';
+
+import SvgSprite from '../src/assets/svg/SvgSprite';
+
+const withSvgSprite = Story => {
+  return React.createElement(
+    React.Fragment,
+    null,
+    React.createElement(SvgSprite, null),
+    React.createElement(Story, null)
+  );
+};
 
 const preview: Preview = {
+  decorators: [withSvgSprite],
   parameters: {
     controls: {
       matchers: {
