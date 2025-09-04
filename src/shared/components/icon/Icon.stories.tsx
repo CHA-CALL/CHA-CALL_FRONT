@@ -21,7 +21,7 @@ const iconIds: IconId[] = [
 ];
 
 const meta: Meta<typeof Icon> = {
-  title: 'Shared/Icon',
+  title: 'Components/Icon',
   component: Icon,
   argTypes: {
     name: { control: 'select', options: iconIds },
