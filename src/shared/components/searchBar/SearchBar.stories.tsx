@@ -18,6 +18,10 @@ const meta: Meta<typeof SearchBar> = {
       control: { type: 'text' },
       description: '검색바의 입력값',
     },
+    placeholder: {
+      control: { type: 'text' },
+      description: 'placeholder 텍스트',
+    },
     maxLength: {
       control: { type: 'number' },
       description: '최대 입력 길이',
@@ -41,6 +45,7 @@ export const Default: Story = {
   args: {
     type: 'icon',
     value: '',
+    placeholder: '검색어를 입력하세요',
     rightComponent: '🔍',
   },
 };
@@ -50,6 +55,7 @@ export const IconTypeWithText: Story = {
   args: {
     type: 'icon',
     value: '검색어를 입력하세요',
+    placeholder: '검색어를 입력하세요',
     rightComponent: '🔍',
   },
 };
@@ -59,6 +65,7 @@ export const IconTypeWithMaxLength: Story = {
   args: {
     type: 'icon',
     value: '검색어',
+    placeholder: '검색어를 입력하세요',
     maxLength: 20,
     rightComponent: '🔍',
   },
@@ -69,6 +76,7 @@ export const ButtonType: Story = {
   args: {
     type: 'button',
     value: '',
+    placeholder: '검색어를 입력하세요',
     rightComponent: '→',
   },
 };
@@ -78,6 +86,7 @@ export const ButtonTypeWithText: Story = {
   args: {
     type: 'button',
     value: '검색어',
+    placeholder: '검색어를 입력하세요',
     rightComponent: '→',
   },
 };
@@ -87,6 +96,7 @@ export const WithMaxLength: Story = {
   args: {
     type: 'icon',
     value: '긴 검색어입니다',
+    placeholder: '검색어를 입력하세요',
     maxLength: 15,
     rightComponent: '🔍',
   },
@@ -97,44 +107,17 @@ export const WithoutRightComponent: Story = {
   args: {
     type: 'icon',
     value: '검색어',
+    placeholder: '검색어를 입력하세요',
     maxLength: 20,
   },
 };
 
-// 모든 variant를 한번에 보여주는 스토리
-export const AllVariants: Story = {
-  render: () => (
-    <div className='space-y-6'>
-      <div>
-        <h3 className='text-lg font-semibold mb-2'>아이콘 타입</h3>
-        <SearchBar type='icon' value='' rightComponent='🔍' />
-      </div>
-      <div>
-        <h3 className='text-lg font-semibold mb-2'>
-          아이콘 타입 (텍스트 입력)
-        </h3>
-        <SearchBar
-          type='icon'
-          value='검색어'
-          maxLength={20}
-          rightComponent='🔍'
-        />
-      </div>
-      <div>
-        <h3 className='text-lg font-semibold mb-2'>버튼 타입</h3>
-        <SearchBar type='button' value='' rightComponent='→' />
-      </div>
-      <div>
-        <h3 className='text-lg font-semibold mb-2'>버튼 타입 (텍스트 입력)</h3>
-        <SearchBar type='button' value='검색어' rightComponent='→' />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: '모든 검색바 variant를 한번에 확인할 수 있습니다.',
-      },
-    },
+// placeholder가 있는 검색바
+export const WithPlaceholder: Story = {
+  args: {
+    type: 'icon',
+    value: '',
+    placeholder: '원하는 검색어를 입력해보세요',
+    rightComponent: '🔍',
   },
 };
