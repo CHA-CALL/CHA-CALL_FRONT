@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
 import React from 'react';
+import '../src/shared/styles/global.css';
 
 import SvgSprite from '../src/assets/svg/SvgSprite';
 

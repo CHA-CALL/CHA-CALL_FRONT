@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Navigation from './Navigation';
+import Button from '../button/Button';
+import { Icon } from '../icon/Icon';
 
 const meta: Meta<typeof Navigation> = {
   title: 'Components/Navigation',
@@ -45,7 +47,7 @@ export const Default: Story = {
 // 뒤로가기 버튼이 있는 네비게이션
 export const WithBackButton: Story = {
   args: {
-    leftIcon: '←',
+    leftIcon: <Icon name='ic_back' />,
     text: '뒤로가기',
   },
 };
@@ -54,15 +56,23 @@ export const WithBackButton: Story = {
 export const WithMenuButton: Story = {
   args: {
     text: '메뉴',
-    rightIcon: '☰',
+    rightIcon: (
+      <Button variant='chip' buttonStyle='selected1'>
+        버튼
+      </Button>
+    ),
   },
 };
 
 // 양쪽에 버튼이 있는 네비게이션
 export const WithBothButtons: Story = {
   args: {
-    leftIcon: '←',
+    leftIcon: <Icon name='ic_back' />,
     text: '상세 페이지',
-    rightIcon: '⋮',
+    rightIcon: (
+      <Button variant='chip' buttonStyle='selected1'>
+        버튼
+      </Button>
+    ),
   },
 };
