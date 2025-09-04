@@ -53,7 +53,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         aria-hidden={title ? undefined : true}
         focusable='false'
         className={className}
-        style={{ color, ...style }}
+        style={{ ...style, color }}
         {...rest}
       >
         {title && <title id={titleId}>{title}</title>}

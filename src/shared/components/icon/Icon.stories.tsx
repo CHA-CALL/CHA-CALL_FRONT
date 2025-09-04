@@ -27,7 +27,7 @@ const meta: Meta<typeof Icon> = {
     name: { control: 'select', options: iconIds },
     width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
     height: { control: { type: 'range', min: 12, max: 64, step: 2 } },
-    color: { control: 'text', options: ['#565B65', '#F83419', '#CCCED5'] },
+    color: { control: 'color' },
     title: { control: 'text' },
     className: { control: false },
     style: { control: false },
