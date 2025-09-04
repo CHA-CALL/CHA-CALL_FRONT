@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import SearchBar from './SearchBar';
+import { Icon } from '../icon/Icon';
+import Button from '../button/Button';
 
 const meta: Meta<typeof SearchBar> = {
   title: 'Components/SearchBar',
@@ -41,22 +43,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // 기본 검색바 (아이콘 타입)
-export const Default: Story = {
+export const WithIcon: Story = {
   args: {
     type: 'icon',
     value: '',
     placeholder: '검색어를 입력하세요',
-    rightComponent: '🔍',
-  },
-};
-
-// 아이콘 타입 검색바 (텍스트 입력됨)
-export const IconTypeWithText: Story = {
-  args: {
-    type: 'icon',
-    value: '검색어를 입력하세요',
-    placeholder: '검색어를 입력하세요',
-    rightComponent: '🔍',
+    rightComponent: <Icon name='ic_search' />,
   },
 };
 
@@ -64,10 +56,10 @@ export const IconTypeWithText: Story = {
 export const IconTypeWithMaxLength: Story = {
   args: {
     type: 'icon',
-    value: '검색어',
+    value: '',
     placeholder: '검색어를 입력하세요',
     maxLength: 20,
-    rightComponent: '🔍',
+    rightComponent: <Icon name='ic_search' />,
   },
 };
 
@@ -77,47 +69,35 @@ export const ButtonType: Story = {
     type: 'button',
     value: '',
     placeholder: '검색어를 입력하세요',
-    rightComponent: '→',
-  },
-};
-
-// 버튼 타입 검색바 (텍스트 입력됨)
-export const ButtonTypeWithText: Story = {
-  args: {
-    type: 'button',
-    value: '검색어',
-    placeholder: '검색어를 입력하세요',
-    rightComponent: '→',
+    rightComponent: (
+      <Button variant='verify' buttonStyle='active'>
+        버튼
+      </Button>
+    ),
   },
 };
 
 // 최대 길이가 있는 검색바
-export const WithMaxLength: Story = {
+export const WithMaxLengthAndButton: Story = {
   args: {
-    type: 'icon',
-    value: '긴 검색어입니다',
+    type: 'button',
+    value: '',
     placeholder: '검색어를 입력하세요',
     maxLength: 15,
-    rightComponent: '🔍',
+    rightComponent: (
+      <Button variant='verify' buttonStyle='active'>
+        버튼
+      </Button>
+    ),
   },
 };
 
 // 오른쪽 컴포넌트가 없는 검색바
-export const WithoutRightComponent: Story = {
-  args: {
-    type: 'icon',
-    value: '검색어',
-    placeholder: '검색어를 입력하세요',
-    maxLength: 20,
-  },
-};
-
-// placeholder가 있는 검색바
-export const WithPlaceholder: Story = {
+export const WithMaxLength: Story = {
   args: {
     type: 'icon',
     value: '',
-    placeholder: '원하는 검색어를 입력해보세요',
-    rightComponent: '🔍',
+    placeholder: '검색어를 입력하세요',
+    maxLength: 20,
   },
 };

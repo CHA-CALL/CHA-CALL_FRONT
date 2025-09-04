@@ -8,12 +8,12 @@ interface SearchBarProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const containerVariants = cva(
-  'flex items-center border border-grayscale-700 rounded-[1.6rem] w-[33.5rem] h-[5.4rem] flex-shrink-0',
+  'flex justify-between items-center border border-grayscale-700 rounded-[1.6rem] w-[33.5rem] h-[5.4rem] flex-shrink-0',
   {
     variants: {
       type: {
-        icon: 'justify-end pl-[2rem] pr-[1.6rem] py-[1.6rem]',
-        button: 'justify-between px-[1rem] py-[1.7rem]',
+        icon: 'pl-[2rem] pr-[1.6rem] py-[1.6rem]',
+        button: 'px-[1rem] py-[1.7rem]',
       },
     },
     defaultVariants: {
@@ -31,7 +31,7 @@ export default function SearchBar({
   return (
     <div className={containerVariants({ type })}>
       <input
-        className='w-full h-full caret-primary-700 body-m-14 text-grayscale-900 placeholder:text-grayscale-300 placeholder:body-m-14'
+        className='w-[16.4rem] h-full caret-primary-700 body-m-14 text-grayscale-900 placeholder:text-grayscale-300 placeholder:body-m-14'
         {...props}
       />
       <div className='flex items-center gap-[1rem]'>
@@ -45,9 +45,7 @@ export default function SearchBar({
           </div>
         )}
         {rightComponent && (
-          <button onClick={handleRightClick} className='w-[2.2rem] h-[2.2rem]'>
-            {rightComponent}
-          </button>
+          <button onClick={handleRightClick}>{rightComponent}</button>
         )}
       </div>
     </div>
