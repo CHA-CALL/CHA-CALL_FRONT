@@ -33,26 +33,50 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Run lint
+        id: lint
+        run: pnpm run lint
+        continue-on-error: true
+
       - name: Build project with Vite
         id: build
         run: pnpm run build
         continue-on-error: true
 
-      - name: Evaluate build status
+      - name: Evaluate lint and build status
         id: status
         run: |
-          result="failed"
-          message="빌드 실패 ❌"
-
-          if [ "${{ steps.build.outcome }}" == "success" ]; then
-            result="success"
-            message="빌드 성공 🎊"
+          lint_result="${{ steps.lint.outcome }}"
+          build_result="${{ steps.build.outcome }}"
+          
+          lint_message=""
+          build_message=""
+          overall_result="success"
+          
+          if [ "$lint_result" == "success" ]; then
+            lint_message="린트 통과 ✅"
+          else
+            lint_message="린트 실패 ❌"
+            overall_result="failed"
+          fi
+          
+          if [ "$build_result" == "success" ]; then
+            build_message="빌드 성공 🎊"
+          else
+            build_message="빌드 실패 ❌"
+            overall_result="failed"
+          fi
+          
+          if [ "$overall_result" == "success" ]; then
+            message="모든 검사 통과 🎉\n- $lint_message\n- $build_message"
+          else
+            message="일부 검사 실패 ⚠️\n- $lint_message\n- $build_message"
           fi
 
-          echo "result=$result" >> $GITHUB_OUTPUT
+          echo "result=$overall_result" >> $GITHUB_OUTPUT
           echo "message=$message" >> $GITHUB_OUTPUT
 
-      - name: Add comment to PR with build status
+      - name: Add comment to PR with status
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v6
         with:
@@ -63,9 +87,9 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `### 빌드 결과\n${message}`
+              body: `### 빌드 및 린트 결과\n${message}`
             });
 
-      - name: Fail job if build failed
-        if: steps.build.outcome == 'failure'
+      - name: Fail job if any step failed
+        if: ${{ steps.status.outputs.result == 'failed' }}
         run: exit 1
