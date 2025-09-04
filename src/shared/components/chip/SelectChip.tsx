@@ -20,7 +20,7 @@ const RemoveableChip = ({ title, handleClickChip }: RemovableChipProps) => {
   return (
     <button
       type='button'
-      className='flex rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-auto'
+      className='flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-auto'
       onClick={handleClickChip}
     >
       <div className='font-semibold text-xs text-primary-700'>{title}</div>
