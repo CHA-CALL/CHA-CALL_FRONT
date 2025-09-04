@@ -26,7 +26,7 @@ const meta: Meta<typeof Button> = {
       ],
       description: '버튼의 스타일 상태',
     },
-    handleClick: {
+    handleClickButton: {
       action: 'clicked',
       description: '클릭 이벤트 핸들러',
     },

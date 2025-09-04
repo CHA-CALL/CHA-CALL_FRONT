@@ -1,15 +1,16 @@
+import React from 'react';
 import { cn } from '@utils/cn';
 
 export interface ButtonProps {
   children: React.ReactNode;
   variant: ButtonVariant;
   buttonStyle: ButtonStyle;
-  handleClick?: () => void;
+  handleClickButton?: () => void;
 }
 
 export const ButtonClasses = {
   cta: {
-    base: 'w-[34.3rem] h-[5rem] px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
+    base: 'w-full h-[5rem] px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
     active: 'bg-primary-700 text-white',
     disabled: 'bg-primary-100 text-white cursor-not-allowed',
     sub: 'bg-white text-grayscale-700 border border-grayscale-200',
@@ -40,7 +41,7 @@ export default function Button({
   children,
   variant,
   buttonStyle,
-  handleClick,
+  handleClickButton,
   ...props
 }: ButtonProps) {
   const baseClasses = ButtonClasses[variant].base;
@@ -51,8 +52,9 @@ export default function Button({
 
   return (
     <button
+      type='button'
       className={cn(baseClasses, styleClasses)}
-      onClick={handleClick}
+      onClick={handleClickButton}
       {...props}
     >
       {children}
