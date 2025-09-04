@@ -5,9 +5,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import '@styles/global.css';
 
-import SvgSprite from './SvgSprite';
+import SvgSprite from '@assets/svg/SvgSprite';
 
 const queryClient = new QueryClient();
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
