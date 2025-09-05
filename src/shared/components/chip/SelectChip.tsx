@@ -1,17 +1,17 @@
 import { Icon } from '@shared/components/icon/Icon';
 
+const TOTALCOUNT = 10;
+
 export interface ChipData {
   title: string;
 }
 
-export interface SelectChipProps {
-  totalCount: number;
+interface SelectChipProps {
   chips: ChipData[];
-  // eslint-disable-next-line no-unused-vars
-  handleDeleteChip: (title: string) => void;
+  handleDeleteChip: (_title: string) => void;
 }
 
-export interface RemovableChipProps {
+interface RemovableChipProps {
   title: string;
   handleClickChip: () => void;
 }
@@ -20,17 +20,16 @@ const RemoveableChip = ({ title, handleClickChip }: RemovableChipProps) => {
   return (
     <button
       type='button'
-      className='flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-auto'
+      className='h-[3rem] flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-[0.2rem] leading-[1.5rem]'
       onClick={handleClickChip}
     >
-      <div className='font-semibold title-sb-12 text-primary-700'>{title}</div>
-      <Icon name={'ic_close'} className='text-primary-700 stroke-primary-700' />
+      <span className='title-sb-12 text-primary-700'>{title}</span>
+      <Icon name={'ic_close'} color='#F83419' />
     </button>
   );
 };
 
 export const SelectChip = ({
-  totalCount,
   chips,
   handleDeleteChip,
 }: SelectChipProps) => {
@@ -38,9 +37,9 @@ export const SelectChip = ({
     <>
       {chips.length > 0 && (
         <div className='flex flex-col gap-[1rem] rounded-t-[1rem] px-[2rem] py-[1.1rem] bg-white'>
-          <span className='font-semibold title-sb-12 leading-none'>
+          <span className='title-sb-12 leading-none'>
             <span className='text-primary-700'>{chips.length} </span>
-            <span className='text-black'>/ {totalCount}</span>
+            <span className='text-black'>/ {TOTALCOUNT}</span>
           </span>
           <div className='flex flex-wrap gap-[0.8rem]'>
             {(chips ?? []).map(chip => (

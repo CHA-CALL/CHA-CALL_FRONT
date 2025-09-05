@@ -10,7 +10,6 @@ const Home = () => {
   return (
     <div className='bg-black'>
       <SelectChip
-        totalCount={10}
         chips={chips}
         handleDeleteChip={(title: string) => {
           setChips(prev => prev.filter(chips => chips.title !== title));
@@ -18,6 +17,7 @@ const Home = () => {
       />
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
+      <Icon name='ic_confirm' width={40} height={40} color='#F83419' />
       <p className='heading-sb-20'>Hello World</p>
       <p className='heading-sb-18'>Hello World</p>
       <p className='title-b-16'>Hello World</p>

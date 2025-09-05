@@ -9,10 +9,6 @@ const meta: Meta<typeof SelectChip> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    totalCount: {
-      control: 'number',
-      description: '선택 가능한 전체 항목의 수',
-    },
     chips: {
       control: 'object',
       description: '현재 선택된 칩들의 배열',
@@ -29,7 +25,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    totalCount: 10,
     chips: [{ title: 'React' }, { title: 'TypeScript' }, { title: 'Next.js' }],
   },
 };
@@ -37,14 +32,12 @@ export const Default: Story = {
 /** 아무 chip도 선택되지 않으면 렌더링 하지 않음. */
 export const NoChipsSelected: Story = {
   args: {
-    totalCount: 10,
     chips: [],
   },
 };
 
-export const WithManyChips: Story = {
+export const AllChipsSelected: Story = {
   args: {
-    totalCount: 20,
     chips: [
       { title: 'JavaScript' },
       { title: 'React' },
@@ -55,19 +48,8 @@ export const WithManyChips: Story = {
       { title: 'Vite' },
       { title: 'Jest' },
       { title: 'React Query' },
+      { title: 'Tanstack Query' },
     ],
   },
 };
 
-export const AllChipsSelected: Story = {
-  args: {
-    totalCount: 5,
-    chips: [
-      { title: 'Vue' },
-      { title: 'Svelte' },
-      { title: 'Angular' },
-      { title: 'SolidJS' },
-      { title: 'Qwik' },
-    ],
-  },
-};
