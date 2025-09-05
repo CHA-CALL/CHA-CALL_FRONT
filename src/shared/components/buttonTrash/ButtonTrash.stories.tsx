@@ -22,6 +22,6 @@ type Story = StoryObj<typeof ButtonTrash>;
 
 export const Default: Story = {
   args: {
-    onClick: () => alert('Trash 버튼 클릭'),
+    onClick: () => alert('삭제 버튼 클릭'),
   }
 };
