@@ -27,6 +27,7 @@ const meta: Meta<typeof Icon> = {
     name: { control: 'select', options: iconIds },
     width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
     height: { control: { type: 'range', min: 12, max: 64, step: 2 } },
+    color: { control: 'color' },
     title: { control: 'text' },
     className: { control: false },
     style: { control: false },
@@ -77,6 +78,23 @@ export const AllIcons: Story = {
         >
           <Icon name={id} width={24} height={24} />
           <code style={{ fontSize: 12 }}>{id}</code>
+        </div>
+      ))}
+      {iconIds.map(id => (
+        <div
+          key={id}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 6,
+            padding: 8,
+            border: '1px solid #eee',
+            borderRadius: 8,
+          }}
+        >
+          <Icon name={id} width={24} height={24} color='#F83419' />
+          <code style={{ fontSize: 12 }}>{id}_primary</code>
         </div>
       ))}
     </div>
