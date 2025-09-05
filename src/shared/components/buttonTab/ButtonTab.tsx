@@ -26,9 +26,7 @@ export default function ButtonTab({
       >
         {children}
       </button>
-      {isActive && (
-          <div className='h-[0.2rem] bg-primary-700 rounded-[0.2rem]' />
-        )}
+      {isActive && <div className='h-[0.2rem] bg-primary-700 rounded-[0.2rem]' />}
     </div>
   )
 }

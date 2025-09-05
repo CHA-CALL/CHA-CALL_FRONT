@@ -40,7 +40,7 @@ export const Active: Story = {
 
 export const TabGroup: Story = {
   render: () => (
-    <ButtonTabGroup 
+    <ButtonTabGroup
       tabs={['전체보기', '안 읽음', '예약 확정']}
       defaultActiveIndex={0}
     />

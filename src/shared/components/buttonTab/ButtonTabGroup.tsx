@@ -4,7 +4,7 @@ import ButtonTab from './ButtonTab';
 interface ButtonTabGroupProps {
   tabs: string[]
   defaultActiveIndex?: number
-  onTabChange?: (index: number) => void
+  onTabChange?: (_index: number) => void
 }
 
 export default function ButtonTabGroup({
@@ -17,7 +17,6 @@ export default function ButtonTabGroup({
   const handleTabClick = (index: number) => {
     setActiveTab(index);
     onTabChange?.(index);
-    console.info(`Tab changed to: ${tabs[index]}`);
   };
 
   return (
