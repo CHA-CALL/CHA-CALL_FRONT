@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SearchBar from './SearchBar';
-import { Icon } from '../icon/Icon';
-import Button from '../button/Button';
+import SearchBar from '@shared/components/searchBar/SearchBar';
+import { Icon } from '@shared/components/icon/Icon';
+import Button from '@shared/components/button/Button';
 
 const meta: Meta<typeof SearchBar> = {
   title: 'Components/SearchBar',
@@ -11,11 +11,6 @@ const meta: Meta<typeof SearchBar> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    type: {
-      control: { type: 'select' },
-      options: ['icon', 'button'],
-      description: '검색바의 타입 (아이콘 또는 버튼)',
-    },
     value: {
       control: { type: 'text' },
       description: '검색바의 입력값',
@@ -45,7 +40,6 @@ type Story = StoryObj<typeof meta>;
 // 기본 검색바 (아이콘 타입)
 export const WithIcon: Story = {
   args: {
-    type: 'icon',
     value: '',
     placeholder: '검색어를 입력하세요',
     rightComponent: <Icon name='ic_search' />,
@@ -55,7 +49,6 @@ export const WithIcon: Story = {
 // 아이콘 타입 검색바 (최대 길이 제한)
 export const IconTypeWithMaxLength: Story = {
   args: {
-    type: 'icon',
     value: '',
     placeholder: '검색어를 입력하세요',
     maxLength: 20,
@@ -66,7 +59,6 @@ export const IconTypeWithMaxLength: Story = {
 // 버튼 타입 검색바
 export const ButtonType: Story = {
   args: {
-    type: 'button',
     value: '',
     placeholder: '검색어를 입력하세요',
     rightComponent: (
@@ -80,7 +72,6 @@ export const ButtonType: Story = {
 // 최대 길이가 있는 검색바
 export const WithMaxLengthAndButton: Story = {
   args: {
-    type: 'button',
     value: '',
     placeholder: '검색어를 입력하세요',
     maxLength: 15,
@@ -95,9 +86,18 @@ export const WithMaxLengthAndButton: Story = {
 // 오른쪽 컴포넌트가 없는 검색바
 export const WithMaxLength: Story = {
   args: {
-    type: 'icon',
     value: '',
     placeholder: '검색어를 입력하세요',
     maxLength: 20,
+  },
+};
+
+// 긴 텍스트 테스트용 검색바
+export const WithLongText: Story = {
+  args: {
+    value:
+      '이것은 매우 긴 검색어입니다. 텍스트가 길어졌을 때 어떻게 표시되는지 확인하기 위한 테스트입니다.',
+    placeholder: '검색어를 입력하세요',
+    rightComponent: <Icon name='ic_search' />,
   },
 };
