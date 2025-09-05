@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { BtnCheck } from '@shared/components/btn-check/BtnCheck';
+import { ButtonCheck } from '@shared/components/btn-check/ButtonCheck';
 import { useState } from 'react';
 
-const meta: Meta<typeof BtnCheck> = {
+const meta: Meta<typeof ButtonCheck> = {
   title: 'Components/BtnCheck',
-  component: BtnCheck,
+  component: ButtonCheck,
   parameters: {
     layout: 'centered',
   },
@@ -39,6 +39,6 @@ export const Checked: Story = {
 export const Interactive: Story = {
   render: () => {
     const [isChecked, setIsChecked] = useState(false);
-    return <BtnCheck isChecked={isChecked} setIsChecked={setIsChecked} />;
+    return <ButtonCheck isChecked={isChecked} setIsChecked={setIsChecked} />;
   },
 };

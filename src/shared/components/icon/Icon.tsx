@@ -3,7 +3,6 @@ import React, { forwardRef, useId } from 'react';
 export type IconId =
   | 'ic_chat'
   | 'ic_check'
-  | 'ic_check_2'
   | 'ic_close'
   | 'ic_confirm'
   | 'ic_error'

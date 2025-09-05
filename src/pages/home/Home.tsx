@@ -1,4 +1,4 @@
-import { BtnCheck } from '@shared/components/btn-check/BtnCheck';
+import { ButtonCheck } from '@shared/components/btn-check/ButtonCheck';
 import { Icon } from '@shared/components/icon/Icon';
 import { useState } from 'react';
 
@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <div>
       <div className='flex'>
-        <BtnCheck isChecked={isChecked} setIsChecked={setIsChecked} />
-        <BtnCheck isChecked={isChecked} setIsChecked={setIsChecked} />
+        <ButtonCheck isChecked={isChecked} setIsChecked={setIsChecked} />
+        <ButtonCheck isChecked={isChecked} setIsChecked={setIsChecked} />
       </div>
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
