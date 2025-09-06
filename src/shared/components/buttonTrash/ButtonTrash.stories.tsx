@@ -9,7 +9,7 @@ const meta: Meta<typeof ButtonTrash> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    onClick: {
+    handleClick: {
       action: 'clicked',
       description: '클릭 시 실행 함수',
     }
@@ -22,6 +22,6 @@ type Story = StoryObj<typeof ButtonTrash>;
 
 export const Default: Story = {
   args: {
-    onClick: () => alert('삭제 버튼 클릭'),
+    handleClick: () => alert('삭제 버튼 클릭'),
   }
 };

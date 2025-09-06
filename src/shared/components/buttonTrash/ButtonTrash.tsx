@@ -1,14 +1,14 @@
 import { Icon } from '@components/icon/Icon';
 
 interface ButtonTrashProps {
-  onClick: () => void;
+  handleClick: () => void;
 }
 
-export default function ButtonTrash({ onClick }: ButtonTrashProps) {
+export default function ButtonTrash({ handleClick }: ButtonTrashProps) {
   return (
     <button
       type='button'
-      onClick={onClick}
+      onClick={handleClick}
       className='flex px-[0.2rem] py-[0.2rem] bg-white border-[0.1rem] border-grayscale-200 rounded-[0.4rem]'
     >
       <Icon
