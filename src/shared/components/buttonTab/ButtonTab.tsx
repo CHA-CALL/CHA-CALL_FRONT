@@ -4,19 +4,19 @@ import { cn } from '../../utils/cn';
 interface ButtonTabProps {
   children: React.ReactNode
   isActive?: boolean
-  onClick?: () => void
+  handleClickTab?: () => void
 }
 
 export default function ButtonTab({
   children,
   isActive = false,
-  onClick,
+  handleClickTab,
 }: ButtonTabProps) {
   return (
     <div>
       <button
         type='button'
-        onClick={onClick}
+        onClick={handleClickTab}
         className={cn(
           'relative mx-[0.5rem] px-[0.4rem] py-[1.2rem] duration-200',
           isActive

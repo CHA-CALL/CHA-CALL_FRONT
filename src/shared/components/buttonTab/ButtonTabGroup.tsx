@@ -25,7 +25,7 @@ export default function ButtonTabGroup({
         <ButtonTab
           key={index}
           isActive={activeTab === index}
-          onClick={() => handleTabClick(index)}
+          handleClickTab={() => handleTabClick(index)}
         >
           {tab}
         </ButtonTab>

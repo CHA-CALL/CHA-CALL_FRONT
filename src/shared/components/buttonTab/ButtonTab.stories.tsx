@@ -14,7 +14,7 @@ const meta: Meta<typeof ButtonTab> = {
       control: 'boolean',
       description: '초기 활성화 상태',
     },
-    onClick: {
+    handleClickTab: {
       action: 'clicked',
       description: '클릭 시 실행 함수',
     },
