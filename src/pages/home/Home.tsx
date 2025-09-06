@@ -1,14 +1,8 @@
 import { Icon } from '@shared/components/icon/Icon';
-import { Tag } from '@shared/components/tag/Tag';
 
 const Home = () => {
   return (
     <div>
-      <Tag title={'오소리 푸드트럭'} />
-      <div className='flex gap-[0.5rem]'>
-        <Tag title={'피자'} />
-        <Tag title={'치킨'} />
-      </div>
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
       <Icon name='ic_confirm' width={40} height={40} color='#F83419' />
