@@ -68,17 +68,19 @@ export default function Modal({
         </span>
         <div className='flex gap-[1rem] mt-[1.6rem]'>
           <Button
-            children={cancelChildren}
             variant='cta'
             buttonStyle='sub'
             handleClickButton={handleCancel}
-          />
+          >
+            {cancelChildren}
+          </Button>
           <Button
-            children={confirmChildren}
             variant='cta'
             buttonStyle='active'
             handleClickButton={handleConfirm}
-          />
+          >
+            {confirmChildren}
+          </Button>
         </div>
       </div>
     </div>

@@ -42,11 +42,12 @@ export const Default: Story = {
           handleModalClose={() => setIsOpen(false)}
         />
         <Button
-          children='모달 열기'
           variant='cta'
           buttonStyle='active'
           handleClickButton={() => setIsOpen(true)}
-        />
+        >
+          모달 열기
+        </Button>
       </div>
     );
   },
