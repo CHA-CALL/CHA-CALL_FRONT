@@ -16,7 +16,6 @@
   blockquote,
   pre,
   a,
-  button,
   abbr,
   acronym,
   address,
@@ -138,6 +137,7 @@
     margin: 0;
     padding: 0;
     text-wrap: nowrap;
+    font: inherit;
   }
 
   input {
