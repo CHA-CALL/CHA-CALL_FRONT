@@ -9,7 +9,7 @@ const meta: Meta<typeof ButtonClose> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    onClick: {
+    handleClick: {
       action: 'clicked',
       description: '클릭 시 실행 함수',
     },
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onClick: () => alert('닫기 버튼 클릭'),
+    handleClick: () => alert('닫기 버튼 클릭'),
   },
 };
 
@@ -30,7 +30,7 @@ export const WithContainer: Story = {
     <div className='relative inline-block'>
       <div className='w-[8rem] h-[8rem] bg-grayscale-200 rounded-[1.6rem]' />
       <ButtonClose
-        onClick={() => alert('닫기 버튼 클릭')}
+        handleClick={() => alert('닫기 버튼 클릭')}
         className='absolute top-[-0.6rem] right-[-1rem]'
       />
     </div>

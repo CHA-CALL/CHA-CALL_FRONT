@@ -2,18 +2,18 @@ import { Icon } from '@components/icon/Icon';
 import { cn } from '@utils/cn';
 
 interface ButtonCloseProps {
-  onClick: () => void;
+  handleClick: () => void;
   className?: string;
 }
 
 export default function ButtonClose({
-  onClick,
+  handleClick,
   className
 }: ButtonCloseProps) {
   return (
     <button
       type='button'
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
         'flex px-[0.64rem] py-[0.64rem] bg-grayscale-900 rounded-full',
         className
