@@ -18,6 +18,7 @@ const iconIds: IconId[] = [
   'ic_trash',
   'ic_back',
   'ic_calendar',
+  'ic_camera',
 ];
 
 const meta: Meta<typeof Icon> = {
