@@ -9,7 +9,7 @@ interface Tab {
 interface ButtonTabGroupProps {
   tabs: Tab[]
   defaultActiveId?: string
-  handleTabChange?: (tabId: string) => void
+  handleTabChange?: (_tabId: string) => void
 }
 
 export default function ButtonTabGroup({
