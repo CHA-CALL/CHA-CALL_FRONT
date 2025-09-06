@@ -2,7 +2,7 @@ import { Icon } from '@shared/components/icon/Icon';
 
 const TOTALCOUNT = 10;
 
-export interface ChipData {
+interface ChipData {
   title: string;
 }
 
@@ -11,28 +11,7 @@ interface SelectChipProps {
   handleDeleteChip: (_title: string) => void;
 }
 
-interface RemovableChipProps {
-  title: string;
-  handleClickChip: () => void;
-}
-
-const RemoveableChip = ({ title, handleClickChip }: RemovableChipProps) => {
-  return (
-    <button
-      type='button'
-      className='h-[3rem] flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-[0.2rem] leading-[1.5rem]'
-      onClick={handleClickChip}
-    >
-      <span className='title-sb-12 text-primary-700'>{title}</span>
-      <Icon name={'ic_close'} color='#F83419' />
-    </button>
-  );
-};
-
-export const SelectChip = ({
-  chips,
-  handleDeleteChip,
-}: SelectChipProps) => {
+function SelectChip({ chips, handleDeleteChip }: SelectChipProps){
   return (
     <>
       {chips.length > 0 && (
@@ -43,11 +22,17 @@ export const SelectChip = ({
           </span>
           <div className='flex flex-wrap gap-[0.8rem]'>
             {(chips ?? []).map(chip => (
-              <RemoveableChip
-                title={chip.title}
-                handleClickChip={() => handleDeleteChip(chip.title)}
+              <button
                 key={chip.title}
-              />
+                type='button'
+                className='h-[3rem] flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-[0.2rem] leading-[1.5rem]'
+                onClick={() => handleDeleteChip(chip.title)}
+              >
+                <span className='title-sb-12 text-primary-700'>
+                  {chip.title}
+                </span>
+                <Icon name={'ic_close'} color='#F83419' />
+              </button>
             ))}
           </div>
         </div>
@@ -55,3 +40,5 @@ export const SelectChip = ({
     </>
   );
 };
+
+export {type ChipData, SelectChip}
