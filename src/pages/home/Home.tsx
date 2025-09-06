@@ -1,20 +1,8 @@
-import { SelectChip, type ChipData } from '@shared/components/chip/SelectChip';
 import { Icon } from '@shared/components/icon/Icon';
-import { useState } from 'react';
 
 const Home = () => {
-  const [chips, setChips] = useState<ChipData[]>([
-    { title: '논현동' },
-    { title: '신사동' },
-  ]);
   return (
-    <div className='bg-black'>
-      <SelectChip
-        chips={chips}
-        handleDeleteChip={(title: string) => {
-          setChips(prev => prev.filter(chips => chips.title !== title));
-        }}
-      />
+    <div>
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
       <Icon name='ic_confirm' width={40} height={40} color='#F83419' />

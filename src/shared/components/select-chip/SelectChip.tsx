@@ -1,7 +1,5 @@
 import { Icon } from '@shared/components/icon/Icon';
 
-const TOTALCOUNT = 10;
-
 interface ChipData {
   title: string;
 }
@@ -18,7 +16,7 @@ function SelectChip({ chips, handleDeleteChip }: SelectChipProps){
         <div className='flex flex-col gap-[1rem] rounded-t-[1rem] px-[2rem] py-[1.1rem] bg-white'>
           <span className='title-sb-12 leading-none'>
             <span className='text-primary-700'>{chips.length} </span>
-            <span className='text-black'>/ {TOTALCOUNT}</span>
+            <span className='text-black'>/ 10</span>
           </span>
           <div className='flex flex-wrap gap-[0.8rem]'>
             {(chips ?? []).map(chip => (
