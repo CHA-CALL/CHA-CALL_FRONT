@@ -1,3 +1,4 @@
+import React, { type MouseEvent } from 'react';
 import { cn } from '@utils/cn';
 import Button from '@components/button/Button';
 
@@ -26,7 +27,7 @@ export default function Modal({
     return null;
   }
 
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       handleModalClose();
     }
@@ -43,7 +44,7 @@ export default function Modal({
   };
 
   return (
-    <div 
+    <div
       onClick={handleOverlayClick}
       className={cn(
         'fixed flex items-center justify-center',
@@ -52,7 +53,7 @@ export default function Modal({
       )}
     >
       <div
-        onClick={(e) => e.stopPropagation()} 
+        onClick={(e) => e.stopPropagation()}
         className={cn(
           'flex flex-col',
           'px-[2rem] pt-[2.4rem] pb-[2rem]',
