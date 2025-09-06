@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ButtonCheck } from '@shared/components/btn-check/ButtonCheck';
 import { useState } from 'react';
+import ButtonCheck from '@shared/components/button-check/ButtonCheck';
 
 const meta: Meta<typeof ButtonCheck> = {
-  title: 'Components/BtnCheck',
+  title: 'Components/ButtonCheck',
   component: ButtonCheck,
   parameters: {
     layout: 'centered',

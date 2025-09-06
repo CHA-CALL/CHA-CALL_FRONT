@@ -1,15 +1,8 @@
-import { ButtonCheck } from '@shared/components/btn-check/ButtonCheck';
 import { Icon } from '@shared/components/icon/Icon';
-import { useState } from 'react';
 
 const Home = () => {
-  const [isChecked, setIsChecked] = useState(true);
   return (
     <div>
-      <div className='flex'>
-        <ButtonCheck isChecked={isChecked} setIsChecked={setIsChecked} />
-        <ButtonCheck isChecked={isChecked} setIsChecked={setIsChecked} />
-      </div>
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
       <Icon name='ic_confirm' width={40} height={40} color='#F83419' />

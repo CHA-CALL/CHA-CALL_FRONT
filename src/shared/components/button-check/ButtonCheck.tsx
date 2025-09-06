@@ -7,7 +7,7 @@ interface ButtonCheckClickProps {
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ButtonCheck = ({ isChecked, setIsChecked }: ButtonCheckClickProps) => {
+export default function ButtonCheck ({ isChecked, setIsChecked }: ButtonCheckClickProps){
   const ButtonCheckClasses = {
     checked:'bg-primary-700',
     unchecked: 'bg-white ring-1 ring-inset ring-grayscale-200'
