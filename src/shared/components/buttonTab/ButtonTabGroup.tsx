@@ -1,33 +1,38 @@
 import { useState } from 'react';
 import ButtonTab from './ButtonTab';
 
+interface Tab {
+  id: string
+  label: string
+}
+
 interface ButtonTabGroupProps {
-  tabs: string[]
-  defaultActiveIndex?: number
-  onTabChange?: (_index: number) => void
+  tabs: Tab[]
+  defaultActiveId?: string
+  handleTabChange?: (tabId: string) => void
 }
 
 export default function ButtonTabGroup({
   tabs,
-  defaultActiveIndex = 0,
-  onTabChange,
+  defaultActiveId,
+  handleTabChange,
 }: ButtonTabGroupProps) {
-  const [activeTab, setActiveTab] = useState(defaultActiveIndex);
+  const [activeTabId, setActiveTabId] = useState(defaultActiveId || tabs[0]?.id);
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-    onTabChange?.(index);
+  const handleTabClick = (tabId: string) => {
+    setActiveTabId(tabId);
+    handleTabChange?.(tabId);
   };
 
   return (
     <div className={'flex flex-row border-b border-grayscale-100'}>
-      {tabs.map((tab, index) => (
+      {tabs.map((tab) => (
         <ButtonTab
-          key={index}
-          isActive={activeTab === index}
-          handleClickTab={() => handleTabClick(index)}
+          key={tab.id}
+          isActive={activeTabId === tab.id}
+          handleClickTab={() => handleTabClick(tab.id)}
         >
-          {tab}
+          {tab.label}
         </ButtonTab>
       ))}
     </div>

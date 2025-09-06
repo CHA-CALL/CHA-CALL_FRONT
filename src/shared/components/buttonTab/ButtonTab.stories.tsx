@@ -41,8 +41,13 @@ export const Active: Story = {
 export const TabGroup: Story = {
   render: () => (
     <ButtonTabGroup
-      tabs={['전체보기', '안 읽음', '예약 확정']}
-      defaultActiveIndex={0}
+      tabs={[
+        { id: 'all', label: '전체보기' },
+        { id: 'unread', label: '안 읽음' },
+        { id: 'confirmed', label: '예약 확정' }
+      ]}
+      defaultActiveId='all'
+      handleTabChange={(tabId) => alert(tabId)}
     />
   ),
 }
