@@ -13,7 +13,7 @@ const meta: Meta<typeof ButtonText> = {
       control: 'text',
       description: '버튼 텍스트'
     },
-    onClick: {
+    handleClick: {
       action: 'clicked',
       description: '클릭 시 실행 함수'
     },
@@ -26,6 +26,6 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     children: '일정 추가하기',
-    onClick: () => alert('버튼 클릭'),
+    handleClick: () => alert('버튼 클릭'),
   },
 };

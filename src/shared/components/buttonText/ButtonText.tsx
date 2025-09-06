@@ -3,17 +3,17 @@ import { cn } from '@utils/cn';
 
 interface ButtonTextProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  handleClick?: () => void;
 }
 
 export default function ButtonText({
   children,
-  onClick
+  handleClick
 }: ButtonTextProps) {
   return (
     <button
       type='button'
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
         'pb-[0.1rem] text-grayscale-500 border-b-[0.1rem] border-grayscale-500',
         'hover:text-grayscale-900 hover:border-grayscale-900 duration-200'
