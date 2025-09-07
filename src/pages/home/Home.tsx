@@ -33,6 +33,7 @@ const Home = () => {
         sheetContent={
           <Calendar handleCloseBottomSheet={handleCloseBottomSheet} />
         }
+        sheetHeight={490}
       />
     </div>
   );
