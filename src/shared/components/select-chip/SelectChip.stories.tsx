@@ -1,4 +1,3 @@
-// SelectChip.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import SelectChip from '@shared/components/select-chip/SelectChip';
 

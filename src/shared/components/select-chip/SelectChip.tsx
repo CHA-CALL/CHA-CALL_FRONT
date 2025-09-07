@@ -13,7 +13,7 @@ export default function SelectChip({ title, handleDeleteChip }: SelectChipProps)
       onClick={handleDeleteChip}
     >
       <span className='title-sb-12 text-primary-700'>{title}</span>
-      <Icon name={'ic_close'} color='#F83419' />
+      <Icon name='ic_close' color='#F83419' />
     </button>
   );
 }
