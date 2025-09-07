@@ -14,7 +14,7 @@ const meta: Meta<typeof ButtonCheck> = {
       control: { type: 'boolean' },
       description: '체크박스의 선택 여부 상태',
     },
-    setIsChecked: {
+    handleToggle: {
       action: 'checked changed',
       description: '체크 상태를 변경하는 함수',
     },
@@ -39,6 +39,6 @@ export const Checked: Story = {
 export const Interactive: Story = {
   render: () => {
     const [isChecked, setIsChecked] = useState(false);
-    return <ButtonCheck isChecked={isChecked} setIsChecked={setIsChecked} />;
+    return <ButtonCheck isChecked={isChecked} handleToggle={()=>setIsChecked(!isChecked)} />;
   },
 };
