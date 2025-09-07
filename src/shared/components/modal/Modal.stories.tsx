@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import Modal from './Modal';
+import Modal from '@shared/components/modal/Modal';
 import Button from '@components/button/Button';
 
 const meta: Meta<typeof Modal> = {
@@ -37,8 +37,12 @@ export const Default: Story = {
           content='최종 승인까지 영업일 기준 3-5일이 소요돼요.'
           cancelChildren='취소'
           confirmChildren='확인'
-          handleCancelClick={() => {alert('취소 버튼 클릭');}}
-          handleConfirmClick={() => {alert('확인 버튼 클릭');}}
+          handleCancelClick={() => {
+            alert('취소 버튼 클릭');
+          }}
+          handleConfirmClick={() => {
+            alert('확인 버튼 클릭');
+          }}
           handleModalClose={() => setIsOpen(false)}
         />
         <Button

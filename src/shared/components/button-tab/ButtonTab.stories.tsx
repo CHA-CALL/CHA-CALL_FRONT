@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonTab from './ButtonTab';
-import ButtonTabGroup from './ButtonTabGroup';
+import ButtonTab from '@shared/components/button-tab/ButtonTab';
+import ButtonTabGroup from '@shared/components/button-tab/ButtonTabGroup';
 
 const meta: Meta<typeof ButtonTab> = {
   title: 'Components/ButtonTab',
@@ -29,14 +29,14 @@ export const Default: Story = {
     children: '탭 버튼',
     isActive: false,
   },
-}
+};
 
 export const Active: Story = {
   args: {
     children: '활성화된 탭',
     isActive: true,
   },
-}
+};
 
 export const TabGroup: Story = {
   render: () => (
@@ -44,10 +44,10 @@ export const TabGroup: Story = {
       tabs={[
         { id: 'all', label: '전체보기' },
         { id: 'unread', label: '안 읽음' },
-        { id: 'confirmed', label: '예약 확정' }
+        { id: 'confirmed', label: '예약 확정' },
       ]}
       defaultActiveId='all'
-      handleTabChange={(tabId) => alert(tabId)}
+      handleTabChange={tabId => alert(tabId)}
     />
   ),
-}
+};
