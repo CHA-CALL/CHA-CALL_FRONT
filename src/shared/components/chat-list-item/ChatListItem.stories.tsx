@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ChatListItem from './ChatListItem'; // 실제 컴포넌트 경로에 맞게 수정해주세요.
+import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
 import { useState } from 'react';
 
 const meta: Meta<typeof ChatListItem> = {
   title: 'Components/ChatListItem',
   component: ChatListItem,
   parameters: {
-    // 리스트 아이템이므로 전체 너비를 사용하는 것이 보기 좋습니다.
     layout: 'fullscreen',
   },
   tags: ['autodocs'],

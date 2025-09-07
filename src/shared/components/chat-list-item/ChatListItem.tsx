@@ -1,5 +1,5 @@
 import Tag from '@shared/components/tag/Tag';
-import ButtonCheck from '../button-check/ButtonCheck';
+import ButtonCheck from '@shared/components/button-check/ButtonCheck';
 
 interface ChatListItemProps {
   profileImage?: string;
@@ -35,7 +35,7 @@ export default function ChatListItem({
         />
       )}
 
-      <div className='relative w-[5.2rem] h-[5.2rem] rounded-full overflow-hidden flex-shrink-0 border border-grayscale-200'>
+      <div className='w-[5.2rem] h-[5.2rem] rounded-full overflow-hidden flex-shrink-0 border border-grayscale-200'>
         {profileImage ? (
           <img
             src={profileImage}
