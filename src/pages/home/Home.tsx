@@ -1,54 +1,39 @@
-import { Icon } from '@shared/components/icon/Icon';
+import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
+import ButtonDate from '@shared/components/button-date/ButtonDate';
+import Calendar from '@shared/components/calendar/Calendar';
+import { useState } from 'react';
 
 const Home = () => {
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  const handleOpenBottomSheet = () => {
+    setIsBottomSheetOpen(true);
+  };
+
+  const handleCloseBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+
+  const handleSelectDate = (startDate: Date | null, endDate: Date | null) => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
   return (
-    <div>
-      <Icon name='ic_search' />
-      <Icon name='ic_search' width={40} height={40} />
-      <Icon name='ic_confirm' width={40} height={40} color='#F83419' />
-      <p className='heading-sb-20'>Hello World</p>
-      <p className='heading-sb-18'>Hello World</p>
-      <p className='title-b-16'>Hello World</p>
-      <p className='title-b-14'>Hello World</p>
-      <p className='title-sb-16'>Hello World</p>
-      <p className='title-sb-14'>Hello World</p>
-      <p className='title-sb-12'>Hello World</p>
-      <p className='body-m-16'>Hello World</p>
-      <p className='body-m-14'>Hello World</p>
-      <p className='caption-m-12'>Hello World</p>
-      <p className='caption-r-12'>Hello World</p>
-      <p className='scrollbar-hide'>Hello World</p>
-      <p className='scrollbar-hide'>Hello World</p>
-      <p className='heading-sb-20'>Hello World</p>
-      <p className='heading-sb-18'>Hello World</p>
-      <p className='title-b-16'>Hello World</p>
-      <p className='title-b-14'>Hello World</p>
-      <p className='title-sb-16'>Hello World</p>
-      <p className='title-sb-14'>Hello World</p>
-      <p className='title-sb-12'>Hello World</p>
-      <p className='body-m-16'>Hello World</p>
-      <p className='body-m-14'>Hello World</p>
-      <p className='caption-m-12'>Hello World</p>
-      <p className='caption-r-12'>Hello World</p>
-      <p className='scrollbar-hide'>Hello World</p>
-      <p className='scrollbar-hide'>Hello World</p>
-      <p className='bg-primary-25'>Hello World</p>
-      <p className='bg-primary-50'>Hello World</p>
-      <p className='bg-primary-100'>Hello World</p>
-      <p className='bg-primary-300'>Hello World</p>
-      <p className='bg-primary-500'>Hello World</p>
-      <p className='bg-primary-700'>Hello World</p>
-      <p className='bg-primary-900'>Hello World</p>
-      <p className='bg-grayscale-50'>Hello World</p>
-      <p className='bg-grayscale-100'>Hello World</p>
-      <p className='bg-grayscale-200'>Hello World</p>
-      <p className='bg-grayscale-300'>Hello World</p>
-      <p className='bg-grayscale-500'>Hello World</p>
-      <p className='bg-grayscale-700'>Hello World</p>
-      <p className='bg-grayscale-900'>Hello World</p>
-      <p className='bg-white'>Hello World</p>
-      <p className='bg-black50'>Hello World</p>
-      <p className='bg-black'>Hello World</p>
+    <div className='bg-white h-dvh relative flex flex-col'>
+      <ButtonDate
+        startDate={startDate}
+        endDate={endDate}
+        handleOpenCalendar={handleOpenBottomSheet}
+      />
+      <BottomSheet
+        isOpen={isBottomSheetOpen}
+        handleCloseBottomSheet={handleCloseBottomSheet}
+        sheetContent={
+          <Calendar handleCloseBottomSheet={handleCloseBottomSheet} />
+        }
+      />
     </div>
   );
 };
