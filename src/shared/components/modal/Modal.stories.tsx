@@ -30,7 +30,7 @@ export const Default: Story = {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-      <div className='flex items-center justify-center h-[80vh] mx-[40rem]'>
+      <div className='flex items-center justify-center h-screen w-[40rem]'>
         <Modal
           isOpen={isOpen}
           title='신청하시겠습니까?'
