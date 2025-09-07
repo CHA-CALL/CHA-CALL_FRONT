@@ -1,8 +1,10 @@
+import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
 import { Icon } from '@shared/components/icon/Icon';
 
 const Home = () => {
   return (
     <div>
+      <ChatListItem isEditing={true} clientName={'고객이름'} tagTitle={'오소리 푸드트럭'} lastChat={'혹시 예약 가능할까요?'} lastChatTime={'오후 5:40'} unreadCount={312}/>
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
       <Icon name='ic_confirm' width={40} height={40} color='#F83419' />
