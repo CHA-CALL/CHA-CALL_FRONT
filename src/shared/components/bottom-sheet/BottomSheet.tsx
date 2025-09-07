@@ -35,7 +35,7 @@ const BottomSheet = ({
       <div
         ref={sheetRef}
         className={cn(
-          'fixed bottom-[0rem] w-full flex flex-col justify-center px-[3.2rem] bg-white rounded-t-[3.2rem]',
+          'fixed bottom-[0rem] w-full max-w-[60rem] flex flex-col justify-center px-[3.2rem] bg-white rounded-t-[3.2rem]',
           'transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-y-0' : 'translate-y-full'
         )}
