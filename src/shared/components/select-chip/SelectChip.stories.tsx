@@ -1,5 +1,6 @@
+// SelectChip.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { SelectChip } from './SelectChip';
+import SelectChip from '@shared/components/select-chip/SelectChip';
 
 const meta: Meta<typeof SelectChip> = {
   title: 'Components/SelectChip',
@@ -9,9 +10,9 @@ const meta: Meta<typeof SelectChip> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    chips: {
-      control: 'object',
-      description: '현재 선택된 칩들의 배열',
+    title: {
+      control: 'text',
+      description: '칩에 표시될 텍스트',
     },
     handleDeleteChip: {
       action: 'deleted',
@@ -25,31 +26,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    chips: [{ title: 'React' }, { title: 'TypeScript' }, { title: 'Next.js' }],
+    title: 'React',
   },
 };
 
-/** 아무 chip도 선택되지 않으면 렌더링 하지 않음. */
-export const NoChipsSelected: Story = {
+export const LongTitle: Story = {
   args: {
-    chips: [],
+    title: '타입스크립트와 리액트 쿼리',
   },
 };
-
-export const AllChipsSelected: Story = {
-  args: {
-    chips: [
-      { title: 'JavaScript' },
-      { title: 'React' },
-      { title: 'TypeScript' },
-      { title: 'Next.js' },
-      { title: 'Tailwind CSS' },
-      { title: 'Storybook' },
-      { title: 'Vite' },
-      { title: 'Jest' },
-      { title: 'React Query' },
-      { title: 'Tanstack Query' },
-    ],
-  },
-};
-
