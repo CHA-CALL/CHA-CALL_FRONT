@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div>
       <ChatListItem
-        isEditing={true}
+        isEditing={false}
         clientName={'고객이름'}
         tagTitle={'오소리 푸드트럭'}
         lastChat={'혹시 예약 가능할까요?'}
