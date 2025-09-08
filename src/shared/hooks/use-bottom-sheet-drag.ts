@@ -47,7 +47,7 @@ export default function useBottomSheetDrag({
       const diff = currentY.current - startY.current;
 
       if (diff > 0) {
-        const maxTranslate = window.innerHeight - sheetHeight;
+        const maxTranslate = sheetHeight;
         const limitedDiff = Math.min(diff, maxTranslate);
         sheet.style.transform = `translateY(${limitedDiff}px)`;
       }

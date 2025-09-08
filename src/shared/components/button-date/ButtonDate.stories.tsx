@@ -32,6 +32,19 @@ export const Empty: Story = {
     startDate: null,
     endDate: null,
   },
+  render: args => (
+    <ButtonDate
+      {...args}
+      startDate={
+        typeof args.startDate === 'number'
+          ? new Date(args.startDate)
+          : args.startDate
+      }
+      endDate={
+        typeof args.endDate === 'number' ? new Date(args.endDate) : args.endDate
+      }
+    />
+  ),
 };
 
 export const StartOnly: Story = {
@@ -39,6 +52,19 @@ export const StartOnly: Story = {
     startDate: new Date(2025, 8, 10),
     endDate: null,
   },
+  render: args => (
+    <ButtonDate
+      {...args}
+      startDate={
+        typeof args.startDate === 'number'
+          ? new Date(args.startDate)
+          : args.startDate
+      }
+      endDate={
+        typeof args.endDate === 'number' ? new Date(args.endDate) : args.endDate
+      }
+    />
+  ),
 };
 
 export const RangeSelected: Story = {
@@ -46,4 +72,17 @@ export const RangeSelected: Story = {
     startDate: new Date(2025, 8, 10),
     endDate: new Date(2025, 8, 20),
   },
+  render: args => (
+    <ButtonDate
+      {...args}
+      startDate={
+        typeof args.startDate === 'number'
+          ? new Date(args.startDate)
+          : args.startDate
+      }
+      endDate={
+        typeof args.endDate === 'number' ? new Date(args.endDate) : args.endDate
+      }
+    />
+  ),
 };
