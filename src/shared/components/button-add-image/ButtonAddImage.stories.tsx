@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 
@@ -9,9 +10,9 @@ const meta: Meta<typeof ButtonAddImage> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    onFileSelect: {
+    handleFileChange: {
       action: 'fileSelected',
-      description: '파일 선택 시 실행되는 함수',
+      description: '파일 첨부시 실행되는 함수',
     },
     multiple: {
       control: 'boolean',
@@ -25,8 +26,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onFileSelect: (file: File) => {
-      alert(`첨부한 파일: ${file.name}, ${file.type}, ${file.size}`);
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      const files = event.target.files;
+      alert(`첨부한 파일: ${files?.[0]?.name}, ${files?.[0]?.type}, ${files?.[0]?.size}`);
     },
+    multiple: false,
   },
 };

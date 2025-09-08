@@ -3,30 +3,18 @@ import { Icon } from '@components/icon/Icon';
 import { cn } from '@utils/cn';
 
 interface ButtonAddImageProps {
-  onFileSelect?: (_file: File) => void
+  handleFileChange?: (_event: ChangeEvent<HTMLInputElement>) => void
   multiple?: boolean
 }
 
 export default function ButtonAddImage({
-  onFileSelect,
+  handleFileChange,
   multiple = false,
 }: ButtonAddImageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      if (multiple) {
-        Array.from(files).forEach(file => onFileSelect?.(file));
-      } else {
-        onFileSelect?.(files[0]);
-      }
-    }
-    event.target.value = '';
   };
 
   return (
