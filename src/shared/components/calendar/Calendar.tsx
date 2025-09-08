@@ -24,7 +24,7 @@ export interface CalendarDate {
 
 interface CalendarProps {
   isOpen: boolean;
-  handleApplyDate: (date: SelectedDate) => void;
+  handleApplyDate: (_range: SelectedDate) => void;
   handleCloseBottomSheet: () => void;
 }
 

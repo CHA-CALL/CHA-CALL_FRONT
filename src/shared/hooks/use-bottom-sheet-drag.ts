@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface UseBottomSheetDragProps {
   sheetRef: React.RefObject<HTMLDivElement | null>;
@@ -78,5 +78,5 @@ export default function useBottomSheetDrag({
       sheet.removeEventListener('touchmove', handleTouchMove);
       sheet.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [sheetRef, sheetHeight]);
+  }, [sheetRef, sheetHeight, handleCloseBottomSheet]);
 }
