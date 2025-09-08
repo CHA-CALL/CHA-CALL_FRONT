@@ -33,7 +33,11 @@ export default function Calendar({
 
   const days = useCalendarDays(year, month);
 
+  const isPrevDisabled = month === currentDate.getMonth() + 1;
+
   const handlePrevMonth = () => {
+    if (isPrevDisabled) return;
+
     if (month === 1) {
       setYear(prev => prev - 1);
       setMonth(12);
@@ -107,7 +111,10 @@ export default function Calendar({
           </h3>
           <div className='flex flex-row gap-[1.2rem]'>
             <button type='button' onClick={handlePrevMonth}>
-              <Icon name='ic_back' />
+              <Icon
+                name='ic_back'
+                color={isPrevDisabled ? '#ccced5' : '#565B65'}
+              />
             </button>
             <button type='button' onClick={handleNextMonth}>
               <Icon name='ic_next' />

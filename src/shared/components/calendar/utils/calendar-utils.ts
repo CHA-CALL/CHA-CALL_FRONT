@@ -61,6 +61,18 @@ function isInSelectedDateRange(
   return isInRange;
 }
 
+// 지난 날인지 (선택 불가하도록)
+function isPreviousDays(year: number, month: number, day: number): boolean {
+  const today = new Date();
+  const startOfToday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  const current = new Date(year, month - 1, day);
+  return current < startOfToday; // "현재 날짜 이전"만 비활성화
+}
+
 // 달력 각 칸 관련 스타일 클래스
 export function calendarBtnClass(
   year: number,
@@ -69,6 +81,7 @@ export function calendarBtnClass(
   textClass: string,
   selectedDates: CalendarDate[]
 ) {
+  const isPrevious = isPreviousDays(year, month, day);
   const isSelected = isSelectedDate(year, month, day, selectedDates);
   const isInRange = isInSelectedDateRange(year, month, day, selectedDates);
   const isStart =
@@ -78,6 +91,10 @@ export function calendarBtnClass(
   return cn(
     'h-[4.4rem] w-full flex items-center justify-center',
     textClass,
+    isPrevious && 'pointer-events-none cursor-not-allowed text-grayscale-100',
+    // 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
+    // isPrevious &&
+    //   'pointer-events-none cursor-not-allowed line-through decoration-2 decoration-grayscale-700 text-grayscale-100',
     isInRange && 'bg-primary-50',
     isSelected && 'text-white',
     isStart && 'bg-gradient-to-l from-primary-50 from-50% to-white to-50%',
