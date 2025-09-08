@@ -1,6 +1,5 @@
-import type { CalendarDate } from '@shared/components/calendar/Calendar';
-
-import { cn } from './cn';
+import type { CalendarDate } from '@shared/types/calendar-types';
+import { cn } from '@shared/utils/cn';
 
 // 날짜 비교: 앞이면 -1, 같으면 0, 뒤면 1
 export function compareDate(date1: CalendarDate, date2: CalendarDate) {
@@ -48,13 +47,18 @@ function isInSelectedDateRange(
   month: number,
   day: number,
   selectedDates: CalendarDate[]
-) {
-  if (selectedDates.length < 2) return null;
+): boolean | null {
+  const hasTwoDates = selectedDates.length >= 2;
+  if (!hasTwoDates) return null;
+
   const [start, end] = [...selectedDates].sort(compareDate);
-  const r = { start, end };
-  if (!r) return false;
-  const cur = { year, month, day };
-  return compareDate(cur, r.start) > 0 && compareDate(cur, r.end) < 0;
+  const current = { year, month, day };
+
+  const isAfterStart = compareDate(current, start) > 0;
+  const isBeforeEnd = compareDate(current, end) < 0;
+  const isInRange = isAfterStart && isBeforeEnd;
+
+  return isInRange;
 }
 
 // 달력 각 칸 관련 스타일 클래스
@@ -65,15 +69,18 @@ export function calendarBtnClass(
   textClass: string,
   selectedDates: CalendarDate[]
 ) {
+  const isSelected = isSelectedDate(year, month, day, selectedDates);
+  const isInRange = isInSelectedDateRange(year, month, day, selectedDates);
+  const isStart =
+    selectedDates.length === 2 && isStartDate(year, month, day, selectedDates);
+  const isEnd = selectedDates.length === 2 && isSelected && !isStart;
+
   return cn(
     'h-[4.4rem] w-full flex items-center justify-center',
-    isInSelectedDateRange(year, month, day, selectedDates) && 'bg-primary-50',
     textClass,
-    isSelectedDate(year, month, day, selectedDates) && 'text-white',
-    isSelectedDate(year, month, day, selectedDates) &&
-      selectedDates.length === 2 &&
-      (isStartDate(year, month, day, selectedDates)
-        ? 'bg-gradient-to-l from-primary-50 from-50% to-white to-50%'
-        : 'bg-gradient-to-r from-primary-50 from-50% to-white to-50%')
+    isInRange && 'bg-primary-50',
+    isSelected && 'text-white',
+    isStart && 'bg-gradient-to-l from-primary-50 from-50% to-white to-50%',
+    isEnd && 'bg-gradient-to-r from-primary-50 from-50% to-white to-50%'
   );
 }

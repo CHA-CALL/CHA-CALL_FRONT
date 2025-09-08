@@ -1,8 +1,7 @@
+import { Icon } from '@shared/components/icon/Icon';
 import { dateFormatter } from '@shared/utils/date-formatter';
 import { cn } from '@shared/utils/cn';
-
-import { Icon } from '../icon/Icon';
-import type { SelectedDate } from '../calendar/Calendar';
+import type { SelectedDate } from '@shared/types/calendar-types';
 
 interface ButtonDateProps extends SelectedDate {
   handleOpenCalendar: () => void;

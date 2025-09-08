@@ -1,26 +1,17 @@
 import { useEffect, useState } from 'react';
 
-import { useCalendarDays } from '@shared/hooks/use-calendar-days';
+import { Icon } from '@shared/components/icon/Icon';
+import Button from '@shared/components/button/Button';
+
+import { formatCalendarDayToDate } from '@shared/utils/date-formatter';
+import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
+import { useCalendarDays } from '@shared/components/calendar/hooks/use-calendar-days';
+
 import {
   calendarBtnClass,
   compareDate,
   isSelectedDate,
-} from '@shared/utils/calendar-utils';
-import { formatCalendarDayToDate } from '@shared/utils/date-formatter';
-
-import { Icon } from '../icon/Icon';
-import Button from '../button/Button';
-
-export interface SelectedDate {
-  startDate: Date | null;
-  endDate: Date | null;
-}
-
-export interface CalendarDate {
-  year: number;
-  month: number;
-  day: number;
-}
+} from '@shared/components/calendar/utils/calendar-utils';
 
 interface CalendarProps {
   isOpen: boolean;
@@ -28,7 +19,7 @@ interface CalendarProps {
   handleCloseBottomSheet: () => void;
 }
 
-const dayOfTheWeekLabels = ['일', '월', '화', '수', '목', '금', '토'];
+const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({
   isOpen,
@@ -38,8 +29,6 @@ export default function Calendar({
   const currentDate = new Date();
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth() + 1);
-
-  // 최대 2개까지 선택
   const [selectedDates, setSelectedDates] = useState<CalendarDate[]>([]);
 
   const days = useCalendarDays(year, month);
@@ -62,7 +51,6 @@ export default function Calendar({
     }
   };
 
-  // 최대 두 개 선택 가능
   const handleSelectDay = (y: number, m: number, d: number) => {
     const newDate: CalendarDate = { year: y, month: m, day: d };
     if (selectedDates.length === 2) {
@@ -93,7 +81,6 @@ export default function Calendar({
     setSelectedDates([]);
   }, [isOpen]);
 
-  // 이전/다음 달의 (year,month)
   const prevYM =
     month === 1
       ? { year: year - 1, month: 12 }
@@ -103,7 +90,6 @@ export default function Calendar({
       ? { year: year + 1, month: 1 }
       : { year: year, month: month + 1 };
 
-  // 클릭한 날짜 Circle 하이라이트 컴포넌트
   const CalendarSelectedCircle = ({ year, month, day }: CalendarDate) => {
     return (
       isSelectedDate(year, month, day, selectedDates) && (
@@ -130,7 +116,7 @@ export default function Calendar({
         </div>
 
         <div className='grid grid-cols-7 text-center caption-r-12 text-grayscale-500 mb-2'>
-          {dayOfTheWeekLabels.map(dayOfTheWeek => (
+          {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
             </span>
@@ -138,7 +124,6 @@ export default function Calendar({
         </div>
 
         <div className='grid grid-cols-7 body-m-14'>
-          {/* 이전 달 칸 */}
           {days.prevDates.map(day => (
             <div key={`p${day}`} className='flex relative'>
               <button
@@ -165,7 +150,6 @@ export default function Calendar({
             </div>
           ))}
 
-          {/* 이번 달 칸 */}
           {days.thisDates.map(day => (
             <div key={`c${day}`} className='flex relative'>
               <button
@@ -185,7 +169,6 @@ export default function Calendar({
             </div>
           ))}
 
-          {/* 다음 달 칸 */}
           {days.nextDates.map(day => (
             <div key={`n${day}`} className='flex relative'>
               <button
