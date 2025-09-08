@@ -1,4 +1,3 @@
-// src/shared/ui/Icon.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Icon, type IconId } from './Icon';
 
@@ -24,6 +23,7 @@ const iconIds: IconId[] = [
 const meta: Meta<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
+  tags: ['autodocs'],
   argTypes: {
     name: { control: 'select', options: iconIds },
     width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
