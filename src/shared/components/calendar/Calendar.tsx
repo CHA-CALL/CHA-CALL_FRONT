@@ -120,10 +120,10 @@ export default function Calendar({
             {year}년 {month}월
           </h3>
           <div className='flex flex-row gap-[1.2rem]'>
-            <button onClick={handlePrevMonth}>
+            <button type='button' onClick={handlePrevMonth}>
               <Icon name='ic_back' />
             </button>
-            <button onClick={handleNextMonth}>
+            <button type='button' onClick={handleNextMonth}>
               <Icon name='ic_next' />
             </button>
           </div>
@@ -142,6 +142,7 @@ export default function Calendar({
           {days.prevDates.map(day => (
             <div key={`p${day}`} className='flex relative'>
               <button
+                type='button'
                 className={calendarBtnClass(
                   prevYM.year,
                   prevYM.month,
@@ -168,6 +169,7 @@ export default function Calendar({
           {days.thisDates.map(day => (
             <div key={`c${day}`} className='flex relative'>
               <button
+                type='button'
                 className={calendarBtnClass(
                   year,
                   month,
@@ -187,6 +189,7 @@ export default function Calendar({
           {days.nextDates.map(day => (
             <div key={`n${day}`} className='flex relative'>
               <button
+                type='button'
                 className={calendarBtnClass(
                   nextYM.year,
                   nextYM.month,
