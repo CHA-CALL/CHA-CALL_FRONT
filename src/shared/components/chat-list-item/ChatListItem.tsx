@@ -1,5 +1,6 @@
 import Tag from '@shared/components/tag/Tag';
 import ButtonCheck from '@shared/components/button-check/ButtonCheck';
+import { cn } from '@shared/utils/cn';
 
 interface ChatListItemProps {
   profileImage?: string;
@@ -24,9 +25,17 @@ export default function ChatListItem({
   isChecked,
   handleCheckChange,
 }: ChatListItemProps) {
+
   return (
     <div
-      className={`w-full flex items-center gap-[1.8rem] px-[2rem] py-[1.4rem] transition-colors duration-200 ${isChecked && isEditing ? 'bg-primary-25' : 'bg-white'}`}
+      className={cn(
+        'w-full flex items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
+        'transition-colors duration-200',
+        {
+          'bg-primary-25': isChecked && isEditing,
+          'bg-white': !isChecked || !isEditing,
+        }
+      )}
     >
       {isEditing && (
         <ButtonCheck
