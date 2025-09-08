@@ -113,7 +113,7 @@ export default function Calendar({
   };
 
   return (
-    <div className='w-full h-[40.5rem] relative flex flex-col justify-between'>
+    <div className='w-full h-[42.5rem] relative flex flex-col justify-between'>
       <div>
         <div className='flex flex-row justify-between items-center mb-[1.6rem] pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]'>
           <h3 className='heading-sb-18 text-grayscale-900'>

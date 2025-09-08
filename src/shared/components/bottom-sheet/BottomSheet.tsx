@@ -26,7 +26,8 @@ export default function BottomSheet({
   return (
     <div
       className={cn(
-        'fixed inset-0 z-50 bg-black/50 transition-opacity duration-300 ease-in-out',
+        'absolute w-full h-full bg-black/50 transition-opacity duration-300 ease-in-out',
+        'transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
       )}
       onClick={handleCloseBottomSheet}
