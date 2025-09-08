@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
+import useBottomSheetDrag from '@shared/hooks/use-bottom-sheet-drag';
 import { cn } from '@shared/utils/cn';
-import useBottomSheetDrag from '@shared/hooks/useBottomSheetDrag';
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -10,12 +10,12 @@ interface BottomSheetProps {
   sheetHeight: number;
 }
 
-const BottomSheet = ({
+export default function BottomSheet({
   isOpen,
   handleCloseBottomSheet,
   sheetContent,
   sheetHeight,
-}: BottomSheetProps) => {
+}: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
 
   useBottomSheetDrag({
@@ -46,6 +46,4 @@ const BottomSheet = ({
       </div>
     </div>
   );
-};
-
-export default BottomSheet;
+}

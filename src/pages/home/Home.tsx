@@ -1,11 +1,15 @@
+import { useState } from 'react';
+
 import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
 import ButtonDate from '@shared/components/button-date/ButtonDate';
 import Calendar from '@shared/components/calendar/Calendar';
-import { useState } from 'react';
+import { type SelectedDate } from '@shared/components/calendar/Calendar';
 
 const Home = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>({
+    startDate: null,
+    endDate: null,
+  });
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleOpenBottomSheet = () => {
@@ -16,22 +20,25 @@ const Home = () => {
     setIsBottomSheetOpen(false);
   };
 
-  const handleSelectDate = (startDate: Date | null, endDate: Date | null) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
+  const handleApplyDate = (date: SelectedDate) => {
+    setSelectedDate(date);
   };
   return (
     <div className='bg-white h-dvh relative flex flex-col'>
       <ButtonDate
-        startDate={startDate}
-        endDate={endDate}
+        startDate={selectedDate.startDate}
+        endDate={selectedDate.endDate}
         handleOpenCalendar={handleOpenBottomSheet}
       />
       <BottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
         sheetContent={
-          <Calendar handleCloseBottomSheet={handleCloseBottomSheet} />
+          <Calendar
+            isOpen={isBottomSheetOpen}
+            handleApplyDate={handleApplyDate}
+            handleCloseBottomSheet={handleCloseBottomSheet}
+          />
         }
         sheetHeight={490}
       />
