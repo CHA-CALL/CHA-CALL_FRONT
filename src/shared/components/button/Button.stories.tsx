@@ -106,3 +106,18 @@ export const VerifyDisabled: Story = {
     children: '비활성화',
   },
 };
+
+export const NewButton: Story = {
+  args: {
+    variant: 'cta',
+    buttonStyle: 'active',
+    children: '새로운 버튼 🚀',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: '스토리북 업데이트를 위한 새로운 버튼 스토리입니다.',
+      },
+    },
+  },
+};

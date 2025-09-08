@@ -1,6 +1,6 @@
 // src/shared/ui/Icon.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Icon, type IconId } from './Icon';
+import { Icon, type IconId } from '@shared/components/icon/Icon';
 
 const iconIds: IconId[] = [
   'ic_chat',
