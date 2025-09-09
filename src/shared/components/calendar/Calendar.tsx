@@ -114,7 +114,7 @@ export default function Calendar({
             <button type='button' onClick={handlePrevMonth}>
               <Icon
                 name='ic_back'
-                color={isPrevDisabled ? '#ccced5' : '#565B65'}
+                color={isPrevDisabled ? '#f2f3f7' : '#565B65'}
               />
             </button>
             <button type='button' onClick={handleNextMonth}>

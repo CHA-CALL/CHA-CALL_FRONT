@@ -26,7 +26,7 @@ export default function BottomSheet({
   return (
     <div
       className={cn(
-        'absolute h-full w-full bg-black/50 transition-opacity duration-300 ease-in-out',
+        'absolute left-[0rem] h-dvh w-dvw bg-black/50 transition-opacity duration-300 ease-in-out',
         'transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}
@@ -35,7 +35,7 @@ export default function BottomSheet({
       <div
         ref={sheetRef}
         className={cn(
-          'fixed bottom-[0rem] flex w-full max-w-[60rem] flex-col justify-center rounded-t-[3.2rem] bg-white px-[3.2rem]',
+          'fixed bottom-[0rem] left-1/2 flex w-full max-w-[60rem] -translate-x-1/2 flex-col justify-center rounded-t-[3.2rem] bg-white px-[3.2rem]',
           'transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-y-0' : 'translate-y-full'
         )}
