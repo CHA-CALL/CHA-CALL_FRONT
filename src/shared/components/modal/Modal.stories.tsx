@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import Modal from './Modal';
+import Modal from '@shared/components/modal/Modal';
 import Button from '@components/button/Button';
 
 const meta: Meta<typeof Modal> = {
@@ -30,15 +30,19 @@ export const Default: Story = {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-      <div className='flex items-center justify-center h-[80vh] mx-[40rem]'>
+      <div className='flex items-center justify-center h-screen w-[40rem]'>
         <Modal
           isOpen={isOpen}
           title='신청하시겠습니까?'
           content='최종 승인까지 영업일 기준 3-5일이 소요돼요.'
           cancelChildren='취소'
           confirmChildren='확인'
-          handleCancelClick={() => {alert('취소 버튼 클릭');}}
-          handleConfirmClick={() => {alert('확인 버튼 클릭');}}
+          handleCancelClick={() => {
+            alert('취소 버튼 클릭');
+          }}
+          handleConfirmClick={() => {
+            alert('확인 버튼 클릭');
+          }}
           handleModalClose={() => setIsOpen(false)}
         />
         <Button

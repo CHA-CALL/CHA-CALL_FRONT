@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonText from './ButtonText';
+import ButtonText from '@shared/components/button-text/ButtonText';
 
 const meta: Meta<typeof ButtonText> = {
   title: 'Components/ButtonText',
@@ -11,11 +11,11 @@ const meta: Meta<typeof ButtonText> = {
   argTypes: {
     children: {
       control: 'text',
-      description: '버튼 텍스트'
+      description: '버튼 텍스트',
     },
     handleClick: {
       action: 'clicked',
-      description: '클릭 시 실행 함수'
+      description: '클릭 시 실행 함수',
     },
   },
 };

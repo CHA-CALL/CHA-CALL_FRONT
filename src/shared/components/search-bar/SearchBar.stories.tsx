@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SearchBar from '@shared/components/searchBar/SearchBar';
+import SearchBar from '@shared/components/search-bar/SearchBar';
 import { Icon } from '@shared/components/icon/Icon';
 import Button from '@shared/components/button/Button';
 
