@@ -33,7 +33,8 @@ export default function Calendar({
 
   const days = useCalendarDays(year, month);
 
-  const isPrevDisabled = month === currentDate.getMonth() + 1;
+  const isPrevDisabled =
+    year === currentDate.getFullYear() && month === currentDate.getMonth() + 1;
 
   const handlePrevMonth = () => {
     if (isPrevDisabled) return;
@@ -97,16 +98,16 @@ export default function Calendar({
   const CalendarSelectedCircle = ({ year, month, day }: CalendarDate) => {
     return (
       isSelectedDate(year, month, day, selectedDates) && (
-        <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[4.4rem] h-[4.4rem] rounded-full bg-primary-500' />
+        <div className='absolute left-1/2 top-0 h-[4.4rem] w-[4.4rem] -translate-x-1/2 rounded-full bg-primary-500' />
       )
     );
   };
 
   return (
-    <div className='w-full h-[42.5rem] relative flex flex-col justify-between'>
+    <div className='relative flex h-[42.5rem] w-full flex-col justify-between'>
       <div>
-        <div className='flex flex-row justify-between items-center mb-[1.6rem] pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]'>
-          <h3 className='heading-sb-18 text-grayscale-900'>
+        <div className='mb-[1.6rem] flex flex-row items-center justify-between pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]'>
+          <h3 className='text-grayscale-900 heading-sb-18'>
             {year}년 {month}월
           </h3>
           <div className='flex flex-row gap-[1.2rem]'>
@@ -122,7 +123,7 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className='grid grid-cols-7 text-center caption-r-12 text-grayscale-500 mb-2'>
+        <div className='mb-2 grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
           {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
@@ -132,7 +133,7 @@ export default function Calendar({
 
         <div className='grid grid-cols-7 body-m-14'>
           {days.prevDates.map(day => (
-            <div key={`p${day}`} className='flex relative'>
+            <div key={`p${day}`} className='relative flex'>
               <button
                 type='button'
                 className={calendarBtnClass(
@@ -158,14 +159,14 @@ export default function Calendar({
           ))}
 
           {days.thisDates.map(day => (
-            <div key={`c${day}`} className='flex relative'>
+            <div key={`c${day}`} className='relative flex'>
               <button
                 type='button'
                 className={calendarBtnClass(
                   year,
                   month,
                   day,
-                  'text-grayscale-900 relative',
+                  'relative text-grayscale-900',
                   selectedDates
                 )}
                 onClick={() => handleSelectDay(year, month, day)}
@@ -177,7 +178,7 @@ export default function Calendar({
           ))}
 
           {days.nextDates.map(day => (
-            <div key={`n${day}`} className='flex relative'>
+            <div key={`n${day}`} className='relative flex'>
               <button
                 type='button'
                 className={calendarBtnClass(

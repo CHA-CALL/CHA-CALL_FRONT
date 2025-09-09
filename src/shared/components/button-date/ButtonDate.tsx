@@ -13,7 +13,7 @@ export default function ButtonDate({
 }: ButtonDateProps) {
   return (
     <button
-      className='w-full px-[2rem] h-[5.4rem] flex flex-row items-center gap-[1.2rem] border border-grayscale-300 rounded-[1.6rem]'
+      className='flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]'
       onClick={handleOpenCalendar}
     >
       <Icon
@@ -23,7 +23,7 @@ export default function ButtonDate({
       <div className='flex flex-row items-center gap-[0.4rem]'>
         <span
           className={cn(
-            'body-m-14 text-grayscale-700',
+            'text-grayscale-700 body-m-14',
             !props.startDate && 'text-grayscale-300'
           )}
         >
@@ -34,7 +34,7 @@ export default function ButtonDate({
         {props.startDate && props.endDate && (
           <>
             <Icon name='ic_dash' color='#838992' />
-            <span className='body-m-14 text-grayscale-700'>
+            <span className='text-grayscale-700 body-m-14'>
               {dateFormatter(props.endDate)}
             </span>
           </>

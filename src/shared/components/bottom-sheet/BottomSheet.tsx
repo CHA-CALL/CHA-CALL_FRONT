@@ -26,23 +26,23 @@ export default function BottomSheet({
   return (
     <div
       className={cn(
-        'absolute w-full h-full bg-black/50 transition-opacity duration-300 ease-in-out',
+        'absolute h-full w-full bg-black/50 transition-opacity duration-300 ease-in-out',
         'transition-opacity duration-300 ease-in-out',
-        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}
       onClick={handleCloseBottomSheet}
     >
       <div
         ref={sheetRef}
         className={cn(
-          'fixed bottom-[0rem] w-full max-w-[60rem] flex flex-col justify-center px-[3.2rem] bg-white rounded-t-[3.2rem]',
+          'fixed bottom-[0rem] flex w-full max-w-[60rem] flex-col justify-center rounded-t-[3.2rem] bg-white px-[3.2rem]',
           'transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-y-0' : 'translate-y-full'
         )}
         onClick={e => e.stopPropagation()}
       >
-        <div className='my-[1rem] mx-auto rounded-[10rem] h-[0.35rem] w-[4.1rem] bg-grayscale-300' />
-        <div className='mt-[2.8rem] mb-[3.4rem]'>{sheetContent}</div>
+        <div className='mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem] bg-grayscale-300' />
+        <div className='mb-[3.4rem] mt-[2.8rem]'>{sheetContent}</div>
       </div>
     </div>
   );
