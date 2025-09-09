@@ -13,6 +13,7 @@ export default function ButtonDate({
 }: ButtonDateProps) {
   return (
     <button
+      type='button'
       className='flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]'
       onClick={handleOpenCalendar}
     >
