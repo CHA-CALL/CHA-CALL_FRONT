@@ -16,7 +16,7 @@ export default function CalendarSelectedCircle({
 }: CalendarSelectedCircleProps) {
   return (
     isSelectedDate(year, month, day, selectedDates) && (
-      <div className='absolute left-1/2 top-0 h-[4.4rem] w-[4.4rem] -translate-x-1/2 rounded-full bg-primary-500' />
+      <div className='pointer-events-none absolute left-1/2 top-0 h-[4.4rem] w-[4.4rem] -translate-x-1/2 rounded-full bg-primary-500' />
     )
   );
 }

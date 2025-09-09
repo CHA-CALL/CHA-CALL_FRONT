@@ -72,11 +72,20 @@ export default function Calendar({
 
   const handleSelectDay = (y: number, m: number, d: number) => {
     const newDate: CalendarDate = { year: y, month: m, day: d };
-    if (selectedDates.length === 2) {
-      setSelectedDates([newDate]);
-    } else {
-      setSelectedDates(prev => [...prev, newDate]);
-    }
+
+    const isSameCalendarDate = (a?: CalendarDate, b?: CalendarDate) =>
+      !!a && !!b && a.year === b.year && a.month === b.month && a.day === b.day;
+
+    setSelectedDates(prev => {
+      if (prev.length === 0) return [newDate];
+
+      if (prev.length === 1) {
+        if (isSameCalendarDate(prev[0], newDate)) return [];
+        return [prev[0], newDate];
+      }
+
+      return [newDate];
+    });
   };
 
   const handleCompleteApplyDate = () => {
@@ -98,7 +107,7 @@ export default function Calendar({
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedDates(initialSelectedDate);
+      setSelectedDates(formatToCalendarDate(selectedDate));
     }
   }, [isOpen, selectedDate]);
 
