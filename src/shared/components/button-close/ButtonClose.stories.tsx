@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonClose from './ButtonClose';
+import ButtonClose from '@shared/components/button-close/ButtonClose';
 
 const meta: Meta<typeof ButtonClose> = {
   title: 'Components/ButtonClose',
@@ -36,5 +36,3 @@ export const WithContainer: Story = {
     </div>
   ),
 };
-
-
