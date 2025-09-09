@@ -1,5 +1,22 @@
-import type { CalendarDate } from '@shared/types/calendar-types';
+import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
 import { cn } from '@shared/utils/cn';
+
+// prop으로 들어온 SelectedDate를 CalendarDate로 변환하는 함수
+const formatToCalendarDate = (selectedDate: SelectedDate) => {
+  const convert = (date: Date | null): CalendarDate | null => {
+    if (!date) return null;
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+    };
+  };
+
+  const start = convert(selectedDate.startDate);
+  const end = convert(selectedDate.endDate);
+
+  return [start, end].filter((d): d is CalendarDate => d !== null);
+};
 
 // 날짜 비교: 앞이면 -1, 같으면 0, 뒤면 1
 const compareDate = (date1: CalendarDate, date2: CalendarDate) => {
@@ -78,7 +95,7 @@ const calendarBtnClass = (
   year: number,
   month: number,
   day: number,
-  textClass: string,
+  textColor: string,
   selectedDates: CalendarDate[]
 ) => {
   const isPrevious = isPreviousDays(year, month, day);
@@ -90,7 +107,7 @@ const calendarBtnClass = (
 
   return cn(
     'h-[4.4rem] w-full flex items-center justify-center',
-    textClass,
+    textColor,
     isPrevious && 'pointer-events-none cursor-not-allowed text-grayscale-100',
     // 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
     // isPrevious &&
@@ -102,4 +119,4 @@ const calendarBtnClass = (
   );
 };
 
-export { compareDate, isSelectedDate, calendarBtnClass };
+export { formatToCalendarDate, compareDate, isSelectedDate, calendarBtnClass };

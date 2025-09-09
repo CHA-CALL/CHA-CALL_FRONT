@@ -70,9 +70,10 @@ const Home = () => {
         handleCloseBottomSheet={handleCloseCalendar}
         sheetContent={
           <Calendar
-            isOpen={isBottomSheetOpen}
+            selectedDate={selectedDate}
             handleApplyDate={handleApplyDate}
             handleCloseBottomSheet={handleCloseCalendar}
+            isOpen={isBottomSheetOpen}
           />
         }
         sheetHeight={490}

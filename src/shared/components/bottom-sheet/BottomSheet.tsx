@@ -26,7 +26,7 @@ export default function BottomSheet({
   return (
     <div
       className={cn(
-        'absolute left-[0rem] h-dvh w-dvw bg-black/50 transition-opacity duration-300 ease-in-out',
+        'absolute left-[0rem] top-[0rem] h-dvh w-dvw bg-black/50',
         'transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}

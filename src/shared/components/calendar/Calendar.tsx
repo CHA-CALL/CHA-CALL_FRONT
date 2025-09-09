@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Icon } from '@shared/components/icon/Icon';
 import Button from '@shared/components/button/Button';
@@ -7,37 +7,51 @@ import { formatCalendarDayToDate } from '@shared/utils/date-formatter';
 import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
 
 import {
-  calendarBtnClass,
   compareDate,
-  isSelectedDate,
+  formatToCalendarDate,
 } from '@shared/components/calendar/utils/calendar-utils';
 import useCalendarDays from '@shared/components/calendar//hooks/use-calendar-days';
+import CalendarDayButton from './components/CalendarDayButton';
 
 interface CalendarProps {
-  isOpen: boolean;
+  selectedDate: SelectedDate;
   handleApplyDate: (_range: SelectedDate) => void;
   handleCloseBottomSheet: () => void;
+  isOpen: boolean;
 }
 
 const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({
-  isOpen,
+  selectedDate,
   handleApplyDate,
   handleCloseBottomSheet,
+  isOpen,
 }: CalendarProps) {
+  const initialSelectedDate = formatToCalendarDate(selectedDate);
+  const [selectedDates, setSelectedDates] =
+    useState<CalendarDate[]>(initialSelectedDate);
+
   const currentDate = new Date();
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth() + 1);
-  const [selectedDates, setSelectedDates] = useState<CalendarDate[]>([]);
 
   const days = useCalendarDays(year, month);
 
-  const isPrevDisabled =
+  const isPrevMonth =
     year === currentDate.getFullYear() && month === currentDate.getMonth() + 1;
 
+  const prevYM =
+    month === 1
+      ? { year: year - 1, month: 12 }
+      : { year: year, month: month - 1 };
+  const nextYM =
+    month === 12
+      ? { year: year + 1, month: 1 }
+      : { year: year, month: month + 1 };
+
   const handlePrevMonth = () => {
-    if (isPrevDisabled) return;
+    if (isPrevMonth) return;
 
     if (month === 1) {
       setYear(prev => prev - 1);
@@ -83,25 +97,10 @@ export default function Calendar({
   };
 
   useEffect(() => {
-    setSelectedDates([]);
-  }, [isOpen]);
-
-  const prevYM =
-    month === 1
-      ? { year: year - 1, month: 12 }
-      : { year: year, month: month - 1 };
-  const nextYM =
-    month === 12
-      ? { year: year + 1, month: 1 }
-      : { year: year, month: month + 1 };
-
-  const CalendarSelectedCircle = ({ year, month, day }: CalendarDate) => {
-    return (
-      isSelectedDate(year, month, day, selectedDates) && (
-        <div className='absolute left-1/2 top-0 h-[4.4rem] w-[4.4rem] -translate-x-1/2 rounded-full bg-primary-500' />
-      )
-    );
-  };
+    if (isOpen) {
+      setSelectedDates(initialSelectedDate);
+    }
+  }, [isOpen, selectedDate]);
 
   return (
     <div className='relative flex h-[42.5rem] w-full flex-col justify-between'>
@@ -114,7 +113,7 @@ export default function Calendar({
             <button type='button' onClick={handlePrevMonth}>
               <Icon
                 name='ic_back'
-                color={isPrevDisabled ? '#f2f3f7' : '#565B65'}
+                color={isPrevMonth ? '#f2f3f7' : '#565B65'}
               />
             </button>
             <button type='button' onClick={handleNextMonth}>
@@ -133,74 +132,43 @@ export default function Calendar({
 
         <div className='grid grid-cols-7 body-m-14'>
           {days.prevDates.map(day => (
-            <div key={`p${day}`} className='relative flex'>
-              <button
-                type='button'
-                className={calendarBtnClass(
-                  prevYM.year,
-                  prevYM.month,
-                  day,
-                  'text-grayscale-300',
-                  selectedDates
-                )}
-                onClick={() => {
-                  handlePrevMonth();
-                  handleSelectDay(prevYM.year, prevYM.month, day);
-                }}
-              >
-                <span className='z-[10]'>{day}</span>
-              </button>
-              <CalendarSelectedCircle
-                year={prevYM.year}
-                month={prevYM.month}
-                day={day}
-              />
-            </div>
+            <CalendarDayButton
+              key={`p${day}`}
+              year={prevYM.year}
+              month={prevYM.month}
+              day={day}
+              textColor='text-grayscale-300'
+              handleClickDayButton={() =>
+                handleSelectDay(prevYM.year, prevYM.month, day)
+              }
+              selectedDates={selectedDates}
+            />
           ))}
 
           {days.thisDates.map(day => (
-            <div key={`c${day}`} className='relative flex'>
-              <button
-                type='button'
-                className={calendarBtnClass(
-                  year,
-                  month,
-                  day,
-                  'relative text-grayscale-900',
-                  selectedDates
-                )}
-                onClick={() => handleSelectDay(year, month, day)}
-              >
-                <span className='z-[10]'>{day}</span>
-              </button>
-              <CalendarSelectedCircle year={year} month={month} day={day} />
-            </div>
+            <CalendarDayButton
+              key={`c${day}`}
+              year={year}
+              month={month}
+              day={day}
+              textColor='text-grayscale-900'
+              handleClickDayButton={() => handleSelectDay(year, month, day)}
+              selectedDates={selectedDates}
+            />
           ))}
 
           {days.nextDates.map(day => (
-            <div key={`n${day}`} className='relative flex'>
-              <button
-                type='button'
-                className={calendarBtnClass(
-                  nextYM.year,
-                  nextYM.month,
-                  day,
-                  'text-grayscale-300',
-                  selectedDates
-                )}
-                onClick={() => {
-                  handleNextMonth();
-                  handleSelectDay(nextYM.year, nextYM.month, day);
-                }}
-              >
-                <span className='z-[10]'>{day}</span>
-              </button>
-              <CalendarSelectedCircle
-                year={nextYM.year}
-                month={nextYM.month}
-                day={day}
-              />
-            </div>
+            <CalendarDayButton
+              key={`n${day}`}
+              year={nextYM.year}
+              month={nextYM.month}
+              day={day}
+              textColor='text-grayscale-300'
+              handleClickDayButton={() =>
+                handleSelectDay(nextYM.year, nextYM.month, day)
+              }
+              selectedDates={selectedDates}
+            />
           ))}
         </div>
       </div>
