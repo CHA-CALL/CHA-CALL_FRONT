@@ -5,13 +5,13 @@ import Button from '@shared/components/button/Button';
 
 import { formatCalendarDayToDate } from '@shared/utils/date-formatter';
 import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
-import { useCalendarDays } from '@shared/components/calendar/hooks/use-calendar-days';
 
 import {
   calendarBtnClass,
   compareDate,
   isSelectedDate,
 } from '@shared/components/calendar/utils/calendar-utils';
+import useCalendarDays from '@shared/components/calendar//hooks/use-calendar-days';
 
 interface CalendarProps {
   isOpen: boolean;

@@ -4,7 +4,10 @@ interface CalendarDays {
   nextDates: number[];
 }
 
-export const useCalendarDays = (year: number, month: number): CalendarDays => {
+export default function useCalendarDays(
+  year: number,
+  month: number
+): CalendarDays {
   const firstDay = new Date(year, month - 1, 1);
   const lastDay = new Date(year, month, 0);
   const prevLastDay = new Date(year, month - 1, 0);
@@ -24,4 +27,4 @@ export const useCalendarDays = (year: number, month: number): CalendarDays => {
   const nextDates = Array.from({ length: nextCount }, (_, i) => i + 1);
 
   return { prevDates, thisDates, nextDates };
-};
+}
