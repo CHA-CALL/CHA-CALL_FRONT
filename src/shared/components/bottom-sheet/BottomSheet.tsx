@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import useBottomSheetDrag from '@shared/hooks/use-bottom-sheet-drag';
 import { cn } from '@shared/utils/cn';
@@ -18,6 +18,17 @@ export default function BottomSheet({
 }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   useBottomSheetDrag({
     sheetRef,
     handleCloseBottomSheet,
@@ -27,7 +38,7 @@ export default function BottomSheet({
     <div
       className={cn(
         'absolute left-[0rem] top-[0rem] h-dvh w-dvw bg-black/50',
-        'transition-opacity duration-300 ease-in-out',
+        'z-100 transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}
       onClick={handleCloseBottomSheet}
