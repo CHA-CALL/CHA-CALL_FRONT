@@ -109,7 +109,7 @@ const calendarBtnClass = (
     'h-[4.4rem] w-full flex items-center justify-center',
     textColor,
     isPrevious && 'pointer-events-none cursor-not-allowed text-grayscale-100',
-    // 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
+    // TODO: 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
     // isPrevious &&
     //   'pointer-events-none cursor-not-allowed line-through decoration-2 decoration-grayscale-700 text-grayscale-100',
     isInRange && 'bg-primary-50',
