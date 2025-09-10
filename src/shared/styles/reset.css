@@ -137,6 +137,7 @@
     margin: 0;
     padding: 0;
     text-wrap: nowrap;
+    font: inherit;
   }
 
   input {
