@@ -12,7 +12,8 @@ export const ButtonClasses = {
   cta: {
     base: 'w-full h-[5rem] px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
     active: 'bg-primary-700 text-white',
-    disabled: 'bg-primary-100 text-white cursor-not-allowed',
+    disabled:
+      'bg-primary-100 text-white cursor-not-allowed pointer-events-none',
     sub: 'bg-white text-grayscale-700 border border-grayscale-200',
   },
   chip: {

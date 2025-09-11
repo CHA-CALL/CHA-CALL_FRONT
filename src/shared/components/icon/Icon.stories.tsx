@@ -1,6 +1,5 @@
-// src/shared/ui/Icon.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Icon, type IconId } from './Icon';
+import { Icon, type IconId } from '@shared/components/icon/Icon';
 
 const iconIds: IconId[] = [
   'ic_chat',
@@ -18,6 +17,7 @@ const iconIds: IconId[] = [
   'ic_trash',
   'ic_back',
   'ic_calendar',
+  'ic_dash',
   'ic_close_white',
   'ic_camera',
 ];
@@ -25,6 +25,7 @@ const iconIds: IconId[] = [
 const meta: Meta<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
+  tags: ['autodocs'],
   argTypes: {
     name: { control: 'select', options: iconIds },
     width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
