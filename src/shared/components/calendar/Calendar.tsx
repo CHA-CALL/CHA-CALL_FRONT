@@ -57,7 +57,7 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className='mb-2 grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
+        <div className='grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
           {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
