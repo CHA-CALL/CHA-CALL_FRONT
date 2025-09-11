@@ -1,13 +1,6 @@
 import React from 'react';
 import { cn } from '@utils/cn';
 
-export interface ButtonProps {
-  children: React.ReactNode;
-  variant: ButtonVariant;
-  buttonStyle: ButtonStyle;
-  handleClickButton?: () => void;
-}
-
 export const ButtonClasses = {
   cta: {
     base: 'w-full h-[5rem] px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
@@ -34,17 +27,20 @@ export const ButtonClasses = {
   },
 } as const;
 
-export type ButtonVariant = keyof typeof ButtonClasses;
-export type ButtonStyle =
-  | 'active'
-  | 'disabled'
-  | 'sub'
-  | 'default'
-  | 'selected1'
-  | 'selected2'
-  | 'default'
-  | 'large'
-  | 'medium';
+type VariantStyleMap = {
+  cta: 'active' | 'disabled' | 'sub';
+  chip: 'default' | 'selected1' | 'selected2';
+  verify: 'active' | 'disabled';
+  default: 'large' | 'medium';
+};
+
+type ButtonProps<V extends keyof VariantStyleMap = keyof VariantStyleMap> =
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    children: React.ReactNode;
+    variant: V;
+    buttonStyle: VariantStyleMap[V];
+    handleClickButton?: () => void;
+  };
 
 export default function Button({
   children,
