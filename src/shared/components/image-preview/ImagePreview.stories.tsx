@@ -13,7 +13,11 @@ const meta: Meta<typeof ImagePreview> = {
       action: 'closed',
       description: '닫기 버튼 클릭 이벤트 핸들러',
     },
-    children: {
+    src: {
+      control: { type: 'text' },
+      description: '이미지 미리보기 내부 콘텐츠',
+    },
+    alt: {
       control: { type: 'text' },
       description: '이미지 미리보기 내부 콘텐츠',
     },
@@ -27,12 +31,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     handleClose: () => console.log('닫기 버튼 클릭'),
-    children: (
-      <img
-        src='https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg'
-        alt='미리보기 이미지'
-        className='w-full h-full object-cover rounded-[0.4rem]'
-      />
-    ),
+    src: 'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
+    alt: '미리보기 이미지',
   },
 };

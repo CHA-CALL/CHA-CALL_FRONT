@@ -14,12 +14,8 @@ const meta: Meta<typeof ButtonAddImage> = {
       action: 'fileSelected',
       description: '파일 첨부시 실행되는 함수',
     },
-    multiple: {
-      control: 'boolean',
-      description: '다중 파일 선택 허용 여부',
-    },
   },
-}
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -28,8 +24,9 @@ export const Default: Story = {
   args: {
     handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
-      alert(`첨부한 파일: ${files?.[0]?.name}, ${files?.[0]?.type}, ${files?.[0]?.size}`);
+      alert(
+        `첨부한 파일: ${files?.[0]?.name}, ${files?.[0]?.type}, ${files?.[0]?.size}`
+      );
     },
-    multiple: false,
   },
 };

@@ -1,8 +1,34 @@
+import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import { Icon } from '@shared/components/icon/Icon';
+import ImagePreview from '@shared/components/image-preview/ImagePreview';
+import { useState } from 'react';
 
 const Home = () => {
+  const [files, setFiles] = useState<File[]>([]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      setFiles([...files]);
+    }
+  };
+  const handleClose = (file: File) => {
+    setFiles(files.filter(f => f.name !== file.name));
+  };
+
   return (
     <div>
+      <div className='flex flex-wrap gap-[0.8rem] p-[1.6rem]'>
+        <ButtonAddImage handleFileChange={handleFileChange} />
+        {files.map(file => (
+          <ImagePreview
+            key={file.name}
+            handleClose={() => handleClose(file)}
+            src={URL.createObjectURL(file)}
+            alt={file.name}
+          />
+        ))}
+      </div>
+
       <Icon name='ic_search' />
       <Icon name='ic_search' width={40} height={40} />
       <Icon name='ic_confirm' width={40} height={40} color='#F83419' />

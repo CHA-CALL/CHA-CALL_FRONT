@@ -1,19 +1,23 @@
-import { Icon } from '../icon/Icon';
+import { Icon } from '@shared/components/icon/Icon';
 
 interface ImagePreviewProps {
   handleClose: () => void;
-  children: React.ReactNode;
+  src: string;
+  alt: string;
 }
 
 export default function ImagePreview({
   handleClose,
-  children,
+  src,
+  alt,
 }: ImagePreviewProps) {
   return (
-    <div className='relative w-[8rem] h-[8rem] flex items-center flex-shrink-0 rounded-[1.6rem]'>
-      <div className='object-cover w-full h-full cursor-pointer rounded-[1.6rem]'>
-        {children}
-      </div>
+    <div className='relative w-[8rem] h-[8rem] flex items-center justify-center rounded-[1.6rem]'>
+      <img
+        className='max-w-full max-h-full cursor-pointer rounded-[1.6rem] flex items-center justify-center object-cover'
+        src={src}
+        alt={alt}
+      />
       <button
         type='button'
         onClick={handleClose}
