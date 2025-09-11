@@ -27,6 +27,11 @@ export const ButtonClasses = {
     active: 'bg-primary-700 text-white',
     disabled: 'bg-primary-100 text-white cursor-not-allowed',
   },
+  default: {
+    base: 'rounded-[0.4rem] border border-grayscale-200 bg-white',
+    large: 'w-full h-[4.6rem] px-[11.4rem] py-[1.5rem] title-sb-14',
+    medium: 'h-[2.8rem] px-[1.85rem] py-[0.5rem] caption-m-12',
+  },
 } as const;
 
 export type ButtonVariant = keyof typeof ButtonClasses;
@@ -36,7 +41,10 @@ export type ButtonStyle =
   | 'sub'
   | 'default'
   | 'selected1'
-  | 'selected2';
+  | 'selected2'
+  | 'default'
+  | 'large'
+  | 'medium';
 
 export default function Button({
   children,
@@ -56,6 +64,7 @@ export default function Button({
       type='button'
       className={cn(baseClasses, styleClasses)}
       onClick={handleClickButton}
+      disabled={buttonStyle == 'disabled'}
       {...props}
     >
       {children}
