@@ -19,6 +19,7 @@ const iconIds: IconId[] = [
   'ic_calendar',
   'ic_dash',
   'ic_close_white',
+  'ic_camera',
 ];
 
 const meta: Meta<typeof Icon> = {
