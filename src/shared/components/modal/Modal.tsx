@@ -21,7 +21,7 @@ export default function Modal({
   confirmChildren,
   handleCancelClick,
   handleConfirmClick,
-  handleModalClose
+  handleModalClose,
 }: ModalProps) {
   if (!isOpen) {
     return null;
@@ -53,16 +53,14 @@ export default function Modal({
       )}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
         className={cn(
           'flex flex-col',
           'px-[2rem] pt-[2.4rem] pb-[2rem]',
-          'bg-white rounded-[1.6rem]',
+          'bg-white rounded-[1.6rem]'
         )}
       >
-        <span className='title-sb-16 text-grayscale-900'>
-          {title}
-        </span>
+        <span className='title-sb-16 text-grayscale-900'>{title}</span>
         <span className='mt-[0.7rem] caption-m-12 text-grayscale-700'>
           {content}
         </span>
@@ -84,5 +82,5 @@ export default function Modal({
         </div>
       </div>
     </div>
-  )
+  );
 }

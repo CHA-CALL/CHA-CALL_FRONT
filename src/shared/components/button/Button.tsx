@@ -1,13 +1,6 @@
 import React from 'react';
 import { cn } from '@utils/cn';
 
-export interface ButtonProps {
-  children: React.ReactNode;
-  variant: ButtonVariant;
-  buttonStyle: ButtonStyle;
-  handleClickButton?: () => void;
-}
-
 export const ButtonClasses = {
   cta: {
     base: 'w-full h-[5rem] px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
@@ -27,16 +20,27 @@ export const ButtonClasses = {
     active: 'bg-primary-700 text-white',
     disabled: 'bg-primary-100 text-white cursor-not-allowed',
   },
+  default: {
+    base: 'rounded-[0.4rem] border border-grayscale-200 bg-white',
+    large: 'w-full h-[4.6rem] px-[11.4rem] py-[1.5rem] title-sb-14',
+    medium: 'h-[2.8rem] px-[1.85rem] py-[0.5rem] caption-m-12',
+  },
 } as const;
 
-export type ButtonVariant = keyof typeof ButtonClasses;
-export type ButtonStyle =
-  | 'active'
-  | 'disabled'
-  | 'sub'
-  | 'default'
-  | 'selected1'
-  | 'selected2';
+type VariantStyleMap = {
+  cta: 'active' | 'disabled' | 'sub';
+  chip: 'default' | 'selected1' | 'selected2';
+  verify: 'active' | 'disabled';
+  default: 'large' | 'medium';
+};
+
+type ButtonProps<V extends keyof VariantStyleMap = keyof VariantStyleMap> =
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    children: React.ReactNode;
+    variant: V;
+    buttonStyle: VariantStyleMap[V];
+    handleClickButton?: () => void;
+  };
 
 export default function Button({
   children,
@@ -56,6 +60,7 @@ export default function Button({
       type='button'
       className={cn(baseClasses, styleClasses)}
       onClick={handleClickButton}
+      disabled={buttonStyle == 'disabled'}
       {...props}
     >
       {children}
