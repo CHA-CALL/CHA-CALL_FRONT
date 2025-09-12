@@ -17,15 +17,17 @@ export default function BottomSheet({
   sheetHeight,
 }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
+  const prevOverflowRef = useRef<string>('');
 
   useEffect(() => {
     if (isOpen) {
+      prevOverflowRef.current = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = prevOverflowRef.current || '';
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = prevOverflowRef.current || '';
     };
   }, [isOpen]);
 
@@ -38,7 +40,7 @@ export default function BottomSheet({
     <div
       className={cn(
         'absolute left-[0rem] top-[0rem] h-dvh w-dvw bg-black/50',
-        'z-100 transition-opacity duration-300 ease-in-out',
+        'z-50 transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}
       onClick={handleCloseBottomSheet}
