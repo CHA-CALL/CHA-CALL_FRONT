@@ -8,7 +8,7 @@ import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface BizRegCertSectionProps {
   file: OwnerFormData['bizRegCert'];
-  onChange: (value: OwnerFormData['bizRegCert']) => void;
+  onChange: (_value: OwnerFormData['bizRegCert']) => void;
   error?: string;
 }
 export default function BizRegCertSection({

@@ -8,7 +8,7 @@ import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface OtherDocsSectionProps {
   files: File[];
-  onChange: (value: OwnerFormData['otherDocs']) => void;
+  onChange: (_value: OwnerFormData['otherDocs']) => void;
   error?: string;
 }
 

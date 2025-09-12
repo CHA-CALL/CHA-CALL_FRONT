@@ -21,6 +21,8 @@ export const useOwnerName = () => {
   const [isCheckingDuplicate, setIsCheckingDuplicate] = useState(false);
 
   const handleCheckNameDuplicate = (_name: string) => {
+    //TODO: 추후 alert 삭제
+    alert(_name);
     //TODO: 중복확인 로직 추가
     setIsNameVerified(true);
     handleIsCheckingDuplicate();

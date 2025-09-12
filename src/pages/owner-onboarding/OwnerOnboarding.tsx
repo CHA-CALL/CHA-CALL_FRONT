@@ -20,14 +20,12 @@ export default function OwnerOnboarding() {
 
   return (
     <>
-      <Navigation text='Owner Onboarding' leftIcon={<Icon name='ic_back' />} />
+      <Navigation text='푸드트럭 등록' leftIcon={<Icon name='ic_back' />} />
       <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem] gap-[2.6rem] min-h-[calc(100vh-4.8rem-8.4rem)] '>
         <NameSection
           value={formData.name}
           onChange={updateName}
-          handleCheckNameDuplicate={() =>
-            handleCheckNameDuplicate(formData.name)
-          }
+          handleCheckNameDuplicate={handleCheckNameDuplicate}
           error={errors.name}
         />
         <div className='w-full h-[0.1rem] bg-grayscale-100' />

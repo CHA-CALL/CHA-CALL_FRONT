@@ -7,8 +7,8 @@ import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface NameSectionProps {
   value: OwnerFormData['name'];
-  onChange: (name: string) => void;
-  handleCheckNameDuplicate: () => void;
+  onChange: (_name: string) => void;
+  handleCheckNameDuplicate: (_name: string) => void;
   error?: string;
 }
 
@@ -30,7 +30,7 @@ export default function NameSection({
           <Button
             variant='verify'
             buttonStyle={'active'}
-            handleClickButton={handleCheckNameDuplicate}
+            handleClickButton={() => handleCheckNameDuplicate(value)}
           >
             중복확인
           </Button>
