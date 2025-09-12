@@ -38,7 +38,7 @@ export default function Calendar({
   );
 
   return (
-    <div className='relative flex h-[42.5rem] w-full flex-col justify-between'>
+    <div className='relative flex h-[43.5rem] w-full flex-col justify-between'>
       <div>
         <div className='mb-[1.6rem] flex flex-row items-center justify-between pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]'>
           <h3 className='text-grayscale-900 heading-sb-18'>
