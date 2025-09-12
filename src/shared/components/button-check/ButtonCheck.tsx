@@ -19,12 +19,18 @@ export default function ButtonCheck({
     <button
       type='button'
       className={cn(
-        'w-[1.8rem] h-[1.8rem] rounded-[0.6rem] flex justify-center items-center ',
+        'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
         isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked
       )}
       onClick={handleToggle}
     >
-      {isChecked && <Icon name='ic_check' color='#fff'className='scale-125 -translate-y-[0.1rem]'/>}
+      {isChecked && (
+        <Icon
+          name='ic_check'
+          color='#fff'
+          className='-translate-y-[0.1rem] scale-125'
+        />
+      )}
     </button>
   );
 }

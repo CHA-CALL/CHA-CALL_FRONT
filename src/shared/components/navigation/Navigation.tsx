@@ -20,8 +20,8 @@ export default function Navigation({
       <div className='flex h-full items-center justify-start p-[1.3rem]'>
         {leftIcon && <button onClick={handleLeftClick}>{leftIcon}</button>}
       </div>
-      <div className='flex h-full items-center justify-center'>
-        {text && <span className='text-grayscale-900 title-sb-16'>{text}</span>}
+      <div className='flex justify-center items-center h-full'>
+        {text && <span className='title-sb-16 text-grayscale-900'>{text}</span>}
       </div>
       <div className='flex h-full items-center justify-end py-[1rem] pr-[2rem]'>
         {rightIcon && <button onClick={handleRightClick}>{rightIcon}</button>}

@@ -23,6 +23,8 @@ const meta: Meta<typeof Button> = {
         'default',
         'selected1',
         'selected2',
+        'large',
+        'medium',
       ],
       description: '버튼의 스타일 상태',
     },
@@ -107,17 +109,19 @@ export const VerifyDisabled: Story = {
   },
 };
 
-export const NewButton: Story = {
+// Default 버튼 스토리
+export const DefaultLarge: Story = {
   args: {
-    variant: 'cta',
-    buttonStyle: 'active',
-    children: '새로운 버튼 🚀',
+    variant: 'default',
+    buttonStyle: 'large',
+    children: '기본 버튼 (Large)',
   },
-  parameters: {
-    docs: {
-      description: {
-        story: '스토리북 업데이트를 위한 새로운 버튼 스토리입니다.',
-      },
-    },
+};
+
+export const DefaultMedium: Story = {
+  args: {
+    variant: 'default',
+    buttonStyle: 'medium',
+    children: '기본 버튼 (Medium)',
   },
 };

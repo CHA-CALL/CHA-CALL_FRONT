@@ -25,7 +25,6 @@ export default function ChatListItem({
   isChecked,
   handleCheckChange,
 }: ChatListItemProps) {
-
   return (
     <div
       className={cn(
@@ -49,10 +48,10 @@ export default function ChatListItem({
           <img
             src={profileImage}
             alt={`${clientName} profile`}
-            className='w-full h-full object-cover'
+            className='object-cover w-full h-full'
           />
         ) : (
-          <div className='w-full h-full bg-grayscale-200 bg-cover' />
+          <div className='w-full h-full bg-cover bg-grayscale-200' />
         )}
       </div>
 
@@ -72,7 +71,7 @@ export default function ChatListItem({
         </div>
 
         <div className='flex flex-col items-end gap-[0.6rem] pt-[0.3rem] flex-shrink-0 w-[5rem]'>
-          <span className='caption-m-11 text-grayscale-500 whitespace-nowrap'>
+          <span className='whitespace-nowrap caption-m-11 text-grayscale-500'>
             {lastChatTime}
           </span>
           {unreadCount > 0 && (
