@@ -2,13 +2,17 @@ import Button from '@shared/components/button/Button';
 
 interface FilterChipGroupProps {
   filterTitle: string;
+  selectedOption: string | string[];
   options: string[];
+  handleSelectFilter: (filter: string) => void;
   multiSelectable?: boolean;
 }
 
 export default function FilterChipGroup({
   filterTitle,
+  selectedOption,
   options,
+  handleSelectFilter,
   multiSelectable = false,
 }: FilterChipGroupProps) {
   return (
@@ -24,11 +28,22 @@ export default function FilterChipGroup({
         <h2 className='px-[0.5rem] title-b-14'>{filterTitle}</h2>
       )}
       <div className='flex flex-row flex-wrap gap-x-[0.8rem] gap-y-[1rem]'>
-        {options.map(item => (
-          <Button key={item} variant='chip' buttonStyle='default'>
-            {item}
-          </Button>
-        ))}
+        {options.map(item => {
+          const isSelected = Array.isArray(selectedOption)
+            ? selectedOption.includes(item)
+            : selectedOption === item;
+
+          return (
+            <Button
+              key={item}
+              variant='chip'
+              buttonStyle={isSelected ? 'selected2' : 'default'}
+              handleClickButton={() => handleSelectFilter(item)}
+            >
+              {item}
+            </Button>
+          );
+        })}
       </div>
     </div>
   );

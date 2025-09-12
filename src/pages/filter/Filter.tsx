@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { isEqual } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 
+import { cn } from '@shared/utils/cn';
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
 import ButtonText from '@shared/components/button-text/ButtonText';
@@ -15,87 +18,194 @@ import {
   PAYMENT_TYPE,
   SERVING_SIZE,
 } from '@pages/filter/constant/filter-option-constants';
-import { cn } from '@shared/utils/cn';
 import Button from '@shared/components/button/Button';
 
-export default function Filter() {
-  const [selectedDate, setSelectedDate] = useState<SelectedDate>({
-    startDate: null,
-    endDate: null,
-  });
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+interface FilterState {
+  eventType: string | null;
+  date: SelectedDate[];
+  servingSize: string | null;
+  foodType: string[] | null;
+  electricityUsage: string | null;
+  paymentType: string | null;
+}
 
-  const handleOpenCalendar = () => {
+const initialFilter: FilterState = {
+  eventType: null,
+  date: [{ startDate: null, endDate: null }],
+  servingSize: null,
+  foodType: null,
+  electricityUsage: null,
+  paymentType: null,
+};
+
+export default function Filter() {
+  const navigate = useNavigate();
+
+  const [filters, setFilters] = useState<FilterState>(initialFilter);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [currentDateIndex, setCurrentDateIndex] = useState<number | null>(null);
+
+  const handleSelectSingle = (
+    key: keyof Omit<FilterState, 'date' | 'foodType'>,
+    value: string
+  ) => {
+    setFilters(prev => ({
+      ...prev,
+      [key]: prev[key] === value ? null : value,
+    }));
+  };
+
+  const handleSelectMulti = (
+    key: keyof Pick<FilterState, 'foodType'>,
+    value: string
+  ) => {
+    setFilters(prev => {
+      const current = prev[key] ?? [];
+      const updated = current.includes(value)
+        ? current.filter(item => item !== value)
+        : [...current, value];
+      return { ...prev, [key]: updated.length > 0 ? updated : null };
+    });
+  };
+
+  const handleApplyDate = (date: SelectedDate, index: number) => {
+    setFilters(prev => {
+      const current = prev.date ?? [];
+      const updated = [...current];
+      updated[index] = date;
+      return { ...prev, date: updated };
+    });
+  };
+
+  const handleAddSchedule = () => {
+    setFilters(prev => ({
+      ...prev,
+      date: [...(prev.date ?? []), { startDate: null, endDate: null }],
+    }));
+  };
+
+  const handleResetFilter = () => {
+    setFilters(initialFilter);
+  };
+
+  const handleOpenCalendar = (index: number) => {
+    setCurrentDateIndex(index);
     setIsBottomSheetOpen(true);
   };
 
   const handleCloseCalendar = () => {
     setIsBottomSheetOpen(false);
-  };
-
-  const handleApplyDate = (date: SelectedDate) => {
-    setSelectedDate(date);
+    setCurrentDateIndex(null);
   };
 
   return (
     <div>
       <Navigation
         leftIcon={<Icon name='ic_back' color='#19212A' />}
-        // rightIcon={
-        //   <Button variant='cta' buttonStyle='sub'>
-        //     초기화
-        //   </Button>
-        // }
+        handleLeftClick={() => navigate(-1)}
+        rightIcon={
+          <div className='caption-m-12 text-grayscale-700 border border-grayscale-200 rounded-[0.4rem] px-[1.25rem] py-[0.5rem]'>
+            초기화
+          </div>
+        }
+        handleRightClick={handleResetFilter}
         text='필터'
       />
+
       <div className='mb-[9rem] flex flex-col gap-[2.8rem] p-[2rem]'>
-        <FilterChipGroup filterTitle='행사 종류' options={EVENT_TYPE} />
+        <FilterChipGroup
+          filterTitle='행사 종류'
+          selectedOption={filters.eventType ?? ''}
+          options={EVENT_TYPE}
+          handleSelectFilter={value => handleSelectSingle('eventType', value)}
+        />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
+
         <div className='mb-[2rem] flex flex-col gap-[2rem]'>
           <div className='flex flex-row items-center justify-between'>
             <h2 className='px-[0.5rem] title-b-14'>일정</h2>
-            <ButtonText>일정 추가하기</ButtonText>
+            <ButtonText handleClick={handleAddSchedule}>
+              일정 추가하기
+            </ButtonText>
           </div>
-          <ButtonDate
-            startDate={selectedDate.startDate}
-            endDate={selectedDate.endDate}
-            handleOpenCalendar={handleOpenCalendar}
-          />
+          {filters.date.map((date, index) => (
+            <ButtonDate
+              key={index}
+              startDate={date.startDate}
+              endDate={date.endDate}
+              handleOpenCalendar={() => handleOpenCalendar(index)}
+            />
+          ))}
         </div>
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
-        <FilterChipGroup filterTitle='수량' options={SERVING_SIZE} />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+
         <FilterChipGroup
-          filterTitle='음식 종류'
-          options={FOOD_TYPE}
-          multiSelectable
+          filterTitle='수량'
+          selectedOption={filters.servingSize ?? ''}
+          options={SERVING_SIZE}
+          handleSelectFilter={value => handleSelectSingle('servingSize', value)}
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
-        <FilterChipGroup filterTitle='전기 사용' options={ELECTRICITY_USAGE} />
 
+        <FilterChipGroup
+          filterTitle='음식 종류'
+          selectedOption={filters.foodType ?? []}
+          options={FOOD_TYPE}
+          multiSelectable
+          handleSelectFilter={value => handleSelectMulti('foodType', value)}
+        />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
-        <FilterChipGroup filterTitle='결제 방법' options={PAYMENT_TYPE} />
+
+        <FilterChipGroup
+          filterTitle='전기 사용'
+          selectedOption={filters.electricityUsage ?? ''}
+          options={ELECTRICITY_USAGE}
+          handleSelectFilter={value =>
+            handleSelectSingle('electricityUsage', value)
+          }
+        />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+
+        <FilterChipGroup
+          filterTitle='결제 방법'
+          selectedOption={filters.paymentType ?? ''}
+          options={PAYMENT_TYPE}
+          handleSelectFilter={value => handleSelectSingle('paymentType', value)}
+        />
       </div>
+
       <BottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseCalendar}
         sheetContent={
-          <Calendar
-            selectedDate={selectedDate}
-            handleApplyDate={handleApplyDate}
-            handleCloseBottomSheet={handleCloseCalendar}
-            isOpen={isBottomSheetOpen}
-          />
+          currentDateIndex !== null ? (
+            <Calendar
+              selectedDate={
+                filters.date?.[currentDateIndex] ?? {
+                  startDate: null,
+                  endDate: null,
+                }
+              }
+              handleApplyDate={date => handleApplyDate(date, currentDateIndex)}
+              handleCloseBottomSheet={handleCloseCalendar}
+              isOpen={isBottomSheetOpen}
+            />
+          ) : null
         }
         sheetHeight={490}
       />
+
       <div
         className={cn(
           'fixed bottom-[0rem] w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
           'shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'
         )}
       >
-        <Button variant='cta' buttonStyle='disabled'>
+        <Button
+          variant='cta'
+          buttonStyle={isEqual(filters, initialFilter) ? 'disabled' : 'active'}
+          handleClickButton={() => console.log(filters)}
+        >
           적용
         </Button>
       </div>
