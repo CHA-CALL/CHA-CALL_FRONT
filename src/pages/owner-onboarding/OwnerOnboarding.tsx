@@ -21,7 +21,7 @@ export default function OwnerOnboarding() {
   return (
     <>
       <Navigation text='Owner Onboarding' leftIcon={<Icon name='ic_back' />} />
-      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem] gap-[2.6rem] min-h-[calc(100vh-4.8rem)]'>
+      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem] gap-[2.6rem] min-h-[calc(100vh-4.8rem-8.4rem)] '>
         <NameSection
           value={formData.name}
           onChange={updateName}
@@ -44,7 +44,7 @@ export default function OwnerOnboarding() {
           error={errors.otherDocs}
         />
       </div>
-      <footer className='sticky bottom-0 right-0 w-full px-[2rem] py-[1.7rem] bg-white'>
+      <footer className='sticky bottom-[0] left-[0] right-[0] w-full px-[2rem] py-[1.7rem] bg-white'>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}

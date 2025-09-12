@@ -25,6 +25,7 @@ export default function NameSection({
         value={value}
         onChange={e => onChange(e.target.value)}
         maxLength={OWNER_TEXT.MAX_LENGTH}
+        error={!!error}
         rightComponent={
           <Button
             variant='verify'
