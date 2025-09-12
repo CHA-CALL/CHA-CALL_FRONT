@@ -12,7 +12,7 @@ export default function SearchBar({
   ...props
 }: SearchBarProps) {
   return (
-    <div className='flex justify-between items-center px-[1rem] py-[1.6rem] border border-grayscale-700 rounded-[1.6rem] w-[33.5rem] h-[5.4rem] flex-shrink-0'>
+    <div className='flex justify-between items-center px-[1rem] py-[1.6rem] border border-grayscale-200 rounded-[1.6rem] min-w-[33.5rem] w-[full] h-[5.4rem] flex-shrink-0'>
       <input
         className={cn(
           'w-full h-full caret-primary-700 body-m-14 text-grayscale-900 placeholder:text-grayscale-300 placeholder:body-m-14 mr-[1rem]'

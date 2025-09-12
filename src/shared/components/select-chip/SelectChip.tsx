@@ -5,7 +5,10 @@ interface SelectChipProps {
   handleDeleteChip: () => void;
 }
 
-export default function SelectChip({ title, handleDeleteChip }: SelectChipProps) {
+export default function SelectChip({
+  title,
+  handleDeleteChip,
+}: SelectChipProps) {
   return (
     <button
       type='button'
