@@ -4,7 +4,7 @@ interface FilterChipGroupProps {
   filterTitle: string;
   selectedOption: string | string[];
   options: string[];
-  handleSelectFilter: (filter: string) => void;
+  handleSelectFilter: (_filter: string) => void;
   multiSelectable?: boolean;
 }
 
