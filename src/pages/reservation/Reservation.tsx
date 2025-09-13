@@ -33,26 +33,31 @@ export default function Reservation({
 
   const navigate = useNavigate();
 
+  const handleClickBack = () => {
+    alert('뒤로가기 클릭');
+    navigate(-1);
+  };
+
   const handleClickLocation = () => {
     alert('위치설정 클릭');
-    // navigate('/location');
+    navigate('/location');
   };
 
   const handleClickFilter = () => {
     alert('필터 클릭');
-    // navigate('/filter');
+    navigate('/filter');
   };
 
   const handleClickFoodTruck = (name: string) => {
     alert(`${name} 푸드트럭 클릭`);
-    // navigate(`/food-truck/${name}`);
+    navigate(`/food-truck/${name}`);
   };
 
   return (
     <>
       <Navigation
         leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={() => alert('뒤로가기 클릭')}
+        handleLeftClick={handleClickBack}
         text='예약하기'
       />
 
@@ -69,17 +74,18 @@ export default function Reservation({
         >
           <Icon name='ic_locate' color='#f83419' />
           <span className='body-m-14 text-grayscale-900'>{location}</span>
-          <Icon name='ic_dash' />
+          <Icon name='ic_down' />
         </button>
         <button
           type='button'
           onClick={handleClickFilter}
           className={cn(
             'flex items-center justify-center',
-            'w-[2.8rem] h-[2.8rem] rounded-[0.4rem] border border-grayscale-200'
+            'w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]',
+            'rounded-[0.4rem] border border-grayscale-200'
           )}
         >
-          <Icon name='ic_dash' />
+          <Icon name='ic_adjustment' />
         </button>
       </div>
 
@@ -119,11 +125,11 @@ export default function Reservation({
         onClick={handleScrollToTop}
         className={cn(
           'fixed bottom-[2.4rem] right-[2.4rem] w-[5rem] h-[5rem]',
-          'flex items-center justify-center rounded-full',
-          'bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]'
+          'flex items-center justify-center pr-[0.1rem] pb-[0.3rem]',
+          'rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]'
         )}
       >
-        <Icon name='ic_dash' />
+        <Icon name='ic_up' />
       </button>
     </>
   )

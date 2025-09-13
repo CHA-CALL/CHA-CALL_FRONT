@@ -18,7 +18,10 @@ export type IconId =
   | 'ic_calendar'
   | 'ic_dash'
   | 'ic_close_white'
-  | 'ic_camera';
+  | 'ic_camera'
+  | 'ic_adjustment'
+  | 'ic_down'
+  | 'ic_up';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
