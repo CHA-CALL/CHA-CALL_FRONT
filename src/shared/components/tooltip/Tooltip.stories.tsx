@@ -43,7 +43,7 @@ const meta: Meta<typeof Tooltip> = {
     verticalAlign: {
       control: 'select',
       options: ['top', 'bottom'],
-      description: '툴팁의 수직 정렬 (상/하)',
+      description: '툴팁의 수직 위치 (부모 기준 상/하)',
     },
   },
   decorators: [
