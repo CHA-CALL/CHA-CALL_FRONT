@@ -2,14 +2,14 @@ import { useState } from 'react';
 import Tooltip from '@shared/components/tooltip/Tooltip';
 
 const Home = () => {
-  const [isTooltip1Open, setIsTooltip1Open] = useState(true);
-  const [isTooltip2Open, setIsTooltip2Open] = useState(true);
+  const [isTooltip1Visible, setIsTooltip1Visible] = useState(true);
+  const [isTooltip2Visible, setIsTooltip2Visible] = useState(true);
 
   const handleCloseTooltip1 = () => {
-    setIsTooltip1Open(false);
+    setIsTooltip1Visible(false);
   };
   const handleCloseTooltip2 = () => {
-    setIsTooltip2Open(false);
+    setIsTooltip2Visible(false);
   };
 
   return (
@@ -20,7 +20,7 @@ const Home = () => {
             툴팁 기준점
           </div>
           <Tooltip
-            isTooltipOpen={isTooltip1Open}
+            isTooltipVisible={isTooltip1Visible}
             text='맞춤조건을 설정해보세요'
             handleCloseTooltip={handleCloseTooltip1}
             positionOffsetY={2.5}
@@ -42,13 +42,13 @@ const Home = () => {
             툴팁 기준점
           </div>
           <Tooltip
-            isTooltipOpen={isTooltip2Open}
+            isTooltipVisible={isTooltip2Visible}
             text='맞춤조건을 설정할 수 있어요'
             handleCloseTooltip={handleCloseTooltip2}
             positionOffsetY={-3.5}
             positionOffsetX={-0.5}
             horizontalAlign='right'
-            verticalAlign='up'
+            verticalAlign='top'
           />
         </div>
       </div>

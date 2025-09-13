@@ -3,28 +3,28 @@ import { cn } from '@shared/utils/cn';
 
 interface TooltipProps {
   text: string;
-  isTooltipOpen: boolean;
+  isTooltipVisible: boolean;
   handleCloseTooltip: () => void;
   positionOffsetY: number;
   positionOffsetX: number;
   horizontalAlign?: 'left' | 'right';
-  verticalAlign?: 'up' | 'down';
+  verticalAlign?: 'top' | 'bottom';
 }
 
 export default function Tooltip({
   text,
-  isTooltipOpen,
+  isTooltipVisible,
   handleCloseTooltip,
   positionOffsetY,
   positionOffsetX,
   horizontalAlign = 'right',
-  verticalAlign = 'down',
+  verticalAlign = 'bottom',
 }: TooltipProps) {
-  if (!isTooltipOpen) return null;
+  if (!isTooltipVisible) return null;
 
   const containerClass = cn(
     'absolute w-max',
-    verticalAlign === 'down' ? 'pt-[1.1rem]' : 'pb-[1.1rem]'
+    verticalAlign === 'bottom' ? 'pt-[1.1rem]' : 'pb-[1.1rem]'
   );
 
   const containerStyle: React.CSSProperties = {
@@ -39,7 +39,7 @@ export default function Tooltip({
 
   return (
     <div className={containerClass} style={containerStyle}>
-      {verticalAlign === 'down' && (
+      {verticalAlign === 'bottom' && (
         <svg
           className='absolute top-[0]'
           style={arrowStyle}
@@ -67,7 +67,7 @@ export default function Tooltip({
         />
       </div>
 
-      {verticalAlign === 'up' && (
+      {verticalAlign === 'top' && (
         <svg
           className='absolute bottom-[0]'
           style={arrowStyle}
