@@ -45,6 +45,10 @@ export default function Filter() {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [currentDateIndex, setCurrentDateIndex] = useState<number | null>(null);
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   const handleSelectSingle = (
     key: keyof Omit<FilterState, 'date' | 'foodType'>,
     value: string
@@ -111,11 +115,11 @@ export default function Filter() {
     <div>
       <Navigation
         leftIcon={<Icon name='ic_back' color='#19212A' />}
-        handleLeftClick={() => navigate(-1)}
+        handleLeftClick={handleGoBack}
         rightIcon={
-          <div className='caption-m-12 text-grayscale-700 border border-grayscale-200 rounded-[0.4rem] px-[1.25rem] py-[0.5rem]'>
+          <Button variant='default' buttonStyle='edit'>
             초기화
-          </div>
+          </Button>
         }
         handleRightClick={handleResetFilter}
         text='필터'
