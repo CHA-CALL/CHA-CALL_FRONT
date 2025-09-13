@@ -3,13 +3,18 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
+import { FOOD_TRUCK_CATEGORIES } from '@pages/reservation/constant/foodTruckCategory';
+
+import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
 
 interface ReservationProps {
   location?: string;
+  categories?: string[];
 }
 
 export default function Reservation({
   location = '서울시 광진구 구의동',
+  categories = FOOD_TRUCK_CATEGORIES,
 }: ReservationProps) {
   return (
     <>
@@ -47,65 +52,29 @@ export default function Reservation({
       </div>
 
       <div className='sticky top-[9.9rem] bg-white flex gap-[0.6rem] pl-[2rem] py-[1.2rem]'>
-        <Button
-          variant='chip'
-          buttonStyle='default'
-          handleClickButton={() => {}}
-        >
-          전체 보기
-        </Button>
-        <Button
-          variant='chip'
-          buttonStyle='selected1'
-          handleClickButton={() => {}}
-        >
-          전체 보기
-        </Button>
+        {categories.map((category) => (
+          <Button
+            key={category}
+            variant='chip'
+            buttonStyle='default'
+            handleClickButton={() => {}}
+          >
+            {category}
+          </Button>
+        ))}
       </div>
 
       <div className='flex flex-col gap-[2.2rem] px-[2rem] py-[1.6rem]'>
-        <FoodTruckItem
-          image='https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          name='달마시안 푸드트럭'
-          priceRange='16,000-20,000'
-          minOrder='30인분'
-          tags={['피자', '양식']}
-        />
-        <FoodTruckItem
-          image='https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          name='달마시안 푸드트럭'
-          priceRange='16,000-20,000'
-          minOrder='30인분'
-          tags={['피자', '양식']}
-        />
-        <FoodTruckItem
-          image='https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          name='달마시안 푸드트럭'
-          priceRange='16,000-20,000'
-          minOrder='30인분'
-          tags={['피자', '양식']}
-        />
-        <FoodTruckItem
-          image='https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          name='달마시안 푸드트럭'
-          priceRange='16,000-20,000'
-          minOrder='30인분'
-          tags={['피자', '양식']}
-        />
-        <FoodTruckItem
-          image='https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          name='달마시안 푸드트럭'
-          priceRange='16,000-20,000'
-          minOrder='30인분'
-          tags={['피자', '양식']}
-        />
-        <FoodTruckItem
-          image='https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          name='달마시안 푸드트럭'
-          priceRange='16,000-20,000'
-          minOrder='30인분'
-          tags={['피자', '양식']}
-        />
+        {mockFoodTruckData.map((item) => (
+          <FoodTruckItem
+            key={item.name}
+            image={item.image}
+            name={item.name}
+            priceRange={item.priceRange}
+            minOrder={item.minOrder}
+            tags={item.tags}
+          />
+        ))}
       </div>
 
       <button

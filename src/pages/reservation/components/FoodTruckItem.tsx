@@ -35,7 +35,7 @@ export default function FoodTruckItem({
           </span>
           <span>최소주문</span>
           <span className='text-grayscale-900 ml-[0.4rem]'>
-            {minOrder}
+            {minOrder}인분
           </span>
         </div>
 
