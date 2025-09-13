@@ -39,7 +39,7 @@ export default function BottomSheet({
   return (
     <div
       className={cn(
-        'absolute left-[0rem] top-[0rem] h-dvh w-dvw bg-black/50',
+        'fixed inset-[0] h-dvh w-dvw bg-black/50',
         'z-50 transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}
