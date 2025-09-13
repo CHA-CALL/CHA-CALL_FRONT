@@ -6,6 +6,7 @@ interface FoodTruckItemProps {
   priceRange: string;
   minOrder: string;
   tags: string[];
+  handleClick?: () => void;
 }
 
 export default function FoodTruckItem({
@@ -14,9 +15,13 @@ export default function FoodTruckItem({
   priceRange,
   minOrder,
   tags,
+  handleClick,
 }: FoodTruckItemProps) {
   return (
-    <div className='flex gap-[2rem] w-full pb-[2.4rem] border-b border-grayscale-100'>
+    <div
+      onClick={handleClick}
+      className='flex gap-[2rem] w-full pb-[2.4rem] border-b border-grayscale-100'
+    >
       <img
         src={image}
         alt='food truck'

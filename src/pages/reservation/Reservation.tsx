@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
@@ -23,11 +24,28 @@ export default function Reservation({
     ? mockFoodTruckData
     : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
 
-  const scrollToTop = () => {
+  const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
+  };
+
+  const navigate = useNavigate();
+
+  const handleClickLocation = () => {
+    alert('위치설정 클릭');
+    // navigate('/location');
+  };
+
+  const handleClickFilter = () => {
+    alert('필터 클릭');
+    // navigate('/filter');
+  };
+
+  const handleClickFoodTruck = (name: string) => {
+    alert(`${name} 푸드트럭 클릭`);
+    // navigate(`/food-truck/${name}`);
   };
 
   return (
@@ -46,7 +64,7 @@ export default function Reservation({
       )}>
         <button
           type='button'
-          onClick={() => alert('위치설정')}
+          onClick={handleClickLocation}
           className='flex items-center gap-[0.6rem] cursor-pointer'
         >
           <Icon name='ic_locate' color='#f83419' />
@@ -55,7 +73,7 @@ export default function Reservation({
         </button>
         <button
           type='button'
-          onClick={() => alert('필터')}
+          onClick={handleClickFilter}
           className={cn(
             'flex items-center justify-center',
             'w-[2.8rem] h-[2.8rem] rounded-[0.4rem] border border-grayscale-200'
@@ -91,13 +109,14 @@ export default function Reservation({
             priceRange={item.priceRange}
             minOrder={item.minOrder}
             tags={item.tags}
+            handleClick={() => handleClickFoodTruck(item.name)}
           />
         ))}
       </div>
 
       <button
         type='button'
-        onClick={scrollToTop}
+        onClick={handleScrollToTop}
         className={cn(
           'fixed bottom-[2.4rem] right-[2.4rem] w-[5rem] h-[5rem]',
           'flex items-center justify-center rounded-full',
