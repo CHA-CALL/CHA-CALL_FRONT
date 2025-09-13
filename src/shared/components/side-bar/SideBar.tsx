@@ -37,13 +37,14 @@ const MenuItem = ({
   };
 
   return (
-    <div
+    <button
+      type='button'
       onClick={onClick}
       className='flex items-center gap-[0.8rem] mx-[0.6rem] my-[1.2rem] cursor-pointer'
     >
       <Icon name={icon} />
       <span className='body-m-16 text-grayscale-900'>{text}</span>
-    </div>
+    </button>
   );
 };
 
@@ -166,8 +167,8 @@ export default function SideBar({
           <MenuItem
             icon='ic_register'
             text='푸드트럭 등록하기'
-            onClick={handleClickRegister!}
-            show={userType === 'manager'}
+            onClick={handleClickRegister ?? (() => {})}
+            show={userType === 'manager' && !!handleClickRegister}
           />
 
           <div className='my-[1.2rem] border-b border-grayscale-200' />
