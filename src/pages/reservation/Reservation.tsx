@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
@@ -16,6 +17,12 @@ export default function Reservation({
   location = '서울시 광진구 구의동',
   categories = FOOD_TRUCK_CATEGORIES,
 }: ReservationProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>(FOOD_TRUCK_CATEGORIES[0]);
+
+  const filteredFoodTrucks = selectedCategory === FOOD_TRUCK_CATEGORIES[0]
+    ? mockFoodTruckData
+    : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
+
   return (
     <>
       <Navigation
@@ -51,13 +58,17 @@ export default function Reservation({
         </button>
       </div>
 
-      <div className='sticky top-[9.9rem] bg-white flex gap-[0.6rem] pl-[2rem] py-[1.2rem]'>
+      <div className={cn(
+        'sticky top-[9.9rem] flex gap-[0.6rem]',
+        'px-[2rem] py-[1.2rem] bg-white',
+        'overflow-x-auto scrollbar-hide'
+      )}>
         {categories.map((category) => (
           <Button
             key={category}
             variant='chip'
-            buttonStyle='default'
-            handleClickButton={() => {}}
+            buttonStyle={selectedCategory === category ? 'selected1' : 'default'}
+            handleClickButton={() => setSelectedCategory(category)}
           >
             {category}
           </Button>
@@ -65,7 +76,7 @@ export default function Reservation({
       </div>
 
       <div className='flex flex-col gap-[2.2rem] px-[2rem] py-[1.6rem]'>
-        {mockFoodTruckData.map((item) => (
+        {filteredFoodTrucks.map((item) => (
           <FoodTruckItem
             key={item.name}
             image={item.image}
