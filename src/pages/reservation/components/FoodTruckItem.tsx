@@ -18,7 +18,8 @@ export default function FoodTruckItem({
   handleClick,
 }: FoodTruckItemProps) {
   return (
-    <div
+    <button
+      type='button'
       onClick={handleClick}
       className='flex gap-[2rem] w-full pb-[2.4rem] border-b border-grayscale-100'
     >
@@ -50,6 +51,6 @@ export default function FoodTruckItem({
           ))}
         </div>
       </div>
-    </div>
+    </button>
   )
 }
