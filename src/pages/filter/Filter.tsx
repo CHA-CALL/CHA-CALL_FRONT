@@ -98,6 +98,15 @@ export default function Filter() {
     setCurrentDateIndex(null);
   };
 
+  // TODO: 서버에 필터링 요청
+  const handleApplyFilter = () => {
+    const cleanedFilters = {
+      ...filters,
+      date: filters.date.filter(date => date.startDate !== null),
+    };
+    console.log(cleanedFilters);
+  };
+
   return (
     <div>
       <Navigation
@@ -204,7 +213,7 @@ export default function Filter() {
         <Button
           variant='cta'
           buttonStyle={isEqual(filters, initialFilter) ? 'disabled' : 'active'}
-          handleClickButton={() => console.log(filters)}
+          handleClickButton={handleApplyFilter}
         >
           적용
         </Button>
