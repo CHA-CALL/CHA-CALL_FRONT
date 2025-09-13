@@ -23,6 +23,13 @@ export default function Reservation({
     ? mockFoodTruckData
     : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <>
       <Navigation
@@ -90,7 +97,7 @@ export default function Reservation({
 
       <button
         type='button'
-        onClick={() => {}}
+        onClick={scrollToTop}
         className={cn(
           'fixed bottom-[2.4rem] right-[2.4rem] w-[5rem] h-[5rem]',
           'flex items-center justify-center rounded-full',

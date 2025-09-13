@@ -58,4 +58,12 @@ export const mockFoodTruckData: FoodTruckItemData[] = [
     tags: ['중식', '일식', '한식'],
     category: FOOD_TRUCK_CATEGORIES[3],
   },
+  {
+    image: 'https://placehold.co/80',
+    name: '말티푸 푸드트럭',
+    priceRange: '1,000-11,000',
+    minOrder: '1',
+    tags: ['중식', '일식', '한식'],
+    category: FOOD_TRUCK_CATEGORIES[3],
+  },
 ];
