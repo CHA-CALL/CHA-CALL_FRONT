@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
@@ -61,12 +60,12 @@ export default function Reservation({
         text='예약하기'
       />
 
-      <div className={cn(
-        'sticky top-[4.8rem] bg-white',
-        'flex between items-center justify-between',
-        'px-[2rem] pt-[1.2rem] pb-[1rem]',
-        'border-b border-b-grayscale-100',
-      )}>
+      <div className={`
+        sticky top-[4.8rem] bg-white
+        flex between items-center justify-between
+        px-[2rem] pt-[1.2rem] pb-[1rem]
+        border-b border-b-grayscale-100
+      `}>
         <button
           type='button'
           onClick={handleClickLocation}
@@ -79,21 +78,21 @@ export default function Reservation({
         <button
           type='button'
           onClick={handleClickFilter}
-          className={cn(
-            'flex items-center justify-center',
-            'w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]',
-            'rounded-[0.4rem] border border-grayscale-200'
-          )}
+          className={`
+            flex items-center justify-center
+            w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]
+            rounded-[0.4rem] border border-grayscale-200
+          `}
         >
           <Icon name='ic_filter' />
         </button>
       </div>
 
-      <div className={cn(
-        'sticky top-[9.9rem] flex gap-[0.6rem]',
-        'px-[2rem] py-[1.2rem] bg-white',
-        'overflow-x-auto scrollbar-hide'
-      )}>
+      <div className={`
+        sticky top-[9.9rem] flex gap-[0.6rem]
+        px-[2rem] py-[1.2rem] bg-white
+        overflow-x-auto scrollbar-hide
+      `}>
         {categories.map((category) => (
           <Button
             key={category}
@@ -124,11 +123,11 @@ export default function Reservation({
       <button
         type='button'
         onClick={handleScrollToTop}
-        className={cn(
-          'fixed bottom-[2.6rem] right-[2.4rem] w-[5rem] h-[5rem]',
-          'flex items-center justify-center pr-[0.1rem] pb-[0.3rem]',
-          'rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]'
-        )}
+        className={`
+          fixed bottom-[2.6rem] right-[2.4rem] w-[5rem] h-[5rem]
+          flex items-center justify-center pr-[0.1rem] pb-[0.3rem]
+          rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]
+        `}
       >
         <Icon name='ic_up' />
       </button>
