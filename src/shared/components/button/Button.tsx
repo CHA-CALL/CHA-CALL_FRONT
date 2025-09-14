@@ -40,6 +40,7 @@ type ButtonProps<V extends keyof VariantStyleMap = keyof VariantStyleMap> =
     variant: V;
     buttonStyle: VariantStyleMap[V];
     handleClickButton?: () => void;
+    className?: string;
   };
 
 export default function Button({
@@ -47,6 +48,7 @@ export default function Button({
   variant,
   buttonStyle,
   handleClickButton,
+  className,
   ...props
 }: ButtonProps) {
   const baseClasses = ButtonClasses[variant].base;
@@ -58,7 +60,7 @@ export default function Button({
   return (
     <button
       type='button'
-      className={cn(baseClasses, styleClasses)}
+      className={cn(baseClasses, styleClasses, className)}
       onClick={handleClickButton}
       disabled={buttonStyle == 'disabled'}
       {...props}

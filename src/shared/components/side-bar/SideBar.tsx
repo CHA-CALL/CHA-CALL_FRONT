@@ -1,6 +1,7 @@
 import { type MouseEvent } from 'react';
 import { cn } from '@utils/cn';
 import { Icon, type IconId } from '@components/icon/Icon';
+import Button from '@components/button/Button';
 
 type UserType = 'guest' | 'customer' | 'manager';
 
@@ -73,58 +74,58 @@ export default function SideBar({
   };
 
   const renderButtons = () => {
-    const BUTTON_CLASS = cn(
-      'w-full h-[4.6rem] py-[1.25rem] title-sb-14 text-grayscale-900',
-      'bg-white rounded-[0.4rem] border border-grayscale-200'
-    );
-
     switch (userType) {
     case 'guest':
       return (
-        <button
-          type='button'
-          onClick={handleLogin}
-          className={cn(BUTTON_CLASS, 'px-[8.5rem]')}
+        <Button
+          variant='default'
+          buttonStyle='large'
+          handleClickButton={handleLogin}
+          className='px-[0] py-[0]'
         >
           로그인/회원가입
-        </button>
+        </Button>
       )
     case 'customer':
       return (
         <div className='flex gap-[1rem]'>
-          <button
-            type='button'
-            onClick={handleLogout}
-            className={cn(BUTTON_CLASS, 'px-[3.05rem]')}
+          <Button
+            variant='default'
+            buttonStyle='large'
+            handleClickButton={handleLogout}
+            className='px-[0] py-[0]'
           >
             로그아웃
-          </button>
-          <button
-            type='button'
-            onClick={handleSwitchToManager}
-            className={cn(BUTTON_CLASS, 'px-[3.05rem]')}
+          </Button>
+          <Button
+            variant='default'
+            buttonStyle='large'
+            handleClickButton={handleSwitchToManager}
+            className='px-[0] py-[0]'
           >
             사장님 전환
-          </button>
+          </Button>
         </div>
       )
     case 'manager':
       return (
         <div className='flex gap-[1rem]'>
-          <button
-            type='button'
-            onClick={handleLogout}
-            className={cn(BUTTON_CLASS, 'px-[3.05rem]')}
+          <Button
+            variant='default'
+            buttonStyle='large'
+            handleClickButton={handleLogout}
+            className='px-[0] py-[0]'
           >
             로그아웃
-          </button>
-          <button
-            type='button'
-            onClick={handleSwitchToCustomer}
-            className={cn(BUTTON_CLASS, 'px-[3.05rem]')}
+          </Button>
+          <Button
+            variant='default'
+            buttonStyle='large'
+            handleClickButton={handleSwitchToCustomer}
+            className='px-[0] py-[0]'
           >
             고객 전환
-          </button>
+          </Button>
         </div>
       )
     }
