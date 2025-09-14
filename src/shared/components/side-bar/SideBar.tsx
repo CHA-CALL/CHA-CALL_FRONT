@@ -74,7 +74,7 @@ export default function SideBar({
 
   const renderButtons = () => {
     const BUTTON_CLASS = cn(
-      'w-full h-[4.6rem] py-[1.25rem] title-sb-14',
+      'w-full h-[4.6rem] py-[1.25rem] title-sb-14 text-grayscale-900',
       'bg-white rounded-[0.4rem] border border-grayscale-200'
     );
 
@@ -134,15 +134,15 @@ export default function SideBar({
     <div
       onClick={handleOverlayClick}
       className={cn(
-        'fixed flex w-[100%] h-[100%]',
-        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-1'
+        'fixed flex w-full h-full',
+        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-50'
       )}
     >
       <div
         onClick={e => e.stopPropagation()}
         className={cn(
           'fixed top-0 left-0 flex flex-col',
-          'w-[30rem] py-[2.3rem] px-[2rem] h-full',
+          'w-[80%] max-w-[30rem] py-[2.3rem] px-[2rem] h-full',
           'bg-white'
         )}
       >
