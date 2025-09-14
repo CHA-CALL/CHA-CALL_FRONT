@@ -109,7 +109,7 @@ export default function Reservation({
       <div className='flex flex-col gap-[2.2rem] px-[2rem] py-[1.6rem]'>
         {filteredFoodTrucks.map((item, index) => (
           <FoodTruckItem
-            key={item.name}
+            key={item.truckId}
             image={item.image}
             name={item.name}
             priceRange={item.priceRange}

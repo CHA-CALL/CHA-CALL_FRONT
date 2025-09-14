@@ -36,7 +36,7 @@ export default function FoodTruckItem({
       />
 
       <div className='flex flex-col'>
-        <span className='title-sb-16 mt-[0.5rem]'>
+        <span className='flex title-sb-16 mt-[0.5rem]'>
           {name}
         </span>
 
