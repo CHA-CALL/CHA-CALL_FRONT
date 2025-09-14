@@ -35,8 +35,8 @@ export default function FoodTruckItem({
         className='w-[8rem] h-[8rem] cursor-pointer rounded-[1.6rem] flex items-center justify-center object-cover'
       />
 
-      <div className='flex flex-col'>
-        <span className='flex title-sb-16 mt-[0.5rem]'>
+      <div className='flex flex-col items-start'>
+        <span className='title-sb-16 mt-[0.5rem]'>
           {name}
         </span>
 
