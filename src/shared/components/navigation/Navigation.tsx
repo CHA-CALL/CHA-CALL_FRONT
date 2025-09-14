@@ -16,15 +16,15 @@ export default function Navigation({
   text,
 }: NavigationProps) {
   return (
-    <nav className='sticky top-[0] left-[0] right-[0] w-full h-[4.8rem] grid grid-cols-3 items-center bg-white z-30'>
-      <div className='h-full flex justify-start items-center p-[1.3rem]'>
+    <nav className='sticky left-[0] right-[0] top-[0] z-30 grid h-[4.8rem] w-full grid-cols-3 items-center bg-white'>
+      <div className='flex h-full items-center justify-start p-[1.3rem]'>
         {leftIcon && <button onClick={handleLeftClick}>{leftIcon}</button>}
       </div>
       <div className='flex justify-center items-center h-full'>
         {text && <span className='title-sb-16 text-grayscale-900'>{text}</span>}
       </div>
-      <div className='h-full flex justify-end items-center pr-[2rem] py-[1rem]'>
-        {rightIcon && <button onClick={handleRightClick}>{rightIcon}</button>}
+      <div className='flex h-full items-center justify-end py-[1rem] pr-[2rem]'>
+        {rightIcon && <div onClick={handleRightClick}>{rightIcon}</div>}
       </div>
     </nav>
   );
