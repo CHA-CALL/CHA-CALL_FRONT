@@ -1,12 +1,12 @@
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@shared/components/button/Button';
-import { useOwnerInput } from '@pages/owner-onboarding/hooks/useOwnerInput';
-import NameSection from '@pages/owner-onboarding/components/name-section';
-import BizRegCertSection from '@pages/owner-onboarding/components/bizRegCert-section';
-import OtherDocsSection from '@pages/owner-onboarding/components/otherDocs-section';
+import { useFoodTruckInput } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
+import NameSection from '@pages/owner-onboarding/components/NameSection';
+import BizRegCertSection from '@pages/owner-onboarding/components/BizRegCertSection';
+import OtherDocsSection from '@pages/owner-onboarding/components/OtherDocsSection';
 
-export default function OwnerOnboarding() {
+export default function FoodTruckOnboarding() {
   const {
     formData,
     errors,
@@ -16,12 +16,12 @@ export default function OwnerOnboarding() {
     handleCheckNameDuplicate,
     handleSubmit,
     isFormValid,
-  } = useOwnerInput();
+  } = useFoodTruckInput();
 
   return (
     <>
       <Navigation text='푸드트럭 등록' leftIcon={<Icon name='ic_back' />} />
-      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem] gap-[2.6rem] min-h-[calc(100vh-4.8rem-8.4rem)] '>
+      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem] min-h-[calc(100vh-13.2rem)]'>
         <NameSection
           value={formData.name}
           onChange={updateName}

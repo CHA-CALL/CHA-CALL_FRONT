@@ -1,5 +1,5 @@
-import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useOwnerInput';
-import Title from '@pages/owner-onboarding/components/Title';
+import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
+import SectionTitle from '@pages/owner-onboarding/components/SectionTitle';
 import { OWNER_MEDIA_MAX_COUNT } from '@pages/owner-onboarding/constants/owner';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import { useEffect, useState, type ChangeEvent } from 'react';
@@ -46,7 +46,7 @@ export default function OtherDocsSection({
   return (
     <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
       <div className='flex  w-full flex-col items-start justify-center gap-[0.2rem]'>
-        <Title
+        <SectionTitle
           title='기타 서류'
           maxLength={OWNER_MEDIA_MAX_COUNT.OTHER_DOCS}
           currentLength={files?.length || 0}

@@ -6,26 +6,26 @@ import {
   OTHER_DOCS_FILES_VALIDATOR,
 } from '@pages/owner-onboarding/hooks/useFileUpload';
 import {
-  OWNER_NAME_VALIDATOR,
-  useOwnerName,
-} from '@pages/owner-onboarding/hooks/useOwnerName';
+  FOOD_TRUCK_NAME_VALIDATOR,
+  useFoodTruckName,
+} from '@pages/owner-onboarding/hooks/useFoodTruckName';
 import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/owner-onboarding/constants/owner';
 
 const ownerSchema = z.object({
-  name: OWNER_NAME_VALIDATOR,
+  name: FOOD_TRUCK_NAME_VALIDATOR,
   bizRegCert: BIZ_REG_CERT_FILE_VALIDATOR,
   otherDocs: OTHER_DOCS_FILES_VALIDATOR,
 });
 
 export type OwnerFormData = z.infer<typeof ownerSchema>;
 
-export const useOwnerInput = () => {
+export const useFoodTruckInput = () => {
   const {
     isNameVerified,
     isCheckingDuplicate,
     handleCheckNameDuplicate,
     resetVerification,
-  } = useOwnerName();
+  } = useFoodTruckName();
 
   const {
     handleSubmit,
@@ -132,7 +132,7 @@ export const useOwnerInput = () => {
     updateBizRegCertFile,
     updateOtherDocsFiles,
     handleCheckNameDuplicate,
-    handleSubmit: () => handleSubmit(onSubmit)(),
+    handleSubmit: handleSubmit(onSubmit),
     isFormValid: isValid && isNameVerified,
   };
 };

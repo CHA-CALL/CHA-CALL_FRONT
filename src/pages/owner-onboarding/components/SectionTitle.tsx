@@ -4,7 +4,11 @@ interface TitleProps {
   currentLength?: number;
 }
 
-export default function Title({ title, maxLength, currentLength }: TitleProps) {
+export default function SectionTitle({
+  title,
+  maxLength,
+  currentLength,
+}: TitleProps) {
   return (
     <div className='flex w-full items-center justify-between'>
       <p className='title-sb-14 text-grayscale-900'>{title}</p>

@@ -1,7 +1,7 @@
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import { OWNER_MEDIA_MAX_COUNT } from '@pages/owner-onboarding/constants/owner';
-import Title from '@pages/owner-onboarding/components/Title';
-import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useOwnerInput';
+import SectionTitle from '@pages/owner-onboarding/components/SectionTitle';
+import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
 import { useEffect, useState, type ChangeEvent } from 'react';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import ErrorText from '@shared/components/error-text/ErrorText';
@@ -11,6 +11,7 @@ interface BizRegCertSectionProps {
   onChange: (_value: OwnerFormData['bizRegCert']) => void;
   error?: string;
 }
+
 export default function BizRegCertSection({
   file,
   onChange,
@@ -47,7 +48,7 @@ export default function BizRegCertSection({
 
   return (
     <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
-      <Title
+      <SectionTitle
         title='사업자 등록증'
         maxLength={OWNER_MEDIA_MAX_COUNT.BIZ_REG_CERT}
         currentLength={file ? 1 : 0}

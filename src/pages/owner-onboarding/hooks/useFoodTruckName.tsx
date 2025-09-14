@@ -5,8 +5,9 @@ import {
 import { z } from 'zod';
 import { useState } from 'react';
 
-export const OWNER_NAME_VALIDATOR = z
+export const FOOD_TRUCK_NAME_VALIDATOR = z
   .string()
+  .trim()
   .min(
     OWNER_TEXT.MIN_LENGTH,
     OWNER_TEXT_ERROR_MESSAGE.MIN(OWNER_TEXT.MIN_LENGTH)
@@ -16,7 +17,7 @@ export const OWNER_NAME_VALIDATOR = z
     OWNER_TEXT_ERROR_MESSAGE.MAX(OWNER_TEXT.MAX_LENGTH)
   );
 
-export const useOwnerName = () => {
+export const useFoodTruckName = () => {
   const [isNameVerified, setIsNameVerified] = useState(false);
   const [isCheckingDuplicate, setIsCheckingDuplicate] = useState(false);
 

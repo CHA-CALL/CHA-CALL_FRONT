@@ -1,4 +1,4 @@
 export const ROUTES = {
   HOME: '/',
-  OWNER_ONBOARDING: '/owner-onboarding',
+  FOOD_TRUCK_ONBOARDING: '/food-truck-onboarding',
 };

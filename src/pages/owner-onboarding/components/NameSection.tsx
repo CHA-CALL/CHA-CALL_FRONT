@@ -1,8 +1,8 @@
 import Button from '@shared/components/button/Button';
 import { OWNER_TEXT } from '@pages/owner-onboarding/constants/owner';
 import SearchBar from '@shared/components/search-bar/SearchBar';
-import Title from '@pages/owner-onboarding/components/Title';
-import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useOwnerInput';
+import SectionTitle from '@pages/owner-onboarding/components/SectionTitle';
+import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
 import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface NameSectionProps {
@@ -20,7 +20,7 @@ export default function NameSection({
 }: NameSectionProps) {
   return (
     <section className='flex w-full flex-col items-start justify-center gap-[1rem]'>
-      <Title title='이름' />
+      <SectionTitle title='이름' />
       <SearchBar
         value={value}
         onChange={e => onChange(e.target.value)}
