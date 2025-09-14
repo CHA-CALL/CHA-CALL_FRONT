@@ -1,4 +1,4 @@
-import { FOOD_TRUCK_CATEGORIES } from '@pages/reservation/constant/foodTruckCategory';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 
 interface FoodTruckItemData {
   image: string;

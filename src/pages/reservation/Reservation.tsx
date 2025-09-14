@@ -5,7 +5,7 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
-import { FOOD_TRUCK_CATEGORIES } from '@pages/reservation/constant/foodTruckCategory';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 
 import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
 
