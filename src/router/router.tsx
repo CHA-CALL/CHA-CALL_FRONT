@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Home from '@/pages/home/Home';
 import { ROUTES } from '@/router/constant/routes';
 import Layout from '@/router/Layout';
+import Home from '@/pages/home/Home';
+import Filter from '@pages/filter/Filter';
 import FoodTruckOnboarding from '@pages/owner-onboarding/FoodTruckOnboarding';
 
 export const router = createBrowserRouter([
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.HOME,
         element: <Home />,
+      },
+      {
+        path: ROUTES.FILTER,
+        element: <Filter />,
       },
       {
         path: ROUTES.FOOD_TRUCK_ONBOARDING,

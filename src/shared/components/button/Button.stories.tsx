@@ -25,6 +25,7 @@ const meta: Meta<typeof Button> = {
         'selected2',
         'large',
         'medium',
+        'edit',
       ],
       description: '버튼의 스타일 상태',
     },
@@ -123,5 +124,13 @@ export const DefaultMedium: Story = {
     variant: 'default',
     buttonStyle: 'medium',
     children: '기본 버튼 (Medium)',
+  },
+};
+
+export const DefaultEdit: Story = {
+  args: {
+    variant: 'default',
+    buttonStyle: 'edit',
+    children: '편집 버튼 (edit)',
   },
 };
