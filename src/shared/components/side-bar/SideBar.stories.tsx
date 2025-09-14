@@ -31,11 +31,6 @@ export const Guest: Story = {
         <SideBar
           isOpen={isOpen}
           userType='guest'
-          handleLogin={() => alert('로그인/회원가입 클릭')}
-          handleClickMyPage={() => alert('마이페이지 클릭')}
-          handleClickChat={() => alert('채팅 클릭')}
-          handleClickSupport={() => alert('문의하기 클릭')}
-          handleClickTeam={() => alert('팀 소개 클릭')}
           handleSideBarClose={() => setIsOpen(false)}
         />
         <Button
@@ -59,12 +54,6 @@ export const Customer: Story = {
         <SideBar
           isOpen={isOpen}
           userType='customer'
-          handleLogout={() => alert('로그아웃 클릭')}
-          handleSwitchToManager={() => alert('사장님 전환 클릭')}
-          handleClickMyPage={() => alert('마이페이지 클릭')}
-          handleClickChat={() => alert('채팅 클릭')}
-          handleClickSupport={() => alert('문의하기 클릭')}
-          handleClickTeam={() => alert('팀 소개 클릭')}
           handleSideBarClose={() => setIsOpen(false)}
         />
         <Button
@@ -88,13 +77,6 @@ export const Manager: Story = {
         <SideBar
           isOpen={isOpen}
           userType='manager'
-          handleLogout={() => alert('로그아웃 클릭')}
-          handleSwitchToCustomer={() => alert('고객 전환 클릭')}
-          handleClickMyPage={() => alert('마이페이지 클릭')}
-          handleClickChat={() => alert('채팅 클릭')}
-          handleClickRegister={() => alert('푸드트럭 등록하기 클릭')}
-          handleClickSupport={() => alert('문의하기 클릭')}
-          handleClickTeam={() => alert('팀 소개 클릭')}
           handleSideBarClose={() => setIsOpen(false)}
         />
         <Button
