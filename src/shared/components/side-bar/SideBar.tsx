@@ -15,15 +15,6 @@ interface MenuItemProps {
 interface SideBarProps {
   isOpen?: boolean;
   userType: UserType;
-  handleLogin?: () => void;
-  handleLogout?: () => void;
-  handleSwitchToManager?: () => void;
-  handleSwitchToCustomer?: () => void;
-  handleClickMyPage: () => void;
-  handleClickChat: () => void;
-  handleClickRegister?: () => void;
-  handleClickSupport: () => void;
-  handleClickTeam: () => void;
   handleSideBarClose: () => void;
 }
 
@@ -52,19 +43,46 @@ const MenuItem = ({
 export default function SideBar({
   isOpen,
   userType = 'guest',
-  handleLogin,
-  handleLogout,
-  handleSwitchToManager,
-  handleSwitchToCustomer,
-  handleClickMyPage,
-  handleClickChat,
-  handleClickRegister,
-  handleClickSupport,
-  handleClickTeam,
   handleSideBarClose,
 }: SideBarProps) {
   if (!isOpen) {
     return null;
+  };
+
+  const handleLogin = () => {
+    // TODO: 로그인 페이지로 라우팅
+  };
+
+  const handleLogout = () => {
+    // TODO: 로그아웃 로직
+  };
+
+  const handleSwitchToManager = () => {
+    // TODO: 사장님 모드 전환 로직
+  };
+
+  const handleSwitchToCustomer = () => {
+    // TODO: 고객 모드 전환 로직
+  };
+
+  const handleClickMyPage = () => {
+    // TODO: 마이페이지로 라우팅
+  };
+
+  const handleClickChat = () => {
+    // TODO: 채팅 페이지로 라우팅
+  };
+
+  const handleClickRegister = () => {
+    // TODO: 푸드트럭 등록 페이지로 라우팅
+  };
+
+  const handleClickSupport = () => {
+    // TODO: 문의하기 페이지로 라우팅
+  };
+
+  const handleClickTeam = () => {
+    // TODO: 팀소개 페이지로 라우팅
   };
 
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -168,8 +186,8 @@ export default function SideBar({
           <MenuItem
             icon='ic_register'
             text='푸드트럭 등록하기'
-            onClick={handleClickRegister ?? (() => {})}
-            show={userType === 'manager' && !!handleClickRegister}
+            onClick={handleClickRegister}
+            show={userType === 'manager'}
           />
 
           <div className='my-[1.2rem] border-b border-grayscale-200' />
