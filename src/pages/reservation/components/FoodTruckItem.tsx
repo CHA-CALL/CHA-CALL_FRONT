@@ -1,3 +1,4 @@
+import { cn } from '@utils/cn';
 import Tag from '@components/tag/Tag';
 
 interface FoodTruckItemProps {
@@ -7,6 +8,7 @@ interface FoodTruckItemProps {
   minOrder: string;
   tags: string[];
   handleClick?: () => void;
+  isLast?: boolean;
 }
 
 export default function FoodTruckItem({
@@ -16,12 +18,16 @@ export default function FoodTruckItem({
   minOrder,
   tags,
   handleClick,
+  isLast = false,
 }: FoodTruckItemProps) {
   return (
     <button
       type='button'
       onClick={handleClick}
-      className='flex gap-[2rem] w-full pb-[2.4rem] border-b border-grayscale-100'
+      className={cn(
+        'flex gap-[2rem] w-full pb-[2.4rem]',
+        !isLast && 'border-b border-grayscale-100'
+      )}
     >
       <img
         src={image}

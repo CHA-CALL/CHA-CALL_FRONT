@@ -85,7 +85,7 @@ export default function Reservation({
             'rounded-[0.4rem] border border-grayscale-200'
           )}
         >
-          <Icon name='ic_adjustment' />
+          <Icon name='ic_filter' />
         </button>
       </div>
 
@@ -107,7 +107,7 @@ export default function Reservation({
       </div>
 
       <div className='flex flex-col gap-[2.2rem] px-[2rem] py-[1.6rem]'>
-        {filteredFoodTrucks.map((item) => (
+        {filteredFoodTrucks.map((item, index) => (
           <FoodTruckItem
             key={item.name}
             image={item.image}
@@ -116,6 +116,7 @@ export default function Reservation({
             minOrder={item.minOrder}
             tags={item.tags}
             handleClick={() => handleClickFoodTruck(item.name)}
+            isLast={index === filteredFoodTrucks.length - 1}
           />
         ))}
       </div>
