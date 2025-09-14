@@ -24,7 +24,11 @@ export default function Navigation({
         {text && <span className='title-sb-16 text-grayscale-900'>{text}</span>}
       </div>
       <div className='flex h-full items-center justify-end py-[1rem] pr-[2rem]'>
-        {rightIcon && <div onClick={handleRightClick}>{rightIcon}</div>}
+        {rightIcon && (
+          <div role='button' onClick={handleRightClick}>
+            {rightIcon}
+          </div>
+        )}
       </div>
     </nav>
   );
