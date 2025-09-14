@@ -20,13 +20,17 @@ export default function Reservation({
   categories = FOOD_TRUCK_CATEGORIES,
 }: ReservationProps) {
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>(FOOD_TRUCK_CATEGORIES[0]);
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
 
-  const filteredFoodTrucks = selectedCategory === FOOD_TRUCK_CATEGORIES[0]
+  const isAll = selectedCategory === categories[0];
+  const filteredFoodTrucks = isAll
     ? mockFoodTruckData
-    : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
+    : mockFoodTruckData.filter((truck) => truck.category === selectedCategory);
 
   const navigate = useNavigate();
+
+  // TODO: 필터 페이지와 연결 및 필터 상태 관리 로직 추가
+  const [isFilterApplied] = useState<boolean>(false);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -74,20 +78,26 @@ export default function Reservation({
           className={`
             flex items-center justify-center
             w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]
-            rounded-[0.4rem] border border-grayscale-200
+            rounded-[0.4rem] border
+            ${isFilterApplied ? 'bg-primary-50 border-primary-700' : 'border-grayscale-200'}
           `}
         >
-          <Icon name='ic_filter' />
+          <Icon
+            name='ic_filter'
+            color={isFilterApplied ? '#f83419' : undefined}
+          />
         </button>
-        <Tooltip
-          text='맞춤조건을 설정할 수 있어요'
-          isTooltipVisible={isTooltipOpen}
-          handleCloseTooltip={() => {setIsTooltipOpen(false)}}
-          positionOffsetY={3.2}
-          positionOffsetX={1.4}
-          horizontalAlign='right'
-          verticalAlign='bottom'
-        />
+        {!isFilterApplied && (
+          <Tooltip
+            text='맞춤조건을 설정할 수 있어요'
+            isTooltipVisible={isTooltipOpen}
+            handleCloseTooltip={() => {setIsTooltipOpen(false)}}
+            positionOffsetY={3.2}
+            positionOffsetX={1.4}
+            horizontalAlign='right'
+            verticalAlign='bottom'
+          />
+        )}
       </div>
 
       <div className={`
