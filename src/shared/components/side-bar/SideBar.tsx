@@ -8,7 +8,7 @@ type UserType = 'guest' | 'customer' | 'manager';
 interface MenuItemProps {
   icon: IconId;
   text: string;
-  onClick: () => void;
+  handleMenuClick: () => void;
   show?: boolean;
 }
 
@@ -21,7 +21,7 @@ interface SideBarProps {
 const MenuItem = ({
   icon,
   text,
-  onClick,
+  handleMenuClick,
   show = true
 }: MenuItemProps) => {
   if (!show) {
@@ -31,7 +31,7 @@ const MenuItem = ({
   return (
     <button
       type='button'
-      onClick={onClick}
+      onClick={handleMenuClick}
       className='flex items-center gap-[0.8rem] mx-[0.6rem] my-[1.2rem] cursor-pointer'
     >
       <Icon name={icon} />
@@ -176,17 +176,17 @@ export default function SideBar({
           <MenuItem
             icon='ic_mypage'
             text='마이페이지'
-            onClick={handleClickMyPage}
+            handleMenuClick={handleClickMyPage}
           />
           <MenuItem
             icon='ic_chat'
             text='채팅'
-            onClick={handleClickChat}
+            handleMenuClick={handleClickChat}
           />
           <MenuItem
             icon='ic_register'
             text='푸드트럭 등록하기'
-            onClick={handleClickRegister}
+            handleMenuClick={handleClickRegister}
             show={userType === 'manager'}
           />
 
@@ -195,12 +195,12 @@ export default function SideBar({
           <MenuItem
             icon='ic_support'
             text='문의하기'
-            onClick={handleClickSupport}
+            handleMenuClick={handleClickSupport}
           />
           <MenuItem
             icon='ic_team'
             text='팀소개'
-            onClick={handleClickTeam}
+            handleMenuClick={handleClickTeam}
           />
         </div>
       </div>
