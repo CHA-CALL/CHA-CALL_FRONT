@@ -106,12 +106,11 @@ const calendarBtnClass = (
   const isEnd = selectedDates.length === 2 && isSelected && !isStart;
 
   return cn(
-    'h-[4.4rem] w-full flex items-center justify-center',
+    'h-[3.6rem] my-[0.4rem] w-full flex items-center justify-center',
     textColor,
-    isPrevious && 'pointer-events-none cursor-not-allowed text-grayscale-100',
     // TODO: 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
-    // isPrevious &&
-    //   'pointer-events-none cursor-not-allowed line-through decoration-2 decoration-grayscale-700 text-grayscale-100',
+    isPrevious &&
+      'pointer-events-none cursor-not-allowed line-through decoration-grayscale-300 text-grayscale-300',
     isInRange && 'bg-primary-50',
     isSelected && 'text-white',
     isStart && 'bg-gradient-to-l from-primary-50 from-50% to-white to-50%',
@@ -119,4 +118,33 @@ const calendarBtnClass = (
   );
 };
 
-export { formatToCalendarDate, compareDate, isSelectedDate, calendarBtnClass };
+const getCalendarDays = (year: number, month: number) => {
+  const prevFillCount = new Date(year, month - 1, 1).getDay();
+  const prevStart = new Date(year, month - 1, 0).getDate() - prevFillCount + 1;
+  const prevDates = Array.from(
+    { length: prevFillCount },
+    (_, i) => prevStart + i
+  );
+
+  const thisDates = Array.from(
+    { length: new Date(year, month, 0).getDate() },
+    (_, i) => i + 1
+  );
+
+  const baseLen = prevDates.length + thisDates.length;
+  const targetLength = baseLen > 35 ? 42 : 35;
+  const nextDates = Array.from(
+    { length: targetLength - baseLen },
+    (_, i) => i + 1
+  );
+
+  return { prevDates, thisDates, nextDates };
+};
+
+export {
+  formatToCalendarDate,
+  compareDate,
+  isSelectedDate,
+  calendarBtnClass,
+  getCalendarDays,
+};
