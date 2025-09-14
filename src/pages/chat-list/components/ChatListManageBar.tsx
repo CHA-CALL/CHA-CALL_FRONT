@@ -1,7 +1,7 @@
 import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
 import { cn } from '@shared/utils/cn';
+import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
 
-const FILTERS = ['전체보기', '안 읽음', '예약 확정'];
 const BaseFilterClass = 'border-b-[0.2rem] pb-[1.2rem]';
 const FilterClass = {
   selected: 'text-primary-700 border-primary-700',
@@ -17,8 +17,8 @@ interface ChatListManageBarProps {
   isEditing: boolean;
   handleToggleEdit: () => void;
   selectChatList: Set<number>;
-  handleSelectOff: ()=>void;
-  handleDeleteChat: ()=>void;
+  handleSelectOff: () => void;
+  handleDeleteChat: () => void;
 }
 
 export default function ChatListManageBar({
@@ -28,7 +28,7 @@ export default function ChatListManageBar({
   handleToggleEdit,
   selectChatList,
   handleSelectOff,
-  handleDeleteChat
+  handleDeleteChat,
 }: ChatListManageBarProps) {
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);

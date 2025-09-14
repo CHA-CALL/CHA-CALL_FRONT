@@ -49,7 +49,7 @@ export default function Modal({
       className={cn(
         'fixed inset-0 flex items-center justify-center',
         'w-[100%] h-[100%]',
-        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-[100]'
+        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-1'
       )}
     >
       <div
