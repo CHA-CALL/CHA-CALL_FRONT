@@ -124,7 +124,7 @@ export default function Reservation({
         type='button'
         onClick={handleScrollToTop}
         className={cn(
-          'fixed bottom-[2.4rem] right-[2.4rem] w-[5rem] h-[5rem]',
+          'fixed bottom-[2.6rem] right-[2.4rem] w-[5rem] h-[5rem]',
           'flex items-center justify-center pr-[0.1rem] pb-[0.3rem]',
           'rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]'
         )}
