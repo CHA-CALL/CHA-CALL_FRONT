@@ -4,6 +4,7 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
 import Tooltip from '@components/tooltip/Tooltip';
+import ButtonFloating from '@components/button-floating/ButtonFloating';
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 
@@ -25,32 +26,21 @@ export default function Reservation({
     ? mockFoodTruckData
     : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
 
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
   const navigate = useNavigate();
 
   const handleClickBack = () => {
-    alert('뒤로가기 클릭');
     navigate(-1);
   };
 
   const handleClickLocation = () => {
-    alert('위치설정 클릭');
     navigate('/location');
   };
 
   const handleClickFilter = () => {
-    alert('필터 클릭');
     navigate('/filter');
   };
 
   const handleClickFoodTruck = (name: string) => {
-    alert(`${name} 푸드트럭 클릭`);
     navigate(`/food-truck/${name}`);
   };
 
@@ -132,17 +122,7 @@ export default function Reservation({
         ))}
       </div>
 
-      <button
-        type='button'
-        onClick={handleScrollToTop}
-        className={`
-          fixed bottom-[2.6rem] right-[2.4rem] w-[5rem] h-[5rem]
-          flex items-center justify-center pr-[0.1rem] pb-[0.3rem]
-          rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]
-        `}
-      >
-        <Icon name='ic_up' />
-      </button>
+      <ButtonFloating />
     </>
   )
 }
