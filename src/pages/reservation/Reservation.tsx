@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
+import Tooltip from '@components/tooltip/Tooltip';
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 
@@ -17,6 +18,7 @@ export default function Reservation({
   location = '서울시 광진구 구의동',
   categories = FOOD_TRUCK_CATEGORIES,
 }: ReservationProps) {
+  const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>(FOOD_TRUCK_CATEGORIES[0]);
 
   const filteredFoodTrucks = selectedCategory === FOOD_TRUCK_CATEGORIES[0]
@@ -61,7 +63,7 @@ export default function Reservation({
       />
 
       <div className={`
-        sticky top-[4.8rem] bg-white
+        sticky top-[4.8rem] bg-white z-50
         flex between items-center justify-between
         px-[2rem] pt-[1.2rem] pb-[1rem]
         border-b border-b-grayscale-100
@@ -75,6 +77,7 @@ export default function Reservation({
           <span className='body-m-14 text-grayscale-900'>{location}</span>
           <Icon name='ic_down' />
         </button>
+
         <button
           type='button'
           onClick={handleClickFilter}
@@ -86,6 +89,15 @@ export default function Reservation({
         >
           <Icon name='ic_filter' />
         </button>
+        <Tooltip
+          text='맞춤조건을 설정할 수 있어요'
+          isTooltipVisible={isTooltipOpen}
+          handleCloseTooltip={() => {setIsTooltipOpen(false)}}
+          positionOffsetY={3.2}
+          positionOffsetX={1.4}
+          horizontalAlign='right'
+          verticalAlign='bottom'
+        />
       </div>
 
       <div className={`
