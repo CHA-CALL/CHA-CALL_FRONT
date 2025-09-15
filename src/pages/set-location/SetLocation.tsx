@@ -61,6 +61,7 @@ export default function SetLocation() {
       <div className='flex flex-col flex-1 w-full overflow-y-scroll scrollbar-hide'>
         {searchText !== '' ? (
           <div className='flex flex-col gap-[1.6rem] p-[2rem]'>
+            {/* TODO: 장소 검색 API 확정되면 개선 */}
             {(getSearchedRegionsResponse.results ?? []).map(item => (
               <SearhResultItem
                 locationName={item.name}

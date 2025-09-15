@@ -4,6 +4,7 @@ import {
   getRegionsDepth2_Parent11,
   getRegionsDepth3_Parent11680,
 } from '@pages/set-location/constant/mocks';
+import { MAX_SELECTED } from '@pages/set-location/constant/set-loacation';
 import { useEffect, useState } from 'react';
 
 export const useLocations = () => {
@@ -30,12 +31,15 @@ export const useLocations = () => {
   };
 
   const handleToogleLocation = (locaiton: Region) => {
+    // TODO: API 확정 시 '~전체' 장소의 경우 다른 장소는 선택 해제되도록 처리.
     setSelectedLocationsId(prev => {
       const newSet = new Set(prev);
       if (newSet.has(locaiton)) {
         newSet.delete(locaiton);
         return newSet;
       }
+      // TODO: 추후 toast등으로 더 선택할 수 없음을 안내.
+      if (newSet.size >= MAX_SELECTED) return newSet;
       newSet.add(locaiton);
       return newSet;
     });
