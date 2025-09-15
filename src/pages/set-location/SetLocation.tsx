@@ -1,54 +1,39 @@
 import DongEupMeonItem from '@pages/set-location/components/DongEupMeonItem';
+import LocationCategoryLabels from '@pages/set-location/components/LocationCategoryLabels';
 import SearhResultItem from '@pages/set-location/components/SearhResultItem';
+import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
 import SiDoItem from '@pages/set-location/components/SiDoItem';
 import SiGunGuItem from '@pages/set-location/components/SiGunGuItem';
-import {
-  cityListMockup,
-  MAX_SELECTED,
-  neighborhoodListMockup,
-  provinceListMockup,
-  searchedListMockup,
-} from '@pages/set-location/constant/set-loacation';
+import { getSearchedRegionsResponse } from '@pages/set-location/constant/mocks';
+import { useLocations } from '@pages/set-location/hooks/use-locations';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import SearchBar from '@shared/components/search-bar/SearchBar';
-import SelectChip from '@shared/components/select-chip/SelectChip';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LocationCategoryLabels from './components/LocationCategoryLabels';
 
 export default function SetLocation() {
   const navigate = useNavigate();
-  const [selectedSiDo, setSelectedSido] = useState<string>();
-  const [selectedSiGunGu, setSelectedSiGunGu] = useState<string>();
-  /** 동,읍,면에 해당 */
-  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
-  const [searchText, setSearchText] = useState('');
   const handleClickBack = () => navigate(-1);
-  const handleClearSearchBar = () => setSearchText('');
 
-  const handleSelectSiDo = (sido: string) => {
-    setSelectedSido(sido);
-  };
-  const handleSelectSiGunGu = (sigungu: string) => {
-    setSelectedSiGunGu(sigungu);
-  };
+  const {
+    siDoList,
+    siGunGuList,
+    locationList,
+    selectedSiDoId,
+    selectedSiGunGuId,
+    selectedLocationsId,
+    searchText,
+    setSearchText,
+    handleClearSearchBar,
+    handleSelectSiDo,
+    handleSelectSiGunGu,
+    handleToogleLocation,
+    handleClearLocations,
+    handleDeleteLocation,
+    handleConfirmLoatcion,
+  } = useLocations();
 
-  const handleAddLocation = (locaitonName: string) => {
-    setSelectedLocations(prev => {
-      if (prev.includes(locaitonName))
-        return prev.filter(chip => chip !== locaitonName);
-      return [...prev, locaitonName];
-    });
-  };
-  const handleClearLocations = () => {
-    setSelectedLocations([]);
-  };
-  const handleDeleteLocation = (locaitonName: string) => {
-    setSelectedLocations(prev => prev.filter(chip => chip !== locaitonName));
-  };
-  const handleConfirmLoatcion = () => {};
   return (
     <div className='flex flex-col h-screen'>
       <Navigation
@@ -76,11 +61,11 @@ export default function SetLocation() {
       <div className='flex flex-col flex-1 w-full overflow-y-scroll scrollbar-hide'>
         {searchText !== '' ? (
           <div className='flex flex-col gap-[1.6rem] p-[2rem]'>
-            {(searchedListMockup ?? []).map(item => (
+            {(getSearchedRegionsResponse.results ?? []).map(item => (
               <SearhResultItem
-                locationName={item}
-                isChecked={selectedLocations.includes(item)}
-                handleToggle={() => handleAddLocation(item)}
+                locationName={item.name}
+                isChecked={selectedLocationsId.has(item)}
+                handleToggle={() => handleToogleLocation(item)}
                 searchText={searchText}
               />
             ))}
@@ -88,56 +73,46 @@ export default function SetLocation() {
         ) : (
           <div className='grid grid-cols-[106fr_135fr_134fr]'>
             <div className='flex flex-col'>
-              {provinceListMockup.map(item => (
+              {siDoList.map(item => (
                 <SiDoItem
-                  title={item}
-                  isSelected={item === selectedSiDo}
-                  handleSelectSiDo={() => handleSelectSiDo(item)}
-                  key={item}
+                  title={item.name}
+                  isSelected={item.id === selectedSiDoId}
+                  handleSelectSiDo={() => handleSelectSiDo(item.id)}
+                  key={item.name}
                 />
               ))}
             </div>
             <div className='flex flex-col'>
-              {cityListMockup.map(item => (
+              {siGunGuList.map(item => (
                 <SiGunGuItem
-                  title={item}
-                  isSelected={item === selectedSiGunGu}
-                  handleSelectSiGunGu={() => handleSelectSiGunGu(item)}
-                  key={item}
+                  title={item.name}
+                  isSelected={item.id === selectedSiGunGuId}
+                  handleSelectSiGunGu={() => handleSelectSiGunGu(item.id)}
+                  key={item.name}
                 />
               ))}
             </div>
             <div className='flex flex-col'>
-              {neighborhoodListMockup.map(item => (
+              {locationList.map(item => (
                 <DongEupMeonItem
-                  title={item}
-                  isSelected={selectedLocations.includes(item)}
-                  handleSelectDongEupMeon={() => handleAddLocation(item)}
-                  key={item}
+                  title={item.name}
+                  isSelected={selectedLocationsId.has(item)}
+                  handleSelectDongEupMeon={() => handleToogleLocation(item)}
+                  key={item.name}
                 />
               ))}
             </div>
           </div>
         )}
       </div>
-      {selectedLocations.length > 0 && (
-        <div className='flex flex-col gap-[1rem] rounded-t-[1rem] px-[2rem] py-[1.1rem] bg-white shadow-[0px_-4px_10px_0px_rgba(0,0,0,0.04)]'>
-          <span className='title-sb-12 leading-none'>
-            <span className='text-primary-700'>
-              {selectedLocations.length}{' '}
-            </span>
-            <span className='text-black'>/ {MAX_SELECTED}</span>
-          </span>
-          <div className='flex flex-wrap gap-[0.8rem]'>
-            {[...selectedLocations].map(chip => (
-              <SelectChip
-                title={chip}
-                handleDeleteChip={() => handleDeleteLocation(chip)}
-              />
-            ))}
-          </div>
-        </div>
+
+      {selectedLocationsId.size > 0 && (
+        <SelectedChipsSheet
+          selectedLocationsId={selectedLocationsId}
+          handleDeleteLocation={handleDeleteLocation}
+        />
       )}
+
       <div className='flex gap-[0.7rem] py-[1.7rem] px-[2rem] border-t-1 border-grayscale-200'>
         <Button
           variant='cta'
@@ -148,7 +123,7 @@ export default function SetLocation() {
         </Button>
         <Button
           variant='cta'
-          buttonStyle={selectedLocations.length > 0 ? 'active' : 'disabled'}
+          buttonStyle={selectedLocationsId.size > 0 ? 'active' : 'disabled'}
           handleClickButton={handleConfirmLoatcion}
         >
           확인
