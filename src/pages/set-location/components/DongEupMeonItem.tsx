@@ -21,21 +21,17 @@ export default function DongEupMeonItem({
         BaseClass,
 
         isSelected &&
-          'flex items-center justify-center px-[1rem] title-sb-14 text-primary-700'
+          'relative flex justify-center items-center px-[1rem] title-sb-14 text-primary-700'
       )}
     >
-      <p className='flex relative justify-center items-center'>
-        {isSelected && (
-          <Icon
-            name={'ic_check'}
-            color='primary-700'
-            viewBox='0 0 22 22'
-            className='absolute left-[-3.7rem]'
-          />
-        )}
-
-        {title}
-      </p>
+      {isSelected && (
+        <Icon
+          name={'ic_check'}
+          color='primary-700'
+          className='absolute left-[1rem]'
+        />
+      )}
+      <p className='flex relative justify-center items-center'>{title}</p>
     </button>
   );
 }

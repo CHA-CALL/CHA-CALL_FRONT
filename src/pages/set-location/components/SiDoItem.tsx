@@ -1,4 +1,3 @@
-// import type { LocationItemProps } from '@pages/set-location/types/set-location-types';
 import { cn } from '@shared/utils/cn';
 
 interface SiDoItemProps {

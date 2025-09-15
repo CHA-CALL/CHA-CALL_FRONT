@@ -73,7 +73,7 @@ export default function SetLocation() {
         />
       </div>
       {searchText === '' && <LocationCategoryLabels />}
-      <div className='flex flex-col flex-1 w-full overflow-y-scroll'>
+      <div className='flex flex-col flex-1 w-full overflow-y-scroll scrollbar-hide'>
         {searchText !== '' ? (
           <div className='flex flex-col gap-[1.6rem] p-[2rem]'>
             {(searchedListMockup ?? []).map(item => (
@@ -86,38 +86,36 @@ export default function SetLocation() {
             ))}
           </div>
         ) : (
-          <div>
-            <div className='flex'>
-              <div className='flex flex-col basis-0 grow-[106] min-w-0 '>
-                {provinceListMockup.map(item => (
-                  <SiDoItem
-                    title={item}
-                    isSelected={item === selectedSiDo}
-                    handleSelectSiDo={() => handleSelectSiDo(item)}
-                    key={item}
-                  />
-                ))}
-              </div>
-              <div className='flex flex-col basis-0 grow-[135] min-w-0'>
-                {cityListMockup.map(item => (
-                  <SiGunGuItem
-                    title={item}
-                    isSelected={item === selectedSiGunGu}
-                    handleSelectSiGunGu={() => handleSelectSiGunGu(item)}
-                    key={item}
-                  />
-                ))}
-              </div>
-              <div className='flex flex-col basis-0 grow-[134] min-w-0'>
-                {neighborhoodListMockup.map(item => (
-                  <DongEupMeonItem
-                    title={item}
-                    isSelected={selectedLocations.includes(item)}
-                    handleSelectDongEupMeon={() => handleAddLocation(item)}
-                    key={item}
-                  />
-                ))}
-              </div>
+          <div className='grid grid-cols-[106fr_135fr_134fr]'>
+            <div className='flex flex-col'>
+              {provinceListMockup.map(item => (
+                <SiDoItem
+                  title={item}
+                  isSelected={item === selectedSiDo}
+                  handleSelectSiDo={() => handleSelectSiDo(item)}
+                  key={item}
+                />
+              ))}
+            </div>
+            <div className='flex flex-col'>
+              {cityListMockup.map(item => (
+                <SiGunGuItem
+                  title={item}
+                  isSelected={item === selectedSiGunGu}
+                  handleSelectSiGunGu={() => handleSelectSiGunGu(item)}
+                  key={item}
+                />
+              ))}
+            </div>
+            <div className='flex flex-col'>
+              {neighborhoodListMockup.map(item => (
+                <DongEupMeonItem
+                  title={item}
+                  isSelected={selectedLocations.includes(item)}
+                  handleSelectDongEupMeon={() => handleAddLocation(item)}
+                  key={item}
+                />
+              ))}
             </div>
           </div>
         )}
