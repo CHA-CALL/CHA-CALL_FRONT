@@ -16,7 +16,7 @@ export default function ImagePreview({
   }
 
   return (
-    <div className='relative w-[8rem] h-[8rem] flex items-center justify-center rounded-[1.6rem]'>
+    <div className='relative w-[8rem] h-[8rem] flex items-center justify-center rounded-[1.6rem] flex-shrink-0'>
       <img
         className='w-[8rem] h-[8rem] cursor-pointer rounded-[1.6rem] flex items-center justify-center object-cover'
         src={src}

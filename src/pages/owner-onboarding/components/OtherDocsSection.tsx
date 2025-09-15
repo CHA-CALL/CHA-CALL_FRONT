@@ -45,7 +45,7 @@ export default function OtherDocsSection({
 
   return (
     <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
-      <div className='flex  w-full flex-col items-start justify-center gap-[0.2rem]'>
+      <div className='flex w-full flex-col items-start justify-center gap-[0.2rem]'>
         <SectionTitle
           title='기타 서류'
           maxLength={OWNER_MEDIA_MAX_COUNT.OTHER_DOCS}
@@ -55,7 +55,7 @@ export default function OtherDocsSection({
           영업신고증 (자동차등록증, 위생증, 보건증, 가스완성검사증명서) 필요
         </p>
       </div>
-      <div className='flex items-start justify-center gap-[1rem]'>
+      <div className='w-full flex items-start justify-start gap-[1rem] overflow-x-scroll scrollbar-hide pt-[0.8rem] pr-[1rem]'>
         {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
         {files &&
           files.map((_, index) => (
