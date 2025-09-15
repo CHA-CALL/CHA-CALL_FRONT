@@ -1,6 +1,6 @@
 import DongEupMeonItem from '@pages/set-location/components/DongEupMeonItem';
 import LocationCategoryLabels from '@pages/set-location/components/LocationCategoryLabels';
-import SearhResultItem from '@pages/set-location/components/SearhResultItem';
+import SearchResultItem from '@pages/set-location/components/SearchResultItem';
 import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
 import SiDoItem from '@pages/set-location/components/SiDoItem';
 import SiGunGuItem from '@pages/set-location/components/SiGunGuItem';
@@ -28,10 +28,10 @@ export default function SetLocation() {
     handleClearSearchBar,
     handleSelectSiDo,
     handleSelectSiGunGu,
-    handleToogleLocation,
+    handleToggleLocation,
     handleClearLocations,
     handleDeleteLocation,
-    handleConfirmLoatcion,
+    handleConfirmLocation,
   } = useLocations();
 
   return (
@@ -63,10 +63,10 @@ export default function SetLocation() {
           <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
             {/* TODO: 장소 검색 API 확정되면 개선 */}
             {(getSearchedRegionsResponse.results ?? []).map(item => (
-              <SearhResultItem
+              <SearchResultItem
                 locationName={item.name}
                 isChecked={selectedLocationsId.has(item)}
-                handleToggle={() => handleToogleLocation(item)}
+                handleToggle={() => handleToggleLocation(item)}
                 searchText={searchText}
               />
             ))}
@@ -98,7 +98,7 @@ export default function SetLocation() {
                 <DongEupMeonItem
                   title={item.name}
                   isSelected={selectedLocationsId.has(item)}
-                  handleSelectDongEupMeon={() => handleToogleLocation(item)}
+                  handleSelectDongEupMeon={() => handleToggleLocation(item)}
                   key={item.name}
                 />
               ))}
@@ -125,7 +125,7 @@ export default function SetLocation() {
         <Button
           variant='cta'
           buttonStyle={selectedLocationsId.size > 0 ? 'active' : 'disabled'}
-          handleClickButton={handleConfirmLoatcion}
+          handleClickButton={handleConfirmLocation}
         >
           확인
         </Button>

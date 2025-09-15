@@ -1,5 +1,5 @@
 import type { Region } from '@pages/set-location/constant/mocks';
-import { MAX_SELECTED } from '@pages/set-location/constant/set-loacation';
+import { MAX_SELECTED } from '@pages/set-location/constant/set-location';
 import SelectChip from '@shared/components/select-chip/SelectChip';
 
 interface SelectedChipsSheetProps {

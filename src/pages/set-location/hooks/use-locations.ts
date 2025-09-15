@@ -4,7 +4,7 @@ import {
   getRegionsDepth2_Parent11,
   getRegionsDepth3_Parent11680,
 } from '@pages/set-location/constant/mocks';
-import { MAX_SELECTED } from '@pages/set-location/constant/set-loacation';
+import { MAX_SELECTED } from '@pages/set-location/constant/set-location';
 import { useEffect, useState } from 'react';
 
 export const useLocations = () => {
@@ -30,7 +30,7 @@ export const useLocations = () => {
     setLocationList(getRegionsDepth3_Parent11680.regions);
   };
 
-  const handleToogleLocation = (locaiton: Region) => {
+  const handleToggleLocation = (locaiton: Region) => {
     // TODO: API 확정 시 '~전체' 장소의 경우 다른 장소는 선택 해제되도록 처리.
     setSelectedLocationsId(prev => {
       const newSet = new Set(prev);
@@ -56,7 +56,7 @@ export const useLocations = () => {
       return newSet;
     });
   };
-  const handleConfirmLoatcion = () => {};
+  const handleConfirmLocation = () => {};
 
   useEffect(() => {
     setSiDoList(getRegionsDepth1.regions);
@@ -74,9 +74,9 @@ export const useLocations = () => {
     handleClearSearchBar,
     handleSelectSiDo,
     handleSelectSiGunGu,
-    handleToogleLocation,
+    handleToggleLocation,
     handleClearLocations,
     handleDeleteLocation,
-    handleConfirmLoatcion,
+    handleConfirmLocation,
   };
 };

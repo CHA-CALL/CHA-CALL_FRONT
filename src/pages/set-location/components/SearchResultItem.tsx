@@ -6,7 +6,7 @@ interface SearchResultItemProps {
   handleToggle: () => void;
   searchText: string;
 }
-export default function SearhResultItem({
+export default function SearchResultItem({
   locationName,
   isChecked,
   handleToggle,
