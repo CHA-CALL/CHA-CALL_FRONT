@@ -15,9 +15,14 @@ export const useLocations = () => {
   const [selectedSiDoId, setSelectedSidoId] = useState<string>();
   const [selectedSiGunGuId, setSelectedSiGunGuId] = useState<string>();
   /** 동,읍,면에 해당 */
-  const [selectedLocationsId, setSelectedLocationsId] = useState<Set<Region>>(
+  const [selectedLocationIds, setSelectedLocationIds] = useState<Set<string>>(
     new Set()
   );
+  const getSelectedLocations = () => {
+    return locationList.filter(location =>
+      selectedLocationIds.has(location.id)
+    );
+  };
   const [searchText, setSearchText] = useState('');
   const handleClearSearchBar = () => setSearchText('');
 
@@ -32,27 +37,27 @@ export const useLocations = () => {
 
   const handleToggleLocation = (locaiton: Region) => {
     // TODO: API 확정 시 '~전체' 장소의 경우 다른 장소는 선택 해제되도록 처리.
-    setSelectedLocationsId(prev => {
+    setSelectedLocationIds(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(locaiton)) {
-        newSet.delete(locaiton);
+      if (newSet.has(locaiton.id)) {
+        newSet.delete(locaiton.id);
         return newSet;
       }
       // TODO: 추후 toast등으로 더 선택할 수 없음을 안내.
       if (newSet.size >= MAX_SELECTED) return newSet;
-      newSet.add(locaiton);
+      newSet.add(locaiton.id);
       return newSet;
     });
   };
 
   const handleClearLocations = () => {
-    setSelectedLocationsId(new Set());
+    setSelectedLocationIds(new Set());
   };
 
   const handleDeleteLocation = (locaiton: Region) => {
-    setSelectedLocationsId(prev => {
+    setSelectedLocationIds(prev => {
       const newSet = new Set(prev);
-      newSet.delete(locaiton);
+      newSet.delete(locaiton.id);
       return newSet;
     });
   };
@@ -68,9 +73,10 @@ export const useLocations = () => {
     locationList,
     selectedSiDoId,
     selectedSiGunGuId,
-    selectedLocationsId,
+    selectedLocationIds,
     searchText,
     setSearchText,
+    getSelectedLocations,
     handleClearSearchBar,
     handleSelectSiDo,
     handleSelectSiGunGu,

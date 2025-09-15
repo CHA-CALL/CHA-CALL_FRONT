@@ -22,9 +22,10 @@ export default function SetLocation() {
     locationList,
     selectedSiDoId,
     selectedSiGunGuId,
-    selectedLocationsId,
+    selectedLocationIds,
     searchText,
     setSearchText,
+    getSelectedLocations,
     handleClearSearchBar,
     handleSelectSiDo,
     handleSelectSiGunGu,
@@ -65,7 +66,7 @@ export default function SetLocation() {
             {(getSearchedRegionsResponse.results ?? []).map(item => (
               <SearchResultItem
                 locationName={item.name}
-                isChecked={selectedLocationsId.has(item)}
+                isChecked={selectedLocationIds.has(item.id)}
                 handleToggle={() => handleToggleLocation(item)}
                 searchText={searchText}
               />
@@ -97,7 +98,7 @@ export default function SetLocation() {
               {locationList.map(item => (
                 <DongEupMeonItem
                   title={item.name}
-                  isSelected={selectedLocationsId.has(item)}
+                  isSelected={selectedLocationIds.has(item.id)}
                   handleSelectDongEupMeon={() => handleToggleLocation(item)}
                   key={item.name}
                 />
@@ -107,9 +108,9 @@ export default function SetLocation() {
         )}
       </div>
 
-      {selectedLocationsId.size > 0 && (
+      {selectedLocationIds.size > 0 && (
         <SelectedChipsSheet
-          selectedLocationsId={selectedLocationsId}
+          selectedLocations={getSelectedLocations()}
           handleDeleteLocation={handleDeleteLocation}
         />
       )}
@@ -124,7 +125,7 @@ export default function SetLocation() {
         </Button>
         <Button
           variant='cta'
-          buttonStyle={selectedLocationsId.size > 0 ? 'active' : 'disabled'}
+          buttonStyle={selectedLocationIds.size > 0 ? 'active' : 'disabled'}
           handleClickButton={handleConfirmLocation}
         >
           확인
