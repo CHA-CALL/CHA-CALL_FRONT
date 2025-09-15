@@ -25,7 +25,7 @@ export default function ButtonCheck({
         'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
         isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked
       )}
-      onClick={handleToggle}
+      onClick={isInteractive ? handleToggle : undefined}
     >
       {isChecked && (
         <Icon

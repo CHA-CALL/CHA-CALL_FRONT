@@ -34,10 +34,11 @@ export default function ChatListManageBar({
   };
   return (
     <div className='flex justify-between px-[2rem] pt-[3.1rem] border-b-[0.1rem] border-grayscale-100'>
-      <div className='w-full flex gap-[1rem] title-sb-14 text-graysclae-900 pt-[0.2rem]'>
+      <div className='w-full flex gap-[1rem] title-sb-14 text-grayscale-900 pt-[0.2rem]'>
         {FILTERS.map(filter => {
           return (
             <button
+              type='button'
               onClick={() => handleFilter(filter)}
               className={cn(
                 baseFilterClasses,
