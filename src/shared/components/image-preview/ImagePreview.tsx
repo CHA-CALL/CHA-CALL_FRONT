@@ -2,7 +2,7 @@ import { Icon } from '@shared/components/icon/Icon';
 
 interface ImagePreviewProps {
   handleClose: () => void;
-  src: string;
+  src?: string;
   alt: string;
 }
 
@@ -11,8 +11,12 @@ export default function ImagePreview({
   src,
   alt,
 }: ImagePreviewProps) {
+  if (!src) {
+    return null;
+  }
+
   return (
-    <div className='relative w-[8rem] h-[8rem] flex items-center justify-center rounded-[1.6rem]'>
+    <div className='relative w-[8rem] h-[8rem] flex items-center justify-center rounded-[1.6rem] flex-shrink-0'>
       <img
         className='w-[8rem] h-[8rem] cursor-pointer rounded-[1.6rem] flex items-center justify-center object-cover'
         src={src}

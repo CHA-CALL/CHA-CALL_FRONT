@@ -16,7 +16,7 @@ export default function ButtonAddImage({
 
   return (
     <div
-      className='flex flex-col w-[8rem] h-[8rem] items-center justify-center rounded-[1.6rem] bg-white border border-grayscale-200 hover:bg-grayscale-50 duration-200 cursor-pointer'
+      className='flex flex-col w-[8rem] h-[8rem] items-center justify-center rounded-[1.6rem] bg-white border border-grayscale-200 hover:bg-grayscale-50 duration-200 cursor-pointer flex-shrink-0'
       onClick={handleClick}
     >
       <input
