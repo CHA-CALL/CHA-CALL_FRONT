@@ -3,7 +3,8 @@ import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
 import Button from '@shared/components/button/Button';
 import { cn } from '@shared/utils/cn';
 
-const baseFilterClasses = 'border-b-[0.2rem] pb-[1.2rem]';
+const baseFilterClasses =
+  'w-[5.4rem] border-b-[0.2rem] pb-[1.2rem] text-center';
 const filterClasses = {
   selected: 'text-primary-700 border-primary-700',
   unselected: 'border-transparent',
@@ -44,6 +45,7 @@ export default function ChatListManageBar({
                   ? filterClasses.selected
                   : filterClasses.unselected
               )}
+              key={filter}
             >
               {filter}
             </button>
