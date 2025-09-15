@@ -59,7 +59,7 @@ export default function SetLocation() {
         />
       </div>
       {searchText === '' && <LocationCategoryLabels />}
-      <div className='flex flex-col flex-1 w-full overflow-y-scroll scrollbar-hide'>
+      <div className='flex flex-col flex-1 w-full overflow-y-auto scrollbar-hide'>
         {searchText !== '' ? (
           <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
             {/* TODO: 장소 검색 API 확정되면 개선 */}
@@ -73,8 +73,8 @@ export default function SetLocation() {
             ))}
           </ul>
         ) : (
-          <div className='grid grid-cols-[106fr_135fr_134fr]'>
-            <div className='flex flex-col'>
+          <div className='flex-1 grid grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
+            <div className='overflow-auto scrollbar-hide'>
               {siDoList.map(item => (
                 <SiDoItem
                   title={item.name}
@@ -84,7 +84,7 @@ export default function SetLocation() {
                 />
               ))}
             </div>
-            <div className='flex flex-col'>
+            <div className='overflow-auto scrollbar-hide'>
               {siGunGuList.map(item => (
                 <SiGunGuItem
                   title={item.name}
@@ -94,7 +94,7 @@ export default function SetLocation() {
                 />
               ))}
             </div>
-            <div className='flex flex-col'>
+            <div className='overflow-auto scrollbar-hide'>
               {locationList.map(item => (
                 <DongEupMeonItem
                   title={item.name}
