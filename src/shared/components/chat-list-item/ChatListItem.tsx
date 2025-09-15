@@ -26,22 +26,17 @@ export default function ChatListItem({
   handleCheckChange,
 }: ChatListItemProps) {
   return (
-    <div
+    <button
       className={cn(
         'w-full flex items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
         'transition-colors duration-200',
-        {
-          'bg-primary-25': isChecked && isEditing,
-          'bg-white': !isChecked || !isEditing,
-        }
+        isChecked && isEditing ? 'bg-primary-25' : 'bg-white',
+        !isEditing && 'pointer-events-none'
       )}
+      disabled={!isEditing}
+      onClick={() => handleCheckChange(!isChecked)}
     >
-      {isEditing && (
-        <ButtonCheck
-          isChecked={isChecked}
-          handleToggle={() => handleCheckChange(!isChecked)}
-        />
-      )}
+      {isEditing && <ButtonCheck isChecked={isChecked} />}
 
       <div className='w-[5.2rem] h-[5.2rem] rounded-full overflow-hidden flex-shrink-0 border border-grayscale-200'>
         {profileImage ? (
@@ -56,7 +51,7 @@ export default function ChatListItem({
       </div>
 
       <div className='flex-1 flex justify-between items-start gap-[1rem] overflow-hidden'>
-        <div className='flex flex-col gap-[0.4rem] overflow-hidden flex-1'>
+        <div className='flex flex-col gap-[0.2rem] overflow-hidden flex-1'>
           <div className='flex items-center gap-[0.6rem] overflow-hidden'>
             <span className='text-grayscale-900 title-sb-16 truncate block'>
               {clientName}
@@ -64,7 +59,7 @@ export default function ChatListItem({
             <Tag title={tagTitle} />
           </div>
           <span
-            className={`caption-m-12 truncate block ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
+            className={`caption-m-12 truncate text-start block ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
           >
             {lastChat}
           </span>
@@ -81,6 +76,6 @@ export default function ChatListItem({
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
