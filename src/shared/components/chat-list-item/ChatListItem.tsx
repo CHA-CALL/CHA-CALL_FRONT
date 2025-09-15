@@ -1,5 +1,5 @@
-import Tag from '@shared/components/tag/Tag';
 import ButtonCheck from '@shared/components/button-check/ButtonCheck';
+import Tag from '@shared/components/tag/Tag';
 import { cn } from '@shared/utils/cn';
 
 interface ChatListItemProps {
@@ -58,13 +58,13 @@ export default function ChatListItem({
       <div className='flex-1 flex justify-between items-start gap-[1rem] overflow-hidden'>
         <div className='flex flex-col gap-[0.4rem] overflow-hidden flex-1'>
           <div className='flex items-center gap-[0.6rem] overflow-hidden'>
-            <span className='text-grayscale-900 title-sb-16 leading-[1.5rem] truncate block'>
+            <span className='text-grayscale-900 title-sb-16 truncate block'>
               {clientName}
             </span>
             <Tag title={tagTitle} />
           </div>
           <span
-            className={`caption-m-12 leading-[1.5rem] truncate block ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
+            className={`caption-m-12 truncate block ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
           >
             {lastChat}
           </span>

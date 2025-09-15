@@ -1,10 +1,10 @@
+import ChatListManageBar from '@pages/chat-list/components/ChatListManageBar';
+import { useChatList } from '@pages/chat-list/hooks/use-chat-list';
 import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
 import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
-import ChatListManageBar from '@pages/chat-list/components/ChatListManageBar';
 import Modal from '@shared/components/modal/Modal';
+import Navigation from '@shared/components/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
-import { useChatList } from '@pages/chat-list/hooks/useChatList';
 
 export default function ChatList() {
   const navigate = useNavigate();

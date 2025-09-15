@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { mockup } from '@pages/chat-list/constant/chat-list-constant';
+import { mockup } from '@pages/chat-list/constant/mocks';
 import type { Chat } from '@pages/chat-list/types/chat-list-type';
+import { useEffect, useState } from 'react';
 
 export const useChatList = () => {
   const [isEditing, setIsEditing] = useState(false);

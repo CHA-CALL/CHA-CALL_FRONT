@@ -1,15 +1,13 @@
-import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
-import { cn } from '@shared/utils/cn';
 import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
+import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
+import Button from '@shared/components/button/Button';
+import { cn } from '@shared/utils/cn';
 
-const BaseFilterClass = 'border-b-[0.2rem] pb-[1.2rem]';
-const FilterClass = {
+const baseFilterClasses = 'border-b-[0.2rem] pb-[1.2rem]';
+const filterClasses = {
   selected: 'text-primary-700 border-primary-700',
   unselected: 'border-transparent',
 };
-
-const BaseEditButtonClass =
-  'border-grayscale-200 border-[0.1rem] caption-m-12 py-[0.5rem] rounded-[0.4rem] text-grayscale-700';
 
 interface ChatListManageBarProps {
   activeFilter: string;
@@ -41,10 +39,10 @@ export default function ChatListManageBar({
             <button
               onClick={() => handleFilter(filter)}
               className={cn(
-                BaseFilterClass,
+                baseFilterClasses,
                 activeFilter === filter
-                  ? FilterClass.selected
-                  : FilterClass.unselected
+                  ? filterClasses.selected
+                  : filterClasses.unselected
               )}
             >
               {filter}
@@ -57,28 +55,31 @@ export default function ChatListManageBar({
           <div className='flex gap-[1rem]'>
             <ButtonTrash handleClick={handleDeleteChat} />
             {selectChatList.size !== 0 ? (
-              <button
-                className={cn(BaseEditButtonClass, 'pl-[0.75rem] pr-[0.85rem]')}
+              <Button
+                style={{ paddingLeft: '0.75rem', paddingRight: '0.85rem' }}
+                children={'선택해제'}
+                variant={'default'}
+                buttonStyle={'edit'}
                 onClick={handleSelectOff}
-              >
-                선택해제
-              </button>
+              />
             ) : (
-              <button
-                className={cn(BaseEditButtonClass, 'px-[2rem]')}
+              <Button
+                style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
+                children={'취소'}
+                variant={'default'}
+                buttonStyle={'edit'}
                 onClick={handleToggleEdit}
-              >
-                취소
-              </button>
+              />
             )}
           </div>
         ) : (
-          <button
-            className={cn(BaseEditButtonClass, 'px-[1.85rem]')}
+          <Button
+            style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
+            children={'편집'}
+            variant={'default'}
+            buttonStyle={'edit'}
             onClick={handleToggleEdit}
-          >
-            편집
-          </button>
+          />
         )}
       </div>
     </div>
