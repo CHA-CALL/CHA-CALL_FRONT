@@ -16,6 +16,7 @@ export default function DongEupMeonItem({
 }: DongEupMeonItemProps) {
   return (
     <button
+      type='button'
       onClick={handleSelectDongEupMeon}
       className={cn(
         BaseClass,

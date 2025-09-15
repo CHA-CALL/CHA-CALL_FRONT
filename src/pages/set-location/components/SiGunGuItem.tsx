@@ -15,6 +15,7 @@ export default function SiGunGuItem({
 }: SiGunGuItemProps) {
   return (
     <button
+      type='button'
       onClick={handleSelectSiGunGu}
       className={cn(
         BaseClass,

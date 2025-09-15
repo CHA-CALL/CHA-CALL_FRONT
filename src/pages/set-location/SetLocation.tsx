@@ -60,7 +60,7 @@ export default function SetLocation() {
       {searchText === '' && <LocationCategoryLabels />}
       <div className='flex flex-col flex-1 w-full overflow-y-scroll scrollbar-hide'>
         {searchText !== '' ? (
-          <div className='flex flex-col gap-[1.6rem] p-[2rem]'>
+          <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
             {/* TODO: 장소 검색 API 확정되면 개선 */}
             {(getSearchedRegionsResponse.results ?? []).map(item => (
               <SearhResultItem
@@ -70,7 +70,7 @@ export default function SetLocation() {
                 searchText={searchText}
               />
             ))}
-          </div>
+          </ul>
         ) : (
           <div className='grid grid-cols-[106fr_135fr_134fr]'>
             <div className='flex flex-col'>

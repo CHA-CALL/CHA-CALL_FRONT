@@ -15,6 +15,7 @@ export default function SiDoItem({
 }: SiDoItemProps) {
   return (
     <button
+      type='button'
       onClick={handleSelectSiDo}
       className={cn(
         BaseClass,

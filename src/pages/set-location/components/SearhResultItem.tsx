@@ -15,7 +15,7 @@ export default function SearhResultItem({
   const searchTextArray = Array.from(searchText);
 
   return (
-    <div
+    <li
       className='flex items-center gap-[1.3rem] mx-[0.5rem] pb-[1.6rem] border-b-1 border-grayscale-100
     body-m-14 text-grayscale-900'
     >
@@ -31,6 +31,6 @@ export default function SearhResultItem({
           </>
         ))}
       </span>
-    </div>
+    </li>
   );
 }
