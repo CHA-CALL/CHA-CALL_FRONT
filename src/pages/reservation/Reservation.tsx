@@ -9,6 +9,7 @@ import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 
 import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
+import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
 
 interface ReservationProps {
   location?: string;
@@ -80,21 +81,21 @@ export default function Reservation({
           <Icon name='ic_down' />
         </button>
 
-        <button
-          type='button'
-          onClick={handleClickFilter}
-          className={`
-            flex items-center justify-center
-            w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]
-            rounded-[0.4rem] border
-            ${isFilterApplied ? 'bg-primary-50 border-primary-700' : 'border-grayscale-200'}
-          `}
-        >
-          <Icon
-            name='ic_filter'
-            color={isFilterApplied ? '#f83419' : undefined}
-          />
-        </button>
+       
+<ButtonIcon
+icon='ic_filter'
+iconColor={isFilterApplied ? '#f83419' : undefined}
+handleClick={handleClickFilter}
+className={`
+  flex items-center justify-center
+  w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]
+  rounded-[0.4rem] border
+  ${isFilterApplied ? 'bg-primary-50 border-primary-700' : 'border-grayscale-200'}
+`}
+/>
+
+
+   
         {!isFilterApplied && (
           <Tooltip
             text='맞춤조건을 설정할 수 있어요'
