@@ -35,7 +35,7 @@ const MenuItem = ({
       className='flex items-center gap-[0.8rem] mx-[0.6rem] my-[1.2rem] cursor-pointer'
     >
       <Icon name={icon} />
-      <span className='body-m-16 text-grayscale-900'>{text}</span>
+      <span className='relative top-[0.1rem] body-m-16 text-grayscale-900'>{text}</span>
     </button>
   );
 };
@@ -163,7 +163,7 @@ export default function SideBar({
         onClick={e => e.stopPropagation()}
         className={`
           fixed top-0 left-0 flex flex-col
-          w-[80%] max-w-[30rem] py-[2.3rem] px-[2rem] h-full'
+          w-[80%] max-w-[30rem] h-full py-[2.3rem] px-[2rem]
           bg-white`
         }
       >
