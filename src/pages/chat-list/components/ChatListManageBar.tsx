@@ -3,13 +3,6 @@ import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
 import Button from '@shared/components/button/Button';
 import { cn } from '@shared/utils/cn';
 
-const baseFilterClasses =
-  'w-[5.4rem] border-b-[0.2rem] pb-[1.2rem] text-center';
-const filterClasses = {
-  selected: 'text-primary-700 border-primary-700',
-  unselected: 'border-transparent',
-};
-
 interface ChatListManageBarProps {
   activeFilter: string;
   setActiveFilter: (_filter: string) => void;
@@ -19,6 +12,13 @@ interface ChatListManageBarProps {
   handleSelectOff: () => void;
   handleDeleteChat: () => void;
 }
+
+const baseFilterClasses =
+  'w-[5.4rem] border-b-[0.2rem] pb-[1.2rem] text-center';
+const filterClasses = {
+  selected: 'text-primary-700 border-primary-700',
+  unselected: 'border-transparent',
+};
 
 export default function ChatListManageBar({
   activeFilter,

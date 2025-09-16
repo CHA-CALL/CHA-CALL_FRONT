@@ -27,13 +27,12 @@ export default function ChatListItem({
 }: ChatListItemProps) {
   return (
     <button
+      disabled={!isEditing}
       className={cn(
         'flex w-full items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
-        'transition-colors duration-200',
-        isChecked && isEditing ? 'bg-primary-25' : 'bg-white',
-        !isEditing && 'pointer-events-none'
+        'transition-colors duration-200 disabled:cursor-not-allowed',
+        isChecked && isEditing ? 'bg-primary-25' : 'bg-white'
       )}
-      disabled={!isEditing}
       onClick={() => handleCheckChange(!isChecked)}
     >
       {isEditing && <ButtonCheck isChecked={isChecked} />}

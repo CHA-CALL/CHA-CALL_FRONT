@@ -50,7 +50,7 @@ export default function ChatList() {
         handleConfirmClick={handleCloseModal}
         handleModalClose={handleCloseModal}
       />
-      <div className='flex flex-1 flex-col overflow-y-scroll py-[1.2rem]'>
+      <div className='scrollbar-hide flex flex-1 flex-col overflow-y-scroll py-[1.2rem]'>
         {(chatList ?? []).map(item => {
           return (
             <ChatListItem
