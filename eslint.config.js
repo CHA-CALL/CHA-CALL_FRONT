@@ -52,8 +52,8 @@ export default tseslint.config(
       'no-multiple-empty-lines': 'error',
       //정의 안 한 변수 사용 x
       'no-undef': 'error',
-      //들여쓰기 2칸!
-      indent: ['error', 2],
+      //들여쓰기는 Prettier가 관리
+      // indent: ['error', 2],
       // 쓸데없는 공백 없애기
       'no-trailing-spaces': 'error',
       'import/newline-after-import': ['error', { count: 1 }],

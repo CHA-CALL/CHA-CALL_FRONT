@@ -1,3 +1,4 @@
+import React from "react";
 import { Icon } from "@shared/components/icon/Icon";
 import { dateFormatter } from "@shared/utils/date-formatter";
 import { cn } from "@shared/utils/cn";

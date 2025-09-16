@@ -1,3 +1,4 @@
+import React from "react";
 import { Icon } from "@shared/components/icon/Icon";
 import { cn } from "@utils/cn";
 
