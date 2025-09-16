@@ -12,7 +12,7 @@ export default function SelectedChipsSheet({
   handleDeleteLocation,
 }: SelectedChipsSheetProps) {
   return (
-    <div className='flex flex-col gap-[1rem] rounded-t-[1rem] px-[2rem] py-[1.1rem] bg-white shadow-[0px_-4px_10px_0px_rgba(0,0,0,0.04)]'>
+    <div className='flex flex-col gap-[1rem] rounded-t-[1rem] bg-white px-[2rem] py-[1.1rem] shadow-[0px_-4px_10px_0px_rgba(0,0,0,0.04)]'>
       <span className='title-sb-12'>
         <span className='text-primary-700'>{selectedLocations.length} </span>
         <span className='text-black'>/ {MAX_SELECTED}</span>

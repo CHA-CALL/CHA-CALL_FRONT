@@ -15,10 +15,7 @@ export default function SearchResultItem({
   const searchTextArray = Array.from(searchText);
 
   return (
-    <li
-      className='flex items-center gap-[1.3rem] mx-[0.5rem] pb-[1.6rem] border-b-1 border-grayscale-100
-    body-m-14 text-grayscale-900'
-    >
+    <li className='border-b-1 border-grayscale-100 body-m-14 text-grayscale-900 mx-[0.5rem] flex items-center gap-[1.3rem] pb-[1.6rem]'>
       <ButtonCheck isChecked={isChecked} handleToggle={handleToggle} />
       <span>
         {[...locationName].map(char => (

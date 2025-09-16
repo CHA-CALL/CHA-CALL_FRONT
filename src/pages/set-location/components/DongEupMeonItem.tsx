@@ -22,7 +22,7 @@ export default function DongEupMeonItem({
         BaseClass,
 
         isSelected &&
-          'relative flex justify-center items-center px-[1rem] title-sb-14 text-primary-700'
+          'title-sb-14 text-primary-700 relative flex items-center justify-center px-[1rem]'
       )}
     >
       {isSelected && (
@@ -32,7 +32,7 @@ export default function DongEupMeonItem({
           className='absolute left-[1rem]'
         />
       )}
-      <p className='flex relative justify-center items-center'>{title}</p>
+      <p className='relative flex items-center justify-center'>{title}</p>
     </button>
   );
 }

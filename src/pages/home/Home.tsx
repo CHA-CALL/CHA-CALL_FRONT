@@ -1,83 +1,57 @@
 import { useState } from 'react';
-
-import ButtonDate from '@shared/components/button-date/ButtonDate';
-import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
-import { Icon } from '@shared/components/icon/Icon';
-import { type SelectedDate } from '@shared/types/calendar-types';
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
-import Calendar from '@shared/components/calendar/Calendar';
+import Tooltip from '@shared/components/tooltip/Tooltip';
 
 const Home = () => {
-  const [check, setCheck] = useState(false);
-  const handleCheckChange = () => {
-    setCheck(prev => !prev);
+  const [isTooltip1Visible, setIsTooltip1Visible] = useState(true);
+  const [isTooltip2Visible, setIsTooltip2Visible] = useState(true);
+
+  const handleCloseTooltip1 = () => {
+    setIsTooltip1Visible(false);
   };
-
-  const [selectedDate, setSelectedDate] = useState<SelectedDate>({
-    startDate: null,
-    endDate: null,
-  });
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
-  const handleOpenCalendar = () => {
-    setIsBottomSheetOpen(true);
-  };
-
-  const handleCloseCalendar = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleApplyDate = (date: SelectedDate) => {
-    setSelectedDate(date);
+  const handleCloseTooltip2 = () => {
+    setIsTooltip2Visible(false);
   };
 
   return (
-    <div>
-      <ChatListItem
-        isEditing={false}
-        clientName={'고객이름'}
-        tagTitle={'오소리 푸드트럭'}
-        lastChat={'혹시 예약 가능할까요?'}
-        lastChatTime={'오후 5:40'}
-        unreadCount={312}
-        isChecked={check}
-        handleCheckChange={handleCheckChange}
-      />
-      <ChatListItem
-        isEditing={true}
-        clientName={'고객이름고객이름고객이름고객이름고객이름'}
-        tagTitle={'오소리 푸드트럭'}
-        lastChat={
-          '네 알겠습니다 긴내용답변긴긴내용답변긴내용답변긴긴내용답변긴내용답변긴긴내용답변긴내용답변긴긴내용답변'
-        }
-        lastChatTime={'오후 10:40'}
-        unreadCount={0}
-        isChecked={check}
-        handleCheckChange={handleCheckChange}
-      />
-      <Icon name='ic_search' />
-      <Icon name='ic_search' width={40} height={40} />
-      <Icon name='ic_confirm' width={40} height={40} color='#F83419' />
-
-      <ButtonDate
-        startDate={selectedDate.startDate}
-        endDate={selectedDate.endDate}
-        handleOpenCalendar={handleOpenCalendar}
-      />
-
-      <BottomSheet
-        isOpen={isBottomSheetOpen}
-        handleCloseBottomSheet={handleCloseCalendar}
-        sheetContent={
-          <Calendar
-            selectedDate={selectedDate}
-            handleApplyDate={handleApplyDate}
-            handleCloseBottomSheet={handleCloseCalendar}
-            isOpen={isBottomSheetOpen}
+    <div className='p-[2rem]'>
+      <div className='flex flex-row justify-between'>
+        <div className='relative'>
+          <div className='h-[3rem] w-[3rem] rounded-[0.4rem] border border-grayscale-200'>
+            툴팁 기준점
+          </div>
+          <Tooltip
+            isTooltipVisible={isTooltip1Visible}
+            text='맞춤조건을 설정해보세요'
+            handleCloseTooltip={handleCloseTooltip1}
+            positionOffsetY={2.5}
+            positionOffsetX={-0.5}
+            horizontalAlign='left'
           />
-        }
-        sheetHeight={490}
-      />
+        </div>
+        <div className='w-[25rem] rounded-[0.4rem] border border-grayscale-200'>
+          다른 요소
+        </div>
+      </div>
+
+      <div className='mt-[10rem] flex flex-row justify-between'>
+        <div className='w-[25rem] rounded-[0.4rem] border border-grayscale-200'>
+          다른 요소
+        </div>
+        <div className='relative'>
+          <div className='h-[3rem] w-[3rem] rounded-[0.4rem] border border-grayscale-200'>
+            툴팁 기준점
+          </div>
+          <Tooltip
+            isTooltipVisible={isTooltip2Visible}
+            text='맞춤조건을 설정할 수 있어요'
+            handleCloseTooltip={handleCloseTooltip2}
+            positionOffsetY={-3.5}
+            positionOffsetX={-0.5}
+            horizontalAlign='right'
+            verticalAlign='top'
+          />
+        </div>
+      </div>
     </div>
   );
 };
