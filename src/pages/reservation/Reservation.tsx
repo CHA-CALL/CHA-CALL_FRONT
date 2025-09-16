@@ -48,6 +48,14 @@ export default function Reservation({
     navigate(`/food-truck/${name}`);
   };
 
+  const handleClickTooltip = () => {
+    setIsTooltipOpen(!isTooltipOpen);
+  };
+
+  const handleClickChip = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <>
       <Navigation
@@ -91,7 +99,7 @@ export default function Reservation({
           <Tooltip
             text='맞춤조건을 설정할 수 있어요'
             isTooltipVisible={isTooltipOpen}
-            handleCloseTooltip={() => {setIsTooltipOpen(false)}}
+            handleCloseTooltip={handleClickTooltip}
             positionOffsetY={3.2}
             positionOffsetX={1.4}
             horizontalAlign='right'
@@ -110,7 +118,7 @@ export default function Reservation({
             key={category}
             variant='chip'
             buttonStyle={selectedCategory === category ? 'selected1' : 'default'}
-            handleClickButton={() => setSelectedCategory(category)}
+            handleClickButton={() => handleClickChip(category)}
           >
             {category}
           </Button>
