@@ -11,13 +11,15 @@ export default function SearchBar({
   rightComponent,
   handleRightClick,
   error = false,
+  className,
   ...props
 }: SearchBarProps) {
   return (
     <div
       className={cn(
-        'flex h-[5.4rem] w-full min-w-[33.5rem] flex-shrink-0 items-center justify-between rounded-[1.6rem] border border-grayscale-200 px-[1rem] py-[1.6rem] hover:border-grayscale-700',
-        error && 'border-primary-500'
+        'flex h-[5.4rem] w-full min-w-[33.5rem] flex-shrink-0 items-center justify-between rounded-[1.6rem] border border-grayscale-200 px-[1rem] py-[1.7rem] focus-within:border-grayscale-700',
+        error && 'border-primary-500',
+        className
       )}
     >
       <input
