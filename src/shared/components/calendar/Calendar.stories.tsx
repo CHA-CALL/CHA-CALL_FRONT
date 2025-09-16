@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import Calendar from '@shared/components/calendar/Calendar';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import Calendar from "@shared/components/calendar/Calendar";
 
 const meta: Meta<typeof Calendar> = {
-  title: 'Components/Calendar',
+  title: "Components/Calendar",
   component: Calendar,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
@@ -13,27 +13,27 @@ const meta: Meta<typeof Calendar> = {
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     isOpen: {
-      control: 'boolean',
+      control: "boolean",
       description:
-        '열림 상태 플래그. 값이 바뀌면 내부 선택 상태가 초기화됩니다(스토리에서 리셋 트리거용으로 사용).',
+        "열림 상태 플래그. 값이 바뀌면 내부 선택 상태가 초기화됩니다(스토리에서 리셋 트리거용으로 사용).",
     },
     handleApplyDate: {
-      action: 'apply-date',
+      action: "apply-date",
       description:
-        '`적용` 버튼 클릭 시 호출됩니다. `{ startDate: Date|null, endDate: Date|null }`를 전달합니다.',
+        "`적용` 버튼 클릭 시 호출됩니다. `{ startDate: Date|null, endDate: Date|null }`를 전달합니다.",
     },
     handleCloseBottomSheet: {
-      action: 'close',
-      description: '`취소` 클릭 시 호출됩니다.',
+      action: "close",
+      description: "`취소` 클릭 시 호출됩니다.",
     },
   },
   decorators: [
-    Story => (
+    (Story) => (
       // w-full 기준 폭을 잡아주면 디자인이 안정적으로 보입니다.
-      <div style={{ width: 960, maxWidth: '60rem' }}>
+      <div style={{ width: 960, maxWidth: "60rem" }}>
         <Story />
       </div>
     ),

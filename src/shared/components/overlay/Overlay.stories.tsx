@@ -39,11 +39,7 @@ export const Modal: Story = {
           모달 열기
         </Button>
 
-        <Overlay
-          {...args}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(false)}
-        >
+        <Overlay {...args} isOpen={isOpen} handleClose={() => setIsOpen(false)}>
           <div className="flex min-w-[27.4rem] flex-col rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]">
             <h3 className="mb-[2rem] text-[1.8rem] font-bold">모달 제목</h3>
             <p className="mb-[2rem]">모달 내용입니다.</p>
@@ -89,15 +85,13 @@ export const BottomSheet: Story = {
           바텀시트 열기
         </Button>
 
-        <Overlay
-          {...args}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(false)}
-        >
+        <Overlay {...args} isOpen={isOpen} handleClose={() => setIsOpen(false)}>
           <div className="fixed bottom-[0rem] left-1/2 flex w-full max-w-[60rem] -translate-x-1/2 flex-col rounded-t-[3.2rem] bg-white px-[3.2rem] transition-transform duration-300 ease-in-out">
-            <div className="mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem] bg-grayscale-300" />
+            <div className="bg-grayscale-300 mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem]" />
             <div className="mb-[3.4rem] mt-[2.8rem]">
-              <h3 className="mb-[2rem] text-[1.8rem] font-bold">바텀시트 내용</h3>
+              <h3 className="mb-[2rem] text-[1.8rem] font-bold">
+                바텀시트 내용
+              </h3>
               <p className="mb-[2rem]">이것은 바텀시트의 내용입니다.</p>
               <Button
                 variant="cta"
@@ -133,11 +127,7 @@ export const TopPosition: Story = {
           상단 오버레이 열기
         </Button>
 
-        <Overlay
-          {...args}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(false)}
-        >
+        <Overlay {...args} isOpen={isOpen} handleClose={() => setIsOpen(false)}>
           <div className="flex min-w-[27.4rem] flex-col rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]">
             <h3 className="mb-[2rem] text-[1.8rem] font-bold">상단 오버레이</h3>
             <p className="mb-[2rem]">상단에서 나타나는 오버레이입니다.</p>
@@ -174,11 +164,7 @@ export const LeftPosition: Story = {
           좌측 오버레이 열기
         </Button>
 
-        <Overlay
-          {...args}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(false)}
-        >
+        <Overlay {...args} isOpen={isOpen} handleClose={() => setIsOpen(false)}>
           <div className="flex min-w-[27.4rem] flex-col rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]">
             <h3 className="mb-[2rem] text-[1.8rem] font-bold">좌측 오버레이</h3>
             <p className="mb-[2rem]">좌측에서 나타나는 오버레이입니다.</p>
@@ -215,11 +201,7 @@ export const RightPosition: Story = {
           우측 오버레이 열기
         </Button>
 
-        <Overlay
-          {...args}
-          isOpen={isOpen}
-          handleClose={() => setIsOpen(false)}
-        >
+        <Overlay {...args} isOpen={isOpen} handleClose={() => setIsOpen(false)}>
           <div className="flex min-w-[27.4rem] flex-col rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]">
             <h3 className="mb-[2rem] text-[1.8rem] font-bold">우측 오버레이</h3>
             <p className="mb-[2rem]">우측에서 나타나는 오버레이입니다.</p>

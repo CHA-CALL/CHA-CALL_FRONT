@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Icon } from '@components/icon/Icon';
+import { useState, useEffect } from "react";
+import { Icon } from "@components/icon/Icon";
 
 export default function ButtonFloating() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -7,7 +7,7 @@ export default function ButtonFloating() {
   const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -17,9 +17,9 @@ export default function ButtonFloating() {
       setIsVisible(scrollTop > 1);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -29,15 +29,11 @@ export default function ButtonFloating() {
 
   return (
     <button
-      type='button'
+      type="button"
       onClick={handleScrollToTop}
-      className={`
-        fixed bottom-[2.6rem] right-[2.4rem] w-[5rem] h-[5rem]
-        flex items-center justify-center pr-[0.1rem] pb-[0.3rem]
-        rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]
-      `}
+      className={`fixed bottom-[2.6rem] right-[2.4rem] flex h-[5rem] w-[5rem] items-center justify-center rounded-full bg-white pb-[0.3rem] pr-[0.1rem] shadow-[0_0_8px_0_rgba(0,0,0,0.08)]`}
     >
-      <Icon name='ic_up' />
+      <Icon name="ic_up" />
     </button>
   );
-};
+}

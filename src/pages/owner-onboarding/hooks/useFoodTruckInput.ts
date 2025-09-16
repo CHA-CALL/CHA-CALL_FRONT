@@ -1,15 +1,15 @@
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   BIZ_REG_CERT_FILE_VALIDATOR,
   OTHER_DOCS_FILES_VALIDATOR,
-} from '@pages/owner-onboarding/hooks/useFileUpload';
+} from "@pages/owner-onboarding/hooks/useFileUpload";
 import {
   FOOD_TRUCK_NAME_VALIDATOR,
   useFoodTruckName,
-} from '@pages/owner-onboarding/hooks/useFoodTruckName';
-import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/owner-onboarding/constants/owner';
+} from "@pages/owner-onboarding/hooks/useFoodTruckName";
+import { OWNER_TEXT_ERROR_MESSAGE } from "@pages/owner-onboarding/constants/owner";
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,
@@ -37,55 +37,55 @@ export const useFoodTruckInput = () => {
   } = useForm<OwnerFormData>({
     resolver: zodResolver(ownerSchema),
     defaultValues: {
-      name: '',
+      name: "",
       bizRegCert: undefined,
       otherDocs: undefined,
     },
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const formData = watch();
 
   const updateName = (name: string) => {
-    setValue('name', name, { shouldValidate: true });
+    setValue("name", name, { shouldValidate: true });
     resetVerification();
   };
 
   const updateBizRegCertFile = (bizRegCert: File | undefined) => {
-    setValue('bizRegCert', bizRegCert, { shouldValidate: true });
+    setValue("bizRegCert", bizRegCert, { shouldValidate: true });
   };
 
   const updateOtherDocsFiles = (otherDocs: File[] | undefined) => {
-    setValue('otherDocs', otherDocs, { shouldValidate: true });
+    setValue("otherDocs", otherDocs, { shouldValidate: true });
   };
 
   const parsePresignedUrl = (rawPresignedUrl: string) => {
-    return rawPresignedUrl.split('?')[0] || '';
+    return rawPresignedUrl.split("?")[0] || "";
   };
 
   const onSubmit = async (formData: OwnerFormData) => {
     if (!isCheckingDuplicate) {
-      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.NOT_VERIFIED });
+      setError("name", { message: OWNER_TEXT_ERROR_MESSAGE.NOT_VERIFIED });
       return;
     }
     if (!isNameVerified) {
-      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
+      setError("name", { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
       return;
     }
 
     try {
       // 1. 사업자 등록증 파일 presigned URL 요청
-      let bizRegCertUrl: string = '';
+      let bizRegCertUrl: string = "";
       if (formData.bizRegCert) {
         //TODO: 사업자 등록증 파일 presigned URL 요청
-        bizRegCertUrl = '';
+        bizRegCertUrl = "";
       }
 
       // 2. 영수증 파일 presigned URL 요청
       let otherDocsUrls: string[] = [];
       if (formData.otherDocs) {
         //TODO: 기타 서류 파일 presigned URL 요청
-        otherDocsUrls = [''];
+        otherDocsUrls = [""];
       }
 
       // 3. Presigned URL로 파일 업로드
@@ -101,14 +101,14 @@ export const useFoodTruckInput = () => {
       const ownerRequest = {
         name: formData.name,
         bizRegCertUrl: parsePresignedUrl(bizRegCertUrl),
-        otherDocsUrls: otherDocsUrls.map(url => parsePresignedUrl(url)),
+        otherDocsUrls: otherDocsUrls.map((url) => parsePresignedUrl(url)),
       };
 
       if (ownerRequest) {
         //TODO: 오너 등록 제출
       }
     } catch (error) {
-      console.error('오너 등록 실패:', error);
+      console.error("오너 등록 실패:", error);
     }
   };
 

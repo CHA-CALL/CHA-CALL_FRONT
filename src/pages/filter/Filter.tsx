@@ -1,24 +1,24 @@
-import { useState } from 'react';
-import { isEqual } from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { isEqual } from "lodash";
+import { useNavigate } from "react-router-dom";
 
-import { cn } from '@shared/utils/cn';
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import ButtonText from '@shared/components/button-text/ButtonText';
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
-import Calendar from '@shared/components/calendar/Calendar';
-import type { SelectedDate } from '@shared/types/calendar-types';
-import ButtonDate from '@shared/components/button-date/ButtonDate';
-import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
+import { cn } from "@shared/utils/cn";
+import Navigation from "@shared/components/navigation/Navigation";
+import { Icon } from "@shared/components/icon/Icon";
+import ButtonText from "@shared/components/button-text/ButtonText";
+import BottomSheet from "@shared/components/bottom-sheet/BottomSheet";
+import Calendar from "@shared/components/calendar/Calendar";
+import type { SelectedDate } from "@shared/types/calendar-types";
+import ButtonDate from "@shared/components/button-date/ButtonDate";
+import FilterChipGroup from "@pages/filter/components/FilterChipGroup";
 import {
   ELECTRICITY_USAGE,
   EVENT_TYPE,
   FOOD_TYPE,
   PAYMENT_TYPE,
   SERVING_SIZE,
-} from '@pages/filter/constant/filter-option-constants';
-import Button from '@shared/components/button/Button';
+} from "@pages/filter/constant/filter-option-constants";
+import Button from "@shared/components/button/Button";
 
 interface FilterState {
   eventType: string | null;
@@ -50,30 +50,30 @@ export default function Filter() {
   };
 
   const handleSelectSingle = (
-    key: keyof Omit<FilterState, 'date' | 'foodType'>,
+    key: keyof Omit<FilterState, "date" | "foodType">,
     value: string
   ) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       [key]: prev[key] === value ? null : value,
     }));
   };
 
   const handleSelectMulti = (
-    key: keyof Pick<FilterState, 'foodType'>,
+    key: keyof Pick<FilterState, "foodType">,
     value: string
   ) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const current = prev[key] ?? [];
       const updated = current.includes(value)
-        ? current.filter(item => item !== value)
+        ? current.filter((item) => item !== value)
         : [...current, value];
       return { ...prev, [key]: updated.length > 0 ? updated : null };
     });
   };
 
   const handleApplyDate = (date: SelectedDate, index: number) => {
-    setFilters(prev => {
+    setFilters((prev) => {
       const current = prev.date ?? [];
       const updated = [...current];
       updated[index] = date;
@@ -82,7 +82,7 @@ export default function Filter() {
   };
 
   const handleAddSchedule = () => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       date: [...(prev.date ?? []), { startDate: null, endDate: null }],
     }));
@@ -106,7 +106,7 @@ export default function Filter() {
   const handleApplyFilter = () => {
     const cleanedFilters = {
       ...filters,
-      date: filters.date.filter(date => date.startDate !== null),
+      date: filters.date.filter((date) => date.startDate !== null),
     };
     alert(cleanedFilters);
   };
@@ -114,29 +114,29 @@ export default function Filter() {
   return (
     <div>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='#19212A' />}
+        leftIcon={<Icon name="ic_back" color="#19212A" />}
         handleLeftClick={handleGoBack}
         rightIcon={
-          <Button variant='default' buttonStyle='edit'>
+          <Button variant="default" buttonStyle="edit">
             초기화
           </Button>
         }
         handleRightClick={handleResetFilter}
-        text='필터'
+        text="필터"
       />
 
-      <div className='mb-[9rem] flex flex-col gap-[2.8rem] p-[2rem]'>
+      <div className="mb-[9rem] flex flex-col gap-[2.8rem] p-[2rem]">
         <FilterChipGroup
-          filterTitle='행사 종류'
-          selectedOption={filters.eventType ?? ''}
+          filterTitle="행사 종류"
+          selectedOption={filters.eventType ?? ""}
           options={EVENT_TYPE}
-          handleSelectFilter={value => handleSelectSingle('eventType', value)}
+          handleSelectFilter={(value) => handleSelectSingle("eventType", value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className="bg-grayscale-100 h-[0.1rem] w-full" />
 
-        <div className='mb-[2rem] flex flex-col gap-[2rem]'>
-          <div className='flex flex-row items-center justify-between'>
-            <h2 className='px-[0.5rem] title-b-14'>일정</h2>
+        <div className="mb-[2rem] flex flex-col gap-[2rem]">
+          <div className="flex flex-row items-center justify-between">
+            <h2 className="title-b-14 px-[0.5rem]">일정</h2>
             <ButtonText handleClick={handleAddSchedule}>
               일정 추가하기
             </ButtonText>
@@ -150,40 +150,44 @@ export default function Filter() {
             />
           ))}
         </div>
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className="bg-grayscale-100 h-[0.1rem] w-full" />
 
         <FilterChipGroup
-          filterTitle='수량'
-          selectedOption={filters.servingSize ?? ''}
+          filterTitle="수량"
+          selectedOption={filters.servingSize ?? ""}
           options={SERVING_SIZE}
-          handleSelectFilter={value => handleSelectSingle('servingSize', value)}
+          handleSelectFilter={(value) =>
+            handleSelectSingle("servingSize", value)
+          }
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className="bg-grayscale-100 h-[0.1rem] w-full" />
 
         <FilterChipGroup
-          filterTitle='음식 종류'
+          filterTitle="음식 종류"
           selectedOption={filters.foodType ?? []}
           options={FOOD_TYPE}
           multiSelectable
-          handleSelectFilter={value => handleSelectMulti('foodType', value)}
+          handleSelectFilter={(value) => handleSelectMulti("foodType", value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className="bg-grayscale-100 h-[0.1rem] w-full" />
 
         <FilterChipGroup
-          filterTitle='전기 사용'
-          selectedOption={filters.electricityUsage ?? ''}
+          filterTitle="전기 사용"
+          selectedOption={filters.electricityUsage ?? ""}
           options={ELECTRICITY_USAGE}
-          handleSelectFilter={value =>
-            handleSelectSingle('electricityUsage', value)
+          handleSelectFilter={(value) =>
+            handleSelectSingle("electricityUsage", value)
           }
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className="bg-grayscale-100 h-[0.1rem] w-full" />
 
         <FilterChipGroup
-          filterTitle='결제 방법'
-          selectedOption={filters.paymentType ?? ''}
+          filterTitle="결제 방법"
+          selectedOption={filters.paymentType ?? ""}
           options={PAYMENT_TYPE}
-          handleSelectFilter={value => handleSelectSingle('paymentType', value)}
+          handleSelectFilter={(value) =>
+            handleSelectSingle("paymentType", value)
+          }
         />
       </div>
 
@@ -199,7 +203,9 @@ export default function Filter() {
                   endDate: null,
                 }
               }
-              handleApplyDate={date => handleApplyDate(date, currentDateIndex)}
+              handleApplyDate={(date) =>
+                handleApplyDate(date, currentDateIndex)
+              }
               handleCloseBottomSheet={handleCloseCalendar}
               isOpen={isBottomSheetOpen}
             />
@@ -210,13 +216,13 @@ export default function Filter() {
 
       <div
         className={cn(
-          'fixed bottom-[0rem] w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
-          'shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'
+          "fixed bottom-[0rem] w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]",
+          "shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]"
         )}
       >
         <Button
-          variant='cta'
-          buttonStyle={isEqual(filters, initialFilter) ? 'disabled' : 'active'}
+          variant="cta"
+          buttonStyle={isEqual(filters, initialFilter) ? "disabled" : "active"}
           handleClickButton={handleApplyFilter}
         >
           적용

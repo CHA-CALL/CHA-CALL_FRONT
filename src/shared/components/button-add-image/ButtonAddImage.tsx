@@ -1,6 +1,6 @@
-import { useRef, type ChangeEvent } from 'react';
-import { Icon } from '@components/icon/Icon';
-import { cn } from '@utils/cn';
+import { useRef, type ChangeEvent } from "react";
+import { Icon } from "@components/icon/Icon";
+import { cn } from "@utils/cn";
 
 interface ButtonAddImageProps {
   handleFileChange?: (_event: ChangeEvent<HTMLInputElement>) => void;
@@ -20,20 +20,20 @@ export default function ButtonAddImage({
   return (
     <div
       className={cn(
-        'flex flex-none h-[8rem] w-[8rem] flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[1.6rem] border border-grayscale-200 bg-white duration-200 hover:bg-grayscale-50',
+        "border-grayscale-200 hover:bg-grayscale-50 flex h-[8rem] w-[8rem] flex-none flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[1.6rem] border bg-white duration-200",
         className
       )}
       onClick={handleClick}
     >
       <input
         ref={fileInputRef}
-        type='file'
-        accept='image/*'
+        type="file"
+        accept="image/*"
         onChange={handleFileChange}
-        className='hidden h-full w-full'
+        className="hidden h-full w-full"
       />
-      <Icon name='ic_camera' />
-      <span className='mt-[0.4rem] text-grayscale-300 caption-m-10'>
+      <Icon name="ic_camera" />
+      <span className="text-grayscale-300 caption-m-10 mt-[0.4rem]">
         서류 첨부
       </span>
     </div>

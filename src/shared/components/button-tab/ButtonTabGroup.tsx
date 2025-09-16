@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import ButtonTab from '@shared/components/button-tab/ButtonTab';
+import { useState } from "react";
+import ButtonTab from "@shared/components/button-tab/ButtonTab";
 
 interface Tab {
   id: string;
@@ -27,8 +27,8 @@ export default function ButtonTabGroup({
   };
 
   return (
-    <div className={'flex flex-row border-b border-grayscale-100'}>
-      {tabs.map(tab => (
+    <div className={"border-grayscale-100 flex flex-row border-b"}>
+      {tabs.map((tab) => (
         <ButtonTab
           key={tab.id}
           isActive={activeTabId === tab.id}

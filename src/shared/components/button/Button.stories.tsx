@@ -1,41 +1,41 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import Button, { ButtonClasses } from '@shared/components/button/Button';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import Button, { ButtonClasses } from "@shared/components/button/Button";
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: Button,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: { type: 'select' },
+      control: { type: "select" },
       options: Object.keys(ButtonClasses),
-      description: '버튼의 스타일 변형',
+      description: "버튼의 스타일 변형",
     },
     buttonStyle: {
-      control: { type: 'select' },
+      control: { type: "select" },
       options: [
-        'active',
-        'disabled',
-        'sub',
-        'default',
-        'selected1',
-        'selected2',
-        'large',
-        'medium',
-        'edit',
+        "active",
+        "disabled",
+        "sub",
+        "default",
+        "selected1",
+        "selected2",
+        "large",
+        "medium",
+        "edit",
       ],
-      description: '버튼의 스타일 상태',
+      description: "버튼의 스타일 상태",
     },
     handleClickButton: {
-      action: 'clicked',
-      description: '클릭 이벤트 핸들러',
+      action: "clicked",
+      description: "클릭 이벤트 핸들러",
     },
     children: {
-      control: { type: 'text' },
-      description: '버튼 내부 텍스트',
+      control: { type: "text" },
+      description: "버튼 내부 텍스트",
     },
   },
 };
@@ -46,91 +46,91 @@ type Story = StoryObj<typeof meta>;
 // CTA 버튼 스토리
 export const CTA: Story = {
   args: {
-    variant: 'cta',
-    buttonStyle: 'active',
-    children: 'CTA 버튼',
+    variant: "cta",
+    buttonStyle: "active",
+    children: "CTA 버튼",
   },
 };
 
 export const CTADisabled: Story = {
   args: {
-    variant: 'cta',
-    buttonStyle: 'disabled',
-    children: '비활성화된 CTA',
+    variant: "cta",
+    buttonStyle: "disabled",
+    children: "비활성화된 CTA",
   },
 };
 
 export const CTASub: Story = {
   args: {
-    variant: 'cta',
-    buttonStyle: 'sub',
-    children: '서브 CTA',
+    variant: "cta",
+    buttonStyle: "sub",
+    children: "서브 CTA",
   },
 };
 
 // Chip 버튼 스토리
 export const Chip: Story = {
   args: {
-    variant: 'chip',
-    buttonStyle: 'default',
-    children: '칩 버튼',
+    variant: "chip",
+    buttonStyle: "default",
+    children: "칩 버튼",
   },
 };
 
 export const ChipSelected1: Story = {
   args: {
-    variant: 'chip',
-    buttonStyle: 'selected1',
-    children: '선택된 칩 1',
+    variant: "chip",
+    buttonStyle: "selected1",
+    children: "선택된 칩 1",
   },
 };
 
 export const ChipSelected2: Story = {
   args: {
-    variant: 'chip',
-    buttonStyle: 'selected2',
-    children: '선택된 칩 2',
+    variant: "chip",
+    buttonStyle: "selected2",
+    children: "선택된 칩 2",
   },
 };
 
 // Verify 버튼 스토리
 export const Verify: Story = {
   args: {
-    variant: 'verify',
-    buttonStyle: 'active',
-    children: '인증',
+    variant: "verify",
+    buttonStyle: "active",
+    children: "인증",
   },
 };
 
 export const VerifyDisabled: Story = {
   args: {
-    variant: 'verify',
-    buttonStyle: 'disabled',
-    children: '비활성화',
+    variant: "verify",
+    buttonStyle: "disabled",
+    children: "비활성화",
   },
 };
 
 // Default 버튼 스토리
 export const DefaultLarge: Story = {
   args: {
-    variant: 'default',
-    buttonStyle: 'large',
-    children: '기본 버튼 (Large)',
+    variant: "default",
+    buttonStyle: "large",
+    children: "기본 버튼 (Large)",
   },
 };
 
 export const DefaultMedium: Story = {
   args: {
-    variant: 'default',
-    buttonStyle: 'medium',
-    children: '기본 버튼 (Medium)',
+    variant: "default",
+    buttonStyle: "medium",
+    children: "기본 버튼 (Medium)",
   },
 };
 
 export const DefaultEdit: Story = {
   args: {
-    variant: 'default',
-    buttonStyle: 'edit',
-    children: '편집 버튼 (edit)',
+    variant: "default",
+    buttonStyle: "edit",
+    children: "편집 버튼 (edit)",
   },
 };

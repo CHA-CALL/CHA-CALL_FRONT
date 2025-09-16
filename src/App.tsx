@@ -1,11 +1,11 @@
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from "react-router-dom";
 
-import { router } from '@/router/router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { router } from "@/router/router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import '@styles/global.css';
+import "@styles/global.css";
 
-import SvgSprite from '@assets/svg/SvgSprite';
+import SvgSprite from "@assets/svg/SvgSprite";
 
 const queryClient = new QueryClient();
 

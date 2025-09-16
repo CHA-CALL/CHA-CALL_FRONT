@@ -1,5 +1,5 @@
-import React from 'react';
-import { cn } from '@utils/cn';
+import React from "react";
+import { cn } from "@utils/cn";
 
 interface ButtonTabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -17,11 +17,11 @@ export default function ButtonTab({
   return (
     <div>
       <button
-        type='button'
+        type="button"
         onClick={handleClickTab}
         className={cn(
-          'relative mx-[0.5rem] px-[0.4rem] py-[1.2rem] duration-200',
-          isActive ? 'cursor-default text-primary-700' : 'text-grayscale-900',
+          "relative mx-[0.5rem] px-[0.4rem] py-[1.2rem] duration-200",
+          isActive ? "text-primary-700 cursor-default" : "text-grayscale-900",
           className
         )}
         {...props}
@@ -29,7 +29,7 @@ export default function ButtonTab({
         {children}
       </button>
       {isActive && (
-        <div className='h-[0.2rem] rounded-[0.2rem] bg-primary-700' />
+        <div className="bg-primary-700 h-[0.2rem] rounded-[0.2rem]" />
       )}
     </div>
   );

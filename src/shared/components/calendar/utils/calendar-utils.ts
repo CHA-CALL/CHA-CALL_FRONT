@@ -1,5 +1,5 @@
-import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
-import { cn } from '@shared/utils/cn';
+import type { CalendarDate, SelectedDate } from "@shared/types/calendar-types";
+import { cn } from "@shared/utils/cn";
 
 // prop으로 들어온 SelectedDate를 CalendarDate로 변환하는 함수
 const formatToCalendarDate = (selectedDate: SelectedDate) => {
@@ -35,7 +35,7 @@ const isSelectedDate = (
   selectedDates: CalendarDate[]
 ) => {
   return selectedDates.some(
-    date => date.year === year && date.month === month && date.day === day
+    (date) => date.year === year && date.month === month && date.day === day
   );
 };
 
@@ -106,15 +106,15 @@ const calendarBtnClass = (
   const isEnd = selectedDates.length === 2 && isSelected && !isStart;
 
   return cn(
-    'h-[3.6rem] my-[0.4rem] w-full flex items-center justify-center text-center',
+    "h-[3.6rem] my-[0.4rem] w-full flex items-center justify-center text-center",
     textColor,
     // TODO: 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
     isPrevious &&
-      'pointer-events-none cursor-not-allowed line-through decoration-grayscale-300 text-grayscale-300',
-    isInRange && 'bg-primary-50',
-    isSelected && 'text-white',
-    isStart && 'bg-gradient-to-l from-primary-50 from-50% to-white to-50%',
-    isEnd && 'bg-gradient-to-r from-primary-50 from-50% to-white to-50%'
+      "pointer-events-none cursor-not-allowed line-through decoration-grayscale-300 text-grayscale-300",
+    isInRange && "bg-primary-50",
+    isSelected && "text-white",
+    isStart && "bg-gradient-to-l from-primary-50 from-50% to-white to-50%",
+    isEnd && "bg-gradient-to-r from-primary-50 from-50% to-white to-50%"
   );
 };
 

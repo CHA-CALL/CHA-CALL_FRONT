@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 interface UseBottomSheetDragProps {
   sheetRef: React.RefObject<HTMLDivElement | null>;
@@ -23,7 +23,7 @@ export default function useBottomSheetDrag({
     const handleTouchStart = (e: TouchEvent) => {
       isDragging.current = true;
       startY.current = e.touches[0].clientY;
-      sheet.style.transition = 'none';
+      sheet.style.transition = "none";
 
       // 실제 스크롤이 필요한지 확인
       const hasScrollableContent = sheet.scrollHeight > sheet.clientHeight;
@@ -61,22 +61,22 @@ export default function useBottomSheetDrag({
         handleCloseBottomSheet();
       }
 
-      sheet.style.transition = '';
-      sheet.style.transform = '';
+      sheet.style.transition = "";
+      sheet.style.transform = "";
       isDragging.current = false;
       canDrag.current = false;
       startY.current = 0;
       currentY.current = 0;
     };
 
-    sheet.addEventListener('touchstart', handleTouchStart);
-    sheet.addEventListener('touchmove', handleTouchMove);
-    sheet.addEventListener('touchend', handleTouchEnd);
+    sheet.addEventListener("touchstart", handleTouchStart);
+    sheet.addEventListener("touchmove", handleTouchMove);
+    sheet.addEventListener("touchend", handleTouchEnd);
 
     return () => {
-      sheet.removeEventListener('touchstart', handleTouchStart);
-      sheet.removeEventListener('touchmove', handleTouchMove);
-      sheet.removeEventListener('touchend', handleTouchEnd);
+      sheet.removeEventListener("touchstart", handleTouchStart);
+      sheet.removeEventListener("touchmove", handleTouchMove);
+      sheet.removeEventListener("touchend", handleTouchEnd);
     };
   }, [sheetRef, sheetHeight, handleCloseBottomSheet]);
 }
