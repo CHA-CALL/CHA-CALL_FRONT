@@ -11,6 +11,7 @@ interface ModalProps {
   handleCancelClick: () => void;
   handleConfirmClick: () => void;
   handleModalClose: () => void;
+  className?: string;
 }
 
 export default function Modal({
@@ -22,6 +23,7 @@ export default function Modal({
   handleCancelClick,
   handleConfirmClick,
   handleModalClose,
+  className,
 }: ModalProps) {
   if (!isOpen) {
     return null;
@@ -49,16 +51,17 @@ export default function Modal({
       className={cn(
         'fixed inset-0 flex items-center justify-center',
         'h-[100%] w-[100%]',
-        'z-1 bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))]'
+        'z-1 bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))]',
+        className
       )}
     >
       <div
         onClick={e => e.stopPropagation()}
-        className={cn(
-          'flex flex-col',
-          'px-[2rem] pb-[2rem] pt-[2.4rem]',
-          'rounded-[1.6rem] bg-white'
-        )}
+        className={`
+          flex flex-col
+          px-[2rem] pb-[2rem] pt-[2.4rem]
+          rounded-[1.6rem] bg-white
+        `}
       >
         <span className='text-grayscale-900 title-sb-16'>{title}</span>
         <span className='mt-[0.7rem] text-grayscale-700 caption-m-12'>
