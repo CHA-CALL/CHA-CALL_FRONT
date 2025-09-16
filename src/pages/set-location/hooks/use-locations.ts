@@ -15,52 +15,78 @@ export const useLocations = () => {
   const [selectedSiDoId, setSelectedSidoId] = useState<string>();
   const [selectedSiGunGuId, setSelectedSiGunGuId] = useState<string>();
   /** 동,읍,면에 해당 */
-  const [selectedLocationIds, setSelectedLocationIds] = useState<Set<string>>(
-    new Set()
-  );
+  const [selectedLocations, setSelectedLocations] = useState<
+    Map<string, Region>
+  >(new Map());
   const getSelectedLocations = () => {
-    return locationList.filter(location =>
-      selectedLocationIds.has(location.id)
-    );
+    return locationList.filter(location => selectedLocations.has(location.id));
   };
   const [searchText, setSearchText] = useState('');
   const handleClearSearchBar = () => setSearchText('');
 
+  const clearCategory = (depth: string) => {
+    if (depth === 'depth1') {
+      setSelectedSidoId(undefined);
+      setSelectedSiGunGuId(undefined);
+      setSiGunGuList([]);
+      setLocationList([]);
+    }
+    if (depth === 'depth2') {
+      setSelectedSiGunGuId(undefined);
+      setLocationList([]);
+    }
+  };
+
   const handleSelectSiDo = (sidoId: string) => {
+    if (selectedSiDoId === sidoId) {
+      clearCategory('depth1');
+      return;
+    }
     setSelectedSidoId(sidoId);
+    // TODO : 추후 depth2 지역 요청 API로 교체;
     setSiGunGuList(getRegionsDepth2_Parent11.regions);
   };
   const handleSelectSiGunGu = (sigunguId: string) => {
+    if (selectedSiGunGuId === sigunguId) {
+      clearCategory('depth2');
+      return;
+    }
     setSelectedSiGunGuId(sigunguId);
+    // TODO : 추후 depth3 지역 요청 API로 교체;
     setLocationList(getRegionsDepth3_Parent11680.regions);
   };
 
   const handleToggleLocation = (locaiton: Region) => {
     // TODO: API 확정 시 '~전체' 장소의 경우 다른 장소는 선택 해제되도록 처리.
-    setSelectedLocationIds(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(locaiton.id)) {
-        newSet.delete(locaiton.id);
-        return newSet;
+    setSelectedLocations(prev => {
+      const newMap = new Map(prev);
+      if (newMap.has(locaiton.id)) {
+        newMap.delete(locaiton.id);
+        return newMap;
       }
       // TODO: 추후 toast등으로 더 선택할 수 없음을 안내.
-      if (newSet.size >= MAX_SELECTED) return newSet;
-      newSet.add(locaiton.id);
-      return newSet;
+      if (newMap.size >= MAX_SELECTED) return newMap;
+      newMap.set(locaiton.id, locaiton);
+      return newMap;
     });
   };
 
   const handleClearLocations = () => {
-    setSelectedLocationIds(new Set());
+    setSelectedLocations(new Map());
+    setSelectedSidoId(undefined);
+    setSelectedSiGunGuId(undefined);
+    setSiGunGuList([]);
+    setLocationList([]);
   };
 
   const handleDeleteLocation = (locaiton: Region) => {
-    setSelectedLocationIds(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(locaiton.id);
-      return newSet;
+    setSelectedLocations(prev => {
+      const newMap = new Map(prev);
+      newMap.delete(locaiton.id);
+      return newMap;
     });
   };
+
   const handleConfirmLocation = () => {};
 
   useEffect(() => {
@@ -73,7 +99,7 @@ export const useLocations = () => {
     locationList,
     selectedSiDoId,
     selectedSiGunGuId,
-    selectedLocationIds,
+    selectedLocations,
     searchText,
     setSearchText,
     getSelectedLocations,

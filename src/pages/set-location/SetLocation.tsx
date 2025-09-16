@@ -22,10 +22,9 @@ export default function SetLocation() {
     locationList,
     selectedSiDoId,
     selectedSiGunGuId,
-    selectedLocationIds,
+    selectedLocations,
     searchText,
     setSearchText,
-    getSelectedLocations,
     handleClearSearchBar,
     handleSelectSiDo,
     handleSelectSiGunGu,
@@ -66,7 +65,7 @@ export default function SetLocation() {
             {(getSearchedRegionsResponse.results ?? []).map(item => (
               <SearchResultItem
                 locationName={item.name}
-                isChecked={selectedLocationIds.has(item.id)}
+                isChecked={selectedLocations.has(item.id)}
                 handleToggle={() => handleToggleLocation(item)}
                 searchText={searchText}
               />
@@ -84,7 +83,7 @@ export default function SetLocation() {
                 />
               ))}
             </div>
-            <div className='scrollbar-hide overflow-auto'>
+            <div className='scrollbar-hide outline-grayscale-200 overflow-auto outline-1'>
               {siGunGuList.map(item => (
                 <SiGunGuItem
                   title={item.name}
@@ -98,7 +97,7 @@ export default function SetLocation() {
               {locationList.map(item => (
                 <DongEupMeonItem
                   title={item.name}
-                  isSelected={selectedLocationIds.has(item.id)}
+                  isSelected={selectedLocations.has(item.id)}
                   handleSelectDongEupMeon={() => handleToggleLocation(item)}
                   key={item.name}
                 />
@@ -108,9 +107,9 @@ export default function SetLocation() {
         )}
       </div>
 
-      {selectedLocationIds.size > 0 && (
+      {selectedLocations.size > 0 && (
         <SelectedChipsSheet
-          selectedLocations={getSelectedLocations()}
+          selectedLocations={selectedLocations}
           handleDeleteLocation={handleDeleteLocation}
         />
       )}
@@ -125,7 +124,7 @@ export default function SetLocation() {
         </Button>
         <Button
           variant='cta'
-          buttonStyle={selectedLocationIds.size > 0 ? 'active' : 'disabled'}
+          buttonStyle={selectedLocations.size > 0 ? 'active' : 'disabled'}
           handleClickButton={handleConfirmLocation}
         >
           확인
