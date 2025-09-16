@@ -50,8 +50,8 @@ export default function Modal({
       onClick={handleOverlayClick}
       className={cn(
         'fixed inset-0 flex items-center justify-center',
-        'h-[100%] w-[100%]',
-        'z-1 bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))]',
+        'max-w-[60rem] w-screen h-screen',
+        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-100 ',
         className
       )}
     >
