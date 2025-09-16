@@ -1,4 +1,4 @@
-import { Icon } from '../icon/Icon';
+import { Icon } from '@shared/components/icon/Icon';
 
 export interface ErrorTextProps {
   text: string;
