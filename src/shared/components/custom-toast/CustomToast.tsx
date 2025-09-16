@@ -7,11 +7,15 @@ interface CustomToastProps extends ToastContentProps {
   children?: React.ReactNode;
 }
 
-export default function CustomToast({ text, icon, children }: CustomToastProps) {
+export default function CustomToast({
+  text,
+  icon,
+  children,
+}: CustomToastProps) {
   return (
-    <div className="flex items-center gap-[1rem] px-[1.6rem] w-[33.5rem] h-[4rem] py-[0.9rem] bg-grayscale-900 text-white rounded-[1.6rem]">
+    <div className='flex h-[4rem] w-[33.5rem] items-center gap-[1rem] rounded-[1.6rem] bg-grayscale-900 px-[1.6rem] py-[0.9rem] text-white'>
       {icon && icon}
-      {text && <p className="caption-m-12">{text}</p>}
+      {text && <p className='caption-m-12'>{text}</p>}
       {children && children}
     </div>
   );
