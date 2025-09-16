@@ -14,7 +14,7 @@ export default function ButtonDate({
   return (
     <button
       type='button'
-      className='border-grayscale-300 flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border px-[2rem]'
+      className='flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]'
       onClick={handleOpenCalendar}
     >
       <Icon

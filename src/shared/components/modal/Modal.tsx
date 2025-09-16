@@ -48,23 +48,23 @@ export default function Modal({
       onClick={handleOverlayClick}
       className={cn(
         'fixed inset-0 flex items-center justify-center',
-        'w-[100%] h-[100%]',
-        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-1'
+        'h-[100%] w-[100%]',
+        'z-1 bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))]'
       )}
     >
       <div
         onClick={e => e.stopPropagation()}
         className={cn(
           'flex flex-col',
-          'px-[2rem] pt-[2.4rem] pb-[2rem]',
-          'bg-white rounded-[1.6rem]'
+          'px-[2rem] pb-[2rem] pt-[2.4rem]',
+          'rounded-[1.6rem] bg-white'
         )}
       >
-        <span className='title-sb-16 text-grayscale-900'>{title}</span>
-        <span className='mt-[0.7rem] caption-m-12 text-grayscale-700'>
+        <span className='text-grayscale-900 title-sb-16'>{title}</span>
+        <span className='mt-[0.7rem] text-grayscale-700 caption-m-12'>
           {content}
         </span>
-        <div className='flex gap-[1rem] mt-[1.6rem]'>
+        <div className='mt-[1.6rem] flex gap-[1rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'

@@ -16,7 +16,7 @@ const Home = () => {
     <div className='p-[2rem]'>
       <div className='flex flex-row justify-between'>
         <div className='relative'>
-          <div className='h-[3rem] w-[3rem] border border-grayscale-200 rounded-[0.4rem]'>
+          <div className='h-[3rem] w-[3rem] rounded-[0.4rem] border border-grayscale-200'>
             툴팁 기준점
           </div>
           <Tooltip
@@ -28,17 +28,17 @@ const Home = () => {
             horizontalAlign='left'
           />
         </div>
-        <div className='w-[25rem] border border-grayscale-200 rounded-[0.4rem]'>
+        <div className='w-[25rem] rounded-[0.4rem] border border-grayscale-200'>
           다른 요소
         </div>
       </div>
 
-      <div className='flex flex-row justify-between mt-[10rem]'>
-        <div className='w-[25rem] border border-grayscale-200 rounded-[0.4rem]'>
+      <div className='mt-[10rem] flex flex-row justify-between'>
+        <div className='w-[25rem] rounded-[0.4rem] border border-grayscale-200'>
           다른 요소
         </div>
         <div className='relative'>
-          <div className='h-[3rem] w-[3rem] border border-grayscale-200 rounded-[0.4rem]'>
+          <div className='h-[3rem] w-[3rem] rounded-[0.4rem] border border-grayscale-200'>
             툴팁 기준점
           </div>
           <Tooltip
