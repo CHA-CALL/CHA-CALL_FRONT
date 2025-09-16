@@ -48,6 +48,7 @@ export default function Button({
   variant,
   buttonStyle,
   handleClickButton,
+  className,
   ...props
 }: ButtonProps) {
   const baseClasses = ButtonClasses[variant].base;
@@ -59,7 +60,7 @@ export default function Button({
   return (
     <button
       type='button'
-      className={cn(baseClasses, styleClasses)}
+      className={cn(baseClasses, styleClasses, className)}
       onClick={handleClickButton}
       disabled={buttonStyle == 'disabled'}
       {...props}

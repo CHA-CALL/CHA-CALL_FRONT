@@ -2,20 +2,25 @@ import { Icon } from '@shared/components/icon/Icon';
 import { dateFormatter } from '@shared/utils/date-formatter';
 import { cn } from '@shared/utils/cn';
 import type { SelectedDate } from '@shared/types/calendar-types';
-
-interface ButtonDateProps extends SelectedDate {
+  
+interface ButtonDateProps extends SelectedDate, React.ButtonHTMLAttributes<HTMLButtonElement> {
   handleOpenCalendar: () => void;
 }
 
 export default function ButtonDate({
   handleOpenCalendar,
+  className,
   ...props
 }: ButtonDateProps) {
   return (
     <button
       type='button'
-      className='flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]'
+      className={cn(
+        'flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]',
+        className
+      )}
       onClick={handleOpenCalendar}
+      {...props}
     >
       <Icon
         name='ic_calendar'

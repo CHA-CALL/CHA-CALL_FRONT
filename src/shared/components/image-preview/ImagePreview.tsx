@@ -1,24 +1,33 @@
 import { Icon } from '@shared/components/icon/Icon';
+import { cn } from '@utils/cn';
 
 interface ImagePreviewProps {
   handleClose: () => void;
   src?: string;
   alt: string;
+  className?: string;
 }
 
 export default function ImagePreview({
   handleClose,
   src,
   alt,
+  className,
+  ...props
 }: ImagePreviewProps) {
   if (!src) {
     return null;
   }
 
   return (
-    <div className='relative flex h-[8rem] w-[8rem] flex-shrink-0 items-center justify-center rounded-[1.6rem]'>
+    <div className={cn(
+      'relative flex h-[8rem] w-[8rem] flex-none items-center justify-center rounded-[1.6rem]',
+      className
+    )}
+      {...props}
+    >
       <img
-        className='flex h-[8rem] w-[8rem] cursor-pointer items-center justify-center rounded-[1.6rem] object-cover'
+        className='flex h-full w-full cursor-pointer items-center justify-center rounded-[1.6rem] object-cover'
         src={src}
         alt={alt}
       />

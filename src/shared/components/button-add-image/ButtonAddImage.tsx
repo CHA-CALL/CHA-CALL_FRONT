@@ -1,12 +1,15 @@
 import { useRef, type ChangeEvent } from 'react';
 import { Icon } from '@components/icon/Icon';
+import { cn } from '@utils/cn';
 
 interface ButtonAddImageProps {
   handleFileChange?: (_event: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
 export default function ButtonAddImage({
   handleFileChange,
+  className,
 }: ButtonAddImageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -16,7 +19,10 @@ export default function ButtonAddImage({
 
   return (
     <div
-      className='flex h-[8rem] w-[8rem] flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[1.6rem] border border-grayscale-200 bg-white duration-200 hover:bg-grayscale-50'
+      className={cn(
+        'flex flex-none h-[8rem] w-[8rem] flex-shrink-0 cursor-pointer flex-col items-center justify-center rounded-[1.6rem] border border-grayscale-200 bg-white duration-200 hover:bg-grayscale-50',
+        className
+      )}
       onClick={handleClick}
     >
       <input
