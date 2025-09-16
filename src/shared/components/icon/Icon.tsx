@@ -21,7 +21,8 @@ export type IconId =
   | 'ic_camera'
   | 'ic_filter'
   | 'ic_down'
-  | 'ic_up';
+  | 'ic_up'
+  | 'ic_error';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;

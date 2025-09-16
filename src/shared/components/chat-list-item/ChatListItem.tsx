@@ -28,7 +28,7 @@ export default function ChatListItem({
   return (
     <div
       className={cn(
-        'w-full flex items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
+        'flex w-full items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
         'transition-colors duration-200',
         {
           'bg-primary-25': isChecked && isEditing,
@@ -43,39 +43,39 @@ export default function ChatListItem({
         />
       )}
 
-      <div className='w-[5.2rem] h-[5.2rem] rounded-full overflow-hidden flex-shrink-0 border border-grayscale-200'>
+      <div className='h-[5.2rem] w-[5.2rem] flex-shrink-0 overflow-hidden rounded-full border border-grayscale-200'>
         {profileImage ? (
           <img
             src={profileImage}
             alt={`${clientName} profile`}
-            className='object-cover w-full h-full'
+            className='h-full w-full object-cover'
           />
         ) : (
-          <div className='w-full h-full bg-cover bg-grayscale-200' />
+          <div className='h-full w-full bg-grayscale-200 bg-cover' />
         )}
       </div>
 
-      <div className='flex-1 flex justify-between items-start gap-[1rem] overflow-hidden'>
-        <div className='flex flex-col gap-[0.4rem] overflow-hidden flex-1'>
+      <div className='flex flex-1 items-start justify-between gap-[1rem] overflow-hidden'>
+        <div className='flex flex-1 flex-col gap-[0.4rem] overflow-hidden'>
           <div className='flex items-center gap-[0.6rem] overflow-hidden'>
-            <span className='text-grayscale-900 title-sb-16 leading-[1.5rem] truncate block'>
+            <span className='block truncate leading-[1.5rem] text-grayscale-900 title-sb-16'>
               {clientName}
             </span>
             <Tag title={tagTitle} />
           </div>
           <span
-            className={`caption-m-12 leading-[1.5rem] truncate block ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
+            className={`block truncate leading-[1.5rem] caption-m-12 ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
           >
             {lastChat}
           </span>
         </div>
 
-        <div className='flex flex-col items-end gap-[0.6rem] pt-[0.3rem] flex-shrink-0 w-[5rem]'>
-          <span className='whitespace-nowrap caption-m-11 text-grayscale-500'>
+        <div className='flex w-[5rem] flex-shrink-0 flex-col items-end gap-[0.6rem] pt-[0.3rem]'>
+          <span className='whitespace-nowrap text-grayscale-500 caption-m-11'>
             {lastChatTime}
           </span>
           {unreadCount > 0 && (
-            <div className='h-[1.8rem] rounded-full bg-primary-500 flex justify-center items-center caption-m-12 text-white px-[0.5rem] whitespace-nowrap'>
+            <div className='flex h-[1.8rem] items-center justify-center whitespace-nowrap rounded-full bg-primary-500 px-[0.5rem] text-white caption-m-12'>
               {unreadCount}
             </div>
           )}

@@ -12,10 +12,10 @@ export default function SelectChip({
   return (
     <button
       type='button'
-      className='h-[3rem] flex items-center rounded-[0.8rem] bg-primary-25 pl-[1.2rem] pr-[0.6rem] py-[0.2rem] leading-[1.5rem]'
+      className='flex h-[3rem] items-center rounded-[0.8rem] bg-primary-25 py-[0.2rem] pl-[1.2rem] pr-[0.6rem] leading-[1.5rem]'
       onClick={handleDeleteChip}
     >
-      <span className='title-sb-12 text-primary-700'>{title}</span>
+      <span className='text-primary-700 title-sb-12'>{title}</span>
       <Icon name='ic_close' color='#F83419' />
     </button>
   );

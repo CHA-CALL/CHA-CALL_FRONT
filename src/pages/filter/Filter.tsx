@@ -108,7 +108,7 @@ export default function Filter() {
       ...filters,
       date: filters.date.filter(date => date.startDate !== null),
     };
-    console.log(cleanedFilters);
+    alert(cleanedFilters);
   };
 
   return (
