@@ -51,11 +51,11 @@ export default function OtherDocsSection({
           maxLength={OWNER_MEDIA_MAX_COUNT.OTHER_DOCS}
           currentLength={files?.length || 0}
         />
-        <p className='caption-m-11 text-grayscale-500'>
+        <p className='text-grayscale-500 caption-m-11'>
           영업신고증 (자동차등록증, 위생증, 보건증, 가스완성검사증명서) 필요
         </p>
       </div>
-      <div className='w-full flex items-start justify-start gap-[1rem] overflow-x-scroll scrollbar-hide pt-[0.8rem] pr-[1rem]'>
+      <div className='flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem] scrollbar-hide'>
         {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
         {files &&
           files.map((_, index) => (

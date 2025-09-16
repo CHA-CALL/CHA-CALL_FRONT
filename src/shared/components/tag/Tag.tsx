@@ -1,7 +1,11 @@
-interface TagProps{
-    title:string;
+interface TagProps {
+  title: string;
 }
 
-export default function Tag({title}:TagProps){
-  return <div className="inline-block px-[1.2rem] py-[0.2rem] bg-primary-50 text-primary-700 caption-m-10 rounded-[0.6rem] leading-[1.5rem] whitespace-nowrap">{title}</div>;
-};
+export default function Tag({ title }: TagProps) {
+  return (
+    <div className='inline-block whitespace-nowrap rounded-[0.6rem] bg-primary-50 px-[1.2rem] py-[0.2rem] leading-[1.5rem] text-primary-700 caption-m-10'>
+      {title}
+    </div>
+  );
+}

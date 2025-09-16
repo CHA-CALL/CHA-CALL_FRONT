@@ -16,12 +16,12 @@ export default function SearchBar({
   return (
     <div
       className={cn(
-        'flex justify-between items-center px-[1rem] py-[1.6rem] border border-grayscale-200 rounded-[1.6rem] min-w-[33.5rem] w-full h-[5.4rem] flex-shrink-0 hover:border-grayscale-700',
+        'flex h-[5.4rem] w-full min-w-[33.5rem] flex-shrink-0 items-center justify-between rounded-[1.6rem] border border-grayscale-200 px-[1rem] py-[1.6rem] hover:border-grayscale-700',
         error && 'border-primary-500'
       )}
     >
       <input
-        className='w-full h-full caret-primary-700 body-m-14 text-grayscale-900 placeholder:text-grayscale-300 placeholder:body-m-14 mr-[1rem]'
+        className='mr-[1rem] h-full w-full text-grayscale-900 caret-primary-700 body-m-14 placeholder:text-grayscale-300 placeholder:body-m-14'
         maxLength={props.maxLength}
         {...props}
       />

@@ -57,8 +57,8 @@ export default function Tooltip({
         </svg>
       )}
 
-      <div className='w-fit flex flex-row items-center gap-[0.4rem] px-[1.2rem] py-[0.6rem] rounded-[1.6rem] bg-primary-700'>
-        <span className='caption-m-11 text-white'>{text}</span>
+      <div className='flex w-fit flex-row items-center gap-[0.4rem] rounded-[1.6rem] bg-primary-700 px-[1.2rem] py-[0.6rem]'>
+        <span className='text-white caption-m-11'>{text}</span>
         <Icon
           name='ic_close'
           width={15}
