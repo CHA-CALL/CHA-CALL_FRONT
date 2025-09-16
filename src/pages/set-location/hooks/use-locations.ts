@@ -61,35 +61,37 @@ export const useLocations = () => {
 
   const handleToggleLocation = (location: Region) => {
     setSelectedLocations(prev => {
-      const newMap = new Map(prev);
-      const allMap = [...prev].filter(
-        ([key]) => key.length === SELECT_ALL_ID_LENGTH
-      );
-      if (newMap.has(location.id)) {
-        newMap.delete(location.id);
+      const clickedId = location.id;
+      if (prev.has(clickedId)) {
+        const newMap = new Map(prev);
+        newMap.delete(clickedId);
         return newMap;
       }
+
+      const newMap = new Map(prev);
       /** 전체 지역 버튼을 누른 경우 */
-      if (location.id.length === SELECT_ALL_ID_LENGTH) {
-        const filteredMap = new Map(
-          [...prev].filter(([key]) => !key.startsWith(location.id))
-        );
-        filteredMap.set(location.id, location);
-        return filteredMap;
+      const isAllButton = clickedId.length === SELECT_ALL_ID_LENGTH;
+      if (isAllButton) {
+        for (const key of newMap.keys()) {
+          if (key.startsWith(clickedId) && key.length > clickedId.length) {
+            newMap.delete(key);
+          }
+        }
+        newMap.set(clickedId, location);
+        return newMap;
       }
       /** 이미 5개 길이의 id를 갖고 있을 때, 일반 지역이 선택된 경우.
       일반 지역의 앞 5개 길이와 비교하여 일치하는 id를 제거.*/
-      if (allMap.length > 0) {
-        const filteredMap = new Map(
-          [...allMap].filter(([key]) => !location.id.startsWith(key))
-        );
-        filteredMap.set(location.id, location);
-        return filteredMap;
+      const parentKey = [...newMap.keys()].find(
+        key => clickedId.startsWith(key) && key.length === SELECT_ALL_ID_LENGTH
+      );
+      if (parentKey) {
+        newMap.delete(parentKey);
       }
       if (newMap.size >= MAX_SELECTED)
         // TODO: 추후 toast등으로 더 선택할 수 없음을 안내.
         return newMap;
-      newMap.set(location.id, location);
+      newMap.set(clickedId, location);
       return newMap;
     });
   };
