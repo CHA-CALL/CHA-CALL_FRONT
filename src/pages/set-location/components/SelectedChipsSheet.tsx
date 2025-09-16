@@ -4,7 +4,7 @@ import SelectChip from '@shared/components/select-chip/SelectChip';
 
 interface SelectedChipsSheetProps {
   selectedLocations: Map<string, Region>;
-  handleDeleteLocation: (_locaiton: Region) => void;
+  handleDeleteLocation: (_location: Region) => void;
 }
 
 export default function SelectedChipsSheet({

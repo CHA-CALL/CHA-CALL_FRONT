@@ -4,7 +4,10 @@ import {
   getRegionsDepth2_Parent11,
   getRegionsDepth3_Parent11680,
 } from '@pages/set-location/constant/mocks';
-import { MAX_SELECTED } from '@pages/set-location/constant/set-location';
+import {
+  MAX_SELECTED,
+  SELECT_ALL_ID_LENGTH,
+} from '@pages/set-location/constant/set-location';
 import { useEffect, useState } from 'react';
 
 export const useLocations = () => {
@@ -56,17 +59,37 @@ export const useLocations = () => {
     setLocationList(getRegionsDepth3_Parent11680.regions);
   };
 
-  const handleToggleLocation = (locaiton: Region) => {
-    // TODO: API 확정 시 '~전체' 장소의 경우 다른 장소는 선택 해제되도록 처리.
+  const handleToggleLocation = (location: Region) => {
     setSelectedLocations(prev => {
       const newMap = new Map(prev);
-      if (newMap.has(locaiton.id)) {
-        newMap.delete(locaiton.id);
+      const allMap = [...prev].filter(
+        ([key]) => key.length === SELECT_ALL_ID_LENGTH
+      );
+      if (newMap.has(location.id)) {
+        newMap.delete(location.id);
         return newMap;
       }
-      // TODO: 추후 toast등으로 더 선택할 수 없음을 안내.
-      if (newMap.size >= MAX_SELECTED) return newMap;
-      newMap.set(locaiton.id, locaiton);
+      /** 전체 지역 버튼을 누른 경우 */
+      if (location.id.length === SELECT_ALL_ID_LENGTH) {
+        const filteredMap = new Map(
+          [...prev].filter(([key]) => !key.startsWith(location.id))
+        );
+        filteredMap.set(location.id, location);
+        return filteredMap;
+      }
+      /** 이미 5개 길이의 id를 갖고 있을 때, 일반 지역이 선택된 경우.
+      일반 지역의 앞 5개 길이와 비교하여 일치하는 id를 제거.*/
+      if (allMap.length > 0) {
+        const filteredMap = new Map(
+          [...allMap].filter(([key]) => !location.id.startsWith(key))
+        );
+        filteredMap.set(location.id, location);
+        return filteredMap;
+      }
+      if (newMap.size >= MAX_SELECTED)
+        // TODO: 추후 toast등으로 더 선택할 수 없음을 안내.
+        return newMap;
+      newMap.set(location.id, location);
       return newMap;
     });
   };
@@ -79,10 +102,10 @@ export const useLocations = () => {
     setLocationList([]);
   };
 
-  const handleDeleteLocation = (locaiton: Region) => {
+  const handleDeleteLocation = (location: Region) => {
     setSelectedLocations(prev => {
       const newMap = new Map(prev);
-      newMap.delete(locaiton.id);
+      newMap.delete(location.id);
       return newMap;
     });
   };

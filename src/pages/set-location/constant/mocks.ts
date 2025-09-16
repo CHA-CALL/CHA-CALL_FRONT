@@ -42,7 +42,7 @@ export const getRegionsDepth1 = {
 
 /** GET /regions?depth=2&parentId={id} parentId=11 (서울) 더미 응답 */
 export const getRegionsDepth2_Parent11 = {
-  parent: { name: '서울특별시', id: '11' },
+  parent: { name: '서울', id: '11' },
   regions: [
     { name: '서울 전체', id: '11' },
     { name: '종로구', id: '11110' },
