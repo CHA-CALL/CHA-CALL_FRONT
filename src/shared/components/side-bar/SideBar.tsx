@@ -16,6 +16,7 @@ interface SideBarProps {
   isOpen?: boolean;
   userType: UserType;
   handleSideBarClose: () => void;
+  className?: string;
 }
 
 const MenuItem = ({
@@ -44,6 +45,7 @@ export default function SideBar({
   isOpen,
   userType = 'guest',
   handleSideBarClose,
+  className,
 }: SideBarProps) {
   if (!isOpen) {
     return null;
@@ -154,16 +156,17 @@ export default function SideBar({
       onClick={handleOverlayClick}
       className={cn(
         'fixed flex w-full h-full',
-        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-50'
+        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-50',
+        className
       )}
     >
       <div
         onClick={e => e.stopPropagation()}
-        className={cn(
-          'fixed top-0 left-0 flex flex-col',
-          'w-[80%] max-w-[30rem] py-[2.3rem] px-[2rem] h-full',
-          'bg-white'
-        )}
+        className={`
+          fixed top-0 left-0 flex flex-col
+          w-[80%] max-w-[30rem] py-[2.3rem] px-[2rem] h-full'
+          bg-white`
+        }
       >
         <img
           src='https://picsum.photos/id/11/120/34'
