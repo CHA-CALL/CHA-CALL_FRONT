@@ -2,8 +2,7 @@ import { type MouseEvent } from 'react';
 import { cn } from '@utils/cn';
 import { Icon, type IconId } from '@components/icon/Icon';
 import Button from '@components/button/Button';
-
-type UserType = 'guest' | 'customer' | 'manager';
+import { USER_TYPE, type UserType } from '@shared/types/user-types';
 
 interface MenuItemProps {
   icon: IconId;
@@ -43,7 +42,7 @@ const MenuItem = ({
 
 export default function SideBar({
   isOpen,
-  userType = 'guest',
+  userType = USER_TYPE.Guest,
   handleSideBarClose,
   className,
 }: SideBarProps) {
@@ -95,7 +94,7 @@ export default function SideBar({
 
   const renderButtons = () => {
     switch (userType) {
-    case 'guest':
+    case USER_TYPE.Guest:
       return (
         <Button
           variant='default'
@@ -106,7 +105,7 @@ export default function SideBar({
           로그인/회원가입
         </Button>
       )
-    case 'customer':
+    case USER_TYPE.Customer:
       return (
         <div className='flex gap-[1rem]'>
           <Button
@@ -127,7 +126,7 @@ export default function SideBar({
           </Button>
         </div>
       )
-    case 'manager':
+    case USER_TYPE.Manager:
       return (
         <div className='flex gap-[1rem]'>
           <Button
@@ -190,7 +189,7 @@ export default function SideBar({
             icon='ic_register'
             text='푸드트럭 등록하기'
             handleMenuClick={handleClickRegister}
-            show={userType === 'manager'}
+            show={userType === USER_TYPE.Manager}
           />
 
           <div className='my-[1.2rem] border-b border-grayscale-200' />
