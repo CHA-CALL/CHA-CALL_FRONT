@@ -37,14 +37,7 @@ export default function BottomSheet({
     sheetHeight,
   });
   return (
-    <div
-      className={cn(
-        'fixed inset-[0] h-dvh w-dvw bg-black/50',
-        'z-50 transition-opacity duration-300 ease-in-out',
-        isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
-      )}
-      onClick={handleCloseBottomSheet}
-    >
+   
       <div
         ref={sheetRef}
         className={cn(
@@ -57,6 +50,6 @@ export default function BottomSheet({
         <div className='mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem] bg-grayscale-300' />
         <div className='mb-[3.4rem] mt-[2.8rem]'>{sheetContent}</div>
       </div>
-    </div>
+   
   );
 }
