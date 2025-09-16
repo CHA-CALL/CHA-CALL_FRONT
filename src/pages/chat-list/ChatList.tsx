@@ -25,7 +25,7 @@ export default function ChatList() {
   } = useChatList();
 
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex h-screen flex-col'>
       <Navigation
         text='채팅'
         leftIcon={<Icon name='ic_back' />}
@@ -50,7 +50,7 @@ export default function ChatList() {
         handleConfirmClick={handleCloseModal}
         handleModalClose={handleCloseModal}
       />
-      <div className='flex flex-col flex-1 py-[1.2rem] overflow-y-scroll'>
+      <div className='flex flex-1 flex-col overflow-y-scroll py-[1.2rem]'>
         {(chatList ?? []).map(item => {
           return (
             <ChatListItem

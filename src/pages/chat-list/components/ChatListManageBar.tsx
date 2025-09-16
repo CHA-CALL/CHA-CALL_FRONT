@@ -33,8 +33,8 @@ export default function ChatListManageBar({
     setActiveFilter(filter);
   };
   return (
-    <div className='flex justify-between px-[2rem] pt-[3.1rem] border-b-[0.1rem] border-grayscale-100'>
-      <div className='w-full flex gap-[1rem] title-sb-14 text-grayscale-900 pt-[0.2rem]'>
+    <div className='border-grayscale-100 flex justify-between border-b-[0.1rem] px-[2rem] pt-[3.1rem]'>
+      <div className='title-sb-14 text-grayscale-900 flex w-full gap-[1rem] pt-[0.2rem]'>
         {FILTERS.map(filter => {
           return (
             <button

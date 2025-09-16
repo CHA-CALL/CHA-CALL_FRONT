@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 export default function Layout() {
   return (
-    <main className='max-w-[60rem] min-h-dvh mx-auto'>
+    <main className='mx-auto min-h-dvh max-w-[60rem]'>
       <Outlet />
     </main>
   );
