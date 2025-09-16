@@ -24,6 +24,7 @@ export const ButtonClasses = {
     base: 'rounded-[0.4rem] border border-grayscale-200 bg-white',
     large: 'w-full h-[4.6rem] px-[11.4rem] py-[1.5rem] title-sb-14',
     medium: 'h-[2.8rem] px-[1.85rem] py-[0.5rem] caption-m-12',
+    edit: 'px-[1.25rem] py-[0.5rem] caption-m-12 text-grayscale-700',
   },
 } as const;
 
@@ -31,7 +32,7 @@ type VariantStyleMap = {
   cta: 'active' | 'disabled' | 'sub';
   chip: 'default' | 'selected1' | 'selected2';
   verify: 'active' | 'disabled';
-  default: 'large' | 'medium';
+  default: 'large' | 'medium' | 'edit';
 };
 
 type ButtonProps<V extends keyof VariantStyleMap = keyof VariantStyleMap> =
