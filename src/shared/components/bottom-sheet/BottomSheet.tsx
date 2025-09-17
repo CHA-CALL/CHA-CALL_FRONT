@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import useBottomSheetDrag from '@shared/hooks/use-bottom-sheet-drag';
 import { cn } from '@shared/utils/cn';
@@ -17,19 +17,6 @@ export default function BottomSheet({
   sheetHeight,
 }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
-  const prevOverflowRef = useRef<string>('');
-
-  useEffect(() => {
-    if (isOpen) {
-      prevOverflowRef.current = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = prevOverflowRef.current || '';
-    }
-    return () => {
-      document.body.style.overflow = prevOverflowRef.current || '';
-    };
-  }, [isOpen]);
 
   useBottomSheetDrag({
     sheetRef,

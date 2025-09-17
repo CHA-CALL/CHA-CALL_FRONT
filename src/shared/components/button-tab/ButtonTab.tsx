@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@utils/cn';
+import { cn } from '@shared/utils/cn';
 
 interface ButtonTabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@shared/components/icon/Icon';
-import { cn } from '@utils/cn';
+import { cn } from '@shared/utils/cn';
 
 interface SelectChipProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

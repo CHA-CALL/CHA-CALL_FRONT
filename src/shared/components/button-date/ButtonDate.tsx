@@ -8,11 +8,15 @@ interface ButtonDateProps
   extends SelectedDate,
     React.ButtonHTMLAttributes<HTMLButtonElement> {
   handleOpenCalendar: () => void;
+  startDate: Date;
+  endDate: Date;
 }
 
 export default function ButtonDate({
   handleOpenCalendar,
   className,
+  startDate,
+  endDate,
   ...props
 }: ButtonDateProps) {
   return (
@@ -25,26 +29,21 @@ export default function ButtonDate({
       onClick={handleOpenCalendar}
       {...props}
     >
-      <Icon
-        name='ic_calendar'
-        color={props.startDate ? '#565B65' : '#CCCED5'}
-      />
+      <Icon name='ic_calendar' color={startDate ? '#565B65' : '#CCCED5'} />
       <div className='flex flex-row items-center gap-[0.4rem]'>
         <span
           className={cn(
             'text-grayscale-700 body-m-14',
-            !props.startDate && 'text-grayscale-300'
+            !startDate && 'text-grayscale-300'
           )}
         >
-          {props.startDate
-            ? dateFormatter(props.startDate)
-            : '일정을 선택해 주세요.'}
+          {startDate ? dateFormatter(startDate) : '일정을 선택해 주세요.'}
         </span>
-        {props.startDate && props.endDate && (
+        {startDate && endDate && (
           <>
             <Icon name='ic_dash' color='#838992' />
             <span className='text-grayscale-700 body-m-14'>
-              {dateFormatter(props.endDate)}
+              {dateFormatter(endDate)}
             </span>
           </>
         )}
