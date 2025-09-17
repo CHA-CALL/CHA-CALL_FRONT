@@ -8,8 +8,8 @@ interface ButtonDateProps
   extends SelectedDate,
     React.ButtonHTMLAttributes<HTMLButtonElement> {
   handleOpenCalendar: () => void;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 export default function ButtonDate({
