@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
 const meta: Meta<typeof ChatListItem> = {
@@ -16,7 +16,8 @@ const meta: Meta<typeof ChatListItem> = {
     },
     isEditing: {
       control: 'boolean',
-      description: '편집 모드 활성화 여부',
+      description:
+        '편집 모드 활성화 여부. true인 경우에 컴포넌트 전체에 클릭 이벤트 발생',
     },
     clientName: {
       control: 'text',
@@ -81,7 +82,8 @@ export const LongText: Story = {
   args: {
     ...defaultArgs,
     clientName: '건국대학교 총학생회 축제준비위원회 부팀장 고객님',
-    lastChat: '안녕하세요, 문의주신 내용에 대한 답변입니다. 저희 학교의 축제를 맞이하여 총 7대의 푸드트럭을 각 건물 앞에 요청드리려고 합니다.',
+    lastChat:
+      '안녕하세요, 문의주신 내용에 대한 답변입니다. 저희 학교의 축제를 맞이하여 총 7대의 푸드트럭을 각 건물 앞에 요청드리려고 합니다.',
     unreadCount: 1,
   },
 };
@@ -115,14 +117,14 @@ export const Interactive: Story = {
     ...Default.args,
     isEditing: true,
   },
-  render: (args) => {
+  render: args => {
     const [isChecked, setIsChecked] = useState(args.isChecked);
 
     return (
       <ChatListItem
         {...args}
         isChecked={isChecked}
-        handleCheckChange={(checked) => {
+        handleCheckChange={checked => {
           args.handleCheckChange(checked);
           setIsChecked(checked);
         }}
