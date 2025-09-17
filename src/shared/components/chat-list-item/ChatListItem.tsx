@@ -25,15 +25,23 @@ export default function ChatListItem({
   isChecked,
   handleCheckChange,
 }: ChatListItemProps) {
+  const handleClickItem = () => {
+    if (isEditing) {
+      handleCheckChange(!isChecked);
+      return;
+    }
+    // TODO : 대화창 페이지, API 추가 시 연결 예정.
+    alert('대화창으로 이동');
+  };
+
   return (
     <button
-      disabled={!isEditing}
       className={cn(
         'flex w-full items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
-        'transition-colors duration-200 disabled:cursor-not-allowed',
+        'transition-colors duration-200',
         isChecked && isEditing ? 'bg-primary-25' : 'bg-white'
       )}
-      onClick={() => handleCheckChange(!isChecked)}
+      onClick={handleClickItem}
     >
       {isEditing && <ButtonCheck isChecked={isChecked} />}
 
