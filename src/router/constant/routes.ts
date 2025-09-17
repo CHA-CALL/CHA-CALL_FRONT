@@ -3,4 +3,5 @@ export const ROUTES = {
   FILTER: '/filter',
   RESERVATION: '/reservation',
   FOOD_TRUCK_ONBOARDING: '/food-truck-onboarding',
+  CHATLIST: '/chat-list',
 };
