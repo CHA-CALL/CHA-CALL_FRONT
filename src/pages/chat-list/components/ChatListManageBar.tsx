@@ -32,6 +32,9 @@ export default function ChatListManageBar({
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
   };
+  const handleClickTrash = () => {
+    if (selectChatList.size !== 0) handleDeleteChat();
+  };
   return (
     <div className='border-grayscale-100 flex justify-between border-b-[0.1rem] px-[2rem] pt-[3.1rem]'>
       <div className='title-sb-14 text-grayscale-900 flex w-full gap-[1rem] pt-[0.2rem]'>
@@ -56,7 +59,7 @@ export default function ChatListManageBar({
       <div>
         {isEditing ? (
           <div className='flex gap-[1rem]'>
-            <ButtonTrash handleClick={handleDeleteChat} />
+            <ButtonTrash handleClick={handleClickTrash} />
             {selectChatList.size !== 0 ? (
               <Button
                 style={{ paddingLeft: '0.75rem', paddingRight: '0.85rem' }}
