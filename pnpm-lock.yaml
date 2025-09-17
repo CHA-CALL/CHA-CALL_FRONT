@@ -123,9 +123,6 @@ importers:
       globals:
         specifier: ^16.3.0
         version: 16.4.0
-      headwind:
-        specifier: ^0.0.0
-        version: 0.0.0
       playwright:
         specifier: ^1.55.0
         version: 1.55.0
@@ -1894,9 +1891,6 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
-
-  headwind@0.0.0:
-    resolution: {integrity: sha512-TC/DBABeED48/OIkzJLp0yvlLDHgXS67fFF2t7U4iIvGmo+bdfzSWOVkJS9OxzvddC8ZlhD2PZf6riVr0vTygw==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -4875,8 +4869,6 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
-
-  headwind@0.0.0: {}
 
   html-escaper@2.0.2: {}
 
