@@ -1,9 +1,9 @@
 import {
   OWNER_TEXT,
   OWNER_TEXT_ERROR_MESSAGE,
-} from "@pages/owner-onboarding/constants/owner";
-import { z } from "zod";
-import { useState } from "react";
+} from '@pages/owner-onboarding/constants/owner';
+import { z } from 'zod';
+import { useState } from 'react';
 
 export const FOOD_TRUCK_NAME_VALIDATOR = z
   .string()

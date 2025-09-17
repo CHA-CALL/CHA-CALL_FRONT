@@ -1,9 +1,9 @@
-import Button from "@shared/components/button/Button";
-import { Icon } from "@shared/components/icon/Icon";
-import type { SelectedDate } from "@shared/types/calendar-types";
+import Button from '@shared/components/button/Button';
+import { Icon } from '@shared/components/icon/Icon';
+import type { SelectedDate } from '@shared/types/calendar-types';
 
-import CalendarDayButton from "@shared/components/calendar/components/CalendarDayButton";
-import useCalendar from "@shared/components/calendar/hooks/use-calendar";
+import CalendarDayButton from '@shared/components/calendar/components/CalendarDayButton';
+import useCalendar from '@shared/components/calendar/hooks/use-calendar';
 
 interface CalendarProps {
   selectedDate: SelectedDate;
@@ -12,7 +12,7 @@ interface CalendarProps {
   isOpen: boolean;
 }
 
-const DAY_OF_THE_WEEK_LABELS = ["일", "월", "화", "수", "목", "금", "토"];
+const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({
   selectedDate,
@@ -38,41 +38,41 @@ export default function Calendar({
   );
 
   return (
-    <div className="relative flex h-[43.5rem] w-full flex-col justify-between">
+    <div className='relative flex h-[43.5rem] w-full flex-col justify-between'>
       <div>
-        <div className="mb-[1.6rem] flex flex-row items-center justify-between pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]">
-          <h3 className="text-grayscale-900 heading-sb-18">
+        <div className='mb-[1.6rem] flex flex-row items-center justify-between pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]'>
+          <h3 className='text-grayscale-900 heading-sb-18'>
             {year}년 {month}월
           </h3>
-          <div className="flex flex-row gap-[1.2rem]">
-            <button type="button" onClick={handlePrevMonth}>
+          <div className='flex flex-row gap-[1.2rem]'>
+            <button type='button' onClick={handlePrevMonth}>
               <Icon
-                name="ic_back"
-                color={isPrevMonth ? "#f2f3f7" : "#565B65"}
+                name='ic_back'
+                color={isPrevMonth ? '#f2f3f7' : '#565B65'}
               />
             </button>
-            <button type="button" onClick={handleNextMonth}>
-              <Icon name="ic_next" />
+            <button type='button' onClick={handleNextMonth}>
+              <Icon name='ic_next' />
             </button>
           </div>
         </div>
 
-        <div className="text-grayscale-500 caption-r-12 grid grid-cols-7 text-center">
-          {DAY_OF_THE_WEEK_LABELS.map((dayOfTheWeek) => (
-            <span key={dayOfTheWeek} className="my-[1.2rem]">
+        <div className='text-grayscale-500 caption-r-12 grid grid-cols-7 text-center'>
+          {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
+            <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
             </span>
           ))}
         </div>
 
-        <div className="body-m-14 grid grid-cols-7">
-          {calendarDays.prevDates.map((day) => (
+        <div className='body-m-14 grid grid-cols-7'>
+          {calendarDays.prevDates.map(day => (
             <CalendarDayButton
               key={`p${day}`}
               year={prevYM.year}
               month={prevYM.month}
               day={day}
-              textColor="text-grayscale-300"
+              textColor='text-grayscale-300'
               handleClickDayButton={() =>
                 handleSelectDay(prevYM.year, prevYM.month, day)
               }
@@ -80,25 +80,25 @@ export default function Calendar({
             />
           ))}
 
-          {calendarDays.thisDates.map((day) => (
+          {calendarDays.thisDates.map(day => (
             <CalendarDayButton
               key={`c${day}`}
               year={year}
               month={month}
               day={day}
-              textColor="text-grayscale-900"
+              textColor='text-grayscale-900'
               handleClickDayButton={() => handleSelectDay(year, month, day)}
               selectedDates={selectedDates}
             />
           ))}
 
-          {calendarDays.nextDates.map((day) => (
+          {calendarDays.nextDates.map(day => (
             <CalendarDayButton
               key={`n${day}`}
               year={nextYM.year}
               month={nextYM.month}
               day={day}
-              textColor="text-grayscale-300"
+              textColor='text-grayscale-300'
               handleClickDayButton={() =>
                 handleSelectDay(nextYM.year, nextYM.month, day)
               }
@@ -108,17 +108,17 @@ export default function Calendar({
         </div>
       </div>
 
-      <div className="flex flex-row gap-[0.7rem] py-[1.7rem]">
+      <div className='flex flex-row gap-[0.7rem] py-[1.7rem]'>
         <Button
-          variant="cta"
-          buttonStyle="sub"
+          variant='cta'
+          buttonStyle='sub'
           handleClickButton={handleCloseBottomSheet}
         >
           취소
         </Button>
         <Button
-          variant="cta"
-          buttonStyle={selectedDates.length > 0 ? "active" : "disabled"}
+          variant='cta'
+          buttonStyle={selectedDates.length > 0 ? 'active' : 'disabled'}
           handleClickButton={handleCompleteApplyDate}
         >
           적용

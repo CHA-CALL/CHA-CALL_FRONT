@@ -1,14 +1,14 @@
-import ButtonAddImage from "@shared/components/button-add-image/ButtonAddImage";
-import { OWNER_MEDIA_MAX_COUNT } from "@pages/owner-onboarding/constants/owner";
-import SectionTitle from "@pages/owner-onboarding/components/SectionTitle";
-import type { OwnerFormData } from "@pages/owner-onboarding/hooks/useFoodTruckInput";
-import { useEffect, useState, type ChangeEvent } from "react";
-import ImagePreview from "@shared/components/image-preview/ImagePreview";
-import ErrorText from "@shared/components/error-text/ErrorText";
+import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
+import { OWNER_MEDIA_MAX_COUNT } from '@pages/owner-onboarding/constants/owner';
+import SectionTitle from '@pages/owner-onboarding/components/SectionTitle';
+import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
+import { useEffect, useState, type ChangeEvent } from 'react';
+import ImagePreview from '@shared/components/image-preview/ImagePreview';
+import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface BizRegCertSectionProps {
-  file: OwnerFormData["bizRegCert"];
-  onChange: (_value: OwnerFormData["bizRegCert"]) => void;
+  file: OwnerFormData['bizRegCert'];
+  onChange: (_value: OwnerFormData['bizRegCert']) => void;
   error?: string;
 }
 
@@ -24,7 +24,7 @@ export default function BizRegCertSection({
     if (selectedFile) {
       onChange(selectedFile);
     }
-    e.target.value = "";
+    e.target.value = '';
   };
 
   const handleRemoveFile = () => {
@@ -34,7 +34,7 @@ export default function BizRegCertSection({
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         setImageUrl(e.target?.result as string);
       };
       reader.onerror = () => {
@@ -47,9 +47,9 @@ export default function BizRegCertSection({
   }, [file]);
 
   return (
-    <section className="flex w-full flex-col items-start justify-center gap-[1.2rem]">
+    <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
       <SectionTitle
-        title="사업자 등록증"
+        title='사업자 등록증'
         maxLength={OWNER_MEDIA_MAX_COUNT.BIZ_REG_CERT}
         currentLength={file ? 1 : 0}
       />
@@ -58,7 +58,7 @@ export default function BizRegCertSection({
         <ImagePreview
           handleClose={handleRemoveFile}
           src={imageUrl || undefined}
-          alt="bizRegCert"
+          alt='bizRegCert'
         />
       )}
       {error && <ErrorText text={error} />}

@@ -1,40 +1,40 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Icon, type IconId } from "@shared/components/icon/Icon";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Icon, type IconId } from '@shared/components/icon/Icon';
 
 const iconIds: IconId[] = [
-  "ic_chat",
-  "ic_check",
-  "ic_close",
-  "ic_confirm",
-  "ic_error",
-  "ic_locate",
-  "ic_mypage",
-  "ic_next",
-  "ic_register",
-  "ic_search",
-  "ic_support",
-  "ic_team",
-  "ic_trash",
-  "ic_back",
-  "ic_calendar",
-  "ic_dash",
-  "ic_close_white",
-  "ic_camera",
-  "ic_filter",
-  "ic_down",
-  "ic_up",
+  'ic_chat',
+  'ic_check',
+  'ic_close',
+  'ic_confirm',
+  'ic_error',
+  'ic_locate',
+  'ic_mypage',
+  'ic_next',
+  'ic_register',
+  'ic_search',
+  'ic_support',
+  'ic_team',
+  'ic_trash',
+  'ic_back',
+  'ic_calendar',
+  'ic_dash',
+  'ic_close_white',
+  'ic_camera',
+  'ic_filter',
+  'ic_down',
+  'ic_up',
 ];
 
 const meta: Meta<typeof Icon> = {
-  title: "Components/Icon",
+  title: 'Components/Icon',
   component: Icon,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
-    name: { control: "select", options: iconIds },
-    width: { control: { type: "range", min: 12, max: 64, step: 2 } },
-    height: { control: { type: "range", min: 12, max: 64, step: 2 } },
-    color: { control: "color" },
-    title: { control: "text" },
+    name: { control: 'select', options: iconIds },
+    width: { control: { type: 'range', min: 12, max: 64, step: 2 } },
+    height: { control: { type: 'range', min: 12, max: 64, step: 2 } },
+    color: { control: 'color' },
+    title: { control: 'text' },
     className: { control: false },
     style: { control: false },
   },
@@ -53,10 +53,10 @@ type Story = StoryObj<typeof Icon>;
 
 export const Playground: Story = {
   args: {
-    name: "ic_search",
+    name: 'ic_search',
     width: 22,
     height: 22,
-    title: "검색",
+    title: '검색',
   },
 };
 
@@ -64,21 +64,21 @@ export const AllIcons: Story = {
   render: () => (
     <div
       style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(6, 1fr)",
+        display: 'grid',
+        gridTemplateColumns: 'repeat(6, 1fr)',
         gap: 16,
       }}
     >
-      {iconIds.map((id) => (
+      {iconIds.map(id => (
         <div
           key={id}
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             gap: 6,
             padding: 8,
-            border: "1px solid #eee",
+            border: '1px solid #eee',
             borderRadius: 8,
           }}
         >
@@ -86,20 +86,20 @@ export const AllIcons: Story = {
           <code style={{ fontSize: 12 }}>{id}</code>
         </div>
       ))}
-      {iconIds.map((id) => (
+      {iconIds.map(id => (
         <div
           key={id}
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             gap: 6,
             padding: 8,
-            border: "1px solid #eee",
+            border: '1px solid #eee',
             borderRadius: 8,
           }}
         >
-          <Icon name={id} width={24} height={24} color="#F83419" />
+          <Icon name={id} width={24} height={24} color='#F83419' />
           <code style={{ fontSize: 12 }}>{id}_primary</code>
         </div>
       ))}
@@ -110,10 +110,10 @@ export const AllIcons: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-      {[16, 20, 24, 32, 40, 48].map((s) => (
-        <div key={s} style={{ textAlign: "center" }}>
-          <Icon name="ic_search" width={s} height={s} />
+    <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+      {[16, 20, 24, 32, 40, 48].map(s => (
+        <div key={s} style={{ textAlign: 'center' }}>
+          <Icon name='ic_search' width={s} height={s} />
           <div style={{ fontSize: 12, marginTop: 6 }}>{s}px</div>
         </div>
       ))}

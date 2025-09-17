@@ -1,14 +1,14 @@
-import type { OwnerFormData } from "@pages/owner-onboarding/hooks/useFoodTruckInput";
-import SectionTitle from "@pages/owner-onboarding/components/SectionTitle";
-import { OWNER_MEDIA_MAX_COUNT } from "@pages/owner-onboarding/constants/owner";
-import ButtonAddImage from "@shared/components/button-add-image/ButtonAddImage";
-import { useEffect, useState, type ChangeEvent } from "react";
-import ImagePreview from "@shared/components/image-preview/ImagePreview";
-import ErrorText from "@shared/components/error-text/ErrorText";
+import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
+import SectionTitle from '@pages/owner-onboarding/components/SectionTitle';
+import { OWNER_MEDIA_MAX_COUNT } from '@pages/owner-onboarding/constants/owner';
+import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
+import { useEffect, useState, type ChangeEvent } from 'react';
+import ImagePreview from '@shared/components/image-preview/ImagePreview';
+import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface OtherDocsSectionProps {
   files: File[];
-  onChange: (_value: OwnerFormData["otherDocs"]) => void;
+  onChange: (_value: OwnerFormData['otherDocs']) => void;
   error?: string;
 }
 
@@ -24,7 +24,7 @@ export default function OtherDocsSection({
     if (selectedFile) {
       onChange([...files, selectedFile]);
     }
-    e.target.value = "";
+    e.target.value = '';
   };
 
   const removeFile = (indexToRemove: number) => {
@@ -35,27 +35,27 @@ export default function OtherDocsSection({
   const canAdd = files.length < OWNER_MEDIA_MAX_COUNT.OTHER_DOCS;
 
   useEffect(() => {
-    const urls = files.map((file) => URL.createObjectURL(file));
+    const urls = files.map(file => URL.createObjectURL(file));
     setImageUrl(urls);
 
     return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
+      urls.forEach(url => URL.revokeObjectURL(url));
     };
   }, [files]);
 
   return (
-    <section className="flex w-full flex-col items-start justify-center gap-[1.2rem]">
-      <div className="flex w-full flex-col items-start justify-center gap-[0.2rem]">
+    <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
+      <div className='flex w-full flex-col items-start justify-center gap-[0.2rem]'>
         <SectionTitle
-          title="기타 서류"
+          title='기타 서류'
           maxLength={OWNER_MEDIA_MAX_COUNT.OTHER_DOCS}
           currentLength={files?.length || 0}
         />
-        <p className="text-grayscale-500 caption-m-11">
+        <p className='text-grayscale-500 caption-m-11'>
           영업신고증 (자동차등록증, 위생증, 보건증, 가스완성검사증명서) 필요
         </p>
       </div>
-      <div className="scrollbar-hide flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem]">
+      <div className='scrollbar-hide flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem]'>
         {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
         {files &&
           files.map((_, index) => (
@@ -63,7 +63,7 @@ export default function OtherDocsSection({
               key={`otherDocs-${index}`}
               handleClose={() => removeFile(index)}
               src={imageUrl?.[index] || undefined}
-              alt="otherDocs"
+              alt='otherDocs'
             />
           ))}
       </div>

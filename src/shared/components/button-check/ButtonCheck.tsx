@@ -1,6 +1,6 @@
-import React from "react";
-import { Icon } from "@shared/components/icon/Icon";
-import { cn } from "@shared/utils/cn";
+import React from 'react';
+import { Icon } from '@shared/components/icon/Icon';
+import { cn } from '@shared/utils/cn';
 
 interface ButtonCheckClickProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,8 +10,8 @@ interface ButtonCheckClickProps
 }
 
 const ButtonCheckClasses = {
-  checked: "bg-primary-700",
-  unchecked: "bg-white ring-1 ring-inset ring-grayscale-200",
+  checked: 'bg-primary-700',
+  unchecked: 'bg-white ring-1 ring-inset ring-grayscale-200',
 };
 
 export default function ButtonCheck({
@@ -22,9 +22,9 @@ export default function ButtonCheck({
 }: ButtonCheckClickProps) {
   return (
     <button
-      type="button"
+      type='button'
       className={cn(
-        "flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]",
+        'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
         isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked,
         className
       )}
@@ -33,9 +33,9 @@ export default function ButtonCheck({
     >
       {isChecked && (
         <Icon
-          name="ic_check"
-          color="#fff"
-          className="-translate-y-[0.1rem] scale-125"
+          name='ic_check'
+          color='#fff'
+          className='-translate-y-[0.1rem] scale-125'
         />
       )}
     </button>

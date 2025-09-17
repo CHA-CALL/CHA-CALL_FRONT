@@ -12,7 +12,16 @@ import tanstackQuery from '@tanstack/eslint-plugin-query';
 const { browser: browserGlobals, node: nodeGlobals } = globals;
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', 'build', 'storybook-static', '*.config.js', '*min.js'] },
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      'build',
+      'storybook-static',
+      '*.config.js',
+      '*min.js',
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

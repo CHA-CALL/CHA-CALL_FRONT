@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import type { CalendarDate, SelectedDate } from "@shared/types/calendar-types";
-import { formatCalendarDayToDate } from "@shared/utils/date-formatter";
+import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
+import { formatCalendarDayToDate } from '@shared/utils/date-formatter';
 
 import {
   compareDate,
   formatToCalendarDate,
   getCalendarDays,
-} from "@shared/components/calendar/utils/calendar-utils";
+} from '@shared/components/calendar/utils/calendar-utils';
 
 export default function useCalendar(
   selectedDate: SelectedDate,
@@ -45,19 +45,19 @@ export default function useCalendar(
     if (isPrevMonth) return;
 
     if (month === 1) {
-      setYear((prev) => prev - 1);
+      setYear(prev => prev - 1);
       setMonth(12);
     } else {
-      setMonth((prev) => prev - 1);
+      setMonth(prev => prev - 1);
     }
   };
 
   const handleNextMonth = () => {
     if (month === 12) {
-      setYear((prev) => prev + 1);
+      setYear(prev => prev + 1);
       setMonth(1);
     } else {
-      setMonth((prev) => prev + 1);
+      setMonth(prev => prev + 1);
     }
   };
 
@@ -67,7 +67,7 @@ export default function useCalendar(
     const isSameCalendarDate = (a?: CalendarDate, b?: CalendarDate) =>
       !!a && !!b && a.year === b.year && a.month === b.month && a.day === b.day;
 
-    setSelectedDates((prev) => {
+    setSelectedDates(prev => {
       if (prev.length === 0) return [newDate];
 
       if (prev.length === 1) {

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { cn } from "@utils/cn";
+import { cn } from '@utils/cn';
 
 interface ButtonTextProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -16,11 +16,11 @@ export default function ButtonText({
 }: ButtonTextProps) {
   return (
     <button
-      type="button"
+      type='button'
       onClick={handleClick}
       className={cn(
-        "text-grayscale-500 p-[0.4rem] underline underline-offset-2",
-        "hover:border-grayscale-900 hover:text-grayscale-900 duration-200",
+        'text-grayscale-500 p-[0.4rem] underline underline-offset-2',
+        'hover:border-grayscale-900 hover:text-grayscale-900 duration-200',
         className
       )}
       {...props}

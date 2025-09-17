@@ -1,18 +1,18 @@
-import React from "react";
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonAddImage from "@components/button-add-image/ButtonAddImage";
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 
 const meta: Meta<typeof ButtonAddImage> = {
-  title: "Components/ButtonAddImage",
+  title: 'Components/ButtonAddImage',
   component: ButtonAddImage,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     handleFileChange: {
-      action: "fileSelected",
-      description: "파일 첨부시 실행되는 함수",
+      action: 'fileSelected',
+      description: '파일 첨부시 실행되는 함수',
     },
   },
 };

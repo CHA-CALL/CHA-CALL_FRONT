@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import Tag from "@shared/components/tag/Tag";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import Tag from '@shared/components/tag/Tag';
 
 const meta: Meta<typeof Tag> = {
-  title: "Components/Tag",
+  title: 'Components/Tag',
   component: Tag,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     title: {
-      control: { type: "text" },
-      description: "태그에 표시될 텍스트",
+      control: { type: 'text' },
+      description: '태그에 표시될 텍스트',
     },
   },
   args: {
-    title: "기본 태그",
+    title: '기본 태그',
   },
 };
 
@@ -26,12 +26,12 @@ export const Default: Story = {};
 
 export const LongTitle: Story = {
   args: {
-    title: "TypeScript와 Storybook 함께 사용하기",
+    title: 'TypeScript와 Storybook 함께 사용하기',
   },
 };
 
 export const ShortTitle: Story = {
   args: {
-    title: "Next",
+    title: 'Next',
   },
 };

@@ -1,22 +1,22 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
-import ButtonCheck from "@shared/components/button-check/ButtonCheck";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
+import ButtonCheck from '@shared/components/button-check/ButtonCheck';
 
 const meta: Meta<typeof ButtonCheck> = {
-  title: "Components/ButtonCheck",
+  title: 'Components/ButtonCheck',
   component: ButtonCheck,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     isChecked: {
-      control: { type: "boolean" },
-      description: "체크박스의 선택 여부 상태",
+      control: { type: 'boolean' },
+      description: '체크박스의 선택 여부 상태',
     },
     handleToggle: {
-      action: "checked changed",
-      description: "체크 상태를 변경하는 함수",
+      action: 'checked changed',
+      description: '체크 상태를 변경하는 함수',
     },
   },
 };

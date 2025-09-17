@@ -1,28 +1,28 @@
-import React, { forwardRef, useId } from "react";
+import React, { forwardRef, useId } from 'react';
 
 export type IconId =
-  | "ic_chat"
-  | "ic_check"
-  | "ic_close"
-  | "ic_confirm"
-  | "ic_error"
-  | "ic_locate"
-  | "ic_mypage"
-  | "ic_next"
-  | "ic_register"
-  | "ic_search"
-  | "ic_support"
-  | "ic_team"
-  | "ic_trash"
-  | "ic_back"
-  | "ic_calendar"
-  | "ic_dash"
-  | "ic_close_white"
-  | "ic_camera"
-  | "ic_filter"
-  | "ic_down"
-  | "ic_up"
-  | "ic_error";
+  | 'ic_chat'
+  | 'ic_check'
+  | 'ic_close'
+  | 'ic_confirm'
+  | 'ic_error'
+  | 'ic_locate'
+  | 'ic_mypage'
+  | 'ic_next'
+  | 'ic_register'
+  | 'ic_search'
+  | 'ic_support'
+  | 'ic_team'
+  | 'ic_trash'
+  | 'ic_back'
+  | 'ic_calendar'
+  | 'ic_dash'
+  | 'ic_close_white'
+  | 'ic_camera'
+  | 'ic_filter'
+  | 'ic_down'
+  | 'ic_up'
+  | 'ic_error';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
@@ -38,7 +38,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
       name,
       width = 22,
       height = 22,
-      color = "#565B65",
+      color = '#565B65',
       title,
       className,
       style,
@@ -55,10 +55,10 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         ref={ref}
         width={w}
         height={h}
-        role={title ? "img" : undefined}
+        role={title ? 'img' : undefined}
         aria-labelledby={title ? titleId : undefined}
         aria-hidden={title ? undefined : true}
-        focusable="false"
+        focusable='false'
         className={className}
         style={{ ...style, color }}
         {...rest}
@@ -70,4 +70,4 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
   }
 );
 
-Icon.displayName = "Icon";
+Icon.displayName = 'Icon';
