@@ -1,6 +1,6 @@
 import type { CalendarDate } from '@shared/types/calendar-types';
-import { calendarBtnClass } from '../utils/calendar-utils';
-import CalendarSelectedCircle from './CalendarSelectedCircle';
+import { calendarBtnClass } from '@shared/components/calendar/utils/calendar-utils';
+import CalendarSelectedCircle from '@shared/components/calendar/components/CalendarSelectedCircle';
 
 interface CalendarDayButtonProps {
   year: number;

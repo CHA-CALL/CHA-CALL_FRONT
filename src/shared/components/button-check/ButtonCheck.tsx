@@ -1,7 +1,9 @@
+import React from 'react';
 import { Icon } from '@shared/components/icon/Icon';
 import { cn } from '@shared/utils/cn';
 
-interface ButtonCheckClickProps {
+interface ButtonCheckClickProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isChecked: boolean;
   handleToggle: () => void;
 }
@@ -14,15 +16,21 @@ const ButtonCheckClasses = {
 export default function ButtonCheck({
   isChecked,
   handleToggle,
+  className,
+  ...props
 }: ButtonCheckClickProps) {
+  const isInteractive = !!handleToggle;
+
   return (
     <button
-      type='button'
+      type={isInteractive ? 'button' : undefined}
       className={cn(
         'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
-        isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked
+        isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked,
+        className
       )}
       onClick={handleToggle}
+      {...props}
     >
       {isChecked && (
         <Icon

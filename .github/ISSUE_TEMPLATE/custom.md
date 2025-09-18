@@ -4,7 +4,6 @@ about: Describe this issue template's purpose here.
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 <!-- 이슈 제목은 `[Feature] ${제목}`과 같이 작성헤주세요 -->

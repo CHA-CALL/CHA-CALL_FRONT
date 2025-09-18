@@ -12,7 +12,16 @@ import tanstackQuery from '@tanstack/eslint-plugin-query';
 const { browser: browserGlobals, node: nodeGlobals } = globals;
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', 'build', 'storybook-static', '*.config.js', '*min.js'] },
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      'build',
+      'storybook-static',
+      '*.config.js',
+      '*min.js',
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -52,8 +61,8 @@ export default tseslint.config(
       'no-multiple-empty-lines': 'error',
       //정의 안 한 변수 사용 x
       'no-undef': 'error',
-      //들여쓰기 2칸!
-      indent: ['error', 2],
+      //들여쓰기는 Prettier가 관리
+      // indent: ['error', 2],
       // 쓸데없는 공백 없애기
       'no-trailing-spaces': 'error',
       'import/newline-after-import': ['error', { count: 1 }],

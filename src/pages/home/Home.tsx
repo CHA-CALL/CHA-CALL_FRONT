@@ -1,57 +1,118 @@
 import { useState } from 'react';
-import Tooltip from '@shared/components/tooltip/Tooltip';
+import Button from '@shared/components/button/Button';
+import Overlay from '@shared/components/overlay/Overlay';
+import SearchBar from '@shared/components/search-bar/SearchBar';
+import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
 
 const Home = () => {
-  const [isTooltip1Visible, setIsTooltip1Visible] = useState(true);
-  const [isTooltip2Visible, setIsTooltip2Visible] = useState(true);
+  // BottomSheet states
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const handleCloseTooltip1 = () => {
-    setIsTooltip1Visible(false);
+  // Modal states
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Search states
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleOpenBottomSheet = () => {
+    setIsBottomSheetOpen(true);
   };
-  const handleCloseTooltip2 = () => {
-    setIsTooltip2Visible(false);
+
+  const handleCloseBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
-    <div className='p-[2rem]'>
-      <div className='flex flex-row justify-between'>
-        <div className='relative'>
-          <div className='h-[3rem] w-[3rem] rounded-[0.4rem] border border-grayscale-200'>
-            툴팁 기준점
+    <div className='relative'>
+      {/* Modal */}
+      <Overlay
+        isOpen={isModalOpen}
+        position='center'
+        handleClose={handleCloseModal}
+      >
+        <div>
+          <h3 className='mb-[2rem] text-[1.8rem] font-bold'>모달 제목</h3>
+          <p className='mb-[2rem]'>모달 내용입니다.</p>
+          <div className='flex gap-[1rem]'>
+            <Button
+              variant='cta'
+              buttonStyle='sub'
+              handleClickButton={handleCloseModal}
+            >
+              취소
+            </Button>
+            <Button
+              variant='cta'
+              buttonStyle='active'
+              handleClickButton={handleCloseModal}
+            >
+              확인
+            </Button>
           </div>
-          <Tooltip
-            isTooltipVisible={isTooltip1Visible}
-            text='맞춤조건을 설정해보세요'
-            handleCloseTooltip={handleCloseTooltip1}
-            positionOffsetY={2.5}
-            positionOffsetX={-0.5}
-            horizontalAlign='left'
-          />
         </div>
-        <div className='w-[25rem] rounded-[0.4rem] border border-grayscale-200'>
-          다른 요소
-        </div>
-      </div>
+      </Overlay>
 
-      <div className='mt-[10rem] flex flex-row justify-between'>
-        <div className='w-[25rem] rounded-[0.4rem] border border-grayscale-200'>
-          다른 요소
+      {/* BottomSheet */}
+      <Overlay
+        isOpen={isBottomSheetOpen}
+        position='bottom'
+        handleClose={handleCloseBottomSheet}
+      >
+        <BottomSheet
+          isOpen={isBottomSheetOpen}
+          handleCloseBottomSheet={handleCloseBottomSheet}
+          sheetContent={
+            <div>
+              <h3 className='mb-[2rem] text-[1.8rem] font-bold'>
+                바텀시트 내용
+              </h3>
+              <p className='mb-[2rem]'>이것은 바텀시트의 내용입니다.</p>
+            </div>
+          }
+          sheetHeight={400}
+        />
+      </Overlay>
+
+      {/* Search Bar */}
+      <section>
+        <h2 className='mb-[2rem] text-[2rem] font-bold'>Search Bar</h2>
+        <SearchBar
+          value={searchValue}
+          onChange={e => setSearchValue(e.target.value)}
+          placeholder='검색어를 입력하세요'
+        />
+      </section>
+
+      {/* Modal and BottomSheet Triggers */}
+      <section>
+        <h2 className='mb-[2rem] text-[2rem] font-bold'>
+          Modals & Bottom Sheets
+        </h2>
+        <div className='flex gap-[2rem]'>
+          <Button
+            variant='cta'
+            buttonStyle='active'
+            handleClickButton={handleOpenModal}
+          >
+            모달 열기
+          </Button>
+          <Button
+            variant='cta'
+            buttonStyle='active'
+            handleClickButton={handleOpenBottomSheet}
+          >
+            바텀시트 열기
+          </Button>
         </div>
-        <div className='relative'>
-          <div className='h-[3rem] w-[3rem] rounded-[0.4rem] border border-grayscale-200'>
-            툴팁 기준점
-          </div>
-          <Tooltip
-            isTooltipVisible={isTooltip2Visible}
-            text='맞춤조건을 설정할 수 있어요'
-            handleCloseTooltip={handleCloseTooltip2}
-            positionOffsetY={-3.5}
-            positionOffsetX={-0.5}
-            horizontalAlign='right'
-            verticalAlign='top'
-          />
-        </div>
-      </div>
+      </section>
     </div>
   );
 };
