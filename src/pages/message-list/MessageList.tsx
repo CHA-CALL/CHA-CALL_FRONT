@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@shared/components/button/Button';
 import { mockup } from './mockup';
 import Message from './components/Message';
+
 export default function MessageList() {
   const navigate = useNavigate();
 
