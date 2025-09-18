@@ -48,7 +48,7 @@ const meta: Meta<typeof Tooltip> = {
   },
   decorators: [
     Story => (
-      <div className='relative w-[20rem] h-[10rem]'>
+      <div className='relative h-[10rem] w-[20rem]'>
         <Story />
       </div>
     ),

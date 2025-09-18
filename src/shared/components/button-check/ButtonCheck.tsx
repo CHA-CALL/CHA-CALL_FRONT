@@ -1,9 +1,11 @@
+import React from 'react';
 import { Icon } from '@shared/components/icon/Icon';
 import { cn } from '@shared/utils/cn';
 
-interface ButtonCheckClickProps {
+interface ButtonCheckClickProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isChecked: boolean;
-  handleToggle?: () => void;
+  handleToggle: () => void;
 }
 
 const ButtonCheckClasses = {
@@ -14,18 +16,21 @@ const ButtonCheckClasses = {
 export default function ButtonCheck({
   isChecked,
   handleToggle,
+  className,
+  ...props
 }: ButtonCheckClickProps) {
   const isInteractive = !!handleToggle;
-  const Component = isInteractive ? 'button' : 'div';
 
   return (
-    <Component
+    <button
       type={isInteractive ? 'button' : undefined}
       className={cn(
         'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
-        isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked
+        isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked,
+        className
       )}
-      onClick={isInteractive ? handleToggle : undefined}
+      onClick={handleToggle}
+      {...props}
     >
       {isChecked && (
         <Icon
@@ -34,6 +39,6 @@ export default function ButtonCheck({
           className='-translate-y-[0.1rem] scale-125'
         />
       )}
-    </Component>
+    </button>
   );
 }

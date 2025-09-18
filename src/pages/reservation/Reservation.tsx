@@ -7,8 +7,9 @@ import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
-
 import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
+import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
+import { cn } from '@shared/utils/cn';
 
 interface ReservationProps {
   location?: string;
@@ -20,12 +21,14 @@ export default function Reservation({
   categories = FOOD_TRUCK_CATEGORIES,
 }: ReservationProps) {
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    categories[0]
+  );
 
   const isAll = selectedCategory === categories[0];
   const filteredFoodTrucks = isAll
     ? mockFoodTruckData
-    : mockFoodTruckData.filter((truck) => truck.category === selectedCategory);
+    : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
 
   const navigate = useNavigate();
 
@@ -64,37 +67,31 @@ export default function Reservation({
         text='예약하기'
       />
 
-      <div className={`
-        sticky top-[4.8rem] bg-white z-50
-        flex between items-center justify-between
-        px-[2rem] pt-[1.2rem] pb-[1rem]
-        border-b border-b-grayscale-100
-      `}>
+      <div
+        className={`between border-b-grayscale-100 sticky top-[4.8rem] z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]`}
+      >
         <button
           type='button'
           onClick={handleClickLocation}
-          className='flex items-center gap-[0.6rem] cursor-pointer'
+          className='flex cursor-pointer items-center gap-[0.6rem]'
         >
           <Icon name='ic_locate' color='#f83419' />
           <span className='body-m-14 text-grayscale-900'>{location}</span>
           <Icon name='ic_down' />
         </button>
 
-        <button
-          type='button'
-          onClick={handleClickFilter}
-          className={`
-            flex items-center justify-center
-            w-[2.8rem] h-[2.8rem] pl-[0.4rem] pt-[0.4rem]
-            rounded-[0.4rem] border
-            ${isFilterApplied ? 'bg-primary-50 border-primary-700' : 'border-grayscale-200'}
-          `}
-        >
-          <Icon
-            name='ic_filter'
-            color={isFilterApplied ? '#f83419' : undefined}
-          />
-        </button>
+        <ButtonIcon
+          icon='ic_filter'
+          iconColor={isFilterApplied ? '#f83419' : undefined}
+          handleClick={handleClickFilter}
+          className={cn(
+            'flex h-[2.8rem] w-[2.8rem] items-center justify-center rounded-[0.4rem] border pl-[0.4rem] pt-[0.4rem]',
+            isFilterApplied
+              ? 'bg-primary-50 border-primary-700'
+              : 'border-grayscale-200'
+          )}
+        />
+
         {!isFilterApplied && (
           <Tooltip
             text='맞춤조건을 설정할 수 있어요'
@@ -108,16 +105,16 @@ export default function Reservation({
         )}
       </div>
 
-      <div className={`
-        sticky top-[9.9rem] flex gap-[0.6rem]
-        px-[2rem] py-[1.2rem] bg-white
-        overflow-x-auto scrollbar-hide
-      `}>
-        {categories.map((category) => (
+      <div
+        className={`scrollbar-hide sticky top-[9.9rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
+      >
+        {categories.map(category => (
           <Button
             key={category}
             variant='chip'
-            buttonStyle={selectedCategory === category ? 'selected1' : 'default'}
+            buttonStyle={
+              selectedCategory === category ? 'selected1' : 'default'
+            }
             handleClickButton={() => handleClickChip(category)}
           >
             {category}
@@ -142,5 +139,5 @@ export default function Reservation({
 
       <ButtonFloating />
     </>
-  )
+  );
 }

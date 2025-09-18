@@ -28,13 +28,13 @@ export default function FoodTruckOnboarding() {
           handleCheckNameDuplicate={handleCheckNameDuplicate}
           error={errors.name}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <BizRegCertSection
           file={formData.bizRegCert}
           onChange={updateBizRegCertFile}
           error={errors.bizRegCert}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <OtherDocsSection
           files={formData.otherDocs}
