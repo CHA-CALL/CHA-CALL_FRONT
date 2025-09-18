@@ -1,0 +1,18 @@
+import { Icon } from '@shared/components/icon/Icon';
+
+interface MessageProps {
+  number: number;
+  message: string;
+}
+
+export default function Message({ number, message }: MessageProps) {
+  return (
+    <div className='bg-grayscale-50 flex w-full items-center rounded-[1.6rem] p-[2rem]'>
+      <div className='flex w-full flex-col items-start gap-[0.4rem]'>
+        <span className='title-sb-16 text-grayscale-900'>{number}</span>
+        <p className='caption-m-12 text-grayscale-700'>{message}</p>
+      </div>
+      <Icon name='ic_dot' width={22} height={22} color='#565B65' />
+    </div>
+  );
+}
