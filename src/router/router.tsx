@@ -8,8 +8,8 @@ import ChatList from '@pages/chat-list/ChatList';
 import Reservation from '@/pages/reservation/Reservation';
 import FoodTruckOnboarding from '@pages/owner-onboarding/FoodTruckOnboarding';
 import SetLocation from '@pages/set-location/SetLocation';
-import MessageList from '@pages/message-list/MessageList';
-import MessageForm from '@pages/message-list/components/MessageForm';
+import MessageList from '@pages/@owner/message-list/MessageList';
+import MessageForm from '@pages/@owner/message-list/components/MessageForm';
 
 export const router = createBrowserRouter([
   {
