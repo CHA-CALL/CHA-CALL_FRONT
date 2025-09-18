@@ -6,7 +6,6 @@ interface ButtonCheckClickProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isChecked: boolean;
   handleToggle: () => void;
-  className?: string;
 }
 
 const ButtonCheckClasses = {
@@ -21,10 +20,9 @@ export default function ButtonCheck({
   ...props
 }: ButtonCheckClickProps) {
   const isInteractive = !!handleToggle;
-  const Component = isInteractive ? 'button' : 'div';
 
   return (
-    <Component
+    <button
       type={isInteractive ? 'button' : undefined}
       className={cn(
         'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
@@ -41,6 +39,6 @@ export default function ButtonCheck({
           className='-translate-y-[0.1rem] scale-125'
         />
       )}
-    </Component>
+    </button>
   );
 }
