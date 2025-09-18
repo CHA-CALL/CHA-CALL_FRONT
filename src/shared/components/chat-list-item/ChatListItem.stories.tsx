@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
 const meta: Meta<typeof ChatListItem> = {
@@ -16,7 +16,8 @@ const meta: Meta<typeof ChatListItem> = {
     },
     isEditing: {
       control: 'boolean',
-      description: '편집 모드 활성화 여부',
+      description:
+        '편집 모드 활성화 여부. true인 경우에 컴포넌트 전체에 클릭 이벤트 발생',
     },
     clientName: {
       control: 'text',
