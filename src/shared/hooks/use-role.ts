@@ -3,9 +3,9 @@ import { create } from 'zustand';
 
 interface RoleState {
   role: Role;
-  setRole: (role: Role) => void;
+  setRole: (_role: Role) => void;
   getRole: () => Role;
-  updateRole: (role: Role) => void;
+  updateRole: (_role: Role) => void;
 }
 
 export const useRole = create<RoleState>((set, get) => ({
