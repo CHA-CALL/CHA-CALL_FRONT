@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import useBottomSheetDrag from '@shared/hooks/use-bottom-sheet-drag';
 import { cn } from '@shared/utils/cn';
@@ -17,19 +17,6 @@ export default function BottomSheet({
   sheetHeight,
 }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
-  const prevOverflowRef = useRef<string>('');
-
-  useEffect(() => {
-    if (isOpen) {
-      prevOverflowRef.current = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = prevOverflowRef.current || '';
-    }
-    return () => {
-      document.body.style.overflow = prevOverflowRef.current || '';
-    };
-  }, [isOpen]);
 
   useBottomSheetDrag({
     sheetRef,
@@ -38,25 +25,16 @@ export default function BottomSheet({
   });
   return (
     <div
+      ref={sheetRef}
       className={cn(
-        'fixed inset-[0] h-dvh w-dvw bg-black/50',
-        'z-50 transition-opacity duration-300 ease-in-out',
-        isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+        'fixed bottom-[0rem] left-1/2 flex w-full max-w-[60rem] -translate-x-1/2 flex-col justify-center rounded-t-[3.2rem] bg-white px-[3.2rem]',
+        'transition-transform duration-300 ease-in-out',
+        isOpen ? 'translate-y-0' : 'translate-y-full'
       )}
-      onClick={handleCloseBottomSheet}
+      onClick={e => e.stopPropagation()}
     >
-      <div
-        ref={sheetRef}
-        className={cn(
-          'fixed bottom-[0rem] left-1/2 flex w-full max-w-[60rem] -translate-x-1/2 flex-col justify-center rounded-t-[3.2rem] bg-white px-[3.2rem]',
-          'transition-transform duration-300 ease-in-out',
-          isOpen ? 'translate-y-0' : 'translate-y-full'
-        )}
-        onClick={e => e.stopPropagation()}
-      >
-        <div className='mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem] bg-grayscale-300' />
-        <div className='mb-[3.4rem] mt-[2.8rem]'>{sheetContent}</div>
-      </div>
+      <div className='bg-grayscale-300 mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem]' />
+      <div className='mb-[3.4rem] mt-[2.8rem]'>{sheetContent}</div>
     </div>
   );
 }

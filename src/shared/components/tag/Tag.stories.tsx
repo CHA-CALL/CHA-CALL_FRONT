@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import  Tag  from '@shared/components/tag/Tag';
+import Tag from '@shared/components/tag/Tag';
 
 const meta: Meta<typeof Tag> = {
   title: 'Components/Tag',
@@ -22,8 +22,7 @@ const meta: Meta<typeof Tag> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-};
+export const Default: Story = {};
 
 export const LongTitle: Story = {
   args: {

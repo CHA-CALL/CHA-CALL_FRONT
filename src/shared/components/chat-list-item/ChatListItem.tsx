@@ -43,7 +43,12 @@ export default function ChatListItem({
       )}
       onClick={handleClickItem}
     >
-      {isEditing && <ButtonCheck isChecked={isChecked} />}
+      {isEditing && (
+        <ButtonCheck
+          isChecked={isChecked}
+          handleToggle={() => handleCheckChange(!isChecked)}
+        />
+      )}
 
       <div className='border-grayscale-200 h-[5.2rem] w-[5.2rem] flex-shrink-0 overflow-hidden rounded-full border'>
         {profileImage ? (

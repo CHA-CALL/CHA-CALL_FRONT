@@ -106,7 +106,7 @@ const calendarBtnClass = (
   const isEnd = selectedDates.length === 2 && isSelected && !isStart;
 
   return cn(
-    'h-[3.6rem] my-[0.4rem] w-full flex items-center justify-center',
+    'h-[3.6rem] my-[0.4rem] w-full flex items-center justify-center text-center',
     textColor,
     // TODO: 텍스트 가운데 라인을 긋는 것과 아닌 것 중 어떤 것이 더 좋을지 논의
     isPrevious &&

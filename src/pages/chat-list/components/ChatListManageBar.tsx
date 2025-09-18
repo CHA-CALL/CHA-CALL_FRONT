@@ -1,5 +1,5 @@
 import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
-import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
+import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
 import Button from '@shared/components/button/Button';
 import { cn } from '@shared/utils/cn';
 
@@ -59,7 +59,7 @@ export default function ChatListManageBar({
       <div>
         {isEditing ? (
           <div className='flex gap-[1rem]'>
-            <ButtonTrash handleClick={handleClickTrash} />
+            <ButtonIcon handleClick={handleClickTrash} icon='ic_trash' />
             {selectChatList.size !== 0 ? (
               <Button
                 style={{ paddingLeft: '0.75rem', paddingRight: '0.85rem' }}

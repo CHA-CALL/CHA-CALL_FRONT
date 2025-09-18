@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonTrash from '@shared/components/button-trash/ButtonTrash';
+import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
 
-const meta: Meta<typeof ButtonTrash> = {
-  title: 'Components/ButtonTrash',
-  component: ButtonTrash,
+const meta: Meta<typeof ButtonIcon> = {
+  title: 'Components/ButtonIcon',
+  component: ButtonIcon,
   parameters: {
     layout: 'centered',
   },
@@ -18,10 +18,11 @@ const meta: Meta<typeof ButtonTrash> = {
 
 export default meta;
 
-type Story = StoryObj<typeof ButtonTrash>;
+type Story = StoryObj<typeof ButtonIcon>;
 
 export const Default: Story = {
   args: {
+    icon: 'ic_trash',
     handleClick: () => alert('삭제 버튼 클릭'),
   },
 };

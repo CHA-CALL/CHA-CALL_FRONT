@@ -55,7 +55,7 @@ export default function OtherDocsSection({
           영업신고증 (자동차등록증, 위생증, 보건증, 가스완성검사증명서) 필요
         </p>
       </div>
-      <div className='flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem] scrollbar-hide'>
+      <div className='scrollbar-hide flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem]'>
         {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
         {files &&
           files.map((_, index) => (

@@ -45,6 +45,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   args: {
+    selectedDate: { startDate: null, endDate: null },
     isOpen: true,
+    handleApplyDate: () => {},
+    handleCloseBottomSheet: () => {},
   },
 };
