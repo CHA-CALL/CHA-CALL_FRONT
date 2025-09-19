@@ -31,7 +31,7 @@ const Home = () => {
   };
 
   return (
-    <div className='relative'>
+    <div>
       {/* Modal */}
       <Overlay
         isOpen={isModalOpen}

@@ -63,6 +63,13 @@
   * {
     box-sizing: border-box;
   }
+  #root {
+    background: #f8fafb;
+  }
+  main {
+    background: #fff;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.04);
+  }
 }
 
 @layer utilities {

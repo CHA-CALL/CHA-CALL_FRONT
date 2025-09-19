@@ -56,7 +56,7 @@ export default function Overlay({
     <div
       onClick={handleOverlayClick}
       className={cn(
-        'z-100 fixed inset-0 flex h-dvh w-full max-w-[60rem] bg-black/50',
+        'fixed left-1/2 top-[0] z-50 flex h-dvh w-full max-w-[60rem] -translate-x-1/2 bg-black/50',
         getPositionClasses(),
         'transition-opacity duration-300 ease-in-out',
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
