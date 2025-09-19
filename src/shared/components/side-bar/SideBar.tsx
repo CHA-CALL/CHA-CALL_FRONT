@@ -32,7 +32,7 @@ const MenuItem = ({
     <button
       type='button'
       onClick={handleMenuClick}
-      className='flex items-center gap-[0.8rem] mx-[0.6rem] my-[1.2rem] cursor-pointer'
+      className='flex items-center gap-[0.8rem] w-full mx-[0.6rem] my-[1.2rem] cursor-pointer'
     >
       <Icon name={icon} />
       <span className='relative top-[0.1rem] body-m-16 text-grayscale-900'>{text}</span>
