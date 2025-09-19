@@ -64,10 +64,10 @@
     box-sizing: border-box;
   }
   #root {
-    background: #f8fafb;
+    background-color: var(--color-grayscale-50);
   }
   main {
-    background: #fff;
+    background-color: var(--color-white);
     box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.04);
   }
 }
