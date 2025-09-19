@@ -8,6 +8,7 @@ import ChatList from '@pages/chat-list/ChatList';
 import Reservation from '@/pages/reservation/Reservation';
 import FoodTruckOnboarding from '@pages/owner-onboarding/FoodTruckOnboarding';
 import SetLocation from '@pages/set-location/SetLocation';
+import Account from '@pages/@owner/account/Account';
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.CHATLIST,
         element: <ChatList />,
+      },
+      {
+        path: ROUTES.ACCOUNT,
+        element: <Account />,
       },
     ],
   },
