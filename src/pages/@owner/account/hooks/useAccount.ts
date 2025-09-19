@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { BANK, type Bank } from '../constants/bank';
-import { ERROR_MESSAGE } from '../constants/account-schema';
-import { formatAccountNumber } from '../utils/format-account-number';
+import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
+import { ERROR_MESSAGE } from '@pages/@owner/account/constants/account-schema';
+import { formatAccountNumber } from '@pages/@owner/account/utils/format-account-number';
 
 const accountSchema = z.object({
   bank: z
