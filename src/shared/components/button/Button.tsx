@@ -3,7 +3,7 @@ import { cn } from '@shared/utils/cn';
 
 export const ButtonClasses = {
   cta: {
-    base: 'w-full h-[5rem] px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
+    base: 'w-full px-[1.24rem] py-[1.3rem] rounded-[1.6rem] title-sb-16',
     active: 'bg-primary-700 text-white',
     disabled:
       'bg-primary-100 text-white cursor-not-allowed pointer-events-none',
@@ -16,14 +16,14 @@ export const ButtonClasses = {
     selected2: 'bg-primary-50 text-primary-700 border border-primary-700',
   },
   verify: {
-    base: 'w-[7rem] h-[3.6rem] px-[1.4rem] py-[0.9rem] rounded-[0.8rem] caption-m-12',
+    base: 'w-[7rem] px-[1.4rem] py-[0.9rem] rounded-[0.8rem] caption-m-12',
     active: 'bg-primary-700 text-white',
     disabled: 'bg-primary-100 text-white cursor-not-allowed',
   },
   default: {
     base: 'rounded-[0.4rem] border border-grayscale-200 bg-white',
-    large: 'w-full h-[4.6rem] px-[11.4rem] py-[1.5rem] title-sb-14',
-    medium: 'h-[2.8rem] px-[1.85rem] py-[0.5rem] caption-m-12',
+    large: 'w-full  px-[11.4rem] py-[1.5rem] title-sb-14 rounded-[1.6rem]',
+    medium: 'px-[1.85rem] py-[0.5rem] caption-m-12',
     edit: 'px-[1.25rem] py-[0.5rem] caption-m-12 text-grayscale-700',
   },
 } as const;
