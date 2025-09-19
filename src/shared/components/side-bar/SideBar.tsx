@@ -2,7 +2,8 @@ import { type MouseEvent } from 'react';
 import { cn } from '@utils/cn';
 import { Icon, type IconId } from '@components/icon/Icon';
 import Button from '@components/button/Button';
-import { USER_TYPE, type UserType } from '@shared/types/user-types';
+import { useRole } from '@shared/hooks/use-role';
+import { ROLE } from '@shared/constant/role';
 
 interface MenuItemProps {
   icon: IconId;
@@ -13,7 +14,6 @@ interface MenuItemProps {
 
 interface SideBarProps {
   isOpen?: boolean;
-  userType: UserType;
   handleSideBarClose: () => void;
   className?: string;
 }
@@ -42,28 +42,30 @@ const MenuItem = ({
 
 export default function SideBar({
   isOpen,
-  userType = USER_TYPE.Guest,
   handleSideBarClose,
   className,
 }: SideBarProps) {
+  const { role, setRole } = useRole();
+
   if (!isOpen) {
     return null;
   };
 
   const handleLogin = () => {
     // TODO: 로그인 페이지로 라우팅
+    setRole(ROLE.CLIENT);
   };
 
   const handleLogout = () => {
-    // TODO: 로그아웃 로직
+    setRole(ROLE.LOGOUT);
   };
 
   const handleSwitchToManager = () => {
-    // TODO: 사장님 모드 전환 로직
+    setRole(ROLE.PROVIDER);
   };
 
   const handleSwitchToCustomer = () => {
-    // TODO: 고객 모드 전환 로직
+    setRole(ROLE.CLIENT);
   };
 
   const handleClickMyPage = () => {
@@ -93,8 +95,8 @@ export default function SideBar({
   };
 
   const renderButtons = () => {
-    switch (userType) {
-    case USER_TYPE.Guest:
+    switch (role) {
+    case ROLE.LOGOUT:
       return (
         <Button
           variant='default'
@@ -105,7 +107,7 @@ export default function SideBar({
           로그인/회원가입
         </Button>
       )
-    case USER_TYPE.Customer:
+    case ROLE.CLIENT:
       return (
         <div className='flex gap-[1rem]'>
           <Button
@@ -126,7 +128,7 @@ export default function SideBar({
           </Button>
         </div>
       )
-    case USER_TYPE.Manager:
+    case ROLE.PROVIDER:
       return (
         <div className='flex gap-[1rem]'>
           <Button
@@ -189,7 +191,7 @@ export default function SideBar({
             icon='ic_register'
             text='푸드트럭 등록하기'
             handleMenuClick={handleClickRegister}
-            show={userType === USER_TYPE.Manager}
+            show={role === ROLE.PROVIDER}
           />
 
           <div className='my-[1.2rem] border-b border-grayscale-200' />
