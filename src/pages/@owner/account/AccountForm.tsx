@@ -1,11 +1,11 @@
 import Button from '@shared/components/button/Button';
 import Information from '@shared/components/information/Information';
 import Navigation from '@shared/components/navigation/Navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { type Bank } from '@pages/@owner/account/constants/bank';
 import { useAccount } from '@pages/@owner/account/hooks/useAccount';
 import SearchBar from '@shared/components/search-bar/SearchBar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import SelectBankModal from '@pages/@owner/account/@modal/(.)select-bank-modal/SelectBankModal';
 import { cn } from '@shared/utils/cn';
@@ -15,6 +15,9 @@ import { ROUTES } from '@router/constant/routes';
 
 export default function Account() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditMode = !!id;
+
   const [isSelectBankOpen, setIsSelectBankOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const {
@@ -71,6 +74,24 @@ export default function Account() {
     reset();
   };
 
+  // TODO: 수정 모드일 때 API로 계좌 정보를 가져와서 폼에 초기값으로 설정
+  const fetchAccountData = async (accountId: string) => {
+    // TODO: 받아온 데이터로 폼 초기값 설정
+    if (accountId) {
+      return;
+    }
+    // updateBank(accountData.bank);
+    // updateName(accountData.name);
+    // updateAccountNumber(accountData.accountNumber);
+  };
+
+  // 수정 모드일 때 계좌 정보 가져오기
+  useEffect(() => {
+    if (isEditMode && id) {
+      fetchAccountData(id);
+    }
+  }, [isEditMode, id]);
+
   return (
     <>
       <SelectBankModal
@@ -88,7 +109,7 @@ export default function Account() {
       />
 
       <Navigation
-        text='계좌 등록'
+        text={isEditMode ? '계좌 수정' : '계좌 등록'}
         handleLeftClick={handleClickBack}
         leftIcon={<Icon name='ic_back' />}
         rightIcon={

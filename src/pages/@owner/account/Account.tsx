@@ -8,24 +8,43 @@ import { mockup } from '@pages/@owner/account/mockup';
 
 export default function Account() {
   const navigate = useNavigate();
+  const data = mockup;
+
   const handleClickBack = () => {
     navigate(-1);
   };
   const handleSubmitButton = () => {
     navigate(ROUTES.ACCOUNT_FORM);
   };
-  const data = mockup;
+
+  const handleEditButton = () => {
+    if (data) {
+      navigate(`${ROUTES.ACCOUNT_FORM}/${data.id}`);
+    } else {
+      navigate(ROUTES.ACCOUNT_FORM);
+    }
+  };
 
   return (
     <>
       <Navigation
-        text='계좌 등록'
+        text='결제관리'
         handleLeftClick={handleClickBack}
         leftIcon={<Icon name='ic_back' />}
       />
       <div className='flex flex-col gap-[2rem] p-[2rem] pt-[4rem]'>
         <div className='flex flex-col gap-[1rem]'>
-          <p>등록된 계좌</p>
+          <div className='flex items-center justify-between'>
+            <p className='title-sb-12 text-grayscale-500'>등록된 계좌</p>
+            {data && (
+              <Button
+                variant='default'
+                buttonStyle='edit'
+                children='수정'
+                handleClickButton={handleEditButton}
+              />
+            )}
+          </div>
           <Information
             iconId='ic_chat'
             text='한 번 등록하면 채팅에서 바로 계좌 발송이 가능해요!'

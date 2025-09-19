@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ROUTES.ACCOUNT_FORM,
+        path: ROUTES.ACCOUNT_FORM + '/:id?',
         element: <AccountForm />,
       },
       {
