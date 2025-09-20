@@ -57,7 +57,7 @@ export default function Account() {
             key={data.id}
           >
             <div className='flex items-center justify-between'>
-              <p className='title-sb-12 text-grayscale-500'>은향명</p>
+              <p className='title-sb-12 text-grayscale-500'>은행명</p>
               <p className='body-m-13 text-grayscale-900'>{data.bank}</p>
             </div>
             <div className='flex items-center justify-between'>
