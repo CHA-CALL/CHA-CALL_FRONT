@@ -44,7 +44,7 @@ export default function MessageForm() {
   };
 
   return (
-    <div>
+    <div className='flex h-screen flex-col'>
       <ConfirmModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -56,21 +56,21 @@ export default function MessageForm() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex min-h-[calc(100vh-13.2rem)] flex-col gap-[1rem] p-[2rem]'>
+      <div className='flex flex-1 flex-col gap-[1rem] p-[2rem]'>
         <textarea
           className='body-m-14 border-grayscale-300 text-grayscale-900 placeholder:text-grayscale-300 caret-primary-700 placeholder:body-m-14 focus:border-grayscale-500 min-h-[34rem] rounded-[1.6rem] px-[2rem] py-[1.5rem] focus:outline-none'
-          placeholder='메세지를 입력해주세요.'
+          placeholder='텍스트를 입력해주세요.'
           value={message}
           maxLength={MAX_LENGTH}
           onChange={handleChangeMessage}
-        ></textarea>
+        />
         <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
           <p className='text-primary-700'>{message.length}</p>
           <p className='text-grayscale-700'>/</p>
           <p className='text-grayscale-700'>{MAX_LENGTH}</p>
         </div>
       </div>
-      <footer className='sticky bottom-[0] left-[0] right-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='sticky bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
           buttonStyle={isDisabled ? 'disabled' : 'active'}
