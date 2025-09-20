@@ -1,7 +1,8 @@
+import { ROUTES } from '@router/constant/routes';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
-import Overlay from '@shared/components/overlay/Overlay';
+import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/ConfirmModal';
 import { useState, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,14 +22,14 @@ export default function MessageForm() {
     //TODO: API 연동
     setSubmit(true);
     //TODO: Toast 알림 표시
-    navigate('/message-list');
+    navigate(ROUTES.MESSAGELIST);
   };
 
   const handleClickBack = () => {
     if (!submit && message.trim()) {
       setIsOpen(true);
     } else {
-      navigate('/message-list');
+      navigate(ROUTES.MESSAGELIST);
     }
   };
 
@@ -39,43 +40,17 @@ export default function MessageForm() {
 
   const handleClickConfirm = () => {
     setIsOpen(false);
-    navigate('/message-list');
+    navigate(ROUTES.MESSAGELIST);
   };
 
   return (
     <div>
-      <Overlay isOpen={isOpen} handleClose={() => setIsOpen(false)}>
-        <div className='flex w-[27.4rem] flex-col items-center justify-center gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
-          <div className='flex w-full flex-col justify-start gap-[0.2rem]'>
-            <p className='title-sb-16 text-grayscale-900'>
-              저장하지 않고 나가시겠습니까?
-            </p>
-            <p className='caption-m-12 text-grayscale-700'>
-              작성 중인 내용은 저장되지 않으며,
-              <br />
-              나가면 모두 삭제됩니다.
-            </p>
-          </div>
-          <div className='flex justify-between gap-[1rem]'>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              className='w-[11.2rem]'
-              handleClickButton={handleClickConfirm}
-            >
-              나가기
-            </Button>
-            <Button
-              variant='cta'
-              buttonStyle='active'
-              className='w-[11.2rem]'
-              handleClickButton={handleClickCancel}
-            >
-              취소
-            </Button>
-          </div>
-        </div>
-      </Overlay>
+      <ConfirmModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleClickConfirm={handleClickConfirm}
+        handleClickCancel={handleClickCancel}
+      />
       <Navigation
         text='자주 쓰는 메세지 설정'
         leftIcon={<Icon name='ic_back' />}
