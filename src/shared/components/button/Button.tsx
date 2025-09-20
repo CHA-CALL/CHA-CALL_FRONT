@@ -22,7 +22,7 @@ export const ButtonClasses = {
   },
   default: {
     base: 'rounded-[0.4rem] border border-grayscale-200 bg-white',
-    large: 'w-full  px-[11.4rem] py-[1.5rem] title-sb-14 rounded-[1.6rem]',
+    large: 'w-full px-[11.4rem] py-[1.5rem] title-sb-14',
     medium: 'px-[1.85rem] py-[0.5rem] caption-m-12',
     edit: 'px-[1.25rem] py-[0.5rem] caption-m-12 text-grayscale-700',
   },

@@ -1,10 +1,10 @@
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@shared/components/button/Button';
-import { useFoodTruckInput } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
-import NameSection from '@pages/owner-onboarding/components/NameSection';
-import BizRegCertSection from '@pages/owner-onboarding/components/BizRegCertSection';
-import OtherDocsSection from '@pages/owner-onboarding/components/OtherDocsSection';
+import { useFoodTruckInput } from '@pages/@owner/food-truck-onboarding/hooks/useFoodTruckInput';
+import NameSection from '@pages/@owner/food-truck-onboarding/components/NameSection';
+import BizRegCertSection from '@pages/@owner/food-truck-onboarding/components/BizRegCertSection';
+import OtherDocsSection from '@pages/@owner/food-truck-onboarding/components/OtherDocsSection';
 
 export default function FoodTruckOnboarding() {
   const {

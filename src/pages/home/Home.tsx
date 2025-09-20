@@ -31,7 +31,7 @@ const Home = () => {
   };
 
   return (
-    <div className='relative'>
+    <div>
       {/* Modal */}
       <Overlay
         isOpen={isModalOpen}
@@ -61,25 +61,18 @@ const Home = () => {
       </Overlay>
 
       {/* BottomSheet */}
-      <Overlay
+
+      <BottomSheet
         isOpen={isBottomSheetOpen}
-        position='bottom'
-        handleClose={handleCloseBottomSheet}
-      >
-        <BottomSheet
-          isOpen={isBottomSheetOpen}
-          handleCloseBottomSheet={handleCloseBottomSheet}
-          sheetContent={
-            <div>
-              <h3 className='mb-[2rem] text-[1.8rem] font-bold'>
-                바텀시트 내용
-              </h3>
-              <p className='mb-[2rem]'>이것은 바텀시트의 내용입니다.</p>
-            </div>
-          }
-          sheetHeight={400}
-        />
-      </Overlay>
+        handleCloseBottomSheet={handleCloseBottomSheet}
+        sheetContent={
+          <div>
+            <h3 className='mb-[2rem] text-[1.8rem] font-bold'>바텀시트 내용</h3>
+            <p className='mb-[2rem]'>이것은 바텀시트의 내용입니다.</p>
+          </div>
+        }
+        sheetHeight={400}
+      />
 
       {/* Search Bar */}
       <section>

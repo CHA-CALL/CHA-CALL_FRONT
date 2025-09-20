@@ -6,10 +6,10 @@ import Layout from '@/router/Layout';
 import Filter from '@pages/filter/Filter';
 import ChatList from '@pages/chat-list/ChatList';
 import Reservation from '@/pages/reservation/Reservation';
-import FoodTruckOnboarding from '@pages/owner-onboarding/FoodTruckOnboarding';
+import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOnboarding';
 import SetLocation from '@pages/set-location/SetLocation';
-import Account from '@pages/@owner/account/Account';
-import AccountForm from '@pages/@owner/account/AccountForm';
+import MessageList from '@pages/@owner/message-list/MessageList';
+import MessageForm from '@pages/@owner/message-list/components/MessageForm';
 
 export const router = createBrowserRouter([
   {
@@ -40,12 +40,12 @@ export const router = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ROUTES.ACCOUNT_FORM + '/:id?',
-        element: <AccountForm />,
+        path: ROUTES.MESSAGELIST,
+        element: <MessageList />,
       },
       {
-        path: ROUTES.ACCOUNT,
-        element: <Account />,
+        path: ROUTES.MESSAGE_FORM,
+        element: <MessageForm />,
       },
     ],
   },
