@@ -19,7 +19,6 @@ import {
   SERVING_SIZE,
 } from '@pages/filter/constant/filter-option-constants';
 import Button from '@shared/components/button/Button';
-import Overlay from '@shared/components/overlay/Overlay';
 
 interface FilterState {
   eventType: string | null;
@@ -188,34 +187,26 @@ export default function Filter() {
         />
       </div>
 
-      <Overlay
+      <BottomSheet
         isOpen={isBottomSheetOpen}
-        position='bottom'
-        handleClose={handleCloseCalendar}
-      >
-        <BottomSheet
-          isOpen={isBottomSheetOpen}
-          handleCloseBottomSheet={handleCloseCalendar}
-          sheetContent={
-            currentDateIndex !== null ? (
-              <Calendar
-                selectedDate={
-                  filters.date?.[currentDateIndex] ?? {
-                    startDate: null,
-                    endDate: null,
-                  }
+        handleCloseBottomSheet={handleCloseCalendar}
+        sheetContent={
+          currentDateIndex !== null ? (
+            <Calendar
+              selectedDate={
+                filters.date?.[currentDateIndex] ?? {
+                  startDate: null,
+                  endDate: null,
                 }
-                handleApplyDate={date =>
-                  handleApplyDate(date, currentDateIndex)
-                }
-                handleCloseBottomSheet={handleCloseCalendar}
-                isOpen={isBottomSheetOpen}
-              />
-            ) : null
-          }
-          sheetHeight={490}
-        />
-      </Overlay>
+              }
+              handleApplyDate={date => handleApplyDate(date, currentDateIndex)}
+              handleCloseBottomSheet={handleCloseCalendar}
+              isOpen={isBottomSheetOpen}
+            />
+          ) : null
+        }
+        sheetHeight={490}
+      />
 
       <div
         className={cn(
