@@ -3,7 +3,7 @@ import {
   OWNER_MEDIA_ERROR_MESSAGE,
   OWNER_MEDIA_MAX_COUNT,
   OWNER_MEDIA_MIN_COUNT,
-} from '@pages/owner-onboarding/constants/owner';
+} from '@pages/@owner/food-truck-onboarding/constants/owner';
 
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 

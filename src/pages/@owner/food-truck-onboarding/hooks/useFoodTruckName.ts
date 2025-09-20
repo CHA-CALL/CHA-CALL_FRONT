@@ -1,7 +1,7 @@
 import {
   OWNER_TEXT,
   OWNER_TEXT_ERROR_MESSAGE,
-} from '@pages/owner-onboarding/constants/owner';
+} from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { z } from 'zod';
 import { useState } from 'react';
 

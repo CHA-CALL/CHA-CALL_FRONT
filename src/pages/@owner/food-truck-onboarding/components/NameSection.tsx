@@ -1,8 +1,8 @@
 import Button from '@shared/components/button/Button';
-import { OWNER_TEXT } from '@pages/owner-onboarding/constants/owner';
+import { OWNER_TEXT } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import SearchBar from '@shared/components/search-bar/SearchBar';
-import SectionTitle from '@pages/owner-onboarding/components/SectionTitle';
-import type { OwnerFormData } from '@pages/owner-onboarding/hooks/useFoodTruckInput';
+import SectionTitle from '@pages/@owner/food-truck-onboarding/components/SectionTitle';
+import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/useFoodTruckInput';
 import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface NameSectionProps {

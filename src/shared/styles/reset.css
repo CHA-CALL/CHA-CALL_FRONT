@@ -144,4 +144,9 @@
   a {
     text-decoration: none;
   }
+
+  textarea {
+    font: inherit;
+    resize: none;
+  }
 }
