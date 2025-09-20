@@ -38,7 +38,7 @@ export default function Calendar({
   );
 
   return (
-    <div className='relative flex h-[43.5rem] w-full flex-col justify-between'>
+    <div className='relative mt-[2.8rem] flex h-[43.5rem] w-full flex-col justify-between'>
       <div>
         <div className='mb-[1.6rem] flex flex-row items-center justify-between pl-[calc(50%/7-1rem)] pr-[calc(50%/7-1.5rem)]'>
           <h3 className='text-grayscale-900 heading-sb-18'>
@@ -57,7 +57,7 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className='text-grayscale-500 caption-r-12 grid grid-cols-7 text-center'>
+        <div className='grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
           {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
@@ -65,7 +65,7 @@ export default function Calendar({
           ))}
         </div>
 
-        <div className='body-m-14 grid grid-cols-7'>
+        <div className='grid grid-cols-7 body-m-14'>
           {calendarDays.prevDates.map(day => (
             <CalendarDayButton
               key={`p${day}`}
