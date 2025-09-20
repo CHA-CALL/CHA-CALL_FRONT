@@ -2,7 +2,7 @@ import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import Overlay from '@shared/components/overlay/Overlay';
-import React, { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function MessageForm() {
@@ -12,7 +12,7 @@ export default function MessageForm() {
   const MAX_LENGTH = 100;
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
     setSubmit(false);
   };
