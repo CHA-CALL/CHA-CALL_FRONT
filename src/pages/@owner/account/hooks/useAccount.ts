@@ -12,7 +12,7 @@ const accountSchema = z.object({
     .refine(bank => Object.values(BANK).includes(bank as Bank), {
       message: ERROR_MESSAGE.bank,
     }),
-  name: z.string().min(1, ERROR_MESSAGE.name),
+  name: z.string().min(1, ERROR_MESSAGE.name).max(15, ERROR_MESSAGE.nameMax),
   accountNumber: z
     .string()
     .min(1, ERROR_MESSAGE.accountNumber)

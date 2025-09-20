@@ -182,6 +182,7 @@ export default function Account() {
               value={formData.name}
               placeholder='예금주를 입력해주세요.'
               onChange={e => updateName(e.target.value)}
+              maxLength={15}
             />
             {errors.name && <ErrorText text={errors.name} />}
           </div>
