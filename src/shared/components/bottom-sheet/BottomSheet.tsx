@@ -33,7 +33,7 @@ export default function BottomSheet({
       <div
         ref={sheetRef}
         className={cn(
-          'fixed bottom-[0rem] left-1/2 flex w-full max-w-[60rem] -translate-x-1/2 flex-col justify-center rounded-t-[3.2rem] bg-white px-[3.2rem]',
+          'fixed bottom-[0rem] left-1/2 flex w-full max-w-[60rem] -translate-x-1/2 flex-col justify-center rounded-t-[3.2rem] bg-white px-[2rem]',
           'transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-y-0' : 'translate-y-full'
         )}

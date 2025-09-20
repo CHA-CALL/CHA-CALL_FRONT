@@ -8,17 +8,28 @@ import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import AgreementSection from '@pages/profile-setting/components/AgreementSection';
 import Button from '@shared/components/button/Button';
+import DeleteAccountModal from './components/DeleteAccountModal';
 
 export default function ProfileSetting() {
   const navigate = useNavigate();
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleToHome = () => {
+  const handleLogout = () => {
+    // TODO: 로그아웃 api
     navigate('/');
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleOpenBottomSheet = () => {
@@ -45,7 +56,7 @@ export default function ProfileSetting() {
           <button
             type='button'
             className='px-[1rem] py-[0.6rem] text-grayscale-500'
-            onClick={handleToHome}
+            onClick={handleLogout}
           >
             로그아웃
           </button>
@@ -53,12 +64,13 @@ export default function ProfileSetting() {
           <button
             type='button'
             className='px-[1rem] py-[0.6rem] text-grayscale-500'
-            onClick={handleToHome}
+            onClick={handleOpenModal}
           >
             회원탈퇴
           </button>
         </footer>
       </div>
+      <DeleteAccountModal isOpen={isModalOpen} handleClose={handleCloseModal} />
       <BottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
@@ -79,7 +91,7 @@ export default function ProfileSetting() {
             </Button>
           </div>
         }
-        sheetHeight={200}
+        sheetHeight={230}
       />
     </>
   );
