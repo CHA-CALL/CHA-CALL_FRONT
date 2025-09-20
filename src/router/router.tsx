@@ -6,7 +6,7 @@ import Layout from '@/router/Layout';
 import Filter from '@pages/filter/Filter';
 import ChatList from '@pages/chat-list/ChatList';
 import Reservation from '@/pages/reservation/Reservation';
-import FoodTruckOnboarding from '@pages/owner-onboarding/FoodTruckOnboarding';
+import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOnboarding';
 import SetLocation from '@pages/set-location/SetLocation';
 import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';

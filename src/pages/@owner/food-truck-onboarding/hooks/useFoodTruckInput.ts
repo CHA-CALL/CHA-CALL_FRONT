@@ -4,12 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   BIZ_REG_CERT_FILE_VALIDATOR,
   OTHER_DOCS_FILES_VALIDATOR,
-} from '@pages/owner-onboarding/hooks/useFileUpload';
+} from '@pages/@owner/food-truck-onboarding/hooks/useFileUpload';
 import {
   FOOD_TRUCK_NAME_VALIDATOR,
   useFoodTruckName,
-} from '@pages/owner-onboarding/hooks/useFoodTruckName';
-import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/owner-onboarding/constants/owner';
+} from '@pages/@owner/food-truck-onboarding/hooks/useFoodTruckName';
+import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,
