@@ -1,55 +1,49 @@
 import Overlay from '@shared/components/overlay/Overlay';
-import { type AccountFormData } from '@pages/@owner/account/hooks/useAccount';
-
 import Button from '@shared/components/button/Button';
 
 interface ConfirmModalProps {
-  formData: AccountFormData;
   isOpen: boolean;
   handleClose: () => void;
-  handleConfirm: () => void;
-  handleCancel: () => void;
+  handleClickConfirm: () => void;
+  handleClickCancel: () => void;
 }
+
 export default function ConfirmModal({
-  formData,
   isOpen,
   handleClose,
-  handleConfirm,
-  handleCancel,
+  handleClickConfirm,
+  handleClickCancel,
 }: ConfirmModalProps) {
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
-      <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
-        <p className='heading-sb-18 text-black'>저장정보 확인</p>
-        <div className='flex flex-col gap-[1rem]'>
-          <div className='flex items-center justify-between'>
-            <p className='title-sb-12 text-grayscale-500'>은행</p>
-            <p className='caption-m-12 text-grayscale-900'>{formData.bank}</p>
-          </div>
-          <div className='flex items-center justify-between'>
-            <p className='title-sb-12 text-grayscale-500'>예금주</p>
-            <p className='caption-m-12 text-grayscale-900'>{formData.name}</p>
-          </div>
-          <div className='flex items-center justify-between'>
-            <p className='title-sb-12 text-grayscale-500'>계좌번호</p>
-            <p className='caption-m-12 text-grayscale-900'>
-              {formData.accountNumber}
-            </p>
-          </div>
+      <div className='flex w-[27.4rem] flex-col items-center justify-center gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
+        <div className='flex w-full flex-col justify-start gap-[0.2rem]'>
+          <p className='title-sb-16 text-grayscale-900'>
+            저장하지 않고 나가시겠습니까?
+          </p>
+          <p className='caption-m-12 text-grayscale-700'>
+            작성 중인 내용은 저장되지 않으며,
+            <br />
+            나가면 모두 삭제됩니다.
+          </p>
         </div>
-        <div className='flex gap-[1rem]'>
+        <div className='flex justify-between gap-[1rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'
-            children='취소'
-            handleClickButton={handleCancel}
-          />
+            className='w-[11.2rem]'
+            handleClickButton={handleClickConfirm}
+          >
+            나가기
+          </Button>
           <Button
             variant='cta'
             buttonStyle='active'
-            children='저장'
-            handleClickButton={handleConfirm}
-          />
+            className='w-[11.2rem]'
+            handleClickButton={handleClickCancel}
+          >
+            취소
+          </Button>
         </div>
       </div>
     </Overlay>
