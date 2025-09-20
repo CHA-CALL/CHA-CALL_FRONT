@@ -3,19 +3,19 @@ import Button from '@shared/components/button/Button';
 
 interface ConfirmModalProps {
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  handleClose: () => void;
   handleClickConfirm: () => void;
   handleClickCancel: () => void;
 }
 
 export default function ConfirmModal({
   isOpen,
-  setIsOpen,
+  handleClose,
   handleClickConfirm,
   handleClickCancel,
 }: ConfirmModalProps) {
   return (
-    <Overlay isOpen={isOpen} handleClose={() => setIsOpen(false)}>
+    <Overlay isOpen={isOpen} handleClose={handleClose}>
       <div className='flex w-[27.4rem] flex-col items-center justify-center gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
         <div className='flex w-full flex-col justify-start gap-[0.2rem]'>
           <p className='title-sb-16 text-grayscale-900'>

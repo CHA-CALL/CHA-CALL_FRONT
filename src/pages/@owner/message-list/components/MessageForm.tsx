@@ -42,12 +42,15 @@ export default function MessageForm() {
     setIsOpen(false);
     navigate(ROUTES.MESSAGELIST);
   };
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <div className='flex h-screen flex-col'>
       <ConfirmModal
         isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        handleClose={handleCloseModal}
         handleClickConfirm={handleClickConfirm}
         handleClickCancel={handleClickCancel}
       />
