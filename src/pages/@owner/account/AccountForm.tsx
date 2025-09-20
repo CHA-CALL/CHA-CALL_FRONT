@@ -12,6 +12,7 @@ import { cn } from '@shared/utils/cn';
 import ErrorText from '@shared/components/error-text/ErrorText';
 import ConfirmModal from '@pages/@owner/account/@modal/(.)confirm-modal/ConfirmModal';
 import { ROUTES } from '@router/constant/routes';
+import SaveModal from '@pages/@owner/account/@modal/(.)save-modal/SaveModal';
 
 export default function Account() {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ export default function Account() {
 
   const [isSelectBankOpen, setIsSelectBankOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isSaveOpen, setIsSaveOpen] = useState(false);
+
   const {
     formData,
     errors,
@@ -33,13 +36,20 @@ export default function Account() {
     trigger,
   } = useAccount();
 
-  const handleChange = (option: Bank) => {
+  const handleUpdateBank = (option: Bank) => {
     updateBank(option);
     setIsSelectBankOpen(false);
   };
 
   const handleClickBack = () => {
-    navigate(-1);
+    // 폼에 수정사항이 있는지 확인
+    const hasChanges = formData.name || formData.bank || formData.accountNumber;
+
+    if (hasChanges) {
+      setIsConfirmOpen(true);
+    } else {
+      navigate(-1);
+    }
   };
 
   const handleClickSelectBank = () => {
@@ -53,7 +63,7 @@ export default function Account() {
   const handleSubmitButton = () => {
     trigger();
     if (isFormValid) {
-      setIsConfirmOpen(true);
+      setIsSaveOpen(true);
     }
   };
 
@@ -63,13 +73,28 @@ export default function Account() {
 
   const handleConfirm = () => {
     setIsConfirmOpen(false);
+    navigate(-1);
+  };
+
+  const handleCancel = () => {
+    setIsConfirmOpen(false);
+  };
+
+  const handleCloseSave = () => {
+    setIsSaveOpen(false);
+  };
+
+  const handleConfirmSave = () => {
+    setIsSaveOpen(false);
     //TODO: 계좌 등록 제출
     handleSubmit();
     navigate(ROUTES.ACCOUNT);
   };
-  const handleCancel = () => {
-    setIsConfirmOpen(false);
+
+  const handleCancelSave = () => {
+    setIsSaveOpen(false);
   };
+
   const handleClickReset = () => {
     reset();
   };
@@ -97,14 +122,20 @@ export default function Account() {
       <SelectBankModal
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}
-        handleChange={handleChange}
+        handleChange={handleUpdateBank}
         bank={formData.bank as Bank}
       />
       <ConfirmModal
         isOpen={isConfirmOpen}
         handleClose={handleCloseConfirm}
-        handleConfirm={handleConfirm}
-        handleCancel={handleCancel}
+        handleClickConfirm={handleConfirm}
+        handleClickCancel={handleCancel}
+      />
+      <SaveModal
+        isOpen={isSaveOpen}
+        handleClose={handleCloseSave}
+        handleConfirm={handleConfirmSave}
+        handleCancel={handleCancelSave}
         formData={formData}
       />
 

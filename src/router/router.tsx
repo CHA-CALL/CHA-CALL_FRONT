@@ -10,6 +10,8 @@ import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOn
 import SetLocation from '@pages/set-location/SetLocation';
 import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
+import Account from '@pages/@owner/account/Account';
+import AccountForm from '@pages/@owner/account/AccountForm';
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MESSAGE_FORM,
         element: <MessageForm />,
+      },
+      {
+        path: ROUTES.ACCOUNT,
+        element: <Account />,
+      },
+      {
+        path: ROUTES.ACCOUNT_FORM + '/:id?',
+        element: <AccountForm />,
       },
     ],
   },
