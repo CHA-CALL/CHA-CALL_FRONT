@@ -22,7 +22,7 @@ export default function SaveAccountModal({
     <Overlay isOpen={isOpen} handleClose={handleClose}>
       <div className='flex min-w-[27.4rem] flex-col gap-[1rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
         <p className='heading-sb-18 text-black'>저장정보 확인</p>
-        <div className='bg-grayscale-100 h-[1px] w-full' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <div className='flex flex-col gap-[1rem]'>
           <div className='flex items-center justify-between'>
             <p className='title-sb-12 text-grayscale-500'>은행</p>

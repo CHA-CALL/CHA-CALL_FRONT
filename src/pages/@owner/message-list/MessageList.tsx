@@ -6,9 +6,10 @@ import { mockup } from '@pages/@owner/message-list/mockup';
 import Message from '@pages/@owner/message-list/components/Message';
 import Information from '@shared/components/information/Information';
 import { ROUTES } from '@router/constant/routes';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/(.)delete-message-bottom-sheet/DeleteMessageBottomSheet';
 import ConfirmDeleteModal from '@pages/@owner/message-list/@modal/(.)confirm-delete-modal/ConfirmExitModal';
+import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
 
 export default function MessageList() {
   const navigate = useNavigate();
@@ -17,8 +18,6 @@ export default function MessageList() {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState<string>('');
-  const [showScrollToTop, setShowScrollToTop] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -57,20 +56,6 @@ export default function MessageList() {
     }
   };
 
-  const handleClickScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
-  useEffect(() => {
-    const hasVerticalScroll =
-      document.documentElement.scrollHeight > window.innerHeight;
-    console.log('hasVerticalScroll:', hasVerticalScroll);
-    setShowScrollToTop(hasVerticalScroll);
-  }, [messageList]);
-
   return (
     <>
       <DeleteMessageBottomSheet
@@ -97,17 +82,14 @@ export default function MessageList() {
         />
       </div>
 
-      <div
-        ref={scrollContainerRef}
-        className='flex flex-col gap-[1.2rem] px-[2rem]'
-      >
+      <div className='flex flex-col gap-[1.2rem] px-[2rem]'>
         {messageList &&
           messageList.map((message, index) => (
             <Message
               key={index}
               number={index + 1}
               message={message.message}
-              messageId={message.id.toString()}
+              messageId={String(message.id)}
               handleDeleteMessage={handleDeleteMessage}
             />
           ))}
@@ -124,15 +106,7 @@ export default function MessageList() {
         </Button>
       </footer>
 
-      {showScrollToTop && (
-        <button
-          onClick={handleClickScrollToTop}
-          className='fixed bottom-[10rem] right-[2rem] z-50 flex h-[5rem] w-[5rem] items-center justify-center rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]'
-          aria-label='맨 위로 이동'
-        >
-          <Icon name='ic_up' width={24} height={24} />
-        </button>
-      )}
+      <ButtonFloating />
     </>
   );
 }

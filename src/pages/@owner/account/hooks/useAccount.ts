@@ -51,7 +51,6 @@ export const useAccount = () => {
 
   const updateAccountNumber = (accountNumber: string) => {
     const numbersOnly = accountNumber.replace(/\D/g, '');
-    console.log(numbersOnly);
     setValue('accountNumber', numbersOnly, { shouldValidate: true });
   };
 

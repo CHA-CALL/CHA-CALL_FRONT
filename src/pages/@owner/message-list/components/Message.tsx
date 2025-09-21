@@ -13,6 +13,9 @@ export default function Message({
   messageId,
   handleDeleteMessage,
 }: MessageProps) {
+  const handleDeleteMessageClick = () => {
+    handleDeleteMessage(messageId);
+  };
   return (
     <div className='bg-grayscale-50 flex w-full items-start rounded-[1.6rem] p-[2rem]'>
       <div className='flex w-full flex-col items-start gap-[0.4rem]'>
@@ -21,12 +24,9 @@ export default function Message({
         </span>
         <p className='caption-m-12 text-grayscale-700'>{message}</p>
       </div>
-      <Icon
-        name='ic_dot'
-        color='#565B65'
-        className='cursor-pointer'
-        onClick={() => handleDeleteMessage(messageId)}
-      />
+      <button type='button' onClick={handleDeleteMessageClick}>
+        <Icon name='ic_dot' color='#565B65' className='cursor-pointer' />
+      </button>
     </div>
   );
 }
