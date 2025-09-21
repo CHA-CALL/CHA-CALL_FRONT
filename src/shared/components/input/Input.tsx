@@ -1,19 +1,19 @@
 import { cn } from '@shared/utils/cn';
 import React from 'react';
 
-interface SearchBarProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   rightComponent?: React.ReactNode;
   handleRightClick?: () => void;
   error?: boolean;
 }
 
-export default function SearchBar({
+export default function Input({
   rightComponent,
   handleRightClick,
   error = false,
   className,
   ...props
-}: SearchBarProps) {
+}: InputProps) {
   return (
     <div
       className={cn(

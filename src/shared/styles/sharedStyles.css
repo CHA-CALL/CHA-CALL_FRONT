@@ -33,6 +33,7 @@
   --title-sb-12: 1.2rem;
   --body-m-16: 1.6rem;
   --body-m-14: 1.4rem;
+  --body-m-13: 1.3rem;
   --caption-m-12: 1.2rem;
   --caption-r-12: 1.2rem;
   --caption-m-11: 1.1rem;
@@ -118,6 +119,11 @@
   }
   .body-m-14 {
     font-size: var(--body-m-14);
+    font-weight: 500;
+    line-height: 150%;
+  }
+  .body-m-13 {
+    font-size: var(--body-m-13);
     font-weight: 500;
     line-height: 150%;
   }

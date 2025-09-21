@@ -9,7 +9,7 @@ import { useLocations } from '@pages/set-location/hooks/use-locations';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
-import SearchBar from '@shared/components/search-bar/SearchBar';
+import Input from '@shared/components/input/Input';
 import { useNavigate } from 'react-router-dom';
 
 export default function SetLocation() {
@@ -42,7 +42,7 @@ export default function SetLocation() {
         handleLeftClick={handleClickBack}
       />
       <div className='px-[2rem] pb-[0.8rem] pt-[1.6rem]'>
-        <SearchBar
+        <Input
           placeholder='검색어를 입력해주세요.'
           value={searchText}
           onChange={e => setSearchText(e.target.value)}
