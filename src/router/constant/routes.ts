@@ -7,4 +7,7 @@ export const ROUTES = {
   CHATLIST: '/chat-list',
   MESSAGELIST: '/owner/message-list',
   MESSAGE_FORM: '/owner/message-form',
+  SET_NAME: '/set-user-name',
+  SET_EMAIL: '/set-user-email',
+  SET_GENDER: '/set-user-gender',
 };
