@@ -17,6 +17,7 @@ import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-
 import { user_mockup } from '@pages/mypage/constant/mockup';
 
 export default function ProfileSetting() {
+  // TODO: 커스텀 훅으로 분리
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
