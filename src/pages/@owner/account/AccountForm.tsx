@@ -4,7 +4,7 @@ import Navigation from '@shared/components/navigation/Navigation';
 import { useState, useEffect } from 'react';
 import { type Bank } from '@pages/@owner/account/constants/bank';
 import { useAccount } from '@pages/@owner/account/hooks/useAccount';
-import SearchBar from '@shared/components/search-bar/SearchBar';
+import Input from '@shared/components/input/Input';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
@@ -178,7 +178,7 @@ export default function Account() {
           </div>
           <div className='flex flex-col gap-[1rem]'>
             <p className='title-sb-12 text-gray-900'>예금주</p>
-            <SearchBar
+            <Input
               value={formData.name}
               placeholder='예금주를 입력해주세요.'
               onChange={e => updateName(e.target.value)}
@@ -188,7 +188,7 @@ export default function Account() {
           </div>
           <div className='flex flex-col gap-[1rem]'>
             <p className='title-sb-12 text-gray-900'>계좌번호</p>
-            <SearchBar
+            <Input
               placeholder='계좌번호를 입력해주세요.'
               value={formatAccountNumber(formData.accountNumber)}
               onChange={e => updateAccountNumber(e.target.value)}
