@@ -1,14 +1,24 @@
-import ButtonCheck from '@components/button-check/ButtonCheck';
-import { Icon } from '@components/icon/Icon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function AgreementSection() {
-  const navigate = useNavigate();
-  const [isAgreed, setIsAgreed] = useState(false);
+import ButtonCheck from '@components/button-check/ButtonCheck';
+import { Icon } from '@components/icon/Icon';
 
-  // TODO: 토스트 메시지
+interface AgreementSectionProps {
+  termAgreed: boolean | undefined;
+}
+
+export default function AgreementSection({
+  termAgreed,
+}: AgreementSectionProps) {
+  const navigate = useNavigate();
+  const [isAgreed, setIsAgreed] = useState<boolean>(false);
+
+  // TODO: 토스트 메시지 및 회원정보 수정 api
   const handleToggleCheck = () => {
+    if (!isAgreed) {
+      alert('약관 동의가 완료되었습니다.');
+    }
     setIsAgreed(!isAgreed);
   };
 
@@ -16,6 +26,10 @@ export default function AgreementSection() {
   const handleNavigateToTerm = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    setIsAgreed(termAgreed ?? false);
+  }, [termAgreed]);
 
   return (
     <div className='flex flex-row items-center justify-between rounded-[1.6rem] border border-grayscale-200 px-[1.8rem] py-[1.6rem]'>
