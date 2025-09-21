@@ -16,7 +16,7 @@ const accountSchema = z.object({
   accountNumber: z
     .string()
     .min(1, ERROR_MESSAGE.accountNumber)
-    .max(14, ERROR_MESSAGE.accountNumberMax),
+    .max(16, ERROR_MESSAGE.accountNumberMax),
 });
 
 export type AccountFormData = z.infer<typeof accountSchema>;
@@ -51,6 +51,7 @@ export const useAccount = () => {
 
   const updateAccountNumber = (accountNumber: string) => {
     const numbersOnly = accountNumber.replace(/\D/g, '');
+    console.log(numbersOnly);
     setValue('accountNumber', numbersOnly, { shouldValidate: true });
   };
 

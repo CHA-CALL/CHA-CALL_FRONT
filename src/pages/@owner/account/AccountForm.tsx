@@ -7,12 +7,12 @@ import { useAccount } from '@pages/@owner/account/hooks/useAccount';
 import SearchBar from '@shared/components/search-bar/SearchBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
-import SelectBankModal from '@pages/@owner/account/@modal/(.)select-bank-modal/SelectBankModal';
+import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
 import { cn } from '@shared/utils/cn';
 import ErrorText from '@shared/components/error-text/ErrorText';
-import ConfirmModal from '@pages/@owner/account/@modal/(.)confirm-modal/ConfirmModal';
+import ConfirmExitModal from '@pages/@owner/account/@modal/(.)confirm-exit-modal/ConfirmExitModal';
 import { ROUTES } from '@router/constant/routes';
-import SaveModal from '@pages/@owner/account/@modal/(.)save-modal/SaveModal';
+import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal/SaveAccountModal';
 
 export default function Account() {
   const navigate = useNavigate();
@@ -118,20 +118,20 @@ export default function Account() {
   }, [isEditMode, id]);
 
   return (
-    <>
-      <SelectBankModal
+    <div className='flex h-screen flex-col'>
+      <SelectBankBottomSheet
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}
         handleChange={handleUpdateBank}
         bank={formData.bank as Bank}
       />
-      <ConfirmModal
+      <ConfirmExitModal
         isOpen={isConfirmOpen}
         handleClose={handleCloseConfirm}
         handleClickConfirm={handleConfirm}
         handleClickCancel={handleCancel}
       />
-      <SaveModal
+      <SaveAccountModal
         isOpen={isSaveOpen}
         handleClose={handleCloseSave}
         handleConfirm={handleConfirmSave}
@@ -152,7 +152,7 @@ export default function Account() {
           />
         }
       />
-      <div className='flex min-h-[calc(100vh-5.2rem)] flex-col gap-[0.3rem] p-[2rem]'>
+      <div className='flex flex-1 flex-col gap-[0.3rem] overflow-y-auto p-[2rem]'>
         <Information
           iconId='ic_error'
           text='거래가 진행 될 계좌이므로, 꼼꼼한 확인이 필요해요! '
@@ -192,13 +192,13 @@ export default function Account() {
               placeholder='계좌번호를 입력해주세요.'
               value={formatAccountNumber(formData.accountNumber)}
               onChange={e => updateAccountNumber(e.target.value)}
-              maxLength={14}
+              maxLength={16}
             />
             {errors.accountNumber && <ErrorText text={errors.accountNumber} />}
           </div>
         </section>
       </div>
-      <footer className='sticky bottom-[1.7rem] left-0 right-0 w-full bg-white px-[2rem]'>
+      <footer className='sticky bottom-[1.7rem] w-full bg-white px-[2rem]'>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}
@@ -207,6 +207,6 @@ export default function Account() {
           handleClickButton={handleSubmitButton}
         />
       </footer>
-    </>
+    </div>
   );
 }

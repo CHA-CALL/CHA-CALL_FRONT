@@ -4,18 +4,18 @@ import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
 import { cn } from '@shared/utils/cn';
 import { Icon } from '@shared/components/icon/Icon';
 
-interface SelectBankModalProps {
+interface SelectBankBottomSheetProps {
   isOpen: boolean;
   handleClose: () => void;
   handleChange: (_option: Bank) => void;
   bank: Bank;
 }
-export default function SelectBankModal({
+export default function SelectBankBottomSheet({
   isOpen,
   handleClose,
   handleChange,
   bank,
-}: SelectBankModalProps) {
+}: SelectBankBottomSheetProps) {
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
       <BottomSheet

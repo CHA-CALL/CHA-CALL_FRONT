@@ -3,7 +3,7 @@ import { type AccountFormData } from '@pages/@owner/account/hooks/useAccount';
 
 import Button from '@shared/components/button/Button';
 
-interface SaveModalProps {
+interface SaveAccountModalProps {
   formData: AccountFormData;
   isOpen: boolean;
   handleClose: () => void;
@@ -11,17 +11,18 @@ interface SaveModalProps {
   handleCancel: () => void;
 }
 
-export default function SaveModal({
+export default function SaveAccountModal({
   formData,
   isOpen,
   handleClose,
   handleConfirm,
   handleCancel,
-}: SaveModalProps) {
+}: SaveAccountModalProps) {
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
-      <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
+      <div className='flex min-w-[27.4rem] flex-col gap-[1rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
         <p className='heading-sb-18 text-black'>저장정보 확인</p>
+        <div className='bg-grayscale-100 h-[1px] w-full' />
         <div className='flex flex-col gap-[1rem]'>
           <div className='flex items-center justify-between'>
             <p className='title-sb-12 text-grayscale-500'>은행</p>
@@ -38,7 +39,8 @@ export default function SaveModal({
             </p>
           </div>
         </div>
-        <div className='flex gap-[1rem]'>
+
+        <div className='mt-[0.6rem] flex gap-[1rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'
