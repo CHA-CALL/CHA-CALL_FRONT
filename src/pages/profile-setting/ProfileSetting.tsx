@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { type UserResponse } from 'apis/data-contracts';
 
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
-import Button from '@components/button/Button';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { FILE_ERROR_MESSAGE, MAX_MB } from '@shared/constant/image';
 
@@ -14,6 +12,7 @@ import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import AgreementSection from '@pages/profile-setting/components/AgreementSection';
 import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
+import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileImageBottomSheet';
 import { user_mockup } from '@pages/mypage/constant/mockup';
 
 export default function ProfileSetting() {
@@ -22,8 +21,6 @@ export default function ProfileSetting() {
   const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -48,10 +45,6 @@ export default function ProfileSetting() {
   };
   const handleCloseBottomSheet = () => {
     setIsBottomSheetOpen(false);
-  };
-
-  const handleEditImage = () => {
-    fileInputRef.current?.click();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,40 +116,11 @@ export default function ProfileSetting() {
         </footer>
       </div>
       <DeleteAccountModal isOpen={isModalOpen} handleClose={handleCloseModal} />
-      <BottomSheet
-        isOpen={isBottomSheetOpen}
+      <ProfileImageBottomSheet
+        isBottomSheetOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
-        sheetContent={
-          <div className='text-grayscale-700 title-sb-14'>
-            <div
-              className='flex justify-center border-b border-grayscale-100 py-[2rem]'
-              onClick={handleEditImage}
-            >
-              <span>수정하기</span>
-            </div>
-            <input
-              className='hidden'
-              type='file'
-              accept='image/*'
-              ref={fileInputRef}
-              onChange={handleFileChange}
-            />
-            <div
-              className='flex justify-center py-[2rem]'
-              onClick={handleDeleteImage}
-            >
-              <span>삭제하기</span>
-            </div>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleCloseBottomSheet}
-            >
-              취소
-            </Button>
-          </div>
-        }
-        sheetHeight={230}
+        handleFileChange={handleFileChange}
+        handleDeleteImage={handleDeleteImage}
       />
     </>
   );
