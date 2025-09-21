@@ -10,7 +10,7 @@ export default function MessageForm() {
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [submit, setSubmit] = useState(false);
-  const MAX_LENGTH = 100;
+  const MAX_LENGTH = 500;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
