@@ -84,7 +84,7 @@ export default function ProfileSetting() {
   return (
     <>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='#19212A' />}
+        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
         handleLeftClick={handleGoBack}
         text='프로필 설정'
       />

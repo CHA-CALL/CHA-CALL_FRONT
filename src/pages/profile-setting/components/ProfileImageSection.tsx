@@ -23,7 +23,7 @@ export default function ProfileImageSection({
         alt='프로필사진'
       />
       <div className='absolute bottom-[0.8rem] right-[0] z-50 flex h-[3rem] w-[3rem] items-center rounded-[1.5rem] border border-grayscale-200 bg-white p-[0.5rem]'>
-        <Icon name='ic_camera' color='#838992' />
+        <Icon name='ic_camera' color='var(--color-grayscale-500)' />
       </div>
     </button>
   );

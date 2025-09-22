@@ -115,7 +115,7 @@ export default function Filter() {
   return (
     <div>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='#19212A' />}
+        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
         handleLeftClick={handleGoBack}
         rightIcon={
           <Button variant='default' buttonStyle='edit'>
