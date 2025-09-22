@@ -58,6 +58,8 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE_SETTING,
         element: <ProfileSetting />,
+      },
+      {
         path: ROUTES.ACCOUNT,
         element: <Account />,
       },
