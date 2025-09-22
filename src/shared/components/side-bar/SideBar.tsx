@@ -14,7 +14,6 @@ interface MenuItemProps {
 interface SideBarProps {
   isOpen?: boolean;
   handleSideBarClose: () => void;
-  className?: string;
 }
 
 const MenuItem = ({
@@ -152,11 +151,10 @@ export default function SideBar({
     >
       <div
         onClick={e => e.stopPropagation()}
-        className={`
+        className='
           fixed top-0 left-0 flex flex-col
           w-[80%] max-w-[30rem] h-full py-[2.3rem] px-[2rem]
-          bg-white`
-        }
+          bg-white'
       >
         <img
           src='https://picsum.photos/id/11/120/34'
