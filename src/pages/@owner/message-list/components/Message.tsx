@@ -17,15 +17,19 @@ export default function Message({
     handleDeleteMessage(messageId);
   };
   return (
-    <div className='bg-grayscale-50 flex w-full items-start rounded-[1.6rem] p-[2rem]'>
+    <div className='flex w-full items-start rounded-[1.6rem] bg-grayscale-50 p-[2rem]'>
       <div className='flex w-full flex-col items-start gap-[0.4rem]'>
-        <span className='title-sb-16 text-grayscale-900'>
+        <span className='text-grayscale-900 title-sb-16'>
           {number.toString().padStart(2, '0')}
         </span>
-        <p className='caption-m-12 text-grayscale-700'>{message}</p>
+        <p className='text-grayscale-700 caption-m-12'>{message}</p>
       </div>
       <button type='button' onClick={handleDeleteMessageClick}>
-        <Icon name='ic_dot' color='#565B65' className='cursor-pointer' />
+        <Icon
+          name='ic_dot'
+          color='var(--color-grayscale-700)'
+          className='cursor-pointer'
+        />
       </button>
     </div>
   );

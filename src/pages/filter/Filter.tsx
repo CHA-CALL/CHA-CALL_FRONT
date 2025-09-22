@@ -41,6 +41,7 @@ const initialFilter: FilterState = {
 export default function Filter() {
   const navigate = useNavigate();
 
+  // TODO: 커스텀훅으로 만들기
   const [filters, setFilters] = useState<FilterState>(initialFilter);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [currentDateIndex, setCurrentDateIndex] = useState<number | null>(null);
@@ -114,7 +115,7 @@ export default function Filter() {
   return (
     <div>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='#19212A' />}
+        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
         handleLeftClick={handleGoBack}
         rightIcon={
           <Button variant='default' buttonStyle='edit'>
@@ -125,7 +126,7 @@ export default function Filter() {
         text='필터'
       />
 
-      <div className='mb-[9rem] flex flex-col gap-[2.8rem] p-[2rem]'>
+      <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem]'>
         <FilterChipGroup
           filterTitle='행사 종류'
           selectedOption={filters.eventType ?? ''}
