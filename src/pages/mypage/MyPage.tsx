@@ -11,7 +11,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { role } = useRole();
-  const isPresident = role === ROLE.PRESIDENT;
+  const isPresident = role === ROLE.PROVIDER;
 
   const handleNavigateTo = (navigateTo: string) => {
     navigate(navigateTo);
