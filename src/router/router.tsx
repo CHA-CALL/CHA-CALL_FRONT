@@ -12,6 +12,8 @@ import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
 import MyPage from '@pages/mypage/MyPage';
 import ProfileSetting from '@pages/profile-setting/ProfileSetting';
+import Account from '@pages/@owner/account/Account';
+import AccountForm from '@pages/@owner/account/AccountForm';
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +58,12 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE_SETTING,
         element: <ProfileSetting />,
+        path: ROUTES.ACCOUNT,
+        element: <Account />,
+      },
+      {
+        path: ROUTES.ACCOUNT_FORM + '/:id?',
+        element: <AccountForm />,
       },
     ],
   },

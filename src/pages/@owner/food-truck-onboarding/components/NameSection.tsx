@@ -1,6 +1,6 @@
 import Button from '@shared/components/button/Button';
 import { OWNER_TEXT } from '@pages/@owner/food-truck-onboarding/constants/owner';
-import SearchBar from '@shared/components/search-bar/SearchBar';
+import Input from '@shared/components/input/Input';
 import SectionTitle from '@pages/@owner/food-truck-onboarding/components/SectionTitle';
 import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/useFoodTruckInput';
 import ErrorText from '@shared/components/error-text/ErrorText';
@@ -21,7 +21,7 @@ export default function NameSection({
   return (
     <section className='flex w-full flex-col items-start justify-center gap-[1rem]'>
       <SectionTitle title='이름' />
-      <SearchBar
+      <Input
         value={value}
         onChange={e => onChange(e.target.value)}
         maxLength={OWNER_TEXT.MAX_LENGTH}

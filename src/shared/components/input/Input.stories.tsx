@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SearchBar from '@shared/components/search-bar/SearchBar';
 import { Icon } from '@shared/components/icon/Icon';
 import Button from '@shared/components/button/Button';
+import Input from '@shared/components/input/Input';
 
-const meta: Meta<typeof SearchBar> = {
-  title: 'Components/SearchBar',
-  component: SearchBar,
+const meta: Meta<typeof Input> = {
+  title: 'Components/Input',
+  component: Input,
   parameters: {
     layout: 'centered',
   },

@@ -9,4 +9,6 @@ export const ROUTES = {
   MESSAGE_FORM: '/owner/message-form',
   MYPAGE: '/mypage',
   PROFILE_SETTING: '/profile-setting',
+  ACCOUNT: '/owner/account',
+  ACCOUNT_FORM: '/owner/account-form',
 };
