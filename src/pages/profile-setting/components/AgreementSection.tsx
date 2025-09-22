@@ -36,8 +36,8 @@ export default function AgreementSection({
       <div className='flex flex-row gap-[0.8rem]'>
         <ButtonCheck isChecked={isAgreed} handleToggle={handleToggleCheck} />
         <span className='text-grayscale-900 caption-m-12'>
-          개인정보수집 및 이용 동의 - 푸드트럭 추천{' '}
-          <span className='text-grayscale-500'>(선택)</span>
+          개인정보수집 및 이용 동의 - 푸드트럭 추천
+          <span className='text-grayscale-500'> (선택)</span>
         </span>
       </div>
       <Icon

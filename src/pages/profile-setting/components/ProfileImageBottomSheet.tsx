@@ -25,13 +25,14 @@ export default function ProfileImageBottomSheet({
       isOpen={isBottomSheetOpen}
       handleCloseBottomSheet={handleCloseBottomSheet}
       sheetContent={
-        <div className='text-grayscale-700 title-sb-14'>
-          <div
-            className='flex justify-center border-b border-grayscale-100 py-[2rem]'
+        <>
+          <button
+            type='button'
+            className='flex w-full justify-center border-b border-grayscale-100 py-[2rem] text-grayscale-700 title-sb-14'
             onClick={handleEditImage}
           >
             <span>수정하기</span>
-          </div>
+          </button>
           <input
             className='hidden'
             type='file'
@@ -39,12 +40,13 @@ export default function ProfileImageBottomSheet({
             ref={fileInputRef}
             onChange={handleFileChange}
           />
-          <div
-            className='flex justify-center py-[2rem]'
+          <button
+            type='button'
+            className='flex w-full justify-center py-[2rem] text-grayscale-700 title-sb-14'
             onClick={handleDeleteImage}
           >
             <span>삭제하기</span>
-          </div>
+          </button>
           <Button
             variant='cta'
             buttonStyle='sub'
@@ -52,7 +54,7 @@ export default function ProfileImageBottomSheet({
           >
             취소
           </Button>
-        </div>
+        </>
       }
       sheetHeight={230}
     />
