@@ -10,8 +10,8 @@ import type { UpdateUserInfoRequest } from 'apis/data-contracts';
 import { dummyUserInfo } from '@pages/set-user-info/constant/mocks';
 import type { Field } from '@pages/set-user-info/types/set-user-types';
 import {
-  initialUserInfo,
-  title,
+  INITIAL_USER_INFO,
+  SET_USER_INFO_TITLES,
 } from '@pages/set-user-info/constant/set-user-constant';
 import { ROUTES } from '@router/constant/routes';
 
@@ -19,23 +19,22 @@ export default function SetUserInfo() {
   const { field } = useParams<{ field: Field }>();
 
   const [userInfo, setUserInfo] =
-    useState<UpdateUserInfoRequest>(initialUserInfo);
+    useState<UpdateUserInfoRequest>(INITIAL_USER_INFO);
+  const { name: oldName } = userInfo;
   const [newUserInfo, setNewUserInfo] =
-    useState<UpdateUserInfoRequest>(initialUserInfo);
+    useState<UpdateUserInfoRequest>(INITIAL_USER_INFO);
+  const { name: newName, email: newEmail, gender: newGender } = newUserInfo;
   const navigate = useNavigate();
 
-  const isValid =
-    newUserInfo.name === '' ||
-    newUserInfo.email === '' ||
-    newUserInfo.gender === undefined;
+  const isValid = newName === '' || newEmail === '' || newGender === undefined;
 
   const handleClickBack = () => navigate(-1);
   const handleClickSave = () => {
     // TODO : 추후 이메일 변경 API 추가, 프로필 페이지로 이동 후 toast
     alert(`변경된 사용자 정보
-      name : ${newUserInfo.name}
-      email: ${newUserInfo.email}
-      gender: ${newUserInfo.gender}`);
+      name : ${newName}
+      email: ${newEmail}
+      gender: ${newGender}`);
   };
 
   useEffect(() => {
@@ -53,7 +52,7 @@ export default function SetUserInfo() {
   return (
     <div className='flex h-dvh flex-col'>
       <Navigation
-        text={title[field ?? 'name']}
+        text={SET_USER_INFO_TITLES[field ?? 'name']}
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
@@ -62,7 +61,7 @@ export default function SetUserInfo() {
           <SetUserName
             newUserInfo={newUserInfo}
             setNewUserInfo={setNewUserInfo}
-            originalName={userInfo.name}
+            originalName={oldName}
           />
         )}
         {field === 'email' && (

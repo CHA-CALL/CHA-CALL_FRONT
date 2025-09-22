@@ -1,13 +1,13 @@
 import Button from '@shared/components/button/Button';
 import { cn } from '@shared/utils/cn';
 import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
-import { setUserGenderText } from '@pages/set-user-info/constant/set-user-constant';
+import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
 
 export default function SetUserGender({
   newUserInfo,
   setNewUserInfo,
 }: SetUserInfoItemProps) {
-  const { title, male, female } = setUserGenderText;
+  const { title, male, female } = SET_USER_GENDER_TEXT;
 
   const handleChangeGender = (value: string) => {
     setNewUserInfo(prev => ({

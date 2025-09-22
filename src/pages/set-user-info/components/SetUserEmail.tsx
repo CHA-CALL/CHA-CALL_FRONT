@@ -1,34 +1,40 @@
 import { Icon } from '@shared/components/icon/Icon';
-import SearchBar from '@shared/components/search-bar/SearchBar';
+import Input from '@shared/components/input/Input';
 import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
+import type { ChangeEvent } from 'react';
 
 export default function SetUserEmail({
   newUserInfo,
   setNewUserInfo,
 }: SetUserInfoItemProps) {
-  const handleChangeEmail = (value: string) => {
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setNewUserInfo(prev => ({
       ...prev,
-      email: value,
+      email: e.target.value,
+    }));
+  };
+
+  const handleClearEmail = () => {
+    setNewUserInfo(prev => ({
+      ...prev,
+      email: '',
     }));
   };
   return (
     <div className='flex flex-1 flex-col gap-[1rem] py-[2rem]'>
       <h2 className='title-sb-16 px-[0.5rem]'>이메일을 입력해주세요.</h2>
-      <SearchBar
+      <Input
         value={newUserInfo.email}
-        onChange={e => handleChangeEmail(e.target.value)}
+        onChange={handleChangeEmail}
         placeholder={'이메일 입력'}
         rightComponent={
           newUserInfo.email !== '' && (
-            <button
-              className='translate-y-[0.2rem]'
-              onClick={() => handleChangeEmail('')}
-            >
+            <button className='translate-y-[0.2rem]'>
               <Icon name='ic_close' />
             </button>
           )
         }
+        handleRightClick={handleClearEmail}
       />
     </div>
   );

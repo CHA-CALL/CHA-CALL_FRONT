@@ -1,6 +1,6 @@
 import type { UpdateUserInfoRequest } from 'apis/data-contracts';
 
-export const initialUserInfo: UpdateUserInfoRequest = {
+export const INITIAL_USER_INFO: UpdateUserInfoRequest = {
   profileImageUrl: '',
   name: '',
   email: '',
@@ -8,7 +8,7 @@ export const initialUserInfo: UpdateUserInfoRequest = {
   termAgreed: false,
 };
 
-export const title = {
+export const SET_USER_INFO_TITLES = {
   name: '이름 변경',
   email: '이메일 변경',
   gender: '성별 변경',
@@ -16,13 +16,13 @@ export const title = {
 
 export const USER_NAME_MAX_LENGTH = 25;
 
-export const setUserNameText = {
+export const SET_USER_NAME_TEXT = {
   title: '이름을 입력해주세요.',
   ownerText: '고객님에게 보여지는 이름입니다.',
   memberText: '사장님에게 보여지는 이름입니다.',
 };
 
-export const setUserGenderText = {
+export const SET_USER_GENDER_TEXT = {
   title: '성별을 선택해주세요.',
   male: '남성',
   female: '여성',

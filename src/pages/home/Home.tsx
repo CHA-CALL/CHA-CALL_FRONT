@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button from '@shared/components/button/Button';
 import Overlay from '@shared/components/overlay/Overlay';
-import SearchBar from '@shared/components/search-bar/SearchBar';
+import Input from '@shared/components/input/Input';
 import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
 
 const Home = () => {
@@ -77,7 +77,7 @@ const Home = () => {
       {/* Search Bar */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>Search Bar</h2>
-        <SearchBar
+        <Input
           value={searchValue}
           onChange={e => setSearchValue(e.target.value)}
           placeholder='검색어를 입력하세요'
