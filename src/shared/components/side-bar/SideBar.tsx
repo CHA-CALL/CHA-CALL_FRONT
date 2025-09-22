@@ -1,7 +1,6 @@
-import { type MouseEvent } from 'react';
-import { cn } from '@utils/cn';
 import { Icon, type IconId } from '@components/icon/Icon';
 import Button from '@components/button/Button';
+import Overlay from '@components/overlay/Overlay';
 import { useRole } from '@shared/hooks/use-role';
 import { ROLE } from '@shared/constant/role';
 
@@ -43,7 +42,6 @@ const MenuItem = ({
 export default function SideBar({
   isOpen,
   handleSideBarClose,
-  className,
 }: SideBarProps) {
   const { role, setRole } = useRole();
 
@@ -86,12 +84,6 @@ export default function SideBar({
 
   const handleClickTeam = () => {
     // TODO: 팀소개 페이지로 라우팅
-  };
-
-  const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      handleSideBarClose();
-    }
   };
 
   const renderButtons = () => {
@@ -153,13 +145,10 @@ export default function SideBar({
   };
 
   return (
-    <div
-      onClick={handleOverlayClick}
-      className={cn(
-        'fixed flex w-full h-full',
-        'bg-[var(--grayscale-black-50,rgba(0,0,0,0.5))] z-50',
-        className
-      )}
+    <Overlay
+      isOpen={isOpen}
+      position='left'
+      handleClose={handleSideBarClose}
     >
       <div
         onClick={e => e.stopPropagation()}
@@ -208,6 +197,6 @@ export default function SideBar({
           />
         </div>
       </div>
-    </div>
+    </Overlay>
   )
 }
