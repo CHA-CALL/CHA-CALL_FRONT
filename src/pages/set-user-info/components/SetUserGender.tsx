@@ -21,24 +21,24 @@ export default function SetUserGender({
       <h2 className='title-sb-16 px-[0.5rem]'>{title}</h2>
       <div className='flex w-full gap-[1rem]'>
         <Button
-          children={<p className='px-[2rem]'>{male}</p>}
-          variant={'cta'}
-          buttonStyle={'sub'}
+          children={male}
+          variant='cta'
+          buttonStyle='sub'
           onClick={() => handleChangeGender(male)}
           className={cn(
-            'title-sb-14 w-[50%]',
+            'title-sb-14',
             newUserInfo.gender === male
               ? 'bg-primary-25 text-primary-700 border-primary-700'
               : 'border-grayscale-300'
           )}
         />
         <Button
-          children={<p className='px-[2rem]'>{female}</p>}
-          variant={'cta'}
-          buttonStyle={'sub'}
+          children={female}
+          variant='cta'
+          buttonStyle='sub'
           onClick={() => handleChangeGender(female)}
           className={cn(
-            'title-sb-14 w-[50%]',
+            'title-sb-14',
             newUserInfo.gender === female
               ? 'bg-primary-25 text-primary-700 border-primary-700'
               : 'border-grayscale-300'

@@ -7,6 +7,7 @@ import {
 } from '@pages/set-user-info/constant/set-user-constant';
 import { useRole } from '@shared/hooks/use-role';
 import { ROLE } from '@shared/constant/role';
+import type { ChangeEvent } from 'react';
 
 interface SetUserNameProps extends SetUserInfoItemProps {
   originalName: string;
@@ -21,10 +22,10 @@ export default function SetUserName({
   const { role } = useRole();
   const isPresident = role === ROLE.PRESIDENT;
 
-  const handleChangeName = (value: string) => {
+  const handleChangeName = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewUserInfo(prev => ({
       ...prev,
-      name: value,
+      name: e.target.value,
     }));
   };
 
@@ -39,7 +40,7 @@ export default function SetUserName({
 
       <SearchBar
         value={newUserInfo?.name}
-        onChange={e => handleChangeName(e.target.value)}
+        onChange={handleChangeName}
         placeholder={originalName}
         maxLength={newUserInfo.name === '' ? undefined : USER_NAME_MAX_LENGTH}
         rightComponent={

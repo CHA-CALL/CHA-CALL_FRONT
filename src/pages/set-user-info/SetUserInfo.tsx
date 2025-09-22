@@ -13,6 +13,7 @@ import {
   initialUserInfo,
   title,
 } from '@pages/set-user-info/constant/set-user-constant';
+import { ROUTES } from '@router/constant/routes';
 
 export default function SetUserInfo() {
   const { field } = useParams<{ field: Field }>();
@@ -23,7 +24,7 @@ export default function SetUserInfo() {
     useState<UpdateUserInfoRequest>(initialUserInfo);
   const navigate = useNavigate();
 
-  const checkEmptyValue =
+  const isValid =
     newUserInfo.name === '' ||
     newUserInfo.email === '' ||
     newUserInfo.gender === undefined;
@@ -45,7 +46,7 @@ export default function SetUserInfo() {
   useEffect(() => {
     if (!field) {
       // 문제가 발생했을 때 돌아갈 안전한 경로를 명시적으로 지정
-      navigate('/profile-setting', { replace: true });
+      navigate(ROUTES.PROFILE_SETTING, { replace: true });
     }
   }, [field, navigate]);
 
@@ -79,7 +80,7 @@ export default function SetUserInfo() {
 
         <Button
           variant='cta'
-          buttonStyle={checkEmptyValue ? 'disabled' : 'active'}
+          buttonStyle={isValid ? 'disabled' : 'active'}
           className='h-[5.4rem]'
           handleClickButton={handleClickSave}
         >
