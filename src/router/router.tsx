@@ -12,7 +12,8 @@ import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
-import MenuRegister from '@pages/@owner/menu-register/MenuRegister';
+import MenuList from '@pages/@owner/menu/MenuList';
+import MenuRegister from '@pages/@owner/menu/MenuRegister';
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ACCOUNT_FORM + '/:id?',
         element: <AccountForm />,
+      },
+      {
+        path: ROUTES.MENU_LIST,
+        element: <MenuList />,
       },
       {
         path: ROUTES.MENU_REGISTER,

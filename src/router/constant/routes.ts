@@ -9,5 +9,6 @@ export const ROUTES = {
   MESSAGE_FORM: '/owner/message-form',
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
+  MENU_LIST: '/owner/menu-list',
   MENU_REGISTER: '/owner/menu-register',
 };
