@@ -9,31 +9,33 @@ import { useRole } from '@shared/hooks/use-role';
 import { ROLE } from '@shared/constant/role';
 import type { ChangeEvent } from 'react';
 
-interface SetUserNameProps extends SetUserInfoItemProps {
-  originalName: string;
-}
-
 export default function SetUserName({
-  newUserInfo,
-  setNewUserInfo,
-  originalName,
-}: SetUserNameProps) {
+  userInfo,
+  setUserInfo,
+}: SetUserInfoItemProps) {
   const { title, ownerText, memberText } = SET_USER_NAME_TEXT;
   const { role } = useRole();
   const isProvider = role === ROLE.PROVIDER;
+  const userName = userInfo?.name ?? '';
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewUserInfo(prev => ({
-      ...prev,
-      name: e.target.value,
-    }));
+    setUserInfo(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        name: e.target.value,
+      };
+    });
   };
 
   const handleClearName = () => {
-    setNewUserInfo(prev => ({
-      ...prev,
-      name: '',
-    }));
+    setUserInfo(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        name: '',
+      };
+    });
   };
   return (
     <div className='flex flex-1 flex-col gap-[1rem] py-[2rem]'>
@@ -45,11 +47,11 @@ export default function SetUserName({
       </nav>
 
       <Input
-        value={newUserInfo?.name}
-        placeholder={originalName}
-        maxLength={newUserInfo.name === '' ? undefined : USER_NAME_MAX_LENGTH}
+        value={userName}
+        placeholder={userName}
+        maxLength={userName === '' ? undefined : USER_NAME_MAX_LENGTH}
         rightComponent={
-          newUserInfo.name !== '' && (
+          userName !== '' && (
             <button className='translate-y-[0.2rem]'>
               <Icon name='ic_close' />
             </button>

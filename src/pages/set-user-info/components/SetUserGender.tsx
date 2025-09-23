@@ -4,16 +4,19 @@ import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-t
 import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
 
 export default function SetUserGender({
-  newUserInfo,
-  setNewUserInfo,
+  userInfo,
+  setUserInfo,
 }: SetUserInfoItemProps) {
   const { title, male, female } = SET_USER_GENDER_TEXT;
-
-  const handleChangeGender = (value: string) => {
-    setNewUserInfo(prev => ({
-      ...prev,
-      gender: value,
-    }));
+  const userGender = userInfo?.gender;
+  const handleChangeGender = (value: string) => () => {
+    setUserInfo(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        gender: value,
+      };
+    });
   };
 
   return (
@@ -24,10 +27,10 @@ export default function SetUserGender({
           children={male}
           variant='cta'
           buttonStyle='sub'
-          onClick={() => handleChangeGender(male)}
+          onClick={handleChangeGender(male)}
           className={cn(
             'title-sb-14',
-            newUserInfo.gender === male
+            userGender === male
               ? 'bg-primary-25 text-primary-700 border-primary-700'
               : 'border-grayscale-300'
           )}
@@ -36,10 +39,10 @@ export default function SetUserGender({
           children={female}
           variant='cta'
           buttonStyle='sub'
-          onClick={() => handleChangeGender(female)}
+          onClick={handleChangeGender(female)}
           className={cn(
             'title-sb-14',
-            newUserInfo.gender === female
+            userGender === female
               ? 'bg-primary-25 text-primary-700 border-primary-700'
               : 'border-grayscale-300'
           )}

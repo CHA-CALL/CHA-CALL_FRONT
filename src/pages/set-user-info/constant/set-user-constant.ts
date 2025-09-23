@@ -1,13 +1,3 @@
-import type { UpdateUserInfoRequest } from 'apis/data-contracts';
-
-export const INITIAL_USER_INFO: UpdateUserInfoRequest = {
-  profileImageUrl: '',
-  name: '',
-  email: '',
-  gender: '',
-  termAgreed: false,
-};
-
 export const SET_USER_INFO_TITLES = {
   name: '이름 변경',
   email: '이메일 변경',
