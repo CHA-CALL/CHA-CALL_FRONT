@@ -9,4 +9,5 @@ export const ROUTES = {
   MESSAGE_FORM: '/owner/message-form',
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
+  UPLOAD_FOOD_TRUCK: '/owner/upload-food-truck',
 };

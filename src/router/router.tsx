@@ -12,6 +12,7 @@ import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
+import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ACCOUNT_FORM + '/:id?',
         element: <AccountForm />,
+      },
+      {
+        path: ROUTES.UPLOAD_FOOD_TRUCK,
+        element: <UploadFoodTruck />,
       },
     ],
   },
