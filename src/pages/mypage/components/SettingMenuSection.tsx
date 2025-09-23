@@ -19,6 +19,10 @@ export default function SettingMenuSection({
   const settingList: SettingList[] = isPresident
     ? [
         {
+          menu: '예약내역',
+          navigateTo: ROUTES.MESSAGE_LIST,
+        },
+        {
           menu: '나의 푸드트럭',
           navigateTo: ROUTES.MESSAGE_LIST,
         },
