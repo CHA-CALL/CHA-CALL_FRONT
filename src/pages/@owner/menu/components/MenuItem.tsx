@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { cn } from '@utils/cn';
+import ToggleSwitch from '@pages/@owner/menu/components/ToggleSwitch';
 
 interface MenuItemProps {
   menuImage: string;
   menuName: string;
   menuDescription: string;
   menuPrice: number;
-  handleClickToggle: () => void;
+  handleToggle: () => void;
   isLast?: boolean;
 }
 
@@ -14,9 +16,16 @@ export default function MenuItem({
   menuName,
   menuDescription,
   menuPrice,
-  handleClickToggle,
+  handleToggle,
   isLast = false,
 }: MenuItemProps) {
+  const [isToggled, setIsToggled] = useState(true);
+
+  const handleClickToggle = () => {
+    setIsToggled(!isToggled);
+    handleToggle();
+  };
+
   return (
     <div className={cn(
       'flex items-center justify-between py-[2rem]',
@@ -43,7 +52,7 @@ export default function MenuItem({
           </span>
         </div>
       </div>
-      <button onClick={handleClickToggle}>Toggle</button>
+      <ToggleSwitch isToggled={isToggled} handleToggle={handleClickToggle} />
     </div>
   );
 }

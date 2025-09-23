@@ -45,13 +45,19 @@ export default function MenuList() {
     handleCloseBottomSheet();
   };
 
+  const handleSave = () => {
+    // TODO: 메뉴 노출 여부 저장 로직 구현
+  };
+
   return (
-    <div className='w-full bg-white'>
-      <Navigation
-        leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={handleClickBack}
-        text='메뉴 등록'
-      />
+    <div className='flex flex-col w-full h-screen bg-white'>
+      <div className='sticky top-[0] py-[1.2rem]'>
+        <Navigation
+          leftIcon={<Icon name='ic_back' />}
+          handleLeftClick={handleClickBack}
+          text='메뉴 등록'
+        />
+      </div>
 
       <div className='flex flex-col p-[2rem]'>
         <span className='title-sb-16 text-grayscale-900'>
@@ -88,12 +94,13 @@ export default function MenuList() {
             menuName={menu.name}
             menuDescription={menu.description}
             menuPrice={menu.price}
-            handleClickToggle={() => {}}
+            handleToggle={() => {}}
             isLast={index === sortedMenuList().length - 1}
           />
         ))}
       </div>
 
+      <div className='flex-1' />
       <footer className='
         sticky bottom-[0] w-full px-[2rem] py-[1.7rem]
         bg-white shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]
@@ -101,7 +108,7 @@ export default function MenuList() {
         <Button
           variant='cta'
           buttonStyle='active'
-          handleClickButton={() => {}}
+          handleClickButton={handleSave}
         >
           저장하기
         </Button>
@@ -135,7 +142,7 @@ export default function MenuList() {
             </Button>
           </>
         }
-        sheetHeight={300}
+        sheetHeight={200}
       />
     </div>
   );
