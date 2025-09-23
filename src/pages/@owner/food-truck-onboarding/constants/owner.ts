@@ -21,9 +21,6 @@ export const OWNER_MEDIA_MAX_COUNT = {
 export const OWNER_MEDIA_ERROR_MESSAGE = {
   MIN_COUNT: (min: number) => `${min}개 이상 업로드 가능합니다.`,
   MAX_COUNT: (max: number) => `${max}개까지 업로드 가능합니다.`,
-  NOT_ALLOWED_FILE_TYPE:
-    '지원하지 않는 파일 형식입니다. JPG, JPEG, PNG 파일만 업로드 가능합니다.',
-  CANNOT_UPLOAD_FILE: 'cannot upload file',
 } as const;
 
 export const OWNER_MEDIA_TYPE = {
