@@ -53,7 +53,12 @@ export default function SettingMenuSection({
           onClick={() => handleNavigateTo(setting.navigateTo)}
         >
           <span className='text-grayscale-900 title-sb-14'>{setting.menu}</span>
-          <Icon name='ic_next' width={18} height={18} color='#838992' />
+          <Icon
+            name='ic_next'
+            width={18}
+            height={18}
+            className='text-grayscale-500'
+          />
         </button>
       ))}
     </div>

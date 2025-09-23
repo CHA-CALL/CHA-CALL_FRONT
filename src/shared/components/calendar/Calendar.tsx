@@ -48,10 +48,8 @@ export default function Calendar({
             <button type='button' onClick={handlePrevMonth}>
               <Icon
                 name='ic_back'
-                color={
-                  isPrevMonth
-                    ? 'var(--color-grayscale-100)'
-                    : 'var(--color-grayscale-700)'
+                className={
+                  isPrevMonth ? 'text-grayscale-200' : 'text-grayscale-700'
                 }
               />
             </button>

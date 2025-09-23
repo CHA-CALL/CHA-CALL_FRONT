@@ -68,14 +68,14 @@ export default function Reservation({
       />
 
       <div
-        className={`between border-b-grayscale-100 sticky top-[4.8rem] z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]`}
+        className={`between sticky top-[4.8rem] z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem]`}
       >
         <button
           type='button'
           onClick={handleClickLocation}
           className='flex cursor-pointer items-center gap-[0.6rem]'
         >
-          <Icon name='ic_locate' color='var(--color-primary-700)' />
+          <Icon name='ic_locate' className='text-primary-700' />
           <span className='text-grayscale-900 body-m-14'>{location}</span>
           <Icon name='ic_down' />
         </button>
@@ -106,7 +106,7 @@ export default function Reservation({
       </div>
 
       <div
-        className={`scrollbar-hide sticky top-[9.9rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
+        className={`sticky top-[9.9rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide`}
       >
         {categories.map(category => (
           <Button
