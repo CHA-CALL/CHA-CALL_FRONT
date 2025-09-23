@@ -23,6 +23,7 @@ const iconIds: IconId[] = [
   'ic_filter',
   'ic_down',
   'ic_up',
+  'ic_chat_dot',
 ];
 
 const meta: Meta<typeof Icon> = {

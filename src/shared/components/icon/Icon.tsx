@@ -1,11 +1,21 @@
 import React, { forwardRef, useId } from 'react';
 
 export type IconId =
+  | 'ic_back'
+  | 'ic_calendar'
+  | 'ic_camera'
   | 'ic_chat'
+  | 'ic_chat_dot'
   | 'ic_check'
   | 'ic_close'
+  | 'ic_close_white'
   | 'ic_confirm'
+  | 'ic_dash'
+  | 'ic_dot'
+  | 'ic_down'
   | 'ic_error'
+  | 'ic_error_small'
+  | 'ic_filter'
   | 'ic_locate'
   | 'ic_mypage'
   | 'ic_next'
@@ -14,23 +24,14 @@ export type IconId =
   | 'ic_support'
   | 'ic_team'
   | 'ic_trash'
-  | 'ic_back'
-  | 'ic_calendar'
-  | 'ic_dash'
-  | 'ic_close_white'
-  | 'ic_camera'
-  | 'ic_filter'
-  | 'ic_down'
-  | 'ic_up'
-  | 'ic_error'
-  | 'ic_dot';
+  | 'ic_up';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
   width?: number;
   height?: number;
-  color?: string;
   title?: string;
+  className?: string;
 }
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
@@ -39,9 +40,8 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
       name,
       width = 22,
       height = 22,
-      color = '#565B65',
       title,
-      className,
+      className = 'text-grayscale-600',
       style,
       ...rest
     },
@@ -61,7 +61,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         aria-hidden={title ? undefined : true}
         focusable='false'
         className={className}
-        style={{ ...style, color }}
+        style={style}
         {...rest}
       >
         {title && <title id={titleId}>{title}</title>}

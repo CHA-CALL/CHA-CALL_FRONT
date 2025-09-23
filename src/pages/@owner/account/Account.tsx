@@ -46,7 +46,7 @@ export default function Account() {
             )}
           </div>
           <Information
-            iconId='ic_chat'
+            iconId='ic_chat_dot'
             text='한 번 등록하면 채팅에서 바로 계좌 발송이 가능해요!'
           />
         </div>

@@ -41,7 +41,7 @@ export default function SelectBankBottomSheet({
                 {bank === option && (
                   <Icon
                     name='ic_check'
-                    color='#F83419'
+                    className='text-primary-700'
                     width={22}
                     height={22}
                   />
