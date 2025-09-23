@@ -8,7 +8,6 @@ export const ROUTES = {
   MESSAGE_LIST: '/owner/message-list',
   MESSAGE_FORM: '/owner/message-form',
   MYPAGE: '/mypage',
-  PROFILE_SETTING: '/profile-setting',
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
   PROFILE_SETTING: '/profile-setting',
