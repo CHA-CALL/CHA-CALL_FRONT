@@ -28,8 +28,7 @@ export default function DongEupMeonItem({
       {isSelected && (
         <Icon
           name={'ic_check'}
-          color='primary-700'
-          className='absolute left-[1rem]'
+          className='text-primary-700 absolute left-[1rem]'
         />
       )}
       <p className='relative flex items-center justify-center'>{title}</p>

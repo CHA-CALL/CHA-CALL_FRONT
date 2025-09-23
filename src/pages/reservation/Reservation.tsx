@@ -68,7 +68,7 @@ export default function Reservation({
       />
 
       <div
-        className={`between sticky top-[4.8rem] z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem]`}
+        className={`between border-b-grayscale-100 sticky top-[4.8rem] z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]`}
       >
         <button
           type='button'
@@ -82,7 +82,7 @@ export default function Reservation({
 
         <ButtonIcon
           icon='ic_filter'
-          iconColor={isFilterApplied ? '#f83419' : undefined}
+          iconClassName={isFilterApplied ? 'text-primary-700' : undefined}
           handleClick={handleClickFilter}
           className={cn(
             'flex h-[2.8rem] w-[2.8rem] items-center justify-center rounded-[0.4rem] border pl-[0.4rem] pt-[0.4rem]',
@@ -106,7 +106,7 @@ export default function Reservation({
       </div>
 
       <div
-        className={`sticky top-[9.9rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide`}
+        className={`scrollbar-hide sticky top-[9.9rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
       >
         {categories.map(category => (
           <Button
