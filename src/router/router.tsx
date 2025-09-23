@@ -10,6 +10,8 @@ import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOn
 import SetLocation from '@pages/set-location/SetLocation';
 import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
+import MyPage from '@pages/mypage/MyPage';
+import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
@@ -43,12 +45,20 @@ export const router = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ROUTES.MESSAGELIST,
+        path: ROUTES.MESSAGE_LIST,
         element: <MessageList />,
       },
       {
         path: ROUTES.MESSAGE_FORM,
         element: <MessageForm />,
+      },
+      {
+        path: ROUTES.MYPAGE,
+        element: <MyPage />,
+      },
+      {
+        path: ROUTES.PROFILE_SETTING,
+        element: <ProfileSetting />,
       },
       {
         path: ROUTES.ACCOUNT,
