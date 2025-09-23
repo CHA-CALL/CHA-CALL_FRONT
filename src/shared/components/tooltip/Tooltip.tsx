@@ -63,7 +63,7 @@ export default function Tooltip({
           name='ic_close'
           width={15}
           height={15}
-          color='#fff'
+          className='text-white'
           onClick={handleCloseTooltip}
         />
       </div>

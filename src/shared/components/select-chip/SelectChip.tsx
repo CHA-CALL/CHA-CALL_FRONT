@@ -25,7 +25,7 @@ export default function SelectChip({
       {...props}
     >
       <span className='text-primary-700 title-sb-12'>{title}</span>
-      <Icon name='ic_close' color='#F83419' />
+      <Icon name='ic_close' className='text-primary-700' />
     </button>
   );
 }

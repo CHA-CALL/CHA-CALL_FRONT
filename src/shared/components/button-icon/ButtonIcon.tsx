@@ -29,7 +29,12 @@ export default function ButtonIcon({
       )}
       {...props}
     >
-      <Icon name={icon} width={iconSize} height={iconSize} color={iconColor} />
+      <Icon
+        name={icon}
+        width={iconSize}
+        height={iconSize}
+        className={iconColor}
+      />
     </button>
   );
 }
