@@ -16,7 +16,6 @@ export function extractIconIds(): string[] {
 
     return ids.sort();
   } catch (error) {
-    console.error('Error extracting icon IDs:', error);
     return [];
   }
 }
@@ -49,8 +48,6 @@ function updateIconTsxFile() {
 
     fs.writeFileSync(iconTsxPath, updatedContent, 'utf-8');
     console.log('✅ Icon.tsx 파일이 자동으로 업데이트되었습니다!');
-    console.log('📋 업데이트된 타입 정의:');
-    console.log(typeDefinition);
   } catch (error) {
     console.error('❌ Icon.tsx 파일 업데이트 중 오류 발생:', error);
   }
