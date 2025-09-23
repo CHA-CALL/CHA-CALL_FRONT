@@ -51,7 +51,7 @@ export default function MenuList() {
 
   return (
     <div className='flex flex-col w-full h-screen bg-white'>
-      <div className='sticky top-[0] py-[1.2rem]'>
+      <div className='sticky top-[0]'>
         <Navigation
           leftIcon={<Icon name='ic_back' />}
           handleLeftClick={handleClickBack}
