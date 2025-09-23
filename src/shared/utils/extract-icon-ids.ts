@@ -15,7 +15,7 @@ export function extractIconIds(): string[] {
     }
 
     return ids.sort();
-  } catch (error) {
+  } catch {
     return [];
   }
 }
@@ -42,12 +42,11 @@ function updateIconTsxFile() {
 
     const typeDefinition = generateIconIdType();
 
-    // IconId 타입 정의를 찾아서 교체
     const typeRegex = /export type IconId =[\s\S]*?;/;
     const updatedContent = iconTsxContent.replace(typeRegex, typeDefinition);
 
     fs.writeFileSync(iconTsxPath, updatedContent, 'utf-8');
-    console.log('✅ Icon.tsx 파일이 자동으로 업데이트되었습니다!');
+    console.info('✅ Icon.tsx 파일이 자동으로 업데이트되었습니다!');
   } catch (error) {
     console.error('❌ Icon.tsx 파일 업데이트 중 오류 발생:', error);
   }
