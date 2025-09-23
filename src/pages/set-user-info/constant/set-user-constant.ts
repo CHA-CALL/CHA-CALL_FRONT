@@ -1,3 +1,16 @@
+import SetUserName from '@pages/set-user-info/components/SetUserName';
+import SetUserEmail from '@pages/set-user-info/components/SetUserEmail';
+import SetUserGender from '@pages/set-user-info/components/SetUserGender';
+
+export const COMPONENT_MAP = {
+  name: SetUserName,
+  email: SetUserEmail,
+  gender: SetUserGender,
+} as const;
+
+export type ValidField = keyof typeof COMPONENT_MAP;
+export const VALID_FIELDS = Object.keys(COMPONENT_MAP) as ValidField[];
+
 export const SET_USER_INFO_TITLES = {
   name: '이름 변경',
   email: '이메일 변경',

@@ -28,6 +28,7 @@ export default function SetUserEmail({
       };
     });
   };
+
   return (
     <div className='flex flex-1 flex-col gap-[1rem] py-[2rem]'>
       <h2 className='title-sb-16 px-[0.5rem]'>이메일을 입력해주세요.</h2>

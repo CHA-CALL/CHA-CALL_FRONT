@@ -1,20 +1,22 @@
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
-import SetUserName from '@pages/set-user-info/components/SetUserName';
-import SetUserEmail from '@pages/set-user-info/components/SetUserEmail';
-import SetUserGender from '@pages/set-user-info/components/SetUserGender';
 import SetUserInfoSkeletonUI from '@pages/set-user-info/components/SetUserInfoSkeletonUI';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import type { UpdateUserInfoRequest } from 'apis/data-contracts';
 import { dummyUserInfo } from '@pages/set-user-info/constant/mocks';
-import { SET_USER_INFO_TITLES } from '@pages/set-user-info/constant/set-user-constant';
+import {
+  COMPONENT_MAP,
+  VALID_FIELDS,
+  type ValidField,
+  SET_USER_INFO_TITLES,
+} from '@pages/set-user-info/constant/set-user-constant';
 import { ROUTES } from '@router/constant/routes';
 
 export default function SetUserInfo() {
   const [isLoading, setIsLoading] = useState(true);
-  const { field } = useParams<{ field: keyof typeof componentMap }>();
+  const { field } = useParams<{ field: ValidField }>();
   const [userInfo, setUserInfo] = useState<UpdateUserInfoRequest | null>(null);
   const navigate = useNavigate();
 
@@ -33,19 +35,12 @@ export default function SetUserInfo() {
     }
   }, [field, navigate]);
 
-  const componentMap = {
-    name: SetUserName,
-    email: SetUserEmail,
-    gender: SetUserGender,
-  };
-  const VALID_FIELDS = Object.keys(componentMap);
-
   if (isLoading || !userInfo) {
     // 로딩 중일 때 보여줄 스켈레톤 UI
     return <SetUserInfoSkeletonUI />;
   }
 
-  const ComponentToRender = field ? componentMap[field] : null;
+  const ComponentToRender = field ? COMPONENT_MAP[field] : null;
   const { name: userName, email: userEmail, gender: userGender } = userInfo;
 
   const isValid =
