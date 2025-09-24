@@ -27,8 +27,6 @@ export default function UploadFoodTruck() {
     navigate(-1);
   };
 
-  const handleRightClick = () => {};
-
   const [imageUrl, setImageUrl] = useState<string[] | null>([]);
 
   useEffect(() => {
@@ -47,17 +45,6 @@ export default function UploadFoodTruck() {
         text='사진 등록'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleLeftClick}
-        rightIcon={
-          files.length > 0 ? (
-            <Button
-              variant='default'
-              buttonStyle='medium'
-              handleClickButton={handleRightClick}
-            >
-              미리보기
-            </Button>
-          ) : undefined
-        }
       />
       <div className='flex w-full flex-col items-start justify-start gap-[1.2rem] p-[2rem]'>
         <div className='flex w-full flex-col items-start justify-start gap-[0.2rem]'>
@@ -76,6 +63,7 @@ export default function UploadFoodTruck() {
         {files &&
           files.map((_, index) => (
             <ImagePreview
+              isMain={index === 0}
               key={`foodTruck-${index}`}
               handleClose={() => handleRemoveFile(index)}
               src={imageUrl?.[index] || undefined}
