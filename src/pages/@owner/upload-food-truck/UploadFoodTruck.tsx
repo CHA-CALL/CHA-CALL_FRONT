@@ -1,13 +1,15 @@
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Information from '@shared/components/information/Information';
-import { useFoodTruck } from '@pages/@owner/upload-food-truck/hooks/useFoodTruck';
+import {
+  useFoodTruck,
+  MAX_IMAGE_COUNT,
+} from '@pages/@owner/upload-food-truck/hooks/use-food-truck';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import { useEffect, useState } from 'react';
 import Button from '@shared/components/button/Button';
 import ErrorText from '@shared/components/error-text/ErrorText';
-import { MAX_IMAGE_COUNT } from '@pages/@owner/upload-food-truck/hooks/useFoodTruck';
 import { useNavigate } from 'react-router-dom';
 
 export default function UploadFoodTruck() {
