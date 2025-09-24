@@ -75,19 +75,19 @@ export default function Reservation({
           onClick={handleClickLocation}
           className='flex cursor-pointer items-center gap-[0.6rem]'
         >
-          <Icon name='ic_locate' color='#f83419' />
-          <span className='body-m-14 text-grayscale-900'>{location}</span>
+          <Icon name='ic_locate' color='var(--color-primary-700)' />
+          <span className='text-grayscale-900 body-m-14'>{location}</span>
           <Icon name='ic_down' />
         </button>
 
         <ButtonIcon
           icon='ic_filter'
-          iconColor={isFilterApplied ? '#f83419' : undefined}
+          iconClassName={isFilterApplied ? 'text-primary-700' : undefined}
           handleClick={handleClickFilter}
           className={cn(
             'flex h-[2.8rem] w-[2.8rem] items-center justify-center rounded-[0.4rem] border pl-[0.4rem] pt-[0.4rem]',
             isFilterApplied
-              ? 'bg-primary-50 border-primary-700'
+              ? 'border-primary-700 bg-primary-50'
               : 'border-grayscale-200'
           )}
         />

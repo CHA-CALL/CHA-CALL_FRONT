@@ -6,7 +6,7 @@ interface ButtonIconProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick: () => void;
   icon: IconId;
-  iconColor?: string;
+  iconClassName?: string;
   iconSize?: number;
   className?: string;
 }
@@ -15,7 +15,7 @@ export default function ButtonIcon({
   handleClick,
   className,
   icon,
-  iconColor,
+  iconClassName,
   iconSize = 22,
   ...props
 }: ButtonIconProps) {
@@ -29,7 +29,12 @@ export default function ButtonIcon({
       )}
       {...props}
     >
-      <Icon name={icon} width={iconSize} height={iconSize} color={iconColor} />
+      <Icon
+        name={icon}
+        width={iconSize}
+        height={iconSize}
+        className={iconClassName}
+      />
     </button>
   );
 }

@@ -35,8 +35,7 @@ export default function ButtonCheck({
       {isChecked && (
         <Icon
           name='ic_check'
-          color='#fff'
-          className='-translate-y-[0.1rem] scale-125'
+          className='-translate-y-[0.1rem] scale-125 text-white'
         />
       )}
     </button>

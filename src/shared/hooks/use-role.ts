@@ -9,7 +9,7 @@ interface RoleState {
 }
 
 export const useRole = create<RoleState>((set, get) => ({
-  role: ROLE.USER,
+  role: ROLE.LOGOUT,
   setRole: (role: Role) => set({ role }),
   getRole: () => get().role,
   updateRole: (role: Role) => set({ role }),

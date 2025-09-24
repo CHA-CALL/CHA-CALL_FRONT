@@ -3,6 +3,7 @@ import Button from '@shared/components/button/Button';
 import Overlay from '@shared/components/overlay/Overlay';
 import Input from '@shared/components/input/Input';
 import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
+import { Icon } from '@shared/components/icon/Icon';
 
 const Home = () => {
   // BottomSheet states
@@ -106,6 +107,7 @@ const Home = () => {
           </Button>
         </div>
       </section>
+      <Icon name='ic_chat_dot' className='text-primary-500' />
     </div>
   );
 };

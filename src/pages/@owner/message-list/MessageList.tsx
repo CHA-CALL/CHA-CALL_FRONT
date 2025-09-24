@@ -77,7 +77,7 @@ export default function MessageList() {
       />
       <div className='sticky top-[4.8rem] z-10 bg-white p-[2rem] pb-[1.6rem]'>
         <Information
-          iconId='ic_chat'
+          iconId='ic_chat_dot'
           text='한 번 등록하면 채팅에서 바로 내용 전송이 가능해요!'
         />
       </div>

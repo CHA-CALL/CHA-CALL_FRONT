@@ -41,6 +41,7 @@ type ButtonProps<V extends keyof VariantStyleMap = keyof VariantStyleMap> =
     variant: V;
     buttonStyle: VariantStyleMap[V];
     handleClickButton?: () => void;
+    className?: string;
   };
 
 export default function Button({
