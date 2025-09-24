@@ -6,6 +6,7 @@ interface ImagePreviewProps {
   src?: string;
   alt: string;
   className?: string;
+  isMain?: boolean;
 }
 
 export default function ImagePreview({
@@ -13,6 +14,7 @@ export default function ImagePreview({
   src,
   alt,
   className,
+  isMain,
   ...props
 }: ImagePreviewProps) {
   if (!src) {
@@ -22,7 +24,7 @@ export default function ImagePreview({
   return (
     <div
       className={cn(
-        'relative flex h-[8rem] w-[8rem] flex-none items-center justify-center rounded-[1.6rem]',
+        'border-grayscale-200 relative flex h-[8rem] w-[8rem] flex-none items-center justify-center rounded-[1.6rem] border',
         className
       )}
       {...props}
@@ -32,6 +34,11 @@ export default function ImagePreview({
         src={src}
         alt={alt}
       />
+      {isMain && (
+        <div className='bg-black70 absolute bottom-[0rem] left-[0rem] right-[0rem] flex h-[2.4rem] items-center justify-center rounded-b-[1.6rem] text-white'>
+          대표 이미지
+        </div>
+      )}
       <button
         type='button'
         onClick={handleClose}
