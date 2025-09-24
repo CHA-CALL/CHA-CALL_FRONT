@@ -8,7 +8,6 @@ import {
   CANNOT_UPLOAD_FILE_MB,
   NOT_ALLOWED_FILE_TYPE,
 } from '@shared/constant/image';
-import { CANNOT_UPLOAD_FILE } from '@pages/@owner/upload-food-truck/hooks/useFoodTruck';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
 export const BIZ_REG_CERT_FILE_VALIDATOR = z
@@ -26,7 +25,7 @@ export const BIZ_REG_CERT_FILE_VALIDATOR = z
       return isFileSizeValid(file);
     },
     {
-      message: CANNOT_UPLOAD_FILE,
+      message: CANNOT_UPLOAD_FILE_MB,
     }
   )
   .optional();
