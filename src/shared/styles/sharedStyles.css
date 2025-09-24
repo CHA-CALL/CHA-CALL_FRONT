@@ -5,6 +5,7 @@
   --color-white: #ffffff;
   --color-black: #000000;
   --color-black50: rgba(0, 0, 0, 0.5);
+  --color-black70: rgba(0, 0, 0, 0.7);
 
   /* grayscale */
   --color-grayscale-50: #f8fafb;
