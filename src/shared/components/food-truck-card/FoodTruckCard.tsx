@@ -1,3 +1,4 @@
+import { cn } from '@utils/cn';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
 import { Icon, type IconId } from '@components/icon/Icon';
 import Tag from '@components/tag/Tag';
@@ -19,7 +20,12 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
   switch (props.variant) {
     case 'reservationProvider':
       return (
-        <div className='flex w-full p-[2rem] bg-white'>
+        <div
+          className={cn(
+            'flex w-full p-[2rem] bg-white',
+            { 'border-b border-grayscale-100': !props.isLast },
+          )}
+        >
           <img
             src={props.image}
             alt={props.clientName}
@@ -48,7 +54,12 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'reservationClient':
       return (
-        <div className='flex w-full p-[2rem] bg-white'>
+        <div
+          className={cn(
+            'flex w-full p-[2rem] bg-white',
+            { 'border-b border-grayscale-100': !props.isLast },
+          )}
+        >
           <img
             src={props.image}
             alt={props.foodTruckName}
@@ -74,7 +85,13 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'foodtruckProvider':
       return (
-        <div onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white cursor-pointer'>
+        <div
+          onClick={props.handleClickCard}
+          className={cn(
+            'flex w-full p-[2rem] bg-white cursor-pointer',
+            { 'border-b border-grayscale-100': !props.isLast },
+          )}
+        >
           <img
             src={props.image}
             alt={props.foodTruckName}
@@ -103,7 +120,13 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'foodtruckClient':
       return (
-        <div onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white cursor-pointer'>
+        <div
+          onClick={props.handleClickCard}
+          className={cn(
+            'flex w-full p-[2rem] bg-white cursor-pointer',
+            { 'border-b border-grayscale-100': !props.isLast },
+          )}
+        >
           <img
             src={props.image}
             alt={props.foodTruckName}

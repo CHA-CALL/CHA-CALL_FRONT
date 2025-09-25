@@ -101,3 +101,97 @@ export const FoodTruckClient: Story = {
     isLast: false,
   },
 };
+
+export const ReservationProviderList: Story = {
+  args: {
+    variant: 'reservationProvider',
+    image: 'https://placehold.co/50',
+    clientName: '고정현',
+    foodTruckName: '오소리 푸드트럭',
+    location: '서울 광진구 화양동',
+    period: '2025.09.30 - 2025.10.05',
+    time: '13:00 - 19:00',
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
+  },
+  render: (args: FoodTruckCardProps) => (
+    <div className='p-[2rem] bg-white'>
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={true} />
+    </div>
+  ),
+};
+
+export const ReservationClientList: Story = {
+  args: {
+    variant: 'reservationClient',
+    image: 'https://placehold.co/50',
+    foodTruckName: '오소리 푸드트럭',
+    location: '서울 광진구 화양동',
+    period: '2025.09.30 - 2025.10.05',
+    time: '13:00 - 19:00',
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
+    isLast: false,
+  },
+  render: (args: FoodTruckCardProps) => (
+    <div className='p-[2rem] bg-white'>
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={true} />
+    </div>
+  ),
+};
+
+export const FoodTruckProviderList: Story = {
+  args: {
+    variant: 'foodtruckProvider',
+    image: 'https://placehold.co/50',
+    foodTruckName: '오소리 푸드트럭',
+    description: '바삭한 타코로 즐거운 한입을!',
+    time: '09:00 - 21:00',
+    locations: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
+    handleClickCard() {
+      alert('카드 클릭');
+    },
+  },
+  render: (args: FoodTruckCardProps) => (
+    <div className='p-[2rem] bg-white'>
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={true} />
+    </div>
+  ),
+};
+
+export const FoodTruckClientList: Story = {
+  args: {
+    variant: 'foodtruckClient',
+    isLiked: true,
+    image: 'https://placehold.co/50',
+    foodTruckName: '오소리 푸드트럭',
+    rating: 4.5,
+    reviewCount: 10,
+    description: '바삭한 타코로 즐거운 한입을!',
+    tags: ['피자', '양식'],
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
+    handleClickCard() {
+      alert('카드 클릭');
+    },
+  },
+  render: (args: FoodTruckCardProps) => (
+    <div className='p-[2rem] bg-white'>
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={false} />
+      <FoodTruckCard {...args} isLast={true} />
+    </div>
+  ),
+};
