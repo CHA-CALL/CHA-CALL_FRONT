@@ -37,7 +37,7 @@ type FoodTruckClientProps = BaseFoodTruckCardProps & {
   rating: number;
   reviewCount: number;
   description: string;
-  tags: (typeof FOOD_TRUCK_CATEGORIES)[keyof typeof FOOD_TRUCK_CATEGORIES][];
+  tags: (typeof FOOD_TRUCK_CATEGORIES)[number][];
   handleClickCard: () => void;
 };
 
