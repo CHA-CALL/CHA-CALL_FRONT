@@ -5,13 +5,13 @@ import Tag from '@components/tag/Tag';
 export default function FoodTruckCard(props: FoodTruckCardProps) {
 
   function infoRow(
+    iconId: IconId,
     children: string,
-    iconId: IconId
   ) {
     return (
       <div className='flex items-center gap-[0.6rem]'>
         <Icon name={iconId} width={16} height={16} className='text-grayscale-300' />
-        <span className='caption-m-11 text-grayscale-700'>{children}</span>
+        <span className='caption-m-11 text-grayscale-700 line-clamp-1'>{children}</span>
       </div>
     );
   }
@@ -23,7 +23,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           <img
             src={props.image}
             alt={props.clientName}
-            className='w-[5rem] h-[5rem] mr-[1.6rem] rounded-[1.6rem] object-cover'
+            className='w-[5rem] h-[5rem] mr-[1.8rem] rounded-[1.6rem] object-cover'
           />
 
           <div className='flex flex-col gap-[0.2rem]'>
@@ -31,9 +31,9 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               <span className='title-sb-16 text-grayscale-900'>{props.clientName}</span>
               <Tag title={props.foodTruckName} />
             </div>
-            {infoRow(props.location, 'ic_locate')}
-            {infoRow(props.period, 'ic_calendar')}
-            {infoRow(props.time, 'ic_error')}
+            {infoRow('ic_locate', props.location)}
+            {infoRow('ic_calendar', props.period)}
+            {infoRow('ic_error', props.time)}
           </div>
 
           <button
@@ -52,14 +52,14 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           <img
             src={props.image}
             alt={props.foodTruckName}
-            className='w-[8rem] h-[8rem] mr-[1.6rem] rounded-[1.6rem] object-cover'
+            className='w-[8rem] h-[8rem] mr-[1.8rem] rounded-[1.6rem] object-cover'
           />
 
           <div className='flex flex-col gap-[0.2rem]'>
             <span className='title-sb-16 text-grayscale-900'>{props.foodTruckName}</span>
-            {infoRow(props.location, 'ic_locate')}
-            {infoRow(props.period, 'ic_calendar')}
-            {infoRow(props.time, 'ic_error')}
+            {infoRow('ic_locate', props.location)}
+            {infoRow('ic_calendar', props.period)}
+            {infoRow('ic_error', props.time)}
           </div>
 
           <button
@@ -74,7 +74,31 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'foodtruckProvider':
       return (
-        <div>3</div>
+        <button type='button' className='flex w-full p-[2rem] bg-white' onClick={props.handleClickCard}>
+          <img
+            src={props.image}
+            alt={props.foodTruckName}
+            className='w-[8rem] h-[8rem] mr-[1.3rem] rounded-[1.6rem] object-cover'
+          />
+
+          <div className='flex flex-col'>
+            <span className='title-sb-16 text-grayscale-900 text-left'>{props.foodTruckName}</span>
+            <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.description}</span>
+            {infoRow('ic_error', props.time)}
+            {infoRow('ic_locate', props.locations)}
+          </div>
+
+          <button
+            type='button'
+            onClick={(e) => {
+              e.stopPropagation();
+              props.handleClickButton();
+            }}
+            className='ml-auto mb-auto text-grayscale-700'
+          >
+            <Icon name='ic_team' />
+          </button>
+        </button>
       );
 
     case 'foodtruckClient':

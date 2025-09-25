@@ -22,6 +22,7 @@ const meta: Meta<typeof FoodTruckCard> = {
     time: { control: 'text' },
     // FoodTruck
     description: { control: 'text' },
+    locations: { control: 'text' },
     rating: { control: 'number' },
     reviewCount: { control: 'number' },
     tags: { control: 'object' },
@@ -40,7 +41,9 @@ export const ReservationProvider: Story = {
     location: '서울 광진구 화양동',
     period: '2025.09.30 - 2025.10.05',
     time: '13:00 - 19:00',
-    handleClickButton: () => {},
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
     isLast: false,
   },
 };
@@ -53,8 +56,27 @@ export const ReservationClient: Story = {
     location: '서울 광진구 화양동',
     period: '2025.09.30 - 2025.10.05',
     time: '13:00 - 19:00',
-    handleClickButton: () => {},
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
     isLast: false,
   },
 };
 
+export const FoodTruckProvider: Story = {
+  args: {
+    variant: 'foodtruckProvider',
+    image: 'https://placehold.co/50',
+    foodTruckName: '오소리 푸드트럭',
+    description: '바삭한 타코로 즐거운 한입을!',
+    time: '09:00 - 21:00',
+    locations: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    handleClickButton() {
+      alert('버튼 클릭');
+    },
+    handleClickCard() {
+      alert('카드 클릭');
+    },
+    isLast: false,
+  },
+};

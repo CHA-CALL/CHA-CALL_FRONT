@@ -27,6 +27,7 @@ type FoodTruckProviderProps = BaseFoodTruckCardProps & {
   description: string;
   time: string;
   locations: string;
+  handleClickCard: () => void;
 };
 
 type FoodTruckClientProps = BaseFoodTruckCardProps & {
@@ -35,6 +36,7 @@ type FoodTruckClientProps = BaseFoodTruckCardProps & {
   reviewCount: number;
   description: string;
   tags: (typeof FOOD_TRUCK_CATEGORIES)[keyof typeof FOOD_TRUCK_CATEGORIES][];
+  handleClickCard: () => void;
 };
 
 export type FoodTruckCardProps =
