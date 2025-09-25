@@ -161,4 +161,8 @@
     scrollbar-width: none;
     /* Firefox */
   }
+
+  .max-w-custom {
+    max-width: 60rem;
+  }
 }
