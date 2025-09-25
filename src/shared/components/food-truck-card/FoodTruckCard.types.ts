@@ -32,6 +32,7 @@ type FoodTruckProviderProps = BaseFoodTruckCardProps & {
 
 type FoodTruckClientProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckClient';
+  isLiked: boolean;
   rating: number;
   reviewCount: number;
   description: string;

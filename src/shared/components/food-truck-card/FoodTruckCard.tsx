@@ -74,7 +74,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'foodtruckProvider':
       return (
-        <button type='button' className='flex w-full p-[2rem] bg-white' onClick={props.handleClickCard}>
+        <button type='button' onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white'>
           <img
             src={props.image}
             alt={props.foodTruckName}
@@ -103,7 +103,39 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'foodtruckClient':
       return (
-        <div>4</div>
+        <button type='button' onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white'>
+          <img
+            src={props.image}
+            alt={props.foodTruckName}
+            className='w-[8rem] h-[8rem] mr-[1.3rem] rounded-[1.6rem] object-cover'
+          />
+
+          <div className='flex flex-col'>
+            <div className='flex items-center'>
+              <span className='title-sb-16 text-grayscale-900 text-left'>{props.foodTruckName}</span>
+              <Icon name='ic_close' width={18} height={16} className='ml-[0.4rem] text-grayscale-500' />
+              <span className='caption-m-11 text-grayscale-500'>{props.rating}</span>
+              <span className='caption-m-10 text-grayscale-300 ml-[0.2rem]'>({props.reviewCount})</span>
+            </div>
+            <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.description}</span>
+            <div className='flex items-center gap-[0.5rem] mt-[0.8rem]'>
+              {props.tags.map((tag, index) => (
+                <Tag key={index} title={String(tag)} />
+              ))}
+            </div>
+          </div>
+
+          <button
+            type='button'
+            onClick={(e) => {
+              e.stopPropagation();
+              props.handleClickButton();
+            }}
+            className='ml-auto mb-auto text-grayscale-700'
+          >
+            {props.isLiked ? <Icon name='ic_confirm' className='text-primary-700' /> : <Icon name='ic_confirm' />}
+          </button>
+        </button>
       );
 
     default:
