@@ -16,7 +16,7 @@ export default function Navigation({
   text,
 }: NavigationProps) {
   return (
-    <nav className='sticky left-[0] top-[0] z-30 flex h-[4.8rem] w-full items-center bg-white'>
+    <nav className='max-w-custom fixed-center top-[0] z-30 flex h-[4.8rem] w-full items-center bg-white'>
       <div className='flex flex-[1] items-center justify-start px-[1.3rem]'>
         {leftIcon && <button onClick={handleLeftClick}>{leftIcon}</button>}
       </div>
