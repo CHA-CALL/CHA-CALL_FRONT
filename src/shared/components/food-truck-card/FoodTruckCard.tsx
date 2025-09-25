@@ -29,7 +29,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           <img
             src={props.image}
             alt={props.clientName}
-            className='w-[5rem] h-[5rem] mr-[1.8rem] rounded-[1.6rem] object-cover'
+            className='w-[5rem] h-[5rem] mr-[1.8rem] my-[0.4rem] rounded-[1.6rem] object-cover'
           />
 
           <div className='flex flex-col gap-[0.2rem]'>
@@ -95,7 +95,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           <img
             src={props.image}
             alt={props.foodTruckName}
-            className='w-[8rem] h-[8rem] mr-[1.3rem] rounded-[1.6rem] object-cover'
+            className='w-[7.4rem] h-[7.4rem] mr-[1.3rem] my-[0.4rem] rounded-[1.6rem] object-cover'
           />
 
           <div className='flex flex-col'>
@@ -123,15 +123,15 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
         <div
           onClick={props.handleClickCard}
           className={cn(
-            'flex w-full p-[2rem] bg-white cursor-pointer',
+            'flex w-full px-[2rem] py-[2.2rem] bg-white cursor-pointer',
             { 'border-b border-grayscale-100': !props.isLast },
-            { 'pt-[0]': props.isFirst },
+            { 'pt-[0.2rem]': props.isFirst },
           )}
         >
           <img
             src={props.image}
             alt={props.foodTruckName}
-            className='w-[8rem] h-[8rem] mr-[1.3rem] rounded-[1.6rem] object-cover'
+            className='w-[8rem] h-[8rem] mr-[1.6rem] rounded-[1.6rem] object-cover'
           />
 
           <div className='flex flex-col'>

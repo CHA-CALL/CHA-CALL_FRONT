@@ -60,7 +60,7 @@ export const ReservationProvider: Story = {
 export const ReservationClient: Story = {
   args: {
     variant: 'reservationClient',
-    image: 'https://placehold.co/50',
+    image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
     location: '서울 광진구 화양동',
     period: '2025.09.30 - 2025.10.05',
@@ -75,7 +75,7 @@ export const ReservationClient: Story = {
 export const FoodTruckProvider: Story = {
   args: {
     variant: 'foodtruckProvider',
-    image: 'https://placehold.co/50',
+    image: 'https://placehold.co/74',
     foodTruckName: '오소리 푸드트럭',
     description: '바삭한 타코로 즐거운 한입을!',
     time: '09:00 - 21:00',
@@ -94,7 +94,7 @@ export const FoodTruckClient: Story = {
   args: {
     variant: 'foodtruckClient',
     isLiked: true,
-    image: 'https://placehold.co/50',
+    image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
     rating: 4.5,
     reviewCount: 10,
@@ -135,7 +135,7 @@ export const ReservationProviderList: Story = {
 export const ReservationClientList: Story = {
   args: {
     variant: 'reservationClient',
-    image: 'https://placehold.co/50',
+    image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
     location: '서울 광진구 화양동',
     period: '2025.09.30 - 2025.10.05',
@@ -157,7 +157,7 @@ export const ReservationClientList: Story = {
 export const FoodTruckProviderList: Story = {
   args: {
     variant: 'foodtruckProvider',
-    image: 'https://placehold.co/50',
+    image: 'https://placehold.co/74',
     foodTruckName: '오소리 푸드트럭',
     description: '바삭한 타코로 즐거운 한입을!',
     time: '09:00 - 21:00',
@@ -182,7 +182,7 @@ export const FoodTruckClientList: Story = {
   args: {
     variant: 'foodtruckClient',
     isLiked: true,
-    image: 'https://placehold.co/50',
+    image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
     rating: 4.5,
     reviewCount: 10,
