@@ -10,7 +10,15 @@ const meta: Meta<typeof FoodTruckCard> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'radio', options: ['reservationProvider', 'reservationClient', 'foodtruckProvider', 'foodtruckClient'] },
+    variant: {
+      control: 'radio',
+      options: [
+        'reservationProvider',
+        'reservationClient',
+        'foodtruckProvider',
+        'foodtruckClient'
+      ]
+    },
     image: { control: 'text' },
     foodTruckName: { control: 'text' },
     handleClickButton: { action: 'button clicked' },
@@ -116,9 +124,9 @@ export const ReservationProviderList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='p-[2rem] bg-white'>
-      <FoodTruckCard {...args} isLast={false} />
-      <FoodTruckCard {...args} isLast={false} />
+    <div className='px-[2rem] bg-white'>
+      <FoodTruckCard {...args} />
+      <FoodTruckCard {...args} />
       <FoodTruckCard {...args} isLast={true} />
     </div>
   ),
@@ -138,9 +146,9 @@ export const ReservationClientList: Story = {
     isLast: false,
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='p-[2rem] bg-white'>
-      <FoodTruckCard {...args} isLast={false} />
-      <FoodTruckCard {...args} isLast={false} />
+    <div className='px-[2rem] bg-white'>
+      <FoodTruckCard {...args} />
+      <FoodTruckCard {...args} />
       <FoodTruckCard {...args} isLast={true} />
     </div>
   ),
@@ -162,9 +170,9 @@ export const FoodTruckProviderList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='p-[2rem] bg-white'>
-      <FoodTruckCard {...args} isLast={false} />
-      <FoodTruckCard {...args} isLast={false} />
+    <div className='px-[2rem] bg-white'>
+      <FoodTruckCard {...args} />
+      <FoodTruckCard {...args} />
       <FoodTruckCard {...args} isLast={true} />
     </div>
   ),
@@ -188,9 +196,12 @@ export const FoodTruckClientList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='p-[2rem] bg-white'>
-      <FoodTruckCard {...args} isLast={false} />
-      <FoodTruckCard {...args} isLast={false} />
+    <div className='flex flex-col px-[2rem] bg-white'>
+      <span className='caption-m-12 text-grayscale-500 ml-[2.4rem] mt-[2rem] mb-[1rem]'>
+        총 14개
+      </span>
+      <FoodTruckCard {...args} isFirst={true} />
+      <FoodTruckCard {...args} />
       <FoodTruckCard {...args} isLast={true} />
     </div>
   ),

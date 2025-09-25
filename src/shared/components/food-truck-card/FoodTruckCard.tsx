@@ -125,6 +125,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           className={cn(
             'flex w-full p-[2rem] bg-white cursor-pointer',
             { 'border-b border-grayscale-100': !props.isLast },
+            { 'pt-[0]': props.isFirst },
           )}
         >
           <img

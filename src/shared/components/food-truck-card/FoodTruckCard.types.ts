@@ -4,6 +4,7 @@ interface BaseFoodTruckCardProps {
   image: string;
   foodTruckName: string;
   handleClickButton: () => void;
+  isFirst?: boolean;
   isLast?: boolean;
 }
 
