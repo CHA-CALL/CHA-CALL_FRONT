@@ -74,7 +74,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'foodtruckProvider':
       return (
-        <button type='button' onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white'>
+        <div onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white cursor-pointer'>
           <img
             src={props.image}
             alt={props.foodTruckName}
@@ -98,12 +98,12 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           >
             <Icon name='ic_team' />
           </button>
-        </button>
+        </div>
       );
 
     case 'foodtruckClient':
       return (
-        <button type='button' onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white'>
+        <div onClick={props.handleClickCard} className='flex w-full p-[2rem] bg-white cursor-pointer'>
           <img
             src={props.image}
             alt={props.foodTruckName}
@@ -117,7 +117,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               <span className='caption-m-11 text-grayscale-500'>{props.rating}</span>
               <span className='caption-m-10 text-grayscale-300 ml-[0.2rem]'>({props.reviewCount})</span>
             </div>
-            <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.description}</span>
+            <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] text-left'>{props.description}</span>
             <div className='flex items-center gap-[0.5rem] mt-[0.8rem]'>
               {props.tags.map((tag, index) => (
                 <Tag key={index} title={String(tag)} />
@@ -135,7 +135,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           >
             {props.isLiked ? <Icon name='ic_confirm' className='text-primary-700' /> : <Icon name='ic_confirm' />}
           </button>
-        </button>
+        </div>
       );
 
     default:

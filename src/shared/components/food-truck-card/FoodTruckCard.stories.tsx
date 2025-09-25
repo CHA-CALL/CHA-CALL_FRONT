@@ -85,7 +85,7 @@ export const FoodTruckProvider: Story = {
 export const FoodTruckClient: Story = {
   args: {
     variant: 'foodtruckClient',
-    isLiked: false,
+    isLiked: true,
     image: 'https://placehold.co/50',
     foodTruckName: '오소리 푸드트럭',
     rating: 4.5,
