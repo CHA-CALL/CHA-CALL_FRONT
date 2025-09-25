@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import type { UserResponse } from 'apis/data-contracts';
 
 interface MyInfoSectionProps {
-  isPresident: boolean;
+  isProvider: boolean;
   handleNavigateTo: (_navigateTo: string) => void;
 }
 
 export default function MyInfoSection({
-  isPresident,
+  isProvider,
   handleNavigateTo,
 }: MyInfoSectionProps) {
   const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
@@ -33,7 +33,7 @@ export default function MyInfoSection({
         onClick={handleNavigateToProfileSetting}
       >
         <img
-          className='h-[5rem] w-[5rem]'
+          className='h-[5rem] w-[5rem] rounded-full border border-grayscale-200 object-cover'
           src={userInfo?.profileImageUrl || DefaultProfile}
           alt='프로필 사진'
         />
@@ -45,7 +45,7 @@ export default function MyInfoSection({
             <Icon name='ic_next' className='text-grayscale-900' />
           </div>
           <span className='text-start text-grayscale-500 title-sb-12'>
-            {isPresident ? '사장님' : '일반'} 회원
+            {isProvider ? '사장님' : '일반'} 회원
           </span>
         </div>
       </button>

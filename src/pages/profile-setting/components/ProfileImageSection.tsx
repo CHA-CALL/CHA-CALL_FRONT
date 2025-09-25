@@ -18,7 +18,7 @@ export default function ProfileImageSection({
       onClick={handleOpenBottomSheet}
     >
       <img
-        className='h-[8rem] w-[8rem] rounded-full'
+        className='h-[8rem] w-[8rem] rounded-full border border-grayscale-200 object-cover'
         src={profileImage}
         alt='프로필사진'
       />

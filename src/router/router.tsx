@@ -14,6 +14,7 @@ import MyPage from '@pages/mypage/MyPage';
 import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
+import ReservationHistory from '@pages/reservation-history/ReservationHistory';
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ACCOUNT_FORM + '/:id?',
         element: <AccountForm />,
+      },
+      {
+        path: ROUTES.RESERVATION_HISTORY,
+        element: <ReservationHistory />,
       },
     ],
   },

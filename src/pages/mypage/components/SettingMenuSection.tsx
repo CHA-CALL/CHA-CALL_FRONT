@@ -2,7 +2,7 @@ import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@shared/components/icon/Icon';
 
 interface SettingMenuSectionProps {
-  isPresident: boolean;
+  isProvider: boolean;
   handleNavigateTo: (_navigateTo: string) => void;
 }
 
@@ -12,11 +12,11 @@ interface SettingList {
 }
 
 export default function SettingMenuSection({
-  isPresident,
+  isProvider,
   handleNavigateTo,
 }: SettingMenuSectionProps) {
   // TODO: 추가된 페이지 경로 설정
-  const settingList: SettingList[] = isPresident
+  const settingList: SettingList[] = isProvider
     ? [
         {
           menu: '예약내역',

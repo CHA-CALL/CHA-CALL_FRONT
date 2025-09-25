@@ -11,4 +11,5 @@ export const ROUTES = {
   PROFILE_SETTING: '/profile-setting',
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
+  RESERVATION_HISTORY: '/reservation-history',
 };

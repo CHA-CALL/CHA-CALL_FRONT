@@ -27,7 +27,11 @@ export default function ButtonTabGroup({
   };
 
   return (
-    <div className={'border-grayscale-100 flex flex-row border-b'}>
+    <div
+      className={
+        'sticky top-[4.8rem] flex flex-row gap-[1rem] border-b border-grayscale-100 bg-white px-[2rem]'
+      }
+    >
       {tabs.map(tab => (
         <ButtonTab
           key={tab.id}

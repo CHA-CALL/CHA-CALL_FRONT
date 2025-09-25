@@ -11,7 +11,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { role } = useRole();
-  const isPresident = role === ROLE.PROVIDER;
+  const isProvider = role === ROLE.PROVIDER;
 
   const handleNavigateTo = (navigateTo: string) => {
     navigate(navigateTo);
@@ -30,12 +30,12 @@ export default function MyPage() {
       />
       <div className='flex flex-col gap-[4rem] p-[2rem]'>
         <MyInfoSection
-          isPresident={isPresident}
+          isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <SettingMenuSection
-          isPresident={isPresident}
+          isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}
         />
       </div>
