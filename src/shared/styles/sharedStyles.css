@@ -165,4 +165,9 @@
   .max-w-custom {
     max-width: 60rem;
   }
+  .fixed-center {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
