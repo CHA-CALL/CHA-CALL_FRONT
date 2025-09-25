@@ -45,3 +45,16 @@ export const ReservationProvider: Story = {
   },
 };
 
+export const ReservationClient: Story = {
+  args: {
+    variant: 'reservationClient',
+    image: 'https://placehold.co/50',
+    foodTruckName: '오소리 푸드트럭',
+    location: '서울 광진구 화양동',
+    period: '2025.09.30 - 2025.10.05',
+    time: '13:00 - 19:00',
+    handleClickButton: () => {},
+    isLast: false,
+  },
+};
+

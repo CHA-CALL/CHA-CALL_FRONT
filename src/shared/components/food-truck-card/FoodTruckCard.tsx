@@ -48,7 +48,28 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
     case 'reservationClient':
       return (
-        <div>2</div>
+        <div className='flex w-full p-[2rem] bg-white'>
+          <img
+            src={props.image}
+            alt={props.foodTruckName}
+            className='w-[8rem] h-[8rem] mr-[1.6rem] rounded-[1.6rem] object-cover'
+          />
+
+          <div className='flex flex-col gap-[0.2rem]'>
+            <span className='title-sb-16 text-grayscale-900'>{props.foodTruckName}</span>
+            {infoRow(props.location, 'ic_locate')}
+            {infoRow(props.period, 'ic_calendar')}
+            {infoRow(props.time, 'ic_error')}
+          </div>
+
+          <button
+            type='button'
+            onClick={props.handleClickButton}
+            className='ml-auto text-grayscale-700'
+          >
+            <Icon name='ic_next' />
+          </button>
+        </div>
       );
 
     case 'foodtruckProvider':
