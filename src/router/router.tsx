@@ -15,6 +15,7 @@ import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
+import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.UPLOAD_FOOD_TRUCK,
         element: <UploadFoodTruck />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_MANAGEMENT,
+        element: <FoodTruckManagement />,
       },
     ],
   },

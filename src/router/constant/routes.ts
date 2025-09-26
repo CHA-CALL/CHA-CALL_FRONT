@@ -12,4 +12,5 @@ export const ROUTES = {
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
   UPLOAD_FOOD_TRUCK: '/owner/upload-food-truck',
+  FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
 };
