@@ -8,7 +8,7 @@ import { cn } from '@shared/utils/cn';
 import { ROUTES } from '@router/constant/routes';
 import { useState, useEffect } from 'react';
 import DeleteFoodTruckBottomSheet from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-bottom-sheet/DeleteFoodTruckBottomSheet';
-import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm/DeleteFoodTruckConfirm';
+import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -85,14 +85,14 @@ export default function FoodTruckManagement() {
         />
         <div className='flex flex-col gap-[2rem]'>
           {data.map((item, index) => (
-            <>
-              <div key={item.id} className={cn(index !== 0 && 'mt-[2rem]')}>
+            <div key={item.id}>
+              <div className={cn(index !== 0 && 'mt-[2rem]')}>
                 <p>{item.name}</p>
               </div>
               {index !== data.length - 1 && (
                 <div className='bg-grayscale-100 h-[0.1rem] w-full' />
               )}
-            </>
+            </div>
           ))}
         </div>
       </div>
@@ -108,10 +108,11 @@ export default function FoodTruckManagement() {
         <Button
           variant='default'
           buttonStyle='large'
-          children='+ 추가하기'
           handleClickButton={handleNavigateToAdd}
           className='rounded-[1.6rem]'
-        />
+        >
+          + 추가하기
+        </Button>
       </footer>
     </>
   );

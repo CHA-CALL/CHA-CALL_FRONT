@@ -1,17 +1,17 @@
 import Overlay from '@shared/components/overlay/Overlay';
 import Button from '@shared/components/button/Button';
 
-interface DeleteFoodTruckConfirmProps {
+interface DeleteFoodTruckConfirmModalProps {
   isOpen: boolean;
   handleClose: () => void;
   handleClickConfirm: () => void;
 }
 
-export default function DeleteFoodTruckConfirm({
+export default function DeleteFoodTruckConfirmModal({
   isOpen,
   handleClose,
   handleClickConfirm,
-}: DeleteFoodTruckConfirmProps) {
+}: DeleteFoodTruckConfirmModalProps) {
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
       <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
