@@ -4,7 +4,10 @@ import {
   OWNER_MEDIA_MAX_COUNT,
   OWNER_MEDIA_MIN_COUNT,
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
-
+import {
+  CANNOT_UPLOAD_FILE_MB,
+  NOT_ALLOWED_FILE_TYPE,
+} from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
 export const BIZ_REG_CERT_FILE_VALIDATOR = z
@@ -14,7 +17,7 @@ export const BIZ_REG_CERT_FILE_VALIDATOR = z
       return isAcceptableFile(file);
     },
     {
-      message: OWNER_MEDIA_ERROR_MESSAGE.NOT_ALLOWED_FILE_TYPE,
+      message: NOT_ALLOWED_FILE_TYPE,
     }
   )
   .refine(
@@ -22,7 +25,7 @@ export const BIZ_REG_CERT_FILE_VALIDATOR = z
       return isFileSizeValid(file);
     },
     {
-      message: OWNER_MEDIA_ERROR_MESSAGE.CANNOT_UPLOAD_FILE,
+      message: CANNOT_UPLOAD_FILE_MB,
     }
   )
   .optional();
@@ -42,7 +45,7 @@ export const OTHER_DOCS_FILES_VALIDATOR = z
       return files.every(file => isAcceptableFile(file));
     },
     {
-      message: OWNER_MEDIA_ERROR_MESSAGE.NOT_ALLOWED_FILE_TYPE,
+      message: NOT_ALLOWED_FILE_TYPE,
     }
   )
   .refine(
@@ -50,7 +53,7 @@ export const OTHER_DOCS_FILES_VALIDATOR = z
       return files.every(file => isFileSizeValid(file));
     },
     {
-      message: OWNER_MEDIA_ERROR_MESSAGE.CANNOT_UPLOAD_FILE,
+      message: CANNOT_UPLOAD_FILE_MB,
     }
   )
   .optional();

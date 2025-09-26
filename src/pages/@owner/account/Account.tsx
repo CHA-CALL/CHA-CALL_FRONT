@@ -35,7 +35,7 @@ export default function Account() {
       <div className='flex flex-col gap-[2rem] p-[2rem] pt-[4rem]'>
         <div className='flex flex-col gap-[1rem]'>
           <div className='flex items-center justify-between'>
-            <p className='title-sb-12 text-grayscale-500'>등록된 계좌</p>
+            <p className='text-grayscale-500 title-sb-12'>등록된 계좌</p>
             {data && (
               <Button
                 variant='default'
@@ -46,27 +46,27 @@ export default function Account() {
             )}
           </div>
           <Information
-            iconId='ic_chat'
+            iconId='ic_chat_dot'
             text='한 번 등록하면 채팅에서 바로 계좌 발송이 가능해요!'
           />
         </div>
 
         {data ? (
           <div
-            className='border-grayscale-200 flex flex-col gap-[2.4rem] rounded-[1.6rem] border px-[2.6rem] py-[2.4rem]'
+            className='flex flex-col gap-[2.4rem] rounded-[1.6rem] border border-grayscale-200 px-[2.6rem] py-[2.4rem]'
             key={data.id}
           >
             <div className='flex items-center justify-between'>
-              <p className='title-sb-12 text-grayscale-500'>은행명</p>
-              <p className='body-m-13 text-grayscale-900'>{data.bank}</p>
+              <p className='text-grayscale-500 title-sb-12'>은행명</p>
+              <p className='text-grayscale-900 body-m-13'>{data.bank}</p>
             </div>
             <div className='flex items-center justify-between'>
-              <p className='title-sb-12 text-grayscale-500'>예금주</p>
-              <p className='body-m-13 text-grayscale-900'>{data.name}</p>
+              <p className='text-grayscale-500 title-sb-12'>예금주</p>
+              <p className='text-grayscale-900 body-m-13'>{data.name}</p>
             </div>
             <div className='flex items-center justify-between'>
-              <p className='title-sb-12 text-grayscale-500'>계좌번호</p>
-              <p className='body-m-13 text-grayscale-900'>
+              <p className='text-grayscale-500 title-sb-12'>계좌번호</p>
+              <p className='text-grayscale-900 body-m-13'>
                 {data.accountNumber}
               </p>
             </div>

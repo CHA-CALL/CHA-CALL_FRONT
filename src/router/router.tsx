@@ -14,6 +14,7 @@ import MyPage from '@pages/mypage/MyPage';
 import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
+import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 
 export const router = createBrowserRouter([
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ACCOUNT_FORM + '/:id?',
         element: <AccountForm />,
+      },
+      {
+        path: ROUTES.UPLOAD_FOOD_TRUCK,
+        element: <UploadFoodTruck />,
       },
       {
         path: ROUTES.PROFILE_SETTING_DETAIL(':field'),

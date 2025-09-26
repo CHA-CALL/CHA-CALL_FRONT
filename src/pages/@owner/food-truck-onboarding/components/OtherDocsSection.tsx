@@ -1,4 +1,4 @@
-import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/useFoodTruckInput';
+import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-input';
 import SectionTitle from '@pages/@owner/food-truck-onboarding/components/SectionTitle';
 import { OWNER_MEDIA_MAX_COUNT } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
