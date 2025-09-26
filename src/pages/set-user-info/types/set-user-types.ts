@@ -3,7 +3,5 @@ import React from 'react';
 
 export interface SetUserInfoItemProps {
   userInfo: UpdateUserInfoRequest;
-  setUserInfo: React.Dispatch<
-    React.SetStateAction<UpdateUserInfoRequest | null>
-  >;
+  setUserInfo: React.Dispatch<React.SetStateAction<UpdateUserInfoRequest>>;
 }

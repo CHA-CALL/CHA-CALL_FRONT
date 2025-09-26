@@ -1,6 +1,15 @@
 import SetUserName from '@pages/set-user-info/components/SetUserName';
 import SetUserEmail from '@pages/set-user-info/components/SetUserEmail';
 import SetUserGender from '@pages/set-user-info/components/SetUserGender';
+import type { UpdateUserInfoRequest } from 'apis/data-contracts';
+
+export const INITIAL_USER_INFO: UpdateUserInfoRequest = {
+  profileImageUrl: '',
+  name: '',
+  email: '',
+  gender: '',
+  termAgreed: false,
+};
 
 export const COMPONENT_MAP = {
   name: SetUserName,

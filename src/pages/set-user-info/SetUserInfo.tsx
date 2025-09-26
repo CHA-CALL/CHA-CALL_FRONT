@@ -1,12 +1,13 @@
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
-import SetUserInfoSkeletonUI from '@pages/set-user-info/components/SetUserInfoSkeletonUI';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import type { UpdateUserInfoRequest } from 'apis/data-contracts';
+
 import { dummyUserInfo } from '@pages/set-user-info/constant/mocks';
 import {
+  INITIAL_USER_INFO,
   COMPONENT_MAP,
   VALID_FIELDS,
   type ValidField,
@@ -15,18 +16,13 @@ import {
 import { ROUTES } from '@router/constant/routes';
 
 export default function SetUserInfo() {
-  const [isLoading, setIsLoading] = useState(true);
   const { field } = useParams<{ field: ValidField }>();
-  const [userInfo, setUserInfo] = useState<UpdateUserInfoRequest | null>(null);
+  const [userInfo, setUserInfo] =
+    useState<UpdateUserInfoRequest>(INITIAL_USER_INFO);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
-      setUserInfo(dummyUserInfo);
-      setIsLoading(false);
-    }, 1000);
-    // setUserInfo(dummyUserInfo);
-    // setIsLoading(false);
+    setUserInfo(dummyUserInfo);
   }, []);
 
   useEffect(() => {
@@ -34,11 +30,6 @@ export default function SetUserInfo() {
       navigate(ROUTES.PROFILE_SETTING, { replace: true });
     }
   }, [field, navigate]);
-
-  if (isLoading || !userInfo) {
-    // 로딩 중일 때 보여줄 스켈레톤 UI
-    return <SetUserInfoSkeletonUI />;
-  }
 
   const ComponentToRender = field ? COMPONENT_MAP[field] : null;
   const { name: userName, email: userEmail, gender: userGender } = userInfo;
