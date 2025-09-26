@@ -75,7 +75,7 @@ export default function MessageList() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='top-[4.8rem] z-10 bg-white p-[2rem] pb-[1.6rem] fixed-center'>
+      <div className='fixed-center top-[4.8rem] z-10 bg-white p-[2rem] pb-[1.6rem]'>
         <Information
           iconId='ic_chat_dot'
           text='한 번 등록하면 채팅에서 바로 내용 전송이 가능해요!'
@@ -95,11 +95,11 @@ export default function MessageList() {
           ))}
       </div>
 
-      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
+      <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
         <Button
           variant='default'
           buttonStyle='large'
-          className='w-full rounded-[1.6rem] border border-grayscale-200 body-m-14'
+          className='border-grayscale-200 body-m-14 w-full rounded-[1.6rem] border'
           handleClickButton={handleAddClick}
         >
           + 추가하기

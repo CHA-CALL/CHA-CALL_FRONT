@@ -44,7 +44,7 @@ export default function SettingMenuSection({
 
   return (
     <div className='flex flex-col gap-[1rem]'>
-      <h4 className='mb-[0.3rem] text-grayscale-500 title-sb-12'>계정 관리</h4>
+      <h4 className='text-grayscale-500 title-sb-12 mb-[0.3rem]'>계정 관리</h4>
       {settingList.map(setting => (
         <button
           key={setting.menu}
@@ -53,7 +53,12 @@ export default function SettingMenuSection({
           onClick={() => handleNavigateTo(setting.navigateTo)}
         >
           <span className='text-grayscale-900 title-sb-14'>{setting.menu}</span>
-          <Icon name='ic_next' width={18} height={18} color='#838992' />
+          <Icon
+            name='ic_next'
+            width={18}
+            height={18}
+            className='text-grayscale-900'
+          />
         </button>
       ))}
     </div>

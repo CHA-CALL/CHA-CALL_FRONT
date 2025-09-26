@@ -84,7 +84,7 @@ export default function ProfileSetting() {
   return (
     <>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
+        leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
         text='프로필 설정'
       />
@@ -97,7 +97,7 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userInfo} />
           <AgreementSection termAgreed={userInfo?.termAgreed} />
         </div>
-        <footer className='bottom-[3rem] flex flex-row items-center justify-center caption-m-12 fixed-center'>
+        <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
             type='button'
             className='text-grayscale-500 px-[1rem] py-[0.6rem]'

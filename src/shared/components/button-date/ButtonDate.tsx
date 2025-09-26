@@ -23,7 +23,7 @@ export default function ButtonDate({
     <button
       type='button'
       className={cn(
-        'flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]',
+        'border-grayscale-300 flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border px-[2rem]',
         className
       )}
       onClick={handleOpenCalendar}
@@ -31,11 +31,7 @@ export default function ButtonDate({
     >
       <Icon
         name='ic_calendar'
-        color={
-          startDate
-            ? 'var(--color-grayscale-700)'
-            : 'var(--color-grayscale-300)'
-        }
+        className={startDate ? 'text-grayscale-700' : 'text-grayscale-300'}
       />
       <div className='flex flex-row items-center gap-[0.4rem]'>
         <span
@@ -48,7 +44,7 @@ export default function ButtonDate({
         </span>
         {startDate && endDate && (
           <>
-            <Icon name='ic_dash' color='var(--color-grayscale-500)' />
+            <Icon name='ic_dash' className='text-grayscale-500' />
             <span className='text-grayscale-700 body-m-14'>
               {dateFormatter(endDate)}
             </span>

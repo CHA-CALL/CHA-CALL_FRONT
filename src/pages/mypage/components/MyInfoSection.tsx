@@ -42,9 +42,9 @@ export default function MyInfoSection({
             <span className='text-grayscale-900 heading-sb-18'>
               {userInfo?.name}님
             </span>
-            <Icon name='ic_next' color='var(--color-grayscale-900)' />
+            <Icon name='ic_next' className='text-grayscale-900' />
           </div>
-          <span className='text-start text-grayscale-500 title-sb-12'>
+          <span className='text-grayscale-500 title-sb-12 text-start'>
             {isPresident ? '사장님' : '일반'} 회원
           </span>
         </div>

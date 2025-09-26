@@ -24,7 +24,7 @@ export default function MyPage() {
   return (
     <>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
+        leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
         text='마이페이지'
       />
@@ -33,7 +33,7 @@ export default function MyPage() {
           isPresident={isPresident}
           handleNavigateTo={handleNavigateTo}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <SettingMenuSection
           isPresident={isPresident}
           handleNavigateTo={handleNavigateTo}

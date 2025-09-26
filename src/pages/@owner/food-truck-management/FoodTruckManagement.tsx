@@ -78,7 +78,7 @@ export default function FoodTruckManagement() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />
-      <div className='flex flex-col gap-[1.6rem] p-[2rem]'>
+      <div className='flex flex-col gap-[1.6rem] p-[2rem] pb-[10rem]'>
         <Information
           iconId='ic_chat_dot'
           text='푸드트럭을 등록하고 의뢰를 받아보세요!'
