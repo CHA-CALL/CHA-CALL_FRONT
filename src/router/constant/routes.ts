@@ -11,5 +11,5 @@ export const ROUTES = {
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
   PROFILE_SETTING: '/profile-setting',
-  PROFILE_SETTING_DETAIL: '/profile-setting/:field',
+  PROFILE_SETTING_DETAIL: (field: string) => `/profile-setting/${field}`,
 };

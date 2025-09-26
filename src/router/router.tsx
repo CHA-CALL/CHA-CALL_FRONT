@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
         element: <AccountForm />,
       },
       {
-        path: ROUTES.PROFILE_SETTING_DETAIL,
+        path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
         element: <SetUserInfo />,
       },
     ],
