@@ -3,7 +3,7 @@ import Information from '@shared/components/information/Information';
 import Navigation from '@shared/components/navigation/Navigation';
 import { useState, useEffect } from 'react';
 import { type Bank } from '@pages/@owner/account/constants/bank';
-import { useAccount } from '@pages/@owner/account/hooks/useAccount';
+import { useAccount } from '@pages/@owner/account/hooks/use-account';
 import Input from '@shared/components/input/Input';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
