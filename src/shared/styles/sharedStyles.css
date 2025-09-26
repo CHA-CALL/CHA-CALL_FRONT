@@ -1,4 +1,6 @@
 @theme {
+  --custom-max-width: 60rem;
+
   --color-*: initial;
 
   /* white ,black*/
@@ -162,13 +164,9 @@
     /* Firefox */
   }
 
-  .max-w-custom {
-    max-width: 60rem;
-  }
-
   .fixed-center {
     width: 100%;
-    max-width: 60rem;
+    max-width: var(--custom-max-width);
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
