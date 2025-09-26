@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Button from '@shared/components/button/Button';
 import Overlay from '@shared/components/overlay/Overlay';
 import Input from '@shared/components/input/Input';
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
 import { Icon } from '@shared/components/icon/Icon';
+import RatingBottomSheet from '@shared/components/rating-bottom-sheet/RatingBottomSheet';
 
 const Home = () => {
   // BottomSheet states
@@ -63,16 +63,9 @@ const Home = () => {
 
       {/* BottomSheet */}
 
-      <BottomSheet
+      <RatingBottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
-        sheetContent={
-          <div>
-            <h3 className='mb-[2rem] text-[1.8rem] font-bold'>바텀시트 내용</h3>
-            <p className='mb-[2rem]'>이것은 바텀시트의 내용입니다.</p>
-          </div>
-        }
-        sheetHeight={400}
       />
 
       {/* Search Bar */}

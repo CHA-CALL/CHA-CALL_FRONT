@@ -21,6 +21,7 @@ export type IconId =
   | 'ic_next'
   | 'ic_register'
   | 'ic_search'
+  | 'ic_star'
   | 'ic_support'
   | 'ic_team'
   | 'ic_trash'
