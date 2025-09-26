@@ -33,7 +33,7 @@ export default function ButtonAddImage({
         onChange={handleFileChange}
         className='hidden h-full w-full'
       />
-      <Icon name='ic_camera' />
+      <Icon name='ic_camera' className='text-grayscale-300' />
       <span className='text-grayscale-300 caption-m-10 mt-[0.4rem]'>
         서류 첨부
       </span>

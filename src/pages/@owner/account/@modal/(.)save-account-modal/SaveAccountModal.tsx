@@ -1,5 +1,5 @@
 import Overlay from '@shared/components/overlay/Overlay';
-import { type AccountFormData } from '@pages/@owner/account/hooks/useAccount';
+import { type AccountFormData } from '@pages/@owner/account/hooks/use-account';
 
 import Button from '@shared/components/button/Button';
 
