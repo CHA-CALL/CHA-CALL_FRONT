@@ -67,9 +67,7 @@ export default function Reservation({
         text='예약하기'
       />
 
-      <div
-        className={`fixed-center top-[4.8rem] z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem]`}
-      >
+      <div className='z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem] fixed-center'>
         <button
           type='button'
           onClick={handleClickLocation}
@@ -106,7 +104,7 @@ export default function Reservation({
       </div>
 
       <div
-        className={`fixed-center top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide`}
+        className={`top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide fixed-center`}
       >
         {categories.map(category => (
           <Button
@@ -122,7 +120,7 @@ export default function Reservation({
         ))}
       </div>
 
-      <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[1.6rem] pt-[17.4rem]'>
+      <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[1.6rem] pt-[12.6rem]'>
         {filteredFoodTrucks.map((item, index) => (
           <FoodTruckItem
             key={item.truckId}

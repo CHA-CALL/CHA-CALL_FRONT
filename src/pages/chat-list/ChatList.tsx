@@ -69,7 +69,7 @@ export default function ChatList() {
           </div>
         </div>
       </OverlayModal>
-      <div className='flex flex-col overflow-y-scroll pb-[2.4rem] pt-[12.5rem] scrollbar-hide'>
+      <div className='flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem] scrollbar-hide'>
         {(chatList ?? []).map(item => {
           return (
             <ChatListItem

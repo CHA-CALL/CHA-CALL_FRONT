@@ -152,7 +152,7 @@ export default function Account() {
           />
         }
       />
-      <div className='flex flex-1 flex-col gap-[0.3rem] overflow-y-auto p-[2rem] pt-[6.8rem]'>
+      <div className='flex flex-1 flex-col gap-[0.3rem] overflow-y-auto p-[2rem]'>
         <Information
           iconId='ic_error'
           text='거래가 진행 될 계좌이므로, 꼼꼼한 확인이 필요해요! '
@@ -198,7 +198,7 @@ export default function Account() {
           </div>
         </section>
       </div>
-      <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}

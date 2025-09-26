@@ -126,7 +126,7 @@ export default function Filter() {
         text='필터'
       />
 
-      <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem] pt-[6.8rem]'>
+      <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem]'>
         <FilterChipGroup
           filterTitle='행사 종류'
           selectedOption={filters.eventType ?? ''}

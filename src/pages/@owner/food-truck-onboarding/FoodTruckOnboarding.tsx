@@ -21,7 +21,7 @@ export default function FoodTruckOnboarding() {
   return (
     <>
       <Navigation text='푸드트럭 등록' leftIcon={<Icon name='ic_back' />} />
-      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] px-[2rem] pb-[10rem] pt-[6.8rem]'>
+      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem]'>
         <NameSection
           value={formData.name}
           onChange={updateName}
@@ -42,7 +42,7 @@ export default function FoodTruckOnboarding() {
           error={errors.otherDocs}
         />
       </div>
-      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}

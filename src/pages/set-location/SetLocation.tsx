@@ -41,8 +41,8 @@ export default function SetLocation() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex h-screen flex-col'>
-        <div className='px-[2rem] pb-[0.8rem] pt-[6.4rem]'>
+      <div className='flex h-[calc(100vh-4.8rem)] flex-col'>
+        <div className='px-[2rem] pb-[0.8rem] pt-[1.6rem]'>
           <Input
             placeholder='검색어를 입력해주세요.'
             value={searchText}

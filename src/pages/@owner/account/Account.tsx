@@ -32,7 +32,7 @@ export default function Account() {
         handleLeftClick={handleClickBack}
         leftIcon={<Icon name='ic_back' />}
       />
-      <div className='flex flex-col gap-[2rem] p-[2rem] pt-[8.8rem]'>
+      <div className='flex flex-col gap-[2rem] p-[2rem] pt-[4rem]'>
         <div className='flex flex-col gap-[1rem]'>
           <div className='flex items-center justify-between'>
             <p className='text-grayscale-500 title-sb-12'>등록된 계좌</p>
