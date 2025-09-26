@@ -28,7 +28,7 @@ export default function MyPage() {
         handleLeftClick={handleGoBack}
         text='마이페이지'
       />
-      <div className='flex flex-col gap-[4rem] p-[2rem]'>
+      <div className='flex flex-col gap-[4rem] p-[2rem] pt-[6.8rem]'>
         <MyInfoSection
           isPresident={isPresident}
           handleNavigateTo={handleNavigateTo}

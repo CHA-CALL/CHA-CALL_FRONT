@@ -118,7 +118,7 @@ export default function Account() {
   }, [isEditMode, id]);
 
   return (
-    <div className='flex h-screen flex-col'>
+    <>
       <SelectBankBottomSheet
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}
@@ -152,17 +152,17 @@ export default function Account() {
           />
         }
       />
-      <div className='flex flex-1 flex-col gap-[0.3rem] overflow-y-auto p-[2rem]'>
+      <div className='flex flex-1 flex-col gap-[0.3rem] overflow-y-auto p-[2rem] pt-[6.8rem]'>
         <Information
           iconId='ic_error'
           text='거래가 진행 될 계좌이므로, 꼼꼼한 확인이 필요해요! '
         />
         <section className='flex flex-col gap-[2rem]'>
           <div className='flex flex-col gap-[1rem] pt-[1rem]'>
-            <p className='title-sb-12 text-gray-900'>은행</p>
+            <p className='text-gray-900 title-sb-12'>은행</p>
             <button
               onClick={handleClickSelectBank}
-              className='border-grayscale-200 flex w-full items-center justify-between rounded-[1.6rem] border bg-white py-[1.5rem] pl-[2rem] pr-[1.6rem] text-left'
+              className='flex w-full items-center justify-between rounded-[1.6rem] border border-grayscale-200 bg-white py-[1.5rem] pl-[2rem] pr-[1.6rem] text-left'
             >
               <p
                 className={cn(
@@ -177,7 +177,7 @@ export default function Account() {
             {errors.bank && <ErrorText text={errors.bank} />}
           </div>
           <div className='flex flex-col gap-[1rem]'>
-            <p className='title-sb-12 text-gray-900'>예금주</p>
+            <p className='text-gray-900 title-sb-12'>예금주</p>
             <Input
               value={formData.name}
               placeholder='예금주를 입력해주세요.'
@@ -187,7 +187,7 @@ export default function Account() {
             {errors.name && <ErrorText text={errors.name} />}
           </div>
           <div className='flex flex-col gap-[1rem]'>
-            <p className='title-sb-12 text-gray-900'>계좌번호</p>
+            <p className='text-gray-900 title-sb-12'>계좌번호</p>
             <Input
               placeholder='계좌번호를 입력해주세요.'
               value={formatAccountNumber(formData.accountNumber)}
@@ -198,7 +198,7 @@ export default function Account() {
           </div>
         </section>
       </div>
-      <footer className='sticky bottom-[1.7rem] w-full bg-white px-[2rem]'>
+      <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}
@@ -207,6 +207,6 @@ export default function Account() {
           handleClickButton={handleSubmitButton}
         />
       </footer>
-    </div>
+    </>
   );
 }

@@ -113,7 +113,7 @@ export default function Filter() {
   };
 
   return (
-    <div>
+    <>
       <Navigation
         leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
         handleLeftClick={handleGoBack}
@@ -126,7 +126,7 @@ export default function Filter() {
         text='필터'
       />
 
-      <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem]'>
+      <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem] pt-[6.8rem]'>
         <FilterChipGroup
           filterTitle='행사 종류'
           selectedOption={filters.eventType ?? ''}
@@ -223,6 +223,6 @@ export default function Filter() {
           적용
         </Button>
       </div>
-    </div>
+    </>
   );
 }
