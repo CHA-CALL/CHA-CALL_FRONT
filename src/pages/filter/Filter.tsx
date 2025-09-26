@@ -209,7 +209,7 @@ export default function Filter() {
         sheetHeight={490}
       />
 
-      <div
+      <footer
         className={cn(
           'fixed bottom-[0rem] w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
           'shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'
@@ -222,7 +222,7 @@ export default function Filter() {
         >
           적용
         </Button>
-      </div>
+      </footer>
     </>
   );
 }
