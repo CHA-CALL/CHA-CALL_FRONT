@@ -20,14 +20,14 @@ export default function SelectBankBottomSheet({
       isOpen={isOpen}
       handleCloseBottomSheet={handleClose}
       sheetContent={
-        <div className='flex flex-col gap-[2rem]'>
-          <p className='heading-sb-18 text-black'>은행선택</p>
+        <div className='flex flex-col'>
+          <p className='py-[2rem] text-black heading-sb-18'>은행선택</p>
           <div className='flex w-full flex-col'>
             {Object.values(BANK).map(option => (
               <button
                 key={option}
                 onClick={() => handleChange(option)}
-                className='body-m-14 text-grayscale-700 flex w-full items-center justify-between py-[1.5rem]'
+                className='flex w-full items-center justify-between py-[1.5rem] text-grayscale-700 body-m-14'
               >
                 <p
                   className={cn(
@@ -41,7 +41,7 @@ export default function SelectBankBottomSheet({
                 {bank === option && (
                   <Icon
                     name='ic_check'
-                    color='#F83419'
+                    className='text-primary-700'
                     width={22}
                     height={22}
                   />

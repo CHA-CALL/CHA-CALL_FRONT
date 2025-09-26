@@ -35,6 +35,7 @@ const meta: Meta<typeof Information> = {
         'ic_up',
         'ic_error_small',
         'ic_dot',
+        'ic_chat_dot',
       ],
       description: '아이콘 ID',
     },

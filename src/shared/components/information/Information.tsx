@@ -19,7 +19,7 @@ export default function Information({
         className
       )}
     >
-      <Icon name={iconId} width={22} height={22} color='#F83419' />
+      <Icon name={iconId} width={22} height={22} className='text-primary-700' />
       <p className='title-sb-12 text-primary-700'>{text}</p>
     </div>
   );
