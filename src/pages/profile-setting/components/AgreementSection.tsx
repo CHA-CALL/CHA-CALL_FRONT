@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import ButtonCheck from '@components/button-check/ButtonCheck';
 import { Icon } from '@components/icon/Icon';
+import { ROUTES } from '@router/constant/routes';
 
 interface AgreementSectionProps {
   termAgreed: boolean | undefined;
@@ -24,7 +25,7 @@ export default function AgreementSection({
 
   // TODO: 추후 약관 페이지로
   const handleNavigateToTerm = () => {
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   useEffect(() => {

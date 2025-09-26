@@ -7,6 +7,7 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { FILE_ERROR_MESSAGE, MAX_MB } from '@shared/constant/image';
+import { ROUTES } from '@router/constant/routes';
 
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
@@ -29,7 +30,7 @@ export default function ProfileSetting() {
   const handleLogout = () => {
     // TODO: 로그아웃 api 및 토스트 메시지 추가
     alert('로그아웃 되셨습니다.');
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   const handleOpenModal = () => {

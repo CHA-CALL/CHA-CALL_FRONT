@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
+
 import DefaultProfile from '@assets/img/img_avatar.png';
 import { Icon } from '@shared/components/icon/Icon';
 import { user_mockup } from '@pages/mypage/constant/mockup';
-import { useEffect, useState } from 'react';
 import type { UserResponse } from 'apis/data-contracts';
+import { ROUTES } from '@router/constant/routes';
 
 interface MyInfoSectionProps {
   isProvider: boolean;
@@ -16,7 +18,7 @@ export default function MyInfoSection({
   const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
 
   const handleNavigateToProfileSetting = () => {
-    handleNavigateTo('/profile-setting');
+    handleNavigateTo(ROUTES.PROFILE_SETTING);
   };
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { UserResponse } from 'apis/data-contracts';
 
 import { Icon } from '@shared/components/icon/Icon';
+import { ROUTES } from '@router/constant/routes';
 
 interface UserDataSectionProps {
   userInfo: UserResponse | null;
@@ -24,9 +25,9 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo('/')}
+            onClick={() => handleNavigateTo(ROUTES.HOME)}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.name}
             </span>
             <Icon name='ic_next' width={18} height={18} />
@@ -37,9 +38,9 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo('/')}
+            onClick={() => handleNavigateTo(ROUTES.HOME)}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.email}
             </span>
             <Icon name='ic_next' width={18} height={18} />
@@ -50,9 +51,9 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo('/')}
+            onClick={() => handleNavigateTo(ROUTES.HOME)}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.gender}
             </span>
             <Icon name='ic_next' width={18} height={18} />
