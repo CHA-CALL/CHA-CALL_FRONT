@@ -1,4 +1,6 @@
 @theme {
+  --custom-max-width: 60rem;
+
   --color-*: initial;
 
   /* white ,black*/
@@ -161,5 +163,13 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+  }
+
+  .fixed-center {
+    width: 100%;
+    max-width: var(--custom-max-width);
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }

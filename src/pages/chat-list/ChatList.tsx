@@ -26,7 +26,7 @@ export default function ChatList() {
   } = useChatList();
 
   return (
-    <div className='flex h-screen flex-col'>
+    <>
       <Navigation
         text='채팅'
         leftIcon={<Icon name='ic_back' />}
@@ -49,7 +49,7 @@ export default function ChatList() {
         <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
           <div>
             <h3 className='title-sb-16'>선택한 대화를 삭제할까요?</h3>
-            <p className='caption-m-12 text-grayscale-700'>{`${selectChatList.size}건이 삭제되며 되돌릴 수 없습니다.`}</p>
+            <p className='text-grayscale-700 caption-m-12'>{`${selectChatList.size}건이 삭제되며 되돌릴 수 없습니다.`}</p>
           </div>
           <div className='flex gap-[1rem]'>
             <Button
@@ -69,8 +69,7 @@ export default function ChatList() {
           </div>
         </div>
       </OverlayModal>
-
-      <div className='scrollbar-hide flex flex-1 flex-col overflow-y-scroll py-[1.2rem]'>
+      <div className='flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem] scrollbar-hide'>
         {(chatList ?? []).map(item => {
           return (
             <ChatListItem
@@ -87,6 +86,6 @@ export default function ChatList() {
           );
         })}
       </div>
-    </div>
+    </>
   );
 }
