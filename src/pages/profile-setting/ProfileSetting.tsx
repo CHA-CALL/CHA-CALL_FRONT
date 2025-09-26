@@ -88,7 +88,7 @@ export default function ProfileSetting() {
         handleLeftClick={handleGoBack}
         text='프로필 설정'
       />
-      <div className='flex h-[calc(100vh-4.8rem)] flex-col items-center gap-[3rem] px-[2rem] py-[3rem]'>
+      <div className='flex flex-col items-center gap-[3rem] p-[2rem] pt-[3rem]'>
         <ProfileImageSection
           profileImageUrl={userInfo?.profileImageUrl}
           handleOpenBottomSheet={handleOpenBottomSheet}
@@ -97,7 +97,7 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userInfo} />
           <AgreementSection termAgreed={userInfo?.termAgreed} />
         </div>
-        <footer className='caption-m-12 fixed bottom-[3rem] flex flex-row items-center'>
+        <footer className='bottom-[3rem] flex flex-row items-center justify-center caption-m-12 fixed-center'>
           <button
             type='button'
             className='text-grayscale-500 px-[1rem] py-[0.6rem]'
