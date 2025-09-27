@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: '/',
   FILTER: '/filter',
   RESERVATION: '/reservation',
+  RESERVATION_DETAIL: '/reservation/detail',
   FOOD_TRUCK_ONBOARDING: '/owner/food-truck-onboarding',
   SET_LOCATION: '/set-location',
   CHATLIST: '/chat-list',

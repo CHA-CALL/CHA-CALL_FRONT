@@ -16,6 +16,7 @@ import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
+import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
         path: ROUTES.RESERVATION,
         element: <Reservation />,
       },
+      {
+        path: ROUTES.RESERVATION_DETAIL,
+        element: <ReservationDetail/>
+      }
       {
         path: ROUTES.FOOD_TRUCK_ONBOARDING,
         element: <FoodTruckOnboarding />,
