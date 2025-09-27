@@ -7,7 +7,7 @@ interface InfoCardProps {
 
 export default function InfoCard({ title, infoList }: InfoCardProps) {
   return (
-    <div className='flex flex-col gap-[1.6rem]'>
+    <div className='flex flex-col gap-[1.6rem] p-[0.5rem]'>
       <h2 className='title-sb-14 text-grayscale-900'>{title}</h2>
       {Object.entries(infoList).map(([label, data]) => (
         <div className='title-sb-12 flex flex-col gap-[1.6rem]'>

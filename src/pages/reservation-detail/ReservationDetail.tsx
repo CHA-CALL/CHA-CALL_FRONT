@@ -50,17 +50,20 @@ export default function ReservationDetail() {
   return (
     <>
       <Navigation
-        text='예약상세'
+        text='상세예약'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex h-[calc(100vh-4.8rem)] flex-col'>
-        {isProvider ? <ClientInfoHeader /> : <ProviderInfoHeader />}
+      <div className='flex h-[calc(100vh-4.8rem)] flex-col pb-[1.6rem]'>
+        {/* {isProvider ? (
+          <ClientInfoHeader foodTruckName={''} clientName={''} />
+        ) : (
+          <ProviderInfoHeader foodTruckName={'오소리 푸드트럭'} />
+        )} */}
         <ClientInfoHeader
           foodTruckName={'오소리 푸드트럭'}
           clientName={'이현준'}
         />
-        <div className='border-grayscale-50 my-[1rem] border-[0.4rem]' />
         <div className='p-[2rem]'>
           <InfoCard title={'예약 내역'} infoList={reservationInfo} />
           <div className='border-grayscale-100 my-[2.4rem] border' />
