@@ -54,13 +54,20 @@ export default function ReservationDetail() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex h-[calc(100vh-4.8rem)] flex-col px-[2rem]'>
+      <div className='flex h-[calc(100vh-4.8rem)] flex-col'>
         {isProvider ? <ClientInfoHeader /> : <ProviderInfoHeader />}
-        <InfoCard title={'예약 내역'} infoList={reservationInfo} />
-        <div className='border-grayscale-100 my-[2.4rem] border' />
-        <InfoCard title={'운영 내용'} infoList={operationInfo} />
-        <div className='border-grayscale-100 my-[2.4rem] border' />
-        <InfoCard title={'기타 내용'} infoList={etcInfo} />
+        <ClientInfoHeader
+          foodTruckName={'오소리 푸드트럭'}
+          clientName={'이현준'}
+        />
+        <div className='border-grayscale-50 my-[1rem] border-[0.4rem]' />
+        <div className='p-[2rem]'>
+          <InfoCard title={'예약 내역'} infoList={reservationInfo} />
+          <div className='border-grayscale-100 my-[2.4rem] border' />
+          <InfoCard title={'운영 내용'} infoList={operationInfo} />
+          <div className='border-grayscale-100 my-[2.4rem] border' />
+          <InfoCard title={'기타 내용'} infoList={etcInfo} />
+        </div>
       </div>
     </>
   );

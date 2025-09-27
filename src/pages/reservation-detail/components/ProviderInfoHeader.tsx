@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function ProviderInfoHeader() {
-  return <div>ProviderInfoHeader</div>;
+  return <div className='p-[2rem]'>ProviderInfoHeader</div>;
 }

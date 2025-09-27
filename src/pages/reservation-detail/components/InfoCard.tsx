@@ -13,7 +13,9 @@ export default function InfoCard({ title, infoList }: InfoCardProps) {
         <div className='title-sb-12 flex flex-col gap-[1.6rem]'>
           {Array.isArray(data) ? (
             <p className='flex justify-between'>
-              <span className='text-grayscale-500'>{label}</span>
+              <span className='text-grayscale-500 whitespace-nowrap'>
+                {label}
+              </span>
               <div className='flex flex-col'>
                 {data.map(item => (
                   <span className='text-grayscale-700 text-end'>{item}</span>
@@ -22,8 +24,12 @@ export default function InfoCard({ title, infoList }: InfoCardProps) {
             </p>
           ) : (
             <p className='flex justify-between'>
-              <span className='text-grayscale-500'>{label}</span>
-              <span className='text-grayscale-700 text-end'>{data}</span>
+              <span className='text-grayscale-500 whitespace-nowrap'>
+                {label}
+              </span>
+              <span className='text-grayscale-700 text-end'>
+                {typeof data === 'boolean' ? (data ? '가능' : '불가능') : data}
+              </span>
             </p>
           )}
         </div>

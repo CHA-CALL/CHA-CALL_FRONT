@@ -10,5 +10,6 @@ export const MOCKUP_DATA: ReservationResponse = {
   menu: '떡볶이, 순대, 튀김',
   deposit: 50000,
   isUseElectricity: true,
-  etcRequest: '주차 공간이 넓었으면 좋겠습니다.',
+  etcRequest:
+    '주차 공간이 넓었으면 좋겠습니다. 음식 많이 주세요. 늦지 말아주세요',
 };
