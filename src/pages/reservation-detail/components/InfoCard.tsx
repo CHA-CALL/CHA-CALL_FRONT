@@ -1,9 +1,4 @@
-import type { ReservationResponse } from 'apis/data-contracts';
-
-interface ReservationPartialInfo {
-  label: string;
-  data: string | undefined;
-}
+import type { ReservationPartialInfo } from '@pages/reservation-detail/hooks/use-reservation-detail';
 
 interface InfoCardProps {
   title: string;

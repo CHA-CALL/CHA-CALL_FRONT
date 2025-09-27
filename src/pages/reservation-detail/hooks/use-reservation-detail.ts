@@ -1,0 +1,85 @@
+import type { ReservationResponse } from 'apis/data-contracts';
+import { useEffect, useState } from 'react';
+import {
+  INITIAL_DATA,
+  MOCKUP_DATA_CLIENT,
+  MOCKUP_DATA_PROVIDER,
+} from '@pages/reservation-detail/constant/reservation-detail';
+import { useRole } from '@shared/hooks/use-role';
+import { ROLE } from '@shared/constant/role';
+
+export interface ReservationPartialInfo {
+  label: string;
+  data: string | undefined;
+}
+
+export const useReservationDetail = () => {
+  const { role } = useRole();
+  const isProvider = role === ROLE.PROVIDER;
+
+  const [reservationData, setReservationData] =
+    useState<ReservationResponse>(INITIAL_DATA);
+  const {
+    address,
+    detailAddress,
+    reservationDates,
+    operationHour,
+    menu,
+    deposit,
+    isUseElectricity,
+    etcRequest,
+  } = reservationData;
+
+  const reservationInfo = [
+    {
+      label: '장소',
+      data: `${address} ${detailAddress}`,
+    },
+    {
+      label: '날짜',
+      data: reservationDates?.join('\n'),
+    },
+    {
+      label: '시간',
+      data: operationHour,
+    },
+  ];
+
+  const operationInfo = [
+    {
+      label: '음식',
+      data: menu,
+    },
+    {
+      label: '결제금',
+      data: `${deposit?.toLocaleString('ko-kr')} 원`,
+    },
+  ];
+
+  const etcInfo = [
+    {
+      label: '전기 사용 유무',
+      data: isUseElectricity ? '가능' : '불가능',
+    },
+    {
+      label: '기타 요청 사항',
+      data: etcRequest,
+    },
+  ];
+
+  useEffect(() => {
+    // TODO : API 확정되면 로직 개선
+    if (isProvider) {
+      setReservationData(MOCKUP_DATA_PROVIDER);
+    } else {
+      setReservationData(MOCKUP_DATA_CLIENT);
+    }
+  }, []);
+
+  return {
+    isProvider,
+    reservationInfo,
+    operationInfo,
+    etcInfo,
+  };
+};
