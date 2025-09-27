@@ -1,5 +1,67 @@
-import React from 'react';
+import Navigation from '@shared/components/navigation/Navigation';
+import { Icon } from '@shared/components/icon/Icon';
+import { useRole } from '@shared/hooks/use-role';
+import { ROLE } from '@shared/constant/role';
+import ClientInfoHeader from '@pages/reservation-detail/components/ClientInfoHeader';
+import ProviderInfoHeader from '@pages/reservation-detail/components/ProviderInfoHeader';
+import InfoCard from '@pages/reservation-detail/components/InfoCard';
+import type { ReservationResponse } from 'apis/data-contracts';
+import { useEffect, useState } from 'react';
+import { INITIAL_DATA, MOCKUP_DATA } from './constant/reservation-detail';
 
 export default function ReservationDetail() {
-  return <div>ReservationDetail</div>;
+  const { role } = useRole();
+  const isProvider = role === ROLE.PROVIDER;
+  const [reservationData, setReservationData] =
+    useState<ReservationResponse>(INITIAL_DATA);
+  const {
+    address,
+    detailAddress,
+    reservationDates,
+    operationHour,
+    menu,
+    deposit,
+    isUseElectricity,
+    etcRequest,
+  } = reservationData;
+
+  const reservationInfo = {
+    장소: `${address} ${detailAddress}`,
+    날짜: reservationDates,
+    시간: operationHour,
+  };
+
+  const operationInfo = {
+    음식: menu,
+    금액: deposit,
+  };
+
+  const etcInfo = {
+    '전기 사용 유무': isUseElectricity,
+    '기타 요청 사항': etcRequest,
+  };
+
+  const handleClickBack = () => {};
+
+  useEffect(() => {
+    setReservationData(MOCKUP_DATA);
+  }, []);
+
+  return (
+    <>
+      <Navigation
+        text='예약상세'
+        leftIcon={<Icon name='ic_back' />}
+        handleLeftClick={handleClickBack}
+      />
+      <div className='flex h-[calc(100vh-4.8rem)] flex-col px-[2rem]'>
+        {isProvider ? <ClientInfoHeader /> : <ProviderInfoHeader />}
+        <InfoCard title={'예약 내역'} infoList={reservationInfo} />
+        <div className='border-grayscale-100 my-[2.4rem] border' />
+        <InfoCard title={'운영 내용'} infoList={operationInfo} />
+        <div className='border-grayscale-100 my-[2.4rem] border' />
+        <InfoCard title={'기타 내용'} infoList={etcInfo} />
+      </div>
+    </>
+  );
 }

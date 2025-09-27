@@ -40,8 +40,8 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.RESERVATION_DETAIL,
-        element: <ReservationDetail/>
-      }
+        element: <ReservationDetail />,
+      },
       {
         path: ROUTES.FOOD_TRUCK_ONBOARDING,
         element: <FoodTruckOnboarding />,
