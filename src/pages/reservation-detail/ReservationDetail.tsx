@@ -8,6 +8,9 @@ import InfoCard from '@pages/reservation-detail/components/InfoCard';
 import type { ReservationResponse } from 'apis/data-contracts';
 import { useEffect, useState } from 'react';
 import { INITIAL_DATA, MOCKUP_DATA } from './constant/reservation-detail';
+import Button from '@shared/components/button/Button';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 
 export default function ReservationDetail() {
   const { role } = useRole();
@@ -24,6 +27,7 @@ export default function ReservationDetail() {
     isUseElectricity,
     etcRequest,
   } = reservationData;
+  const navigate = useNavigate();
 
   const reservationInfo = {
     장소: `${address} ${detailAddress}`,
@@ -41,8 +45,12 @@ export default function ReservationDetail() {
     '기타 요청 사항': etcRequest,
   };
 
-  const handleClickBack = () => {};
-
+  const handleClickBack = () => {
+    navigate(ROUTES.RESERVATION);
+  };
+  const handleDownload = () => {
+    //TODO : 다운로드 API 연동 예정
+  };
   useEffect(() => {
     setReservationData(MOCKUP_DATA);
   }, []);
@@ -53,6 +61,20 @@ export default function ReservationDetail() {
         text='상세예약'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
+        rightIcon={
+          <Button
+            children={
+              <Icon
+                name='ic_download'
+                className='text-grayscale-500 h-[1.2rem] w-[1.1rem]'
+              />
+            }
+            variant={'default'}
+            buttonStyle={'sub'}
+            className='flex h-[2.8rem] w-[2.8rem] items-center justify-center p-[0.5rem]'
+          />
+        }
+        handleRightClick={handleDownload}
       />
       <div className='flex h-[calc(100vh-4.8rem)] flex-col pb-[1.6rem]'>
         {/* {isProvider ? (
@@ -64,6 +86,7 @@ export default function ReservationDetail() {
           foodTruckName={'오소리 푸드트럭'}
           clientName={'이현준'}
         />
+        <Button children={123} variant={'default'} buttonStyle={'sub'} />
         <div className='p-[2rem]'>
           <InfoCard title={'예약 내역'} infoList={reservationInfo} />
           <div className='border-grayscale-100 my-[2.4rem] border' />

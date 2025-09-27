@@ -252,15 +252,10 @@ export class Owners<
   getOwnerReservations = (
     query: {
       /**
-       * 조회할 예약 상태
-       * @example "PENDING"
+       * 조회할 예약 내역 타입
+       * @example "예약 대기"
        */
-      status:
-        | "PENDING"
-        | "CONFIRMED"
-        | "CONFIRMED_REQUESTED"
-        | "CANCELLED"
-        | "CANCELED_REQUESTED";
+      viewType: "진행 예정" | "확정 신청" | "완료 내역" | "취소 내역";
       /**
        * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
        * @format int64
