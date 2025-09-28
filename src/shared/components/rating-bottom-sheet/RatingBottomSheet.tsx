@@ -23,12 +23,12 @@ export default function RatingBottomSheet({
               세밀한 평가를 위해 0.5 단위로 선택가능합니다.
             </span>
           </div>
-          <div className='mb-[5rem] mt-[3rem] flex flex-row justify-center'>
+          <div className='mx-auto mb-[5rem] mt-[3rem] flex flex-row'>
             {[1, 2, 3, 4, 5].map(rate => (
               <Icon
                 key={rate}
-                name='ic_star'
-                className='text-grayscale-50'
+                name='ic_star_half'
+                className='text-primary-700'
                 width={60}
                 height={60}
               />
