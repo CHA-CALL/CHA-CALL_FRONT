@@ -1,11 +1,14 @@
 import type { ReservationPartialInfo } from '@pages/reservation-detail/hooks/use-reservation-detail';
 
-interface InfoCardProps {
+interface ReservationDetailRowProps {
   title: string;
   infoList: ReservationPartialInfo[];
 }
 
-export default function InfoCard({ title, infoList }: InfoCardProps) {
+export default function ReservationDetailRow({
+  title,
+  infoList,
+}: ReservationDetailRowProps) {
   return (
     <div className='title-sb-12 flex flex-col gap-[1.6rem] p-[0.5rem]'>
       <h2 className='title-sb-14 text-grayscale-900'>{title}</h2>
