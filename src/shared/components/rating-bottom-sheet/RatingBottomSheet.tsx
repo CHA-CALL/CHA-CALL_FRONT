@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 
-import BottomSheet from '../bottom-sheet/BottomSheet';
-import Button from '../button/Button';
-import { Icon } from '../icon/Icon';
+import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Button from '@components/button/Button';
+import { Icon } from '@components/icon/Icon';
+import { cn } from '@shared/utils/cn';
 
 interface RatingBottomSheetProps {
   reservationId: number;
@@ -10,6 +11,8 @@ interface RatingBottomSheetProps {
   isOpen: boolean;
   handleCloseBottomSheet: () => void;
 }
+
+const RATES: number[] = [1, 2, 3, 4, 5];
 
 export default function RatingBottomSheet({
   reservationId,
@@ -24,8 +27,6 @@ export default function RatingBottomSheet({
   const rowRef = useRef<HTMLDivElement | null>(null);
   const starRefs = useRef<(SVGSVGElement | null)[]>([]);
 
-  const rates = [1, 2, 3, 4, 5];
-
   // x좌표로부터  판단
   const calcRateFromClientX = (clientX: number) => {
     const stars = starRefs.current.filter(Boolean) as SVGSVGElement[];
@@ -36,7 +37,7 @@ export default function RatingBottomSheet({
       const rect = stars[i].getBoundingClientRect();
       if (clientX >= rect.left && clientX <= rect.right) {
         const isLeftHalf = clientX < rect.left + rect.width / 2;
-        const rate = rates[i];
+        const rate = RATES[i];
         return isLeftHalf ? rate - 0.5 : rate;
       }
     }
@@ -55,26 +56,23 @@ export default function RatingBottomSheet({
     });
     const nearestRect = stars[nearestIdx].getBoundingClientRect();
     const isLeftHalf = clientX < nearestRect.left + nearestRect.width / 2;
-    const rate = rates[nearestIdx];
+    const rate = RATES[nearestIdx];
     return isLeftHalf ? rate - 0.5 : rate;
   };
 
-  // 포인터 다운(클릭/터치 시작) → 캡처 + 즉시 반영
-  const handlePointerDownRow = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!rowRef.current) return;
     rowRef.current.setPointerCapture(e.pointerId);
     setIsDragging(true);
     setSelectedRate(calcRateFromClientX(e.clientX));
   };
 
-  // 드래그 중 이동 반영
-  const handlePointerMoveRow = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleDragMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
     setSelectedRate(calcRateFromClientX(e.clientX));
   };
 
-  // 포인터 업/캔슬 → 캡처 해제
-  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleDragEnd = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!rowRef.current) return;
     try {
       rowRef.current.releasePointerCapture(e.pointerId);
@@ -82,6 +80,13 @@ export default function RatingBottomSheet({
       console.error(error);
     }
     setIsDragging(false);
+  };
+
+  const handleRegisterRate = () => {
+    alert(
+      `${reservationId} / ${foodTruckId}에 대한 별점: ${String(selectedRate)}`
+    );
+    handleCloseBottomSheet();
   };
 
   const renderStar = (rate: number) => {
@@ -100,25 +105,19 @@ export default function RatingBottomSheet({
       <Icon
         key={rate}
         name={iconName}
-        className={
-          colorClass + ' cursor-pointer outline-none focus:outline-none'
-        }
+        className={cn(
+          'cursor-pointer outline-none focus:outline-none',
+          colorClass
+        )}
         width={60}
         height={60}
         ref={el => {
-          starRefs.current[rate] = el;
+          starRefs.current[rate - 1] = el;
         }}
         aria-hidden='true'
         focusable='false'
       />
     );
-  };
-
-  const handleRegisterRate = () => {
-    alert(
-      `${reservationId} / ${foodTruckId}에 대한 별점: ${String(selectedRate)}`
-    );
-    handleCloseBottomSheet();
   };
 
   return (
@@ -137,12 +136,12 @@ export default function RatingBottomSheet({
           <div
             ref={rowRef}
             className='mx-auto mb-[5rem] mt-[3rem] flex touch-none flex-row gap-[0.4rem]'
-            onPointerDown={handlePointerDownRow}
-            onPointerMove={handlePointerMoveRow}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
+            onPointerDown={handleDragStart}
+            onPointerMove={handleDragMove}
+            onPointerUp={handleDragEnd}
+            onPointerCancel={handleDragEnd}
           >
-            {rates.map(rate => renderStar(rate))}
+            {RATES.map(rate => renderStar(rate))}
           </div>
 
           <Button
