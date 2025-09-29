@@ -47,8 +47,11 @@ export default function MenuList() {
     handleCloseBottomSheet();
   };
 
-  const handleSave = () => {
+  const handleClickToggle = () => {
     alert('메뉴가 등록되었습니다.');
+  };
+
+  const handleSave = () => {
     // TODO: 메뉴 노출 여부 저장 로직 구현
   };
 
@@ -99,7 +102,7 @@ export default function MenuList() {
               menuName={menu.name}
               menuDescription={menu.description}
               menuPrice={menu.price}
-              handleToggle={handleSave}
+              handleToggle={handleClickToggle}
               isLast={index === sortedMenuList().length - 1}
             />
           ))

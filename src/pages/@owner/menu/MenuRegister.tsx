@@ -1,5 +1,6 @@
 import { useState, useEffect, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
@@ -13,7 +14,8 @@ export default function MenuRegister() {
   const [menuDescription, setMenuDescription] = useState('');
   const [menuPrice, setMenuPrice] = useState('');
 
-  const TEXT_MAX = 50;
+  const NAME_MAX = 18;
+  const DESCRIPTION_MAX = 50;
   const IMAGE_MAX = 1;
 
   const [imageUrl, setImageUrl] = useState<string[] | null>([]);
@@ -46,8 +48,12 @@ export default function MenuRegister() {
     navigate(-1);
   };
 
-  const handleChangeName = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setMenuName(e.target.value);
+  };
+
+  const handleClearName = () => {
+    setMenuName('');
   };
 
   const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -76,20 +82,35 @@ export default function MenuRegister() {
       />
 
       <div className='flex flex-col p-[2rem]'>
-        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>메뉴이름</span>
-        <textarea
-          className='
-            h-[5.6rem] mb-[2rem] px-[2rem] py-[1.65rem] rounded-[1.6rem]
-            body-m-14 text-grayscale-900 border-grayscale-300 caret-primary-700
-            placeholder:body-m-14 placeholder:text-grayscale-300
-            focus:border-grayscale-500 focus:outline-none
-          '
-          placeholder='텍스트를 입력해주세요.'
-          value={menuName}
-          onChange={handleChangeName}
-        />
+        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>메뉴 이름</span>
+        <div className={cn(
+          'flex w-full items-center justify-between',
+          'mb-[2rem] py-[1.65rem] pl-[2rem] pr-[1rem]',
+          'border border-grayscale-300 rounded-[1.6rem]',
+          'focus-within:border-grayscale-500',
+        )}>
+          <input
+            className='
+              w-full rounded-[1.6rem]
+              body-m-14 text-grayscale-900 caret-primary-700
+              placeholder:body-m-14 placeholder:text-grayscale-300
+            '
+            placeholder='텍스트를 입력해주세요.'
+            value={menuName}
+            onChange={handleChangeName}
+            maxLength={NAME_MAX}
+          />
+          <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mr-[0.5rem]'>
+            <p className='text-primary-700'>{menuName.length}</p>
+            <p className='text-grayscale-700'>/</p>
+            <p className='text-grayscale-700'>{NAME_MAX}</p>
+            <button type='button' onClick={handleClearName}>
+              <Icon name='ic_close' width={16} height={16} className='pt-[0.3rem] pl-[0.3rem]' />
+            </button>
+          </div>
+        </div>
 
-        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>메뉴설명</span>
+        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>메뉴 설명</span>
         <textarea
           className='
             h-[12.2rem] px-[2rem] py-[1.65rem] rounded-[1.6rem]
@@ -100,12 +121,12 @@ export default function MenuRegister() {
           placeholder='텍스트를 입력해주세요.'
           value={menuDescription}
           onChange={handleChangeDescription}
-          maxLength={TEXT_MAX}
+          maxLength={DESCRIPTION_MAX}
         />
         <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mt-[0.6rem] mr-[0.5rem]'>
           <p className='text-primary-700'>{menuDescription.length}</p>
           <p className='text-grayscale-700'>/</p>
-          <p className='text-grayscale-700'>{TEXT_MAX}</p>
+          <p className='text-grayscale-700'>{DESCRIPTION_MAX}</p>
         </div>
 
         <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>가격</span>
