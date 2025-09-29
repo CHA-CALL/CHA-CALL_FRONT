@@ -145,6 +145,8 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
       onClick={getClickHandler()}
       className={cn(
         'flex w-full bg-white',
+        props.className,
+        { 'cursor-pointer': props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient' },
       )}
     >
       {renderCard()}

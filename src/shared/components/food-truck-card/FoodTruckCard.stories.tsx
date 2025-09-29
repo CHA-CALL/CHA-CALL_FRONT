@@ -22,7 +22,6 @@ const meta: Meta<typeof FoodTruckCard> = {
     image: { control: 'text' },
     foodTruckName: { control: 'text' },
     handleClickButton: { action: 'button clicked' },
-    isLast: { control: 'boolean' },
     // Reservation
     clientName: { control: 'text' },
     location: { control: 'text' },
@@ -35,6 +34,8 @@ const meta: Meta<typeof FoodTruckCard> = {
     rating: { control: 'number' },
     reviewCount: { control: 'number' },
     tags: { control: 'object' },
+    handleClickCard: { action: 'card clicked' },
+    className: { control: 'text' },
   },
 };
 
@@ -53,7 +54,7 @@ export const ReservationProvider: Story = {
     handleClickButton() {
       alert('버튼 클릭');
     },
-    isLast: false,
+    className: 'p-[2rem]',
   },
 };
 
@@ -68,7 +69,7 @@ export const ReservationClient: Story = {
     handleClickButton() {
       alert('버튼 클릭');
     },
-    isLast: false,
+    className: 'p-[2rem]',
   },
 };
 
@@ -86,7 +87,7 @@ export const FoodTruckProvider: Story = {
     handleClickCard() {
       alert('카드 클릭');
     },
-    isLast: false,
+    className: 'p-[2rem]',
   },
 };
 
@@ -106,7 +107,7 @@ export const FoodTruckClient: Story = {
     handleClickCard() {
       alert('카드 클릭');
     },
-    isLast: false,
+    className: 'px-[2rem] py-[2.2rem]',
   },
 };
 
@@ -124,10 +125,12 @@ export const ReservationProviderList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='px-[2rem] bg-white'>
+    <div className='flex flex-col gap-[2rem] p-[2rem] bg-white'>
       <FoodTruckCard {...args} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
-      <FoodTruckCard {...args} isLast={true} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <FoodTruckCard {...args} />
     </div>
   ),
 };
@@ -143,13 +146,14 @@ export const ReservationClientList: Story = {
     handleClickButton() {
       alert('버튼 클릭');
     },
-    isLast: false,
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='px-[2rem] bg-white'>
+    <div className='flex flex-col gap-[2rem] p-[2rem] bg-white'>
       <FoodTruckCard {...args} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
-      <FoodTruckCard {...args} isLast={true} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <FoodTruckCard {...args} />
     </div>
   ),
 };
@@ -170,10 +174,12 @@ export const FoodTruckProviderList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='px-[2rem] bg-white'>
+    <div className='flex flex-col gap-[2rem] p-[2rem] bg-white'>
       <FoodTruckCard {...args} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
-      <FoodTruckCard {...args} isLast={true} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <FoodTruckCard {...args} />
     </div>
   ),
 };
@@ -196,13 +202,17 @@ export const FoodTruckClientList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='flex flex-col px-[2rem] bg-white'>
-      <span className='caption-m-12 text-grayscale-500 ml-[2.4rem] mt-[2rem] mb-[1rem]'>
+    <div className='flex flex-col p-[2rem] bg-white'>
+      <span className='caption-m-12 text-grayscale-500 ml-[0.4rem] mb-[1rem]'>
         총 14개
       </span>
-      <FoodTruckCard {...args} isFirst={true} />
-      <FoodTruckCard {...args} />
-      <FoodTruckCard {...args} isLast={true} />
+      <div className='flex flex-col gap-[2rem]'>
+        <FoodTruckCard {...args} />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <FoodTruckCard {...args} />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <FoodTruckCard {...args} />
+      </div>
     </div>
   ),
 };
