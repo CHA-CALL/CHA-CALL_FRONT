@@ -1,3 +1,4 @@
+import React from 'react';
 import { cn } from '@utils/cn';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
 import { Icon } from '@components/icon/Icon';
@@ -5,6 +6,17 @@ import InfoRow from '@components/food-truck-card/InfoRow';
 import Tag from '@components/tag/Tag';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
+  const handleClickButton = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    props.handleClickButton();
+  };
+
+  const handleClickCard = () => {
+    if (props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient') {
+      props.handleClickCard();
+    }
+  };
+
   const renderCard = () => {
     switch (props.variant) {
       case 'reservationProvider':
@@ -28,7 +40,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
             <button
               type='button'
-              onClick={props.handleClickButton}
+              onClick={handleClickButton}
               className='ml-auto text-grayscale-700'
             >
               <Icon name='ic_next' />
@@ -54,7 +66,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
             <button
               type='button'
-              onClick={props.handleClickButton}
+              onClick={handleClickButton}
               className='ml-auto text-grayscale-700'
             >
               <Icon name='ic_next' />
@@ -80,10 +92,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
             <button
               type='button'
-              onClick={(e) => {
-                e.stopPropagation();
-                props.handleClickButton();
-              }}
+              onClick={handleClickButton}
               className='ml-auto mb-auto text-grayscale-700'
             >
               <Icon name='ic_team' />
@@ -117,10 +126,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
             <button
               type='button'
-              onClick={(e) => {
-                e.stopPropagation();
-                props.handleClickButton();
-              }}
+              onClick={handleClickButton}
               className='ml-auto mb-auto text-grayscale-700'
             >
               {props.isLiked ? <Icon name='ic_confirm' className='text-primary-700' /> : <Icon name='ic_confirm' />}
@@ -133,20 +139,13 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
     }
   };
 
-  const getClickHandler = () => {
-    if (props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient') {
-      return 'handleClickCard' in props ? props.handleClickCard : undefined;
-    }
-    return undefined;
-  };
-
   return (
     <div
-      onClick={getClickHandler()}
+      onClick={handleClickCard}
       className={cn(
         'flex w-full bg-white',
+        (props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient') && 'cursor-pointer',
         props.className,
-        { 'cursor-pointer': props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient' },
       )}
     >
       {renderCard()}
