@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
@@ -29,7 +30,7 @@ export default function MenuList() {
   };
 
   const handleRegister = () => {
-    navigate('/owner/menu-register');
+    navigate(ROUTES.MENU_REGISTER);
   };
 
   const handleOpenBottomSheet = () => {
