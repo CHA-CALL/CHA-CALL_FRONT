@@ -2,7 +2,7 @@ import { Icon, type IconId } from '@components/icon/Icon';
 
 interface InfoRowProps {
   iconId: IconId;
-  children: string;
+  children?: string;
 }
 
 export default function InfoRow({

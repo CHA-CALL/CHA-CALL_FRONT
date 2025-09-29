@@ -37,7 +37,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
                 <span className='title-sb-16 text-grayscale-900'>{props.data.name}</span>
                 <Tag title={props.data.foodTruckName || ''} />
               </div>
-              <InfoRow iconId='ic_locate'>{props.data.address || ''}</InfoRow>
+              <InfoRow iconId='ic_locate'>{props.data.address}</InfoRow>
               <InfoRow iconId='ic_calendar'>{period}</InfoRow>
               <InfoRow iconId='ic_time'>{time}</InfoRow>
             </div>
@@ -66,7 +66,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
             <div className='flex flex-col gap-[0.2rem]'>
               <span className='title-sb-16 text-grayscale-900'>{props.data.name}</span>
-              <InfoRow iconId='ic_locate'>{props.data.address || ''}</InfoRow>
+              <InfoRow iconId='ic_locate'>{props.data.address}</InfoRow>
               <InfoRow iconId='ic_calendar'>{period}</InfoRow>
               <InfoRow iconId='ic_time'>{time}</InfoRow>
             </div>
@@ -94,8 +94,8 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
             <div className='flex flex-col'>
               <span className='title-sb-16 text-grayscale-900 text-left'>{props.data.name}</span>
               <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.data.description}</span>
-              <InfoRow iconId='ic_time'>{props.data.activeTime || ''}</InfoRow>
-              <InfoRow iconId='ic_locate'>{props.data.serviceArea || ''}</InfoRow>
+              <InfoRow iconId='ic_time'>{props.data.activeTime}</InfoRow>
+              <InfoRow iconId='ic_locate'>{props.data.serviceArea}</InfoRow>
             </div>
 
             <button
