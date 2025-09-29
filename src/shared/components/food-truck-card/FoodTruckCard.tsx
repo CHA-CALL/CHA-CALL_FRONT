@@ -5,6 +5,7 @@ import { Icon } from '@components/icon/Icon';
 import InfoRow from '@components/food-truck-card/InfoRow';
 import Tag from '@components/tag/Tag';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
+import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
   const handleClickButton = (e: React.MouseEvent) => {
@@ -20,23 +21,25 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
   const renderCard = () => {
     switch (props.variant) {
-      case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER:
+      case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER: {
+        const { period, time } = formatDateTimeInfos(props.data.dateTimeInfos);
+
         return (
           <>
             <img
-              src={props.image}
-              alt={props.clientName}
+              src={props.data.profileImage}
+              alt={props.data.name}
               className='w-[5rem] h-[5rem] mr-[1.8rem] my-[0.4rem] rounded-[1.6rem] object-cover'
             />
 
             <div className='flex flex-col gap-[0.2rem]'>
               <div className='flex items-center gap-[0.8rem] mb-[0.2rem]'>
-                <span className='title-sb-16 text-grayscale-900'>{props.clientName}</span>
-                <Tag title={props.foodTruckName} />
+                <span className='title-sb-16 text-grayscale-900'>{props.data.name}</span>
+                <Tag title={props.data.foodTruckName || ''} />
               </div>
-              <InfoRow iconId='ic_locate'>{props.location}</InfoRow>
-              <InfoRow iconId='ic_calendar'>{props.period}</InfoRow>
-              <InfoRow iconId='ic_time'>{props.time}</InfoRow>
+              <InfoRow iconId='ic_locate'>{props.data.address || ''}</InfoRow>
+              <InfoRow iconId='ic_calendar'>{period}</InfoRow>
+              <InfoRow iconId='ic_time'>{time}</InfoRow>
             </div>
 
             <button
@@ -48,6 +51,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
             </button>
           </>
         );
+      }
 
       case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT:
         return (

@@ -1,32 +1,29 @@
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
+import {
+  OwnerReservationHistoryResponse,
+  MemberReservationHistoryResponse,
+  MyFoodTruckResponse,
+  SavedFoodTruckResponse 
+} from 'apis/data-contracts';
 
 interface BaseFoodTruckCardProps {
-  image: string;
-  foodTruckName: string;
   handleClickButton: () => void;
   className?: string;
 }
 
 type ReservationProviderProps = BaseFoodTruckCardProps & {
   variant: 'reservationProvider';
-  clientName: string;
-  location: string;
-  period: string;
-  time: string;
+  data: OwnerReservationHistoryResponse;
 };
 
 type ReservationClientProps = BaseFoodTruckCardProps & {
   variant: 'reservationClient';
-  location: string;
-  period: string;
-  time: string;
+  data: MemberReservationHistoryResponse;
 };
 
 type FoodTruckProviderProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckProvider';
-  description: string;
-  time: string;
-  locations: string;
+  data: MyFoodTruckResponse;
   handleClickCard: () => void;
 };
 
