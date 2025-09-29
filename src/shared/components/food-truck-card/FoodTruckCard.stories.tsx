@@ -20,21 +20,10 @@ const meta: Meta<typeof FoodTruckCard> = {
         FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
       ]
     },
-    image: { control: 'text' },
-    foodTruckName: { control: 'text' },
-    handleClickButton: { action: 'button clicked' },
-    // Reservation
-    clientName: { control: 'text' },
-    location: { control: 'text' },
-    period: { control: 'text' },
-    time: { control: 'text' },
-    // FoodTruck
+    data: { control: 'object' },
     isLiked: { control: 'boolean' },
-    description: { control: 'text' },
-    locations: { control: 'text' },
-    rating: { control: 'number' },
-    reviewCount: { control: 'number' },
     tags: { control: 'object' },
+    handleClickButton: { action: 'button clicked' },
     handleClickCard: { action: 'card clicked' },
     className: { control: 'text' },
   },
@@ -46,12 +35,13 @@ type Story = StoryObj<FoodTruckCardProps>;
 export const ReservationProvider: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER,
-    image: 'https://placehold.co/50',
-    clientName: '고정현',
-    foodTruckName: '오소리 푸드트럭',
-    location: '서울 광진구 화양동',
-    period: '2025.09.30 - 2025.10.05',
-    time: '13:00 - 19:00',
+    data: {
+      profileImage: 'https://placehold.co/50',
+      name: '고정현',
+      foodTruckName: '오소리 푸드트럭',
+      address: '서울 광진구 화양동',
+      dateTimeInfos: ['2025-09-20 13시~19시', '2025-09-21 13시~19시'],
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -62,11 +52,12 @@ export const ReservationProvider: Story = {
 export const ReservationClient: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT,
-    image: 'https://placehold.co/80',
-    foodTruckName: '오소리 푸드트럭',
-    location: '서울 광진구 화양동',
-    period: '2025.09.30 - 2025.10.05',
-    time: '13:00 - 19:00',
+    data: {
+      photoUrl: 'https://placehold.co/80',
+      name: '오소리 푸드트럭',
+      address: '서울 광진구 화양동',
+      dateTimeInfos: ['2025-09-20 13시~19시', '2025-09-21 13시~19시'],
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -77,11 +68,13 @@ export const ReservationClient: Story = {
 export const FoodTruckProvider: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
-    image: 'https://placehold.co/74',
-    foodTruckName: '오소리 푸드트럭',
-    description: '바삭한 타코로 즐거운 한입을!',
-    time: '09:00 - 21:00',
-    locations: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    data: {
+      imageUrl: 'https://placehold.co/74',
+      name: '오소리 푸드트럭',
+      description: '바삭한 타코로 즐거운 한입을!',
+      activeTime: '09:00 - 21:00',
+      serviceArea: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -95,12 +88,14 @@ export const FoodTruckProvider: Story = {
 export const FoodTruckClient: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
+    data: {
+      photoUrl: 'https://placehold.co/80',
+      name: '오소리 푸드트럭',
+      averageRating: 4.5,
+      ratingCount: 10,
+      description: '바삭한 타코로 즐거운 한입을!',
+    },
     isLiked: true,
-    image: 'https://placehold.co/80',
-    foodTruckName: '오소리 푸드트럭',
-    rating: 4.5,
-    reviewCount: 10,
-    description: '바삭한 타코로 즐거운 한입을!',
     tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
@@ -115,12 +110,13 @@ export const FoodTruckClient: Story = {
 export const ReservationProviderList: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER,
-    image: 'https://placehold.co/50',
-    clientName: '고정현',
-    foodTruckName: '오소리 푸드트럭',
-    location: '서울 광진구 화양동',
-    period: '2025.09.30 - 2025.10.05',
-    time: '13:00 - 19:00',
+    data: {
+      profileImage: 'https://placehold.co/50',
+      name: '고정현',
+      foodTruckName: '오소리 푸드트럭',
+      address: '서울 광진구 화양동',
+      dateTimeInfos: ['2025-09-20 13시~19시', '2025-09-21 13시~19시'],
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -139,11 +135,12 @@ export const ReservationProviderList: Story = {
 export const ReservationClientList: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT,
-    image: 'https://placehold.co/80',
-    foodTruckName: '오소리 푸드트럭',
-    location: '서울 광진구 화양동',
-    period: '2025.09.30 - 2025.10.05',
-    time: '13:00 - 19:00',
+    data: {
+      photoUrl: 'https://placehold.co/80',
+      name: '오소리 푸드트럭',
+      address: '서울 광진구 화양동',
+      dateTimeInfos: ['2025-09-20 13시~19시', '2025-09-21 13시~19시'],
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -162,11 +159,13 @@ export const ReservationClientList: Story = {
 export const FoodTruckProviderList: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
-    image: 'https://placehold.co/74',
-    foodTruckName: '오소리 푸드트럭',
-    description: '바삭한 타코로 즐거운 한입을!',
-    time: '09:00 - 21:00',
-    locations: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    data: {
+      imageUrl: 'https://placehold.co/74',
+      name: '오소리 푸드트럭',
+      description: '바삭한 타코로 즐거운 한입을!',
+      activeTime: '09:00 - 21:00',
+      serviceArea: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -188,12 +187,14 @@ export const FoodTruckProviderList: Story = {
 export const FoodTruckClientList: Story = {
   args: {
     variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
+    data: {
+      photoUrl: 'https://placehold.co/80',
+      name: '오소리 푸드트럭',
+      averageRating: 4.5,
+      ratingCount: 10,
+      description: '바삭한 타코로 즐거운 한입을!',
+    },
     isLiked: true,
-    image: 'https://placehold.co/80',
-    foodTruckName: '오소리 푸드트럭',
-    rating: 4.5,
-    reviewCount: 10,
-    description: '바삭한 타코로 즐거운 한입을!',
     tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
