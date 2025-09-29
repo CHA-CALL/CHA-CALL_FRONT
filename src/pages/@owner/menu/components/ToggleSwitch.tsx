@@ -22,6 +22,7 @@ export default function ToggleSwitch({
         className={`
           inline-block w-[2.6rem] h-[2.6rem] mx-[0.2rem]
           bg-white rounded-full duration-200 ease-in-out
+          shadow-[0_0_8px_rgba(0,0,0,0.08)]
           ${isToggled ? 'translate-x-[1.8rem]' : 'translate-x-[0]'}
         `}
       />
