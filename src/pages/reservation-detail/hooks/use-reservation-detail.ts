@@ -4,9 +4,12 @@ import {
   INITIAL_DATA,
   MOCKUP_DATA_CLIENT,
   MOCKUP_DATA_PROVIDER,
+  MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT,
+  MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER,
 } from '@pages/reservation-detail/constant/reservation-detail';
-import { useRole } from '@shared/hooks/use-role';
+// import { useRole } from '@shared/hooks/use-role';
 import { ROLE } from '@shared/constant/role';
+import type { ReservationDetailTopContentProps } from '../components/ReservationDetailTopContent';
 
 export interface ReservationPartialInfo {
   label: string;
@@ -14,11 +17,21 @@ export interface ReservationPartialInfo {
 }
 
 export const useReservationDetail = () => {
-  const { role } = useRole();
+  // TODO : useRole 동작 시, 주석 해제.
+  // const { role } = useRole();
+  const role = ROLE.PROVIDER;
   const isProvider = role === ROLE.PROVIDER;
 
   const [reservationData, setReservationData] =
     useState<ReservationResponse>(INITIAL_DATA);
+  const [contentProps, setContentProps] =
+    useState<ReservationDetailTopContentProps | null>(null);
+
+  const handleDownload = () => {
+    //TODO : 다운로드 API 연동 예정
+    alert('다운로드 버튼 클릭');
+  };
+
   const {
     address,
     detailAddress,
@@ -69,17 +82,22 @@ export const useReservationDetail = () => {
 
   useEffect(() => {
     // TODO : API 확정되면 로직 개선
-    if (isProvider) {
+    if (role === ROLE.PROVIDER) {
+      setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER);
       setReservationData(MOCKUP_DATA_PROVIDER);
-    } else {
+    } else if (role === ROLE.CLIENT) {
+      setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT);
       setReservationData(MOCKUP_DATA_CLIENT);
     }
   }, []);
 
   return {
+    role,
     isProvider,
     reservationInfo,
     operationInfo,
     etcInfo,
+    contentProps,
+    handleDownload,
   };
 };

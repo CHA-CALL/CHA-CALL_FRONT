@@ -16,16 +16,14 @@ export default function ProviderInfoHeader({
         alt='foodtruck-banner'
         className='object-fit h-[21.1rem] w-full'
       />
-      <div className='flex items-center gap-[0.4rem] px-[2rem]'>
+      <button
+        type='button'
+        className='flex items-center gap-[0.4rem] px-[2rem]'
+        onClick={handleTruckDetail}
+      >
         <h2 className='heading-sb-18 text-grayscale-900'>{foodTruckName}</h2>
-        <button
-          type='button'
-          className='flex items-center justify-center'
-          onClick={handleTruckDetail}
-        >
-          <Icon name={'ic_next'} />
-        </button>
-      </div>
+        <Icon name={'ic_next'} />
+      </button>
     </div>
   );
 }

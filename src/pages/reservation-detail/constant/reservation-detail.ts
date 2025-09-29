@@ -1,4 +1,17 @@
+import { ROLE } from '@shared/constant/role';
 import type { ReservationResponse } from 'apis/data-contracts';
+
+export const MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER = {
+  role: ROLE.PROVIDER,
+  foodTruckName: '목업목뼈 트럭',
+  clientName: '광광우럭',
+};
+
+export const MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT = {
+  role: ROLE.CLIENT,
+  foodTruckName: '목업목뼈 트럭',
+  handleTruckDetail: () => alert('푸드트럭 상세 정보로 이동'),
+};
 
 export const INITIAL_DATA: ReservationResponse = { deposit: 0 };
 

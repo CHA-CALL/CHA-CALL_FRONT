@@ -1,7 +1,5 @@
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
-import ClientInfoHeader from '@pages/reservation-detail/components/ClientInfoHeader';
-import ProviderInfoHeader from '@pages/reservation-detail/components/ProviderInfoHeader';
 import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useState } from 'react';
 import Button from '@shared/components/button/Button';
@@ -9,24 +7,26 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import Tooltip from '@shared/components/tooltip/Tooltip';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
+import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';
 
 export default function ReservationDetail() {
   // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리
   const [isOpenTip, setIsOpenTip] = useState(true);
   const navigate = useNavigate();
 
-  const { isProvider, reservationInfo, operationInfo, etcInfo } =
-    useReservationDetail();
+  const {
+    reservationInfo,
+    operationInfo,
+    etcInfo,
+    contentProps,
+    handleDownload,
+  } = useReservationDetail();
 
   const handleClickBack = () => {
     navigate(ROUTES.RESERVATION);
   };
-  const handleDownload = () => {
-    //TODO : 다운로드 API 연동 예정
-    alert('다운로드 버튼 클릭');
-  };
+
   const handleCloseTooltip = () => setIsOpenTip(false);
-  const handleTruckDetail = () => {};
 
   return (
     <>
@@ -61,7 +61,9 @@ export default function ReservationDetail() {
       />
 
       <div className='flex flex-col pb-[1.6rem]'>
-        {isProvider ? (
+        {contentProps && <ReservationDetailTopContent {...contentProps} />}
+
+        {/* {isProvider ? (
           <ClientInfoHeader
             foodTruckName='오소리 푸드트럭'
             clientName='차콜콜'
@@ -71,7 +73,7 @@ export default function ReservationDetail() {
             foodTruckName='오소리 푸드트럭'
             handleTruckDetail={handleTruckDetail}
           />
-        )}
+        )} */}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
           <div className='border-grayscale-100 my-[2.4rem] border' />
