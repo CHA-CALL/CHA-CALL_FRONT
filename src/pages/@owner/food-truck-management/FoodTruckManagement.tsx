@@ -78,22 +78,28 @@ export default function FoodTruckManagement() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />
-      <div className='flex flex-col gap-[1.6rem] p-[2rem] pb-[10rem]'>
+      <div
+        className={cn(
+          'flex flex-col gap-[1.6rem] p-[2rem]',
+          data.length > 0 && 'pb-[10rem]'
+        )}
+      >
         <Information
           iconId='ic_chat_dot'
           text='푸드트럭을 등록하고 의뢰를 받아보세요!'
         />
         <div className='flex flex-col gap-[2rem]'>
-          {data.map((item, index) => (
-            <div key={item.id}>
-              <div className={cn(index !== 0 && 'mt-[2rem]')}>
-                <p>{item.name}</p>
+          {data &&
+            data.map((item, index) => (
+              <div key={item.id}>
+                <div className={cn(index !== 0 && 'mt-[2rem]')}>
+                  <p>{item.name}</p>
+                </div>
+                {index !== data.length - 1 && (
+                  <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+                )}
               </div>
-              {index !== data.length - 1 && (
-                <div className='bg-grayscale-100 h-[0.1rem] w-full' />
-              )}
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
