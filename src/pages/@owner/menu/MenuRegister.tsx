@@ -1,8 +1,10 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
+import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
+import ImagePreview from '@components/image-preview/ImagePreview';
 
 export default function MenuRegister() {
   const navigate = useNavigate();
@@ -11,7 +13,34 @@ export default function MenuRegister() {
   const [menuDescription, setMenuDescription] = useState('');
   const [menuPrice, setMenuPrice] = useState('');
 
-  const MAX_LENGTH = 50;
+  const TEXT_MAX = 50;
+  const IMAGE_MAX = 1;
+
+  const [imageUrl, setImageUrl] = useState<string[] | null>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFiles([...files, selectedFile]);
+    }
+    e.target.value = '';
+  };
+
+  const removeFile = (indexToRemove: number) => {
+    const updatedFiles = files.filter((_, index) => index !== indexToRemove);
+    setFiles(updatedFiles);
+  };
+
+  const canAdd = files.length < IMAGE_MAX;
+
+  useEffect(() => {
+    const urls = files.map(file => URL.createObjectURL(file));
+    setImageUrl(urls);
+
+    return () => {
+      urls.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [files]);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -39,7 +68,7 @@ export default function MenuRegister() {
   };
 
   return (
-    <div className='flex flex-col w-full h-screen bg-white'>
+    <>
       <Navigation
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
@@ -47,7 +76,7 @@ export default function MenuRegister() {
       />
 
       <div className='flex flex-col p-[2rem]'>
-        <span className='ml-[0.5rem] mb-[1rem] title-sb-16 text-grayscale-900'>메뉴이름</span>
+        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>메뉴이름</span>
         <textarea
           className='
             h-[5.6rem] mb-[2rem] px-[2rem] py-[1.65rem] rounded-[1.6rem]
@@ -60,7 +89,7 @@ export default function MenuRegister() {
           onChange={handleChangeName}
         />
 
-        <span className='ml-[0.5rem] mb-[1rem] title-sb-16 text-grayscale-900'>메뉴설명</span>
+        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>메뉴설명</span>
         <textarea
           className='
             h-[12.2rem] px-[2rem] py-[1.65rem] rounded-[1.6rem]
@@ -71,15 +100,15 @@ export default function MenuRegister() {
           placeholder='텍스트를 입력해주세요.'
           value={menuDescription}
           onChange={handleChangeDescription}
-          maxLength={MAX_LENGTH}
+          maxLength={TEXT_MAX}
         />
         <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mt-[0.6rem] mr-[0.5rem]'>
           <p className='text-primary-700'>{menuDescription.length}</p>
           <p className='text-grayscale-700'>/</p>
-          <p className='text-grayscale-700'>{MAX_LENGTH}</p>
+          <p className='text-grayscale-700'>{TEXT_MAX}</p>
         </div>
 
-        <span className='ml-[0.5rem] mb-[1rem] title-sb-16 text-grayscale-900'>가격</span>
+        <span className='ml-[0.5rem] mb-[1rem] title-sb-14 text-grayscale-900'>가격</span>
         <textarea
           className='
             h-[5.6rem] mb-[2rem] px-[2rem] py-[1.65rem] rounded-[1.6rem]
@@ -91,11 +120,30 @@ export default function MenuRegister() {
           value={menuPrice}
           onChange={handleChangePrice}
         />
+
+        <div className='flex items-center justify-between mb-[0.6rem]'>
+          <span className='ml-[0.5rem] title-sb-14 text-grayscale-900'>사진 등록</span>
+          <div className='caption-m-12 flex items-center gap-[0.1rem] mr-[0.5rem]'>
+            <p className='text-primary-700'>{files.length}</p>
+            <p className='text-grayscale-700'>/</p>
+            <p className='text-grayscale-700'>{IMAGE_MAX}</p>
+          </div>
+        </div>
+        <div className='flex pt-[1rem]'>
+          {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
+          {files &&
+            files.map((_, index) => (
+              <ImagePreview
+                key={`otherDocs-${index}`}
+                handleClose={() => removeFile(index)}
+                src={imageUrl?.[index] || undefined}
+                alt='otherDocs'
+              />
+            ))}
+        </div>
       </div>
 
-
-      <div className='flex-1' />
-      <footer className='sticky bottom-[0] w-full px-[2rem] py-[1.7rem]'>
+      <footer className='fixed-center bottom-[0] w-full px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
           buttonStyle='active'
@@ -104,6 +152,6 @@ export default function MenuRegister() {
           저장하기
         </Button>
       </footer>
-    </div>
+    </>
   );
 }
