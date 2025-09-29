@@ -41,6 +41,7 @@ const initialFilter: FilterState = {
 export default function Filter() {
   const navigate = useNavigate();
 
+  // TODO: 커스텀훅으로 만들기
   const [filters, setFilters] = useState<FilterState>(initialFilter);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [currentDateIndex, setCurrentDateIndex] = useState<number | null>(null);
@@ -112,9 +113,9 @@ export default function Filter() {
   };
 
   return (
-    <div>
+    <>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='#19212A' />}
+        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
         handleLeftClick={handleGoBack}
         rightIcon={
           <Button variant='default' buttonStyle='edit'>
@@ -125,7 +126,7 @@ export default function Filter() {
         text='필터'
       />
 
-      <div className='mb-[9rem] flex flex-col gap-[2.8rem] p-[2rem]'>
+      <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem]'>
         <FilterChipGroup
           filterTitle='행사 종류'
           selectedOption={filters.eventType ?? ''}
@@ -208,7 +209,7 @@ export default function Filter() {
         sheetHeight={490}
       />
 
-      <div
+      <footer
         className={cn(
           'fixed bottom-[0rem] w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
           'shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'
@@ -221,7 +222,7 @@ export default function Filter() {
         >
           적용
         </Button>
-      </div>
-    </div>
+      </footer>
+    </>
   );
 }

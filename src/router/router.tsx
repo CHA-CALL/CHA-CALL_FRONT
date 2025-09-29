@@ -10,8 +10,13 @@ import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOn
 import SetLocation from '@pages/set-location/SetLocation';
 import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
+import MyPage from '@pages/mypage/MyPage';
+import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
+import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
+import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
+import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
 
@@ -44,12 +49,20 @@ export const router = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ROUTES.MESSAGELIST,
+        path: ROUTES.MESSAGE_LIST,
         element: <MessageList />,
       },
       {
         path: ROUTES.MESSAGE_FORM,
         element: <MessageForm />,
+      },
+      {
+        path: ROUTES.MYPAGE,
+        element: <MyPage />,
+      },
+      {
+        path: ROUTES.PROFILE_SETTING,
+        element: <ProfileSetting />,
       },
       {
         path: ROUTES.ACCOUNT,
@@ -58,6 +71,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ACCOUNT_FORM + '/:id?',
         element: <AccountForm />,
+      },
+      {
+        path: ROUTES.SAVE_FOOD_TRUCK_LIST,
+        element: <SaveFoodTruckList />,
+      },
+      {
+        path: ROUTES.UPLOAD_FOOD_TRUCK,
+        element: <UploadFoodTruck />,
+      },
+      {
+        path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
+        element: <SetUserInfo />,
       },
       {
         path: ROUTES.MENU_LIST,

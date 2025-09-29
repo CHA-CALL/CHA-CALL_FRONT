@@ -22,14 +22,14 @@ export default function MessageForm() {
     //TODO: API 연동
     setSubmit(true);
     //TODO: Toast 알림 표시
-    navigate(ROUTES.MESSAGELIST);
+    navigate(ROUTES.MESSAGE_LIST);
   };
 
   const handleClickBack = () => {
     if (!submit && message.trim()) {
       setIsOpen(true);
     } else {
-      navigate(ROUTES.MESSAGELIST);
+      navigate(ROUTES.MESSAGE_LIST);
     }
   };
 
@@ -40,14 +40,14 @@ export default function MessageForm() {
 
   const handleClickConfirm = () => {
     setIsOpen(false);
-    navigate(ROUTES.MESSAGELIST);
+    navigate(ROUTES.MESSAGE_LIST);
   };
   const handleCloseModal = () => {
     setIsOpen(false);
   };
 
   return (
-    <div className='flex h-screen flex-col'>
+    <>
       <ConfirmModal
         isOpen={isOpen}
         handleClose={handleCloseModal}
@@ -59,21 +59,21 @@ export default function MessageForm() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex flex-1 flex-col gap-[1rem] p-[2rem]'>
+      <div className='flex flex-col gap-[1rem] p-[2rem]'>
         <textarea
-          className='body-m-14 border-grayscale-300 text-grayscale-900 placeholder:text-grayscale-300 caret-primary-700 placeholder:body-m-14 focus:border-grayscale-500 min-h-[34rem] rounded-[1.6rem] px-[2rem] py-[1.5rem] focus:outline-none'
+          className='min-h-[34rem] rounded-[1.6rem] border-grayscale-300 px-[2rem] py-[1.5rem] text-grayscale-900 caret-primary-700 body-m-14 placeholder:text-grayscale-300 placeholder:body-m-14 focus:border-grayscale-500 focus:outline-none'
           placeholder='텍스트를 입력해주세요.'
           value={message}
           maxLength={MAX_LENGTH}
           onChange={handleChangeMessage}
         />
-        <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
+        <div className='flex items-center justify-end gap-[0.1rem] caption-m-12'>
           <p className='text-primary-700'>{message.length}</p>
           <p className='text-grayscale-700'>/</p>
           <p className='text-grayscale-700'>{MAX_LENGTH}</p>
         </div>
       </div>
-      <footer className='sticky bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           variant='cta'
           buttonStyle={isDisabled ? 'disabled' : 'active'}
@@ -83,6 +83,6 @@ export default function MessageForm() {
           저장하기
         </Button>
       </footer>
-    </div>
+    </>
   );
 }
