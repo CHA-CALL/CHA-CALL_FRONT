@@ -90,17 +90,30 @@ export default function MenuList() {
       </div>
 
       <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[8.5rem] bg-white'>
-        {sortedMenuList().map((menu, index) => (
-          <MenuItem
-            key={menu.menuId}
-            menuImage={menu.image}
-            menuName={menu.name}
-            menuDescription={menu.description}
-            menuPrice={menu.price}
-            handleToggle={() => {}}
-            isLast={index === sortedMenuList().length - 1}
-          />
-        ))}
+        {sortedMenuList().length > 0 ? (
+          sortedMenuList().map((menu, index) => (
+            <MenuItem
+              key={menu.menuId}
+              menuImage={menu.image}
+              menuName={menu.name}
+              menuDescription={menu.description}
+              menuPrice={menu.price}
+              handleToggle={() => {}}
+              isLast={index === sortedMenuList().length - 1}
+            />
+          ))
+        ) : (
+          <div className='flex flex-col items-center justify-center'>
+            <img
+              src='https://placehold.co/140'
+              alt='No Menu Items'
+              className='w-[14rem] h-[14rem] mt-[50%] mb-[1.6rem] object-cover'
+            />
+            <span className='body-m-14 text-grayscale-500'>
+              등록된 메뉴가 없습니다.
+            </span>
+          </div>
+        )}
       </div>
 
       <footer className='
