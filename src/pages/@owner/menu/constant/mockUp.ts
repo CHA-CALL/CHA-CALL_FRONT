@@ -56,4 +56,20 @@ export const mockMenuData: MenuItemData[] = [
     price: 60000,
     dateAdded: '2025-10-01',
   },
+  {
+    menuId: 7,
+    image: 'https://placehold.co/80',
+    name: 'Fajitas 화이타 7',
+    description: '새우, 치킨, 돼지고기와 부재료를 또띠아에 싸먹는 멕시코 음식입니다.',
+    price: 70000,
+    dateAdded: '2025-10-01',
+  },
+  {
+    menuId: 8,
+    image: 'https://placehold.co/80',
+    name: 'Fajitas 화이타 8',
+    description: '새우, 치킨, 돼지고기와 부재료를 또띠아에 싸먹는 멕시코 음식입니다.',
+    price: 80000,
+    dateAdded: '2025-10-01',
+  },
 ];

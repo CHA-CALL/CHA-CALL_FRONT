@@ -28,7 +28,7 @@ export default function MenuItem({
 
   return (
     <div className={cn(
-      'flex items-center justify-between py-[2rem]',
+      'flex items-center justify-between py-[2rem] pr-[1rem]',
       !isLast && 'border-grayscale-100 border-b',
     )}>
       <img

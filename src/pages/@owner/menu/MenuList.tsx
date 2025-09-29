@@ -4,6 +4,7 @@ import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
+import ButtonFloating from '@components/button-floating/ButtonFloating';
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
 
@@ -51,14 +52,12 @@ export default function MenuList() {
   };
 
   return (
-    <div className='flex flex-col w-full h-screen bg-white'>
-      <div className='sticky top-[0]'>
-        <Navigation
-          leftIcon={<Icon name='ic_back' />}
-          handleLeftClick={handleClickBack}
-          text='메뉴 등록'
-        />
-      </div>
+    <>
+      <Navigation
+        leftIcon={<Icon name='ic_back' />}
+        handleLeftClick={handleClickBack}
+        text='메뉴 등록'
+      />
 
       <div className='fixed-center top-[4.8rem] flex flex-col w-full p-[2rem] bg-white z-10'>
         <span className='title-sb-16 text-grayscale-900'>
@@ -90,7 +89,7 @@ export default function MenuList() {
         </button>
       </div>
 
-      <div className='flex flex-col mt-[11.9rem] px-[2rem]'>
+      <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[8.5rem] bg-white'>
         {sortedMenuList().map((menu, index) => (
           <MenuItem
             key={menu.menuId}
@@ -104,10 +103,9 @@ export default function MenuList() {
         ))}
       </div>
 
-      <div className='flex-1' />
       <footer className='
-        sticky bottom-[0] w-full px-[2rem] py-[1.7rem]
-        bg-white shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]
+        fixed-center bottom-[0] w-full px-[2rem] py-[1.7rem]
+        bg-white shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] z-10
       '>
         <Button
           variant='cta'
@@ -118,6 +116,8 @@ export default function MenuList() {
         </Button>
       </footer>
 
+      <ButtonFloating className='bottom-[10rem]' />
+
       <BottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
@@ -126,7 +126,7 @@ export default function MenuList() {
             <button
               type='button'
               onClick={() => handleSelectSort('latest')}
-              className='w-full p-[2rem] pt-[0] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
+              className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
             >
               최신순
             </button>
@@ -148,6 +148,6 @@ export default function MenuList() {
         }
         sheetHeight={200}
       />
-    </div>
+    </>
   );
 }
