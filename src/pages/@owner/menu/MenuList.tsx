@@ -60,7 +60,7 @@ export default function MenuList() {
         />
       </div>
 
-      <div className='flex flex-col p-[2rem]'>
+      <div className='fixed-center top-[4.8rem] flex flex-col w-full p-[2rem] bg-white z-10'>
         <span className='title-sb-16 text-grayscale-900'>
           푸드트럭 메뉴 등록
         </span>
@@ -69,7 +69,10 @@ export default function MenuList() {
         </span>
       </div>
 
-      <div className='flex justify-between w-full px-[2rem] pb-[1rem] border-b border-grayscale-100'>
+      <div className='
+        fixed-center top-[12.8rem] flex justify-between w-full px-[2rem] pb-[1rem]
+        border-b border-grayscale-100 bg-white z-10
+      '>
         <Button
           variant='default'
           buttonStyle='edit'
@@ -87,7 +90,7 @@ export default function MenuList() {
         </button>
       </div>
 
-      <div className='flex flex-col px-[2rem]'>
+      <div className='flex flex-col mt-[11.9rem] px-[2rem]'>
         {sortedMenuList().map((menu, index) => (
           <MenuItem
             key={menu.menuId}
