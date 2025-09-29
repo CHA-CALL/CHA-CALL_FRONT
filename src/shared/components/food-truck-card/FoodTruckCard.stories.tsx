@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
+import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 
 const meta: Meta<typeof FoodTruckCard> = {
   title: 'Components/FoodTruckCard',
@@ -13,10 +14,10 @@ const meta: Meta<typeof FoodTruckCard> = {
     variant: {
       control: 'radio',
       options: [
-        'reservationProvider',
-        'reservationClient',
-        'foodtruckProvider',
-        'foodtruckClient'
+        FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER,
+        FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT,
+        FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
+        FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
       ]
     },
     image: { control: 'text' },
@@ -44,7 +45,7 @@ type Story = StoryObj<FoodTruckCardProps>;
 
 export const ReservationProvider: Story = {
   args: {
-    variant: 'reservationProvider',
+    variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER,
     image: 'https://placehold.co/50',
     clientName: '고정현',
     foodTruckName: '오소리 푸드트럭',
@@ -60,7 +61,7 @@ export const ReservationProvider: Story = {
 
 export const ReservationClient: Story = {
   args: {
-    variant: 'reservationClient',
+    variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT,
     image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
     location: '서울 광진구 화양동',
@@ -75,7 +76,7 @@ export const ReservationClient: Story = {
 
 export const FoodTruckProvider: Story = {
   args: {
-    variant: 'foodtruckProvider',
+    variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
     image: 'https://placehold.co/74',
     foodTruckName: '오소리 푸드트럭',
     description: '바삭한 타코로 즐거운 한입을!',
@@ -93,7 +94,7 @@ export const FoodTruckProvider: Story = {
 
 export const FoodTruckClient: Story = {
   args: {
-    variant: 'foodtruckClient',
+    variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
     isLiked: true,
     image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
@@ -113,7 +114,7 @@ export const FoodTruckClient: Story = {
 
 export const ReservationProviderList: Story = {
   args: {
-    variant: 'reservationProvider',
+    variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER,
     image: 'https://placehold.co/50',
     clientName: '고정현',
     foodTruckName: '오소리 푸드트럭',
@@ -137,7 +138,7 @@ export const ReservationProviderList: Story = {
 
 export const ReservationClientList: Story = {
   args: {
-    variant: 'reservationClient',
+    variant: FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT,
     image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',
     location: '서울 광진구 화양동',
@@ -160,7 +161,7 @@ export const ReservationClientList: Story = {
 
 export const FoodTruckProviderList: Story = {
   args: {
-    variant: 'foodtruckProvider',
+    variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
     image: 'https://placehold.co/74',
     foodTruckName: '오소리 푸드트럭',
     description: '바삭한 타코로 즐거운 한입을!',
@@ -186,7 +187,7 @@ export const FoodTruckProviderList: Story = {
 
 export const FoodTruckClientList: Story = {
   args: {
-    variant: 'foodtruckClient',
+    variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
     isLiked: true,
     image: 'https://placehold.co/80',
     foodTruckName: '오소리 푸드트럭',

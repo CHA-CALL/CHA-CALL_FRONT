@@ -4,6 +4,7 @@ import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCa
 import { Icon } from '@components/icon/Icon';
 import InfoRow from '@components/food-truck-card/InfoRow';
 import Tag from '@components/tag/Tag';
+import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
   const handleClickButton = (e: React.MouseEvent) => {
@@ -12,14 +13,14 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
   };
 
   const handleClickCard = () => {
-    if (props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient') {
+    if (props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER || props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT) {
       props.handleClickCard();
     }
   };
 
   const renderCard = () => {
     switch (props.variant) {
-      case 'reservationProvider':
+      case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER:
         return (
           <>
             <img
@@ -48,7 +49,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           </>
         );
 
-      case 'reservationClient':
+      case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT:
         return (
           <>
             <img
@@ -74,7 +75,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           </>
         );
 
-      case 'foodtruckProvider':
+      case FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER:
         return (
           <>
             <img
@@ -100,7 +101,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           </>
         );
 
-      case 'foodtruckClient':
+      case FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT:
         return (
           <>
             <img
@@ -144,7 +145,9 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
       onClick={handleClickCard}
       className={cn(
         'flex w-full bg-white',
-        (props.variant === 'foodtruckProvider' || props.variant === 'foodtruckClient') && 'cursor-pointer',
+        (props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER
+          || props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT)
+          && 'cursor-pointer',
         props.className,
       )}
     >
