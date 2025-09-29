@@ -48,6 +48,7 @@ export default function MenuList() {
   };
 
   const handleSave = () => {
+    alert('메뉴가 등록되었습니다.');
     // TODO: 메뉴 노출 여부 저장 로직 구현
   };
 
@@ -98,7 +99,7 @@ export default function MenuList() {
               menuName={menu.name}
               menuDescription={menu.description}
               menuPrice={menu.price}
-              handleToggle={() => {}}
+              handleToggle={handleSave}
               isLast={index === sortedMenuList().length - 1}
             />
           ))

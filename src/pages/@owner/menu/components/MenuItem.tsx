@@ -22,8 +22,10 @@ export default function MenuItem({
   const [isToggled, setIsToggled] = useState(true);
 
   const handleClickToggle = () => {
+    if (!isToggled) {
+      handleToggle();
+    }
     setIsToggled(!isToggled);
-    handleToggle();
   };
 
   return (
