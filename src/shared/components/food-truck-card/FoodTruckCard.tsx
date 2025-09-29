@@ -1,22 +1,10 @@
 import { cn } from '@utils/cn';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
-import { Icon, type IconId } from '@components/icon/Icon';
+import { Icon } from '@components/icon/Icon';
+import InfoRow from '@components/food-truck-card/InfoRow';
 import Tag from '@components/tag/Tag';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
-
-  function infoRow(
-    iconId: IconId,
-    children: string,
-  ) {
-    return (
-      <div className='flex items-center gap-[0.6rem]'>
-        <Icon name={iconId} width={16} height={16} className='text-grayscale-300' />
-        <span className='caption-m-11 text-grayscale-700 line-clamp-1'>{children}</span>
-      </div>
-    );
-  }
-
   switch (props.variant) {
     case 'reservationProvider':
       return (
@@ -37,9 +25,9 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               <span className='title-sb-16 text-grayscale-900'>{props.clientName}</span>
               <Tag title={props.foodTruckName} />
             </div>
-            {infoRow('ic_locate', props.location)}
-            {infoRow('ic_calendar', props.period)}
-            {infoRow('ic_error', props.time)}
+            <InfoRow iconId='ic_locate'>{props.location}</InfoRow>
+            <InfoRow iconId='ic_calendar'>{props.period}</InfoRow>
+            <InfoRow iconId='ic_error'>{props.time}</InfoRow>
           </div>
 
           <button
@@ -68,9 +56,9 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
           <div className='flex flex-col gap-[0.2rem]'>
             <span className='title-sb-16 text-grayscale-900'>{props.foodTruckName}</span>
-            {infoRow('ic_locate', props.location)}
-            {infoRow('ic_calendar', props.period)}
-            {infoRow('ic_error', props.time)}
+            <InfoRow iconId='ic_locate'>{props.location}</InfoRow>
+            <InfoRow iconId='ic_calendar'>{props.period}</InfoRow>
+            <InfoRow iconId='ic_error'>{props.time}</InfoRow>
           </div>
 
           <button
@@ -101,8 +89,8 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
           <div className='flex flex-col'>
             <span className='title-sb-16 text-grayscale-900 text-left'>{props.foodTruckName}</span>
             <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.description}</span>
-            {infoRow('ic_error', props.time)}
-            {infoRow('ic_locate', props.locations)}
+            <InfoRow iconId='ic_error'>{props.time}</InfoRow>
+            <InfoRow iconId='ic_locate'>{props.locations}</InfoRow>
           </div>
 
           <button
