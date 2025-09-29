@@ -36,7 +36,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               </div>
               <InfoRow iconId='ic_locate'>{props.location}</InfoRow>
               <InfoRow iconId='ic_calendar'>{props.period}</InfoRow>
-              <InfoRow iconId='ic_error'>{props.time}</InfoRow>
+              <InfoRow iconId='ic_time'>{props.time}</InfoRow>
             </div>
 
             <button
@@ -62,7 +62,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               <span className='title-sb-16 text-grayscale-900'>{props.foodTruckName}</span>
               <InfoRow iconId='ic_locate'>{props.location}</InfoRow>
               <InfoRow iconId='ic_calendar'>{props.period}</InfoRow>
-              <InfoRow iconId='ic_error'>{props.time}</InfoRow>
+              <InfoRow iconId='ic_time'>{props.time}</InfoRow>
             </div>
 
             <button
@@ -87,7 +87,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
             <div className='flex flex-col'>
               <span className='title-sb-16 text-grayscale-900 text-left'>{props.foodTruckName}</span>
               <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.description}</span>
-              <InfoRow iconId='ic_error'>{props.time}</InfoRow>
+              <InfoRow iconId='ic_time'>{props.time}</InfoRow>
               <InfoRow iconId='ic_locate'>{props.locations}</InfoRow>
             </div>
 
@@ -96,7 +96,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               onClick={handleClickButton}
               className='ml-auto mb-auto text-grayscale-700'
             >
-              <Icon name='ic_team' />
+              <Icon name='ic_dot' />
             </button>
           </>
         );
@@ -113,8 +113,8 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
             <div className='flex flex-col'>
               <div className='flex items-center'>
                 <span className='title-sb-16 text-grayscale-900 text-left'>{props.foodTruckName}</span>
-                <Icon name='ic_close' width={18} height={16} className='ml-[0.4rem] text-grayscale-500' />
-                <span className='caption-m-11 text-grayscale-500'>{props.rating}</span>
+                <Icon name='ic_star_small' width={18} height={16} className='ml-[0.7rem] text-grayscale-500' />
+                <span className='caption-m-11 text-grayscale-500 ml-[0.3rem]'>{props.rating}</span>
                 <span className='caption-m-10 text-grayscale-300 ml-[0.2rem]'>({props.reviewCount})</span>
               </div>
               <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] text-left'>{props.description}</span>
@@ -130,7 +130,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
               onClick={handleClickButton}
               className='ml-auto mb-auto text-grayscale-700'
             >
-              {props.isLiked ? <Icon name='ic_confirm' className='text-primary-700' /> : <Icon name='ic_confirm' />}
+              {props.isLiked ? <Icon name='ic_heart_fill' className='text-primary-700' /> : <Icon name='ic_heart_fill' />}
             </button>
           </>
         );

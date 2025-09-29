@@ -24,6 +24,9 @@ const iconIds: IconId[] = [
   'ic_down',
   'ic_up',
   'ic_chat_dot',
+  'ic_star_small',
+  'ic_heart_fill',
+  'ic_time',
 ];
 
 const meta: Meta<typeof Icon> = {
