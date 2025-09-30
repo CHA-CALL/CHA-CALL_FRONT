@@ -44,7 +44,7 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      {mockup.length !== 0 ? (
+      {mockup.length === 0 ? (
         <EmptyView
           isProvider={isProvider}
           reservationState={reservationState}
