@@ -26,7 +26,7 @@ export function useMenuPriceInput() {
   const validate = () => {
     const result = MENU_PRICE_VALIDATOR.safeParse(price.replace(/,/g, ''));
     if (!result.success) {
-      setError(result.error.message);
+      setError(result.error.issues[0]?.message);
       return false;
     }
     setError(null);
