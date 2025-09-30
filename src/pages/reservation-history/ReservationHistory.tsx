@@ -14,7 +14,10 @@ import {
 import {
   RESERVATION_STATE,
   type ReservationState,
-} from '@pages/reservation-history/type/reservation';
+} from '@pages/reservation-history/types/reservation';
+
+import { mockup } from '@pages/reservation-history/mockup';
+import EmptyView from './components/EmptyView';
 
 export default function ReservationHistory() {
   const { role } = useRole();
@@ -29,10 +32,11 @@ export default function ReservationHistory() {
   };
 
   useEffect(() => {
-    console.log(reservationState);
+    alert(reservationState);
   }, [reservationState]);
+
   return (
-    <div>
+    <>
       <Navigation leftIcon={<Icon name='ic_back' />} text='예약내역' />
       <ButtonTabGroup
         tabs={
@@ -41,7 +45,23 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      <div className='flex flex-col gap-[2rem] px-[2rem] py-[2.6rem]'></div>
-    </div>
+      {mockup.length === 0 ? (
+        <EmptyView
+          isProvider={isProvider}
+          reservationState={reservationState}
+        />
+      ) : (
+        <div className='flex flex-col gap-[2rem] px-[2rem] pb-[2.6rem] pt-[9rem]'>
+          {mockup.map((reservation, index) => (
+            <div key={reservation.id} className='flex flex-col gap-[2rem]'>
+              <span className='heading-sb-20'>{reservation.name}</span>
+              {index !== mockup.length - 1 && (
+                <div className='h-[0.1rem] w-full bg-grayscale-100' />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   );
 }

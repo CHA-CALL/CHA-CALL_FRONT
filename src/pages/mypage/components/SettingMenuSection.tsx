@@ -20,7 +20,7 @@ export default function SettingMenuSection({
     ? [
         {
           menu: '예약내역',
-          navigateTo: ROUTES.MESSAGE_LIST,
+          navigateTo: ROUTES.RESERVATION_HISTORY,
         },
         {
           menu: '나의 푸드트럭',
@@ -38,7 +38,7 @@ export default function SettingMenuSection({
     : [
         {
           menu: '예약내역',
-          navigateTo: ROUTES.MESSAGE_LIST,
+          navigateTo: ROUTES.RESERVATION_HISTORY,
         },
         {
           menu: '저장한 푸드트럭',

@@ -1,4 +1,4 @@
-import { RESERVATION_STATE } from '../type/reservation';
+import { RESERVATION_STATE } from '../types/reservation';
 
 export const OwnerReservationHistoryTabs = [
   {

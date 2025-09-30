@@ -29,7 +29,7 @@ export default function ButtonTabGroup({
   return (
     <div
       className={
-        'sticky top-[4.8rem] flex flex-row gap-[1rem] border-b border-grayscale-100 bg-white px-[2rem]'
+        'top-[4.8rem] flex flex-row gap-[1rem] border-b border-grayscale-100 bg-white px-[2rem] fixed-center'
       }
     >
       {tabs.map(tab => (
