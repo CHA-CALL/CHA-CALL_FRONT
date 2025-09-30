@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import {
   RESERVATION_STATE,
   type ReservationState,
@@ -5,7 +7,6 @@ import {
 import { ROUTES } from '@router/constant/routes';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
-import { useNavigate } from 'react-router-dom';
 
 interface EmptyViewProps {
   isProvider: boolean;

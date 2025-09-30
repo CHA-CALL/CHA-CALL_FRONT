@@ -15,13 +15,12 @@ import {
   RESERVATION_STATE,
   type ReservationState,
 } from '@pages/reservation-history/types/reservation';
-
+import EmptyView from '@pages/reservation-history/components/EmptyView';
 import { mockup } from '@pages/reservation-history/mockup';
-import EmptyView from './components/EmptyView';
 
 export default function ReservationHistory() {
   const { role } = useRole();
-  const isProvider = role === ROLE.PROVIDER;
+  const isProvider = role !== ROLE.PROVIDER;
 
   const [reservationState, setReservationState] = useState<ReservationState>(
     RESERVATION_STATE.UPCOMING
@@ -45,7 +44,7 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      {mockup.length === 0 ? (
+      {mockup.length !== 0 ? (
         <EmptyView
           isProvider={isProvider}
           reservationState={reservationState}
