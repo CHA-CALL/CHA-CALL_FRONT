@@ -22,7 +22,7 @@ export function useMenuDescriptionInput() {
   const validate = () => {
     const result = MENU_DESCRIPTION_VALIDATOR.safeParse(description);
     if (!result.success) {
-      setError(result.error.message);
+      setError(result.error.issues[0].message);
       return false;
     }
     setError(null);
