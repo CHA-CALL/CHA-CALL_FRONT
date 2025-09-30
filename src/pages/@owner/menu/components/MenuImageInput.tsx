@@ -6,7 +6,7 @@ import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 import ImagePreview from '@components/image-preview/ImagePreview';
 
 interface MenuImageInputProps {
-  value: string[];
+  value: File[];
   error?: FieldError;
   onChange: (_value: File) => void;
   removeImage: (_index: number) => void;
