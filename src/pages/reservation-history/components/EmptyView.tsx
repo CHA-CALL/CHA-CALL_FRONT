@@ -29,7 +29,7 @@ export default function EmptyView({
       emptyText = '진행 예정인';
       break;
     case RESERVATION_STATE.CONFIRMED:
-      emptyText = '진행 예정인';
+      emptyText = '확정 신청된';
       break;
     case RESERVATION_STATE.COMPLETED:
       emptyText = '이용 완료된';
