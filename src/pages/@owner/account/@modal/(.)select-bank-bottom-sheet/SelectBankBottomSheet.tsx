@@ -20,8 +20,8 @@ export default function SelectBankBottomSheet({
       isOpen={isOpen}
       handleCloseBottomSheet={handleClose}
       sheetContent={
-        <div className='mt-[2rem] flex flex-col gap-[2rem] px-[0.5rem]'>
-          <p className='text-black heading-sb-18'>은행선택</p>
+        <div className='flex flex-col'>
+          <p className='py-[2rem] text-black heading-sb-18'>은행선택</p>
           <div className='flex w-full flex-col'>
             {Object.values(BANK).map(option => (
               <button

@@ -15,6 +15,9 @@ import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import ReservationHistory from '@pages/reservation-history/ReservationHistory';
+import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
+import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
+import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +74,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.RESERVATION_HISTORY,
         element: <ReservationHistory />,
+      },
+      {
+        path: ROUTES.SAVE_FOOD_TRUCK_LIST,
+        element: <SaveFoodTruckList />,
+      },
+      {
+        path: ROUTES.UPLOAD_FOOD_TRUCK,
+        element: <UploadFoodTruck />,
+      },
+      {
+        path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
+        element: <SetUserInfo />,
       },
     ],
   },

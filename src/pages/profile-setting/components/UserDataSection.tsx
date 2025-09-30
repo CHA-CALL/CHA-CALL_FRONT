@@ -12,9 +12,14 @@ interface UserDataSectionProps {
 export default function UserDataSection({ userInfo }: UserDataSectionProps) {
   const navigate = useNavigate();
 
-  // TODO: 추가된 페이지 경로 설정
-  const handleNavigateTo = (navigateTo: string) => {
-    navigate(navigateTo);
+  const handleNavigateToName = () => {
+    navigate(ROUTES.PROFILE_SETTING_DETAIL('name'));
+  };
+  const handleNavigateToEmail = () => {
+    navigate(ROUTES.PROFILE_SETTING_DETAIL('email'));
+  };
+  const handleNavigateToGender = () => {
+    navigate(ROUTES.PROFILE_SETTING_DETAIL('gender'));
   };
 
   return (
@@ -25,7 +30,7 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo(ROUTES.HOME)}
+            onClick={handleNavigateToName}
           >
             <span className='text-grayscale-900 body-m-13'>
               {userInfo.name}
@@ -38,7 +43,7 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo(ROUTES.HOME)}
+            onClick={handleNavigateToEmail}
           >
             <span className='text-grayscale-900 body-m-13'>
               {userInfo.email}
@@ -51,7 +56,7 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo(ROUTES.HOME)}
+            onClick={handleNavigateToGender}
           >
             <span className='text-grayscale-900 body-m-13'>
               {userInfo.gender}

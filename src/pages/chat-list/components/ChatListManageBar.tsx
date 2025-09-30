@@ -36,8 +36,8 @@ export default function ChatListManageBar({
     if (selectChatList.size !== 0) handleDeleteChat();
   };
   return (
-    <div className='border-grayscale-100 flex justify-between border-b-[0.1rem] px-[2rem] pt-[3.1rem]'>
-      <div className='title-sb-14 text-grayscale-900 flex w-full gap-[1rem] pt-[0.2rem]'>
+    <div className='fixed-center top-[4.8rem] flex justify-between border-b-[0.1rem] border-grayscale-100 bg-white px-[2rem] pt-[2.8rem]'>
+      <div className='flex w-full gap-[1rem] pt-[0.2rem] text-grayscale-900 title-sb-14'>
         {FILTERS.map(filter => {
           return (
             <button

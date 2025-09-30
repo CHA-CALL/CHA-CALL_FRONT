@@ -33,7 +33,7 @@ export default function AgreementSection({
   }, [termAgreed]);
 
   return (
-    <div className='flex flex-row items-center justify-between rounded-[1.6rem] border border-grayscale-200 px-[1.8rem] py-[1.6rem]'>
+    <div className='border-grayscale-200 flex flex-row items-center justify-between rounded-[1.6rem] border px-[1.8rem] py-[1.6rem]'>
       <div className='flex flex-row gap-[0.8rem]'>
         <ButtonCheck isChecked={isAgreed} handleToggle={handleToggleCheck} />
         <span className='text-grayscale-900 caption-m-12'>

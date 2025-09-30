@@ -6,8 +6,8 @@ import { type UserResponse } from 'apis/data-contracts';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
-import { FILE_ERROR_MESSAGE, MAX_MB } from '@shared/constant/image';
 import { ROUTES } from '@router/constant/routes';
+import { NOT_ALLOWED_FILE_TYPE, MAX_MB } from '@shared/constant/image';
 
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
@@ -54,7 +54,7 @@ export default function ProfileSetting() {
 
     // TODO: 토스트메시지로 보여주기
     if (!isAcceptableFile(file)) {
-      alert(FILE_ERROR_MESSAGE.NOT_ALLOWED_FILE_TYPE);
+      alert(NOT_ALLOWED_FILE_TYPE);
       return;
     }
 
@@ -89,7 +89,7 @@ export default function ProfileSetting() {
         handleLeftClick={handleGoBack}
         text='프로필 설정'
       />
-      <div className='flex h-[calc(100vh-4.8rem)] flex-col items-center gap-[3rem] px-[2rem] py-[3rem]'>
+      <div className='flex flex-col items-center gap-[3rem] p-[2rem] pt-[3rem]'>
         <ProfileImageSection
           profileImageUrl={userInfo?.profileImageUrl}
           handleOpenBottomSheet={handleOpenBottomSheet}
@@ -98,7 +98,7 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userInfo} />
           <AgreementSection termAgreed={userInfo?.termAgreed} />
         </div>
-        <footer className='fixed bottom-[3rem] flex flex-row items-center caption-m-12'>
+        <footer className='bottom-[3rem] flex flex-row items-center justify-center caption-m-12 fixed-center'>
           <button
             type='button'
             className='px-[1rem] py-[0.6rem] text-grayscale-500'
