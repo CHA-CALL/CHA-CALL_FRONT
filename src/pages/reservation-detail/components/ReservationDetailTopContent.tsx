@@ -66,7 +66,7 @@ export default function ReservationDetailTopContent(
           onClick={handleTruckDetail}
         >
           <h2 className='heading-sb-18 text-grayscale-900'>{foodTruckName}</h2>
-          <Icon name={'ic_next'} />
+          <Icon name='ic_next' />
         </button>
       </div>
     );

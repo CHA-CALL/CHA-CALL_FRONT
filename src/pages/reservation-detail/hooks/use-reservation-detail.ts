@@ -7,7 +7,6 @@ import {
   MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT,
   MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER,
 } from '@pages/reservation-detail/constant/reservation-detail';
-// import { useRole } from '@shared/hooks/use-role';
 import { ROLE } from '@shared/constant/role';
 import type { ReservationDetailTopContentProps } from '../components/ReservationDetailTopContent';
 
@@ -17,7 +16,7 @@ export interface ReservationPartialInfo {
 }
 
 export const useReservationDetail = () => {
-  // TODO : useRole 동작 시, 주석 해제.
+  // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   const role = ROLE.PROVIDER;
   const isProvider = role === ROLE.PROVIDER;

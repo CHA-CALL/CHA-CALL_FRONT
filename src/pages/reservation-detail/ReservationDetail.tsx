@@ -62,18 +62,6 @@ export default function ReservationDetail() {
 
       <div className='flex flex-col pb-[1.6rem]'>
         {contentProps && <ReservationDetailTopContent {...contentProps} />}
-
-        {/* {isProvider ? (
-          <ClientInfoHeader
-            foodTruckName='오소리 푸드트럭'
-            clientName='차콜콜'
-          />
-        ) : (
-          <ProviderInfoHeader
-            foodTruckName='오소리 푸드트럭'
-            handleTruckDetail={handleTruckDetail}
-          />
-        )} */}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
           <div className='border-grayscale-100 my-[2.4rem] border' />
