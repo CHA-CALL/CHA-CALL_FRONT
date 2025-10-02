@@ -1,11 +1,8 @@
-import React from 'react';
 import { cn } from '@utils/cn';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
 import { Icon } from '@components/icon/Icon';
 import InfoRow from '@shared/components/food-truck-card/components/InfoRow';
-import Tag from '@components/tag/Tag';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
-import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
 import ReservationProviderCard from '@components/food-truck-card/components/ReservationProviderCard';
 import ReservationClientCard from '@components/food-truck-card/components/ReservationClientCard';
 import FoodTruckProviderCard from '@components/food-truck-card/components/FoodTruckProviderCard';
@@ -30,34 +27,11 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
   const renderCard = () => {
     switch (props.variant) {
       case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER: {
-        const { period, time } = formatDateTimeInfos(props.data.dateTimeInfos);
-
         return (
-          <>
-            <img
-              src={props.data.profileImage}
-              alt={props.data.name}
-              className='w-[5rem] h-[5rem] mr-[1.8rem] my-[0.4rem] rounded-[1.6rem] object-cover'
-            />
-
-            <div className='flex flex-col gap-[0.2rem]'>
-              <div className='flex items-center gap-[0.8rem] mb-[0.2rem]'>
-                <span className='title-sb-16 text-grayscale-900'>{props.data.name}</span>
-                <Tag title={props.data.foodTruckName || ''} />
-              </div>
-              <InfoRow iconId='ic_locate'>{props.data.address}</InfoRow>
-              <InfoRow iconId='ic_calendar'>{period}</InfoRow>
-              <InfoRow iconId='ic_time'>{time}</InfoRow>
-            </div>
-
-            <button
-              type='button'
-              onClick={handleClickButton}
-              className='ml-auto text-grayscale-700'
-            >
-              <Icon name='ic_next' />
-            </button>
-          </>
+          <ReservationProviderCard
+            data={props.data}
+            handleCardButton={handleClickButton}
+          />
         );
       }
 
