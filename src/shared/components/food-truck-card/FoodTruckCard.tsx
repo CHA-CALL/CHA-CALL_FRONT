@@ -1,7 +1,5 @@
 import { cn } from '@utils/cn';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
-import { Icon } from '@components/icon/Icon';
-import InfoRow from '@shared/components/food-truck-card/components/InfoRow';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 import ReservationProviderCard from '@components/food-truck-card/components/ReservationProviderCard';
 import ReservationClientCard from '@components/food-truck-card/components/ReservationClientCard';
@@ -36,31 +34,11 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
       }
 
       case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT: {
-        const { period, time } = formatDateTimeInfos(props.data.dateTimeInfos);
-
         return (
-          <>
-            <img
-              src={props.data.photoUrl}
-              alt={props.data.name}
-              className='w-[8rem] h-[8rem] mr-[1.8rem] rounded-[1.6rem] object-cover'
-            />
-
-            <div className='flex flex-col gap-[0.2rem]'>
-              <span className='title-sb-16 text-grayscale-900'>{props.data.name}</span>
-              <InfoRow iconId='ic_locate'>{props.data.address}</InfoRow>
-              <InfoRow iconId='ic_calendar'>{period}</InfoRow>
-              <InfoRow iconId='ic_time'>{time}</InfoRow>
-            </div>
-
-            <button
-              type='button'
-              onClick={handleClickButton}
-              className='ml-auto text-grayscale-700'
-            >
-              <Icon name='ic_next' />
-            </button>
-          </>
+          <ReservationClientCard
+            data={props.data}
+            handleCardButton={handleClickButton}
+          />
         );
       }
 

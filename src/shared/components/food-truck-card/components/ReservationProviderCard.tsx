@@ -5,7 +5,7 @@ import InfoRow from '@components/food-truck-card/components/InfoRow';
 import Tag from '@components/tag/Tag';
 import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
 
-interface FoodTruckClientCardProps {
+interface ReservationProviderCardProps {
   data: OwnerReservationHistoryResponse;
   handleCardButton: () => void;
 }
@@ -13,7 +13,7 @@ interface FoodTruckClientCardProps {
 export default function ReservationProviderCard({
   data,
   handleCardButton,
-}: FoodTruckClientCardProps) {
+}: ReservationProviderCardProps) {
   const { period, time } = formatDateTimeInfos(data.dateTimeInfos);
 
   return (
