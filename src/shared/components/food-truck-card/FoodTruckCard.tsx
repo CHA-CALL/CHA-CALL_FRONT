@@ -6,10 +6,18 @@ import InfoRow from '@shared/components/food-truck-card/components/InfoRow';
 import Tag from '@components/tag/Tag';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
+import ReservationProviderCard from '@components/food-truck-card/components/ReservationProviderCard';
+import ReservationClientCard from '@components/food-truck-card/components/ReservationClientCard';
+import FoodTruckProviderCard from '@components/food-truck-card/components/FoodTruckProviderCard';
+import FoodTruckClientCard from '@components/food-truck-card/components/FoodTruckClientCard';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
-  const handleClickButton = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  // const handleClickButton = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   props.handleClickButton();
+  // };
+
+  const handleClickButton = () => {
     props.handleClickButton();
   };
 
@@ -84,28 +92,10 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
       case FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER:
         return (
-          <>
-            <img
-              src={props.data.imageUrl}
-              alt={props.data.name}
-              className='w-[7.4rem] h-[7.4rem] mr-[1.3rem] my-[0.4rem] rounded-[1.6rem] object-cover'
-            />
-
-            <div className='flex flex-col'>
-              <span className='title-sb-16 text-grayscale-900 text-left'>{props.data.name}</span>
-              <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{props.data.description}</span>
-              <InfoRow iconId='ic_time'>{props.data.activeTime}</InfoRow>
-              <InfoRow iconId='ic_locate'>{props.data.serviceArea}</InfoRow>
-            </div>
-
-            <button
-              type='button'
-              onClick={handleClickButton}
-              className='ml-auto mb-auto text-grayscale-700'
-            >
-              <Icon name='ic_dot' />
-            </button>
-          </>
+          <FoodTruckProviderCard
+            data={props.data}
+            handleCardButton={handleClickButton}
+          />
         );
 
       case FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT:
