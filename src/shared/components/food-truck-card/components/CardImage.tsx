@@ -13,8 +13,8 @@ export default function CardImage({
 }: CardImageProps) {
   return (
     <img
-      src={imageUrl}
-      alt={altText}
+      src={imageUrl || 'https://placehold.co/100'}
+      alt={altText || 'Card Image'}
       className={cn(
         'rounded-[1.6rem] object-cover',
         className,
