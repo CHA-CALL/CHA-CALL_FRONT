@@ -11,6 +11,8 @@ export const ROUTES = {
   MYPAGE: '/mypage',
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
+  RESERVATION_HISTORY: '/reservation-history',
+  SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
   UPLOAD_FOOD_TRUCK: '/owner/upload-food-truck',
   PROFILE_SETTING: '/profile-setting',
   PROFILE_SETTING_DETAIL: (field: string) => `/profile-setting/${field}`,
