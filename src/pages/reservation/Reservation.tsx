@@ -66,7 +66,6 @@ export default function Reservation({
         handleLeftClick={handleClickBack}
         text='예약하기'
       />
-
       <div className='border-b-grayscale-100 fixed-center z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]'>
         <button
           type='button'

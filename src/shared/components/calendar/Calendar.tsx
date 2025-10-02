@@ -49,7 +49,7 @@ export default function Calendar({
               <Icon
                 name='ic_back'
                 className={
-                  isPrevMonth ? 'text-grayscale-100' : 'text-grayscale-700'
+                  isPrevMonth ? 'text-grayscale-200' : 'text-grayscale-700'
                 }
               />
             </button>

@@ -6,6 +6,7 @@ import { type UserResponse } from 'apis/data-contracts';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
+import { ROUTES } from '@router/constant/routes';
 import { NOT_ALLOWED_FILE_TYPE, MAX_MB } from '@shared/constant/image';
 
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
@@ -29,7 +30,7 @@ export default function ProfileSetting() {
   const handleLogout = () => {
     // TODO: 로그아웃 api 및 토스트 메시지 추가
     alert('로그아웃 되셨습니다.');
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   const handleOpenModal = () => {
@@ -100,15 +101,15 @@ export default function ProfileSetting() {
         <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
             type='button'
-            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
+            className='px-[1rem] py-[0.6rem] text-grayscale-500'
             onClick={handleLogout}
           >
             로그아웃
           </button>
-          <div className='bg-grayscale-500 mx-[0.4rem] h-[1rem] w-[0.1rem]' />
+          <div className='mx-[0.4rem] h-[1rem] w-[0.1rem] bg-grayscale-500' />
           <button
             type='button'
-            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
+            className='px-[1rem] py-[0.6rem] text-grayscale-500'
             onClick={handleOpenModal}
           >
             회원탈퇴
