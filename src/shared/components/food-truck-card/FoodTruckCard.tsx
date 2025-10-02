@@ -7,17 +7,14 @@ import FoodTruckProviderCard from '@components/food-truck-card/components/FoodTr
 import FoodTruckClientCard from '@components/food-truck-card/components/FoodTruckClientCard';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
-  // const handleClickButton = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   props.handleClickButton();
-  // };
-
   const handleClickButton = () => {
     props.handleClickButton();
   };
 
   const handleClickCard = () => {
-    if (props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER || props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT) {
+    if (props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER
+        || props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT
+    ) {
       props.handleClickCard();
     }
   };
@@ -46,6 +43,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
         return (
           <FoodTruckProviderCard
             data={props.data}
+            handleCard={handleClickCard}
             handleCardButton={handleClickButton}
           />
         );
@@ -56,6 +54,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
             data={props.data}
             isLiked={props.isLiked}
             tags={props.tags}
+            handleCard={handleClickCard}
             handleCardButton={handleClickButton}
           />
         );
@@ -67,12 +66,8 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
   return (
     <div
-      onClick={handleClickCard}
       className={cn(
         'flex w-full bg-white',
-        (props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER
-          || props.variant === FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT)
-          && 'cursor-pointer',
         props.className,
       )}
     >

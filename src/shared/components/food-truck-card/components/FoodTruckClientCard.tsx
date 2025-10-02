@@ -8,6 +8,7 @@ interface FoodTruckClientCardProps {
   data: SavedFoodTruckResponse;
   isLiked: boolean;
   tags: string[];
+  handleCard: () => void;
   handleCardButton: () => void;
 }
 
@@ -15,10 +16,15 @@ export default function FoodTruckClientCard({
   data,
   isLiked,
   tags,
+  handleCard,
   handleCardButton,
 }: FoodTruckClientCardProps) {
   return (
-    <>
+    <div
+      role='button'
+      onClick={handleCard}
+      className='flex w-full cursor-pointer'
+    >
       <CardImage
         imageUrl={data.photoUrl}
         altText={data.name}
@@ -47,6 +53,6 @@ export default function FoodTruckClientCard({
         buttonIcon='ic_heart_fill'
         className='mb-auto'
       />
-    </>
+    </div>
   );
 }

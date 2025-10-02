@@ -5,15 +5,21 @@ import InfoRow from '@components/food-truck-card/components/InfoRow';
 
 interface FoodTruckClientCardProps {
   data: MyFoodTruckResponse;
+  handleCard: () => void;
   handleCardButton: () => void;
 }
 
 export default function FoodTruckProviderCard({
   data,
+  handleCard,
   handleCardButton,
 }: FoodTruckClientCardProps) {
   return (
-    <>
+    <div
+      role='button'
+      onClick={handleCard}
+      className='flex w-full cursor-pointer'
+    >
       <CardImage
         imageUrl={data.imageUrl}
         altText={data.name}
@@ -32,6 +38,6 @@ export default function FoodTruckProviderCard({
         buttonIcon='ic_dot'
         className='mb-auto'
       />
-    </>
+    </div>
   );
 }

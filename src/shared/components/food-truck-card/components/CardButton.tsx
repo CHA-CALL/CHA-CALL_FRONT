@@ -1,3 +1,4 @@
+import React from 'react';
 import { cn } from '@utils/cn';
 import { Icon, type IconId } from '@components/icon/Icon';
 
@@ -16,10 +17,15 @@ export default function CardButton({
   buttonIcon,
   className,
 }: CardButtonProps) {
+  const handleClickButton = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleClick();
+  }
+
   return (
     <button
       type='button'
-      onClick={handleClick}
+      onClick={handleClickButton}
       className={cn(
         'ml-auto text-grayscale-700',
         className,
