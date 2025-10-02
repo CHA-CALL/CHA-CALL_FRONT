@@ -3,7 +3,7 @@ import CardImage from '@components/food-truck-card/components/CardImage';
 import CardButton from '@components/food-truck-card/components/CardButton';
 import InfoRow from '@components/food-truck-card/components/InfoRow';
 
-interface FoodTruckClientCardProps {
+interface FoodTruckProviderCardProps {
   data: MyFoodTruckResponse;
   handleCard: () => void;
   handleCardButton: () => void;
@@ -13,7 +13,7 @@ export default function FoodTruckProviderCard({
   data,
   handleCard,
   handleCardButton,
-}: FoodTruckClientCardProps) {
+}: FoodTruckProviderCardProps) {
   const {
     imageUrl = '',
     name = '',
