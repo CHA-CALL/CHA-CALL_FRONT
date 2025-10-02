@@ -98,7 +98,7 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userInfo} />
           <AgreementSection termAgreed={userInfo?.termAgreed} />
         </div>
-        <footer className='bottom-[3rem] flex flex-row items-center justify-center caption-m-12 fixed-center'>
+        <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
             type='button'
             className='px-[1rem] py-[0.6rem] text-grayscale-500'

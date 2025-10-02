@@ -48,7 +48,7 @@ export default function SettingMenuSection({
 
   return (
     <div className='flex flex-col gap-[1rem]'>
-      <h4 className='mb-[0.3rem] text-grayscale-500 title-sb-12'>계정 관리</h4>
+      <h4 className='text-grayscale-500 title-sb-12 mb-[0.3rem]'>계정 관리</h4>
       {settingList.map(setting => (
         <button
           key={setting.menu}

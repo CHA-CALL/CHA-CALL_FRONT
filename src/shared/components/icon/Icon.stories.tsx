@@ -103,7 +103,7 @@ export const AllIcons: Story = {
             borderRadius: 8,
           }}
         >
-          <Icon name={id} width={24} height={24} color='#F83419' />
+          <Icon name={id} width={24} height={24} className='text-primary-700' />
           <code style={{ fontSize: 12 }}>{id}_primary</code>
         </div>
       ))}
