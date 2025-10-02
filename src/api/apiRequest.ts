@@ -38,7 +38,7 @@ export const apiRequest = async <T = unknown>({
   }
   //TODO: 회원가입, 로그인 api 연동 시 수정
   const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
-  console.log('accessToken', accessToken);
+  console.info('accessToken', accessToken);
 
   try {
     let requestUrl = `${SERVER_API_BASE_URL}${endPoint}`;
@@ -58,11 +58,11 @@ export const apiRequest = async <T = unknown>({
     };
 
     if (accessToken) {
-      console.log('accessToken', accessToken);
+      console.info('accessToken', accessToken);
       requestHeaders.Authorization = `Bearer ${accessToken}`;
     }
 
-    const fetchOptions: RequestInit = {
+    const fetchOptions: globalThis.RequestInit = {
       method,
       headers: requestHeaders,
     };
