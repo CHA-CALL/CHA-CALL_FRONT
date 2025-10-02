@@ -59,7 +59,7 @@ export default function SetLocation() {
           />
         </div>
         {searchText === '' && <LocationCategoryLabels />}
-        <div className='flex w-full flex-1 flex-col overflow-y-auto scrollbar-hide'>
+        <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
           {searchText !== '' ? (
             <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
               {/* TODO: 장소 검색 API 확정되면 개선 */}
@@ -74,7 +74,7 @@ export default function SetLocation() {
             </ul>
           ) : (
             <div className='grid flex-1 grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
-              <div className='overflow-auto scrollbar-hide'>
+              <div className='scrollbar-hide overflow-auto'>
                 {siDoList.map(item => (
                   <SiDoItem
                     title={item.name}
@@ -84,7 +84,7 @@ export default function SetLocation() {
                   />
                 ))}
               </div>
-              <div className='overflow-auto outline-1 outline-grayscale-200 scrollbar-hide'>
+              <div className='outline-grayscale-200 scrollbar-hide overflow-auto outline-1'>
                 {siGunGuList.map(item => (
                   <SiGunGuItem
                     title={item.name}
@@ -94,7 +94,7 @@ export default function SetLocation() {
                   />
                 ))}
               </div>
-              <div className='overflow-auto scrollbar-hide'>
+              <div className='scrollbar-hide overflow-auto'>
                 {locationList.map(item => (
                   <DongEupMeonItem
                     title={item.name}
@@ -115,7 +115,7 @@ export default function SetLocation() {
           />
         )}
 
-        <div className='border-t-1 flex gap-[0.7rem] border-grayscale-200 px-[2rem] py-[1.7rem]'>
+        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'

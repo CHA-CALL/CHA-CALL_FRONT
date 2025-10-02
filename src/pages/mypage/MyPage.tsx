@@ -33,7 +33,7 @@ export default function MyPage() {
           isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <SettingMenuSection
           isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}

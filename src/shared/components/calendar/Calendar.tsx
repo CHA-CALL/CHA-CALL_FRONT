@@ -59,7 +59,7 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className='grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
+        <div className='text-grayscale-500 caption-r-12 grid grid-cols-7 text-center'>
           {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
@@ -67,7 +67,7 @@ export default function Calendar({
           ))}
         </div>
 
-        <div className='grid grid-cols-7 body-m-14'>
+        <div className='body-m-14 grid grid-cols-7'>
           {calendarDays.prevDates.map(day => (
             <CalendarDayButton
               key={`p${day}`}
