@@ -14,22 +14,33 @@ export default function ReservationProviderCard({
   data,
   handleCardButton,
 }: ReservationProviderCardProps) {
-  const { period, time } = formatDateTimeInfos(data.dateTimeInfos);
+  const {
+    profileImage = '',
+    name = '',
+    foodTruckName = '',
+    address = '',
+    dateTimeInfos = { startDateTime: '', endDateTime: '' },
+  } = data;
+
+  const dateTimeArray = Array.isArray(dateTimeInfos)
+    ? dateTimeInfos
+    : [dateTimeInfos.startDateTime, dateTimeInfos.endDateTime];
+  const { period, time } = formatDateTimeInfos(dateTimeArray);
 
   return (
     <>
       <CardImage
-        imageUrl={data.profileImage}
-        altText={data.name}
+        imageUrl={profileImage}
+        altText={name}
         className='w-[5rem] h-[5rem] mr-[1.8rem] my-[0.4rem]'
       />
 
       <div className='flex flex-col gap-[0.2rem]'>
         <div className='flex items-center gap-[0.8rem] mb-[0.2rem]'>
-          <span className='title-sb-16 text-grayscale-900'>{data.name}</span>
-          <Tag title={data.foodTruckName || ''} />
+          <span className='title-sb-16 text-grayscale-900'>{name}</span>
+          <Tag title={foodTruckName || ''} />
         </div>
-        <InfoRow iconId='ic_locate'>{data.address}</InfoRow>
+        <InfoRow iconId='ic_locate'>{address}</InfoRow>
         <InfoRow iconId='ic_calendar'>{period}</InfoRow>
         <InfoRow iconId='ic_time'>{time}</InfoRow>
       </div>

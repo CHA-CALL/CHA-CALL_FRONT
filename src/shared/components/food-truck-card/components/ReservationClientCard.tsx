@@ -13,19 +13,29 @@ export default function ReservationClientCard({
   data,
   handleCardButton,
 }: ReservationClientCardProps) {
-  const { period, time } = formatDateTimeInfos(data.dateTimeInfos);
+  const {
+    photoUrl = '',
+    name = '',
+    address = '',
+    dateTimeInfos = { startDateTime: '', endDateTime: '' },
+  } = data;
+
+  const dateTimeArray = Array.isArray(dateTimeInfos)
+    ? dateTimeInfos
+    : [dateTimeInfos.startDateTime, dateTimeInfos.endDateTime];
+  const { period, time } = formatDateTimeInfos(dateTimeArray);
 
   return (
     <>
       <CardImage
-        imageUrl={data.photoUrl}
-        altText={data.name}
+        imageUrl={photoUrl}
+        altText={name}
         className='w-[8rem] h-[8rem] mr-[1.8rem]'
       />
 
       <div className='flex flex-col gap-[0.2rem]'>
-        <span className='title-sb-16 text-grayscale-900'>{data.name}</span>
-        <InfoRow iconId='ic_locate'>{data.address}</InfoRow>
+        <span className='title-sb-16 text-grayscale-900'>{name}</span>
+        <InfoRow iconId='ic_locate'>{address}</InfoRow>
         <InfoRow iconId='ic_calendar'>{period}</InfoRow>
         <InfoRow iconId='ic_time'>{time}</InfoRow>
       </div>

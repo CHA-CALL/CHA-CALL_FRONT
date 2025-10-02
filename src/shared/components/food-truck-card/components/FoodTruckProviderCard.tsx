@@ -14,6 +14,14 @@ export default function FoodTruckProviderCard({
   handleCard,
   handleCardButton,
 }: FoodTruckClientCardProps) {
+  const {
+    imageUrl = '',
+    name = '',
+    description = '',
+    activeTime = '',
+    serviceArea = '',
+  } = data;
+
   return (
     <div
       role='button'
@@ -21,16 +29,16 @@ export default function FoodTruckProviderCard({
       className='flex w-full cursor-pointer'
     >
       <CardImage
-        imageUrl={data.imageUrl}
-        altText={data.name}
+        imageUrl={imageUrl}
+        altText={name}
         className='w-[7.4rem] h-[7.4rem] mr-[1.3rem] my-[0.4rem]'
       />
 
       <div className='flex flex-col'>
-        <span className='title-sb-16 text-grayscale-900 text-left'>{data.name}</span>
-        <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{data.description}</span>
-        <InfoRow iconId='ic_time'>{data.activeTime}</InfoRow>
-        <InfoRow iconId='ic_locate'>{data.serviceArea}</InfoRow>
+        <span className='title-sb-16 text-grayscale-900 text-left'>{name}</span>
+        <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{description}</span>
+        <InfoRow iconId='ic_time'>{activeTime}</InfoRow>
+        <InfoRow iconId='ic_locate'>{serviceArea}</InfoRow>
       </div>
 
       <CardButton
