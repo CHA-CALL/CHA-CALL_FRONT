@@ -14,9 +14,11 @@ import MyPage from '@pages/mypage/MyPage';
 import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
+import ReservationHistory from '@pages/reservation-history/ReservationHistory';
 import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
 import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
+import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
 
@@ -73,6 +75,10 @@ export const router = createBrowserRouter([
         element: <AccountForm />,
       },
       {
+        path: ROUTES.RESERVATION_HISTORY,
+        element: <ReservationHistory />,
+      },
+      {
         path: ROUTES.SAVE_FOOD_TRUCK_LIST,
         element: <SaveFoodTruckList />,
       },
@@ -83,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
         element: <SetUserInfo />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_MANAGEMENT,
+        element: <FoodTruckManagement />,
       },
       {
         path: ROUTES.MENU_LIST,

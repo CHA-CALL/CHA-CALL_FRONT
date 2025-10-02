@@ -11,7 +11,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { role } = useRole();
-  const isPresident = role === ROLE.PROVIDER;
+  const isProvider = role === ROLE.PROVIDER;
 
   const handleNavigateTo = (navigateTo: string) => {
     navigate(navigateTo);
@@ -24,18 +24,18 @@ export default function MyPage() {
   return (
     <>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
+        leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
         text='마이페이지'
       />
       <div className='flex flex-col gap-[4rem] p-[2rem]'>
         <MyInfoSection
-          isPresident={isPresident}
+          isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <SettingMenuSection
-          isPresident={isPresident}
+          isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}
         />
       </div>
