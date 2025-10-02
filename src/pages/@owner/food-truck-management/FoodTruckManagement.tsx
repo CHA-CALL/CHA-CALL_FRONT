@@ -1,12 +1,14 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
-import { useNavigate } from 'react-router-dom';
 import Information from '@shared/components/information/Information';
 import Button from '@shared/components/button/Button';
 import { mockup } from '@pages/@owner/food-truck-management/mockup';
 import { cn } from '@shared/utils/cn';
 import { ROUTES } from '@router/constant/routes';
-import { useState, useEffect } from 'react';
+
 import DeleteFoodTruckBottomSheet from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-bottom-sheet/DeleteFoodTruckBottomSheet';
 import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
 
@@ -59,20 +61,16 @@ export default function FoodTruckManagement() {
 
   return (
     <>
-      {isDeleteBottomSheetOpen && (
-        <DeleteFoodTruckBottomSheet
-          isOpen={isDeleteBottomSheetOpen}
-          handleClose={handleCloseDeleteBottomSheet}
-          handleDeleteFoodTruck={handleOpenDeleteConfirm}
-        />
-      )}
-      {isDeleteConfirmModalOpen && (
-        <DeleteFoodTruckConfirm
-          handleClickConfirm={handleConfirmDelete}
-          isOpen={isDeleteConfirmModalOpen}
-          handleClose={handleCancelDelete}
-        />
-      )}
+      <DeleteFoodTruckBottomSheet
+        isOpen={isDeleteBottomSheetOpen}
+        handleClose={handleCloseDeleteBottomSheet}
+        handleDeleteFoodTruck={handleOpenDeleteConfirm}
+      />
+      <DeleteFoodTruckConfirm
+        handleClickConfirm={handleConfirmDelete}
+        isOpen={isDeleteConfirmModalOpen}
+        handleClose={handleCancelDelete}
+      />
       <Navigation
         text='나의 푸드트럭 관리'
         leftIcon={<Icon name='ic_back' />}
@@ -80,14 +78,16 @@ export default function FoodTruckManagement() {
       />
       <div
         className={cn(
-          'flex flex-col gap-[1.6rem] p-[2rem]',
+          'flex flex-col px-[2rem]',
           data.length > 0 && 'pb-[10rem]'
         )}
       >
-        <Information
-          iconId='ic_chat_dot'
-          text='푸드트럭을 등록하고 의뢰를 받아보세요!'
-        />
+        <div className='fixed-center top-0 bg-white px-[2rem] pb-[1.6rem] pt-[2rem]'>
+          <Information
+            iconId='ic_chat_dot'
+            text='푸드트럭을 등록하고 의뢰를 받아보세요!'
+          />
+        </div>
         <div className='flex flex-col gap-[2rem]'>
           {data &&
             data.map((item, index) => (
