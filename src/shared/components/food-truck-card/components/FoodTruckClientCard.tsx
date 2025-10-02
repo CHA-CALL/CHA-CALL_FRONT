@@ -49,7 +49,7 @@ export default function FoodTruckClientCard({
         <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] text-left'>{description}</span>
         <div className='flex items-center gap-[0.5rem] mt-[0.8rem]'>
           {tags.map((tag, index) => (
-            <Tag key={index} title={String(tag)} />
+            <Tag key={index} title={tag} />
           ))}
         </div>
       </div>
