@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ToastContentProps } from 'react-toastify';
 
-interface CustomToastProps extends ToastContentProps {
+interface CustomToastProps extends Partial<ToastContentProps> {
   text?: string;
   icon?: React.ReactNode;
   children?: React.ReactNode;
