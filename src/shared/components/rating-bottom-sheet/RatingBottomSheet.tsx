@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
-
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import Button from '@components/button/Button';
 import { Icon } from '@components/icon/Icon';
 import { cn } from '@shared/utils/cn';
+import { RATES } from '@shared/constant/rate';
+
+import useStarRating from '@components/rating-bottom-sheet/use-star-rating';
 
 interface RatingBottomSheetProps {
   reservationId: number;
@@ -12,82 +13,25 @@ interface RatingBottomSheetProps {
   handleCloseBottomSheet: () => void;
 }
 
-const RATES: number[] = [1, 2, 3, 4, 5];
-
 export default function RatingBottomSheet({
   reservationId,
   foodTruckId,
   isOpen,
   handleCloseBottomSheet,
 }: RatingBottomSheetProps) {
-  const [selectedRate, setSelectedRate] = useState<number>(0);
-
-  const [isDragging, setIsDragging] = useState(false);
-
-  const rowRef = useRef<HTMLDivElement | null>(null);
-  const starRefs = useRef<(SVGSVGElement | null)[]>([]);
-
-  // x좌표로부터  판단
-  const calcRateFromClientX = (clientX: number) => {
-    const stars = starRefs.current.filter(Boolean) as SVGSVGElement[];
-    if (!stars.length) return selectedRate;
-
-    // 각 별 범위 검사
-    for (let i = 0; i < stars.length; i++) {
-      const rect = stars[i].getBoundingClientRect();
-      if (clientX >= rect.left && clientX <= rect.right) {
-        const isLeftHalf = clientX < rect.left + rect.width / 2;
-        const rate = RATES[i];
-        return isLeftHalf ? rate - 0.5 : rate;
-      }
-    }
-
-    // 별 사이의 공백을 드래그할 때: 가장 가까운 쪽으로
-    let nearestIdx = 0;
-    let nearestDist = Infinity;
-    stars.forEach((star, i) => {
-      const rect = star.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
-      const dist = Math.abs(center - clientX);
-      if (dist < nearestDist) {
-        nearestDist = dist;
-        nearestIdx = i;
-      }
-    });
-    const nearestRect = stars[nearestIdx].getBoundingClientRect();
-    const isLeftHalf = clientX < nearestRect.left + nearestRect.width / 2;
-    const rate = RATES[nearestIdx];
-    return isLeftHalf ? rate - 0.5 : rate;
-  };
-
-  const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!rowRef.current) return;
-    rowRef.current.setPointerCapture(e.pointerId);
-    setIsDragging(true);
-    setSelectedRate(calcRateFromClientX(e.clientX));
-  };
-
-  const handleDragMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    setSelectedRate(calcRateFromClientX(e.clientX));
-  };
-
-  const handleDragEnd = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!rowRef.current) return;
-    try {
-      rowRef.current.releasePointerCapture(e.pointerId);
-    } catch (error) {
-      console.error(error);
-    }
-    setIsDragging(false);
-  };
-
-  const handleRegisterRate = () => {
-    alert(
-      `${reservationId} / ${foodTruckId}에 대한 별점: ${String(selectedRate)}`
-    );
-    handleCloseBottomSheet();
-  };
+  const {
+    selectedRate,
+    rowRef,
+    starRefs,
+    handleDragStart,
+    handleDragMove,
+    handleDragEnd,
+    handleRegisterRate,
+  } = useStarRating({
+    reservationId,
+    foodTruckId,
+    handleCloseBottomSheet,
+  });
 
   const renderStar = (rate: number) => {
     const isFull = rate <= Math.floor(selectedRate);
@@ -136,6 +80,8 @@ export default function RatingBottomSheet({
           <div
             ref={rowRef}
             className='mx-auto mb-[5rem] mt-[3rem] flex touch-none flex-row gap-[0.4rem]'
+            role='slider'
+            aria-label='별점'
             onPointerDown={handleDragStart}
             onPointerMove={handleDragMove}
             onPointerUp={handleDragEnd}
