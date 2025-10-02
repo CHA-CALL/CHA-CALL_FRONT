@@ -2,7 +2,7 @@ import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@shared/components/icon/Icon';
 
 interface SettingMenuSectionProps {
-  isPresident: boolean;
+  isProvider: boolean;
   handleNavigateTo: (_navigateTo: string) => void;
 }
 
@@ -12,12 +12,16 @@ interface SettingList {
 }
 
 export default function SettingMenuSection({
-  isPresident,
+  isProvider,
   handleNavigateTo,
 }: SettingMenuSectionProps) {
   // TODO: 추가된 페이지 경로 설정
-  const settingList: SettingList[] = isPresident
+  const settingList: SettingList[] = isProvider
     ? [
+        {
+          menu: '예약내역',
+          navigateTo: ROUTES.RESERVATION_HISTORY,
+        },
         {
           menu: '나의 푸드트럭',
           navigateTo: ROUTES.MESSAGE_LIST,
@@ -34,7 +38,7 @@ export default function SettingMenuSection({
     : [
         {
           menu: '예약내역',
-          navigateTo: ROUTES.MESSAGE_LIST,
+          navigateTo: ROUTES.RESERVATION_HISTORY,
         },
         {
           menu: '저장한 푸드트럭',
@@ -44,7 +48,7 @@ export default function SettingMenuSection({
 
   return (
     <div className='flex flex-col gap-[1rem]'>
-      <h4 className='mb-[0.3rem] text-grayscale-500 title-sb-12'>계정 관리</h4>
+      <h4 className='text-grayscale-500 title-sb-12 mb-[0.3rem]'>계정 관리</h4>
       {settingList.map(setting => (
         <button
           key={setting.menu}
@@ -53,7 +57,12 @@ export default function SettingMenuSection({
           onClick={() => handleNavigateTo(setting.navigateTo)}
         >
           <span className='text-grayscale-900 title-sb-14'>{setting.menu}</span>
-          <Icon name='ic_next' width={18} height={18} color='#838992' />
+          <Icon
+            name='ic_next'
+            width={18}
+            height={18}
+            className='text-grayscale-500'
+          />
         </button>
       ))}
     </div>

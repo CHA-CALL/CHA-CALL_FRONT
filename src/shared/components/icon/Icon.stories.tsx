@@ -24,6 +24,9 @@ const iconIds: IconId[] = [
   'ic_down',
   'ic_up',
   'ic_chat_dot',
+  'ic_star',
+  'ic_star_full',
+  'ic_star_half',
   'ic_star_small',
   'ic_heart_fill',
   'ic_time',
@@ -103,7 +106,7 @@ export const AllIcons: Story = {
             borderRadius: 8,
           }}
         >
-          <Icon name={id} width={24} height={24} color='#F83419' />
+          <Icon name={id} width={24} height={24} className='text-primary-700' />
           <code style={{ fontSize: 12 }}>{id}_primary</code>
         </div>
       ))}

@@ -47,7 +47,7 @@ export default function MessageForm() {
   };
 
   return (
-    <div className='flex h-screen flex-col'>
+    <>
       <ConfirmModal
         isOpen={isOpen}
         handleClose={handleCloseModal}
@@ -59,7 +59,7 @@ export default function MessageForm() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex flex-1 flex-col gap-[1rem] p-[2rem]'>
+      <div className='flex flex-col gap-[1rem] p-[2rem]'>
         <textarea
           className='min-h-[34rem] rounded-[1.6rem] border-grayscale-300 px-[2rem] py-[1.5rem] text-grayscale-900 caret-primary-700 body-m-14 placeholder:text-grayscale-300 placeholder:body-m-14 focus:border-grayscale-500 focus:outline-none'
           placeholder='텍스트를 입력해주세요.'
@@ -73,7 +73,7 @@ export default function MessageForm() {
           <p className='text-grayscale-700'>{MAX_LENGTH}</p>
         </div>
       </div>
-      <footer className='sticky bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           variant='cta'
           buttonStyle={isDisabled ? 'disabled' : 'active'}
@@ -83,6 +83,6 @@ export default function MessageForm() {
           저장하기
         </Button>
       </footer>
-    </div>
+    </>
   );
 }

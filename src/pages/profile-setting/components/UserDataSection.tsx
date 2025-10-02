@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { UserResponse } from 'apis/data-contracts';
 
 import { Icon } from '@shared/components/icon/Icon';
+import { ROUTES } from '@router/constant/routes';
 
 interface UserDataSectionProps {
   userInfo: UserResponse | null;
@@ -11,9 +12,14 @@ interface UserDataSectionProps {
 export default function UserDataSection({ userInfo }: UserDataSectionProps) {
   const navigate = useNavigate();
 
-  // TODO: 추가된 페이지 경로 설정
-  const handleNavigateTo = (navigateTo: string) => {
-    navigate(navigateTo);
+  const handleNavigateToName = () => {
+    navigate(ROUTES.PROFILE_SETTING_DETAIL('name'));
+  };
+  const handleNavigateToEmail = () => {
+    navigate(ROUTES.PROFILE_SETTING_DETAIL('email'));
+  };
+  const handleNavigateToGender = () => {
+    navigate(ROUTES.PROFILE_SETTING_DETAIL('gender'));
   };
 
   return (
@@ -24,9 +30,9 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo('/')}
+            onClick={handleNavigateToName}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.name}
             </span>
             <Icon name='ic_next' width={18} height={18} />
@@ -37,9 +43,9 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo('/')}
+            onClick={handleNavigateToEmail}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.email}
             </span>
             <Icon name='ic_next' width={18} height={18} />
@@ -50,9 +56,9 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
-            onClick={() => handleNavigateTo('/')}
+            onClick={handleNavigateToGender}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.gender}
             </span>
             <Icon name='ic_next' width={18} height={18} />

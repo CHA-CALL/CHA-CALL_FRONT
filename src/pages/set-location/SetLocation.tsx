@@ -35,101 +35,103 @@ export default function SetLocation() {
   } = useLocations();
 
   return (
-    <div className='flex h-screen flex-col'>
+    <>
       <Navigation
         text='위치설정'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='px-[2rem] pb-[0.8rem] pt-[1.6rem]'>
-        <Input
-          placeholder='검색어를 입력해주세요.'
-          value={searchText}
-          onChange={e => setSearchText(e.target.value)}
-          rightComponent={
-            searchText === '' ? (
-              <Icon name='ic_search' />
-            ) : (
-              <button onClick={handleClearSearchBar}>
-                <Icon name='ic_close' />
-              </button>
-            )
-          }
-        />
-      </div>
-      {searchText === '' && <LocationCategoryLabels />}
-      <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
-        {searchText !== '' ? (
-          <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
-            {/* TODO: 장소 검색 API 확정되면 개선 */}
-            {(getSearchedRegionsResponse.results ?? []).map(item => (
-              <SearchResultItem
-                locationName={item.name}
-                isChecked={selectedLocations.has(item.id)}
-                handleToggle={() => handleToggleLocation(item)}
-                searchText={searchText}
-              />
-            ))}
-          </ul>
-        ) : (
-          <div className='grid flex-1 grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
-            <div className='scrollbar-hide overflow-auto'>
-              {siDoList.map(item => (
-                <SiDoItem
-                  title={item.name}
-                  isSelected={item.id === selectedSiDoId}
-                  handleSelectSiDo={() => handleSelectSiDo(item.id)}
-                  key={item.name}
+      <div className='flex h-[calc(100vh-4.8rem)] flex-col'>
+        <div className='px-[2rem] pb-[0.8rem] pt-[1.6rem]'>
+          <Input
+            placeholder='검색어를 입력해주세요.'
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            rightComponent={
+              searchText === '' ? (
+                <Icon name='ic_search' />
+              ) : (
+                <button onClick={handleClearSearchBar}>
+                  <Icon name='ic_close' />
+                </button>
+              )
+            }
+          />
+        </div>
+        {searchText === '' && <LocationCategoryLabels />}
+        <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
+          {searchText !== '' ? (
+            <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
+              {/* TODO: 장소 검색 API 확정되면 개선 */}
+              {(getSearchedRegionsResponse.results ?? []).map(item => (
+                <SearchResultItem
+                  locationName={item.name}
+                  isChecked={selectedLocations.has(item.id)}
+                  handleToggle={() => handleToggleLocation(item)}
+                  searchText={searchText}
                 />
               ))}
+            </ul>
+          ) : (
+            <div className='grid flex-1 grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
+              <div className='scrollbar-hide overflow-auto'>
+                {siDoList.map(item => (
+                  <SiDoItem
+                    title={item.name}
+                    isSelected={item.id === selectedSiDoId}
+                    handleSelectSiDo={() => handleSelectSiDo(item.id)}
+                    key={item.name}
+                  />
+                ))}
+              </div>
+              <div className='outline-grayscale-200 scrollbar-hide overflow-auto outline-1'>
+                {siGunGuList.map(item => (
+                  <SiGunGuItem
+                    title={item.name}
+                    isSelected={item.id === selectedSiGunGuId}
+                    handleSelectSiGunGu={() => handleSelectSiGunGu(item.id)}
+                    key={item.name}
+                  />
+                ))}
+              </div>
+              <div className='scrollbar-hide overflow-auto'>
+                {locationList.map(item => (
+                  <DongEupMeonItem
+                    title={item.name}
+                    isSelected={selectedLocations.has(item.id)}
+                    handleSelectDongEupMeon={() => handleToggleLocation(item)}
+                    key={item.name}
+                  />
+                ))}
+              </div>
             </div>
-            <div className='scrollbar-hide outline-grayscale-200 overflow-auto outline-1'>
-              {siGunGuList.map(item => (
-                <SiGunGuItem
-                  title={item.name}
-                  isSelected={item.id === selectedSiGunGuId}
-                  handleSelectSiGunGu={() => handleSelectSiGunGu(item.id)}
-                  key={item.name}
-                />
-              ))}
-            </div>
-            <div className='scrollbar-hide overflow-auto'>
-              {locationList.map(item => (
-                <DongEupMeonItem
-                  title={item.name}
-                  isSelected={selectedLocations.has(item.id)}
-                  handleSelectDongEupMeon={() => handleToggleLocation(item)}
-                  key={item.name}
-                />
-              ))}
-            </div>
-          </div>
+          )}
+        </div>
+
+        {selectedLocations.size > 0 && (
+          <SelectedChipsSheet
+            selectedLocations={selectedLocations}
+            handleDeleteLocation={handleDeleteLocation}
+          />
         )}
-      </div>
 
-      {selectedLocations.size > 0 && (
-        <SelectedChipsSheet
-          selectedLocations={selectedLocations}
-          handleDeleteLocation={handleDeleteLocation}
-        />
-      )}
-
-      <div className='border-t-1 border-grayscale-200 flex gap-[0.7rem] px-[2rem] py-[1.7rem]'>
-        <Button
-          variant='cta'
-          buttonStyle='sub'
-          handleClickButton={handleClearLocations}
-        >
-          초기화
-        </Button>
-        <Button
-          variant='cta'
-          buttonStyle={selectedLocations.size > 0 ? 'active' : 'disabled'}
-          handleClickButton={handleConfirmLocation}
-        >
-          확인
-        </Button>
+        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
+          <Button
+            variant='cta'
+            buttonStyle='sub'
+            handleClickButton={handleClearLocations}
+          >
+            초기화
+          </Button>
+          <Button
+            variant='cta'
+            buttonStyle={selectedLocations.size > 0 ? 'active' : 'disabled'}
+            handleClickButton={handleConfirmLocation}
+          >
+            확인
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -11,7 +11,7 @@ export default function ErrorText({ text }: ErrorTextProps) {
         width={14}
         height={14}
         name='ic_error'
-        color='var(--color-primary-700)'
+        className='text-primary-700'
       />
       <p className='text-primary-700 caption-m-12'>{text}</p>
     </div>

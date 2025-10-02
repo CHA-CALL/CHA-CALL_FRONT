@@ -113,9 +113,9 @@ export default function Filter() {
   };
 
   return (
-    <div>
+    <>
       <Navigation
-        leftIcon={<Icon name='ic_back' color='var(--color-grayscale-900)' />}
+        leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
         rightIcon={
           <Button variant='default' buttonStyle='edit'>
@@ -133,11 +133,11 @@ export default function Filter() {
           options={EVENT_TYPE}
           handleSelectFilter={value => handleSelectSingle('eventType', value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <div className='mb-[2rem] flex flex-col gap-[2rem]'>
           <div className='flex flex-row items-center justify-between'>
-            <h2 className='px-[0.5rem] title-b-14'>일정</h2>
+            <h2 className='title-b-14 px-[0.5rem]'>일정</h2>
             <ButtonText handleClick={handleAddSchedule}>
               일정 추가하기
             </ButtonText>
@@ -151,7 +151,7 @@ export default function Filter() {
             />
           ))}
         </div>
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='수량'
@@ -159,7 +159,7 @@ export default function Filter() {
           options={SERVING_SIZE}
           handleSelectFilter={value => handleSelectSingle('servingSize', value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='음식 종류'
@@ -168,7 +168,7 @@ export default function Filter() {
           multiSelectable
           handleSelectFilter={value => handleSelectMulti('foodType', value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='전기 사용'
@@ -178,7 +178,7 @@ export default function Filter() {
             handleSelectSingle('electricityUsage', value)
           }
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='결제 방법'
@@ -209,7 +209,7 @@ export default function Filter() {
         sheetHeight={490}
       />
 
-      <div
+      <footer
         className={cn(
           'fixed bottom-[0rem] w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
           'shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'
@@ -222,7 +222,7 @@ export default function Filter() {
         >
           적용
         </Button>
-      </div>
-    </div>
+      </footer>
+    </>
   );
 }

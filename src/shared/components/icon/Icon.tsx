@@ -21,10 +21,13 @@ export type IconId =
   | 'ic_next'
   | 'ic_register'
   | 'ic_search'
+  | 'ic_star'
   | 'ic_support'
   | 'ic_team'
   | 'ic_trash'
   | 'ic_up'
+  | 'ic_star_full'
+  | 'ic_star_half'
   | 'ic_star_small'
   | 'ic_heart_fill'
   | 'ic_time';

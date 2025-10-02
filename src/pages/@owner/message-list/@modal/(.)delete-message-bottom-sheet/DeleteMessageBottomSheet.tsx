@@ -19,11 +19,11 @@ export default function DeleteMessageBottomSheet({
       isOpen={isOpen}
       handleCloseBottomSheet={handleClose}
       sheetContent={
-        <div className='mt-[-2.8rem] flex flex-col'>
+        <div className='flex flex-col'>
           <Button
             variant='cta'
             buttonStyle='sub'
-            className='title-sb-14 text-grayscale-700 border-0 p-[2rem]'
+            className='border-0 p-[2rem] text-grayscale-700 title-sb-14'
             onClick={handleDeleteMessage}
           >
             삭제하기
@@ -31,7 +31,7 @@ export default function DeleteMessageBottomSheet({
           <Button
             variant='cta'
             buttonStyle='sub'
-            className='title-sb-14 text-grayscale-700 p-[2rem]'
+            className='p-[2rem] text-grayscale-700 title-sb-14'
             onClick={handleCloseModal}
           >
             취소
