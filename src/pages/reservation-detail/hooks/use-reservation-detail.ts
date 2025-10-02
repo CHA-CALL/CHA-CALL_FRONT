@@ -88,7 +88,7 @@ export const useReservationDetail = () => {
       setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT);
       setReservationData(MOCKUP_DATA_CLIENT);
     }
-  }, []);
+  }, [role]);
 
   return {
     role,
