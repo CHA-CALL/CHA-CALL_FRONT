@@ -125,7 +125,7 @@ export default function MenuList() {
       </div>
 
       <footer className='
-        fixed-center bottom-0 w-full px-[2rem] py-[1.7rem]
+        fixed-center bottom-[0] w-full px-[2rem] py-[1.7rem]
         bg-white shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] z-10
       '>
         <Button

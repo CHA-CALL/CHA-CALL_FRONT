@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { z } from 'zod';
 import {
   MENU_TEXT,
@@ -18,30 +17,3 @@ export const MENU_PRICE_VALIDATOR = z
     )
     .regex(/^\d+$/, MENU_TEXT_ERROR_MESSAGE.PRICE_ONLY_NUMBER)
   );
-
-export function useMenuPriceInput() {
-  const [price, setPrice] = useState('');
-  const [error, setError] = useState<string | null>(null);
-
-  const validate = () => {
-    const result = MENU_PRICE_VALIDATOR.safeParse(price.replace(/,/g, ''));
-    if (!result.success) {
-      setError(result.error.issues[0]?.message);
-      return false;
-    }
-    setError(null);
-    return true;
-  };
-
-  const clearError = () => {
-    setError(null);
-  };
-
-  return {
-    price,
-    setPrice,
-    error,
-    validate,
-    clearError,
-  };
-}

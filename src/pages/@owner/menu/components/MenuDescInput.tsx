@@ -31,7 +31,6 @@ export default function MenuDescInput({
         placeholder='텍스트를 입력해주세요.'
         value={value}
         onChange={handleChangeDescription}
-        maxLength={MENU_TEXT.DESCRIPTION_MAX_LENGTH}
       />
       <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mt-[0.6rem] mr-[0.5rem]'>
         {error && (

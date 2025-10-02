@@ -41,7 +41,6 @@ export default function MenuNameInput({
           placeholder='텍스트를 입력해주세요.'
           value={value}
           onChange={handleChangeName}
-          maxLength={MENU_TEXT.NAME_MAX_LENGTH}
         />
         <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mr-[0.5rem]'>
           <p className='text-primary-700'>{value.length}</p>

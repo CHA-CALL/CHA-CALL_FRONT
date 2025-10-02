@@ -1,6 +1,5 @@
 import { type ChangeEvent } from 'react';
 import type { FieldError } from 'react-hook-form';
-import { MENU_TEXT } from '@pages/@owner/menu/constant/menu';
 import ErrorText from '@components/error-text/ErrorText';
 
 interface MenuPriceInputProps {
@@ -15,7 +14,7 @@ export default function MenuPriceInput({
   onChange,
 }: MenuPriceInputProps) {
   const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value.replace(/[^0-9]/g, ''));
+    onChange(e.target.value);
   };
 
   return (
@@ -33,7 +32,6 @@ export default function MenuPriceInput({
           placeholder='텍스트를 입력해주세요.'
           value={value}
           onChange={handleChangePrice}
-          maxLength={MENU_TEXT.PRICE_MAX_LENGTH}
         />
       </div>
       {error && (

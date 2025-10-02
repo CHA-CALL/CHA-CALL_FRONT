@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect } from 'react';
-import { MENU_IMAGE_MAX } from '@pages/@owner/menu/constant/menu';
+import { MENU_IMAGE_MAX, MENU_TEXT, MENU_TEXT_ERROR_MESSAGE } from '@pages/@owner/menu/constant/menu';
 import { MENU_NAME_VALIDATOR } from './use-menu-name-input';
 import { MENU_DESCRIPTION_VALIDATOR } from './use-menu-desc-input';
 import { MENU_PRICE_VALIDATOR } from './use-menu-price-input';
@@ -26,7 +26,9 @@ export const useMenuForm = () => {
     reset,
     formState: { errors, isValid },
     watch,
+    setError,
     clearErrors,
+    trigger,
   } = useForm<MenuFormData>({
     resolver: zodResolver(menuSchema),
     defaultValues: {
@@ -54,6 +56,14 @@ export const useMenuForm = () => {
   }, [formData.images]);
 
   const updateName = (name: string) => {
+    if (name.length > MENU_TEXT.NAME_MAX_LENGTH) {
+      setError('name', {
+        type: 'manual',
+        message: MENU_TEXT_ERROR_MESSAGE.NAME_MAX(MENU_TEXT.NAME_MAX_LENGTH)
+      });
+      return;
+    }
+
     setValue('name', name, { shouldValidate: true });
     if (errors.name) {
       clearErrors('name');
@@ -61,6 +71,14 @@ export const useMenuForm = () => {
   };
 
   const updateDescription = (description: string) => {
+    if (description.length > MENU_TEXT.DESCRIPTION_MAX_LENGTH) {
+      setError('description', {
+        type: 'manual',
+        message: MENU_TEXT_ERROR_MESSAGE.DESCRIPTION_MAX(MENU_TEXT.DESCRIPTION_MAX_LENGTH)
+      });
+      return;
+    }
+
     setValue('description', description, { shouldValidate: true });
     if (errors.description) {
       clearErrors('description');
@@ -68,7 +86,18 @@ export const useMenuForm = () => {
   };
 
   const updatePrice = (price: string) => {
-    const numericValue = price.replace(/,/g, '');
+    // 숫자와 쉼표만 허용
+    const cleanedPrice = price.replace(/[^0-9,]/g, '');
+    const numericValue = cleanedPrice.replace(/,/g, '');
+
+    // 숫자 길이만 체크 (쉼표 제외)
+    if (numericValue.length > MENU_TEXT.PRICE_MAX_LENGTH) {
+      setError('price', {
+        type: 'manual',
+        message: MENU_TEXT_ERROR_MESSAGE.PRICE_MAX(MENU_TEXT.PRICE_MAX_LENGTH)
+      });
+      return;
+    }
 
     if (numericValue === '' || /^\d+$/.test(numericValue)) {
       const formattedValue = numericValue === '' ? '' : Number(numericValue).toLocaleString();
@@ -124,5 +153,6 @@ export const useMenuForm = () => {
     handleSubmit,
     reset,
     clearError,
+    trigger,
   };
 };

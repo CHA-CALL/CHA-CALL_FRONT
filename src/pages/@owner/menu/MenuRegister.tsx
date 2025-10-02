@@ -22,6 +22,7 @@ export default function MenuRegister() {
     addImage,
     removeImage,
     handleSubmit,
+    trigger,
   } = useMenuForm();
 
   const handleClickBack = () => {
@@ -29,9 +30,17 @@ export default function MenuRegister() {
   };
 
   const handleClickSubmit = handleSubmit((data) => {
-    console.info('메뉴 등록 성공:', data);
-    navigate(-1);
-    // TODO: 메뉴 등록 API 호출
+    const isValid = trigger(['name', 'description', 'price', 'images']);
+
+    if (!isValid) {
+      console.warn('메뉴 등록 실패');
+      return;
+    } else {
+      console.info('메뉴 등록 성공:', data);
+      console.info(isValid)
+      navigate(-1);
+      // TODO: 메뉴 등록 API 호출
+    }
   });
 
   return (
