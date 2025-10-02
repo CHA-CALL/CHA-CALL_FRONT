@@ -14,8 +14,11 @@ import {
   CreateReservationData,
   CreateReservationRequest,
   GetReservationData,
+  GetReservationStatusData,
   UpdateReservationData,
   UpdateReservationRequest,
+  UpdateReservationStatusData,
+  UpdateReservationStatusRequest,
 } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
@@ -94,6 +97,56 @@ export class Reservations<
     this.request<CreateReservationData, void>({
       path: `/reservations`,
       method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 예약 ID로 예약 상태를 조회합니다.
+   *
+   * @tags Reservation API
+   * @name GetReservationStatus
+   * @summary 예약 상태 조회
+   * @request GET:/reservations/{reservationId}/status
+   * @secure
+   * @response `200` `GetReservationStatusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getReservationStatus = (reservationId: number, params: RequestParams = {}) =>
+    this.request<GetReservationStatusData, void>({
+      path: `/reservations/${reservationId}/status`,
+      method: "GET",
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 요청에 따라 예약 상태를 변경합니다.예약 상태 변경 순서: 예약 대기 -> 예약 확정 요청 -> 예약 확정 -> 예약 취소 요청 -> 예약 취소
+   *
+   * @tags Reservation API
+   * @name UpdateReservationStatus
+   * @summary 예약 상태 변경
+   * @request PATCH:/reservations/{reservationId}/status
+   * @secure
+   * @response `200` `UpdateReservationStatusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateReservationStatus = (
+    reservationId: number,
+    data: UpdateReservationStatusRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateReservationStatusData, void>({
+      path: `/reservations/${reservationId}/status`,
+      method: "PATCH",
       body: data,
       secure: true,
       type: ContentType.Json,

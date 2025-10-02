@@ -54,13 +54,15 @@ export interface BaseResponseVoid {
 export interface UpdateReservationRequest {
   /**
    * 예약 주소 (시/구/동)
-   * @minLength 1
+   * @minLength 0
+   * @maxLength 20
    * @example "서울시 강남구 역삼동"
    */
   address: string;
   /**
    * 예약 상세 주소
-   * @minLength 1
+   * @minLength 0
+   * @maxLength 20
    * @example "역삼로 123"
    */
   detailAddress: string;
@@ -80,7 +82,8 @@ export interface UpdateReservationRequest {
   operationHour: string;
   /**
    * 메뉴
-   * @minLength 1
+   * @minLength 0
+   * @maxLength 50
    * @example "떡볶이, 순대, 튀김"
    */
   menu: string;
@@ -97,26 +100,11 @@ export interface UpdateReservationRequest {
   isUseElectricity: boolean;
   /**
    * 기타 요청 사항
+   * @minLength 0
+   * @maxLength 200
    * @example "주차 공간이 넓었으면 좋겠습니다."
    */
   etcRequest?: string;
-}
-
-export interface BaseResponseReservationIdResponse {
-  isSuccess?: boolean;
-  /** @format int32 */
-  code?: number;
-  message?: string;
-  data?: ReservationIdResponse;
-}
-
-export interface ReservationIdResponse {
-  /**
-   * 생성된 예약 ID
-   * @format int64
-   * @example 1
-   */
-  reservationId?: number;
 }
 
 export interface UpdateChatTemplateRequest {
@@ -166,13 +154,15 @@ export interface CreateReservationRequest {
   reservationUserId: number;
   /**
    * 예약 주소 (시/구/동)
-   * @minLength 1
+   * @minLength 0
+   * @maxLength 20
    * @example "서울시 강남구 역삼동"
    */
   address: string;
   /**
    * 예약 상세 주소
-   * @minLength 1
+   * @minLength 0
+   * @maxLength 20
    * @example "역삼로 123"
    */
   detailAddress: string;
@@ -192,7 +182,8 @@ export interface CreateReservationRequest {
   operationHour: string;
   /**
    * 메뉴
-   * @minLength 1
+   * @minLength 0
+   * @maxLength 50
    * @example "떡볶이, 순대, 튀김"
    */
   menu: string;
@@ -209,9 +200,28 @@ export interface CreateReservationRequest {
   isUseElectricity: boolean;
   /**
    * 기타 요청 사항
+   * @minLength 0
+   * @maxLength 200
    * @example "주차 공간이 넓었으면 좋겠습니다."
    */
   etcRequest?: string;
+}
+
+export interface BaseResponseReservationIdResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ReservationIdResponse;
+}
+
+export interface ReservationIdResponse {
+  /**
+   * 생성된 예약 ID
+   * @format int64
+   * @example 1
+   */
+  reservationId?: number;
 }
 
 export interface RegisterChatTemplateRequest {
@@ -283,6 +293,35 @@ export interface BaseResponseAuthTokenResponse {
   code?: number;
   message?: string;
   data?: AuthTokenResponse;
+}
+
+export interface UpdateReservationStatusRequest {
+  /**
+   * 변경할 예약 상태
+   * @example "예약 대기"
+   */
+  reservationStatus:
+    | "예약 대기"
+    | "예약 확정 완료"
+    | "예약 확정 요청"
+    | "예약 취소 완료"
+    | "예약 취소 요청";
+}
+
+export interface BaseResponseReservationStatusResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ReservationStatusResponse;
+}
+
+export interface ReservationStatusResponse {
+  /**
+   * 예약 상태
+   * @example "예약 확정"
+   */
+  reservationStatus?: string;
 }
 
 /** 푸드트럭 저장 상태 변경 요청 */
@@ -463,6 +502,11 @@ export interface OwnerReservationHistoryResponse {
    * @example "차콜 푸드트럭"
    */
   foodTruckName?: string;
+  /**
+   * 예약 상태
+   * @example "예약 확정"
+   */
+  reservationStatus?: string;
 }
 
 export interface BaseResponseOwnerReservationDetailResponse {
@@ -519,6 +563,11 @@ export interface OwnerReservationDetailResponse {
    * @example "음식을 많이 주세요, 늦지말아주세요"
    */
   etcRequest?: string;
+  /**
+   * 예약 상태
+   * @example "예약 확정"
+   */
+  reservationStatus?: string;
 }
 
 export interface BaseResponseCursorPagingResponseMyFoodTruckResponse {
@@ -666,6 +715,11 @@ export interface MemberReservationHistoryResponse {
    * @example ["2025-09-20 13시~19시","2025-09-21 13시~19시"]
    */
   dateTimeInfos?: string[];
+  /**
+   * 예약 상태
+   * @example "예약 확정"
+   */
+  reservationStatus?: string;
 }
 
 export interface BaseResponseMemberReservationDetailResponse {
@@ -722,6 +776,11 @@ export interface MemberReservationDetailResponse {
    * @example "음식을 많이 주세요, 늦지말아주세요"
    */
   etcRequest?: string;
+  /**
+   * 예약 상태
+   * @example "예약 확정"
+   */
+  reservationStatus?: string;
 }
 
 export interface BaseResponseReservationForRatingResponse {
@@ -823,13 +882,64 @@ export interface SavedFoodTruckResponse {
   ratingCount?: number;
 }
 
+export interface BaseResponseCursorPagingResponseFoodTruckResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: CursorPagingResponseFoodTruckResponse;
+}
+
+export interface CursorPagingResponseFoodTruckResponse {
+  content?: FoodTruckResponse[];
+  /** @format int64 */
+  lastCursor?: number;
+  hasNext?: boolean;
+}
+
+export interface FoodTruckResponse {
+  /**
+   * 푸드트럭 식별자
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
+   * 푸드트럭 이름
+   * @example "푸드트럭"
+   */
+  name?: string;
+  /**
+   * 푸드트럭 대표 사진 URL
+   * @example "http://image.png"
+   */
+  photoUrl?: string;
+  /**
+   * 푸드트럭 설명
+   * @example "맛있는 푸드트럭입니다."
+   */
+  description?: string;
+  /**
+   * 푸드트럭 평균 평점
+   * @format double
+   * @example 4.5
+   */
+  averageRating?: number;
+  /**
+   * 푸드트럭 평점 수
+   * @format int32
+   * @example 100
+   */
+  ratingCount?: number;
+}
+
 export type GetUserInfoData = BaseResponseUserResponse;
 
 export type UpdateUserInfoData = BaseResponseVoid;
 
 export type GetReservationData = BaseResponseReservationResponse;
 
-export type UpdateReservationData = BaseResponseReservationIdResponse;
+export type UpdateReservationData = BaseResponseVoid;
 
 export type UpdateChatTemplateData = BaseResponseVoid;
 
@@ -852,6 +962,10 @@ export type RegisterBankAccountData = BaseResponseVoid;
 export type RegisterRatingsData = BaseResponseVoid;
 
 export type GetTokenData = BaseResponseAuthTokenResponse;
+
+export type GetReservationStatusData = BaseResponseReservationStatusResponse;
+
+export type UpdateReservationStatusData = BaseResponseReservationStatusResponse;
 
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
@@ -880,5 +994,8 @@ export type GetReservationsForRatingData =
 
 export type GetSavedFoodTrucksData =
   BaseResponseCursorPagingResponseSavedFoodTruckResponse;
+
+export type GetFoodTrucksData =
+  BaseResponseCursorPagingResponseFoodTruckResponse;
 
 export type DeleteFoodTruckData = BaseResponseVoid;
