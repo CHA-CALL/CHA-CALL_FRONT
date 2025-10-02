@@ -2,7 +2,6 @@ import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
 import Button from '@shared/components/button/Button';
-import { mockup } from '@pages/@owner/message-list/mockup';
 import Message from '@pages/@owner/message-list/components/Message';
 import Information from '@shared/components/information/Information';
 import { ROUTES } from '@router/constant/routes';
@@ -10,10 +9,12 @@ import { useState } from 'react';
 import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/(.)delete-message-bottom-sheet/DeleteMessageBottomSheet';
 import ConfirmDeleteModal from '@pages/@owner/message-list/@modal/(.)confirm-delete-modal/ConfirmExitModal';
 import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
+import { useOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
+import type { ChatTemplateResponse } from '@/../apis/data-contracts';
 
 export default function MessageList() {
   const navigate = useNavigate();
-  const messageList = mockup;
+  const { data: messageList } = useOwnerChatTemplates();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
@@ -83,16 +84,19 @@ export default function MessageList() {
       </div>
 
       <div className='flex flex-col gap-[1.2rem] px-[2rem] pb-[10rem] pt-[8rem]'>
-        {messageList &&
-          messageList.map((message, index) => (
-            <Message
-              key={index}
-              number={index + 1}
-              message={message.message}
-              messageId={String(message.id)}
-              handleDeleteMessage={handleDeleteMessage}
-            />
-          ))}
+        {messageList?.data &&
+          messageList.data.length > 0 &&
+          messageList.data.map(
+            (message: ChatTemplateResponse, index: number) => (
+              <Message
+                key={index}
+                number={index + 1}
+                message={message.content || ''}
+                messageId={String(message.chatTemplateId)}
+                handleDeleteMessage={handleDeleteMessage}
+              />
+            )
+          )}
       </div>
 
       <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
