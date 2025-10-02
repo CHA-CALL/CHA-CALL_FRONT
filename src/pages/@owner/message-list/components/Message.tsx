@@ -25,11 +25,7 @@ export default function Message({
         <p className='text-grayscale-700 caption-m-12'>{message}</p>
       </div>
       <button type='button' onClick={handleDeleteMessageClick}>
-        <Icon
-          name='ic_dot'
-          color='var(--color-grayscale-700)'
-          className='cursor-pointer'
-        />
+        <Icon name='ic_dot' className='cursor-pointer text-grayscale-700' />
       </button>
     </div>
   );

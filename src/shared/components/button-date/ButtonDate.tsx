@@ -31,11 +31,7 @@ export default function ButtonDate({
     >
       <Icon
         name='ic_calendar'
-        color={
-          startDate
-            ? 'var(--color-grayscale-700)'
-            : 'var(--color-grayscale-300)'
-        }
+        className={startDate ? 'text-grayscale-700' : 'text-grayscale-300'}
       />
       <div className='flex flex-row items-center gap-[0.4rem]'>
         <span
@@ -48,7 +44,7 @@ export default function ButtonDate({
         </span>
         {startDate && endDate && (
           <>
-            <Icon name='ic_dash' color='var(--color-grayscale-500)' />
+            <Icon name='ic_dash' className='text-grayscale-500' />
             <span className='text-grayscale-700 body-m-14'>
               {dateFormatter(endDate)}
             </span>

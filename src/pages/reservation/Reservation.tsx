@@ -66,14 +66,13 @@ export default function Reservation({
         handleLeftClick={handleClickBack}
         text='예약하기'
       />
-
       <div className='z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem] fixed-center'>
         <button
           type='button'
           onClick={handleClickLocation}
           className='flex cursor-pointer items-center gap-[0.6rem]'
         >
-          <Icon name='ic_locate' color='var(--color-primary-700)' />
+          <Icon name='ic_locate' className='text-primary-700' />
           <span className='text-grayscale-900 body-m-14'>{location}</span>
           <Icon name='ic_down' />
         </button>

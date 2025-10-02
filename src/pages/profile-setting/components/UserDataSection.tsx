@@ -24,28 +24,28 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
 
   return (
     userInfo && (
-      <div className='border-grayscale-200 rounded-[1.6rem] border'>
-        <div className='border-grayscale-200 flex flex-row items-center justify-between border-b py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
+      <div className='rounded-[1.6rem] border border-grayscale-200'>
+        <div className='flex flex-row items-center justify-between border-b border-grayscale-200 py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
           <span className='text-grayscale-500 title-sb-12'>이름</span>
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
             onClick={handleNavigateToName}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.name}
             </span>
             <Icon name='ic_next' width={18} height={18} />
           </button>
         </div>
-        <div className='border-grayscale-200 flex flex-row items-center justify-between border-b py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
+        <div className='flex flex-row items-center justify-between border-b border-grayscale-200 py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
           <span className='text-grayscale-500 title-sb-12'>이메일</span>
           <button
             type='button'
             className='flex flex-row items-center gap-[0.5rem]'
             onClick={handleNavigateToEmail}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.email}
             </span>
             <Icon name='ic_next' width={18} height={18} />
@@ -58,7 +58,7 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
             className='flex flex-row items-center gap-[0.5rem]'
             onClick={handleNavigateToGender}
           >
-            <span className='body-m-13 text-grayscale-900'>
+            <span className='text-grayscale-900 body-m-13'>
               {userInfo.gender}
             </span>
             <Icon name='ic_next' width={18} height={18} />
