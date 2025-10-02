@@ -17,13 +17,10 @@ export default function ReservationClientCard({
     photoUrl = '',
     name = '',
     address = '',
-    dateTimeInfos = { startDateTime: '', endDateTime: '' },
+    dateTimeInfos = [],
   } = data;
 
-  const dateTimeArray = Array.isArray(dateTimeInfos)
-    ? dateTimeInfos
-    : [dateTimeInfos.startDateTime, dateTimeInfos.endDateTime];
-  const { period, time } = formatDateTimeInfos(dateTimeArray);
+  const { period, time } = formatDateTimeInfos(dateTimeInfos);
 
   return (
     <>
