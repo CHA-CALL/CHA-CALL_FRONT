@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@utils/cn';
 import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
 import { Icon } from '@components/icon/Icon';
-import InfoRow from '@components/food-truck-card/InfoRow';
+import InfoRow from '@shared/components/food-truck-card/components/InfoRow';
 import Tag from '@components/tag/Tag';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
