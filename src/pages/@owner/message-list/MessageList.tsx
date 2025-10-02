@@ -9,12 +9,18 @@ import { useState } from 'react';
 import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/(.)delete-message-bottom-sheet/DeleteMessageBottomSheet';
 import ConfirmDeleteModal from '@pages/@owner/message-list/@modal/(.)confirm-delete-modal/ConfirmExitModal';
 import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
-import { useOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
+import {
+  useOwnerChatTemplates,
+  useDeleteOwnerChatTemplates,
+} from '@pages/@owner/message-list/hooks/use-owner-message';
 import type { ChatTemplateResponse } from '@/../apis/data-contracts';
+import CustomToast from '@shared/components/custom-toast/CustomToast';
+import { toast } from 'react-toastify';
 
 export default function MessageList() {
   const navigate = useNavigate();
   const { data: messageList } = useOwnerChatTemplates();
+  const { mutate: deleteOwnerChatTemplates } = useDeleteOwnerChatTemplates();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
@@ -49,11 +55,28 @@ export default function MessageList() {
   };
 
   const handleFinalDelete = () => {
-    //TODO: API 연동 - selectedMessageId 사용
-    alert('메시지 삭제');
     if (selectedMessageId) {
-      setIsConfirmDeleteModalOpen(false);
-      setSelectedMessageId('');
+      deleteOwnerChatTemplates(selectedMessageId, {
+        onSuccess: () => {
+          setIsConfirmDeleteModalOpen(false);
+          setSelectedMessageId('');
+          toast.success(
+            <CustomToast
+              text='메시지가 성공적으로 삭제되었습니다.'
+              icon={<Icon name='ic_check' />}
+            />
+          );
+        },
+        onError: error => {
+          toast.error(
+            <CustomToast
+              text='메시지 삭제에 실패했습니다.'
+              icon={<Icon name='ic_close' />}
+            />
+          );
+          console.error('메시지 삭제 실패:', error);
+        },
+      });
     }
   };
 
