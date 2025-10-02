@@ -42,8 +42,13 @@ export default function MenuList() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleSelectSort = (type: SortType) => {
-    setIsSorted(type);
+  const handleSortByLatest = () => {
+    setIsSorted('latest');
+    handleCloseBottomSheet();
+  };
+
+  const handleSortByOldest = () => {
+    setIsSorted('oldest');
     handleCloseBottomSheet();
   };
 
@@ -121,7 +126,7 @@ export default function MenuList() {
       </div>
 
       <footer className='
-        fixed-center bottom-[0] w-full px-[2rem] py-[1.7rem]
+        fixed-center bottom-0 w-full px-[2rem] py-[1.7rem]
         bg-white shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] z-10
       '>
         <Button
@@ -142,14 +147,14 @@ export default function MenuList() {
           <>
             <button
               type='button'
-              onClick={() => handleSelectSort('latest')}
+              onClick={handleSortByLatest}
               className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
             >
               최신순
             </button>
             <button
               type='button'
-              onClick={() => handleSelectSort('oldest')}
+              onClick={handleSortByOldest}
               className='w-full p-[2rem] title-sb-14 text-grayscale-700'
             >
               오래된순
