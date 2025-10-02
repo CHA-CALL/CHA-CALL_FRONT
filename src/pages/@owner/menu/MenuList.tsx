@@ -7,10 +7,9 @@ import Button from '@components/button/Button';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
+import { type SortType, SORT_OPTIONS } from '@pages/@owner/menu/constant/menu-list-sort';
 
 import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
-
-type SortType = 'latest' | 'oldest';
 
 export default function MenuList() {
   const navigate = useNavigate();
@@ -93,7 +92,7 @@ export default function MenuList() {
           onClick={handleOpenBottomSheet}
           className='flex items-center caption-m-12 text-grayscale-700'
         >
-          {isSorted === 'latest' ? '최신순' : '오래된순'}
+          {SORT_OPTIONS[isSorted]}
           <Icon name='ic_down' />
         </button>
       </div>
@@ -150,14 +149,14 @@ export default function MenuList() {
               onClick={handleSortByLatest}
               className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
             >
-              최신순
+              {SORT_OPTIONS.latest}
             </button>
             <button
               type='button'
               onClick={handleSortByOldest}
               className='w-full p-[2rem] title-sb-14 text-grayscale-700'
             >
-              오래된순
+              {SORT_OPTIONS.oldest}
             </button>
             <Button
               variant='cta'
