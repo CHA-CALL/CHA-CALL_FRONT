@@ -1,7 +1,7 @@
 import { cn } from '@utils/cn';
 
 interface CardImageProps {
-  imageUrl?: string;
+  imageUrl: string;
   altText?: string;
   className?: string;
 }
