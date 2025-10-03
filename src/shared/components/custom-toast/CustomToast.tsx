@@ -2,9 +2,7 @@ import { useEffect } from 'react';
 import { useSetAtom } from 'jotai';
 
 import { Icon } from '@shared/components/icon/Icon';
-import { RemoveToastAtom } from '@utils/toast';
-import type { ToastProps } from '@utils/toast';
-
+import { type ToastProps, RemoveToastAtom } from '@shared/utils/toast';
 import { TOAST_DURATION, TOAST_TYPE } from '@shared/constant/toast';
 
 export function CustomToast({ type, message }: ToastProps) {
