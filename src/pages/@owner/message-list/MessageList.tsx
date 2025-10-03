@@ -14,8 +14,7 @@ import {
   useDeleteOwnerChatTemplates,
 } from '@pages/@owner/message-list/hooks/use-owner-message';
 import type { ChatTemplateResponse } from '@/../apis/data-contracts';
-import CustomToast from '@shared/components/custom-toast/CustomToast';
-import { toast } from 'react-toastify';
+import useToast from '@shared/hooks/use-toast';
 
 export default function MessageList() {
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ export default function MessageList() {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState<string>('');
+  const toast = useToast();
 
   const handleClickBack = () => {
     navigate(-1);
@@ -60,21 +60,10 @@ export default function MessageList() {
         onSuccess: () => {
           setIsConfirmDeleteModalOpen(false);
           setSelectedMessageId('');
-          toast.success(
-            <CustomToast
-              text='메시지가 성공적으로 삭제되었습니다.'
-              icon={<Icon name='ic_check' />}
-            />
-          );
+          toast.success('메시지가 성공적으로 삭제되었습니다.');
         },
-        onError: error => {
-          toast.error(
-            <CustomToast
-              text='메시지 삭제에 실패했습니다.'
-              icon={<Icon name='ic_close' />}
-            />
-          );
-          console.error('메시지 삭제 실패:', error);
+        onError: () => {
+          toast.error('메시지 삭제에 실패했습니다.');
         },
       });
     }

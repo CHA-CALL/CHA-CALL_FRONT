@@ -1,13 +1,13 @@
+import { useState, type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/ConfirmModal';
-import { useState, type ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { usePostOwnerChatTemplates } from '../hooks/use-owner-message';
-import { toast } from 'react-toastify';
-import CustomToast from '@shared/components/custom-toast/CustomToast';
+
+import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
+import useToast from '@shared/hooks/use-toast';
 import Loading from '@shared/components/loading/Loading';
 
 export default function MessageForm() {
@@ -17,6 +17,7 @@ export default function MessageForm() {
   const MAX_LENGTH = 500;
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: postChatTemplate, isPending } = usePostOwnerChatTemplates();
+  const toast = useToast();
 
   const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -28,22 +29,11 @@ export default function MessageForm() {
       postChatTemplate(message, {
         onSuccess: () => {
           setSubmit(true);
-          toast.success(
-            <CustomToast
-              text='메시지가 성공적으로 저장되었습니다.'
-              icon={<Icon name='ic_check' />}
-            />
-          );
+          toast.success('메시지가 성공적으로 저장되었습니다.');
           navigate(ROUTES.MESSAGE_LIST);
         },
-        onError: error => {
-          toast.error(
-            <CustomToast
-              text='메시지 저장에 실패했습니다.'
-              icon={<Icon name='ic_close' />}
-            />
-          );
-          console.error('메시지 저장 실패:', error);
+        onError: () => {
+          toast.error('메시지 저장에 실패했습니다.');
         },
       });
     }
