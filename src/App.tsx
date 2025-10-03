@@ -1,7 +1,9 @@
 import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'jotai';
 
 import { router } from '@/router/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ToastContainer from '@shared/components/custom-toast/ToastContainer';
 
 import '@styles/global.css';
 
@@ -11,10 +13,13 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <SvgSprite />
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <Provider>
+      <ToastContainer />
+      <QueryClientProvider client={queryClient}>
+        <SvgSprite />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
