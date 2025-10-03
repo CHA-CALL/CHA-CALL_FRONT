@@ -1,5 +1,5 @@
 import { cn } from '@utils/cn';
-import { type FoodTruckCardProps } from '@components/food-truck-card/FoodTruckCard.types';
+import { type FoodTruckCardProps } from '@shared/components/food-truck-card/types/FoodTruckCard.types';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 import ReservationProviderCard from '@components/food-truck-card/components/ReservationProviderCard';
 import ReservationClientCard from '@components/food-truck-card/components/ReservationClientCard';
