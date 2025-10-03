@@ -5,7 +5,7 @@ export interface ApiRequestProps {
   method?: RequestMethod;
   data?: unknown;
   headers?: Record<string, string>;
-  params?: Record<string, string>;
+  params?: Record<string, string | number>;
 }
 
 const SERVER_API_BASE_URL = import.meta.env.VITE_API_SERVER_URL;
@@ -46,7 +46,7 @@ export const apiRequest = async <T = unknown>({
       const searchParams = new URLSearchParams();
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-          searchParams.append(key, value);
+          searchParams.append(key, value.toString());
         }
       });
       requestUrl += `?${searchParams.toString()}`;

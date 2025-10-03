@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
@@ -10,22 +10,16 @@ import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
 import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
 import { cn } from '@shared/utils/cn';
+import { getFoodTrucksData } from './api';
 
-interface ReservationProps {
-  location?: string;
-  categories?: string[];
-}
-
-export default function Reservation({
-  location = '서울시 광진구 구의동',
-  categories = FOOD_TRUCK_CATEGORIES,
-}: ReservationProps) {
+export default function Reservation() {
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    categories[0]
+    FOOD_TRUCK_CATEGORIES[0]
   );
+  const [location] = useState<string>('전국');
 
-  const isAll = selectedCategory === categories[0];
+  const isAll = selectedCategory === FOOD_TRUCK_CATEGORIES[0];
   const filteredFoodTrucks = isAll
     ? mockFoodTruckData
     : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
@@ -59,6 +53,17 @@ export default function Reservation({
     setSelectedCategory(category);
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getFoodTrucksData();
+        console.log('[FoodTrucks] initial fetch:', data.data?.content);
+      } catch (err) {
+        console.error('[FoodTrucks] fetch error:', err);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <Navigation
@@ -66,7 +71,7 @@ export default function Reservation({
         handleLeftClick={handleClickBack}
         text='예약하기'
       />
-      <div className='border-b-grayscale-100 fixed-center z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]'>
+      <div className='z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem] fixed-center'>
         <button
           type='button'
           onClick={handleClickLocation}
@@ -103,9 +108,9 @@ export default function Reservation({
       </div>
 
       <div
-        className={`scrollbar-hide fixed-center top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
+        className={`top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide fixed-center`}
       >
-        {categories.map(category => (
+        {FOOD_TRUCK_CATEGORIES.map(category => (
           <Button
             key={category}
             variant='chip'

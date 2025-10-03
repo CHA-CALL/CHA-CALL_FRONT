@@ -1,16 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import DongEupMeonItem from '@pages/set-location/components/DongEupMeonItem';
 import LocationCategoryLabels from '@pages/set-location/components/LocationCategoryLabels';
 import SearchResultItem from '@pages/set-location/components/SearchResultItem';
 import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
 import SiDoItem from '@pages/set-location/components/SiDoItem';
 import SiGunGuItem from '@pages/set-location/components/SiGunGuItem';
-import { getSearchedRegionsResponse } from '@pages/set-location/constant/mocks';
-import { useLocations } from '@pages/set-location/hooks/use-locations';
+import { useLocationsFilter } from '@pages/set-location/hooks/use-locations-filter';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import Input from '@shared/components/input/Input';
-import { useNavigate } from 'react-router-dom';
 
 export default function SetLocation() {
   const navigate = useNavigate();
@@ -20,19 +20,23 @@ export default function SetLocation() {
     siDoList,
     siGunGuList,
     locationList,
+    searchRegionsList,
+
     selectedSiDoId,
     selectedSiGunGuId,
     selectedLocations,
+
     searchText,
     setSearchText,
     handleClearSearchBar,
+
     handleSelectSiDo,
     handleSelectSiGunGu,
     handleToggleLocation,
     handleClearLocations,
     handleDeleteLocation,
     handleConfirmLocation,
-  } = useLocations();
+  } = useLocationsFilter();
 
   return (
     <>
@@ -59,50 +63,76 @@ export default function SetLocation() {
           />
         </div>
         {searchText === '' && <LocationCategoryLabels />}
-        <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
+        <div className='flex w-full flex-1 flex-col overflow-y-auto scrollbar-hide'>
           {searchText !== '' ? (
             <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
-              {/* TODO: 장소 검색 API 확정되면 개선 */}
-              {(getSearchedRegionsResponse.results ?? []).map(item => (
-                <SearchResultItem
-                  locationName={item.name}
-                  isChecked={selectedLocations.has(item.id)}
-                  handleToggle={() => handleToggleLocation(item)}
-                  searchText={searchText}
-                />
-              ))}
+              {searchRegionsList.map(
+                searchRegions =>
+                  searchRegions.name && (
+                    <SearchResultItem
+                      key={searchRegions.code}
+                      locationName={searchRegions.name}
+                      isChecked={
+                        searchRegions.code
+                          ? selectedLocations.has(searchRegions.code)
+                          : false
+                      }
+                      handleToggle={() => handleToggleLocation(searchRegions)}
+                      searchText={searchText}
+                    />
+                  )
+              )}
             </ul>
           ) : (
             <div className='grid flex-1 grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
-              <div className='scrollbar-hide overflow-auto'>
-                {siDoList.map(item => (
-                  <SiDoItem
-                    title={item.name}
-                    isSelected={item.id === selectedSiDoId}
-                    handleSelectSiDo={() => handleSelectSiDo(item.id)}
-                    key={item.name}
-                  />
-                ))}
+              <div className='overflow-auto scrollbar-hide'>
+                {siDoList.map(
+                  siDo =>
+                    siDo.name && (
+                      <SiDoItem
+                        key={siDo.code}
+                        title={siDo.name}
+                        isSelected={siDo.code === selectedSiDoId}
+                        handleSelectSiDo={() =>
+                          siDo.code && handleSelectSiDo(siDo.code)
+                        }
+                      />
+                    )
+                )}
               </div>
-              <div className='outline-grayscale-200 scrollbar-hide overflow-auto outline-1'>
-                {siGunGuList.map(item => (
-                  <SiGunGuItem
-                    title={item.name}
-                    isSelected={item.id === selectedSiGunGuId}
-                    handleSelectSiGunGu={() => handleSelectSiGunGu(item.id)}
-                    key={item.name}
-                  />
-                ))}
+              <div className='overflow-auto outline-1 outline-grayscale-200 scrollbar-hide'>
+                {siGunGuList.map(
+                  siGunGu =>
+                    siGunGu.name && (
+                      <SiGunGuItem
+                        key={siGunGu.code}
+                        title={siGunGu.name}
+                        isSelected={siGunGu.code === selectedSiGunGuId}
+                        handleSelectSiGunGu={() =>
+                          siGunGu.code && handleSelectSiGunGu(siGunGu.code)
+                        }
+                      />
+                    )
+                )}
               </div>
-              <div className='scrollbar-hide overflow-auto'>
-                {locationList.map(item => (
-                  <DongEupMeonItem
-                    title={item.name}
-                    isSelected={selectedLocations.has(item.id)}
-                    handleSelectDongEupMeon={() => handleToggleLocation(item)}
-                    key={item.name}
-                  />
-                ))}
+              <div className='overflow-auto scrollbar-hide'>
+                {locationList.map(
+                  dongEupMeon =>
+                    dongEupMeon.name && (
+                      <DongEupMeonItem
+                        key={dongEupMeon.code}
+                        title={dongEupMeon.name}
+                        isSelected={
+                          dongEupMeon.code
+                            ? selectedLocations.has(dongEupMeon.code)
+                            : false
+                        }
+                        handleSelectDongEupMeon={() =>
+                          handleToggleLocation(dongEupMeon)
+                        }
+                      />
+                    )
+                )}
               </div>
             </div>
           )}
@@ -115,7 +145,7 @@ export default function SetLocation() {
           />
         )}
 
-        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
+        <div className='flex gap-[0.7rem] border-t-[0.1rem] border-grayscale-200 px-[2rem] py-[1.7rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'

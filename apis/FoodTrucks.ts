@@ -10,12 +10,42 @@
  * ---------------------------------------------------------------
  */
 
-import { GetFoodTrucksData } from "./data-contracts";
-import { HttpClient, RequestParams } from "./http-client";
+import {
+  FoodTruckNameDuplicateCheckRequest,
+  GetFoodTrucksData,
+  IsNameDuplicatedData,
+} from "./data-contracts";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class FoodTrucks<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
+  /**
+   * @description 푸드트럭 이름 중복 여부를 체크합니다.
+   *
+   * @tags FoodTruck API
+   * @name IsNameDuplicated
+   * @summary 푸드트럭 이름 중복 체크
+   * @request POST:/food-trucks/duplicate-check
+   * @secure
+   * @response `200` `IsNameDuplicatedData` OK
+   * @response `400` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  isNameDuplicated = (
+    data: FoodTruckNameDuplicateCheckRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<IsNameDuplicatedData, void>({
+      path: `/food-trucks/duplicate-check`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
   /**
    * @description 필터링 조건을 기반으로 푸드트럭을 조회합니다.
    *

@@ -224,6 +224,35 @@ export interface ReservationIdResponse {
   reservationId?: number;
 }
 
+export interface RegisterMenuRequest {
+  /**
+   * 메뉴 이름
+   * @minLength 0
+   * @maxLength 18
+   * @example "불고기버거"
+   */
+  name: string;
+  /**
+   * 메뉴 설명
+   * @minLength 0
+   * @maxLength 50
+   * @example "신선한 채소와 불고기를 듬뿍 넣은 수제 버거"
+   */
+  description: string;
+  /**
+   * 메뉴 가격 (원화 단위)
+   * @format int32
+   * @example 7500
+   */
+  price: number;
+  /**
+   * 대표 메뉴 이미지 URL
+   * @minLength 1
+   * @example "https://cdn.example.com/menus/bulgogi-burger.jpg"
+   */
+  photoUrl: string;
+}
+
 export interface RegisterChatTemplateRequest {
   /**
    * 자주 쓰는 채팅 내용
@@ -278,6 +307,32 @@ export interface RegisterRatingRequest {
   rating: string;
 }
 
+export interface FoodTruckNameDuplicateCheckRequest {
+  /**
+   * 중복 여부를 확인할 푸드트럭 이름
+   * @minLength 0
+   * @maxLength 10
+   * @example "차콜 꼬치"
+   */
+  name: string;
+}
+
+export interface BaseResponseFoodTruckNameDuplicateCheckResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckNameDuplicateCheckResponse;
+}
+
+export interface FoodTruckNameDuplicateCheckResponse {
+  /**
+   * 중복 여부
+   * @example true
+   */
+  duplicated?: boolean;
+}
+
 export interface AuthTokenRequest {
   /** @minLength 1 */
   loginTokenKey: string;
@@ -293,6 +348,14 @@ export interface BaseResponseAuthTokenResponse {
   code?: number;
   message?: string;
   data?: AuthTokenResponse;
+}
+
+export interface ApproveFoodTruckStatusRequest {
+  /**
+   * 변경할 푸드트럭 승인 상태
+   * @example "ON"
+   */
+  status: "PENDING" | "ON" | "OFF" | "REJECTED";
 }
 
 export interface UpdateReservationStatusRequest {
@@ -322,6 +385,14 @@ export interface ReservationStatusResponse {
    * @example "예약 확정"
    */
   reservationStatus?: string;
+}
+
+export interface UpdateMenuStatusRequest {
+  /**
+   * 변경할 메뉴 표시 여부
+   * @example "OFF"
+   */
+  status: "ON" | "OFF";
 }
 
 /** 푸드트럭 저장 상태 변경 요청 */
@@ -379,6 +450,14 @@ export interface UserResponse {
    * @example true
    */
   termAgreed?: boolean;
+}
+
+export interface BaseResponseString {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: string;
 }
 
 export interface BaseResponseReservationResponse {
@@ -617,6 +696,56 @@ export interface MyFoodTruckResponse {
    * @example "서울 전체, 경기도 수원시 영통구, 인천 계양구"
    */
   serviceArea?: string;
+}
+
+export interface BaseResponseCursorPagingResponseMyFoodTruckMenuResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: CursorPagingResponseMyFoodTruckMenuResponse;
+}
+
+export interface CursorPagingResponseMyFoodTruckMenuResponse {
+  content?: MyFoodTruckMenuResponse[];
+  /** @format int64 */
+  lastCursor?: number;
+  hasNext?: boolean;
+}
+
+/** 메뉴 응답 */
+export interface MyFoodTruckMenuResponse {
+  /**
+   * 메뉴 ID
+   * @format int64
+   * @example 101
+   */
+  menuId?: number;
+  /**
+   * 메뉴명
+   * @example "크림파스타"
+   */
+  name?: string;
+  /**
+   * 가격
+   * @example "12000원"
+   */
+  price?: string;
+  /**
+   * 설명
+   * @example "진한 크림소스와 베이컨"
+   */
+  description?: string;
+  /**
+   * 이미지 URL
+   * @example "https://cdn.example.com/menus/101.jpg"
+   */
+  imageUrl?: string;
+  /**
+   * 메뉴 표시 여부
+   * @example "ON/OFF"
+   */
+  status?: string;
 }
 
 export interface BaseResponseListChatTemplateResponse {
@@ -951,6 +1080,11 @@ export type DeleteBankAccountData = BaseResponseVoid;
 
 export type CreateReservationData = BaseResponseReservationIdResponse;
 
+export type GetMenusData =
+  BaseResponseCursorPagingResponseMyFoodTruckMenuResponse;
+
+export type RegisterMenuData = BaseResponseVoid;
+
 export type GetChatTemplatesData = BaseResponseListChatTemplateResponse;
 
 export type RegisterChatTemplateData = BaseResponseVoid;
@@ -961,14 +1095,23 @@ export type RegisterBankAccountData = BaseResponseVoid;
 
 export type RegisterRatingsData = BaseResponseVoid;
 
+export type IsNameDuplicatedData =
+  BaseResponseFoodTruckNameDuplicateCheckResponse;
+
 export type GetTokenData = BaseResponseAuthTokenResponse;
+
+export type ApproveFoodTruckStatusData = BaseResponseVoid;
 
 export type GetReservationStatusData = BaseResponseReservationStatusResponse;
 
 export type UpdateReservationStatusData = BaseResponseReservationStatusResponse;
 
+export type UpdateMenuStatusData = BaseResponseVoid;
+
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
+
+export type GetToken1Data = BaseResponseString;
 
 export type GetRegionsData = BaseResponseListRegionResponse;
 

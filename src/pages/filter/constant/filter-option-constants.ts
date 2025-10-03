@@ -1,13 +1,3 @@
-const EVENT_TYPE = [
-  '기업 행사',
-  '개인 행사',
-  '학교 행사',
-  '지자체 행사',
-  '군부대 행사',
-  '촬영장',
-  '기타',
-];
-
 const SERVING_SIZE = [
   '50인분 미만',
   '100인분 미만',
@@ -34,4 +24,4 @@ const ELECTRICITY_USAGE = ['가능', '불가능', '논의 필요'];
 
 const PAYMENT_TYPE = ['카드', '계좌이체', '무관'];
 
-export { EVENT_TYPE, SERVING_SIZE, FOOD_TYPE, ELECTRICITY_USAGE, PAYMENT_TYPE };
+export { SERVING_SIZE, FOOD_TYPE, ELECTRICITY_USAGE, PAYMENT_TYPE };
