@@ -2,18 +2,18 @@ import type { GetFoodTrucksData } from '@/../apis/data-contracts';
 
 import { apiRequest } from '@api/apiRequest';
 import {
-  ELECTRICITY_USAGE,
-  PAYMENT_TYPE,
-  SERVING_SIZE,
+  AVAILABLE_QUANTITY,
+  NEED_ELECTRICITY,
+  PAYMENT_METHOD,
 } from '@pages/filter/constant/filter-option-constants';
 
 export interface FoodTrucksFilterType {
   regionCodes?: string[] | null;
   schedules?: string[] | null;
-  availableQuantity?: typeof SERVING_SIZE | null;
+  availableQuantity?: typeof AVAILABLE_QUANTITY | null;
   categories?: string[] | null;
-  needElectricity?: typeof ELECTRICITY_USAGE | null;
-  paymentMethod?: typeof PAYMENT_TYPE | null;
+  needElectricity?: typeof NEED_ELECTRICITY | null;
+  paymentMethod?: typeof PAYMENT_METHOD | null;
   'cursorPagingRequest.cursor'?: number;
   'cursorPagingRequest.size'?: number;
 }

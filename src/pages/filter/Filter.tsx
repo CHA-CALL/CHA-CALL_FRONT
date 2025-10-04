@@ -8,10 +8,10 @@ import ButtonDate from '@components/button-date/ButtonDate';
 import { cn } from '@utils/cn';
 import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import {
-  ELECTRICITY_USAGE,
-  FOOD_TYPE,
-  PAYMENT_TYPE,
-  SERVING_SIZE,
+  AVAILABLE_QUANTITY,
+  CATEGORIES,
+  NEED_ELECTRICITY,
+  PAYMENT_METHOD,
 } from '@pages/filter/constant/filter-option-constants';
 import useFilterLogic from '@pages/filter/hooks/use-filter-logic';
 
@@ -54,11 +54,11 @@ export default function Filter() {
               일정 추가하기
             </ButtonText>
           </div>
-          {localFilters.date.map((date, index) => (
+          {localFilters.schedules.map((schedule, index) => (
             <ButtonDate
               key={index}
-              startDate={date.startDate}
-              endDate={date.endDate}
+              startDate={schedule.startDate}
+              endDate={schedule.endDate}
               handleOpenCalendar={() => handleOpenCalendar(index)}
             />
           ))}
@@ -67,36 +67,40 @@ export default function Filter() {
 
         <FilterChipGroup
           filterTitle='수량'
-          selectedOption={localFilters.servingSize ?? ''}
-          options={SERVING_SIZE}
-          handleSelectFilter={value => handleSelectSingle('servingSize', value)}
+          selectedOption={localFilters.availableQuantity ?? ''}
+          options={AVAILABLE_QUANTITY}
+          handleSelectFilter={value =>
+            handleSelectSingle('availableQuantity', value)
+          }
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup
           filterTitle='음식 종류'
-          selectedOption={localFilters.foodType ?? []}
-          options={FOOD_TYPE}
+          selectedOption={localFilters.categories ?? []}
+          options={CATEGORIES}
           multiSelectable
-          handleSelectFilter={value => handleSelectMulti('foodType', value)}
+          handleSelectFilter={value => handleSelectMulti('categories', value)}
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup
           filterTitle='전기 사용'
-          selectedOption={localFilters.electricityUsage ?? ''}
-          options={ELECTRICITY_USAGE}
+          selectedOption={localFilters.needElectricity ?? ''}
+          options={NEED_ELECTRICITY}
           handleSelectFilter={value =>
-            handleSelectSingle('electricityUsage', value)
+            handleSelectSingle('needElectricity', value)
           }
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup
           filterTitle='결제 방법'
-          selectedOption={localFilters.paymentType ?? ''}
-          options={PAYMENT_TYPE}
-          handleSelectFilter={value => handleSelectSingle('paymentType', value)}
+          selectedOption={localFilters.paymentMethod ?? ''}
+          options={PAYMENT_METHOD}
+          handleSelectFilter={value =>
+            handleSelectSingle('paymentMethod', value)
+          }
         />
       </div>
 
@@ -107,7 +111,7 @@ export default function Filter() {
           currentDateIndex !== null ? (
             <Calendar
               selectedDate={
-                localFilters.date?.[currentDateIndex] ?? {
+                localFilters.schedules?.[currentDateIndex] ?? {
                   startDate: null,
                   endDate: null,
                 }

@@ -27,19 +27,19 @@ export default function useReservation() {
   const [regions] = useAtom(confirmedRegionsAtom);
 
   const categories = (() => {
-    if (selectedCategory === '전체보기') return filters.foodType ?? [];
-    const base = filters.foodType ? [...filters.foodType] : [];
+    if (selectedCategory === '전체보기') return filters.categories ?? [];
+    const base = filters.categories ? [...filters.categories] : [];
     if (!base.includes(selectedCategory)) base.push(selectedCategory);
     return base;
   })();
 
   const queryFilters = {
     regionCodes: extractLocationCodes(regions),
-    schedules: formatSelectedDateToSchedules(filters.date),
-    availableQuantity: filters.servingSize,
+    schedules: formatSelectedDateToSchedules(filters.schedules),
+    availableQuantity: filters.availableQuantity,
     categories,
-    needElectricity: filters.electricityUsage,
-    paymentMethod: filters.paymentType,
+    needElectricity: filters.needElectricity,
+    paymentMethod: filters.paymentMethod,
   };
 
   const { data: foodTruckData, isLoading } = useFoodTrucksQuery(queryFilters);

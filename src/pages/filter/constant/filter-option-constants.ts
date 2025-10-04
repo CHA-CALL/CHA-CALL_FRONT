@@ -1,4 +1,4 @@
-const SERVING_SIZE = [
+const AVAILABLE_QUANTITY = [
   '50인분 미만',
   '100인분 미만',
   '150인분 미만',
@@ -6,7 +6,7 @@ const SERVING_SIZE = [
   '논의 필요',
 ];
 
-const FOOD_TYPE = [
+const CATEGORIES = [
   '간식',
   '패스트푸드',
   '도시락',
@@ -20,8 +20,8 @@ const FOOD_TYPE = [
   '디저트',
 ];
 
-const ELECTRICITY_USAGE = ['가능', '불가능', '논의 필요'];
+const NEED_ELECTRICITY = ['가능', '불가능', '논의 필요'];
 
-const PAYMENT_TYPE = ['카드', '계좌이체', '무관'];
+const PAYMENT_METHOD = ['카드', '계좌이체', '무관'];
 
-export { SERVING_SIZE, FOOD_TYPE, ELECTRICITY_USAGE, PAYMENT_TYPE };
+export { AVAILABLE_QUANTITY, CATEGORIES, NEED_ELECTRICITY, PAYMENT_METHOD };

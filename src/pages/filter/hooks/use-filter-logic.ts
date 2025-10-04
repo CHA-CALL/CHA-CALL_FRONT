@@ -30,7 +30,7 @@ export default function useFilterLogic() {
   const handleGoBack = () => navigate(-1);
 
   const handleSelectSingle = (
-    key: 'servingSize' | 'electricityUsage' | 'paymentType',
+    key: 'availableQuantity' | 'needElectricity' | 'paymentMethod',
     value: string
   ) => {
     setLocalFilters(prev => {
@@ -39,7 +39,7 @@ export default function useFilterLogic() {
     });
   };
 
-  const handleSelectMulti = (key: 'foodType', value: string) => {
+  const handleSelectMulti = (key: 'categories', value: string) => {
     setLocalFilters(prev => {
       const current = prev[key] ?? [];
       const next = current.includes(value)
@@ -49,18 +49,18 @@ export default function useFilterLogic() {
     });
   };
 
-  const handleApplyDate = (date: SelectedDate, index: number) => {
+  const handleApplyDate = (schedules: SelectedDate, index: number) => {
     setLocalFilters(prev => {
-      const next = [...prev.date];
-      next[index] = date;
-      return { ...prev, date: next };
+      const next = [...prev.schedules];
+      next[index] = schedules;
+      return { ...prev, schedules: next };
     });
   };
 
   const handleAddSchedule = () => {
     setLocalFilters(prev => ({
       ...prev,
-      date: [...prev.date, { startDate: null, endDate: null }],
+      schedules: [...prev.schedules, { startDate: null, endDate: null }],
     }));
   };
 

@@ -3,25 +3,25 @@ import { isEqual } from 'lodash';
 
 import type { SelectedDate } from '@shared/types/calendar-types';
 import {
-  ELECTRICITY_USAGE,
-  PAYMENT_TYPE,
-  SERVING_SIZE,
+  AVAILABLE_QUANTITY,
+  NEED_ELECTRICITY,
+  PAYMENT_METHOD,
 } from '@pages/filter/constant/filter-option-constants';
 
 export interface FilterState {
-  date: SelectedDate[];
-  servingSize: typeof SERVING_SIZE | null;
-  foodType: string[] | null;
-  electricityUsage: typeof ELECTRICITY_USAGE | null;
-  paymentType: typeof PAYMENT_TYPE | null;
+  schedules: SelectedDate[];
+  availableQuantity: typeof AVAILABLE_QUANTITY | null;
+  categories: string[] | null;
+  needElectricity: typeof NEED_ELECTRICITY | null;
+  paymentMethod: typeof PAYMENT_METHOD | null;
 }
 
 export const initialFilter: FilterState = {
-  date: [{ startDate: null, endDate: null }],
-  servingSize: null,
-  foodType: null,
-  electricityUsage: null,
-  paymentType: null,
+  schedules: [{ startDate: null, endDate: null }],
+  availableQuantity: null,
+  categories: null,
+  needElectricity: null,
+  paymentMethod: null,
 };
 
 export const filtersAtom = atom<FilterState>(initialFilter);
@@ -34,7 +34,10 @@ export const setSingleAtom = atom(
     {
       key,
       value,
-    }: { key: Exclude<keyof FilterState, 'date' | 'foodType'>; value: string }
+    }: {
+      key: Exclude<keyof FilterState, 'schedules' | 'categories'>;
+      value: string;
+    }
   ) => {
     const filters = get(filtersAtom);
     const prev = filters[key] as string | null;
@@ -47,7 +50,7 @@ export const setSingleAtom = atom(
 
 export const setMultiAtom = atom(
   null,
-  (get, set, { key, value }: { key: 'foodType'; value: string }) => {
+  (get, set, { key, value }: { key: 'categories'; value: string }) => {
     const filters = get(filtersAtom);
     const current = filters[key] ?? [];
     const next = current.includes(value)
@@ -62,12 +65,16 @@ export const setMultiAtom = atom(
 
 export const applyDateAtom = atom(
   null,
-  (get, set, { date, index }: { date: SelectedDate; index: number }) => {
+  (
+    get,
+    set,
+    { schedules, index }: { schedules: SelectedDate; index: number }
+  ) => {
     const filters = get(filtersAtom);
-    const list = filters.date ?? [];
+    const list = filters.schedules ?? [];
     const next = [...list];
-    next[index] = date;
-    set(filtersAtom, { ...filters, date: next });
+    next[index] = schedules;
+    set(filtersAtom, { ...filters, schedules: next });
   }
 );
 
@@ -75,7 +82,10 @@ export const addScheduleAtom = atom(null, (get, set) => {
   const filters = get(filtersAtom);
   set(filtersAtom, {
     ...filters,
-    date: [...(filters.date ?? []), { startDate: null, endDate: null }],
+    schedules: [
+      ...(filters.schedules ?? []),
+      { startDate: null, endDate: null },
+    ],
   });
 });
 
