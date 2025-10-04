@@ -30,7 +30,6 @@ const menuSchema = z.object({
 
   price: z
     .string()
-    // .regex(/^\d+$/, MENU_ERROR_MESSAGE.PRICE_ONLY_NUMBER)
     .min(
       MENU_LIMIT.PRICE_MIN_LENGTH,
       MENU_ERROR_MESSAGE.PRICE_MIN(MENU_LIMIT.PRICE_MIN_LENGTH)
@@ -91,8 +90,8 @@ export const useMenuForm = () => {
   };
 
   const updatePrice = (price: string) => {
-    const numbersOnly = price.replace(/\D/g, '');
-    setValue('price', numbersOnly, { shouldValidate: true });
+    const formattedPrice = price.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    setValue('price', formattedPrice, { shouldValidate: true });
   };
 
   const updateImage = (image: File | null) => {
@@ -105,14 +104,14 @@ export const useMenuForm = () => {
     }
   };
 
-  const compatibleFormData = {
+  const FormDatas = {
     name: formData.name,
     description: formData.description,
     price: formData.price,
     image: formData.image,
   };
 
-  const compatibleErrors = {
+  const Errors = {
     name: errors.name?.message,
     description: errors.description?.message,
     price: errors.price?.message,
@@ -120,8 +119,8 @@ export const useMenuForm = () => {
   };
 
   return {
-    formData: compatibleFormData,
-    errors: compatibleErrors,
+    formData: FormDatas,
+    errors: Errors,
     isValid,
     updateName,
     updateDescription,

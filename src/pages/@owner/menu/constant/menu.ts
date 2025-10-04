@@ -14,5 +14,4 @@ export const MENU_ERROR_MESSAGE = {
   DESCRIPTION_MAX: (max: number) => `메뉴 설명을 ${max}자 이하로 입력해주세요.`,
   PRICE_MIN: (min: number) => `가격을 ${min}자 이상 입력해주세요.`,
   PRICE_MAX: (max: number) => `가격을 ${max}자 이하로 입력해주세요.`,
-  PRICE_ONLY_NUMBER: '가격은 숫자만 입력 가능합니다.',
 } as const;
