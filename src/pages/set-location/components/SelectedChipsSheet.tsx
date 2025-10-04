@@ -1,10 +1,10 @@
-import type { Region } from '@pages/set-location/constant/mocks';
-import { MAX_SELECTED } from '@pages/set-location/constant/set-location';
+import { MAX_SELECTED } from '@pages/set-location/constant/location';
 import SelectChip from '@shared/components/select-chip/SelectChip';
+import type { RegionResponse } from 'apis/data-contracts';
 
 interface SelectedChipsSheetProps {
-  selectedLocations: Map<string, Region>;
-  handleDeleteLocation: (_location: Region) => void;
+  selectedLocations: Map<number, RegionResponse>;
+  handleDeleteLocation: (_location: RegionResponse) => void;
 }
 
 export default function SelectedChipsSheet({
@@ -20,9 +20,9 @@ export default function SelectedChipsSheet({
       <div className='flex flex-wrap gap-[0.8rem]'>
         {[...selectedLocations.values()].map(chip => (
           <SelectChip
-            title={chip.name}
+            title={chip.name ?? ''}
             handleDeleteChip={() => handleDeleteLocation(chip)}
-            key={chip.id}
+            key={chip.code}
           />
         ))}
       </div>

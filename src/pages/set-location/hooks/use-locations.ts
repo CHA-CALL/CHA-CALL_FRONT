@@ -1,67 +1,100 @@
 import {
-  type Region,
-  getRegionsDepth1,
-  getRegionsDepth2_Parent11,
-  getRegionsDepth3_Parent11680,
-} from '@pages/set-location/constant/mocks';
-import {
   MAX_SELECTED,
   SELECT_ALL_ID_LENGTH,
-} from '@pages/set-location/constant/set-location';
-import { useEffect, useState } from 'react';
+} from '@pages/set-location/constant/location';
+
+import { useState, useEffect } from 'react';
+import { useRegions } from './use-regions';
+import { useQueryClient } from '@tanstack/react-query';
+import { REGION_QUERY_KEY } from '@shared/querykey/regions';
+import { type RegionResponse } from '@../../apis/data-contracts';
+import { DEPTHS } from '@pages/set-location/constant/location';
 
 export const useLocations = () => {
-  const [siDoList, setSiDoList] = useState<Region[]>([]);
-  const [siGunGuList, setSiGunGuList] = useState<Region[]>([]);
-  const [locationList, setLocationList] = useState<Region[]>([]);
-
-  const [selectedSiDoId, setSelectedSidoId] = useState<string>();
-  const [selectedSiGunGuId, setSelectedSiGunGuId] = useState<string>();
-  /** 동,읍,면에 해당 */
+  const [selectedDepth1Id, setSelectedDepth1Id] = useState<number | null>(null);
+  const [selectedDepth2Id, setSelectedDepth2Id] = useState<number | null>(null);
   const [selectedLocations, setSelectedLocations] = useState<
-    Map<string, Region>
+    Map<number, RegionResponse>
   >(new Map());
+
+  const queryClient = useQueryClient();
+
+  const { data: depth1List } = useRegions(1);
+  const { data: depth2List } = useRegions(2, {
+    enabled: selectedDepth1Id !== null,
+    depth1Code: selectedDepth1Id ?? 0,
+  });
+  const { data: depth3List } = useRegions(3, {
+    enabled: selectedDepth2Id !== null,
+    depth1Code: selectedDepth1Id ?? 0,
+    depth2Code: selectedDepth2Id ?? 0,
+  });
+
+  useEffect(() => {
+    if (selectedDepth1Id) {
+      queryClient.invalidateQueries({
+        queryKey: REGION_QUERY_KEY.DEPTH2(selectedDepth1Id),
+      });
+      queryClient.invalidateQueries({
+        queryKey: REGION_QUERY_KEY.DEPTH3(
+          selectedDepth1Id,
+          selectedDepth2Id ?? 0
+        ),
+      });
+    }
+  }, [selectedDepth1Id, queryClient]);
+
+  useEffect(() => {
+    if (selectedDepth2Id) {
+      queryClient.invalidateQueries({
+        queryKey: REGION_QUERY_KEY.DEPTH3(
+          selectedDepth1Id ?? 0,
+          selectedDepth2Id
+        ),
+      });
+    }
+  }, [selectedDepth2Id, selectedDepth1Id, queryClient]);
+
   const getSelectedLocations = () => {
-    return locationList.filter(location => selectedLocations.has(location.id));
+    if (!depth3List || !(depth3List as any)?.regions) return [];
+    return (depth3List as any).regions.filter((location: RegionResponse) =>
+      selectedLocations.has(location.code ?? 0)
+    );
   };
+
   const [searchText, setSearchText] = useState('');
   const handleClearSearchBar = () => setSearchText('');
 
-  const clearCategory = (depth: string) => {
-    if (depth === 'depth1') {
-      setSelectedSidoId(undefined);
-      setSelectedSiGunGuId(undefined);
-      setSiGunGuList([]);
-      setLocationList([]);
+  const clearCategory = (depth: number) => {
+    if (depth === DEPTHS.ONE) {
+      setSelectedDepth1Id(null);
+      setSelectedDepth2Id(null);
     }
-    if (depth === 'depth2') {
-      setSelectedSiGunGuId(undefined);
-      setLocationList([]);
+    if (depth === DEPTHS.TWO) {
+      setSelectedDepth2Id(null);
     }
   };
 
-  const handleSelectSiDo = (sidoId: string) => {
-    if (selectedSiDoId === sidoId) {
-      clearCategory('depth1');
+  const handleSelectDepth1 = (depth1Id: number) => {
+    if (selectedDepth1Id === depth1Id) {
+      clearCategory(DEPTHS.ONE);
       return;
     }
-    setSelectedSidoId(sidoId);
-    // TODO : 추후 depth2 지역 요청 API로 교체;
-    setSiGunGuList(getRegionsDepth2_Parent11.regions);
-  };
-  const handleSelectSiGunGu = (sigunguId: string) => {
-    if (selectedSiGunGuId === sigunguId) {
-      clearCategory('depth2');
-      return;
-    }
-    setSelectedSiGunGuId(sigunguId);
-    // TODO : 추후 depth3 지역 요청 API로 교체;
-    setLocationList(getRegionsDepth3_Parent11680.regions);
+    setSelectedDepth1Id(depth1Id);
+    setSelectedDepth2Id(null);
   };
 
-  const handleToggleLocation = (location: Region) => {
+  const handleSelectDepth2 = (depth2Id: number) => {
+    if (selectedDepth2Id === depth2Id) {
+      clearCategory(DEPTHS.TWO);
+      return;
+    }
+    setSelectedDepth2Id(depth2Id);
+  };
+
+  const handleToggleLocation = (location: RegionResponse) => {
     setSelectedLocations(prev => {
-      const clickedId = location.id;
+      const clickedId = location.code ?? 0;
       if (prev.has(clickedId)) {
         const newMap = new Map(prev);
         newMap.delete(clickedId);
@@ -70,10 +103,13 @@ export const useLocations = () => {
 
       const newMap = new Map(prev);
       /** 전체 지역 버튼을 누른 경우 */
-      const isAllButton = clickedId.length === SELECT_ALL_ID_LENGTH;
+      const isAllButton = clickedId.toString().length === SELECT_ALL_ID_LENGTH;
       if (isAllButton) {
         for (const key of newMap.keys()) {
-          if (key.startsWith(clickedId) && key.length > clickedId.length) {
+          if (
+            key.toString().startsWith(clickedId.toString()) &&
+            key.toString().length > clickedId.toString().length
+          ) {
             newMap.delete(key);
           }
         }
@@ -83,7 +119,9 @@ export const useLocations = () => {
       /** 이미 5개 길이의 id를 갖고 있을 때, 일반 지역이 선택된 경우.
       일반 지역의 앞 5개 길이와 비교하여 일치하는 id를 제거.*/
       const parentKey = [...newMap.keys()].find(
-        key => clickedId.startsWith(key) && key.length === SELECT_ALL_ID_LENGTH
+        key =>
+          clickedId.toString().startsWith(key.toString()) &&
+          key.toString().length === SELECT_ALL_ID_LENGTH
       );
       if (parentKey) {
         newMap.delete(parentKey);
@@ -98,39 +136,33 @@ export const useLocations = () => {
 
   const handleClearLocations = () => {
     setSelectedLocations(new Map());
-    setSelectedSidoId(undefined);
-    setSelectedSiGunGuId(undefined);
-    setSiGunGuList([]);
-    setLocationList([]);
+    setSelectedDepth1Id(null);
+    setSelectedDepth2Id(null);
   };
 
-  const handleDeleteLocation = (location: Region) => {
+  const handleDeleteLocation = (location: RegionResponse) => {
     setSelectedLocations(prev => {
       const newMap = new Map(prev);
-      newMap.delete(location.id);
+      newMap.delete(location.code ?? 0);
       return newMap;
     });
   };
 
   const handleConfirmLocation = () => {};
 
-  useEffect(() => {
-    setSiDoList(getRegionsDepth1.regions);
-  }, []);
-
   return {
-    siDoList,
-    siGunGuList,
-    locationList,
-    selectedSiDoId,
-    selectedSiGunGuId,
+    depth1List,
+    depth2List,
+    depth3List,
+    selectedDepth1Id,
+    selectedDepth2Id,
     selectedLocations,
     searchText,
     setSearchText,
     getSelectedLocations,
     handleClearSearchBar,
-    handleSelectSiDo,
-    handleSelectSiGunGu,
+    handleSelectDepth1,
+    handleSelectDepth2,
     handleToggleLocation,
     handleClearLocations,
     handleDeleteLocation,
