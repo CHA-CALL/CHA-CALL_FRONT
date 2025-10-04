@@ -66,7 +66,6 @@ export const useMenuForm = () => {
   const {
     handleSubmit,
     setValue,
-    reset,
     trigger,
     formState: { errors, isValid },
     watch,
@@ -129,7 +128,6 @@ export const useMenuForm = () => {
     updatePrice,
     updateImage,
     handleSubmit: handleSubmit(onSubmit),
-    reset,
     trigger,
   };
 }

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
@@ -20,7 +21,6 @@ export default function MenuRegister() {
     updatePrice,
     updateImage,
     handleSubmit,
-    reset,
     trigger,
   } = useMenuForm();
 
@@ -28,19 +28,17 @@ export default function MenuRegister() {
     navigate(-1);
   };
 
-  const handleClickSubmit = () => {
-    trigger();
+  const handleClickSubmit = async () => {
+    const isFormValid = await trigger();
 
-    if (isValid) {
-      console.info('메뉴 등록 성공:');
-      console.info(isValid)
-      navigate(-1);
-      handleSubmit();
-    } else {
+    if (!isFormValid) {
       console.warn('메뉴 등록 실패');
-      reset();
       return;
     }
+
+    await handleSubmit();
+    console.info('메뉴 등록 성공');
+    navigate(ROUTES.MENU_LIST);
   };
 
   return (
