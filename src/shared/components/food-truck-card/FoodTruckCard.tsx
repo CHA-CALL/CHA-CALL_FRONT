@@ -6,15 +6,14 @@ import ReservationClientCard from '@components/food-truck-card/components/Reserv
 import FoodTruckProviderCard from '@components/food-truck-card/components/FoodTruckProviderCard';
 import FoodTruckClientCard from '@components/food-truck-card/components/FoodTruckClientCard';
 
-export default function FoodTruckCard({
-  variant,
-  data,
-  isLiked,
-  tags,
-  className,
-  handleClickCard,
-  handleClickButton,
-}: FoodTruckCardProps) {
+export default function FoodTruckCard(props: FoodTruckCardProps) {
+  const {
+    variant,
+    data,
+    className,
+    handleClickButton
+  } = props;
+
   const renderCard = () => {
     switch (variant) {
       case FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER: {
@@ -39,7 +38,7 @@ export default function FoodTruckCard({
         return (
           <FoodTruckProviderCard
             data={data}
-            handleCard={handleClickCard}
+            handleCard={props.handleClickCard}
             handleCardButton={handleClickButton}
           />
         );
@@ -48,9 +47,9 @@ export default function FoodTruckCard({
         return (
           <FoodTruckClientCard
             data={data}
-            isLiked={isLiked}
-            tags={tags}
-            handleCard={handleClickCard}
+            isLiked={props.isLiked}
+            tags={props.tags}
+            handleCard={props.handleClickCard}
             handleCardButton={handleClickButton}
           />
         );

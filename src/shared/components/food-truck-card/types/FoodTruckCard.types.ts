@@ -36,7 +36,7 @@ type FoodTruckClientProps = BaseFoodTruckCardProps & {
 };
 
 export type FoodTruckCardProps =
-  & ReservationProviderProps
-  & ReservationClientProps
-  & FoodTruckProviderProps
-  & FoodTruckClientProps;
+  | ReservationProviderProps
+  | ReservationClientProps
+  | FoodTruckProviderProps
+  | FoodTruckClientProps;
