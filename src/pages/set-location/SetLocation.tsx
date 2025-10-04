@@ -1,39 +1,39 @@
-import DongEupMeonItem from '@pages/set-location/components/DongEupMeonItem';
+import Depth1Item from '@pages/set-location/components/Depth1Item';
+import Depth2Item from '@pages/set-location/components/Depth2Item';
+import Depth3Item from '@pages/set-location/components/Depth3Item';
 import LocationCategoryLabels from '@pages/set-location/components/LocationCategoryLabels';
 import SearchResultItem from '@pages/set-location/components/SearchResultItem';
 import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
-import SiDoItem from '@pages/set-location/components/SiDoItem';
-import SiGunGuItem from '@pages/set-location/components/SiGunGuItem';
-import { getSearchedRegionsResponse } from '@pages/set-location/constant/mocks';
+
 import { useLocations } from '@pages/set-location/hooks/use-locations';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import Input from '@shared/components/input/Input';
 import { useNavigate } from 'react-router-dom';
+import { type RegionResponse } from '@../../apis/data-contracts';
 
 export default function SetLocation() {
   const navigate = useNavigate();
   const handleClickBack = () => navigate(-1);
 
   const {
-    siDoList,
-    siGunGuList,
-    locationList,
-    selectedSiDoId,
-    selectedSiGunGuId,
+    depth1List,
+    depth2List,
+    depth3List,
+    selectedDepth1Id,
+    selectedDepth2Id,
     selectedLocations,
     searchText,
     setSearchText,
     handleClearSearchBar,
-    handleSelectSiDo,
-    handleSelectSiGunGu,
+    handleSelectDepth1,
+    handleSelectDepth2,
     handleToggleLocation,
     handleClearLocations,
     handleDeleteLocation,
     handleConfirmLocation,
   } = useLocations();
-
   return (
     <>
       <Navigation
@@ -63,44 +63,49 @@ export default function SetLocation() {
           {searchText !== '' ? (
             <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
               {/* TODO: 장소 검색 API 확정되면 개선 */}
-              {(getSearchedRegionsResponse.results ?? []).map(item => (
+              {(depth3List?.data ?? []).map((item: RegionResponse) => (
                 <SearchResultItem
-                  locationName={item.name}
-                  isChecked={selectedLocations.has(item.id)}
+                  locationName={item.name ?? ''}
+                  isChecked={selectedLocations.has(item.code ?? 0)}
                   handleToggle={() => handleToggleLocation(item)}
                   searchText={searchText}
+                  key={item.code}
                 />
               ))}
             </ul>
           ) : (
             <div className='grid flex-1 grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
               <div className='scrollbar-hide overflow-auto'>
-                {siDoList.map(item => (
-                  <SiDoItem
-                    title={item.name}
-                    isSelected={item.id === selectedSiDoId}
-                    handleSelectSiDo={() => handleSelectSiDo(item.id)}
-                    key={item.name}
+                {depth1List?.data?.map((item: RegionResponse) => (
+                  <Depth1Item
+                    title={item.name ?? ''}
+                    isSelected={item.code === Number(selectedDepth1Id)}
+                    handleSelectDepth1={() =>
+                      handleSelectDepth1(item.code ?? 0)
+                    }
+                    key={item.code}
                   />
-                ))}
+                )) || <div>데이터를 불러오는 중...</div>}
               </div>
               <div className='outline-grayscale-200 scrollbar-hide overflow-auto outline-1'>
-                {siGunGuList.map(item => (
-                  <SiGunGuItem
-                    title={item.name}
-                    isSelected={item.id === selectedSiGunGuId}
-                    handleSelectSiGunGu={() => handleSelectSiGunGu(item.id)}
-                    key={item.name}
+                {depth2List?.data?.map((item: RegionResponse) => (
+                  <Depth2Item
+                    title={item.name ?? ''}
+                    isSelected={item.code === Number(selectedDepth2Id)}
+                    handleSelectDepth2={() =>
+                      handleSelectDepth2(item.code ?? 0)
+                    }
+                    key={item.code}
                   />
                 ))}
               </div>
               <div className='scrollbar-hide overflow-auto'>
-                {locationList.map(item => (
-                  <DongEupMeonItem
-                    title={item.name}
-                    isSelected={selectedLocations.has(item.id)}
-                    handleSelectDongEupMeon={() => handleToggleLocation(item)}
-                    key={item.name}
+                {depth3List?.data?.map((item: RegionResponse) => (
+                  <Depth3Item
+                    title={item.name ?? ''}
+                    isSelected={selectedLocations.has(item.code ?? 0)}
+                    handleSelectDepth3={() => handleToggleLocation(item)}
+                    key={item.code}
                   />
                 ))}
               </div>
