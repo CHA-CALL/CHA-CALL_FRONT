@@ -1,12 +1,12 @@
 import { type ChangeEvent } from 'react';
-import type { FieldError } from 'react-hook-form';
-import { MENU_TEXT } from '@pages/@owner/menu/constant/menu';
+import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
+import type { MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 import { Icon } from '@components/icon/Icon';
 import ErrorText from '@components/error-text/ErrorText';
 
 interface MenuNameInputProps {
-  value: string;
-  error?: FieldError;
+  value: MenuFormData['name'];
+  error?: string;
   onChange: (_value: string) => void;
 }
 
@@ -41,11 +41,12 @@ export default function MenuNameInput({
           placeholder='텍스트를 입력해주세요.'
           value={value}
           onChange={handleChangeName}
+          maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
         />
         <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mr-[0.5rem]'>
           <p className='text-primary-700'>{value.length}</p>
           <p className='text-grayscale-700'>/</p>
-          <p className='text-grayscale-700'>{MENU_TEXT.NAME_MAX_LENGTH}</p>
+          <p className='text-grayscale-700'>{MENU_LIMIT.NAME_MAX_LENGTH}</p>
           <button type='button' onClick={handleClearName}>
             <Icon name='ic_close' width={16} height={16} className='pt-[0.3rem] pl-[0.3rem]' />
           </button>
@@ -53,7 +54,7 @@ export default function MenuNameInput({
       </div>
       {error && (
         <div className='mt-[-1.8rem]'>
-          <ErrorText text={error.message || ''} />
+          <ErrorText text={error} />
         </div>
       )}
     </>

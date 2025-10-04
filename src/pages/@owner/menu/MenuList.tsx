@@ -7,7 +7,7 @@ import Button from '@components/button/Button';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
-import {SORT_OPTIONS, SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
+import { SORT_OPTIONS, SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
 

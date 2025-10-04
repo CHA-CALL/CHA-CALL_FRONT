@@ -1,158 +1,134 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useEffect } from 'react';
-import { MENU_IMAGE_MAX, MENU_TEXT, MENU_TEXT_ERROR_MESSAGE } from '@pages/@owner/menu/constant/menu';
-import { MENU_NAME_VALIDATOR } from './use-menu-name-input';
-import { MENU_DESCRIPTION_VALIDATOR } from './use-menu-desc-input';
-import { MENU_PRICE_VALIDATOR } from './use-menu-price-input';
-import { MENU_IMAGE_VALIDATOR } from './use-menu-image-input';
+import { MENU_LIMIT, MENU_ERROR_MESSAGE } from '@pages/@owner/menu/constant/menu';
+import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
 const menuSchema = z.object({
-  name: MENU_NAME_VALIDATOR,
-  description: MENU_DESCRIPTION_VALIDATOR,
-  price: MENU_PRICE_VALIDATOR,
-  images: MENU_IMAGE_VALIDATOR,
+  name: z
+    .string()
+    .min(
+      MENU_LIMIT.NAME_MIN_LENGTH,
+      MENU_ERROR_MESSAGE.NAME_MIN(MENU_LIMIT.NAME_MIN_LENGTH)
+    )
+    .max(
+      MENU_LIMIT.NAME_MAX_LENGTH,
+      MENU_ERROR_MESSAGE.NAME_MAX(MENU_LIMIT.NAME_MAX_LENGTH)
+    ),
+
+  description: z
+    .string()
+    .min(
+      MENU_LIMIT.DESCRIPTION_MIN_LENGTH,
+      MENU_ERROR_MESSAGE.DESCRIPTION_MIN(MENU_LIMIT.DESCRIPTION_MIN_LENGTH)
+    )
+    .max(
+      MENU_LIMIT.DESCRIPTION_MAX_LENGTH,
+      MENU_ERROR_MESSAGE.DESCRIPTION_MAX(MENU_LIMIT.DESCRIPTION_MAX_LENGTH)
+    ),
+
+  price: z
+    .string()
+    // .regex(/^\d+$/, MENU_ERROR_MESSAGE.PRICE_ONLY_NUMBER)
+    .min(
+      MENU_LIMIT.PRICE_MIN_LENGTH,
+      MENU_ERROR_MESSAGE.PRICE_MIN(MENU_LIMIT.PRICE_MIN_LENGTH)
+    )
+    .max(
+      MENU_LIMIT.PRICE_MAX_LENGTH,
+      MENU_ERROR_MESSAGE.PRICE_MAX(MENU_LIMIT.PRICE_MAX_LENGTH)
+    ),
+
+  image: z
+    .union([
+      z.instanceof(File),
+      z.null()
+    ])
+    .refine(
+      (file) => file !== null,
+      { message: '이미지를 선택해주세요.' }
+    )
+    .refine(
+      (file) => file === null || isFileSizeValid(file), {
+      message: CANNOT_UPLOAD_FILE_MB,
+    })
+    .refine(
+      (file) => file === null || isAcceptableFile(file), {
+      message: NOT_ALLOWED_FILE_TYPE,
+    }),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
 
 export const useMenuForm = () => {
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
-
   const {
     handleSubmit,
     setValue,
     reset,
+    trigger,
     formState: { errors, isValid },
     watch,
-    setError,
-    clearErrors,
-    trigger,
   } = useForm<MenuFormData>({
     resolver: zodResolver(menuSchema),
     defaultValues: {
       name: '',
       description: '',
       price: '',
-      images: [],
+      image: null,
     },
     mode: 'onChange',
   });
 
   const formData = watch();
 
-  useEffect(() => {
-    if (formData.images?.length > 0) {
-      const urls = formData.images.map((file: File) => URL.createObjectURL(file));
-      setImageUrls(urls);
-
-      return () => {
-        urls.forEach(url => URL.revokeObjectURL(url));
-      };
-    } else {
-      setImageUrls([]);
-    }
-  }, [formData.images]);
-
   const updateName = (name: string) => {
-    if (name.length > MENU_TEXT.NAME_MAX_LENGTH) {
-      setError('name', {
-        type: 'manual',
-        message: MENU_TEXT_ERROR_MESSAGE.NAME_MAX(MENU_TEXT.NAME_MAX_LENGTH)
-      });
-      return;
-    }
-
     setValue('name', name, { shouldValidate: true });
-    if (errors.name) {
-      clearErrors('name');
-    }
   };
 
   const updateDescription = (description: string) => {
-    if (description.length > MENU_TEXT.DESCRIPTION_MAX_LENGTH) {
-      setError('description', {
-        type: 'manual',
-        message: MENU_TEXT_ERROR_MESSAGE.DESCRIPTION_MAX(MENU_TEXT.DESCRIPTION_MAX_LENGTH)
-      });
-      return;
-    }
-
     setValue('description', description, { shouldValidate: true });
-    if (errors.description) {
-      clearErrors('description');
-    }
   };
 
   const updatePrice = (price: string) => {
-    // 숫자와 쉼표만 허용
-    const cleanedPrice = price.replace(/[^0-9,]/g, '');
-    const numericValue = cleanedPrice.replace(/,/g, '');
+    const numbersOnly = price.replace(/\D/g, '');
+    setValue('price', numbersOnly, { shouldValidate: true });
+  };
 
-    // 숫자 길이만 체크 (쉼표 제외)
-    if (numericValue.length > MENU_TEXT.PRICE_MAX_LENGTH) {
-      setError('price', {
-        type: 'manual',
-        message: MENU_TEXT_ERROR_MESSAGE.PRICE_MAX(MENU_TEXT.PRICE_MAX_LENGTH)
-      });
-      return;
-    }
+  const updateImage = (image: File | null) => {
+    setValue('image', image, { shouldValidate: true });
+  };
 
-    if (numericValue === '' || /^\d+$/.test(numericValue)) {
-      const formattedValue = numericValue === '' ? '' : Number(numericValue).toLocaleString();
-      setValue('price', formattedValue, { shouldValidate: true });
-
-      if (errors.price) {
-        clearErrors('price');
-      }
+  const onSubmit = async (formData: MenuFormData) => {
+    if (isValid && formData) {
+      alert('메뉴 등록 완료');
     }
   };
 
-  const addImage = (file: File) => {
-    const currentImages = formData.images || [];
-    if (currentImages.length < MENU_IMAGE_MAX) {
-      const newImages = [...currentImages, file];
-      setValue('images', newImages, { shouldValidate: true });
-
-      if (errors.images) {
-        clearErrors('images');
-      }
-    }
+  const compatibleFormData = {
+    name: formData.name,
+    description: formData.description,
+    price: formData.price,
+    image: formData.image,
   };
 
-  const removeImage = (index: number) => {
-    const currentImages = formData.images || [];
-    const newImages = currentImages.filter((_, i) => i !== index);
-    setValue('images', newImages, { shouldValidate: true });
-  };
-
-  const clearError = (field: keyof MenuFormData) => {
-    clearErrors(field);
-  };
-
-  const isAllFieldsValid = () => {
-    return formData.name.trim() !== '' &&
-           formData.description.trim() !== '' &&
-           formData.price.trim() !== '' &&
-           (formData.images?.length || 0) > 0 &&
-           isValid;
+  const compatibleErrors = {
+    name: errors.name?.message,
+    description: errors.description?.message,
+    price: errors.price?.message,
+    image: errors.image?.message,
   };
 
   return {
-    formData,
-    imageUrls,
-    errors,
+    formData: compatibleFormData,
+    errors: compatibleErrors,
     isValid,
-    isAllFieldsValid: isAllFieldsValid(),
     updateName,
     updateDescription,
     updatePrice,
-    addImage,
-    removeImage,
-    handleSubmit,
+    updateImage,
+    handleSubmit: handleSubmit(onSubmit),
     reset,
-    clearError,
     trigger,
   };
-};
+}

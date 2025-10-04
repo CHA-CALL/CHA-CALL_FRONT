@@ -13,15 +13,14 @@ export default function MenuRegister() {
 
   const {
     formData,
-    imageUrls,
     errors,
-    isAllFieldsValid,
+    isValid,
     updateName,
     updateDescription,
     updatePrice,
-    addImage,
-    removeImage,
+    updateImage,
     handleSubmit,
+    reset,
     trigger,
   } = useMenuForm();
 
@@ -29,19 +28,20 @@ export default function MenuRegister() {
     navigate(-1);
   };
 
-  const handleClickSubmit = handleSubmit((data) => {
-    const isValid = trigger(['name', 'description', 'price', 'images']);
+  const handleClickSubmit = () => {
+    trigger();
 
-    if (!isValid) {
-      console.warn('메뉴 등록 실패');
-      return;
-    } else {
-      console.info('메뉴 등록 성공:', data);
+    if (isValid) {
+      console.info('메뉴 등록 성공:');
       console.info(isValid)
       navigate(-1);
-      // TODO: 메뉴 등록 API 호출
+      handleSubmit();
+    } else {
+      console.warn('메뉴 등록 실패');
+      reset();
+      return;
     }
-  });
+  };
 
   return (
     <>
@@ -71,18 +71,16 @@ export default function MenuRegister() {
         />
 
         <MenuImageInput
-          value={formData.images}
-          error={Array.isArray(errors.images) ? errors.images[0] : errors.images}
-          onChange={addImage}
-          removeImage={removeImage}
-          imageUrls={imageUrls}
+          value={formData.image ?? null}
+          error={errors.image}
+          onChange={updateImage}
         />
       </div>
 
       <footer className='fixed-center bottom-[0] w-full px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
-          buttonStyle={isAllFieldsValid ? 'active' : 'disabled'}
+          buttonStyle={isValid ? 'active' : 'disabled'}
           handleClickButton={handleClickSubmit}
         >
           저장하기

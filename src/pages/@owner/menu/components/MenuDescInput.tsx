@@ -1,11 +1,11 @@
 import type { ChangeEvent } from 'react';
-import type { FieldError } from 'react-hook-form';
-import { MENU_TEXT } from '@pages/@owner/menu/constant/menu';
+import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
+import type { MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 import ErrorText from '@components/error-text/ErrorText';
 
 interface MenuDescInputProps {
-  value: string;
-  error?: FieldError;
+  value: MenuFormData['description'];
+  error?: string;
   onChange: (_value: string) => void;
 }
 
@@ -31,16 +31,17 @@ export default function MenuDescInput({
         placeholder='텍스트를 입력해주세요.'
         value={value}
         onChange={handleChangeDescription}
+        maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
       />
       <div className='caption-m-12 flex items-center justify-end gap-[0.1rem] mt-[0.6rem] mr-[0.5rem]'>
         {error && (
           <div className='mr-auto'>
-            <ErrorText text={error.message || ''} />
+            <ErrorText text={error} />
           </div>
         )}
         <p className='text-primary-700'>{value.length}</p>
         <p className='text-grayscale-700'>/</p>
-        <p className='text-grayscale-700'>{MENU_TEXT.DESCRIPTION_MAX_LENGTH}</p>
+        <p className='text-grayscale-700'>{MENU_LIMIT.DESCRIPTION_MAX_LENGTH}</p>
       </div>
     </>
   );
