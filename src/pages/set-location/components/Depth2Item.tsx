@@ -1,25 +1,25 @@
 import { cn } from '@shared/utils/cn';
 
-interface SiGunGuItemProps {
+interface Depth2ItemProps {
   title: string;
   isSelected: boolean;
-  handleSelectSiGunGu: () => void;
+  handleSelectDepth2: () => void;
 }
 const BaseClass =
   'w-full h-[4.2rem] px-[2rem] py-[0.7rem] bg-white body-m-14 text-grayscale-700';
 
-export default function SiGunGuItem({
+export default function Depth2Item({
   title,
   isSelected,
-  handleSelectSiGunGu,
-}: SiGunGuItemProps) {
+  handleSelectDepth2,
+}: Depth2ItemProps) {
   return (
     <button
       type='button'
-      onClick={handleSelectSiGunGu}
+      onClick={handleSelectDepth2}
       className={cn(
         BaseClass,
-        isSelected && 'bg-primary-50 title-sb-14 text-primary-700'
+        isSelected && 'bg-primary-50 text-primary-700 title-sb-14'
       )}
     >
       {title}

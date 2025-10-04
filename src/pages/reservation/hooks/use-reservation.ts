@@ -10,7 +10,7 @@ import {
 import { formatSelectedDateToSchedules } from '@utils/date-formatter';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
-import { confirmedLocationsAtom } from '@shared/store/location-filter-store';
+import { confirmedRegionsAtom } from '@shared/store/regions-store';
 import useFoodTrucksQuery from '@pages/reservation/hooks/use-food-truck-list-query';
 
 export default function useReservation() {
@@ -24,7 +24,7 @@ export default function useReservation() {
 
   const [filters] = useAtom(filtersAtom);
   const [notFiltered] = useAtom(notFilteredAtom);
-  const [locations] = useAtom(confirmedLocationsAtom);
+  const [regions] = useAtom(confirmedRegionsAtom);
 
   const categories = (() => {
     if (selectedCategory === '전체보기') return filters.foodType ?? [];
@@ -34,7 +34,7 @@ export default function useReservation() {
   })();
 
   const queryFilters = {
-    regionCodes: extractLocationCodes(locations),
+    regionCodes: extractLocationCodes(regions),
     schedules: formatSelectedDateToSchedules(filters.date),
     availableQuantity: filters.servingSize,
     categories,
@@ -49,8 +49,8 @@ export default function useReservation() {
   };
 
   useEffect(() => {
-    setLocationName(_.sortBy(extractLocationName(locations)));
-  }, [locations]);
+    setLocationName(_.sortBy(extractLocationName(regions)));
+  }, [regions]);
 
   const handleClickBack = () => navigate(-1);
   const handleClickLocation = () => navigate('/set-location');

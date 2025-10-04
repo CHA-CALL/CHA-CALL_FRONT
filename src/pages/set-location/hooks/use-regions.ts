@@ -3,87 +3,85 @@ import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import type { RegionResponse } from '@/../apis/data-contracts';
 
+import { ROUTES } from '@router/constant/routes';
+import useToast from '@shared/hooks/use-toast';
+import { confirmedRegionsAtom } from '@shared/store/regions-store';
 import {
   MAX_SELECTED,
   SELECT_ALL_ID_LENGTH,
 } from '@pages/set-location/constant/set-location';
-import { confirmedLocationsAtom } from '@shared/store/location-filter-store';
-import { ROUTES } from '@router/constant/routes';
-import useToast from '@shared/hooks/use-toast';
 import {
-  useGetLocationQuery,
-  useGetSiDoQuery,
-  useGetSiGunGuQuery,
-  useSearchLocationQuery,
-} from '@pages/set-location/hooks/use-locations-query';
+  useDepth1Query,
+  useDepth2Query,
+  useDepth3Query,
+  useSearchRegionQuery,
+} from '@pages/set-location/hooks/use-regions-query';
 
-export default function useLocationsFilter() {
+export default function useRegions() {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const [selectedSiDoId, setSelectedSidoId] = useState<number>();
-  const [selectedSiGunGuId, setSelectedSiGunGuId] = useState<number>();
+  const [selectedDepth1Code, setSelectedDepth1Code] = useState<number>();
+  const [selectedDepth2Code, setSelectedDepth2Code] = useState<number>();
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
   >(new Map());
 
   const [searchText, setSearchText] = useState('');
 
-  const [confirmedLocations, setConfirmedLocations] = useAtom(
-    confirmedLocationsAtom
-  );
+  const [confirmedRegions, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
 
   useEffect(() => {
-    if (confirmedLocations.size > 0) {
-      setSelectedLocations(new Map(confirmedLocations));
+    if (confirmedRegions.size > 0) {
+      setSelectedLocations(new Map(confirmedRegions));
     }
-  }, [confirmedLocations]);
+  }, [confirmedRegions]);
 
   const {
-    data: siDoList = [],
-    isLoading: isLoadingSiDo,
-    isError: isErrorSiDo,
-  } = useGetSiDoQuery();
+    data: depth1List = [],
+    isLoading: isLoadingDepth1,
+    isError: isErrorDepth1,
+  } = useDepth1Query();
 
   const {
-    data: siGunGuList = [],
-    isLoading: isLoadingSiGunGu,
-    isError: isErrorSiGunGu,
-  } = useGetSiGunGuQuery(selectedSiDoId);
+    data: depth2List = [],
+    isLoading: isLoadingDepth2,
+    isError: isErrorDepth2,
+  } = useDepth2Query(selectedDepth1Code);
 
   const {
     data: locationList = [],
-    isLoading: isLoadingLocation,
-    isError: isErrorLocation,
-  } = useGetLocationQuery(selectedSiGunGuId);
+    isLoading: isLoadingLocationList,
+    isError: isErrorLocationList,
+  } = useDepth3Query(selectedDepth2Code);
 
   const {
     data: searchRegionsList = [],
     isLoading: isLoadingSearch,
     isError: isErrorSearch,
-  } = useSearchLocationQuery(searchText);
+  } = useSearchRegionQuery(searchText);
 
   const handleClearSearchBar = () => setSearchText('');
 
-  const handleSelectSiDo = (sidoId: number) => {
-    if (selectedSiDoId === sidoId) {
-      setSelectedSidoId(undefined);
-      setSelectedSiGunGuId(undefined);
+  const handleSelectDepth1 = (depth1Code: number) => {
+    if (selectedDepth1Code === depth1Code) {
+      setSelectedDepth1Code(undefined);
+      setSelectedDepth2Code(undefined);
       return;
     }
-    setSelectedSidoId(sidoId);
-    setSelectedSiGunGuId(undefined);
+    setSelectedDepth1Code(depth1Code);
+    setSelectedDepth2Code(undefined);
   };
 
-  const handleSelectSiGunGu = (sigunguId: number) => {
-    if (selectedSiGunGuId === sigunguId) {
-      setSelectedSiGunGuId(undefined);
+  const handleSelectDepth2 = (depth2Code: number) => {
+    if (selectedDepth2Code === depth2Code) {
+      setSelectedDepth2Code(undefined);
       return;
     }
-    setSelectedSiGunGuId(sigunguId);
+    setSelectedDepth2Code(depth2Code);
   };
 
-  const handleToggleLocation = (location: RegionResponse) => {
+  const handleSelectLocations = (location: RegionResponse) => {
     if (!location.code) return;
     setSelectedLocations(prev => {
       const clickedCode = location.code!;
@@ -105,9 +103,9 @@ export default function useLocationsFilter() {
           }
         }
 
-        const sidoName =
-          siDoList.find(s => s.code === selectedSiDoId)?.name ?? '';
-        const fullName = [sidoName, location.name].filter(Boolean).join(' ');
+        const depth1Name =
+          depth1List.find(s => s.code === selectedDepth1Code)?.name ?? '';
+        const fullName = [depth1Name, location.name].filter(Boolean).join(' ');
 
         newMap.set(clickedCode, { ...location, name: fullName });
         return newMap;
@@ -127,11 +125,11 @@ export default function useLocationsFilter() {
         return newMap;
       }
 
-      const sidoName =
-        siDoList.find(s => s.code === selectedSiDoId)?.name ?? '';
-      const sigunguName =
-        siGunGuList.find(s => s.code === selectedSiGunGuId)?.name ?? '';
-      const fullName = [sidoName, sigunguName, location.name]
+      const depth1Name =
+        depth1List.find(s => s.code === selectedDepth1Code)?.name ?? '';
+      const depth2Name =
+        depth2List.find(s => s.code === selectedDepth2Code)?.name ?? '';
+      const fullName = [depth1Name, depth2Name, location.name]
         .filter(Boolean)
         .join(' ');
 
@@ -143,9 +141,9 @@ export default function useLocationsFilter() {
   const handleClearLocations = () => {
     const empty = new Map();
     setSelectedLocations(empty);
-    setSelectedSidoId(undefined);
-    setSelectedSiGunGuId(undefined);
-    setConfirmedLocations(empty);
+    setSelectedDepth1Code(undefined);
+    setSelectedDepth2Code(undefined);
+    setConfirmedRegions(empty);
   };
 
   const handleDeleteLocation = (location: RegionResponse) => {
@@ -158,39 +156,39 @@ export default function useLocationsFilter() {
   };
 
   const handleConfirmLocation = () => {
-    setConfirmedLocations(new Map(selectedLocations));
+    setConfirmedRegions(new Map(selectedLocations));
     toast.success('위치 설정이 완료되었습니다.');
     navigate(ROUTES.RESERVATION);
   };
 
   return {
-    siDoList,
-    siGunGuList,
+    depth1List,
+    depth2List,
     locationList,
     searchRegionsList,
 
-    isLoadingSiDo,
-    isLoadingSiGunGu,
-    isLoadingLocation,
+    isLoadingDepth1,
+    isLoadingDepth2,
+    isLoadingLocationList,
     isLoadingSearch,
 
-    isErrorSiDo,
-    isErrorSiGunGu,
-    isErrorLocation,
+    isErrorDepth1,
+    isErrorDepth2,
+    isErrorLocationList,
     isErrorSearch,
 
-    selectedSiDoId,
-    selectedSiGunGuId,
+    selectedDepth1Code,
+    selectedDepth2Code,
     selectedLocations,
-    confirmedLocations,
+    confirmedRegions,
 
     searchText,
     setSearchText,
     handleClearSearchBar,
 
-    handleSelectSiDo,
-    handleSelectSiGunGu,
-    handleToggleLocation,
+    handleSelectDepth1,
+    handleSelectDepth2,
+    handleSelectLocations,
     handleClearLocations,
     handleDeleteLocation,
     handleConfirmLocation,
