@@ -7,7 +7,7 @@ import Button from '@components/button/Button';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
-import { type SortType, SORT_OPTIONS } from '@pages/@owner/menu/constant/menu-list-sort';
+import {SORT_OPTIONS, SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
 
@@ -15,13 +15,13 @@ export default function MenuList() {
   const navigate = useNavigate();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isSorted, setIsSorted] = useState<SortType>('latest');
+  const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
 
   const sortedMenuList = () => {
     return [...mockMenuData].sort((a, b) => {
       const dateA = new Date(a.dateAdded).getTime();
       const dateB = new Date(b.dateAdded).getTime();
-      return isSorted === 'latest' ? dateB - dateA : dateA - dateB;
+      return isSorted === SORT_TYPES.LATEST ? dateB - dateA : dateA - dateB;
     });
   };
 
@@ -42,12 +42,12 @@ export default function MenuList() {
   };
 
   const handleSortByLatest = () => {
-    setIsSorted('latest');
+    setIsSorted(SORT_TYPES.LATEST);
     handleCloseBottomSheet();
   };
 
   const handleSortByOldest = () => {
-    setIsSorted('oldest');
+    setIsSorted(SORT_TYPES.OLDEST);
     handleCloseBottomSheet();
   };
 
@@ -149,14 +149,14 @@ export default function MenuList() {
               onClick={handleSortByLatest}
               className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
             >
-              {SORT_OPTIONS.latest}
+              {SORT_OPTIONS[SORT_TYPES.LATEST]}
             </button>
             <button
               type='button'
               onClick={handleSortByOldest}
               className='w-full p-[2rem] title-sb-14 text-grayscale-700'
             >
-              {SORT_OPTIONS.oldest}
+              {SORT_OPTIONS[SORT_TYPES.OLDEST]}
             </button>
             <Button
               variant='cta'
