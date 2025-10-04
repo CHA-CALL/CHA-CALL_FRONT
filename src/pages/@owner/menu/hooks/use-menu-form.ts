@@ -34,9 +34,11 @@ const menuSchema = z.object({
       MENU_LIMIT.PRICE_MIN_LENGTH,
       MENU_ERROR_MESSAGE.PRICE_MIN(MENU_LIMIT.PRICE_MIN_LENGTH)
     )
-    .max(
-      MENU_LIMIT.PRICE_MAX_LENGTH,
-      MENU_ERROR_MESSAGE.PRICE_MAX(MENU_LIMIT.PRICE_MAX_LENGTH)
+    .refine(
+      (value) => value.replace(/,/g, '').length <= MENU_LIMIT.PRICE_MAX_LENGTH,
+      {
+        message: MENU_ERROR_MESSAGE.PRICE_MAX(MENU_LIMIT.PRICE_MAX_LENGTH),
+      }
     ),
 
   image: z
