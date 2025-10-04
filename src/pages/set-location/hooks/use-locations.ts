@@ -1,14 +1,16 @@
+import { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { useRegions } from '@pages/set-location/hooks/use-regions';
+
+import { REGION_QUERY_KEY } from '@shared/querykey/regions';
+import { type RegionResponse } from '@../../apis/data-contracts';
+
 import {
   MAX_SELECTED,
   SELECT_ALL_ID_LENGTH,
+  DEPTHS,
 } from '@pages/set-location/constant/location';
-
-import { useState, useEffect } from 'react';
-import { useRegions } from './use-regions';
-import { useQueryClient } from '@tanstack/react-query';
-import { REGION_QUERY_KEY } from '@shared/querykey/regions';
-import { type RegionResponse } from '@../../apis/data-contracts';
-import { DEPTHS } from '@pages/set-location/constant/location';
 
 export const useLocations = () => {
   const [selectedDepth1Id, setSelectedDepth1Id] = useState<number | null>(null);
@@ -42,7 +44,7 @@ export const useLocations = () => {
         ),
       });
     }
-  }, [selectedDepth1Id, queryClient]);
+  }, [selectedDepth1Id, selectedDepth2Id, queryClient]);
 
   useEffect(() => {
     if (selectedDepth2Id) {
@@ -56,8 +58,8 @@ export const useLocations = () => {
   }, [selectedDepth2Id, selectedDepth1Id, queryClient]);
 
   const getSelectedLocations = () => {
-    if (!depth3List || !(depth3List as any)?.regions) return [];
-    return (depth3List as any).regions.filter((location: RegionResponse) =>
+    if (!depth3List || !depth3List?.data) return [];
+    return depth3List?.data?.filter((location: RegionResponse) =>
       selectedLocations.has(location.code ?? 0)
     );
   };

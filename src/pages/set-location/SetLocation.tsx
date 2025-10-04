@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import Depth1Item from '@pages/set-location/components/Depth1Item';
 import Depth2Item from '@pages/set-location/components/Depth2Item';
 import Depth3Item from '@pages/set-location/components/Depth3Item';
@@ -10,7 +12,6 @@ import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import Input from '@shared/components/input/Input';
-import { useNavigate } from 'react-router-dom';
 import { type RegionResponse } from '@../../apis/data-contracts';
 
 export default function SetLocation() {
