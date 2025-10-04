@@ -7,7 +7,7 @@ import {
   SERVING_SIZE,
 } from '@pages/filter/constant/filter-option-constants';
 
-interface GetFoodTrucksFilterType {
+export interface FoodTrucksFilterType {
   regionCodes?: string[] | null;
   schedules?: string[] | null;
   availableQuantity?: typeof SERVING_SIZE | null;
@@ -18,7 +18,7 @@ interface GetFoodTrucksFilterType {
   'cursorPagingRequest.size'?: number;
 }
 
-export const getFoodTrucksData = async (filter?: GetFoodTrucksFilterType) => {
+export const getFoodTrucksData = async (filter?: FoodTrucksFilterType) => {
   const response = await apiRequest<GetFoodTrucksData>({
     endPoint: `/food-trucks`,
     method: 'GET',
@@ -27,8 +27,9 @@ export const getFoodTrucksData = async (filter?: GetFoodTrucksFilterType) => {
   return response;
 };
 
+// TODO: 추후 머지 이후 삭제 예정. apiRequest에서 해당 기능 수행 예정.
 const toStringParams = (
-  filter?: GetFoodTrucksFilterType
+  filter?: FoodTrucksFilterType
 ): Record<string, string> | undefined => {
   if (!filter) return undefined;
   const result: Record<string, string> = {};

@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAtom } from 'jotai';
-
+import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
@@ -9,76 +6,25 @@ import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 
-import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
+// import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
-import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
-import { getFoodTrucksData } from '@pages/reservation/api';
-import { cn } from '@shared/utils/cn';
-import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
-import { formatSelectedDateToSchedules } from '@shared/utils/date-formatter';
-import { confirmedLocationsAtom } from '@shared/store/location-filter-store';
-import { extractLocationCodes } from '@shared/utils/extract-location';
+import useReservation from '@pages/reservation/hooks/use-reservation';
 
 export default function Reservation() {
-  const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    FOOD_TRUCK_CATEGORIES[0]
-  );
-  const [location] = useState<string>('전국');
-
-  const isAll = selectedCategory === FOOD_TRUCK_CATEGORIES[0];
-  const filteredFoodTrucks = isAll
-    ? mockFoodTruckData
-    : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
-
-  const navigate = useNavigate();
-
-  const handleClickBack = () => {
-    navigate(-1);
-  };
-
-  const handleClickLocation = () => {
-    navigate('/set-location');
-  };
-
-  const handleClickFilter = () => {
-    navigate('/filter');
-  };
-
-  const handleClickFoodTruck = (name: string) => {
-    navigate(`/food-truck/${name}`);
-  };
-
-  const handleClickTooltip = () => {
-    setIsTooltipOpen(!isTooltipOpen);
-  };
-
-  const handleClickChip = (category: string) => {
-    setSelectedCategory(category);
-  };
-
-  const [filters] = useAtom(filtersAtom);
-  const [notFiltered] = useAtom(notFilteredAtom);
-  const [locations] = useAtom(confirmedLocationsAtom);
-
-  useEffect(() => {
-    (async () => {
-      console.log(locations);
-      try {
-        const data = await getFoodTrucksData({
-          regionCodes: extractLocationCodes(locations),
-          schedules: formatSelectedDateToSchedules(filters.date),
-          availableQuantity: filters.servingSize,
-          categories: filters.foodType,
-          needElectricity: filters.electricityUsage,
-          paymentMethod: filters.paymentType,
-        });
-        console.log('[FoodTrucks] initial fetch:', data.data?.content);
-      } catch (err) {
-        console.error('[FoodTrucks] fetch error:', err);
-      }
-    })();
-  }, []);
+  const {
+    isTooltipOpen,
+    selectedCategory,
+    locationName,
+    notFiltered,
+    // isLoading,
+    foodTruckData,
+    handleClickBack,
+    handleClickLocation,
+    handleClickFilter,
+    // handleClickFoodTruck,
+    handleClickTooltip,
+    handleClickChip,
+  } = useReservation();
 
   return (
     <>
@@ -94,7 +40,10 @@ export default function Reservation() {
           className='flex cursor-pointer items-center gap-[0.6rem]'
         >
           <Icon name='ic_locate' className='text-primary-700' />
-          <span className='text-grayscale-900 body-m-14'>{location}</span>
+          <span className='text-grayscale-900 body-m-14'>
+            {locationName.length === 0 ? '전체' : locationName[0]}{' '}
+            {locationName.length > 1 && `외 ${locationName.length - 1}곳`}
+          </span>
           <Icon name='ic_down' />
         </button>
 
@@ -141,17 +90,19 @@ export default function Reservation() {
       </div>
 
       <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[1.6rem] pt-[12.6rem]'>
-        {filteredFoodTrucks.map((item, index) => (
-          <FoodTruckItem
-            key={item.truckId}
-            image={item.image}
-            name={item.name}
-            priceRange={item.priceRange}
-            minOrder={item.minOrder}
-            tags={item.tags}
-            handleClick={() => handleClickFoodTruck(item.name)}
-            isLast={index === filteredFoodTrucks.length - 1}
-          />
+        {foodTruckData?.content?.map((item, index) => (
+          // TODO: 카드 컴포넌트 사용하여 ui 마무리
+          <div key={`${item.name}-${index}`}>{item.name}</div>
+          // <FoodTruckItem
+          //   key={item.truckId}
+          //   image={item.image}
+          //   name={item.name}
+          //   priceRange={item.priceRange}
+          //   minOrder={item.minOrder}
+          //   tags={item.tags}
+          //   handleClick={() => handleClickFoodTruck(item.name)}
+          //   isLast={index === filteredFoodTrucks.length - 1}
+          // />
         ))}
       </div>
 

@@ -1,5 +1,3 @@
-import { cn } from '@utils/cn';
-
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import ButtonText from '@components/button-text/ButtonText';
@@ -7,6 +5,7 @@ import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import Button from '@components/button/Button';
 import ButtonDate from '@components/button-date/ButtonDate';
+import { cn } from '@utils/cn';
 import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import {
   ELECTRICITY_USAGE,
@@ -14,7 +13,7 @@ import {
   PAYMENT_TYPE,
   SERVING_SIZE,
 } from '@pages/filter/constant/filter-option-constants';
-import { useFilterLogic } from '@pages/filter/hooks/use-filter-logic';
+import useFilterLogic from '@pages/filter/hooks/use-filter-logic';
 
 export default function Filter() {
   const {

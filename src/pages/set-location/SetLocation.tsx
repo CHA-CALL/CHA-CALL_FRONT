@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 
+import Button from '@components/button/Button';
+import { Icon } from '@components/icon/Icon';
+import Navigation from '@components/navigation/Navigation';
+import Input from '@components/input/Input';
 import DongEupMeonItem from '@pages/set-location/components/DongEupMeonItem';
 import LocationCategoryLabels from '@pages/set-location/components/LocationCategoryLabels';
 import SearchResultItem from '@pages/set-location/components/SearchResultItem';
 import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
 import SiDoItem from '@pages/set-location/components/SiDoItem';
 import SiGunGuItem from '@pages/set-location/components/SiGunGuItem';
-import { useLocationsFilter } from '@pages/set-location/hooks/use-locations-filter';
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
-import Input from '@shared/components/input/Input';
+import useLocationsFilter from '@pages/set-location/hooks/use-locations-filter';
 
 export default function SetLocation() {
   const navigate = useNavigate();

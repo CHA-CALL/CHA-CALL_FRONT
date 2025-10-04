@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import type { RegionResponse } from '@/../apis/data-contracts';
 
@@ -8,13 +7,17 @@ import {
   MAX_SELECTED,
   SELECT_ALL_ID_LENGTH,
 } from '@pages/set-location/constant/set-location';
-import { getRegionsData, searchRegionsData } from '@pages/set-location/api';
-import { SET_LOCATIONS_KEYS } from '@shared/querykey/food-trucks/set-locations';
 import { confirmedLocationsAtom } from '@shared/store/location-filter-store';
 import { ROUTES } from '@router/constant/routes';
 import useToast from '@shared/hooks/use-toast';
+import {
+  useGetLocationQuery,
+  useGetSiDoQuery,
+  useGetSiGunGuQuery,
+  useSearchLocationQuery,
+} from '@pages/set-location/hooks/use-locations-query';
 
-export const useLocationsFilter = () => {
+export default function useLocationsFilter() {
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -40,40 +43,25 @@ export const useLocationsFilter = () => {
     data: siDoList = [],
     isLoading: isLoadingSiDo,
     isError: isErrorSiDo,
-  } = useQuery({
-    queryKey: SET_LOCATIONS_KEYS.DEPTH(1),
-    queryFn: () => getRegionsData({ depth: 1 }),
-  });
+  } = useGetSiDoQuery();
 
   const {
     data: siGunGuList = [],
     isLoading: isLoadingSiGunGu,
     isError: isErrorSiGunGu,
-  } = useQuery({
-    queryKey: SET_LOCATIONS_KEYS.DEPTH_ID(2, selectedSiDoId),
-    queryFn: () => getRegionsData({ depth: 2, parentCode: selectedSiDoId }),
-    enabled: !!selectedSiDoId,
-  });
+  } = useGetSiGunGuQuery(selectedSiDoId);
 
   const {
     data: locationList = [],
     isLoading: isLoadingLocation,
     isError: isErrorLocation,
-  } = useQuery({
-    queryKey: SET_LOCATIONS_KEYS.DEPTH_ID(3, selectedSiGunGuId),
-    queryFn: () => getRegionsData({ depth: 3, parentCode: selectedSiGunGuId }),
-    enabled: !!selectedSiGunGuId,
-  });
+  } = useGetLocationQuery(selectedSiGunGuId);
 
   const {
     data: searchRegionsList = [],
     isLoading: isLoadingSearch,
     isError: isErrorSearch,
-  } = useQuery({
-    queryKey: SET_LOCATIONS_KEYS.SEARCH(searchText),
-    queryFn: () => searchRegionsData({ keyword: searchText }),
-    enabled: !!searchText,
-  });
+  } = useSearchLocationQuery(searchText);
 
   const handleClearSearchBar = () => setSearchText('');
 
@@ -116,7 +104,12 @@ export const useLocationsFilter = () => {
             newMap.delete(key);
           }
         }
-        newMap.set(clickedCode, location);
+
+        const sidoName =
+          siDoList.find(s => s.code === selectedSiDoId)?.name ?? '';
+        const fullName = [sidoName, location.name].filter(Boolean).join(' ');
+
+        newMap.set(clickedCode, { ...location, name: fullName });
         return newMap;
       }
 
@@ -130,11 +123,19 @@ export const useLocationsFilter = () => {
       }
 
       if (newMap.size >= MAX_SELECTED) {
-        // TODO: toast 처리
+        toast.error(`최대 ${MAX_SELECTED}개까지만 선택 가능합니다.`);
         return newMap;
       }
 
-      newMap.set(clickedCode, location);
+      const sidoName =
+        siDoList.find(s => s.code === selectedSiDoId)?.name ?? '';
+      const sigunguName =
+        siGunGuList.find(s => s.code === selectedSiGunGuId)?.name ?? '';
+      const fullName = [sidoName, sigunguName, location.name]
+        .filter(Boolean)
+        .join(' ');
+
+      newMap.set(clickedCode, { ...location, name: fullName });
       return newMap;
     });
   };
@@ -158,7 +159,7 @@ export const useLocationsFilter = () => {
 
   const handleConfirmLocation = () => {
     setConfirmedLocations(new Map(selectedLocations));
-    toast.success('위치 설정이 완료되었습니다!');
+    toast.success('위치 설정이 완료되었습니다.');
     navigate(ROUTES.RESERVATION);
   };
 
@@ -194,4 +195,4 @@ export const useLocationsFilter = () => {
     handleDeleteLocation,
     handleConfirmLocation,
   };
-};
+}

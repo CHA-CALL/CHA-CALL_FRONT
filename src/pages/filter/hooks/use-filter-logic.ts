@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
+import { isEqual } from 'lodash';
 
 import type { SelectedDate } from '@shared/types/calendar-types';
 import {
@@ -9,9 +10,8 @@ import {
   resetAtom,
 } from '@shared/store/filter-store';
 import { getCleanedFilters } from '@pages/filter/utils/get-cleaned-filters';
-import { isEqual } from 'lodash';
 
-export function useFilterLogic() {
+export default function useFilterLogic() {
   const navigate = useNavigate();
 
   const [globalFilters, setGlobalFilters] = useAtom(filtersAtom);
