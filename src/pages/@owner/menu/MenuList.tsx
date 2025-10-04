@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
@@ -16,14 +16,16 @@ export default function MenuList() {
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
+  const [sortedMenuList, setSortedMenuList] = useState(mockMenuData);
 
-  const sortedMenuList = () => {
-    return [...mockMenuData].sort((a, b) => {
+  useEffect(() => {
+    const sorted = [...mockMenuData].sort((a, b) => {
       const dateA = new Date(a.dateAdded).getTime();
       const dateB = new Date(b.dateAdded).getTime();
       return isSorted === SORT_TYPES.LATEST ? dateB - dateA : dateA - dateB;
     });
-  };
+    setSortedMenuList(sorted);
+  }, [isSorted]);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -98,8 +100,8 @@ export default function MenuList() {
       </div>
 
       <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[8.5rem] bg-white'>
-        {sortedMenuList().length > 0 ? (
-          sortedMenuList().map((menu, index) => (
+        {sortedMenuList.length > 0 ? (
+          sortedMenuList.map((menu, index) => (
             <MenuItem
               key={menu.menuId}
               menuImage={menu.image}
@@ -107,7 +109,7 @@ export default function MenuList() {
               menuDescription={menu.description}
               menuPrice={menu.price}
               handleToggle={handleClickToggle}
-              isLast={index === sortedMenuList().length - 1}
+              isLast={index === sortedMenuList.length - 1}
             />
           ))
         ) : (
