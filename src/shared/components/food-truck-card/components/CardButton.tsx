@@ -32,7 +32,7 @@ export default function CardButton({
       )}
     >
       {isHeart
-        ? <Icon name='ic_heart_fill' className={isLiked ? 'text-primary-700' : ''} />
+        ? <Icon name='ic_heart_fill' className={isLiked ? 'text-primary-700' : 'text-grayscale-700'} />
         : <Icon name={buttonIcon} />
       }
     </button>
