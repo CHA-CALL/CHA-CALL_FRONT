@@ -35,7 +35,7 @@ export function CustomToast({ type, message }: ToastProps) {
 
   return (
     <div
-      className='fixed-center bottom-[8rem] z-[99] bg-white px-[2rem]'
+      className='fixed-center bottom-[8rem] z-[99] px-[2rem]'
       onClick={handleClick}
     >
       <div className='bg-grayscale-900 inline-flex w-full items-center gap-[0.4rem] rounded-[1.6rem] px-[1.6rem] py-[0.9rem]'>
