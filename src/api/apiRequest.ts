@@ -1,11 +1,14 @@
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
+type Primitive = string | number | boolean;
+type ParamValue = Primitive | Primitive[] | null | undefined;
+
 export interface ApiRequestProps {
   endPoint: string;
   method?: RequestMethod;
   data?: unknown;
   headers?: Record<string, string>;
-  params?: Record<string, string>;
+  params?: Record<string, ParamValue>;
 }
 
 const SERVER_API_BASE_URL = import.meta.env.VITE_API_SERVER_URL;
@@ -46,7 +49,11 @@ export const apiRequest = async <T = unknown>({
       const searchParams = new URLSearchParams();
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-          searchParams.append(key, value);
+          if (Array.isArray(value)) {
+            searchParams.append(key, value.map(String).join(','));
+          } else {
+            searchParams.append(key, String(value));
+          }
         }
       });
       requestUrl += `?${searchParams.toString()}`;
