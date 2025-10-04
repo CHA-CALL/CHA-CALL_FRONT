@@ -1,14 +1,19 @@
-import { create } from 'zustand';
+import { atom } from 'jotai';
 import { isEqual } from 'lodash';
 
 import type { SelectedDate } from '@shared/types/calendar-types';
+import {
+  ELECTRICITY_USAGE,
+  PAYMENT_TYPE,
+  SERVING_SIZE,
+} from '@pages/filter/constant/filter-option-constants';
 
 export interface FilterState {
   date: SelectedDate[];
-  servingSize: string | null;
+  servingSize: typeof SERVING_SIZE | null;
   foodType: string[] | null;
-  electricityUsage: string | null;
-  paymentType: string | null;
+  electricityUsage: typeof ELECTRICITY_USAGE | null;
+  paymentType: typeof PAYMENT_TYPE | null;
 }
 
 export const initialFilter: FilterState = {
@@ -19,74 +24,65 @@ export const initialFilter: FilterState = {
   paymentType: null,
 };
 
-type SingleKey = Exclude<keyof FilterState, 'date' | 'foodType'>;
-type MultiKey = 'foodType';
+export const filtersAtom = atom<FilterState>(initialFilter);
 
-interface FilterStore {
-  filters: FilterState;
-  setSingle: (_key: SingleKey, _value: string) => void;
-  setMulti: (_key: MultiKey, _value: string) => void;
-  applyDate: (_date: SelectedDate, _index: number) => void;
-  addSchedule: () => void;
-  reset: () => void;
-  isInitialState: () => boolean;
-  getCleanedFilters: () => FilterState;
-}
+export const setSingleAtom = atom(
+  null,
+  (
+    get,
+    set,
+    {
+      key,
+      value,
+    }: { key: Exclude<keyof FilterState, 'date' | 'foodType'>; value: string }
+  ) => {
+    const filters = get(filtersAtom);
+    const prev = filters[key] as string | null;
+    set(filtersAtom, {
+      ...filters,
+      [key]: prev === value ? null : value,
+    });
+  }
+);
 
-export const useFilterStore = create<FilterStore>()((set, get) => ({
-  filters: initialFilter,
+export const setMultiAtom = atom(
+  null,
+  (get, set, { key, value }: { key: 'foodType'; value: string }) => {
+    const filters = get(filtersAtom);
+    const current = filters[key] ?? [];
+    const next = current.includes(value)
+      ? current.filter(v => v !== value)
+      : [...current, value];
+    set(filtersAtom, {
+      ...filters,
+      [key]: next.length > 0 ? next : null,
+    });
+  }
+);
 
-  setSingle: (key, value) =>
-    set(state => {
-      const prev = state.filters[key] as string | null;
-      return {
-        filters: {
-          ...state.filters,
-          [key]: prev === value ? null : value,
-        },
-      };
-    }),
+export const applyDateAtom = atom(
+  null,
+  (get, set, { date, index }: { date: SelectedDate; index: number }) => {
+    const filters = get(filtersAtom);
+    const list = filters.date ?? [];
+    const next = [...list];
+    next[index] = date;
+    set(filtersAtom, { ...filters, date: next });
+  }
+);
 
-  setMulti: (key, value) =>
-    set(state => {
-      const current = state.filters[key] ?? [];
-      const next = current.includes(value)
-        ? current.filter(v => v !== value)
-        : [...current, value];
-      return {
-        filters: {
-          ...state.filters,
-          [key]: next.length > 0 ? next : null,
-        },
-      };
-    }),
+export const addScheduleAtom = atom(null, (get, set) => {
+  const filters = get(filtersAtom);
+  set(filtersAtom, {
+    ...filters,
+    date: [...(filters.date ?? []), { startDate: null, endDate: null }],
+  });
+});
 
-  applyDate: (date, index) =>
-    set(state => {
-      const list = state.filters.date ?? [];
-      const next = [...list];
-      next[index] = date;
-      return { filters: { ...state.filters, date: next } };
-    }),
+export const resetAtom = atom(null, (_, set) => {
+  set(filtersAtom, initialFilter);
+});
 
-  addSchedule: () =>
-    set(state => ({
-      filters: {
-        ...state.filters,
-        date: [
-          ...(state.filters.date ?? []),
-          { startDate: null, endDate: null },
-        ],
-      },
-    })),
-
-  reset: () => set({ filters: initialFilter }),
-
-  isInitialState: () => isEqual(get().filters, initialFilter),
-
-  // 날짜 중 startDate 없는 항목 제거
-  getCleanedFilters: () => {
-    const f = get().filters;
-    return { ...f, date: f.date.filter(d => d.startDate !== null) };
-  },
-}));
+export const notFilteredAtom = atom(get =>
+  isEqual(get(filtersAtom), initialFilter)
+);

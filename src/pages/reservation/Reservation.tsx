@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
+
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
+import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
+
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
-import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
+import { getFoodTrucksData } from '@pages/reservation/api';
 import { cn } from '@shared/utils/cn';
-import { getFoodTrucksData } from './api';
+import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
+import { formatSelectedDateToSchedules } from '@shared/utils/date-formatter';
+import { confirmedLocationsAtom } from '@shared/store/location-filter-store';
+import { extractLocationCodes } from '@shared/utils/extract-location';
 
 export default function Reservation() {
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
@@ -25,9 +32,6 @@ export default function Reservation() {
     : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
 
   const navigate = useNavigate();
-
-  // TODO: 필터 페이지와 연결 및 필터 상태 관리 로직 추가
-  const [isFilterApplied] = useState<boolean>(false);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -53,10 +57,22 @@ export default function Reservation() {
     setSelectedCategory(category);
   };
 
+  const [filters] = useAtom(filtersAtom);
+  const [notFiltered] = useAtom(notFilteredAtom);
+  const [locations] = useAtom(confirmedLocationsAtom);
+
   useEffect(() => {
     (async () => {
+      console.log(locations);
       try {
-        const data = await getFoodTrucksData();
+        const data = await getFoodTrucksData({
+          regionCodes: extractLocationCodes(locations),
+          schedules: formatSelectedDateToSchedules(filters.date),
+          availableQuantity: filters.servingSize,
+          categories: filters.foodType,
+          needElectricity: filters.electricityUsage,
+          paymentMethod: filters.paymentType,
+        });
         console.log('[FoodTrucks] initial fetch:', data.data?.content);
       } catch (err) {
         console.error('[FoodTrucks] fetch error:', err);
@@ -84,17 +100,17 @@ export default function Reservation() {
 
         <ButtonIcon
           icon='ic_filter'
-          iconClassName={isFilterApplied ? 'text-primary-700' : undefined}
+          iconClassName={!notFiltered ? 'text-primary-700' : undefined}
           handleClick={handleClickFilter}
           className={cn(
             'flex h-[2.8rem] w-[2.8rem] items-center justify-center rounded-[0.4rem] border pl-[0.4rem] pt-[0.4rem]',
-            isFilterApplied
+            !notFiltered
               ? 'border-primary-700 bg-primary-50'
               : 'border-grayscale-200'
           )}
         />
 
-        {!isFilterApplied && (
+        {notFiltered && (
           <Tooltip
             text='맞춤조건을 설정할 수 있어요'
             isTooltipVisible={isTooltipOpen}

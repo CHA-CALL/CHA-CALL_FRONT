@@ -6,4 +6,8 @@ export const SET_LOCATIONS_KEYS = {
     depth,
     id,
   ],
+  SEARCH: (searchText: string | undefined) => [
+    SET_LOCATIONS_KEYS.ALL,
+    searchText,
+  ],
 } as const;

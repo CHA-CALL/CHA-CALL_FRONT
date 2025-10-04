@@ -1,14 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { cn } from '@utils/cn';
 
-import { cn } from '@shared/utils/cn';
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import ButtonText from '@shared/components/button-text/ButtonText';
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
-import Calendar from '@shared/components/calendar/Calendar';
-import type { SelectedDate } from '@shared/types/calendar-types';
-import ButtonDate from '@shared/components/button-date/ButtonDate';
+import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@components/icon/Icon';
+import ButtonText from '@components/button-text/ButtonText';
+import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Calendar from '@components/calendar/Calendar';
+import Button from '@components/button/Button';
+import ButtonDate from '@components/button-date/ButtonDate';
 import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import {
   ELECTRICITY_USAGE,
@@ -16,59 +14,25 @@ import {
   PAYMENT_TYPE,
   SERVING_SIZE,
 } from '@pages/filter/constant/filter-option-constants';
-import Button from '@shared/components/button/Button';
-import { useFilterStore } from '@shared/store/filter-store';
+import { useFilterLogic } from '@pages/filter/hooks/use-filter-logic';
 
 export default function Filter() {
-  const navigate = useNavigate();
-
   const {
-    filters,
-    setSingle,
-    setMulti,
-    applyDate,
-    addSchedule,
-    reset,
-    isInitialState,
-    getCleanedFilters,
-  } = useFilterStore();
+    localFilters,
+    isBottomSheetOpen,
+    currentDateIndex,
+    notFiltered,
+    handleGoBack,
+    handleSelectSingle,
+    handleSelectMulti,
+    handleApplyDate,
+    handleAddSchedule,
+    handleResetFilter,
+    handleOpenCalendar,
+    handleCloseCalendar,
+    handleApplyFilter,
+  } = useFilterLogic();
 
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [currentDateIndex, setCurrentDateIndex] = useState<number | null>(null);
-
-  const handleGoBack = () => navigate(-1);
-
-  const handleSelectSingle = (
-    key: 'servingSize' | 'electricityUsage' | 'paymentType',
-    value: string
-  ) => setSingle(key, value);
-
-  const handleSelectMulti = (key: 'foodType', value: string) =>
-    setMulti(key, value);
-
-  const handleApplyDate = (date: SelectedDate, index: number) =>
-    applyDate(date, index);
-
-  const handleAddSchedule = () => addSchedule();
-
-  const handleResetFilter = () => reset();
-
-  const handleOpenCalendar = (index: number) => {
-    setCurrentDateIndex(index);
-    setIsBottomSheetOpen(true);
-  };
-
-  const handleCloseCalendar = () => {
-    setIsBottomSheetOpen(false);
-    setCurrentDateIndex(null);
-  };
-
-  // TODO: 서버에 필터링 요청
-  const handleApplyFilter = () => {
-    const cleanedFilters = getCleanedFilters();
-    alert(JSON.stringify(cleanedFilters, null, 2));
-    navigate('/reservation');
-  };
   return (
     <>
       <Navigation
@@ -91,7 +55,7 @@ export default function Filter() {
               일정 추가하기
             </ButtonText>
           </div>
-          {filters.date.map((date, index) => (
+          {localFilters.date.map((date, index) => (
             <ButtonDate
               key={index}
               startDate={date.startDate}
@@ -104,7 +68,7 @@ export default function Filter() {
 
         <FilterChipGroup
           filterTitle='수량'
-          selectedOption={filters.servingSize ?? ''}
+          selectedOption={localFilters.servingSize ?? ''}
           options={SERVING_SIZE}
           handleSelectFilter={value => handleSelectSingle('servingSize', value)}
         />
@@ -112,7 +76,7 @@ export default function Filter() {
 
         <FilterChipGroup
           filterTitle='음식 종류'
-          selectedOption={filters.foodType ?? []}
+          selectedOption={localFilters.foodType ?? []}
           options={FOOD_TYPE}
           multiSelectable
           handleSelectFilter={value => handleSelectMulti('foodType', value)}
@@ -121,7 +85,7 @@ export default function Filter() {
 
         <FilterChipGroup
           filterTitle='전기 사용'
-          selectedOption={filters.electricityUsage ?? ''}
+          selectedOption={localFilters.electricityUsage ?? ''}
           options={ELECTRICITY_USAGE}
           handleSelectFilter={value =>
             handleSelectSingle('electricityUsage', value)
@@ -131,7 +95,7 @@ export default function Filter() {
 
         <FilterChipGroup
           filterTitle='결제 방법'
-          selectedOption={filters.paymentType ?? ''}
+          selectedOption={localFilters.paymentType ?? ''}
           options={PAYMENT_TYPE}
           handleSelectFilter={value => handleSelectSingle('paymentType', value)}
         />
@@ -144,7 +108,7 @@ export default function Filter() {
           currentDateIndex !== null ? (
             <Calendar
               selectedDate={
-                filters.date?.[currentDateIndex] ?? {
+                localFilters.date?.[currentDateIndex] ?? {
                   startDate: null,
                   endDate: null,
                 }
@@ -166,7 +130,7 @@ export default function Filter() {
       >
         <Button
           variant='cta'
-          buttonStyle={isInitialState() ? 'disabled' : 'active'}
+          buttonStyle={notFiltered ? 'disabled' : 'active'}
           handleClickButton={handleApplyFilter}
         >
           적용

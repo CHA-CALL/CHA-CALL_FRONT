@@ -1,14 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
 import type { RegionResponse } from '@/../apis/data-contracts';
+
 import {
   MAX_SELECTED,
   SELECT_ALL_ID_LENGTH,
 } from '@pages/set-location/constant/set-location';
 import { getRegionsData, searchRegionsData } from '@pages/set-location/api';
 import { SET_LOCATIONS_KEYS } from '@shared/querykey/food-trucks/set-locations';
+import { confirmedLocationsAtom } from '@shared/store/location-filter-store';
+import { ROUTES } from '@router/constant/routes';
+import useToast from '@shared/hooks/use-toast';
 
 export const useLocationsFilter = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const [selectedSiDoId, setSelectedSidoId] = useState<number>();
   const [selectedSiGunGuId, setSelectedSiGunGuId] = useState<number>();
   const [selectedLocations, setSelectedLocations] = useState<
@@ -17,36 +26,54 @@ export const useLocationsFilter = () => {
 
   const [searchText, setSearchText] = useState('');
 
-  const { data: siDoList = [], isLoading: isLoadingSiDo } = useQuery({
-    queryKey: [SET_LOCATIONS_KEYS.DEPTH(1)],
+  const [confirmedLocations, setConfirmedLocations] = useAtom(
+    confirmedLocationsAtom
+  );
+
+  useEffect(() => {
+    if (confirmedLocations.size > 0) {
+      setSelectedLocations(new Map(confirmedLocations));
+    }
+  }, [confirmedLocations]);
+
+  const {
+    data: siDoList = [],
+    isLoading: isLoadingSiDo,
+    isError: isErrorSiDo,
+  } = useQuery({
+    queryKey: SET_LOCATIONS_KEYS.DEPTH(1),
     queryFn: () => getRegionsData({ depth: 1 }),
   });
 
-  const { data: siGunGuList = [], isLoading: isLoadingSiGunGu } = useQuery({
-    queryKey: [SET_LOCATIONS_KEYS.DEPTH_ID(2, selectedSiDoId)],
-    queryFn: () =>
-      selectedSiDoId
-        ? getRegionsData({ depth: 2, parentCode: selectedSiDoId })
-        : Promise.resolve([]),
+  const {
+    data: siGunGuList = [],
+    isLoading: isLoadingSiGunGu,
+    isError: isErrorSiGunGu,
+  } = useQuery({
+    queryKey: SET_LOCATIONS_KEYS.DEPTH_ID(2, selectedSiDoId),
+    queryFn: () => getRegionsData({ depth: 2, parentCode: selectedSiDoId }),
     enabled: !!selectedSiDoId,
   });
 
-  const { data: locationList = [], isLoading: isLoadingLocation } = useQuery({
-    queryKey: [SET_LOCATIONS_KEYS.DEPTH_ID(3, selectedSiGunGuId)],
-    queryFn: () =>
-      selectedSiGunGuId
-        ? getRegionsData({ depth: 3, parentCode: selectedSiGunGuId })
-        : Promise.resolve([]),
+  const {
+    data: locationList = [],
+    isLoading: isLoadingLocation,
+    isError: isErrorLocation,
+  } = useQuery({
+    queryKey: SET_LOCATIONS_KEYS.DEPTH_ID(3, selectedSiGunGuId),
+    queryFn: () => getRegionsData({ depth: 3, parentCode: selectedSiGunGuId }),
     enabled: !!selectedSiGunGuId,
   });
 
-  const { data: searchRegionsList = [], isLoading: isLoadingSearch } = useQuery(
-    {
-      queryKey: ['regions-search', searchText],
-      queryFn: () => searchRegionsData({ keyword: searchText }),
-      enabled: !!searchText,
-    }
-  );
+  const {
+    data: searchRegionsList = [],
+    isLoading: isLoadingSearch,
+    isError: isErrorSearch,
+  } = useQuery({
+    queryKey: SET_LOCATIONS_KEYS.SEARCH(searchText),
+    queryFn: () => searchRegionsData({ keyword: searchText }),
+    enabled: !!searchText,
+  });
 
   const handleClearSearchBar = () => setSearchText('');
 
@@ -113,9 +140,11 @@ export const useLocationsFilter = () => {
   };
 
   const handleClearLocations = () => {
-    setSelectedLocations(new Map());
+    const empty = new Map();
+    setSelectedLocations(empty);
     setSelectedSidoId(undefined);
     setSelectedSiGunGuId(undefined);
+    setConfirmedLocations(empty);
   };
 
   const handleDeleteLocation = (location: RegionResponse) => {
@@ -128,7 +157,9 @@ export const useLocationsFilter = () => {
   };
 
   const handleConfirmLocation = () => {
-    // TODO: 서버에 선택 지역 전달 등
+    setConfirmedLocations(new Map(selectedLocations));
+    toast.success('위치 설정이 완료되었습니다!');
+    navigate(ROUTES.RESERVATION);
   };
 
   return {
@@ -142,9 +173,15 @@ export const useLocationsFilter = () => {
     isLoadingLocation,
     isLoadingSearch,
 
+    isErrorSiDo,
+    isErrorSiGunGu,
+    isErrorLocation,
+    isErrorSearch,
+
     selectedSiDoId,
     selectedSiGunGuId,
     selectedLocations,
+    confirmedLocations,
 
     searchText,
     setSearchText,

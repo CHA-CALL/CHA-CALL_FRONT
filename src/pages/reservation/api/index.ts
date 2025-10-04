@@ -1,19 +1,19 @@
 import type { GetFoodTrucksData } from '@/../apis/data-contracts';
 
 import { apiRequest } from '@api/apiRequest';
+import {
+  ELECTRICITY_USAGE,
+  PAYMENT_TYPE,
+  SERVING_SIZE,
+} from '@pages/filter/constant/filter-option-constants';
 
 interface GetFoodTrucksFilterType {
-  regionCodes?: string | string[];
-  schedules?: string | string[];
-  availableQuantity?:
-    | '50인분 미만'
-    | '100인분 미만'
-    | '150인분 미만'
-    | '200인분 이상'
-    | '논의 필요';
-  categories?: string | string[]; // 예: ['분식','한식']
-  needElectricity?: '가능' | '불가능' | '논의 필요';
-  paymentMethod?: '무관' | '계좌이체' | '카드';
+  regionCodes?: string[] | null;
+  schedules?: string[] | null;
+  availableQuantity?: typeof SERVING_SIZE | null;
+  categories?: string[] | null;
+  needElectricity?: typeof ELECTRICITY_USAGE | null;
+  paymentMethod?: typeof PAYMENT_TYPE | null;
   'cursorPagingRequest.cursor'?: number;
   'cursorPagingRequest.size'?: number;
 }
