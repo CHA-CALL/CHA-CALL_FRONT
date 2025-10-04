@@ -21,40 +21,38 @@ export default function useStarRating({
   const starRefs = useRef<(SVGSVGElement | null)[]>([]);
 
   // x좌표로부터  판단
-  const calculateRateFromClientX = useCallback(
-    (clientX: number) => {
-      const stars = starRefs.current.filter(Boolean) as SVGSVGElement[];
-      if (!stars.length) return selectedRate;
+  const calculateRateFromClientX = useCallback((clientX: number) => {
+    const stars = starRefs.current.filter(Boolean) as SVGSVGElement[];
+    if (!stars.length) return selectedRate;
 
-      // 각 별 범위 검사
-      for (let i = 0; i < stars.length; i++) {
-        const rect = stars[i].getBoundingClientRect();
-        if (clientX >= rect.left && clientX <= rect.right) {
-          const isLeftHalf = clientX < rect.left + rect.width / 2;
-          const rate = RATES[i];
-          return isLeftHalf ? rate - 0.5 : rate;
-        }
+    // 각 별 범위 검사
+    for (let i = 0; i < stars.length; i++) {
+      const rect = stars[i].getBoundingClientRect();
+      if (clientX >= rect.left && clientX <= rect.right) {
+        const isLeftHalf = clientX < rect.left + rect.width / 2;
+        const rate = RATES[i];
+        return isLeftHalf ? rate - 0.5 : rate;
       }
+    }
 
-      // 별 사이의 공백을 드래그할 때: 가장 가까운 쪽으로
-      let nearestIdx = 0;
-      let nearestDist = Infinity;
-      stars.forEach((star, i) => {
-        const rect = star.getBoundingClientRect();
-        const center = rect.left + rect.width / 2;
-        const dist = Math.abs(center - clientX);
-        if (dist < nearestDist) {
-          nearestDist = dist;
-          nearestIdx = i;
-        }
-      });
-      const nearestRect = stars[nearestIdx].getBoundingClientRect();
-      const isLeftHalf = clientX < nearestRect.left + nearestRect.width / 2;
-      const rate = RATES[nearestIdx];
-      return isLeftHalf ? rate - 0.5 : rate;
-    },
-    [selectedRate]
-  );
+    // 별 사이의 공백을 드래그할 때: 가장 가까운 쪽으로
+    let nearestIdx = 0;
+    let nearestDist = Infinity;
+    stars.forEach((star, i) => {
+      const rect = star.getBoundingClientRect();
+      const center = rect.left + rect.width / 2;
+      const dist = Math.abs(center - clientX);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearestIdx = i;
+      }
+    });
+    const nearestRect = stars[nearestIdx].getBoundingClientRect();
+    const isLeftHalf = clientX < nearestRect.left + nearestRect.width / 2;
+    const rate = RATES[nearestIdx];
+    return isLeftHalf ? rate - 0.5 : rate;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDragStart = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
