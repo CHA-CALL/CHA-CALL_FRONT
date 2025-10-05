@@ -7,7 +7,7 @@ import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 
 // import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import useReservation from '@pages/reservation/hooks/use-reservation';
 
 export default function Reservation() {
