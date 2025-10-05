@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import ButtonTabGroup from '@components/button-tab/ButtonTabGroup';
@@ -16,7 +16,8 @@ import {
   type ReservationState,
 } from '@pages/reservation-history/types/reservation';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
-import { mockup } from '@pages/reservation-history/mockup';
+
+import { useOwnerReservations } from '@pages/reservation-history/hooks/use-reservations';
 
 export default function ReservationHistory() {
   const { role } = useRole();
@@ -26,13 +27,18 @@ export default function ReservationHistory() {
     RESERVATION_STATE.UPCOMING
   );
 
+  const {
+    data,
+    // fetchNextPage,
+    hasNextPage,
+    // isFetchingNextPage,
+  } = useOwnerReservations(reservationState);
+
+  const reservations = data?.pages.flatMap(page => page?.content || []) || [];
+
   const handleSelectReservationState = (state: string) => {
     setReservationState(state);
   };
-
-  useEffect(() => {
-    alert(reservationState);
-  }, [reservationState]);
 
   return (
     <>
@@ -44,21 +50,31 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      {mockup.length === 0 ? (
+      {reservations.length === 0 ? (
         <EmptyView
           isProvider={isProvider}
           reservationState={reservationState}
         />
       ) : (
         <div className='flex flex-col gap-[2rem] px-[2rem] pb-[2.6rem] pt-[9rem]'>
-          {mockup.map((reservation, index) => (
-            <div key={reservation.id} className='flex flex-col gap-[2rem]'>
-              <span className='heading-sb-20'>{reservation.name}</span>
-              {index !== mockup.length - 1 && (
+          {reservations.map((reservation, index) => (
+            <div key={reservation.reservationId} className='flex flex-col gap-[2rem]'>
+              <div className='flex flex-col gap-[1rem]'>
+                <img src={reservation.profileImage} alt={reservation.name} />
+                <span>{reservation.name} [{reservation.foodTruckName}]</span>
+                <span>{reservation.address}</span>
+                <span>{(reservation.dateTimeInfos)}</span>
+              </div>
+              {index !== reservations.length - 1 && (
                 <div className='h-[0.1rem] w-full bg-grayscale-100' />
               )}
             </div>
           ))}
+
+          {/* 무한스크롤 */}
+          {hasNextPage && (
+            <></>
+          )}
         </div>
       )}
     </>
