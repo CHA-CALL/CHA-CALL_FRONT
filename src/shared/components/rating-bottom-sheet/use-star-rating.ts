@@ -23,7 +23,7 @@ export default function useStarRating({
   // x좌표로부터  판단
   const calculateRateFromClientX = useCallback((clientX: number) => {
     const stars = starRefs.current.filter(Boolean) as SVGSVGElement[];
-    if (!stars.length) return selectedRate;
+    if (!stars.length) return 0;
 
     // 각 별 범위 검사
     for (let i = 0; i < stars.length; i++) {
@@ -51,7 +51,6 @@ export default function useStarRating({
     const isLeftHalf = clientX < nearestRect.left + nearestRect.width / 2;
     const rate = RATES[nearestIdx];
     return isLeftHalf ? rate - 0.5 : rate;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDragStart = useCallback(
