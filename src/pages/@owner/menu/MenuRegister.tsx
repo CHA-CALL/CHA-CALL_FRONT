@@ -101,6 +101,7 @@ export default function MenuRegister() {
                 <Icon name='ic_close' />
               </button>
             }
+            className='border-grayscale-300 focus-within:border-grayscale-700'
           />
         </MenuInput>
 
@@ -134,6 +135,7 @@ export default function MenuRegister() {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               updatePrice(e.target.value)
             }
+            className='border-grayscale-300 focus-within:border-grayscale-700'
           />
         </MenuInput>
 
