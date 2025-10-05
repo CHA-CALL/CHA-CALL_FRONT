@@ -15,7 +15,5 @@ export default function useFoodTruckListQuery(filter?: FoodTrucksFilterType) {
       return res.data;
     },
     enabled: !!filter,
-    staleTime: 1000 * 60 * 3,
-    retry: 1,
   });
 }

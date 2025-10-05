@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { isEqual } from 'lodash';
 
 import type { SelectedDate } from '@shared/types/calendar-types';
@@ -14,9 +14,11 @@ import { getCleanedFilters } from '@pages/filter/utils/get-cleaned-filters';
 export default function useFilterLogic() {
   const navigate = useNavigate();
 
-  const [globalFilters, setGlobalFilters] = useAtom(filtersAtom);
+  const globalFilters = useAtomValue(filtersAtom);
+  const setGlobalFilters = useSetAtom(filtersAtom);
+  const resetFilters = useSetAtom(resetAtom);
+
   const [localFilters, setLocalFilters] = useState(globalFilters);
-  const [, resetFilters] = useAtom(resetAtom);
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [currentDateIndex, setCurrentDateIndex] = useState<number | null>(null);

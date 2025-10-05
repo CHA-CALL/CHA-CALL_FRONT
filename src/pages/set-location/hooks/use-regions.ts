@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import type { RegionResponse } from '@/../apis/data-contracts';
 
 import { ROUTES } from '@router/constant/routes';
@@ -29,7 +29,8 @@ export default function useRegions() {
 
   const [searchText, setSearchText] = useState('');
 
-  const [confirmedRegions, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
+  const confirmedRegions = useAtomValue(confirmedRegionsAtom);
+  const setConfirmedRegions = useSetAtom(confirmedRegionsAtom);
 
   useEffect(() => {
     if (confirmedRegions.size > 0) {

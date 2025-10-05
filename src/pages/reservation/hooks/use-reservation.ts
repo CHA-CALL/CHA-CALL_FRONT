@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import _ from 'lodash';
 
 import {
@@ -22,9 +22,9 @@ export default function useReservation() {
   );
   const [locationName, setLocationName] = useState<string[]>([]);
 
-  const [filters] = useAtom(filtersAtom);
-  const [notFiltered] = useAtom(notFilteredAtom);
-  const [regions] = useAtom(confirmedRegionsAtom);
+  const filters = useAtomValue(filtersAtom);
+  const notFiltered = useAtomValue(notFilteredAtom);
+  const regions = useAtomValue(confirmedRegionsAtom);
 
   const categories = (() => {
     if (selectedCategory === '전체보기') return filters.categories ?? [];
