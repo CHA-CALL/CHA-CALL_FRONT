@@ -27,7 +27,7 @@ export default function ReservationList({
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: '0rem',
+      rootMargin: '0px',
       threshold: 0.5,
     }
 
