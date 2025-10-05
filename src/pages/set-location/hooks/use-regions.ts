@@ -26,7 +26,7 @@ export default function useRegions() {
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
   >(new Map());
-  const [isMaxSelected, setIsMaxSelected] = useState<boolean>();
+  const [isMaxSelected, setIsMaxSelected] = useState<boolean>(false);
 
   const [searchText, setSearchText] = useState<string>('');
 
