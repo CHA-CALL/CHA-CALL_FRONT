@@ -60,7 +60,13 @@ const menuSchema = z.object({
         message: CANNOT_UPLOAD_FILE_MB,
       }
     )
-    .optional(),
+    .optional()
+    .refine(
+      (file) => file !== undefined,
+      {
+        message: '이미지를 선택해주세요',
+      }
+    ),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
@@ -102,7 +108,10 @@ export const useMenuForm = () => {
   };
 
   const updateImage = (image: File | null) => {
-    if (image === null) return;
+    if (image === null) {
+      setValue('image', undefined, { shouldValidate: true });
+      return;
+    }
     if (!isAcceptableFile(image)) {
       setError('image', { message: NOT_ALLOWED_FILE_TYPE });
       return;
