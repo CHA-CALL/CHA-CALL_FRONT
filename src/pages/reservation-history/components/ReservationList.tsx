@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import type {
   OwnerReservationHistoryResponse,
   MemberReservationHistoryResponse
@@ -9,14 +10,46 @@ import { splitDateTime } from '@utils/split-date-time';
 interface ReservationListProps {
   isProvider: boolean;
   reservations: OwnerReservationHistoryResponse[] | MemberReservationHistoryResponse[];
+  fetchNextPage: () => void;
   hasNextPage: boolean;
+  isLoading?: boolean;
 }
 
 export default function ReservationList({
   isProvider,
   reservations,
+  fetchNextPage,
   hasNextPage,
+  isLoading,
 }: ReservationListProps) {
+  const nextFetchTargetRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0rem',
+      threshold: 0.5,
+    }
+
+    const fetchCallback = (
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver
+    ) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && hasNextPage) {
+          fetchNextPage();
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(fetchCallback, options);
+
+    if (nextFetchTargetRef.current) {
+      observer.observe(nextFetchTargetRef.current);
+    }
+  }, [reservations, hasNextPage, fetchNextPage]);
+
   if (reservations.length === 0) {
     return <EmptyView isProvider={isProvider} reservationState={'UPCOMING'} />;
   }
@@ -53,7 +86,9 @@ export default function ReservationList({
         </div>
       ))}
 
-      {hasNextPage && <></>}
+      {!isLoading && hasNextPage &&
+        <div ref={nextFetchTargetRef} />
+      }
     </div>
   );
 }

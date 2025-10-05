@@ -8,7 +8,9 @@ interface OwnerReservationListProps {
 export default function OwnerReservationList({ reservationState }: OwnerReservationListProps) {
   const {
     data,
-    hasNextPage
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
   } = useOwnerReservations(reservationState);
 
   const reservations = data?.pages.flatMap(page => page?.content || []) || [];
@@ -17,7 +19,9 @@ export default function OwnerReservationList({ reservationState }: OwnerReservat
     <ReservationList
       isProvider={true}
       reservations={reservations}
+      fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
+      isLoading={isLoading}
     />
   );
 }

@@ -8,7 +8,9 @@ interface UserReservationListProps {
 export default function UserReservationList({ reservationState }: UserReservationListProps) {
   const {
     data,
-    hasNextPage
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
   } = useUserReservations(reservationState);
 
   const reservations = data?.pages.flatMap(page => page?.content || []) || [];
@@ -17,7 +19,9 @@ export default function UserReservationList({ reservationState }: UserReservatio
     <ReservationList
       isProvider={false}
       reservations={reservations}
+      fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
+      isLoading={isLoading}
     />
   );
 }

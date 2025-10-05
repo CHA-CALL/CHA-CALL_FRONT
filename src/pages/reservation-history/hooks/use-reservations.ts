@@ -18,7 +18,7 @@ export const useOwnerReservations = (viewType: ReservationState) => {
       });
       return response;
     },
-    initialPageParam: undefined as number | undefined,
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;
@@ -40,7 +40,7 @@ export const useUserReservations = (viewType: ReservationState) => {
       });
       return response;
     },
-    initialPageParam: undefined as number | undefined,
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;
