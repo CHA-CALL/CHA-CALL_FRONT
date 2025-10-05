@@ -139,24 +139,17 @@ export default function MenuRegister() {
           />
         </MenuInput>
 
-        <MenuInput title='사진 등록' error={errors.image}>
-          <div className='flex flex-col gap-[1rem]'>
-            <div className='flex'>
-              {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
-              {imageUrl && (
-                <ImagePreview
-                  key='image-preview'
-                  handleClose={handleRemoveFile}
-                  src={imageUrl}
-                  alt='image-preview'
-                />
-              )}
-            </div>
-            <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
-              <p className='text-primary-700'>{imageUrl?.length || 0}</p>
-              <p className='text-grayscale-700'>/</p>
-              <p className='text-grayscale-700'>{1}</p>
-            </div>
+        <MenuInput title='사진 등록' error={errors.image} maxLength={1} currentLength={imageUrl ? 1 : 0}>
+          <div className='flex'>
+            {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
+            {imageUrl && (
+              <ImagePreview
+                key='image-preview'
+                handleClose={handleRemoveFile}
+                src={imageUrl}
+                alt='image-preview'
+              />
+            )}
           </div>
         </MenuInput>
       </div>
