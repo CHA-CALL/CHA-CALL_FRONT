@@ -17,11 +17,15 @@ import {
 } from '@pages/reservation-history/types/reservation';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 
-import { useOwnerReservations } from '@pages/reservation-history/hooks/use-reservations';
+import {
+  useOwnerReservations,
+  useUserReservations,
+} from '@pages/reservation-history/hooks/use-reservations';
 import { splitDateTime } from '@utils/split-date-time';
 
 export default function ReservationHistory() {
   const { role } = useRole();
+  // TODO: === 으로 수정 필요
   const isProvider = role !== ROLE.PROVIDER;
 
   const [reservationState, setReservationState] = useState<ReservationState>(
@@ -34,6 +38,13 @@ export default function ReservationHistory() {
     hasNextPage,
     // isFetchingNextPage,
   } = useOwnerReservations(reservationState);
+
+  const {
+    data: userData,
+    // fetchNextPage: userFetchNextPage,
+    hasNextPage: userHasNextPage,
+    // isFetchingNextPage: userIsFetchingNextPage,
+  } = useUserReservations(reservationState);
 
   const reservations = data?.pages.flatMap(page => page?.content || []) || [];
 

@@ -1,10 +1,3 @@
-// export const RESERVATION_STATE = {
-//   UPCOMING: 'upcoming',
-//   CONFIRMED: 'confirmed',
-//   COMPLETED: 'completed',
-//   CANCELED: 'canceled',
-// };
-
 export const RESERVATION_STATE = {
   UPCOMING: '진행 예정',
   CONFIRMED: '확정 신청',
