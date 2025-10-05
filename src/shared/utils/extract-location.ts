@@ -1,4 +1,4 @@
-import type { RegionResponse } from '@/../apis/data-contracts';
+import type { RegionResponse } from 'apis/data-contracts';
 
 /**
  * Map<number, RegionResponse> → string[]

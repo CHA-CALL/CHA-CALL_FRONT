@@ -1,4 +1,4 @@
-import type { GetFoodTrucksData } from '@/../apis/data-contracts';
+import type { GetFoodTrucksData } from 'apis/data-contracts';
 
 import { apiRequest, type ParamValue } from '@api/apiRequest';
 import {

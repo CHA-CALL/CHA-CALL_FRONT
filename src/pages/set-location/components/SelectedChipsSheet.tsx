@@ -1,4 +1,4 @@
-import type { RegionResponse } from '@/../apis/data-contracts';
+import type { RegionResponse } from 'apis/data-contracts';
 
 import SelectChip from '@components/select-chip/SelectChip';
 import { MAX_SELECTED } from '@pages/set-location/constant/set-location';

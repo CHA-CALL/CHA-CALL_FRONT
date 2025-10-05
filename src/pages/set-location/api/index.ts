@@ -1,7 +1,4 @@
-import type {
-  GetRegionsData,
-  SearchRegionsData,
-} from '@/../apis/data-contracts';
+import type { GetRegionsData, SearchRegionsData } from 'apis/data-contracts';
 
 import { apiRequest } from '@api/apiRequest';
 

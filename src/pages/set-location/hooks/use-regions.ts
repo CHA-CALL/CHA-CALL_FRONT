@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
-import type { RegionResponse } from '@/../apis/data-contracts';
+import type { RegionResponse } from 'apis/data-contracts';
 
 import { ROUTES } from '@router/constant/routes';
 import useToast from '@shared/hooks/use-toast';
