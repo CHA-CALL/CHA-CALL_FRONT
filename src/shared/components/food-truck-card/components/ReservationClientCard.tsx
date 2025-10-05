@@ -31,7 +31,7 @@ export default function ReservationClientCard({
       />
 
       <div className='flex flex-col gap-[0.2rem]'>
-        <span className='title-sb-16 text-grayscale-900'>{name}</span>
+        <span className='title-sb-16 text-grayscale-900 mb-[0.2rem]'>{name}</span>
         <InfoRow iconId='ic_locate'>{address}</InfoRow>
         <InfoRow iconId='ic_calendar'>{period}</InfoRow>
         <InfoRow iconId='ic_time'>{time}</InfoRow>
