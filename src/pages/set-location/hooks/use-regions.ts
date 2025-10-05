@@ -26,8 +26,9 @@ export default function useRegions() {
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
   >(new Map());
+  const [isMaxSelected, setIsMaxSelected] = useState<boolean>();
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState<string>('');
 
   const confirmedRegions = useAtomValue(confirmedRegionsAtom);
   const setConfirmedRegions = useSetAtom(confirmedRegionsAtom);
@@ -37,6 +38,13 @@ export default function useRegions() {
       setSelectedLocations(new Map(confirmedRegions));
     }
   }, [confirmedRegions]);
+
+  useEffect(() => {
+    if (isMaxSelected) {
+      toast.error(`최대 ${MAX_SELECTED}개까지만 선택 가능합니다.`);
+      setIsMaxSelected(false);
+    }
+  }, [isMaxSelected, toast]);
 
   const {
     data: depth1List = [],
@@ -122,7 +130,7 @@ export default function useRegions() {
       }
 
       if (newMap.size >= MAX_SELECTED) {
-        toast.error(`최대 ${MAX_SELECTED}개까지만 선택 가능합니다.`);
+        setIsMaxSelected(true);
         return newMap;
       }
 
