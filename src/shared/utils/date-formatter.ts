@@ -25,7 +25,11 @@ export const formatCalendarDayToDate = (
   return c ? new Date(c.year, c.month - 1, c.day) : null;
 };
 
-// SelectedDate 타입을 string[] 형식으로 변환해주는 함수. api 연결 시 필요
+/**
+ *
+ * @param dates SelectedDate 타입의 배열
+ * @returns 2025.10.05~2025.10.08 형식의 string 배열
+ */
 export const formatSelectedDateToSchedules = (
   dates: SelectedDate[]
 ): string[] => {
