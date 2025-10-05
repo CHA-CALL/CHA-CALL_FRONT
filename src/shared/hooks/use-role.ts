@@ -1,16 +1,10 @@
 import { type Role, ROLE } from '@shared/constant/role';
-import { create } from 'zustand';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 
-interface RoleState {
-  role: Role;
-  setRole: (_role: Role) => void;
-  getRole: () => Role;
-  updateRole: (_role: Role) => void;
-}
+const roleAtom = atom<Role>(ROLE.LOGOUT);
 
-export const useRole = create<RoleState>((set, get) => ({
-  role: ROLE.LOGOUT,
-  setRole: (role: Role) => set({ role }),
-  getRole: () => get().role,
-  updateRole: (role: Role) => set({ role }),
-}));
+export const useRole = () => {
+  const role = useAtomValue(roleAtom);
+  const setRole = useSetAtom(roleAtom);
+  return { role, setRole };
+};
