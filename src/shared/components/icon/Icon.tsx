@@ -30,6 +30,7 @@ export type IconId =
   | 'ic_star_half'
   | 'ic_star_small'
   | 'ic_heart_fill'
+  | 'ic_heart_empty'
   | 'ic_time';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
