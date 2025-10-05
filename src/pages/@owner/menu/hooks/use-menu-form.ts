@@ -1,8 +1,14 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MENU_LIMIT, MENU_ERROR_MESSAGE } from '@pages/@owner/menu/constant/menu';
-import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import {
+  MENU_LIMIT,
+  MENU_ERROR_MESSAGE,
+} from '@pages/@owner/menu/constant/menu';
+import {
+  CANNOT_UPLOAD_FILE_MB,
+  NOT_ALLOWED_FILE_TYPE,
+} from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
 const menuSchema = z.object({
@@ -30,34 +36,31 @@ const menuSchema = z.object({
 
   price: z
     .string()
-    .min(
-      MENU_LIMIT.PRICE_MIN_LENGTH,
-      MENU_ERROR_MESSAGE.PRICE_MIN(MENU_LIMIT.PRICE_MIN_LENGTH)
-    )
     .refine(
-      (value) => value.replace(/,/g, '').length <= MENU_LIMIT.PRICE_MAX_LENGTH,
-      {
-        message: MENU_ERROR_MESSAGE.PRICE_MAX(MENU_LIMIT.PRICE_MAX_LENGTH),
-      }
-    ),
+      val => val.replace(/,/g, '').length >= MENU_LIMIT.PRICE_MIN_LENGTH,
+      MENU_ERROR_MESSAGE.PRICE_MIN
+    )
+    .transform(val => Number(val.replace(/,/g, '')).toLocaleString()),
 
   image: z
-    .union([
-      z.instanceof(File),
-      z.null()
-    ])
+    .instanceof(File)
     .refine(
-      (file) => file !== null,
-      { message: '이미지를 선택해주세요.' }
+      file => {
+        return isAcceptableFile(file);
+      },
+      {
+        message: NOT_ALLOWED_FILE_TYPE,
+      }
     )
     .refine(
-      (file) => file === null || isFileSizeValid(file), {
-      message: CANNOT_UPLOAD_FILE_MB,
-    })
-    .refine(
-      (file) => file === null || isAcceptableFile(file), {
-      message: NOT_ALLOWED_FILE_TYPE,
-    }),
+      file => {
+        return isFileSizeValid(file);
+      },
+      {
+        message: CANNOT_UPLOAD_FILE_MB,
+      }
+    )
+    .optional(),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
@@ -68,6 +71,7 @@ export const useMenuForm = () => {
     setValue,
     trigger,
     formState: { errors, isValid },
+    setError,
     watch,
   } = useForm<MenuFormData>({
     resolver: zodResolver(menuSchema),
@@ -75,7 +79,7 @@ export const useMenuForm = () => {
       name: '',
       description: '',
       price: '',
-      image: null,
+      image: undefined,
     },
     mode: 'onChange',
   });
@@ -91,11 +95,22 @@ export const useMenuForm = () => {
   };
 
   const updatePrice = (price: string) => {
-    const formattedPrice = price.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const formattedPrice = price
+      .replace(/\D/g, '')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     setValue('price', formattedPrice, { shouldValidate: true });
   };
 
   const updateImage = (image: File | null) => {
+    if (image === null) return;
+    if (!isAcceptableFile(image)) {
+      setError('image', { message: NOT_ALLOWED_FILE_TYPE });
+      return;
+    }
+    if (!isFileSizeValid(image)) {
+      setError('image', { message: CANNOT_UPLOAD_FILE_MB });
+      return;
+    }
     setValue('image', image, { shouldValidate: true });
   };
 
@@ -130,4 +145,4 @@ export const useMenuForm = () => {
     handleSubmit: handleSubmit(onSubmit),
     trigger,
   };
-}
+};
