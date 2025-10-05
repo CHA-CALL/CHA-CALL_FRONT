@@ -1,5 +1,5 @@
 import { cn } from '@utils/cn';
-import { type FoodTruckCardProps } from '@shared/components/food-truck-card/types/FoodTruckCard.types';
+import { type FoodTruckCardProps } from '@shared/components/food-truck-card/types/food-truck-card-types';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 import ReservationProviderCard from '@components/food-truck-card/components/ReservationProviderCard';
 import ReservationClientCard from '@components/food-truck-card/components/ReservationClientCard';
@@ -7,12 +7,7 @@ import FoodTruckProviderCard from '@components/food-truck-card/components/FoodTr
 import FoodTruckClientCard from '@components/food-truck-card/components/FoodTruckClientCard';
 
 export default function FoodTruckCard(props: FoodTruckCardProps) {
-  const {
-    variant,
-    data,
-    className,
-    handleClickButton
-  } = props;
+  const { variant, data, className, handleClickButton } = props;
 
   const renderCard = () => {
     switch (variant) {
@@ -60,13 +55,6 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
   };
 
   return (
-    <div
-      className={cn(
-        'flex w-full bg-white',
-        className,
-      )}
-    >
-      {renderCard()}
-    </div>
+    <div className={cn('flex w-full bg-white', className)}>{renderCard()}</div>
   );
 }

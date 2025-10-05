@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
-import { type FoodTruckCardProps } from '@shared/components/food-truck-card/types/FoodTruckCard.types';
+import { type FoodTruckCardProps } from '@shared/components/food-truck-card/types/food-truck-card-types';
 import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
 
 const meta: Meta<typeof FoodTruckCard> = {
@@ -18,7 +18,7 @@ const meta: Meta<typeof FoodTruckCard> = {
         FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT,
         FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
         FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT,
-      ]
+      ],
     },
     data: { control: 'object' },
     isLiked: { control: 'boolean' },
@@ -122,11 +122,11 @@ export const ReservationProviderList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='flex flex-col gap-[2rem] p-[2rem] bg-white'>
+    <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -146,11 +146,11 @@ export const ReservationClientList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='flex flex-col gap-[2rem] p-[2rem] bg-white'>
+    <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -174,11 +174,11 @@ export const FoodTruckProviderList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='flex flex-col gap-[2rem] p-[2rem] bg-white'>
+    <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -204,15 +204,15 @@ export const FoodTruckClientList: Story = {
     },
   },
   render: (args: FoodTruckCardProps) => (
-    <div className='flex flex-col p-[2rem] bg-white'>
-      <span className='caption-m-12 text-grayscale-500 ml-[0.4rem] mb-[1rem]'>
+    <div className='flex flex-col bg-white p-[2rem]'>
+      <span className='mb-[1rem] ml-[0.4rem] text-grayscale-500 caption-m-12'>
         총 14개
       </span>
       <div className='flex flex-col gap-[2rem]'>
         <FoodTruckCard {...args} />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <FoodTruckCard {...args} />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <FoodTruckCard {...args} />
       </div>
     </div>
