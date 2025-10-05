@@ -10,10 +10,10 @@ import {
 
 export interface FilterState {
   schedules: SelectedDate[];
-  availableQuantity: typeof AVAILABLE_QUANTITY | null;
+  availableQuantity: (typeof AVAILABLE_QUANTITY)[number] | null;
   categories: string[] | null;
-  needElectricity: typeof NEED_ELECTRICITY | null;
-  paymentMethod: typeof PAYMENT_METHOD | null;
+  needElectricity: (typeof NEED_ELECTRICITY)[number] | null;
+  paymentMethod: (typeof PAYMENT_METHOD)[number] | null;
 }
 
 export const initialFilter: FilterState = {
