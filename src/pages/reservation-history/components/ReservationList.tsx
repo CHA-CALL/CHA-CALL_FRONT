@@ -12,7 +12,6 @@ interface ReservationListProps {
   reservations: OwnerReservationHistoryResponse[] | MemberReservationHistoryResponse[];
   fetchNextPage: () => void;
   hasNextPage: boolean;
-  isLoading?: boolean;
 }
 
 export default function ReservationList({
@@ -20,35 +19,36 @@ export default function ReservationList({
   reservations,
   fetchNextPage,
   hasNextPage,
-  isLoading,
 }: ReservationListProps) {
   const nextFetchTargetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    }
+    if (!hasNextPage) return;
 
-    const fetchCallback = (
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-    ) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && hasNextPage) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
           fetchNextPage();
-          observer.unobserve(entry.target);
         }
-      });
-    };
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5,
+      }
+    );
 
-    const observer = new IntersectionObserver(fetchCallback, options);
-
-    if (nextFetchTargetRef.current) {
-      observer.observe(nextFetchTargetRef.current);
+    const target = nextFetchTargetRef.current;
+    if (target) {
+      observer.observe(target);
     }
-  }, [reservations, hasNextPage, fetchNextPage]);
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, [fetchNextPage, hasNextPage]);
 
   if (reservations.length === 0) {
     return <EmptyView isProvider={isProvider} reservationState={'UPCOMING'} />;
@@ -68,7 +68,7 @@ export default function ReservationList({
             {isProvider && isOwnerReservation(reservation) ? (
               <>
                 <img src={reservation.profileImage} alt={reservation.name} />
-                <span>{reservation.name} [{reservation.foodTruckName}]</span>
+                <span>{index+1} {reservation.name} [{reservation.foodTruckName}]</span>
               </>
             ) : !isProvider && !isOwnerReservation(reservation) ? (
               <>
@@ -86,7 +86,7 @@ export default function ReservationList({
         </div>
       ))}
 
-      {!isLoading && hasNextPage &&
+      {hasNextPage &&
         <div ref={nextFetchTargetRef} />
       }
     </div>

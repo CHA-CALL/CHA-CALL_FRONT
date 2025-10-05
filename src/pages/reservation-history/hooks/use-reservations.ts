@@ -11,14 +11,13 @@ export const useOwnerReservations = (viewType: ReservationState) => {
   return useInfiniteQuery({
     queryKey: [OWNER_GET_RESERVATIONS.ALL, viewType],
     queryFn: async ({ pageParam }) => {
-      const response = await getOwnerReservations({
+      return getOwnerReservations({
         viewType,
-        cursor: pageParam,
-        size: 20,
+        ...(pageParam !== undefined && { 'cursorPagingRequest.cursor': pageParam }),
+        'cursorPagingRequest.size': 20,
       });
-      return response;
     },
-    initialPageParam: 0,
+    initialPageParam: undefined as 0 | number | undefined,
     getNextPageParam: (lastPage) => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;
@@ -33,14 +32,13 @@ export const useUserReservations = (viewType: ReservationState) => {
   return useInfiniteQuery({
     queryKey: [USER_GET_RESERVATIONS.ALL, viewType],
     queryFn: async ({ pageParam }) => {
-      const response = await getUserReservations({
+      return getUserReservations({
         viewType,
-        cursor: pageParam,
-        size: 20,
+        ...(pageParam !== undefined && { 'cursorPagingRequest.cursor': pageParam }),
+        'cursorPagingRequest.size': 20,
       });
-      return response;
     },
-    initialPageParam: 0,
+    initialPageParam: undefined as 0 | number | undefined,
     getNextPageParam: (lastPage) => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;

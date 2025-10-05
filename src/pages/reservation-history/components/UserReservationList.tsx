@@ -10,7 +10,6 @@ export default function UserReservationList({ reservationState }: UserReservatio
     data,
     fetchNextPage,
     hasNextPage,
-    isLoading,
   } = useUserReservations(reservationState);
 
   const reservations = data?.pages.flatMap(page => page?.content || []) || [];
@@ -21,7 +20,6 @@ export default function UserReservationList({ reservationState }: UserReservatio
       reservations={reservations}
       fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
-      isLoading={isLoading}
     />
   );
 }

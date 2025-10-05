@@ -7,8 +7,8 @@ import type { ReservationState } from '@pages/reservation-history/types/reservat
 
 export const getOwnerReservations = async (params: {
   viewType: ReservationState;
-  cursor?: number;
-  size?: number;
+  'cursorPagingRequest.cursor'?: number;
+  'cursorPagingRequest.size'?: number;
 }) => {
   const response = await apiRequest<GetOwnerReservationsData>({
     endPoint: '/owners/me/reservations',
@@ -20,8 +20,8 @@ export const getOwnerReservations = async (params: {
 
 export const getUserReservations = async (params: {
   viewType: ReservationState;
-  cursor?: number;
-  size?: number;
+  'cursorPagingRequest.cursor'?: number;
+  'cursorPagingRequest.size'?: number;
 }) => {
   const response = await apiRequest<GetMemberReservationsData>({
     endPoint: '/members/me/reservations',
