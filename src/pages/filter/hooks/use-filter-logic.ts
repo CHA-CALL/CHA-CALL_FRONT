@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { isEqual } from 'lodash';
@@ -27,7 +27,12 @@ export default function useFilterLogic() {
     setLocalFilters(globalFilters);
   }, [globalFilters]);
 
-  const notFiltered = isEqual(localFilters, initialFilter);
+  const cleanedLocalFilters = useMemo(
+    () => getCleanedFilters(localFilters),
+    [localFilters]
+  );
+
+  const notFiltered = isEqual(cleanedLocalFilters, initialFilter);
 
   const handleGoBack = () => navigate(-1);
 
@@ -82,8 +87,7 @@ export default function useFilterLogic() {
   };
 
   const handleApplyFilter = () => {
-    const cleaned = getCleanedFilters(localFilters);
-    setGlobalFilters(cleaned);
+    setGlobalFilters(cleanedLocalFilters);
     navigate('/reservation');
   };
 

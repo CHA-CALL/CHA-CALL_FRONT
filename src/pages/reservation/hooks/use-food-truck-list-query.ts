@@ -14,6 +14,5 @@ export default function useFoodTruckListQuery(filter?: FoodTrucksFilterType) {
       const res = await getFoodTrucksData(filter);
       return res.data;
     },
-    enabled: !!filter,
   });
 }

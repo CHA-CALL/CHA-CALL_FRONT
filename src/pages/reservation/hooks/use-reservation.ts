@@ -11,7 +11,7 @@ import { formatSelectedDateToSchedules } from '@utils/date-formatter';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
 import { confirmedRegionsAtom } from '@shared/store/regions-store';
-import useFoodTrucksQuery from '@pages/reservation/hooks/use-food-truck-list-query';
+import useFoodTruckListQuery from '@pages/reservation/hooks/use-food-truck-list-query';
 
 export default function useReservation() {
   const navigate = useNavigate();
@@ -42,7 +42,8 @@ export default function useReservation() {
     paymentMethod: filters.paymentMethod,
   };
 
-  const { data: foodTruckData, isLoading } = useFoodTrucksQuery(queryFilters);
+  const { data: foodTruckData, isLoading } =
+    useFoodTruckListQuery(queryFilters);
 
   const handleClickChip = (category: string) => {
     setSelectedCategory(category);
