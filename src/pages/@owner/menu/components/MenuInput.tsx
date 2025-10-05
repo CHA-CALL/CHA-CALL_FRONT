@@ -1,3 +1,4 @@
+import React from 'react';
 import ErrorText from '@components/error-text/ErrorText';
 
 interface MenuInputProps {

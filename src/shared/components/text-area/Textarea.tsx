@@ -4,7 +4,7 @@ import { cn } from '@utils/cn';
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   value: string;
   placeholder?: string;
-  handleChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleChange: (_e: ChangeEvent<HTMLTextAreaElement>) => void;
   maxLength?: number;
   className?: string;
 }
