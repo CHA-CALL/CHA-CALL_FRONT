@@ -18,6 +18,7 @@ import {
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 
 import { useOwnerReservations } from '@pages/reservation-history/hooks/use-reservations';
+import { splitDateTime } from '@utils/split-date-time';
 
 export default function ReservationHistory() {
   const { role } = useRole();
@@ -63,7 +64,8 @@ export default function ReservationHistory() {
                 <img src={reservation.profileImage} alt={reservation.name} />
                 <span>{reservation.name} [{reservation.foodTruckName}]</span>
                 <span>{reservation.address}</span>
-                <span>{(reservation.dateTimeInfos)}</span>
+                <span>{reservation.dateTimeInfos?.[0] ? splitDateTime(reservation.dateTimeInfos[0]).date : ''}</span>
+                <span>{reservation.dateTimeInfos?.[0] ? splitDateTime(reservation.dateTimeInfos[0]).time : ''}</span>
               </div>
               {index !== reservations.length - 1 && (
                 <div className='h-[0.1rem] w-full bg-grayscale-100' />
