@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useRegions } from '@pages/set-location/hooks/use-regions';
+import {
+  useDepth1Regions,
+  useDepth2Regions,
+  useDepth3Regions,
+} from '@pages/set-location/hooks/use-regions';
 
 import { REGION_QUERY_KEY } from '@shared/querykey/regions';
 import { type RegionResponse } from '@../../apis/data-contracts';
@@ -11,51 +15,48 @@ import {
   SELECT_ALL_ID_LENGTH,
   DEPTHS,
 } from '@pages/set-location/constant/location';
+import { useAtom } from 'jotai';
+import { confirmedRegionsAtom } from '@shared/store/regions-store';
 
 export const useLocations = () => {
-  const [selectedDepth1Id, setSelectedDepth1Id] = useState<number | null>(null);
-  const [selectedDepth2Id, setSelectedDepth2Id] = useState<number | null>(null);
+  const [depth1Code, setDepth1Code] = useState<number | null>(null);
+  const [depth2Code, setDepth2Code] = useState<number | null>(null);
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
   >(new Map());
+  const [_, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
 
   const queryClient = useQueryClient();
 
-  const { data: depth1List } = useRegions(1);
-  const { data: depth2List } = useRegions(2, {
-    enabled: selectedDepth1Id !== null,
-    depth1Code: selectedDepth1Id ?? 0,
-  });
-  const { data: depth3List } = useRegions(3, {
-    enabled: selectedDepth2Id !== null,
-    depth1Code: selectedDepth1Id ?? 0,
-    depth2Code: selectedDepth2Id ?? 0,
-  });
+  const { data: depth1List } = useDepth1Regions();
+  const { data: depth2List } = useDepth2Regions(
+    depth1Code ?? 0,
+    depth1Code !== null
+  );
+  const { data: depth3List } = useDepth3Regions(
+    depth1Code ?? 0,
+    depth2Code ?? 0,
+    depth2Code !== null
+  );
 
   useEffect(() => {
-    if (selectedDepth1Id) {
+    if (depth1Code) {
       queryClient.invalidateQueries({
-        queryKey: REGION_QUERY_KEY.DEPTH2(selectedDepth1Id),
+        queryKey: REGION_QUERY_KEY.DEPTH2(depth1Code),
       });
       queryClient.invalidateQueries({
-        queryKey: REGION_QUERY_KEY.DEPTH3(
-          selectedDepth1Id,
-          selectedDepth2Id ?? 0
-        ),
+        queryKey: REGION_QUERY_KEY.DEPTH3(depth1Code, depth2Code ?? 0),
       });
     }
-  }, [selectedDepth1Id, selectedDepth2Id, queryClient]);
+  }, [depth1Code, depth2Code, queryClient]);
 
   useEffect(() => {
-    if (selectedDepth2Id) {
+    if (depth2Code) {
       queryClient.invalidateQueries({
-        queryKey: REGION_QUERY_KEY.DEPTH3(
-          selectedDepth1Id ?? 0,
-          selectedDepth2Id
-        ),
+        queryKey: REGION_QUERY_KEY.DEPTH3(depth1Code ?? 0, depth2Code),
       });
     }
-  }, [selectedDepth2Id, selectedDepth1Id, queryClient]);
+  }, [depth2Code, depth1Code, queryClient]);
 
   const getSelectedLocations = () => {
     if (!depth3List || !depth3List?.data) return [];
@@ -69,29 +70,29 @@ export const useLocations = () => {
 
   const clearCategory = (depth: number) => {
     if (depth === DEPTHS.ONE) {
-      setSelectedDepth1Id(null);
-      setSelectedDepth2Id(null);
+      setDepth1Code(null);
+      setDepth2Code(null);
     }
     if (depth === DEPTHS.TWO) {
-      setSelectedDepth2Id(null);
+      setDepth2Code(null);
     }
   };
 
   const handleSelectDepth1 = (depth1Id: number) => {
-    if (selectedDepth1Id === depth1Id) {
+    if (depth1Code === depth1Id) {
       clearCategory(DEPTHS.ONE);
       return;
     }
-    setSelectedDepth1Id(depth1Id);
-    setSelectedDepth2Id(null);
+    setDepth1Code(depth1Id);
+    setDepth2Code(null);
   };
 
   const handleSelectDepth2 = (depth2Id: number) => {
-    if (selectedDepth2Id === depth2Id) {
+    if (depth2Code === depth2Id) {
       clearCategory(DEPTHS.TWO);
       return;
     }
-    setSelectedDepth2Id(depth2Id);
+    setDepth2Code(depth2Id);
   };
 
   const handleToggleLocation = (location: RegionResponse) => {
@@ -138,8 +139,8 @@ export const useLocations = () => {
 
   const handleClearLocations = () => {
     setSelectedLocations(new Map());
-    setSelectedDepth1Id(null);
-    setSelectedDepth2Id(null);
+    setDepth1Code(null);
+    setDepth2Code(null);
   };
 
   const handleDeleteLocation = (location: RegionResponse) => {
@@ -150,14 +151,16 @@ export const useLocations = () => {
     });
   };
 
-  const handleConfirmLocation = () => {};
+  const handleConfirmLocation = () => {
+    setConfirmedRegions(selectedLocations);
+  };
 
   return {
     depth1List,
     depth2List,
     depth3List,
-    selectedDepth1Id,
-    selectedDepth2Id,
+    depth1Code,
+    depth2Code,
     selectedLocations,
     searchText,
     setSearchText,

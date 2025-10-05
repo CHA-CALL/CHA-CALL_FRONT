@@ -22,8 +22,9 @@ export default function SetLocation() {
     depth1List,
     depth2List,
     depth3List,
-    selectedDepth1Id,
-    selectedDepth2Id,
+
+    depth1Code,
+    depth2Code,
     selectedLocations,
     searchText,
     setSearchText,
@@ -63,7 +64,6 @@ export default function SetLocation() {
         <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
           {searchText !== '' ? (
             <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
-              {/* TODO: 장소 검색 API 확정되면 개선 */}
               {(depth3List?.data ?? []).map((item: RegionResponse) => (
                 <SearchResultItem
                   locationName={item.name ?? ''}
@@ -80,7 +80,7 @@ export default function SetLocation() {
                 {depth1List?.data?.map((item: RegionResponse) => (
                   <Depth1Item
                     title={item.name ?? ''}
-                    isSelected={item.code === Number(selectedDepth1Id)}
+                    isSelected={item.code === Number(depth1Code)}
                     handleSelectDepth1={() =>
                       handleSelectDepth1(item.code ?? 0)
                     }
@@ -92,7 +92,7 @@ export default function SetLocation() {
                 {depth2List?.data?.map((item: RegionResponse) => (
                   <Depth2Item
                     title={item.name ?? ''}
-                    isSelected={item.code === Number(selectedDepth2Id)}
+                    isSelected={item.code === Number(depth2Code)}
                     handleSelectDepth2={() =>
                       handleSelectDepth2(item.code ?? 0)
                     }
