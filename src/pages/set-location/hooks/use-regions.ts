@@ -125,13 +125,14 @@ export default function useRegions() {
           String(clickedCode).startsWith(String(key)) &&
           String(key).length === SELECT_ALL_ID_LENGTH
       );
-      if (parentKey) {
-        newMap.delete(parentKey);
-      }
 
       if (newMap.size >= MAX_SELECTED) {
         setIsMaxSelected(true);
         return newMap;
+      }
+
+      if (parentKey) {
+        newMap.delete(parentKey);
       }
 
       const depth1Name =
