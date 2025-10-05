@@ -20,7 +20,7 @@ export default function Textarea({
   return (
     <textarea
       className={cn(
-        'body-m-14 text-grayscale-900 border-grayscale-300 caret-primary-700 placeholder:body-m-14 placeholder:text-grayscale-300 focus:border-grayscale-500 min-h-[34rem] rounded-[1.6rem] px-[2rem] py-[1.65rem] focus:outline-none',
+        'body-m-14 text-grayscale-900 border-grayscale-300 caret-primary-700 placeholder:body-m-14 placeholder:text-grayscale-300 focus:border-grayscale-500 rounded-[1.6rem] px-[2rem] py-[1.65rem] focus:outline-none',
         className
       )}
       placeholder={placeholder}
