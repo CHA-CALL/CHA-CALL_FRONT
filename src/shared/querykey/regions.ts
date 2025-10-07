@@ -21,4 +21,5 @@ export const REGION_QUERY_KEY = {
     depth1Code,
     depth2Code,
   ],
+  SEARCH: (keyword: string) => [...REGION_QUERY_KEY.ALL, 'search', keyword],
 } as const;
