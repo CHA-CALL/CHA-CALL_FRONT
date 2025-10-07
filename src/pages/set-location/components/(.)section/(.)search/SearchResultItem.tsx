@@ -40,24 +40,11 @@ export default function SearchResultItem({
   handleSelectLocation,
   searchText,
 }: SearchResultItemProps) {
-  const getSaveName = (name: string) => {
-    const splitName = name.split(' ');
-    if (splitName[splitName.length - 1] === '전체') {
-      return splitName.slice(1).join(' ');
-    } else {
-      return splitName[splitName.length - 1];
-    }
-  };
-
-  const saveName = getSaveName(location.name ?? '');
-
   return (
     <li className='border-b-1 border-grayscale-100 body-m-14 text-grayscale-900 mx-[0.5rem] flex items-center gap-[1.3rem] pb-[1.6rem]'>
       <ButtonCheck
         isChecked={isChecked}
-        handleToggle={() =>
-          handleSelectLocation({ name: saveName, code: location.code })
-        }
+        handleToggle={() => handleSelectLocation(location)}
       />
       <span>{highlightText(location.name ?? '', searchText)}</span>
     </li>
