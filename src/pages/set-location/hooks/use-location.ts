@@ -7,7 +7,7 @@ import { MAX_SELECTED } from '@pages/set-location/constant/location';
 import useToast from '@shared/hooks/use-toast';
 
 export const useLocation = () => {
-  const [_, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
+  const [, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
   >(new Map());

@@ -7,7 +7,7 @@ interface SearchSectionProps {
   searchText: string;
   searchRegions: RegionResponse[];
   selectedLocations: Map<number, RegionResponse>;
-  handleSelectLocation: (item: RegionResponse) => void;
+  handleSelectLocation: (_item: RegionResponse) => void;
   isPending: boolean;
 }
 

@@ -4,7 +4,7 @@ import { useSearchRegions } from '@pages/set-location/hooks/use-regions';
 export default function useSearch() {
   const [searchText, setSearchText] = useState('');
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     data: searchRegions,

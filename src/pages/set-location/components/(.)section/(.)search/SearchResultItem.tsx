@@ -5,7 +5,7 @@ import { type RegionResponse } from '@../../apis/data-contracts';
 interface SearchResultItemProps {
   location: RegionResponse;
   isChecked: boolean;
-  handleSelectLocation: (item: RegionResponse) => void;
+  handleSelectLocation: (_item: RegionResponse) => void;
   searchText: string;
 }
 

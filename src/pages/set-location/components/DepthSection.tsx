@@ -10,9 +10,9 @@ interface DepthSectionProps {
   depth3List: RegionResponse[];
   depth1: RegionResponse | null;
   depth2: RegionResponse | null;
-  handleSelectDepth1: (depth: RegionResponse) => void;
-  handleSelectDepth2: (depth2Item: RegionResponse) => void;
-  handleToggleLocation: (item: RegionResponse) => void;
+  handleSelectDepth1: (_depth1Item: RegionResponse) => void;
+  handleSelectDepth2: (_depth2Item: RegionResponse) => void;
+  handleToggleLocation: (_item: RegionResponse) => void;
   selectedLocations: Map<number, RegionResponse>;
 }
 
