@@ -1,19 +1,19 @@
 /**
  * 날짜/시간 정보 배열을 포맷팅하여 기간과 시간을 반환합니다.
  *
- * @param dateTimeInfos - 입력 형식: ["2024-10-03 14시~18시", "2024-10-04 14시~18시"]
+ * @param dateTimeInfos - 입력 형식: ["2025.10.13 ~ 2025.10.13 12:00-14:00", "2025.11.19 ~ 2025.11.19 12:00-14:00"]
  * @returns {DateTime}
- *   - period: "2024.10.03 - 2024.10.04" (단일 날짜인 경우: "2024.10.03")
- *   - time: "14:00 - 18:00"
+ *   - period: "2025.10.13 - 2025.10.13"
+ *   - time: "12:00 - 14:00"
  *
  * @example
- * // 여러 날짜인 경우
- * formatDateTimeInfos(["2024-10-03 14시~18시", "2024-10-04 14시~18시"])
- * // 결과: { period: "2024.10.03 - 2024.10.04", time: "14:00 - 18:00" }
+ * // 날짜 범위인 경우
+ * formatDateTimeInfos(["2025.10.13 ~ 2025.11.19 09:00-17:00"])
+ * // 결과: { period: "2025.10.13 - 2025.11.19", time: "09:00 - 17:00" }
  *
- * // 단일 날짜인 경우
- * formatDateTimeInfos(["2024-10-03 9시~17시"])
- * // 결과: { period: "2024.10.03", time: "09:00 - 17:00" }
+ * // 배열에 여러 항목이 있는 경우 (첫 번째만 처리)
+ * formatDateTimeInfos(["2025.10.13 ~ 2025.10.13 12:00-14:00", "2025.11.19 ~ 2025.11.19 15:00-17:00"])
+ * // 결과: { period: "2025.10.13 - 2025.10.13", time: "12:00 - 14:00" }
  */
 
 interface DateTime {
@@ -26,34 +26,19 @@ export const formatDateTimeInfos = (dateTimeInfos?: string[]): DateTime => {
     return { period: '', time: '' };
   }
 
-  const dateTimeRegex = /(\d{4}-\d{2}-\d{2})\s+(\d+)시~(\d+)시/;
+  // 첫 번째 항목만 처리 (임시)
+  const firstInfo = dateTimeInfos[0];
+  const dateTimeRegex = /(\d{4}\.\d{2}\.\d{2})\s*~\s*(\d{4}\.\d{2}\.\d{2})\s+(\d{2}:\d{2})-(\d{2}:\d{2})/;
 
-  const dates: string[] = [];
-  let startTime = '';
-  let endTime = '';
+  const match = firstInfo.match(dateTimeRegex);
+  if (!match) {
+    return { period: '', time: '' };
+  }
 
-  dateTimeInfos.forEach((info) => {
-    const match = info.match(dateTimeRegex);
-    if (match) {
-      const [, date, start, end] = match;
+  const [, startDate, endDate, startTime, endTime] = match;
 
-      dates.push(date.replace(/-/g, '.'));
-
-      if (!startTime) {
-        startTime = start.padStart(2, '0');
-        endTime = end.padStart(2, '0');
-      }
-    }
-  });
-
-
-  const period = dates.length > 1
-    ? `${dates[0]} - ${dates[dates.length - 1]}`
-    : dates[0] || '';
-
-  const time = startTime && endTime
-    ? `${startTime}:00 - ${endTime}:00`
-    : '';
+  const period = `${startDate} - ${endDate}`;
+  const time = `${startTime} - ${endTime}`;
 
   return { period, time };
 }
