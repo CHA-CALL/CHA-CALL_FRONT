@@ -16,6 +16,7 @@ import {
   DeleteFoodTruckData,
   GetBankAccountData,
   GetChatTemplatesData,
+  GetMenusData,
   GetMyFoodTrucksData,
   GetOwnerReservationsData,
   GetReservationDetailData,
@@ -23,10 +24,14 @@ import {
   RegisterBankAccountRequest,
   RegisterChatTemplateData,
   RegisterChatTemplateRequest,
+  RegisterMenuData,
+  RegisterMenuRequest,
   UpdateBankAccountData,
   UpdateBankAccountRequest,
   UpdateChatTemplateData,
   UpdateChatTemplateRequest,
+  UpdateMenuStatusData,
+  UpdateMenuStatusRequest,
 } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
@@ -136,6 +141,81 @@ export class Owners<
       ...params,
     });
   /**
+   * @description 사장님 - 푸드트럭 메뉴 목록을 조회합니다.
+   *
+   * @tags Owner API
+   * @name GetMenus
+   * @summary 나의 푸드트럭 메뉴 목록 조회
+   * @request GET:/owners/me/food-trucks/{foodTruckId}/menus
+   * @secure
+   * @response `200` `GetMenusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getMenus = (
+    foodTruckId: number,
+    query?: {
+      /**
+       * 정렬 기준
+       * @default "최신순"
+       * @example "최신순"
+       */
+      sort?: "최신순" | "오래된순";
+      /**
+       * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
+       * @format int64
+       * @example 120
+       */
+      "cursorPagingRequest.cursor"?: number;
+      /**
+       * 한 페이지에 조회할 개수
+       * @format int32
+       * @min 1
+       * @default 20
+       */
+      "cursorPagingRequest.size"?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<GetMenusData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus`,
+      method: "GET",
+      query: query,
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 사장님 - 푸드트럭에 메뉴를 등록합니다.
+   *
+   * @tags Owner API
+   * @name RegisterMenu
+   * @summary 나의 푸드트럭 메뉴 등록
+   * @request POST:/owners/me/food-trucks/{foodTruckId}/menus
+   * @secure
+   * @response `200` `RegisterMenuData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  registerMenu = (
+    foodTruckId: number,
+    data: RegisterMenuRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<RegisterMenuData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
    * @description 사장님이 자주 쓰는 채팅을 조회합니다.
    *
    * @tags Owner API
@@ -229,6 +309,35 @@ export class Owners<
     this.request<RegisterBankAccountData, void>({
       path: `/owners/me/bank-accounts`,
       method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 사장님 - 푸드트럭 메뉴의 표시 상태를 변경합니다.
+   *
+   * @tags Owner API
+   * @name UpdateMenuStatus
+   * @summary 나의 푸드트럭 메뉴 표시 상태 변경
+   * @request PATCH:/owners/me/food-trucks/{foodTruckId}/menus/{menuId}/change-status
+   * @secure
+   * @response `200` `UpdateMenuStatusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateMenuStatus = (
+    foodTruckId: number,
+    menuId: number,
+    data: UpdateMenuStatusRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateMenuStatusData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}/change-status`,
+      method: "PATCH",
       body: data,
       secure: true,
       type: ContentType.Json,
