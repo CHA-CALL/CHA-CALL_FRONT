@@ -6,7 +6,7 @@ import Button from '@components/button/Button';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
 import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
 import { cn } from '@shared/utils/cn';
@@ -66,7 +66,7 @@ export default function Reservation({
         handleLeftClick={handleClickBack}
         text='예약하기'
       />
-      <div className='border-b-grayscale-100 fixed-center z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]'>
+      <div className='z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem] fixed-center'>
         <button
           type='button'
           onClick={handleClickLocation}
@@ -103,7 +103,7 @@ export default function Reservation({
       </div>
 
       <div
-        className={`scrollbar-hide fixed-center top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
+        className={`top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide fixed-center`}
       >
         {categories.map(category => (
           <Button

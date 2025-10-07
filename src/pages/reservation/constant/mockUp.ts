@@ -1,4 +1,4 @@
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/foodTruckCategory';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 
 interface FoodTruckItemData {
   truckId: number;
