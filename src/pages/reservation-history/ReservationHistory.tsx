@@ -28,7 +28,7 @@ export default function ReservationHistory() {
     RESERVATION_STATE.UPCOMING
   );
 
-  const handleSelectReservationState = (state: string) => {
+  const handleSelectReservationState = (state: ReservationState) => {
     setReservationState(state);
   };
 
