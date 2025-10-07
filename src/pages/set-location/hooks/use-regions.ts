@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { getRegions } from '@pages/set-location/api';
-import { type GetRegionsData } from '@../../apis/data-contracts';
+import { getRegions, searchRegions } from '@pages/set-location/api';
+import {
+  type GetRegionsData,
+  type SearchRegionsData,
+} from '@../../apis/data-contracts';
 import { REGION_QUERY_KEY } from '@/shared/querykey/regions';
 
 export const useDepth1Regions = () => {
@@ -17,7 +20,7 @@ export const useDepth2Regions = (
   return useQuery<GetRegionsData>({
     queryKey: REGION_QUERY_KEY.DEPTH2(depth1Code),
     queryFn: () => getRegions(2, depth1Code),
-    enabled,
+    enabled: enabled && !!depth1Code,
   });
 };
 
@@ -29,6 +32,14 @@ export const useDepth3Regions = (
   return useQuery<GetRegionsData>({
     queryKey: REGION_QUERY_KEY.DEPTH3(depth1Code, depth2Code),
     queryFn: () => getRegions(3, depth2Code),
-    enabled,
+    enabled: enabled && !!depth2Code && !!depth1Code,
+  });
+};
+
+export const useSearchRegions = (keyword: string) => {
+  return useQuery<SearchRegionsData>({
+    queryKey: REGION_QUERY_KEY.SEARCH(keyword),
+    queryFn: () => searchRegions(keyword),
+    enabled: !!keyword,
   });
 };
