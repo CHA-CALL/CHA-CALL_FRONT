@@ -3,6 +3,7 @@ import type {
   OwnerReservationHistoryResponse,
   MemberReservationHistoryResponse
 } from 'apis/data-contracts';
+import type { ReservationState } from '@pages/reservation-history/types/reservation';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 
@@ -12,6 +13,7 @@ interface ReservationListProps {
   fetchNextPage: () => void;
   hasNextPage: boolean;
   handleClickButton: () => void;
+  reservationState: ReservationState;
 }
 
 export default function ReservationList({
@@ -20,6 +22,7 @@ export default function ReservationList({
   fetchNextPage,
   hasNextPage,
   handleClickButton,
+  reservationState,
 }: ReservationListProps) {
   const nextFetchTargetRef = useRef<HTMLDivElement | null>(null);
 
@@ -52,7 +55,12 @@ export default function ReservationList({
   }, [fetchNextPage, hasNextPage]);
 
   if (reservations.length === 0) {
-    return <EmptyView isProvider={isProvider} reservationState={'UPCOMING'} />;
+    return (
+      <EmptyView
+        isProvider={isProvider}
+        reservationState={reservationState}
+      />
+    );
   }
 
   return (

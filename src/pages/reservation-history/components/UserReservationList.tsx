@@ -26,6 +26,7 @@ export default function UserReservationList({ reservationState }: UserReservatio
       fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
       handleClickButton={handleClickButton}
+      reservationState={reservationState}
     />
   );
 }
