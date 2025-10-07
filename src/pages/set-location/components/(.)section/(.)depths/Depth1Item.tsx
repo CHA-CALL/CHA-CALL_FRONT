@@ -5,6 +5,7 @@ interface Depth1ItemProps {
   isSelected?: boolean;
   handleSelectDepth1: () => void;
 }
+
 const BaseClass =
   'w-full h-[4.2rem] px-[2rem] py-[0.7rem] bg-white title-sb-14 text-grayscale-700';
 
