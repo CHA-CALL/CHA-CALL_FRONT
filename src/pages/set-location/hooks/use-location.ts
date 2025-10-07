@@ -6,7 +6,7 @@ import { confirmedRegionsAtom } from '@shared/store/regions-store';
 import { MAX_SELECTED } from '@pages/set-location/constant/location';
 import useToast from '@shared/hooks/use-toast';
 
-export const useLocation = () => {
+export default function useLocation() {
   const [, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
@@ -15,7 +15,10 @@ export const useLocation = () => {
 
   const handleSelectLocation = (location: RegionResponse) => {
     setSelectedLocations(prev => {
-      const clickedId = location.code ?? 0;
+      if (!location.code) {
+        return prev;
+      }
+      const clickedId = location.code;
       const newMap = new Map(prev);
 
       if (prev.has(clickedId)) {
@@ -56,4 +59,4 @@ export const useLocation = () => {
     handleConfirmLocation,
     handleResetLocations,
   };
-};
+}

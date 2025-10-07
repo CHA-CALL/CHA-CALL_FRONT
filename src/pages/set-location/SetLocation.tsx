@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from '@pages/set-location/hooks/use-location';
+import useLocation from '@pages/set-location/hooks/use-location';
 
-import useSearch from '@pages/set-location/hooks/use-search';
+import useRegionSearch from '@pages/set-location/hooks/use-region-search';
 import { useDepths } from '@pages/set-location/hooks/use-depths';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
@@ -22,7 +22,7 @@ export default function SetLocation() {
     handleClearSearchBar,
     searchRegions,
     isPending,
-  } = useSearch();
+  } = useRegionSearch();
   const {
     depth1,
     depth2,

@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSearchRegions } from '@pages/set-location/hooks/use-regions';
 
-export default function useSearch() {
+export default function useRegionSearch() {
   const [searchText, setSearchText] = useState('');
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -11,6 +11,14 @@ export default function useSearch() {
     isPending,
     isError,
   } = useSearchRegions(debouncedSearchText);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleClearSearchBar = () => {
     setSearchText('');
@@ -32,7 +40,7 @@ export default function useSearch() {
     } else {
       timeoutRef.current = setTimeout(() => {
         setDebouncedSearchText(text);
-      }, 2000);
+      }, 1500);
     }
   };
 

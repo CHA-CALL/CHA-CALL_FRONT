@@ -20,7 +20,7 @@ const highlightText = (text: string, searchText: string) => {
   return (
     <span>
       {parts.map((part, index) => {
-        const isMatch = regex.test(part);
+        const isMatch = part.toLowerCase() === searchText.toLowerCase();
         return (
           <span
             key={index}
