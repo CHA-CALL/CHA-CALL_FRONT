@@ -9,7 +9,7 @@ import {
 
 export const useOwnerReservations = (viewType: ReservationState) => {
   return useInfiniteQuery({
-    queryKey: [OWNER_GET_RESERVATIONS.ALL, viewType],
+    queryKey: [...OWNER_GET_RESERVATIONS.ALL, viewType],
     queryFn: async ({ pageParam }) => {
       return getOwnerReservations({
         viewType,
@@ -30,7 +30,7 @@ export const useOwnerReservations = (viewType: ReservationState) => {
 
 export const useUserReservations = (viewType: ReservationState) => {
   return useInfiniteQuery({
-    queryKey: [USER_GET_RESERVATIONS.ALL, viewType],
+    queryKey: [...USER_GET_RESERVATIONS.ALL, viewType],
     queryFn: async ({ pageParam }) => {
       return getUserReservations({
         viewType,
