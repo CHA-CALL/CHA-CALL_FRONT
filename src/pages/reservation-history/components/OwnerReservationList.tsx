@@ -14,12 +14,17 @@ export default function OwnerReservationList({ reservationState }: OwnerReservat
 
   const reservations = data?.pages.flatMap(page => page?.content || []) || [];
 
+  const handleClickButton = () => {
+    // TODO: 사장님 예약 상세 페이지 이동
+  };
+
   return (
     <ReservationList
       isProvider={true}
       reservations={reservations}
       fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
+      handleClickButton={handleClickButton}
     />
   );
 }

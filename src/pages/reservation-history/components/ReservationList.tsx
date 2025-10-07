@@ -4,14 +4,14 @@ import type {
   MemberReservationHistoryResponse
 } from 'apis/data-contracts';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
-import { splitDateTime } from '@utils/split-date-time';
-// TODO: Card 컴포넌트 import
+import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 
 interface ReservationListProps {
   isProvider: boolean;
   reservations: OwnerReservationHistoryResponse[] | MemberReservationHistoryResponse[];
   fetchNextPage: () => void;
   hasNextPage: boolean;
+  handleClickButton: () => void;
 }
 
 export default function ReservationList({
@@ -19,6 +19,7 @@ export default function ReservationList({
   reservations,
   fetchNextPage,
   hasNextPage,
+  handleClickButton,
 }: ReservationListProps) {
   const nextFetchTargetRef = useRef<HTMLDivElement | null>(null);
 
@@ -54,32 +55,15 @@ export default function ReservationList({
     return <EmptyView isProvider={isProvider} reservationState={'UPCOMING'} />;
   }
 
-  const isOwnerReservation = (
-    reservation: OwnerReservationHistoryResponse | MemberReservationHistoryResponse
-  ): reservation is OwnerReservationHistoryResponse => {
-    return 'profileImage' in reservation && 'foodTruckName' in reservation;
-  };
-
   return (
     <div className='flex flex-col gap-[2rem] px-[2rem] pb-[2.6rem] pt-[9rem]'>
       {reservations.map((reservation, index) => (
         <div key={reservation.reservationId} className='flex flex-col gap-[2rem]'>
-          <div className='flex flex-col gap-[1rem]'>
-            {isProvider && isOwnerReservation(reservation) ? (
-              <>
-                <img src={reservation.profileImage} alt={reservation.name} />
-                <span>{index+1} {reservation.name} [{reservation.foodTruckName}]</span>
-              </>
-            ) : !isProvider && !isOwnerReservation(reservation) ? (
-              <>
-                <img src={reservation.photoUrl} alt={reservation.name} />
-                <span>{reservation.name}</span>
-              </>
-            ) : null}
-            <span>{reservation.address}</span>
-            <span>{reservation.dateTimeInfos?.[0] ? splitDateTime(reservation.dateTimeInfos[0]).date : ''}</span>
-            <span>{reservation.dateTimeInfos?.[0] ? splitDateTime(reservation.dateTimeInfos[0]).time : ''}</span>
-          </div>
+          <FoodTruckCard
+            variant={isProvider ? 'reservationProvider' : 'reservationClient'}
+            data={reservation}
+            handleClickButton={handleClickButton}
+          />
           {index !== reservations.length - 1 && (
             <div className='h-[0.1rem] w-full bg-grayscale-100' />
           )}
