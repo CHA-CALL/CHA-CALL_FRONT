@@ -11,32 +11,26 @@ interface BaseFoodTruckCardProps {
   className?: string;
 }
 
-type ReservationProviderProps = BaseFoodTruckCardProps & {
+export type ReservationProviderProps = BaseFoodTruckCardProps & {
   variant: 'reservationProvider';
   data: OwnerReservationHistoryResponse;
 };
 
-type ReservationClientProps = BaseFoodTruckCardProps & {
+export type ReservationClientProps = BaseFoodTruckCardProps & {
   variant: 'reservationClient';
   data: MemberReservationHistoryResponse;
 };
 
-type FoodTruckProviderProps = BaseFoodTruckCardProps & {
+export type FoodTruckProviderProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckProvider';
   data: MyFoodTruckResponse;
   handleClickCard: () => void;
 };
 
-type FoodTruckClientProps = BaseFoodTruckCardProps & {
+export type FoodTruckClientProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckClient';
   data: SavedFoodTruckResponse;
   isLiked: boolean;
   tags: (typeof FOOD_TRUCK_CATEGORIES)[number][];
   handleClickCard: () => void;
 };
-
-export type FoodTruckCardProps =
-  | ReservationProviderProps
-  | ReservationClientProps
-  | FoodTruckProviderProps
-  | FoodTruckClientProps;
