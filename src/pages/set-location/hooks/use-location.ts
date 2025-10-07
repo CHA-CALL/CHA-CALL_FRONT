@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 
 import { type RegionResponse } from '@../../apis/data-contracts';
 import { confirmedRegionsAtom } from '@shared/store/regions-store';
@@ -7,7 +7,7 @@ import { MAX_SELECTED } from '@pages/set-location/constant/location';
 import useToast from '@shared/hooks/use-toast';
 
 export default function useLocation() {
-  const [, setConfirmedRegions] = useAtom(confirmedRegionsAtom);
+  const setConfirmedRegions = useSetAtom(confirmedRegionsAtom);
   const [selectedLocations, setSelectedLocations] = useState<
     Map<number, RegionResponse>
   >(new Map());
