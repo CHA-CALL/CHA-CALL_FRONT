@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import CustomToast from '@shared/components/custom-toast/CustomToast';
-import { Icon } from '@shared/components/icon/Icon';
+import { CustomToast } from '@shared/components/custom-toast/CustomToast';
 
 const meta: Meta<typeof CustomToast> = {
   title: 'Components/CustomToast',
@@ -10,17 +9,14 @@ const meta: Meta<typeof CustomToast> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    text: {
+    type: {
+      control: { type: 'select' },
+      options: ['success', 'error'],
+      description: '토스트 타입',
+    },
+    message: {
       control: { type: 'text' },
-      description: '토스트에 표시될 텍스트',
-    },
-    icon: {
-      control: false,
-      description: '토스트에 표시될 아이콘',
-    },
-    children: {
-      control: false,
-      description: '토스트 내부에 표시될 추가 콘텐츠',
+      description: '토스트에 표시될 메시지',
     },
   },
 };
@@ -28,29 +24,16 @@ const meta: Meta<typeof CustomToast> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Success: Story = {
   args: {
-    text: '기본 토스트 메시지입니다.',
+    type: 'success',
+    message: '성공적으로 저장되었습니다.',
   },
 };
 
-export const WithIcon: Story = {
+export const Error: Story = {
   args: {
-    text: '아이콘과 함께 표시되는 토스트',
-    icon: <Icon name='ic_check' width={16} height={16} />,
-  },
-};
-
-export const CustomContent: Story = {
-  args: {
-    icon: <Icon name='ic_camera' width={16} height={16} />,
-    children: (
-      <div className='flex flex-col gap-[0.4rem]'>
-        <span className='caption-m-12'>사진이 업로드되었습니다</span>
-        <span className='caption-m-10 text-grayscale-300'>
-          2024.01.15 14:30
-        </span>
-      </div>
-    ),
+    type: 'error',
+    message: '저장에 실패했습니다.',
   },
 };

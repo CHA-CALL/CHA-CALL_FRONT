@@ -59,13 +59,13 @@ export default function Tooltip({
 
       <div className='bg-primary-700 flex w-fit flex-row items-center gap-[0.4rem] rounded-[1.6rem] px-[1.2rem] py-[0.6rem]'>
         <span className='caption-m-11 text-white'>{text}</span>
-        <Icon
-          name='ic_close'
-          width={15}
-          height={15}
-          className='text-white'
+        <button
+          type='button'
+          className='flex justify-center'
           onClick={handleCloseTooltip}
-        />
+        >
+          <Icon name='ic_close' width={15} height={15} className='text-white' />
+        </button>
       </div>
 
       {verticalAlign === 'top' && (

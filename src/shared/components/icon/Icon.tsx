@@ -26,12 +26,14 @@ export type IconId =
   | 'ic_team'
   | 'ic_trash'
   | 'ic_up'
+  | 'ic_download'
   | 'ic_star_full'
   | 'ic_star_half'
   | 'ic_star_small'
   | 'ic_heart_fill'
   | 'ic_heart_empty'
   | 'ic_time';
+
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
