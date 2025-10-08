@@ -53,14 +53,24 @@ export default function DepthSection({
             ))}
           </div>
           <div className='scrollbar-hide overflow-auto'>
-            {depth3List?.map((item: RegionResponse) => (
-              <Depth3Item
-                title={item.name ?? ''}
-                isSelected={selectedLocations.has(item.code ?? 0)}
-                handleSelectDepth3={() => handleToggleLocation(item)}
-                key={item.code}
-              />
-            ))}
+            {depth3List?.map((item: RegionResponse) => {
+              const fullName = item.name?.includes('전체')
+                ? `${depth1?.name} ${item?.name}`
+                : `${depth1?.name} ${depth2?.name} ${item.name}`;
+              return (
+                <Depth3Item
+                  title={item.name ?? ''}
+                  isSelected={selectedLocations.has(item.code ?? 0)}
+                  handleSelectDepth3={() =>
+                    handleToggleLocation({
+                      name: fullName,
+                      code: item.code,
+                    })
+                  }
+                  key={item.code}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
