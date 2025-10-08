@@ -21,7 +21,7 @@ export const useFoodTruckListQuery = (filter?: FoodTrucksFilterType) => {
   });
 };
 
-interface updateFoodTruckSaveStatusProps {
+interface UpdateFoodTruckSaveStatusProps {
   foodTruckId: number;
   isSavedRequest: boolean;
 }
@@ -34,12 +34,14 @@ export const useUpdateFoodTruckSaveStatus = () => {
     mutationFn: ({
       foodTruckId,
       isSavedRequest,
-    }: updateFoodTruckSaveStatusProps) =>
+    }: UpdateFoodTruckSaveStatusProps) =>
       updateFoodTruckSaveStatus(foodTruckId, isSavedRequest),
 
     onSuccess: () => {
-      // 리스트/상세 등 최신화 (필요시 더 촘촘히)
-      qc.invalidateQueries({ queryKey: FOOD_TRUCKS_QUERY_KEY.ALL });
+      qc.invalidateQueries({
+        queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+        refetchType: 'all',
+      });
     },
   });
 };

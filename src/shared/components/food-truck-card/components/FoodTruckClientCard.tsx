@@ -4,7 +4,6 @@ import CardImage from '@components/food-truck-card/components/CardImage';
 import CardButton from '@components/food-truck-card/components/CardButton';
 import { Icon } from '@components/icon/Icon';
 import Tag from '@components/tag/Tag';
-import { useState } from 'react';
 
 interface FoodTruckClientCardProps {
   data: FoodTruckResponse;
@@ -28,13 +27,6 @@ export default function FoodTruckClientCard({
     ratingCount = 0,
     isSaved = false,
   } = data;
-
-  const [isSavedClient, setIsSavedClient] = useState(isSaved);
-
-  const handleToggleSaveButton = () => {
-    handleCardButton(foodTruckId, !isSavedClient);
-    setIsSavedClient(!isSavedClient);
-  };
 
   return (
     <div
@@ -78,8 +70,8 @@ export default function FoodTruckClientCard({
 
       <CardButton
         isHeart={true}
-        isLiked={isSavedClient}
-        handleClick={handleToggleSaveButton}
+        isLiked={isSaved}
+        handleClick={() => handleCardButton(foodTruckId, isSaved)}
         buttonIcon='ic_heart_fill'
         className='mb-auto'
       />
