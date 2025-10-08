@@ -1,26 +1,28 @@
-import type { GetRegionsData, SearchRegionsData } from 'apis/data-contracts';
-
 import { apiRequest } from '@api/apiRequest';
+import {
+  type GetRegionsData,
+  type SearchRegionsData,
+} from '@../../apis/data-contracts';
 
-export type RegionDepth = 1 | 2 | 3;
-
-export const getRegionsData = async (params: {
-  depth: RegionDepth;
-  parentCode?: number;
-}) => {
+const getRegions = async (depth: number, parentCode?: number | null) => {
   const response = await apiRequest<GetRegionsData>({
-    endPoint: `/regions`,
+    endPoint: '/regions',
     method: 'GET',
-    params,
+    params: {
+      depth: depth.toString(),
+      ...(parentCode && { parentCode: parentCode.toString() }),
+    },
   });
-  return response.data;
+  return response;
 };
 
-export const searchRegionsData = async (params: { keyword: string }) => {
+export { getRegions };
+
+export const searchRegions = async (keyword: string) => {
   const response = await apiRequest<SearchRegionsData>({
-    endPoint: `/regions/search`,
+    endPoint: '/regions/search',
     method: 'GET',
-    params,
+    params: { keyword },
   });
-  return response.data;
+  return response;
 };

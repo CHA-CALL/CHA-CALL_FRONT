@@ -27,6 +27,10 @@ const iconIds: IconId[] = [
   'ic_star',
   'ic_star_full',
   'ic_star_half',
+  'ic_star_small',
+  'ic_heart_fill',
+  'ic_heart_empty',
+  'ic_time',
 ];
 
 const meta: Meta<typeof Icon> = {

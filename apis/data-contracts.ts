@@ -307,6 +307,45 @@ export interface RegisterRatingRequest {
   rating: string;
 }
 
+export interface ImageRequest {
+  /**
+   * 파일 확장자 리스트
+   * @maxItems 2147483647
+   * @minItems 1
+   * @example ["png","jpg"]
+   */
+  fileExtensions: string[];
+}
+
+export interface BaseResponseImageResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ImageResponse;
+}
+
+export interface ImageInfo {
+  /**
+   * 생성된 presigned URL
+   * @example "https://example.com/presigned-url"
+   */
+  presignedUrl?: string;
+  /**
+   * 파일 접근 URL
+   * @example "https://example.com/file-url"
+   */
+  fileUrl?: string;
+}
+
+export interface ImageResponse {
+  /**
+   * 생성된 presigned URL 리스트
+   * @example ["https://example.com/presigned-url1","https://example.com/presigned-url2"]
+   */
+  presignedUrls?: ImageInfo[];
+}
+
 export interface FoodTruckNameDuplicateCheckRequest {
   /**
    * 중복 여부를 확인할 푸드트럭 이름
@@ -353,9 +392,9 @@ export interface BaseResponseAuthTokenResponse {
 export interface ApproveFoodTruckStatusRequest {
   /**
    * 변경할 푸드트럭 승인 상태
-   * @example "ON"
+   * @example "OFF"
    */
-  status: "PENDING" | "ON" | "OFF" | "REJECTED";
+  status: 'PENDING' | 'ON' | 'OFF' | 'REJECTED';
 }
 
 export interface UpdateReservationStatusRequest {
@@ -364,11 +403,11 @@ export interface UpdateReservationStatusRequest {
    * @example "예약 대기"
    */
   reservationStatus:
-    | "예약 대기"
-    | "예약 확정 완료"
-    | "예약 확정 요청"
-    | "예약 취소 완료"
-    | "예약 취소 요청";
+    | '예약 대기'
+    | '예약 확정 완료'
+    | '예약 확정 요청'
+    | '예약 취소 완료'
+    | '예약 취소 요청';
 }
 
 export interface BaseResponseReservationStatusResponse {
@@ -392,7 +431,7 @@ export interface UpdateMenuStatusRequest {
    * 변경할 메뉴 표시 여부
    * @example "OFF"
    */
-  status: "ON" | "OFF";
+  status: 'ON' | 'OFF';
 }
 
 /** 푸드트럭 저장 상태 변경 요청 */
@@ -1060,6 +1099,56 @@ export interface FoodTruckResponse {
    * @example 100
    */
   ratingCount?: number;
+  /**
+   * 현재 사용자가 저장한 푸드트럭인지 여부
+   * @example true
+   */
+  isSaved?: boolean;
+}
+
+export interface BaseResponseCursorPagingResponseFoodTruckMenuResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: CursorPagingResponseFoodTruckMenuResponse;
+}
+
+export interface CursorPagingResponseFoodTruckMenuResponse {
+  content?: FoodTruckMenuResponse[];
+  /** @format int64 */
+  lastCursor?: number;
+  hasNext?: boolean;
+}
+
+/** 메뉴 응답 */
+export interface FoodTruckMenuResponse {
+  /**
+   * 메뉴 ID
+   * @format int64
+   * @example 101
+   */
+  menuId?: number;
+  /**
+   * 메뉴명
+   * @example "크림파스타"
+   */
+  name?: string;
+  /**
+   * 가격
+   * @example "12000원"
+   */
+  price?: string;
+  /**
+   * 설명
+   * @example "진한 크림소스와 베이컨"
+   */
+  description?: string;
+  /**
+   * 이미지 URL
+   * @example "https://cdn.example.com/menus/101.jpg"
+   */
+  imageUrl?: string;
 }
 
 export type GetUserInfoData = BaseResponseUserResponse;
@@ -1094,6 +1183,10 @@ export type GetBankAccountData = BaseResponseBankAccountResponse;
 export type RegisterBankAccountData = BaseResponseVoid;
 
 export type RegisterRatingsData = BaseResponseVoid;
+
+export type CreateMenuImagePresignedUrlData = BaseResponseImageResponse;
+
+export type CreateFoodTruckImagePresignedUrlData = BaseResponseImageResponse;
 
 export type IsNameDuplicatedData =
   BaseResponseFoodTruckNameDuplicateCheckResponse;
@@ -1140,5 +1233,8 @@ export type GetSavedFoodTrucksData =
 
 export type GetFoodTrucksData =
   BaseResponseCursorPagingResponseFoodTruckResponse;
+
+export type GetFoodTruckMenusData =
+  BaseResponseCursorPagingResponseFoodTruckMenuResponse;
 
 export type DeleteFoodTruckData = BaseResponseVoid;
