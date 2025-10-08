@@ -3,11 +3,7 @@ import { cn } from '@shared/utils/cn';
 
 interface Depth3ItemProps {
   title: string;
-<<<<<<<< HEAD:src/pages/set-location/components/Depth3Item.tsx
-  isSelected: boolean;
-========
   isSelected?: boolean;
->>>>>>>> develop:src/pages/set-location/components/(.)section/(.)depths/Depth3Item.tsx
   handleSelectDepth3: () => void;
 }
 
@@ -16,11 +12,7 @@ const BaseClass =
 
 export default function Depth3Item({
   title,
-<<<<<<<< HEAD:src/pages/set-location/components/Depth3Item.tsx
-  isSelected,
-========
   isSelected = false,
->>>>>>>> develop:src/pages/set-location/components/(.)section/(.)depths/Depth3Item.tsx
   handleSelectDepth3,
 }: Depth3ItemProps) {
   return (
@@ -35,13 +27,8 @@ export default function Depth3Item({
     >
       {isSelected && (
         <Icon
-<<<<<<<< HEAD:src/pages/set-location/components/Depth3Item.tsx
-          name={'ic_check'}
-          className='absolute left-[1rem] text-primary-700'
-========
           name='ic_check'
-          className='text-primary-700 absolute left-[1rem]'
->>>>>>>> develop:src/pages/set-location/components/(.)section/(.)depths/Depth3Item.tsx
+          className='absolute left-[1rem] text-primary-700'
         />
       )}
       <p className='relative flex items-center justify-center'>{title}</p>

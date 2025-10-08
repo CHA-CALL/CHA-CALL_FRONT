@@ -2,11 +2,7 @@ import { cn } from '@shared/utils/cn';
 
 interface Depth2ItemProps {
   title: string;
-<<<<<<<< HEAD:src/pages/set-location/components/Depth2Item.tsx
-  isSelected: boolean;
-========
   isSelected?: boolean;
->>>>>>>> develop:src/pages/set-location/components/(.)section/(.)depths/Depth2Item.tsx
   handleSelectDepth2: () => void;
 }
 
@@ -15,11 +11,7 @@ const BaseClass =
 
 export default function Depth2Item({
   title,
-<<<<<<<< HEAD:src/pages/set-location/components/Depth2Item.tsx
-  isSelected,
-========
   isSelected = false,
->>>>>>>> develop:src/pages/set-location/components/(.)section/(.)depths/Depth2Item.tsx
   handleSelectDepth2,
 }: Depth2ItemProps) {
   return (
