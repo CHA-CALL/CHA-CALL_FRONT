@@ -11,6 +11,7 @@ export default function OwnerReservationList({ reservationState }: OwnerReservat
     data,
     fetchNextPage,
     hasNextPage,
+    isLoading,
   } = useOwnerReservations(reservationState);
 
   const reservations = data?.pages.flatMap(page => page?.content || []) || [];
@@ -25,6 +26,7 @@ export default function OwnerReservationList({ reservationState }: OwnerReservat
       reservations={reservations}
       fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
+      isLoading={isLoading}
       handleClickButton={handleClickButton}
       reservationState={reservationState}
     />

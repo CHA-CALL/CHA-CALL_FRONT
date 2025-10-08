@@ -6,12 +6,14 @@ import type {
 import type { ReservationState } from '@pages/reservation-history/types/reservation';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
+import Loading from '@components/loading/Loading';
 
 interface ReservationListProps {
   isProvider: boolean;
   reservations: OwnerReservationHistoryResponse[] | MemberReservationHistoryResponse[];
   fetchNextPage: () => void;
   hasNextPage: boolean;
+  isLoading: boolean;
   handleClickButton: () => void;
   reservationState: ReservationState;
 }
@@ -21,6 +23,7 @@ export default function ReservationList({
   reservations,
   fetchNextPage,
   hasNextPage,
+  isLoading,
   handleClickButton,
   reservationState,
 }: ReservationListProps) {
@@ -78,9 +81,8 @@ export default function ReservationList({
         </div>
       ))}
 
-      {hasNextPage &&
-        <div ref={nextFetchTargetRef} />
-      }
+      {isLoading && <Loading />}
+      {hasNextPage && <div ref={nextFetchTargetRef} />}
     </div>
   );
 }
