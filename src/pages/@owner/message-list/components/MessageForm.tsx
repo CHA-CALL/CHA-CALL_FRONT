@@ -9,6 +9,7 @@ import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/Con
 import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
 import useToast from '@shared/hooks/use-toast';
 import Loading from '@shared/components/loading/Loading';
+import Textarea from '@shared/components/text-area/Textarea';
 
 export default function MessageForm() {
   const navigate = useNavigate();
@@ -78,12 +79,11 @@ export default function MessageForm() {
         handleLeftClick={handleClickBack}
       />
       <div className='flex flex-col gap-[1rem] p-[2rem]'>
-        <textarea
-          className='border-grayscale-300 text-grayscale-900 caret-primary-700 body-m-14 placeholder:text-grayscale-300 placeholder:body-m-14 focus:border-grayscale-500 min-h-[34rem] rounded-[1.6rem] px-[2rem] py-[1.5rem] focus:outline-none'
+        <Textarea
           placeholder='텍스트를 입력해주세요.'
           value={message}
           maxLength={MAX_LENGTH}
-          onChange={handleChangeMessage}
+          handleChange={handleChangeMessage}
         />
         <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
           <p className='text-primary-700'>{message.length}</p>
