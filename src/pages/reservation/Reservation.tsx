@@ -6,9 +6,10 @@ import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 
-// import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import useReservation from '@pages/reservation/hooks/use-reservation';
+import Loading from '@shared/components/loading/Loading';
+import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
 
 export default function Reservation() {
   const {
@@ -16,15 +17,20 @@ export default function Reservation() {
     selectedCategory,
     locationName,
     notFiltered,
-    // isLoading,
+    isLoading,
     foodTruckData,
     handleClickBack,
     handleClickLocation,
     handleClickFilter,
-    // handleClickFoodTruck,
+    handleClickFoodTruck,
     handleClickTooltip,
     handleClickChip,
+    handleUpdateFoodTruckSaveStatus,
   } = useReservation();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -89,20 +95,18 @@ export default function Reservation() {
         ))}
       </div>
 
-      <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[1.6rem] pt-[12.6rem]'>
-        {foodTruckData?.content?.map((item, index) => (
-          // TODO: 카드 컴포넌트 사용하여 ui 마무리
-          <div key={`${item.name}-${index}`}>{item.name}</div>
-          // <FoodTruckItem
-          //   key={item.truckId}
-          //   image={item.image}
-          //   name={item.name}
-          //   priceRange={item.priceRange}
-          //   minOrder={item.minOrder}
-          //   tags={item.tags}
-          //   handleClick={() => handleClickFoodTruck(item.name)}
-          //   isLast={index === filteredFoodTrucks.length - 1}
-          // />
+      <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[6rem] pt-[12.6rem]'>
+        {foodTruckData?.map((item, index) => (
+          <FoodTruckCard
+            key={`${item.name}-${index}`}
+            variant='foodtruckClient'
+            data={item}
+            tags={['아직', '서버', '추가안됨']}
+            handleClickCard={() => handleClickFoodTruck(item.foodTruckId ?? 0)}
+            handleClickButton={() =>
+              handleUpdateFoodTruckSaveStatus(item.foodTruckId!, !item.isSaved)
+            }
+          />
         ))}
       </div>
 

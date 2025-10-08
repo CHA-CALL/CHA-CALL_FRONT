@@ -7,3 +7,7 @@ export const FOOD_TRUCKS_QUERY_KEY = {
     filter,
   ],
 } as const;
+
+export const FOOD_TRUCKS_MUTATION_KEY = {
+  UPDATE_SAVE_STATUS: ['food-trucks', 'update-save'],
+} as const;

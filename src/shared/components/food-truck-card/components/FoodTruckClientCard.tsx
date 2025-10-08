@@ -1,53 +1,75 @@
-import type { SavedFoodTruckResponse } from 'apis/data-contracts';
+import type { FoodTruckResponse } from 'apis/data-contracts';
+
 import CardImage from '@components/food-truck-card/components/CardImage';
 import CardButton from '@components/food-truck-card/components/CardButton';
 import { Icon } from '@components/icon/Icon';
 import Tag from '@components/tag/Tag';
+import { useState } from 'react';
 
 interface FoodTruckClientCardProps {
-  data: SavedFoodTruckResponse;
-  isLiked: boolean;
+  data: FoodTruckResponse;
   tags: string[];
-  handleCard: () => void;
-  handleCardButton: () => void;
+  handleCard: (_foodTruckId: number) => void;
+  handleCardButton: (_foodTruckId: number, _isSavedRequest: boolean) => void;
 }
 
 export default function FoodTruckClientCard({
   data,
-  isLiked,
   tags,
   handleCard,
   handleCardButton,
 }: FoodTruckClientCardProps) {
   const {
-    photoUrl = '',
+    foodTruckId = 0,
     name = '',
-    averageRating = 0,
-    ratingCount = '',
+    photoUrl = '',
     description = '',
+    averageRating = 0,
+    ratingCount = 0,
+    isSaved = false,
   } = data;
+
+  const [isSavedClient, setIsSavedClient] = useState(isSaved);
+
+  const handleToggleSaveButton = () => {
+    handleCardButton(foodTruckId, !isSavedClient);
+    setIsSavedClient(!isSavedClient);
+  };
 
   return (
     <div
       role='button'
-      onClick={handleCard}
+      onClick={() => handleCard(foodTruckId)}
       className='flex w-full cursor-pointer'
     >
       <CardImage
         imageUrl={photoUrl}
         altText={name}
-        className='w-[8rem] h-[8rem] mr-[1.6rem]'
+        className='mr-[1.6rem] h-[8rem] w-[8rem]'
       />
 
       <div className='flex flex-col'>
         <div className='flex items-center'>
-          <span className='title-sb-16 text-grayscale-900 text-left'>{name}</span>
-          <Icon name='ic_star_small' width={18} height={16} className='ml-[0.7rem] text-grayscale-500' />
-          <span className='caption-m-11 text-grayscale-500 ml-[0.3rem]'>{averageRating}</span>
-          <span className='caption-m-10 text-grayscale-300 ml-[0.2rem]'>({ratingCount})</span>
+          <span className='text-left text-grayscale-900 title-sb-16'>
+            {name}
+          </span>
+          <Icon
+            name='ic_star_small'
+            width={18}
+            height={16}
+            className='ml-[0.7rem] text-grayscale-500'
+          />
+          <span className='ml-[0.3rem] text-grayscale-500 caption-m-11'>
+            {averageRating}
+          </span>
+          <span className='ml-[0.2rem] text-grayscale-300 caption-m-10'>
+            ({ratingCount})
+          </span>
         </div>
-        <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] text-left'>{description}</span>
-        <div className='flex items-center gap-[0.5rem] mt-[0.8rem]'>
+        <span className='mb-[0.4rem] text-left text-grayscale-700 caption-m-11'>
+          {description}
+        </span>
+        <div className='mt-[0.8rem] flex items-center gap-[0.5rem]'>
           {tags.map((tag, index) => (
             <Tag key={index} title={tag} />
           ))}
@@ -56,8 +78,8 @@ export default function FoodTruckClientCard({
 
       <CardButton
         isHeart={true}
-        isLiked={isLiked}
-        handleClick={handleCardButton}
+        isLiked={isSavedClient}
+        handleClick={handleToggleSaveButton}
         buttonIcon='ic_heart_fill'
         className='mb-auto'
       />

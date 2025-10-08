@@ -11,7 +11,10 @@ import { formatSelectedDateToSchedules } from '@utils/date-formatter';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
 import { confirmedRegionsAtom } from '@shared/store/regions-store';
-import useFoodTruckListQuery from '@pages/reservation/hooks/use-food-truck-list-query';
+import {
+  useFoodTruckListQuery,
+  useUpdateFoodTruckSaveStatus,
+} from '@pages/reservation/hooks/use-food-truck-list-query';
 
 export default function useReservation() {
   const navigate = useNavigate();
@@ -42,11 +45,22 @@ export default function useReservation() {
     paymentMethod: filters.paymentMethod,
   };
 
-  const { data: foodTruckData, isLoading } =
+  const { data: foodTruckResponse, isLoading } =
     useFoodTruckListQuery(queryFilters);
+
+  const foodTruckData = foodTruckResponse?.content;
+
+  const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus();
 
   const handleClickChip = (category: string) => {
     setSelectedCategory(category);
+  };
+
+  const handleUpdateFoodTruckSaveStatus = (
+    foodTruckId: number,
+    isSavedRequest: boolean
+  ) => {
+    updateSaveStatus({ foodTruckId, isSavedRequest });
   };
 
   useEffect(() => {
@@ -56,8 +70,7 @@ export default function useReservation() {
   const handleClickBack = () => navigate(-1);
   const handleClickLocation = () => navigate('/set-location');
   const handleClickFilter = () => navigate('/filter');
-  const handleClickFoodTruck = (name: string) =>
-    navigate(`/food-truck/${name}`);
+  const handleClickFoodTruck = (id: number) => navigate(`/food-truck/${id}`);
   const handleClickTooltip = () => setIsTooltipOpen(!isTooltipOpen);
 
   return {
@@ -73,5 +86,6 @@ export default function useReservation() {
     handleClickFoodTruck,
     handleClickTooltip,
     handleClickChip,
+    handleUpdateFoodTruckSaveStatus,
   };
 }

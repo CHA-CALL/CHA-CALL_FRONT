@@ -1,4 +1,7 @@
-import type { GetFoodTrucksData } from 'apis/data-contracts';
+import type {
+  SavedFoodTruckStatusResponse,
+  BaseResponseCursorPagingResponseFoodTruckResponse,
+} from 'apis/data-contracts';
 
 import { apiRequest, type ParamValue } from '@api/apiRequest';
 import {
@@ -21,10 +24,23 @@ export interface FoodTrucksFilterType {
 }
 
 export const getFoodTrucksData = async (filter?: FoodTrucksFilterType) => {
-  const response = await apiRequest<GetFoodTrucksData>({
-    endPoint: `/food-trucks`,
-    method: 'GET',
-    params: filter ?? undefined,
+  const response =
+    await apiRequest<BaseResponseCursorPagingResponseFoodTruckResponse>({
+      endPoint: `/food-trucks`,
+      method: 'GET',
+      params: filter ?? undefined,
+    });
+  return response.data;
+};
+
+export const updateFoodTruckSaveStatus = async (
+  foodTruckId?: number,
+  isSavedRequest?: boolean
+) => {
+  const response = await apiRequest<SavedFoodTruckStatusResponse>({
+    endPoint: `/members/me/food-trucks/${foodTruckId}`,
+    method: 'PATCH',
+    data: { isSavedRequest },
   });
   return response;
 };

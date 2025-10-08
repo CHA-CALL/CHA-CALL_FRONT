@@ -22,7 +22,6 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
   const handleClickCard =
     'handleClickCard' in props ? props.handleClickCard : () => {};
-  const isLiked = 'isLiked' in props ? props.isLiked : false;
   const tags = 'tags' in props ? props.tags : [];
 
   const cardComponents = {
@@ -45,7 +44,6 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
     [FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT]: (
       <FoodTruckClientCard
         data={data}
-        isLiked={isLiked}
         tags={tags}
         handleCard={handleClickCard}
         handleCardButton={handleClickButton}

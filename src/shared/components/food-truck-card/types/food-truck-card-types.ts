@@ -3,7 +3,7 @@ import type {
   OwnerReservationHistoryResponse,
   MemberReservationHistoryResponse,
   MyFoodTruckResponse,
-  SavedFoodTruckResponse,
+  FoodTruckResponse,
 } from 'apis/data-contracts';
 
 interface BaseFoodTruckCardProps {
@@ -29,8 +29,7 @@ export type FoodTruckProviderProps = BaseFoodTruckCardProps & {
 
 export type FoodTruckClientProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckClient';
-  data: SavedFoodTruckResponse;
-  isLiked: boolean;
+  data: FoodTruckResponse;
   tags: (typeof FOOD_TRUCK_CATEGORIES)[number][];
   handleClickCard: () => void;
 };
