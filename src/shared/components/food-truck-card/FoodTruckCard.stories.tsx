@@ -22,7 +22,6 @@ const meta: Meta<typeof FoodTruckCard> = {
       ],
     },
     data: { control: 'object' },
-    isLiked: { control: 'boolean' },
     tags: { control: 'object' },
     handleClickButton: { action: 'button clicked' },
     handleClickCard: { action: 'card clicked' },
@@ -96,7 +95,6 @@ export const FoodTruckClient: Story = {
       ratingCount: 10,
       description: '바삭한 타코로 즐거운 한입을!',
     },
-    isLiked: true,
     tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
@@ -125,9 +123,9 @@ export const ReservationProviderList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -149,9 +147,9 @@ export const ReservationClientList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -177,9 +175,9 @@ export const FoodTruckProviderList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
-      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='h-[0.1rem] w-full bg-grayscale-100' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -195,7 +193,6 @@ export const FoodTruckClientList: Story = {
       ratingCount: 10,
       description: '바삭한 타코로 즐거운 한입을!',
     },
-    isLiked: true,
     tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
@@ -206,14 +203,14 @@ export const FoodTruckClientList: Story = {
   },
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col bg-white p-[2rem]'>
-      <span className='text-grayscale-500 caption-m-12 mb-[1rem] ml-[0.4rem]'>
+      <span className='mb-[1rem] ml-[0.4rem] text-grayscale-500 caption-m-12'>
         총 14개
       </span>
       <div className='flex flex-col gap-[2rem]'>
         <FoodTruckCard {...args} />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <FoodTruckCard {...args} />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <FoodTruckCard {...args} />
       </div>
     </div>
