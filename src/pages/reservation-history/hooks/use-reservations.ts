@@ -7,17 +7,19 @@ import {
   getUserReservations
 } from '@pages/reservation-history/api';
 
+const PAGE_SIZE = 20;
+
 export const useOwnerReservations = (viewType: ReservationState) => {
   return useInfiniteQuery({
     queryKey: [...OWNER_GET_RESERVATIONS.ALL, viewType],
-    queryFn: async ({ pageParam }) => {
+    queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getOwnerReservations({
         viewType,
         ...(pageParam !== undefined && { 'cursorPagingRequest.cursor': pageParam }),
-        'cursorPagingRequest.size': 20,
+        'cursorPagingRequest.size': PAGE_SIZE,
       });
     },
-    initialPageParam: undefined as 0 | number | undefined,
+    initialPageParam: undefined,
     getNextPageParam: (lastPage) => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;
@@ -31,14 +33,14 @@ export const useOwnerReservations = (viewType: ReservationState) => {
 export const useUserReservations = (viewType: ReservationState) => {
   return useInfiniteQuery({
     queryKey: [...USER_GET_RESERVATIONS.ALL, viewType],
-    queryFn: async ({ pageParam }) => {
+    queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getUserReservations({
         viewType,
         ...(pageParam !== undefined && { 'cursorPagingRequest.cursor': pageParam }),
-        'cursorPagingRequest.size': 20,
+        'cursorPagingRequest.size': PAGE_SIZE,
       });
     },
-    initialPageParam: undefined as 0 | number | undefined,
+    initialPageParam: undefined,
     getNextPageParam: (lastPage) => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;

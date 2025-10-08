@@ -1,4 +1,9 @@
 export const OWNER_GET_RESERVATIONS = {
   ALL: ['owner-reservations'],
-  DETAIL: (reservationId: number) => [...OWNER_GET_RESERVATIONS.ALL, 'detail', reservationId],
+  DETAILS: () => [...OWNER_GET_RESERVATIONS.ALL, 'details'],
+  DETAIL: (reservationId: number) => [
+    ...OWNER_GET_RESERVATIONS.ALL,
+    ...OWNER_GET_RESERVATIONS.DETAILS(),
+    reservationId
+  ],
 } as const;
