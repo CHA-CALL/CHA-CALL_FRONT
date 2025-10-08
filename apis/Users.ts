@@ -11,6 +11,8 @@
  */
 
 import {
+  ApproveFoodTruckStatusData,
+  ApproveFoodTruckStatusRequest,
   GetUserInfoData,
   UpdateUserInfoData,
   UpdateUserInfoRequest,
@@ -59,6 +61,33 @@ export class Users<
     this.request<UpdateUserInfoData, void>({
       path: `/users/me`,
       method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 운영자 - 푸드트럭 승인 상태를 변경합니다.
+   *
+   * @tags User API
+   * @name ApproveFoodTruckStatus
+   * @summary 푸드트럭 승인 상태 변경
+   * @request PATCH:/users/admin/food-trucks/{foodTruckId}/approval
+   * @secure
+   * @response `200` `ApproveFoodTruckStatusData` OK
+   * @response `400` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  approveFoodTruckStatus = (
+    foodTruckId: number,
+    data: ApproveFoodTruckStatusRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<ApproveFoodTruckStatusData, void>({
+      path: `/users/admin/food-trucks/${foodTruckId}/approval`,
+      method: "PATCH",
       body: data,
       secure: true,
       type: ContentType.Json,

@@ -10,12 +10,100 @@
  * ---------------------------------------------------------------
  */
 
-import { GetFoodTrucksData } from "./data-contracts";
-import { HttpClient, RequestParams } from "./http-client";
+import {
+  CreateFoodTruckImagePresignedUrlData,
+  CreateMenuImagePresignedUrlData,
+  FoodTruckNameDuplicateCheckRequest,
+  GetFoodTruckMenusData,
+  GetFoodTrucksData,
+  ImageRequest,
+  IsNameDuplicatedData,
+} from "./data-contracts";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class FoodTrucks<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
+  /**
+   * @description 메뉴 사진을 업로드하기 위한 presigned URL을 발급받습니다.
+   *
+   * @tags FoodTruck API
+   * @name CreateMenuImagePresignedUrl
+   * @summary 메뉴 이미지 presigned URL 발급
+   * @request POST:/food-trucks/menus/images
+   * @secure
+   * @response `200` `CreateMenuImagePresignedUrlData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  createMenuImagePresignedUrl = (
+    data: ImageRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<CreateMenuImagePresignedUrlData, void>({
+      path: `/food-trucks/menus/images`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 푸드트럭 사진을 업로드하기 위한 presigned URL을 발급받습니다.
+   *
+   * @tags FoodTruck API
+   * @name CreateFoodTruckImagePresignedUrl
+   * @summary 푸드트럭 이미지 presigned URL 발급
+   * @request POST:/food-trucks/images
+   * @secure
+   * @response `200` `CreateFoodTruckImagePresignedUrlData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  createFoodTruckImagePresignedUrl = (
+    data: ImageRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<CreateFoodTruckImagePresignedUrlData, void>({
+      path: `/food-trucks/images`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 푸드트럭 이름 중복 여부를 체크합니다.
+   *
+   * @tags FoodTruck API
+   * @name IsNameDuplicated
+   * @summary 푸드트럭 이름 중복 체크
+   * @request POST:/food-trucks/duplicate-check
+   * @secure
+   * @response `200` `IsNameDuplicatedData` OK
+   * @response `400` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  isNameDuplicated = (
+    data: FoodTruckNameDuplicateCheckRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<IsNameDuplicatedData, void>({
+      path: `/food-trucks/duplicate-check`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
   /**
    * @description 필터링 조건을 기반으로 푸드트럭을 조회합니다.
    *
@@ -32,11 +120,6 @@ export class FoodTrucks<
    */
   getFoodTrucks = (
     query?: {
-      /**
-       * 검색어(이름/설명 LIKE)
-       * @example "디저트"
-       */
-      keyword?: string;
       /**
        * 지역 코드들 (prefix 검색, 여러 개 OR). 콤마로 구분
        * @example "11680,41"
@@ -90,6 +173,53 @@ export class FoodTrucks<
   ) =>
     this.request<GetFoodTrucksData, void>({
       path: `/food-trucks`,
+      method: "GET",
+      query: query,
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 푸드트럭 메뉴 목록을 조회합니다.
+   *
+   * @tags FoodTruck API
+   * @name GetFoodTruckMenus
+   * @summary 푸드트럭 메뉴 목록 조회
+   * @request GET:/food-trucks/{foodTruckId}/menus
+   * @secure
+   * @response `200` `GetFoodTruckMenusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getFoodTruckMenus = (
+    foodTruckId: number,
+    query?: {
+      /**
+       * 정렬 기준
+       * @default "최신순"
+       * @example "최신순"
+       */
+      sort?: "최신순" | "오래된순";
+      /**
+       * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
+       * @format int64
+       * @example 120
+       */
+      "cursorPagingRequest.cursor"?: number;
+      /**
+       * 한 페이지에 조회할 개수
+       * @format int32
+       * @min 1
+       * @default 20
+       */
+      "cursorPagingRequest.size"?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<GetFoodTruckMenusData, void>({
+      path: `/food-trucks/${foodTruckId}/menus`,
       method: "GET",
       query: query,
       secure: true,
