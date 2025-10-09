@@ -11,6 +11,9 @@ import {
 } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
+import { useMutation } from '@tanstack/react-query';
+import { postFoodTruckMenu } from '@pages/@owner/menu/api';
+
 const menuSchema = z.object({
   name: z
     .string()
@@ -78,7 +81,10 @@ interface InitialData {
   imageUrl: string;
 }
 
-export const useMenuForm = (initialData?: InitialData) => {
+export const useMenuForm = (
+  initialData?: InitialData,
+  foodTruckId?: number,
+) => {
   const {
     handleSubmit,
     setValue,
@@ -99,6 +105,23 @@ export const useMenuForm = (initialData?: InitialData) => {
   });
 
   const formData = watch();
+
+  const { mutate: registerMenu } = useMutation({
+    mutationFn: async (data: {
+      name: string;
+      description: string;
+      price: number;
+      photoUrl: string;
+    }) => {
+      return postFoodTruckMenu({
+        foodTruckId: foodTruckId || 0,
+        data,
+      });
+    },
+    onSuccess: () => {
+      alert('메뉴가 등록되었습니다.');
+    },
+  });
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
@@ -132,9 +155,20 @@ export const useMenuForm = (initialData?: InitialData) => {
   };
 
   const onSubmit = async (formData: MenuFormData) => {
-    if (isValid && formData) {
-      alert('메뉴 등록 완료');
+    if (!isValid || !formData.image) {
+      return;
     }
+
+    const photoUrl = ''; // 이미지 업로드 후 받은 URL로 교체
+
+    const price = Number(formData.price.replace(/,/g, ''));
+
+    registerMenu({
+      name: formData.name,
+      description: formData.description,
+      price,
+      photoUrl,
+    });
   };
 
   const FormDatas = {

@@ -1,5 +1,6 @@
 import type {
   BaseResponseCursorPagingResponseMyFoodTruckMenuResponse,
+  RegisterMenuRequest,
   UpdateMenuStatusRequest,
   BaseResponseVoid,
 } from 'apis/data-contracts';
@@ -15,6 +16,19 @@ export const getFoodTruckMenus = async (params: {
     endPoint: `/owners/me/food-trucks/${params.foodTruckId}/menus`,
     method: 'GET',
     params,
+  });
+  return response.data;
+};
+
+export const postFoodTruckMenu = async (params: {
+  foodTruckId: number;
+  data: RegisterMenuRequest;
+}) => {
+  const { foodTruckId, data } = params;
+  const response = await apiRequest<BaseResponseVoid>({
+    endPoint: `/owners/me/food-trucks/${foodTruckId}/menus`,
+    method: 'POST',
+    data,
   });
   return response.data;
 };
