@@ -2,16 +2,24 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
-// import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
-import { getFoodTruckMenus } from '@pages/@owner/menu/api';
-
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { getFoodTruckMenus, patchMenuStatus } from '@pages/@owner/menu/api';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { OWNER_GET_MENUS } from '@shared/querykey/owner/menu';
+import type {
+  MyFoodTruckMenuResponse,
+  CursorPagingResponseMyFoodTruckMenuResponse,
+} from 'apis/data-contracts';
 
 const PAGE_SIZE = 20;
 
+interface InfiniteQueryData {
+  pages: (CursorPagingResponseMyFoodTruckMenuResponse | undefined)[];
+  pageParams: (number | undefined)[];
+}
+
 export const useMenuList = (foodTruckId: number) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
@@ -44,6 +52,37 @@ export const useMenuList = (foodTruckId: number) => {
   });
 
   const menuList = data?.pages.flatMap(page => page?.content || []) || [];
+
+  const { mutate: toggleMenuStatus } = useMutation({
+    mutationFn: ({ menuId, status }: { menuId: number; status: "ON" | "OFF" }) =>
+      patchMenuStatus({
+        foodTruckId,
+        menuId,
+        data: { status },
+      }),
+    onSuccess: (_, variables) => {
+      const { menuId, status } = variables;
+      const queryKey = [...OWNER_GET_MENUS.ALL, foodTruckId, isSorted];
+
+      queryClient.setQueryData<InfiniteQueryData>(queryKey, (oldData) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => {
+            if (!page) return page;
+
+            return {
+              ...page,
+              content: page.content?.map((menu: MyFoodTruckMenuResponse) =>
+                menu.menuId === menuId ? { ...menu, status } : menu
+              ),
+            };
+          }),
+        };
+      });
+    },
+  });
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
@@ -80,16 +119,15 @@ export const useMenuList = (foodTruckId: number) => {
     }
   };
 
-  // const handleClickToggle = (menuId?: number) => () => {
-  //   // TODO: API 호출로 메뉴 상태 변경
-  //   setSortedMenuList(prevList =>
-  //     prevList.map(menu =>
-  //       menu.menuId === menuId
-  //         ? { ...menu, status: menu.status === 'ON' ? 'OFF' : 'ON' }
-  //         : menu
-  //     )
-  //   );
-  // };
+  const handleClickToggle = (menuId?: number, currentStatus?: string) => () => {
+    if (typeof menuId === 'number' && currentStatus) {
+      const newStatus = currentStatus === 'ON' ? 'OFF' : 'ON';
+      toggleMenuStatus({
+        menuId,
+        status: newStatus,
+      });
+    }
+  };
 
   const handleSave = () => {
     // TODO: 메뉴 노출 여부 저장
@@ -98,7 +136,6 @@ export const useMenuList = (foodTruckId: number) => {
   return {
     isBottomSheetOpen,
     isSorted,
-    // sortedMenuList,
 
     menuList,
     isLoading,
@@ -115,7 +152,7 @@ export const useMenuList = (foodTruckId: number) => {
     handleSortByOldest,
 
     handleMenuClick,
-    // handleClickToggle,
+    handleClickToggle,
     handleSave,
   };
 };

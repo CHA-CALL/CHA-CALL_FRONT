@@ -23,7 +23,7 @@ export default function MenuList() {
     handleSortByOldest,
 
     handleMenuClick,
-    // handleClickToggle,
+    handleClickToggle,
     handleSave,
   } = useMenuList(1);
 
@@ -76,8 +76,7 @@ export default function MenuList() {
               menuPrice={menu.price || ''}
               isToggled={menu.status === 'ON'}
               handleMenuClick={handleMenuClick(menu.menuId?.toString())}
-              // handleToggle={handleClickToggle(menu.menuId)}
-              handleToggle={() => {}}
+              handleToggle={handleClickToggle(menu.menuId, menu.status)}
               isLast={index === menuList.length - 1}
             />
           ))
