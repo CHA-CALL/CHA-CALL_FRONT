@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
-import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
+import { getFoodTruckMenus } from '@pages/@owner/menu/api';
 
-export const useMenuList = () => {
+import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { OWNER_GET_MENUS } from '@shared/querykey/owner/menu';
+
+export const useMenuList = (foodTruckId: number) => {
   const navigate = useNavigate();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
