@@ -4,6 +4,8 @@ import Button from '@components/button/Button';
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 
+const TEST_FOOD_TRUCK_ID = 1;
+
 export default function MenuRegister() {
   const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ export default function MenuRegister() {
     updateImage,
     isValid,
     handleSubmit,
-  } = useMenuForm();
+  } = useMenuForm(TEST_FOOD_TRUCK_ID);
 
   const handleClickSubmit = () => {
     handleSubmit();

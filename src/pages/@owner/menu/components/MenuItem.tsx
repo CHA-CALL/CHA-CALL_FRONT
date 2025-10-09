@@ -47,7 +47,7 @@ export default function MenuItem({
         </span>
         <div className='flex items-center gap-[0.2rem]'>
           <span className='title-sb-16 text-grayscale-900'>
-            {menuPrice.toLocaleString()}
+            {Number(menuPrice.toLocaleString().slice(0, -1)).toLocaleString()}
           </span>
           <span className='caption-m-11 text-grayscale-700'>원</span>
         </div>

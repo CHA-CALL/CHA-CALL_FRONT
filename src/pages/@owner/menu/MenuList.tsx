@@ -7,6 +7,8 @@ import ListSortBottomSheet from '@pages/@owner/menu/components/ListSortBottomShe
 import { SORT_OPTIONS } from '@pages/@owner/menu/constant/menu-list-sort';
 import { useMenuList } from '@pages/@owner/menu/hooks/use-menu-list';
 
+const TEST_FOOD_TRUCK_ID = 1;
+
 export default function MenuList() {
   const {
     isBottomSheetOpen,
@@ -25,7 +27,7 @@ export default function MenuList() {
     handleMenuClick,
     handleClickToggle,
     handleSave,
-  } = useMenuList(1);
+  } = useMenuList(TEST_FOOD_TRUCK_ID);
 
   return (
     <>

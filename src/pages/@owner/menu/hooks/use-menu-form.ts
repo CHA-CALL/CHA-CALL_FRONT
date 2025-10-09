@@ -82,8 +82,8 @@ interface InitialData {
 }
 
 export const useMenuForm = (
+  foodTruckId: number,
   initialData?: InitialData,
-  foodTruckId?: number,
 ) => {
   const {
     handleSubmit,
@@ -114,7 +114,7 @@ export const useMenuForm = (
       photoUrl: string;
     }) => {
       return postFoodTruckMenu({
-        foodTruckId: foodTruckId || 0,
+        foodTruckId: foodTruckId,
         data,
       });
     },
@@ -159,15 +159,13 @@ export const useMenuForm = (
       return;
     }
 
-    const photoUrl = ''; // 이미지 업로드 후 받은 URL로 교체
-
     const price = Number(formData.price.replace(/,/g, ''));
 
     registerMenu({
       name: formData.name,
       description: formData.description,
-      price,
-      photoUrl,
+      price: price,
+      photoUrl: formData.image.name,
     });
   };
 
