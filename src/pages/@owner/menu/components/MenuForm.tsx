@@ -1,15 +1,14 @@
 import React, { useState, useEffect, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
-import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
-import MenuInput from '@pages/@owner/menu/components/MenuInput';
+import Input from '@components/input/Input';
+import Textarea from '@components/text-area/Textarea';
 import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 import ImagePreview from '@components/image-preview/ImagePreview';
+import MenuInput from '@pages/@owner/menu/components/MenuInput';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
-import Input from '@shared/components/input/Input';
-import Textarea from '@shared/components/text-area/Textarea';
+import type { MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 
 interface MenuFormProps {
   initialData?: {
@@ -19,24 +18,32 @@ interface MenuFormProps {
     imageUrl?: string;
   };
   footerContent: React.ReactNode;
+  formData: MenuFormData;
+  errors: {
+    name?: string;
+    description?: string;
+    price?: string;
+    image?: string;
+  };
+  updateName: (_name: string) => void;
+  updateDescription: (_description: string) => void;
+  updatePrice: (_price: string) => void;
+  updateImage: (_image: File | null) => void;
 }
 
 export default function MenuForm({
   initialData,
   footerContent,
+  formData,
+  errors,
+  updateName,
+  updateDescription,
+  updatePrice,
+  updateImage,
 }: MenuFormProps) {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState<string | null>(initialData?.imageUrl || null);
   const canAdd = !imageUrl;
-
-  const {
-    formData,
-    errors,
-    updateName,
-    updateDescription,
-    updatePrice,
-    updateImage,
-  } = useMenuForm();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -70,13 +77,13 @@ export default function MenuForm({
     }
   }, [formData.image, initialData?.imageUrl]);
 
-  useEffect(() => {
-    if (initialData) {
-      updateName(initialData.name);
-      updateDescription(initialData.description);
-      updatePrice(initialData.price);
-    }
-  }, [initialData, updateName, updateDescription, updatePrice]);
+  // useEffect(() => {
+  //   if (initialData) {
+  //     updateName(initialData.name);
+  //     updateDescription(initialData.description);
+  //     updatePrice(initialData.price);
+  //   }
+  // }, [initialData, updateName, updateDescription, updatePrice]);
 
   const handleClickBack = () => {
     navigate(-1);

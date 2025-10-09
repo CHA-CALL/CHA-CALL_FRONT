@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import Button from '@components/button/Button';
@@ -8,16 +8,20 @@ import MenuForm from '@pages/@owner/menu/components/MenuForm';
 
 import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
 
+const convertURLtoFile = async (url: string) => {
+  const response = await fetch(url);
+  const data = await response.blob();
+  const ext = data.type.split('/')[1] || 'jpg';
+  const filename = url.split('/').pop() || `image.${ext}`;
+  const metadata = { type: data.type };
+
+  return new File([data], filename, metadata);
+};
+
 export default function MenuEdit() {
   const navigate = useNavigate();
   const { menuId } = useParams<{ menuId: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const {
-    isValid,
-    handleSubmit,
-    trigger,
-  } = useMenuForm();
 
   // TODO: menuId를 사용해서 기존 메뉴 데이터 불러오기
   const menuData = mockMenuData.find(menu => menu.menuId === Number(menuId)) || mockMenuData[0];
@@ -29,6 +33,37 @@ export default function MenuEdit() {
     imageUrl: menuData.imageUrl || '',
   };
 
+  const {
+    formData,
+    errors,
+    updateName,
+    updateDescription,
+    updatePrice,
+    updateImage,
+    isValid,
+    handleSubmit,
+    reset,
+  } = useMenuForm(initialData);
+
+  useEffect(() => {
+    const loadImage = async () => {
+      if (menuData?.imageUrl) {
+        try {
+          const file = await convertURLtoFile(menuData.imageUrl);
+          reset({
+            name: menuData.name,
+            description: menuData.description,
+            price: menuData.price,
+            image: file,
+          });
+        } catch (error) {
+          console.error("이미지 파일로 변환 실패.", error);
+        }
+      }
+    };
+    loadImage();
+  }, [menuData, reset]);
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -37,16 +72,8 @@ export default function MenuEdit() {
     setIsModalOpen(true);
   };
 
-  const handleClickUpdate = async () => {
-    const isFormValid = await trigger();
-
-    if (!isFormValid) {
-      // TODO: 에러 처리
-      return;
-    }
-
-    await handleSubmit();
-    // TODO: 성공 처리
+  const handleClickUpdate = () => {
+    handleSubmit();
     navigate(ROUTES.MENU_LIST);
   };
 
@@ -86,6 +113,12 @@ export default function MenuEdit() {
       </Overlay>
 
       <MenuForm
+        formData={formData}
+        errors={errors}
+        updateName={updateName}
+        updateDescription={updateDescription}
+        updatePrice={updatePrice}
+        updateImage={updateImage}
         initialData={initialData}
         footerContent={
           <div className='flex gap-[1rem]'>

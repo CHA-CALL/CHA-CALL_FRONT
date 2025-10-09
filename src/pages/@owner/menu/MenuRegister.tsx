@@ -8,26 +8,29 @@ export default function MenuRegister() {
   const navigate = useNavigate();
 
   const {
+    formData,
+    errors,
+    updateName,
+    updateDescription,
+    updatePrice,
+    updateImage,
     isValid,
     handleSubmit,
-    trigger,
   } = useMenuForm();
 
-  const handleClickSubmit = async () => {
-    const isFormValid = await trigger();
-
-    if (!isFormValid) {
-      // TODO: 에러 처리
-      return;
-    }
-
-    await handleSubmit();
-    // TODO: 성공 처리
+  const handleClickSubmit = () => {
+    handleSubmit();
     navigate(ROUTES.MENU_LIST);
   };
 
   return (
     <MenuForm
+      formData={formData}
+      errors={errors}
+      updateName={updateName}
+      updateDescription={updateDescription}
+      updatePrice={updatePrice}
+      updateImage={updateImage}
       footerContent={
         <div className='flex flex-col gap-[1.7rem]'>
           <span className='caption-m-12 text-grayscale-300'>
