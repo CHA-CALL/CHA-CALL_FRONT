@@ -47,8 +47,8 @@ export default function Reservation() {
         >
           <Icon name='ic_locate' className='text-primary-700' />
           <span className='text-grayscale-900 body-m-14'>
-            {locationName.length === 0 ? '전체' : locationName[0]}{' '}
-            {locationName.length > 1 && `외 ${locationName.length - 1}곳`}
+            {locationName.length === 0 ? '전체' : locationName[0]}
+            {locationName.length > 1 && ` 외 ${locationName.length - 1}곳`}
           </span>
           <Icon name='ic_down' />
         </button>

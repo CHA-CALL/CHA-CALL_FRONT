@@ -1,5 +1,5 @@
 import type {
-  SavedFoodTruckStatusResponse,
+  BaseResponseSavedFoodTruckStatusResponse,
   BaseResponseCursorPagingResponseFoodTruckResponse,
 } from 'apis/data-contracts';
 
@@ -37,10 +37,10 @@ export const updateFoodTruckSaveStatus = async (
   foodTruckId: number,
   isSavedRequest: boolean
 ) => {
-  const response = await apiRequest<SavedFoodTruckStatusResponse>({
+  const response = await apiRequest<BaseResponseSavedFoodTruckStatusResponse>({
     endPoint: `/members/me/food-trucks/${foodTruckId}`,
     method: 'PATCH',
     data: { isSavedRequest },
   });
-  return response;
+  return response.data;
 };
