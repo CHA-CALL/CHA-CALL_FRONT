@@ -34,8 +34,8 @@ export const getFoodTrucksData = async (filter?: FoodTrucksFilterType) => {
 };
 
 export const updateFoodTruckSaveStatus = async (
-  foodTruckId?: number,
-  isSavedRequest?: boolean
+  foodTruckId: number,
+  isSavedRequest: boolean
 ) => {
   const response = await apiRequest<SavedFoodTruckStatusResponse>({
     endPoint: `/members/me/food-trucks/${foodTruckId}`,

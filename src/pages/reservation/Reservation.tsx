@@ -102,10 +102,22 @@ export default function Reservation() {
             variant='foodtruckClient'
             data={item}
             tags={['아직', '서버', '추가안됨']}
-            handleClickCard={() => handleClickFoodTruck(item.foodTruckId ?? 0)}
-            handleClickButton={() =>
-              handleUpdateFoodTruckSaveStatus(item.foodTruckId!, !item.isSaved)
-            }
+            handleClickCard={() => {
+              if (item.foodTruckId !== undefined) {
+                handleClickFoodTruck(item.foodTruckId);
+              }
+            }}
+            handleClickButton={() => {
+              if (
+                item.foodTruckId !== undefined &&
+                item.isSaved !== undefined
+              ) {
+                handleUpdateFoodTruckSaveStatus(
+                  item.foodTruckId,
+                  !item.isSaved
+                );
+              }
+            }}
           />
         ))}
       </div>

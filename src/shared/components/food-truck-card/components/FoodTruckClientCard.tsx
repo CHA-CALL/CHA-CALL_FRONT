@@ -71,7 +71,7 @@ export default function FoodTruckClientCard({
       <CardButton
         isHeart={true}
         isLiked={isSaved}
-        handleClick={() => handleCardButton(foodTruckId, isSaved)}
+        handleClick={() => handleCardButton(foodTruckId, !isSaved)}
         buttonIcon='ic_heart_fill'
         className='mb-auto'
       />
