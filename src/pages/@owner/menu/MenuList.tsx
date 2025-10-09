@@ -1,65 +1,30 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
-import { SORT_OPTIONS, SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
-
-import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
+import ListSortBottomSheet from '@pages/@owner/menu/components/ListSortBottomSheet';
+import { SORT_OPTIONS } from '@pages/@owner/menu/constant/menu-list-sort';
+import { useMenuList } from '@pages/@owner/menu/hooks/use-menu-list';
 
 export default function MenuList() {
-  const navigate = useNavigate();
+  const {
+    isBottomSheetOpen,
+    isSorted,
+    sortedMenuList,
 
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
-  const [sortedMenuList, setSortedMenuList] = useState(mockMenuData);
+    handleClickBack,
+    handleRegister,
 
-  useEffect(() => {
-    const sorted = [...mockMenuData].sort((a, b) => {
-      const dateA = new Date(a.dateAdded).getTime();
-      const dateB = new Date(b.dateAdded).getTime();
-      return isSorted === SORT_TYPES.LATEST ? dateB - dateA : dateA - dateB;
-    });
-    setSortedMenuList(sorted);
-  }, [isSorted]);
+    handleOpenBottomSheet,
+    handleCloseBottomSheet,
+    handleSortByLatest,
+    handleSortByOldest,
 
-  const handleClickBack = () => {
-    navigate(-1);
-  };
-
-  const handleRegister = () => {
-    navigate(ROUTES.MENU_REGISTER);
-  };
-
-  const handleOpenBottomSheet = () => {
-    setIsBottomSheetOpen(true);
-  };
-
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleSortByLatest = () => {
-    setIsSorted(SORT_TYPES.LATEST);
-    handleCloseBottomSheet();
-  };
-
-  const handleSortByOldest = () => {
-    setIsSorted(SORT_TYPES.OLDEST);
-    handleCloseBottomSheet();
-  };
-
-  const handleClickToggle = () => {
-    alert('메뉴가 등록되었습니다.');
-  };
-
-  const handleSave = () => {
-    // TODO: 메뉴 노출 여부 저장 로직 구현
-  };
+    handleMenuClick,
+    handleClickToggle,
+    handleSave,
+  } = useMenuList();
 
   return (
     <>
@@ -99,16 +64,18 @@ export default function MenuList() {
         </button>
       </div>
 
-      <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[8.5rem] bg-white'>
+      <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[12.5rem] bg-white'>
         {sortedMenuList.length > 0 ? (
           sortedMenuList.map((menu, index) => (
             <MenuItem
               key={menu.menuId}
-              menuImage={menu.image}
-              menuName={menu.name}
-              menuDescription={menu.description}
-              menuPrice={menu.price}
-              handleToggle={handleClickToggle}
+              menuImage={menu.imageUrl || ''}
+              menuName={menu.name || ''}
+              menuDescription={menu.description || ''}
+              menuPrice={menu.price || ''}
+              isToggled={menu.status === 'ON'}
+              handleMenuClick={handleMenuClick(menu.menuId?.toString())}
+              handleToggle={handleClickToggle(menu.menuId)}
               isLast={index === sortedMenuList.length - 1}
             />
           ))
@@ -141,35 +108,11 @@ export default function MenuList() {
 
       <ButtonFloating className='bottom-[10rem]' />
 
-      <BottomSheet
-        isOpen={isBottomSheetOpen}
+      <ListSortBottomSheet
+        isBottomSheetOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
-        sheetContent={
-          <>
-            <button
-              type='button'
-              onClick={handleSortByLatest}
-              className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
-            >
-              {SORT_OPTIONS[SORT_TYPES.LATEST]}
-            </button>
-            <button
-              type='button'
-              onClick={handleSortByOldest}
-              className='w-full p-[2rem] title-sb-14 text-grayscale-700'
-            >
-              {SORT_OPTIONS[SORT_TYPES.OLDEST]}
-            </button>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleCloseBottomSheet}
-            >
-              취소
-            </Button>
-          </>
-        }
-        sheetHeight={200}
+        handleSortByLatest={handleSortByLatest}
+        handleSortByOldest={handleSortByOldest}
       />
     </>
   );

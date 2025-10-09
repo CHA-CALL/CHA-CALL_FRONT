@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ToggleSwitchProps {
   isToggled: boolean;
   handleToggle: () => void;
@@ -7,10 +9,15 @@ export default function ToggleSwitch({
   isToggled,
   handleToggle,
 }: ToggleSwitchProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleToggle();
+  };
+
   return (
     <button
       type='button'
-      onClick={handleToggle}
+      onClick={handleClick}
       className={`
         relative inline-flex items-center
         w-[4.8rem] h-[3rem] ml-[2.1rem]

@@ -22,6 +22,7 @@ import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
+import MenuEdit from '@pages/@owner/menu/MenuEdit';
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MENU_REGISTER,
         element: <MenuRegister />,
+      },
+      {
+        path: ROUTES.MENU_EDIT(':menuId'),
+        element: <MenuEdit />,
       },
     ],
   },
