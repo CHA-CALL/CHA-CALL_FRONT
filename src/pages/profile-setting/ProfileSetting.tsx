@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { type UserResponse } from 'apis/data-contracts';
-
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
-import { isAcceptableFile, isFileSizeValid } from '@utils/image';
-import { ROUTES } from '@router/constant/routes';
-import { NOT_ALLOWED_FILE_TYPE, MAX_MB } from '@shared/constant/image';
-
-import UserDataSection from '@pages/profile-setting/components/UserDataSection';
-import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
-import AgreementSection from '@pages/profile-setting/components/AgreementSection';
+import {
+  useFetchUserData,
+  usePatchUserData,
+} from '@pages/mypage/hooks/use-user-data';
 import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
+import AgreementSection from '@pages/profile-setting/components/AgreementSection';
 import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileImageBottomSheet';
-import { user_mockup } from '@pages/mypage/constant/mockup';
+import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
+import UserDataSection from '@pages/profile-setting/components/UserDataSection';
+import { ROUTES } from '@router/constant/routes';
+import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileSetting() {
   // TODO: 커스텀 훅으로 분리
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
+  // const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
+
+  const { data: userData, isLoading } = useFetchUserData();
+  const { mutate, isPending } = usePatchUserData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
@@ -77,10 +79,14 @@ export default function ProfileSetting() {
     handleCloseBottomSheet();
   };
 
-  useEffect(() => {
-    // TODO: 추후 서버에서 api를 통해 회원정보 조회
-    setUserInfo(user_mockup);
-  }, []);
+  // useEffect(() => {
+  //   // TODO: 추후 서버에서 api를 통해 회원정보 조회
+  //   setUserInfo(user_mockup);
+  // }, []);
+
+  if (isLoading) {
+    return <div>...사용자 정보 불러오는 중</div>;
+  }
 
   return (
     <>
@@ -91,25 +97,25 @@ export default function ProfileSetting() {
       />
       <div className='flex flex-col items-center gap-[3rem] p-[2rem] pt-[3rem]'>
         <ProfileImageSection
-          profileImageUrl={userInfo?.profileImageUrl}
+          profileImageUrl={userData?.profileImageUrl}
           handleOpenBottomSheet={handleOpenBottomSheet}
         />
         <div className='flex w-full flex-col gap-[2.4rem]'>
-          <UserDataSection userInfo={userInfo} />
-          <AgreementSection termAgreed={userInfo?.termAgreed} />
+          <UserDataSection userInfo={userData || null} />
+          <AgreementSection termAgreed={userData?.termAgreed} />
         </div>
         <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
             type='button'
-            className='px-[1rem] py-[0.6rem] text-grayscale-500'
+            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
             onClick={handleLogout}
           >
             로그아웃
           </button>
-          <div className='mx-[0.4rem] h-[1rem] w-[0.1rem] bg-grayscale-500' />
+          <div className='bg-grayscale-500 mx-[0.4rem] h-[1rem] w-[0.1rem]' />
           <button
             type='button'
-            className='px-[1rem] py-[0.6rem] text-grayscale-500'
+            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
             onClick={handleOpenModal}
           >
             회원탈퇴
