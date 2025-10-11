@@ -11,14 +11,13 @@ import {
 import {
   getFoodTrucksData,
   updateFoodTruckSaveStatus,
+  type FoodTrucksFilterType,
 } from '@pages/reservation/api';
 import {
   FOOD_TRUCKS_MUTATION_KEY,
   FOOD_TRUCKS_QUERY_KEY,
 } from '@shared/querykey/food-trucks/food-trucks';
 import { PAGE_SIZE } from '@shared/constant/page-size';
-
-import type { FoodTrucksFilterType } from '@pages/reservation/types/food-trucks-filter-type';
 
 const FALLBACK: CursorPagingResponseFoodTruckResponse = {
   content: [],
