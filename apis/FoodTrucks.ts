@@ -18,8 +18,8 @@ import {
   GetFoodTrucksData,
   ImageRequest,
   IsNameDuplicatedData,
-} from './data-contracts';
-import { ContentType, HttpClient, RequestParams } from './http-client';
+} from "./data-contracts";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class FoodTrucks<
   SecurityDataType = unknown,
@@ -41,11 +41,11 @@ export class FoodTrucks<
    */
   createMenuImagePresignedUrl = (
     data: ImageRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<CreateMenuImagePresignedUrlData, void>({
       path: `/food-trucks/menus/images`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -68,11 +68,11 @@ export class FoodTrucks<
    */
   createFoodTruckImagePresignedUrl = (
     data: ImageRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<CreateFoodTruckImagePresignedUrlData, void>({
       path: `/food-trucks/images`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -94,11 +94,11 @@ export class FoodTrucks<
    */
   isNameDuplicated = (
     data: FoodTruckNameDuplicateCheckRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<IsNameDuplicatedData, void>({
       path: `/food-trucks/duplicate-check`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -135,13 +135,13 @@ export class FoodTrucks<
        * @example "150인분 미만"
        */
       availableQuantity?:
-        | '50인분 미만'
-        | '100인분 미만'
-        | '150인분 미만'
-        | '200인분 이상'
-        | '논의 필요';
+        | "50인분 미만"
+        | "100인분 미만"
+        | "150인분 미만"
+        | "200인분 이상"
+        | "논의 필요";
       /**
-       * 음식 종류(여러 개 OR, CSV). 예) 분식,한식  / 허용값: 한식, 중식, 일식, 양식, 분식, 카페/디저트, 기타
+       * 음식 종류(여러 개 OR, CSV). 예) 분식,한식  / 허용값: 식사,도시락,퓨전식,분식,양식,중식,한식,간식,디저트,음료,커피,미정
        * @example "분식,한식"
        */
       categories?: string;
@@ -149,31 +149,31 @@ export class FoodTrucks<
        * 전기 사용
        * @example "논의 필요"
        */
-      needElectricity?: '가능' | '불가능' | '논의 필요';
+      needElectricity?: "가능" | "불가능" | "논의 필요";
       /**
        * 결제 방법(무관을 선택하면 필터 미적용)
        * @example "무관"
        */
-      paymentMethod?: '무관' | '계좌이체' | '카드';
+      paymentMethod?: "무관" | "계좌이체" | "카드";
       /**
        * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
        * @format int64
        * @example 120
        */
-      'cursorPagingRequest.cursor'?: number;
+      "cursorPagingRequest.cursor"?: number;
       /**
        * 한 페이지에 조회할 개수
        * @format int32
        * @min 1
        * @default 20
        */
-      'cursorPagingRequest.size'?: number;
+      "cursorPagingRequest.size"?: number;
     },
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<GetFoodTrucksData, void>({
       path: `/food-trucks`,
-      method: 'GET',
+      method: "GET",
       query: query,
       secure: true,
       ...params,
@@ -201,26 +201,26 @@ export class FoodTrucks<
        * @default "최신순"
        * @example "최신순"
        */
-      sort?: '최신순' | '오래된순';
+      sort?: "최신순" | "오래된순";
       /**
        * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
        * @format int64
        * @example 120
        */
-      'cursorPagingRequest.cursor'?: number;
+      "cursorPagingRequest.cursor"?: number;
       /**
        * 한 페이지에 조회할 개수
        * @format int32
        * @min 1
        * @default 20
        */
-      'cursorPagingRequest.size'?: number;
+      "cursorPagingRequest.size"?: number;
     },
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<GetFoodTruckMenusData, void>({
       path: `/food-trucks/${foodTruckId}/menus`,
-      method: 'GET',
+      method: "GET",
       query: query,
       secure: true,
       ...params,

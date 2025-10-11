@@ -10,7 +10,6 @@ const meta: Meta<typeof FoodTruckCard> = {
   parameters: {
     layout: 'padded',
   },
-  tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'radio',
@@ -22,7 +21,6 @@ const meta: Meta<typeof FoodTruckCard> = {
       ],
     },
     data: { control: 'object' },
-    tags: { control: 'object' },
     handleClickButton: { action: 'button clicked' },
     handleClickCard: { action: 'card clicked' },
     className: { control: 'text' },
@@ -95,7 +93,6 @@ export const FoodTruckClient: Story = {
       ratingCount: 10,
       description: '바삭한 타코로 즐거운 한입을!',
     },
-    tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
     },
@@ -193,7 +190,6 @@ export const FoodTruckClientList: Story = {
       ratingCount: 10,
       description: '바삭한 타코로 즐거운 한입을!',
     },
-    tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
     },

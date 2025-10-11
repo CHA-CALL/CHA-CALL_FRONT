@@ -394,7 +394,7 @@ export interface ApproveFoodTruckStatusRequest {
    * 변경할 푸드트럭 승인 상태
    * @example "OFF"
    */
-  status: 'PENDING' | 'ON' | 'OFF' | 'REJECTED';
+  status: "PENDING" | "ON" | "OFF" | "REJECTED";
 }
 
 export interface UpdateReservationStatusRequest {
@@ -403,11 +403,11 @@ export interface UpdateReservationStatusRequest {
    * @example "예약 대기"
    */
   reservationStatus:
-    | '예약 대기'
-    | '예약 확정 완료'
-    | '예약 확정 요청'
-    | '예약 취소 완료'
-    | '예약 취소 요청';
+    | "예약 대기"
+    | "예약 확정 완료"
+    | "예약 확정 요청"
+    | "예약 취소 완료"
+    | "예약 취소 요청";
 }
 
 export interface BaseResponseReservationStatusResponse {
@@ -431,7 +431,7 @@ export interface UpdateMenuStatusRequest {
    * 변경할 메뉴 표시 여부
    * @example "OFF"
    */
-  status: 'ON' | 'OFF';
+  status: "ON" | "OFF";
 }
 
 /** 푸드트럭 저장 상태 변경 요청 */
@@ -1087,6 +1087,11 @@ export interface FoodTruckResponse {
    * @example "맛있는 푸드트럭입니다."
    */
   description?: string;
+  /**
+   * 푸드트럭 음식 카테고리 (라벨 리스트)
+   * @example ["한식","분식"]
+   */
+  menuCategories?: string[];
   /**
    * 푸드트럭 평균 평점
    * @format double

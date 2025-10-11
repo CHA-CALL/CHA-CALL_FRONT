@@ -7,14 +7,12 @@ import Tag from '@components/tag/Tag';
 
 interface FoodTruckClientCardProps {
   data: FoodTruckResponse;
-  tags: string[];
   handleCard: (_foodTruckId: number) => void;
   handleCardButton: (_foodTruckId: number, _isSavedRequest: boolean) => void;
 }
 
 export default function FoodTruckClientCard({
   data,
-  tags,
   handleCard,
   handleCardButton,
 }: FoodTruckClientCardProps) {
@@ -23,6 +21,7 @@ export default function FoodTruckClientCard({
     name = '',
     photoUrl = '',
     description = '',
+    menuCategories = [],
     averageRating = 0,
     ratingCount = 0,
     isSaved = false,
@@ -62,7 +61,7 @@ export default function FoodTruckClientCard({
           {description}
         </span>
         <div className='mt-[0.8rem] flex items-center gap-[0.5rem]'>
-          {tags.map((tag, index) => (
+          {menuCategories.map((tag, index) => (
             <Tag key={index} title={tag} />
           ))}
         </div>
