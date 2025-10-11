@@ -12,18 +12,22 @@ import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import { ROUTES } from '@router/constant/routes';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const DEFAULT_PROFILE_IMAGE =
+  'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg';
 export default function ProfileSetting() {
   // TODO: 커스텀 훅으로 분리
   const navigate = useNavigate();
-  // const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
-
   const { data: userData, isLoading } = useFetchUserData();
-  const { mutate, isPending } = usePatchUserData();
+  const { mutate: updateUser, isPending } = usePatchUserData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  if (isLoading || isPending || !userData) {
+    return <div>...사용자 정보 불러오는 중</div>;
+  }
 
   const handleGoBack = () => {
     navigate(-1);
@@ -67,26 +71,32 @@ export default function ProfileSetting() {
     }
 
     const imageUrl = URL.createObjectURL(file);
-    setUserInfo(prev => (prev ? { ...prev, profileImageUrl: imageUrl } : prev));
+
+    // TODO : 타입 단언 제거 필요..
+    updateUser({
+      profileImageUrl: imageUrl,
+      name: userData.name!,
+      email: userData.email!,
+      gender: userData.gender!,
+      termAgreed: userData.termAgreed!,
+    });
     alert('이미지 변경 완료');
     handleCloseBottomSheet();
   };
 
   const handleDeleteImage = () => {
     // TODO: 회원정보 수정 api
-    setUserInfo(prev => (prev ? { ...prev, profileImageUrl: '' } : prev));
+    updateUser({
+      profileImageUrl: DEFAULT_PROFILE_IMAGE,
+      name: userData.name!,
+      email: userData.email!,
+      gender: userData.gender!,
+      termAgreed: userData.termAgreed!,
+    });
+
     alert('이미지 삭제 완료');
     handleCloseBottomSheet();
   };
-
-  // useEffect(() => {
-  //   // TODO: 추후 서버에서 api를 통해 회원정보 조회
-  //   setUserInfo(user_mockup);
-  // }, []);
-
-  if (isLoading) {
-    return <div>...사용자 정보 불러오는 중</div>;
-  }
 
   return (
     <>

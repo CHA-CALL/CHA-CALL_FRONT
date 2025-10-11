@@ -20,9 +20,10 @@ export const setUserInfo = async (newUserInfo: UpdateUserInfoRequest) => {
   const response = await apiRequest<UpdateUserInfoData>({
     endPoint: '/users/me',
     method: 'PUT',
-    data: { newUserInfo },
+    data: newUserInfo,
   });
-  if (!response.isSuccess || !response.data) {
+
+  if (!response.isSuccess) {
     throw new Error(
       response.message || '유저 정보를 수정하는 것에 실패했습니다.'
     );
