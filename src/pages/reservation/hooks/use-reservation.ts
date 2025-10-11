@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import _ from 'lodash';
@@ -18,6 +18,7 @@ import {
 
 export default function useReservation() {
   const navigate = useNavigate();
+  const listBottomRef = useRef<HTMLDivElement | null>(null);
 
   const [isTooltipOpen, setIsTooltipOpen] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -45,10 +46,15 @@ export default function useReservation() {
     paymentMethod: filters.paymentMethod,
   };
 
-  const { data: foodTruckResponse, isLoading } =
-    useFoodTruckListQuery(queryFilters);
+  const {
+    foodTruckResponse,
+    isPending,
+    hasNextFoodTrucks,
+    isFetchingNextPage,
+    loadMoreFoodTrucks,
+  } = useFoodTruckListQuery(queryFilters);
 
-  const foodTruckData = foodTruckResponse?.content;
+  const foodTruckData = foodTruckResponse;
 
   const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus();
 
@@ -67,6 +73,28 @@ export default function useReservation() {
     setLocationName(_.sortBy(extractLocationName(regions)));
   }, [regions]);
 
+  useEffect(() => {
+    const el = listBottomRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      entries => {
+        const [entry] = entries;
+        if (entry.isIntersecting && hasNextFoodTrucks && !isFetchingNextPage) {
+          loadMoreFoodTrucks();
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px 50px 0px',
+        threshold: 0,
+      }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasNextFoodTrucks, isFetchingNextPage, loadMoreFoodTrucks]);
+
   const handleClickBack = () => navigate(-1);
   const handleClickLocation = () => navigate('/set-location');
   const handleClickFilter = () => navigate('/filter');
@@ -74,12 +102,15 @@ export default function useReservation() {
   const handleClickTooltip = () => setIsTooltipOpen(!isTooltipOpen);
 
   return {
+    listBottomRef,
     isTooltipOpen,
     selectedCategory,
     locationName,
     notFiltered,
-    isLoading,
+    isPending,
     foodTruckData,
+    hasNextFoodTrucks,
+    isFetchingNextPage,
     handleClickBack,
     handleClickLocation,
     handleClickFilter,
@@ -87,5 +118,6 @@ export default function useReservation() {
     handleClickTooltip,
     handleClickChip,
     handleUpdateFoodTruckSaveStatus,
+    loadMoreFoodTrucks,
   };
 }

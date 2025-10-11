@@ -1,4 +1,3 @@
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import type {
   OwnerReservationHistoryResponse,
   MemberReservationHistoryResponse,
@@ -30,6 +29,5 @@ export type FoodTruckProviderProps = BaseFoodTruckCardProps & {
 export type FoodTruckClientProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckClient';
   data: FoodTruckResponse;
-  tags: (typeof FOOD_TRUCK_CATEGORIES)[number][];
   handleClickCard: () => void;
 };

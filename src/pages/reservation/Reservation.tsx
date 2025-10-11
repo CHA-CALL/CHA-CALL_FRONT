@@ -10,15 +10,18 @@ import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import useReservation from '@pages/reservation/hooks/use-reservation';
 import Loading from '@shared/components/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
+import FoodTruckEmptyView from './components/FoodTruckEmptyView';
 
 export default function Reservation() {
   const {
+    listBottomRef,
     isTooltipOpen,
     selectedCategory,
     locationName,
     notFiltered,
-    isLoading,
+    isPending,
     foodTruckData,
+    isFetchingNextPage,
     handleClickBack,
     handleClickLocation,
     handleClickFilter,
@@ -27,10 +30,6 @@ export default function Reservation() {
     handleClickChip,
     handleUpdateFoodTruckSaveStatus,
   } = useReservation();
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <>
@@ -95,32 +94,48 @@ export default function Reservation() {
         ))}
       </div>
 
-      <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[6rem] pt-[12.6rem]'>
-        {foodTruckData?.map((item, index) => (
-          <FoodTruckCard
-            key={`${item.name}-${index}`}
-            variant='foodtruckClient'
-            data={item}
-            tags={['아직', '서버', '추가안됨']}
-            handleClickCard={() => {
-              if (item.foodTruckId !== undefined) {
-                handleClickFoodTruck(item.foodTruckId);
-              }
-            }}
-            handleClickButton={() => {
-              if (
-                item.foodTruckId !== undefined &&
-                item.isSaved !== undefined
-              ) {
-                handleUpdateFoodTruckSaveStatus(
-                  item.foodTruckId,
-                  !item.isSaved
-                );
-              }
-            }}
-          />
-        ))}
+      <div className='flex flex-col px-[2rem] pb-[6rem] pt-[12.6rem]'>
+        {isPending && <Loading />}
+        {!isPending && foodTruckData.length === 0 ? (
+          <FoodTruckEmptyView />
+        ) : (
+          foodTruckData.map((item, index) => (
+            <>
+              <FoodTruckCard
+                key={`${item.foodTruckId}`}
+                variant='foodtruckClient'
+                data={item}
+                handleClickCard={() => {
+                  if (item.foodTruckId !== undefined) {
+                    handleClickFoodTruck(item.foodTruckId);
+                  }
+                }}
+                handleClickButton={() => {
+                  if (
+                    item.foodTruckId !== undefined &&
+                    item.isSaved !== undefined
+                  ) {
+                    handleUpdateFoodTruckSaveStatus(
+                      item.foodTruckId,
+                      !item.isSaved
+                    );
+                  }
+                }}
+              />
+              {index < foodTruckData.length - 1 && (
+                <div className='mb-[2.2rem] mt-[2.4rem] h-[0.1rem] w-full bg-grayscale-100' />
+              )}
+            </>
+          ))
+        )}
       </div>
+
+      <div ref={listBottomRef} className='h-[0.1rem] w-full' />
+      {isFetchingNextPage && (
+        <div className='py-4 text-center text-grayscale-500'>
+          더 불러오는 중…
+        </div>
+      )}
 
       <ButtonFloating />
     </>

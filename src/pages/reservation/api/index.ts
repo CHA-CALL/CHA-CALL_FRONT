@@ -4,31 +4,28 @@ import type {
 } from 'apis/data-contracts';
 
 import { apiRequest, type ParamValue } from '@api/apiRequest';
-import {
-  AVAILABLE_QUANTITY,
-  NEED_ELECTRICITY,
-  PAYMENT_METHOD,
-} from '@pages/filter/constant/filter-option-constants';
+import type { FoodTrucksFilterType } from '@pages/reservation/types/food-trucks-filter-type';
+import { formatParams } from '@pages/reservation/utils/format-params';
 
-export interface FoodTrucksFilterType {
-  regionCodes?: string[] | null;
-  schedules?: string[] | null;
-  availableQuantity?: (typeof AVAILABLE_QUANTITY)[number] | null;
-  categories?: string[] | null;
-  needElectricity?: (typeof NEED_ELECTRICITY)[number] | null;
-  paymentMethod?: (typeof PAYMENT_METHOD)[number] | null;
-  'cursorPagingRequest.cursor'?: number;
-  'cursorPagingRequest.size'?: number;
-
-  [key: string]: ParamValue;
-}
-
-export const getFoodTrucksData = async (filter?: FoodTrucksFilterType) => {
+export const getFoodTrucksData = async ({
+  filter,
+  cursor,
+  size,
+}: {
+  filter?: FoodTrucksFilterType;
+  cursor?: number | null;
+  size?: number;
+}) => {
+  const params = formatParams({
+    ...(filter as unknown as Record<string, ParamValue>),
+    'cursorPagingRequest.cursor': cursor ?? undefined,
+    'cursorPagingRequest.size': size ?? undefined,
+  });
   const response =
     await apiRequest<BaseResponseCursorPagingResponseFoodTruckResponse>({
       endPoint: `/food-trucks`,
       method: 'GET',
-      params: filter ?? undefined,
+      params,
     });
   return response.data;
 };
