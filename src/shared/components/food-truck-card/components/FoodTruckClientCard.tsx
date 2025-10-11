@@ -36,7 +36,7 @@ export default function FoodTruckClientCard({
       <CardImage
         imageUrl={photoUrl}
         altText={name}
-        className='mr-[1.6rem] h-[8rem] w-[8rem]'
+        className='mr-[1.6rem] h-[8rem] min-w-[8rem]'
       />
 
       <div className='flex flex-col'>

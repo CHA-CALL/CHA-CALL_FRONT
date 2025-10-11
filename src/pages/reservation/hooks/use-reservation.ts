@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
+import { useInView } from 'react-intersection-observer';
 import _ from 'lodash';
 
 import {
@@ -18,7 +19,7 @@ import {
 
 export default function useReservation() {
   const navigate = useNavigate();
-  const listBottomRef = useRef<HTMLDivElement | null>(null);
+  const { ref: listBottomRef, inView } = useInView();
 
   const [isTooltipOpen, setIsTooltipOpen] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -47,14 +48,12 @@ export default function useReservation() {
   };
 
   const {
-    foodTruckResponse,
+    foodTruckData,
     isPending,
     hasNextFoodTrucks,
     isFetchingNextPage,
-    loadMoreFoodTrucks,
+    fetchNextPage,
   } = useFoodTruckListQuery(queryFilters);
-
-  const foodTruckData = foodTruckResponse;
 
   const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus();
 
@@ -69,37 +68,21 @@ export default function useReservation() {
     updateSaveStatus({ foodTruckId, isSavedRequest });
   };
 
-  useEffect(() => {
-    setLocationName(_.sortBy(extractLocationName(regions)));
-  }, [regions]);
-
-  useEffect(() => {
-    const el = listBottomRef.current;
-    if (!el) return;
-
-    const io = new IntersectionObserver(
-      entries => {
-        const [entry] = entries;
-        if (entry.isIntersecting && hasNextFoodTrucks && !isFetchingNextPage) {
-          loadMoreFoodTrucks();
-        }
-      },
-      {
-        root: null,
-        rootMargin: '0px 0px 50px 0px',
-        threshold: 0,
-      }
-    );
-
-    io.observe(el);
-    return () => io.disconnect();
-  }, [hasNextFoodTrucks, isFetchingNextPage, loadMoreFoodTrucks]);
-
   const handleClickBack = () => navigate(-1);
   const handleClickLocation = () => navigate('/set-location');
   const handleClickFilter = () => navigate('/filter');
   const handleClickFoodTruck = (id: number) => navigate(`/food-truck/${id}`);
   const handleClickTooltip = () => setIsTooltipOpen(!isTooltipOpen);
+
+  useEffect(() => {
+    setLocationName(_.sortBy(extractLocationName(regions)));
+  }, [regions]);
+
+  useEffect(() => {
+    if (inView && hasNextFoodTrucks && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextFoodTrucks, isFetchingNextPage, fetchNextPage]);
 
   return {
     listBottomRef,
@@ -109,7 +92,6 @@ export default function useReservation() {
     notFiltered,
     isPending,
     foodTruckData,
-    hasNextFoodTrucks,
     isFetchingNextPage,
     handleClickBack,
     handleClickLocation,
@@ -118,6 +100,6 @@ export default function useReservation() {
     handleClickTooltip,
     handleClickChip,
     handleUpdateFoodTruckSaveStatus,
-    loadMoreFoodTrucks,
+    fetchNextPage,
   };
 }

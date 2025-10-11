@@ -26,11 +26,10 @@ const FALLBACK: CursorPagingResponseFoodTruckResponse = {
 };
 
 export const useFoodTruckListQuery = (filter: FoodTrucksFilterType) => {
-  const { data, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } =
+  const { data, isPending, isFetchingNextPage, fetchNextPage } =
     useInfiniteQuery<CursorPagingResponseFoodTruckResponse>({
       queryKey: FOOD_TRUCKS_QUERY_KEY.FILTER(filter),
       initialPageParam: null,
-      retry: 0,
       queryFn: async ({ pageParam }) => {
         const cursor =
           pageParam === null || typeof pageParam === 'number'
@@ -44,22 +43,23 @@ export const useFoodTruckListQuery = (filter: FoodTrucksFilterType) => {
         });
         return response ?? FALLBACK;
       },
-      getNextPageParam: lastPage =>
-        lastPage.hasNext ? (lastPage.lastCursor ?? null) : undefined,
-      refetchOnWindowFocus: false,
+      getNextPageParam: last => {
+        if (last.hasNext) return last.lastCursor;
+      },
+      refetchOnWindowFocus: true,
     });
 
-  const foodTruckResponse: FoodTruckResponse[] =
+  const foodTruckData: FoodTruckResponse[] =
     data?.pages.flatMap(p => p.content ?? []) ?? [];
+  // 마지막 요소에 hasNext 값
   const hasNextFoodTrucks = data?.pages.at(-1)?.hasNext ?? false;
 
   return {
-    foodTruckResponse,
+    foodTruckData,
     isPending,
-    hasNextPage,
     hasNextFoodTrucks,
     isFetchingNextPage,
-    loadMoreFoodTrucks: () => fetchNextPage(),
+    fetchNextPage,
   };
 };
 

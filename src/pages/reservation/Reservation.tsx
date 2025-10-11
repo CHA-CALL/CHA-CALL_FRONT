@@ -99,10 +99,9 @@ export default function Reservation() {
         {!isPending && foodTruckData.length === 0 ? (
           <FoodTruckEmptyView />
         ) : (
-          foodTruckData.map((item, index) => (
-            <>
+          foodTruckData?.map((item, index) => (
+            <div key={item.foodTruckId}>
               <FoodTruckCard
-                key={`${item.foodTruckId}`}
                 variant='foodtruckClient'
                 data={item}
                 handleClickCard={() => {
@@ -125,7 +124,7 @@ export default function Reservation() {
               {index < foodTruckData.length - 1 && (
                 <div className='mb-[2.2rem] mt-[2.4rem] h-[0.1rem] w-full bg-grayscale-100' />
               )}
-            </>
+            </div>
           ))
         )}
       </div>
