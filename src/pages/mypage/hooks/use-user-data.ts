@@ -19,7 +19,12 @@ export const useFetchUserData = () => {
   });
 };
 
-export const usePatchUserData = () => {
+interface UsePatchUserDataOptions {
+  onSuccess?: () => void;
+  onError?: (_error: Error) => void;
+}
+
+export const usePatchUserData = (options?: UsePatchUserDataOptions) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -27,9 +32,11 @@ export const usePatchUserData = () => {
       setUserInfo(newUserInfo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      options?.onSuccess?.();
     },
     onError: error => {
       console.error('유저 정보 갱신 실패:', error.message);
+      options?.onError?.(error);
     },
   });
 };
