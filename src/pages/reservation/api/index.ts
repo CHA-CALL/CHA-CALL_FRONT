@@ -12,6 +12,7 @@ import type {
   NEED_ELECTRICITY,
   PAYMENT_METHOD,
 } from '@pages/filter/constant/filter-option-constants';
+import { PAGE_SIZE } from '@shared/constant/page-size';
 
 export interface FoodTrucksFilterType {
   regionCodes?: string[] | null;
@@ -27,16 +28,14 @@ export interface FoodTrucksFilterType {
 export const getFoodTrucksData = async ({
   filter,
   cursor,
-  size,
 }: {
   filter?: FoodTrucksFilterType;
   cursor?: number | null;
-  size?: number;
 }) => {
   const params = formatParams({
     ...(filter as unknown as Record<string, ParamValue>),
     'cursorPagingRequest.cursor': cursor ?? undefined,
-    'cursorPagingRequest.size': size ?? undefined,
+    'cursorPagingRequest.size': PAGE_SIZE,
   });
   const response =
     await apiRequest<BaseResponseCursorPagingResponseFoodTruckResponse>({

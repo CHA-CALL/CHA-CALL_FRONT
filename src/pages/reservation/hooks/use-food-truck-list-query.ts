@@ -17,7 +17,6 @@ import {
   FOOD_TRUCKS_MUTATION_KEY,
   FOOD_TRUCKS_QUERY_KEY,
 } from '@shared/querykey/food-trucks/food-trucks';
-import { PAGE_SIZE } from '@shared/constant/page-size';
 
 const FALLBACK: CursorPagingResponseFoodTruckResponse = {
   content: [],
@@ -39,7 +38,6 @@ export const useFoodTruckListQuery = (filter: FoodTrucksFilterType) => {
         const response = await getFoodTrucksData({
           filter,
           cursor,
-          size: PAGE_SIZE,
         });
         return response ?? FALLBACK;
       },
