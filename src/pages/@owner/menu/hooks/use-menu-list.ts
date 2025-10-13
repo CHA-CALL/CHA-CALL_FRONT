@@ -1,21 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 import { getFoodTruckMenus, patchMenuStatus } from '@pages/@owner/menu/api';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { OWNER_GET_MENUS } from '@shared/querykey/owner/menu';
-import type {
-  MyFoodTruckMenuResponse,
-  CursorPagingResponseMyFoodTruckMenuResponse,
-} from 'apis/data-contracts';
+import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 
 const PAGE_SIZE = 20;
-
-interface InfiniteQueryData {
-  pages: (CursorPagingResponseMyFoodTruckMenuResponse | undefined)[];
-  pageParams: (number | undefined)[];
-}
 
 export const useMenuList = (foodTruckId: number) => {
   const navigate = useNavigate();
@@ -23,6 +15,7 @@ export const useMenuList = (foodTruckId: number) => {
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
+  const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
 
   const {
     data,
@@ -51,36 +44,28 @@ export const useMenuList = (foodTruckId: number) => {
     enabled: !!foodTruckId,
   });
 
-  const menuList = data?.pages.flatMap(page => page?.content || []) || [];
+  // const originalMenuList = data?.pages.flatMap((page) => page?.content || []) || [];
 
-  const { mutate: toggleMenuStatus } = useMutation({
-    mutationFn: ({ menuId, status }: { menuId: number; status: "ON" | "OFF" }) =>
-      patchMenuStatus({
-        foodTruckId,
-        menuId,
-        data: { status },
-      }),
-    onSuccess: (_, variables) => {
-      const { menuId, status } = variables;
-      const queryKey = [...OWNER_GET_MENUS.ALL, foodTruckId, isSorted];
+  useEffect(() => {
+    if (data && data.pages) {
+      const newMenus = data.pages.flatMap((page) => page?.content || []);
+      setMenus(newMenus);
+    }
+  }, [data]);
 
-      queryClient.setQueryData<InfiniteQueryData>(queryKey, (oldData) => {
-        if (!oldData) return oldData;
-
-        return {
-          ...oldData,
-          pages: oldData.pages.map((page) => {
-            if (!page) return page;
-
-            return {
-              ...page,
-              content: page.content?.map((menu: MyFoodTruckMenuResponse) =>
-                menu.menuId === menuId ? { ...menu, status } : menu
-              ),
-            };
-          }),
-        };
-      });
+  const { mutate: saveMenuChanges } = useMutation({
+    mutationFn: (changedMenus: { menuId: number; status: 'ON' | 'OFF' }[]) => {
+      const mutationPromises = changedMenus.map((menu) =>
+        patchMenuStatus({
+          foodTruckId,
+          menuId: menu.menuId,
+          data: { status: menu.status },
+        })
+      );
+      return Promise.all(mutationPromises);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [...OWNER_GET_MENUS.ALL, foodTruckId] });
     },
   });
 
@@ -119,25 +104,45 @@ export const useMenuList = (foodTruckId: number) => {
     }
   };
 
-  const handleClickToggle = (menuId?: number, currentStatus?: string) => () => {
-    if (typeof menuId === 'number' && currentStatus) {
-      const newStatus = currentStatus === 'ON' ? 'OFF' : 'ON';
-      toggleMenuStatus({
-        menuId,
-        status: newStatus,
-      });
+  const handleClickToggle = (menuId?: number) => () => {
+    if (typeof menuId !== 'number') {
+      return;
     }
+
+    setMenus((prevMenus) =>
+      prevMenus.map((menu) => {
+        if (menu.menuId === menuId) {
+          const newStatus = menu.status === 'ON' ? 'OFF' : 'ON';
+          return { ...menu, status: newStatus };
+        }
+        return menu;
+      })
+    )
   };
 
   const handleSave = () => {
-    // TODO: 메뉴 노출 여부 저장
+    const originalMenus = data?.pages.flatMap((page) => page?.content || []) || [];
+    const originalStatusMap = new Map(
+      originalMenus.map((menu) => [menu.menuId, menu.status])
+    );
+
+    const changedMenus = menus.filter((menu) =>
+      menu.menuId && originalStatusMap.get(menu.menuId) !== menu.status
+    ).map((menu) => ({ menuId: menu.menuId!, status: menu.status! as "ON" | "OFF" }));
+
+    if (changedMenus.length === 0) {
+      alert('변경사항이 없습니다.');
+      return;
+    }
+
+    saveMenuChanges(changedMenus);
   };
 
   return {
     isBottomSheetOpen,
     isSorted,
 
-    menuList,
+    menus,
     isLoading,
     isFetchingNextPage,
     fetchNextPage,

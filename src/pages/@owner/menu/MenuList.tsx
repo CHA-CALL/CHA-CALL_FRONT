@@ -14,7 +14,7 @@ export default function MenuList() {
     isBottomSheetOpen,
     isSorted,
 
-    menuList,
+    menus,
 
     handleClickBack,
     handleRegister,
@@ -68,8 +68,8 @@ export default function MenuList() {
       </div>
 
       <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[12.5rem] bg-white'>
-        {menuList.length > 0 ? (
-          menuList.map((menu, index) => (
+        {menus.length > 0 ? (
+          menus.map((menu, index) => (
             <MenuItem
               key={menu.menuId}
               menuImage={menu.imageUrl || ''}
@@ -78,8 +78,8 @@ export default function MenuList() {
               menuPrice={menu.price || ''}
               isToggled={menu.status === 'ON'}
               handleMenuClick={handleMenuClick(menu.menuId?.toString())}
-              handleToggle={handleClickToggle(menu.menuId, menu.status)}
-              isLast={index === menuList.length - 1}
+              handleToggle={handleClickToggle(menu.menuId)}
+              isLast={index === menus.length - 1}
             />
           ))
         ) : (
