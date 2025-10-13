@@ -31,7 +31,7 @@ export default function useReservation() {
   const notFiltered = useAtomValue(notFilteredAtom);
   const regions = useAtomValue(confirmedRegionsAtom);
 
-  const categories = (() => {
+  const selectedCategories = (() => {
     if (selectedCategory === '전체보기') return filters.categories ?? [];
     const base = filters.categories ? [...filters.categories] : [];
     if (!base.includes(selectedCategory)) base.push(selectedCategory);
@@ -42,7 +42,7 @@ export default function useReservation() {
     regionCodes: extractLocationCodes(regions),
     schedules: formatSelectedDateToSchedules(filters.schedules),
     availableQuantity: filters.availableQuantity,
-    categories,
+    categories: selectedCategories,
     needElectricity: filters.needElectricity,
     paymentMethod: filters.paymentMethod,
   };

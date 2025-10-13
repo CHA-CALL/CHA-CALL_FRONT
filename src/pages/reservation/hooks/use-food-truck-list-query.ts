@@ -49,7 +49,6 @@ export const useFoodTruckListQuery = (filter: FoodTrucksFilterType) => {
 
   const foodTruckData: FoodTruckResponse[] =
     data?.pages.flatMap(p => p.content ?? []) ?? [];
-  // 마지막 요소에 hasNext 값
   const hasNextFoodTrucks = data?.pages.at(-1)?.hasNext ?? false;
 
   return {
