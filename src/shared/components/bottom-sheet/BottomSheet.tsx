@@ -7,14 +7,14 @@ import { cn } from '@shared/utils/cn';
 interface BottomSheetProps {
   isOpen: boolean;
   handleCloseBottomSheet: () => void;
-  sheetContent: React.ReactNode;
+  children: React.ReactNode;
   sheetHeight: number;
 }
 
 export default function BottomSheet({
   isOpen,
   handleCloseBottomSheet,
-  sheetContent,
+  children,
   sheetHeight,
 }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ export default function BottomSheet({
         onClick={e => e.stopPropagation()}
       >
         <div className='mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem] bg-grayscale-300' />
-        <div className='mb-[3.4rem]'>{sheetContent}</div>
+        <div className='mb-[3.4rem]'>{children}</div>
       </div>
     </Overlay>
   );

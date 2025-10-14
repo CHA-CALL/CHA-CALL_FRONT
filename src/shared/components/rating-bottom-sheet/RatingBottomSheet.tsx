@@ -68,38 +68,37 @@ export default function RatingBottomSheet({
     <BottomSheet
       isOpen={isOpen}
       handleCloseBottomSheet={handleCloseBottomSheet}
-      sheetContent={
-        <div className='flex flex-col px-[0.5rem]'>
-          <div className='flex flex-col gap-[0.2rem] py-[2rem]'>
-            <h2 className='heading-sb-18'>예약하신 푸드트럭은 어떠셨나요?</h2>
-            <span className='text-grayscale-500 body-m-14'>
-              세밀한 평가를 위해 0.5 단위로 선택가능합니다.
-            </span>
-          </div>
-
-          <div
-            ref={rowRef}
-            className='mx-auto mb-[5rem] mt-[3rem] flex touch-none flex-row gap-[0.4rem]'
-            role='slider'
-            aria-label='별점'
-            onPointerDown={handleDragStart}
-            onPointerMove={handleDragMove}
-            onPointerUp={handleDragEnd}
-            onPointerCancel={handleDragEnd}
-          >
-            {RATES.map(rate => renderStar(rate))}
-          </div>
-
-          <Button
-            variant='cta'
-            buttonStyle={selectedRate === 0 ? 'disabled' : 'active'}
-            handleClickButton={handleRegisterRate}
-          >
-            평점 등록하기
-          </Button>
-        </div>
-      }
       sheetHeight={340}
-    />
+    >
+      <div className='flex flex-col px-[0.5rem]'>
+        <div className='flex flex-col gap-[0.2rem] py-[2rem]'>
+          <h2 className='heading-sb-18'>예약하신 푸드트럭은 어떠셨나요?</h2>
+          <span className='text-grayscale-500 body-m-14'>
+            세밀한 평가를 위해 0.5 단위로 선택가능합니다.
+          </span>
+        </div>
+
+        <div
+          ref={rowRef}
+          className='mx-auto mb-[5rem] mt-[3rem] flex touch-none flex-row gap-[0.4rem]'
+          role='slider'
+          aria-label='별점'
+          onPointerDown={handleDragStart}
+          onPointerMove={handleDragMove}
+          onPointerUp={handleDragEnd}
+          onPointerCancel={handleDragEnd}
+        >
+          {RATES.map(rate => renderStar(rate))}
+        </div>
+
+        <Button
+          variant='cta'
+          buttonStyle={selectedRate === 0 ? 'disabled' : 'active'}
+          handleClickButton={handleRegisterRate}
+        >
+          평점 등록하기
+        </Button>
+      </div>
+    </BottomSheet>
   );
 }
