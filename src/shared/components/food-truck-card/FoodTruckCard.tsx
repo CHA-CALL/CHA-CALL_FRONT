@@ -33,12 +33,17 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
   const cardComponents = {
     [FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER]: (
       <ReservationProviderCard
+        variant='reservationProvider'
         data={data}
-        handleCardButton={handleClickButton}
+        handleClickButton={handleClickButton}
       />
     ),
     [FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT]: (
-      <ReservationClientCard data={data} handleCardButton={handleClickButton} />
+      <ReservationClientCard
+        variant='reservationClient'
+        data={data}
+        handleClickButton={handleClickButton}
+      />
     ),
     [FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER]: (
       <FoodTruckProviderCard
