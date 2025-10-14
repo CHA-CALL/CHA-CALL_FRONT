@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { PAGE_SIZE } from '@shared/constant/infinite-scroll';
 import type { ReservationState } from '@pages/reservation-history/types/reservation';
 import { getReservationHistory } from '@pages/reservation-history/api';
+import { PAGE_SIZE } from '@shared/constant/infinite-scroll';
 
 export const useReservations = (
   isProvider: boolean,

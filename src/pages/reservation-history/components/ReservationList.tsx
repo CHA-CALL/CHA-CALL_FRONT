@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
-import type { ReservationState } from '@pages/reservation-history/types/reservation';
-import EmptyView from '@pages/reservation-history/components/EmptyView';
+import { useInView } from 'react-intersection-observer';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 import Loading from '@components/loading/Loading';
+import EmptyView from '@pages/reservation-history/components/EmptyView';
 import { useReservations } from '@pages/reservation-history/hooks/use-reservations';
-import { useInView } from 'react-intersection-observer'
+import type { ReservationState } from '@pages/reservation-history/types/reservation';
 
 interface ReservationListProps {
   isProvider: boolean;
