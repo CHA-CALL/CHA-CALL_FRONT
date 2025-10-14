@@ -85,7 +85,7 @@ export default function FoodTruckManagement() {
         <div className='fixed-center top-0 bg-white px-[2rem] pb-[1.6rem] pt-[2rem]'>
           <Information
             iconId='ic_chat_dot'
-            text='푸드트럭을 등록하고 의뢰를 받아보세요!'
+            text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'
           />
         </div>
         <div className='flex flex-col gap-[2rem]'>
