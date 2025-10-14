@@ -11,19 +11,35 @@ import ProfileImageSection from '@pages/profile-setting/components/ProfileImageS
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import { ROUTES } from '@router/constant/routes';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import useToast from '@shared/hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const DEFAULT_PROFILE_IMAGE =
   'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg';
+
 export default function ProfileSetting() {
   // TODO: 커스텀 훅으로 분리
   const navigate = useNavigate();
+  const location = useLocation();
+  const toast = useToast();
+  const { showToast, isSuccess, toastMessage } = location.state || {};
   const { data: userData, isLoading } = useFetchUserData();
   const { mutate: updateUser, isPending } = usePatchUserData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  useEffect(() => {
+    if (showToast && toastMessage) {
+      if (isSuccess) {
+        toast.success(toastMessage);
+      } else {
+        toast.error(toastMessage);
+      }
+      navigate('.', { replace: true, state: {} });
+    }
+  }, [isSuccess, navigate, showToast, toast, toastMessage]);
 
   if (isLoading || isPending || !userData) {
     return <div>...사용자 정보 불러오는 중</div>;
@@ -60,19 +76,20 @@ export default function ProfileSetting() {
 
     // TODO: 토스트메시지로 보여주기
     if (!isAcceptableFile(file)) {
-      alert(NOT_ALLOWED_FILE_TYPE);
+      toast.error(NOT_ALLOWED_FILE_TYPE);
       return;
     }
 
     // TODO: 토스트메시지로 보여주기
     if (!isFileSizeValid(file)) {
-      alert(`파일 용량은 ${MAX_MB}MB 이하여야 합니다.`);
+      toast.error(`파일 용량은 ${MAX_MB}MB 이하여야 합니다.`);
       return;
     }
 
+    // TODO : 추후 presignedURL api로 대체
     const imageUrl = URL.createObjectURL(file);
 
-    // TODO : 타입 단언 제거 필요..
+    // TODO : 타입 단언 제거 필요한가?
     updateUser({
       profileImageUrl: imageUrl,
       name: userData.name!,
@@ -80,7 +97,6 @@ export default function ProfileSetting() {
       gender: userData.gender!,
       termAgreed: userData.termAgreed!,
     });
-    alert('이미지 변경 완료');
     handleCloseBottomSheet();
   };
 
@@ -94,7 +110,6 @@ export default function ProfileSetting() {
       termAgreed: userData.termAgreed!,
     });
 
-    alert('이미지 삭제 완료');
     handleCloseBottomSheet();
   };
 

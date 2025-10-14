@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import ButtonCheck from '@components/button-check/ButtonCheck';
 import { Icon } from '@components/icon/Icon';
+import { usePatchUserData } from '@pages/mypage/hooks/use-user-data';
 import { ROUTES } from '@router/constant/routes';
+import useToast from '@shared/hooks/use-toast';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface AgreementSectionProps {
   termAgreed: boolean | undefined;
@@ -13,12 +14,13 @@ export default function AgreementSection({
   termAgreed,
 }: AgreementSectionProps) {
   const navigate = useNavigate();
+  const toast = useToast();
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   // TODO: 토스트 메시지 및 회원정보 수정 api
   const handleToggleCheck = () => {
     if (!isAgreed) {
-      alert('약관 동의가 완료되었습니다.');
+      toast.success('약관 동의가 완료되었습니다.');
     }
     setIsAgreed(!isAgreed);
   };

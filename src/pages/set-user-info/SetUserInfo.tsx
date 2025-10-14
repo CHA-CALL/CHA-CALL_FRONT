@@ -1,21 +1,21 @@
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import type { UserResponse } from 'apis/data-contracts';
-import {
-  INITIAL_USER_INFO,
-  COMPONENT_MAP,
-  VALID_FIELDS,
-  type ValidField,
-  SET_USER_INFO_TITLES,
-} from '@pages/set-user-info/constant/set-user-constant';
-import { ROUTES } from '@router/constant/routes';
 import {
   useFetchUserData,
   usePatchUserData,
 } from '@pages/mypage/hooks/use-user-data';
+import {
+  COMPONENT_MAP,
+  INITIAL_USER_INFO,
+  SET_USER_INFO_TITLES,
+  VALID_FIELDS,
+  type ValidField,
+} from '@pages/set-user-info/constant/set-user-constant';
+import { ROUTES } from '@router/constant/routes';
+import Button from '@shared/components/button/Button';
+import { Icon } from '@shared/components/icon/Icon';
+import Navigation from '@shared/components/navigation/Navigation';
+import type { UserResponse } from 'apis/data-contracts';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function SetUserInfo() {
   const { field } = useParams<{ field: ValidField }>();
@@ -28,6 +28,7 @@ export default function SetUserInfo() {
         navigate('/profile-setting', {
           state: {
             showToast: true,
+            isSuccess: false,
             toastMessage: '잘못된 주소로의 접근입니다.',
           },
         });
@@ -36,6 +37,7 @@ export default function SetUserInfo() {
       navigate('/profile-setting', {
         state: {
           showToast: true,
+          isSuccess: true,
           toastMessage: `${SET_USER_INFO_TITLES[field]}이 완료되었습니다.`,
         },
       });
@@ -63,11 +65,6 @@ export default function SetUserInfo() {
 
   const handleClickBack = () => navigate(-1);
   const handleClickSave = () => {
-    alert(`변경된 사용자 정보
-      name : ${userName}
-      email: ${userEmail}
-      gender: ${userGender}`);
-
     updateUser({
       profileImageUrl: userData.profileImageUrl!,
       name: userName ?? INITIAL_USER_INFO.name,
