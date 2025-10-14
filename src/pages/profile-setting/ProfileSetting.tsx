@@ -16,17 +16,20 @@ import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+// TODO : 백엔드 측에 이미지 삭제한 경우 어떻게 보내는지 질문.
 const DEFAULT_PROFILE_IMAGE =
   'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg';
 
 export default function ProfileSetting() {
-  // TODO: 커스텀 훅으로 분리
+  // TODO: 커스텀 훅으로 분리 - 수정 api, 편집 가능한지 확인 후에.
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
   const { showToast, isSuccess, toastMessage } = location.state || {};
-  const { data: userData, isLoading } = useFetchUserData();
-  const { mutate: updateUser, isPending } = usePatchUserData();
+
+  const { data: userData, isPending: isUserDataPending } = useFetchUserData();
+  const { mutate: updateUser, isPending: isUpdateUserPending } =
+    usePatchUserData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
@@ -41,7 +44,7 @@ export default function ProfileSetting() {
     }
   }, [isSuccess, navigate, showToast, toast, toastMessage]);
 
-  if (isLoading || isPending || !userData) {
+  if (isUserDataPending || isUpdateUserPending || !userData) {
     return <div>...사용자 정보 불러오는 중</div>;
   }
 
@@ -74,13 +77,11 @@ export default function ProfileSetting() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // TODO: 토스트메시지로 보여주기
     if (!isAcceptableFile(file)) {
       toast.error(NOT_ALLOWED_FILE_TYPE);
       return;
     }
 
-    // TODO: 토스트메시지로 보여주기
     if (!isFileSizeValid(file)) {
       toast.error(`파일 용량은 ${MAX_MB}MB 이하여야 합니다.`);
       return;
@@ -89,7 +90,7 @@ export default function ProfileSetting() {
     // TODO : 추후 presignedURL api로 대체
     const imageUrl = URL.createObjectURL(file);
 
-    // TODO : 타입 단언 제거 필요한가?
+    // TODO : 타입 단언 제거 필요한가? ➡️ api 편집 요청 후 진행
     updateUser({
       profileImageUrl: imageUrl,
       name: userData.name!,
@@ -101,7 +102,6 @@ export default function ProfileSetting() {
   };
 
   const handleDeleteImage = () => {
-    // TODO: 회원정보 수정 api
     updateUser({
       profileImageUrl: DEFAULT_PROFILE_IMAGE,
       name: userData.name!,
@@ -111,6 +111,16 @@ export default function ProfileSetting() {
     });
 
     handleCloseBottomSheet();
+  };
+
+  const handleToogleTermAgreed = () => {
+    updateUser({
+      profileImageUrl: userData.profileImageUrl!,
+      name: userData.name!,
+      email: userData.email!,
+      gender: userData.gender!,
+      termAgreed: !userData.termAgreed!,
+    });
   };
 
   return (
@@ -127,7 +137,10 @@ export default function ProfileSetting() {
         />
         <div className='flex w-full flex-col gap-[2.4rem]'>
           <UserDataSection userInfo={userData || null} />
-          <AgreementSection termAgreed={userData?.termAgreed} />
+          <AgreementSection
+            termAgreed={userData?.termAgreed}
+            handleToogleTermAgreed={handleToogleTermAgreed}
+          />
         </div>
         <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button

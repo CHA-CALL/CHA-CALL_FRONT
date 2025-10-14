@@ -25,7 +25,7 @@ export default function SetUserInfo() {
   const { mutate: updateUser, isPending } = usePatchUserData({
     onSuccess: () => {
       if (!field) {
-        navigate('/profile-setting', {
+        navigate(ROUTES.PROFILE_SETTING, {
           state: {
             showToast: true,
             isSuccess: false,
@@ -34,7 +34,7 @@ export default function SetUserInfo() {
         });
         throw new Error('허용되지 않은 프로필 수정 url 입니다.');
       }
-      navigate('/profile-setting', {
+      navigate(ROUTES.PROFILE_SETTING, {
         state: {
           showToast: true,
           isSuccess: true,
@@ -49,7 +49,13 @@ export default function SetUserInfo() {
 
   useEffect(() => {
     if (!field || !VALID_FIELDS.includes(field)) {
-      navigate(ROUTES.PROFILE_SETTING, { replace: true });
+      navigate(ROUTES.PROFILE_SETTING, {
+        state: {
+          showToast: true,
+          isSuccess: false,
+          toastMessage: '잘못된 주소로의 접근입니다.',
+        },
+      });
     }
   }, [field, navigate]);
 
