@@ -112,7 +112,7 @@ export default function Filter() {
         {currentDateIndex !== null && (
           <Calendar
             selectedDate={
-              filters.date?.[currentDateIndex] ?? {
+              localFilters.schedules?.[currentDateIndex] ?? {
                 startDate: null,
                 endDate: null,
               }
