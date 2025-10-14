@@ -5,28 +5,25 @@ import type {
 import { apiRequest } from '@api/apiRequest';
 import type { ReservationState } from '@pages/reservation-history/types/reservation';
 
-export const getOwnerReservations = async (params: {
-  viewType: ReservationState;
-  'cursorPagingRequest.cursor'?: number;
-  'cursorPagingRequest.size'?: number;
-}) => {
-  const response = await apiRequest<GetOwnerReservationsData>({
-    endPoint: '/owners/me/reservations',
-    method: 'GET',
-    params,
-  });
-  return response.data;
-};
+export const getReservationHistory = async (
+  isProvider: boolean,
+  params: {
+    viewType: ReservationState;
+    'cursorPagingRequest.cursor'?: number;
+    'cursorPagingRequest.size'?: number;
+  }
+) => {
+  const endPoint = isProvider
+    ? '/owners/me/reservations'
+    : '/members/me/reservations';
 
-export const getUserReservations = async (params: {
-  viewType: ReservationState;
-  'cursorPagingRequest.cursor'?: number;
-  'cursorPagingRequest.size'?: number;
-}) => {
-  const response = await apiRequest<GetMemberReservationsData>({
-    endPoint: '/members/me/reservations',
+  const response = await apiRequest<
+    GetOwnerReservationsData | GetMemberReservationsData
+  >({
+    endPoint,
     method: 'GET',
     params,
   });
+
   return response.data;
 };

@@ -15,13 +15,10 @@ import {
   RESERVATION_STATE,
   type ReservationState,
 } from '@pages/reservation-history/types/reservation';
-
-import OwnerReservationList from '@pages/reservation-history/components/OwnerReservationList';
-import UserReservationList from '@pages/reservation-history/components/UserReservationList';
+import ReservationList from '@pages/reservation-history/components/ReservationList';
 
 export default function ReservationHistory() {
   const { role } = useRole();
-  // TODO: === 으로 수정 필요
   const isProvider = role !== ROLE.PROVIDER;
 
   const [reservationState, setReservationState] = useState<ReservationState>(
@@ -42,10 +39,7 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      {isProvider
-        ? <OwnerReservationList reservationState={reservationState} />
-        : <UserReservationList reservationState={reservationState} />
-      }
+      <ReservationList isProvider={isProvider} reservationState={reservationState} />
     </>
   );
 }
