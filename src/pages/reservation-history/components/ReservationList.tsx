@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import type { ReservationState } from '@pages/reservation-history/types/reservation';
@@ -6,6 +6,7 @@ import EmptyView from '@pages/reservation-history/components/EmptyView';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 import Loading from '@components/loading/Loading';
 import { useReservations } from '@pages/reservation-history/hooks/use-reservations';
+import { useInView } from 'react-intersection-observer'
 
 interface ReservationListProps {
   isProvider: boolean;
@@ -18,8 +19,7 @@ export default function ReservationList({
 }: ReservationListProps) {
   const navigate = useNavigate();
 
-  const nextFetchTargetRef = useRef<HTMLDivElement | null>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const { ref, inView } = useInView()
 
   const {
     reservations,
@@ -33,43 +33,10 @@ export default function ReservationList({
   }
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
-        }
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5,
-      }
-    );
-
-    observerRef.current = observer;
-    return () => {
-      observer.disconnect();
-    };
-  }, [fetchNextPage]);
-
-  useEffect(() => {
-    const observer = observerRef.current;
-    const target = nextFetchTargetRef.current;
-
-    if (!observer || !target) {
-      return;
+    if (inView && hasNextPage) {
+      fetchNextPage();
     }
-
-    if (hasNextPage) {
-      observer.observe(target);
-    } else {
-      observer.unobserve(target);
-    }
-
-    return () => {
-      observer.unobserve(target);
-    };
-  }, [hasNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   if (reservations?.[0]?.content?.length === 0) {
     return (
@@ -103,7 +70,7 @@ export default function ReservationList({
       ))}
 
       {isLoading && <Loading />}
-      {hasNextPage && <div ref={nextFetchTargetRef} className='h-[10rem] w-full' />}
+      {hasNextPage && <div ref={ref} className='h-[10rem] w-full' />}
     </div>
   );
 }
