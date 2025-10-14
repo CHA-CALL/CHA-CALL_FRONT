@@ -3,7 +3,7 @@ import CardImage from '@components/food-truck-card/components/CardImage';
 import InfoRow from '@components/food-truck-card/components/InfoRow';
 import Button from '@shared/components/button/Button';
 import ButtonCheck from '@shared/components/button-check/ButtonCheck';
-import type { FoodTruckProviderProps } from '../types/food-truck-card-types';
+import type { FoodTruckProviderProps } from '@components/food-truck-card/types/food-truck-card-types';
 import { cn } from '@shared/utils/cn';
 
 export default function FoodTruckProviderCard({
@@ -24,9 +24,8 @@ export default function FoodTruckProviderCard({
 
   return (
     <div
-      role='button'
       className={cn(
-        'flex w-full cursor-pointer items-start gap-[1.3rem] p-[2rem]',
+        'flex w-full items-start gap-[1.3rem] p-[2rem]',
         isRemove && 'bg-primary-25'
       )}
     >

@@ -58,11 +58,12 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
     ),
     [FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT]: (
       <FoodTruckClientCard
+        variant='foodtruckClient'
         data={data}
         isLiked={isLiked}
         tags={tags}
-        handleCard={handleClickCard}
-        handleCardButton={handleClickButton}
+        handleClickCard={handleClickCard}
+        handleClickButton={handleClickButton}
       />
     ),
   };
