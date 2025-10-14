@@ -38,7 +38,7 @@ export default function SetUserName({
     });
   };
   return (
-    <div className='flex flex-1 flex-col gap-[1rem] py-[2rem]'>
+    <div className='flex flex-1 flex-col gap-[1rem] pt-[2rem]'>
       <nav className='flex flex-col gap-[0.2rem] px-[0.5rem]'>
         <h2 className='title-sb-16'>{title}</h2>
         <p className='caption-m-11 text-grayscale-500'>

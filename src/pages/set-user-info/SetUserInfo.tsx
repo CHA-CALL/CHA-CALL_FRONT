@@ -81,16 +81,19 @@ export default function SetUserInfo() {
   };
 
   return (
-    <div className='flex h-dvh flex-col'>
+    <div className='relative'>
       <Navigation
         text={SET_USER_INFO_TITLES[field ?? 'name']}
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='jusify-between flex flex-1 flex-col px-[2rem] pb-[1.7rem]'>
+      <div className='px-[2rem]'>
         {ComponentToRender && (
           <ComponentToRender userInfo={userInfo} setUserInfo={setUserInfo} />
         )}
+      </div>
+
+      <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>
         <Button
           variant='cta'
           buttonStyle={isValid ? 'disabled' : 'active'}
@@ -99,7 +102,7 @@ export default function SetUserInfo() {
         >
           저장하기
         </Button>
-      </div>
+      </footer>
     </div>
   );
 }
