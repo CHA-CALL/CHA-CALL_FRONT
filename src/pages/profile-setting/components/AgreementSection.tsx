@@ -1,8 +1,6 @@
 import ButtonCheck from '@components/button-check/ButtonCheck';
 import { Icon } from '@components/icon/Icon';
 import { ROUTES } from '@router/constant/routes';
-// import useToast from '@shared/hooks/use-toast';
-// import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface AgreementSectionProps {
@@ -15,25 +13,10 @@ export default function AgreementSection({
   handleToogleTermAgreed,
 }: AgreementSectionProps) {
   const navigate = useNavigate();
-  // const toast = useToast();
-  // const [isAgreed, setIsAgreed] = useState<boolean>(false);
-
-  // TODO: 토스트 메시지 및 회원정보 수정 api
-  // const handleToggleCheck = () => {
-  //   if (!isAgreed) {
-  //     toast.success('약관 동의가 완료되었습니다.');
-  //   }
-  //   setIsAgreed(!isAgreed);
-  // };
-
   // TODO: 추후 약관 페이지로
   const handleNavigateToTerm = () => {
     navigate(ROUTES.HOME);
   };
-
-  // useEffect(() => {
-  //   setIsAgreed(termAgreed ?? false);
-  // }, [termAgreed]);
 
   if (termAgreed === undefined) {
     return <div>약관 동의 여부 로딩 중</div>;
@@ -42,9 +25,7 @@ export default function AgreementSection({
   return (
     <div className='border-grayscale-200 flex flex-row items-center justify-between rounded-[1.6rem] border px-[1.8rem] py-[1.6rem]'>
       <div className='flex flex-row gap-[0.8rem]'>
-        {/* <ButtonCheck isChecked={isAgreed} handleToggle={handleToggleCheck} /> */}
         <ButtonCheck
-          // isChecked={isAgreed}
           isChecked={termAgreed}
           handleToggle={handleToogleTermAgreed}
         />
