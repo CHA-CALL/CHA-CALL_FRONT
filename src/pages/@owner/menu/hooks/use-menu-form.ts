@@ -7,9 +7,14 @@ import {
 } from '@pages/@owner/menu/constant/menu';
 import {
   CANNOT_UPLOAD_FILE_MB,
+  IMAGE_SIZE_MESSAGE,
   NOT_ALLOWED_FILE_TYPE,
 } from '@shared/constant/image';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import {
+  isAcceptableFile,
+  isFileSizeValid,
+  isImageSizeValid,
+} from '@shared/utils/image';
 
 const menuSchema = z.object({
   name: z
@@ -60,13 +65,18 @@ const menuSchema = z.object({
         message: CANNOT_UPLOAD_FILE_MB,
       }
     )
-    .optional()
     .refine(
-      (file) => file !== undefined,
+      file => {
+        return isImageSizeValid(file);
+      },
       {
-        message: '이미지를 선택해주세요',
+        message: IMAGE_SIZE_MESSAGE,
       }
-    ),
+    )
+    .optional()
+    .refine(file => file !== undefined, {
+      message: '이미지를 선택해주세요',
+    }),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
@@ -118,6 +128,10 @@ export const useMenuForm = () => {
     }
     if (!isFileSizeValid(image)) {
       setError('image', { message: CANNOT_UPLOAD_FILE_MB });
+      return;
+    }
+    if (!isImageSizeValid(image)) {
+      setError('image', { message: IMAGE_SIZE_MESSAGE });
       return;
     }
     setValue('image', image, { shouldValidate: true });
