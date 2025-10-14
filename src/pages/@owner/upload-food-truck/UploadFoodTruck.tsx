@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import Button from '@shared/components/button/Button';
 import ErrorText from '@shared/components/error-text/ErrorText';
 import { useNavigate } from 'react-router-dom';
+import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 export default function UploadFoodTruck() {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export default function UploadFoodTruck() {
         <Information
           iconId='ic_check'
           text='사진은 16:9 비율로, 가능하면 고화질 이미지를 올려주세요!'
+          className='w-full'
         />
       </div>
 
@@ -72,7 +74,9 @@ export default function UploadFoodTruck() {
           ))}
         {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
       </div>
-
+      <p className='caption-m-12 text-grayscale-300 px-[2rem]'>
+        {IMAGE_INFO_MESSAGE}
+      </p>
       <div className='p-[2rem]'>{error && <ErrorText text={error} />}</div>
       <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>
         <Button

@@ -5,6 +5,7 @@ import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/us
 import { useEffect, useState, type ChangeEvent } from 'react';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import ErrorText from '@shared/components/error-text/ErrorText';
+import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 interface BizRegCertSectionProps {
   file: OwnerFormData['bizRegCert'];
@@ -61,6 +62,7 @@ export default function BizRegCertSection({
           alt='bizRegCert'
         />
       )}
+      <p className='caption-m-12 text-grayscale-300'>{IMAGE_INFO_MESSAGE}</p>
       {error && <ErrorText text={error} />}
     </section>
   );

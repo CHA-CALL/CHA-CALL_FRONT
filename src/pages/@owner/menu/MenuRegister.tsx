@@ -12,6 +12,7 @@ import ImagePreview from '@components/image-preview/ImagePreview';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
 import Input from '@shared/components/input/Input';
 import Textarea from '@shared/components/text-area/Textarea';
+import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 export default function MenuRegister() {
   const navigate = useNavigate();
@@ -139,7 +140,12 @@ export default function MenuRegister() {
           />
         </MenuInput>
 
-        <MenuInput title='사진 등록' error={errors.image} maxLength={1} currentLength={imageUrl ? 1 : 0}>
+        <MenuInput
+          title='사진 등록'
+          error={errors.image}
+          maxLength={1}
+          currentLength={imageUrl ? 1 : 0}
+        >
           <div className='flex'>
             {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
             {imageUrl && (
@@ -151,6 +157,9 @@ export default function MenuRegister() {
               />
             )}
           </div>
+          <p className='caption-m-12 text-grayscale-300'>
+            {IMAGE_INFO_MESSAGE}
+          </p>
         </MenuInput>
       </div>
 

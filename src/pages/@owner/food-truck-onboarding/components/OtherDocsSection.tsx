@@ -5,6 +5,7 @@ import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import { useEffect, useState, type ChangeEvent } from 'react';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import ErrorText from '@shared/components/error-text/ErrorText';
+import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 interface OtherDocsSectionProps {
   files: File[];
@@ -67,6 +68,7 @@ export default function OtherDocsSection({
             />
           ))}
       </div>
+      <p className='caption-m-12 text-grayscale-300'>{IMAGE_INFO_MESSAGE}</p>
       {error && <ErrorText text={error} />}
     </section>
   );
