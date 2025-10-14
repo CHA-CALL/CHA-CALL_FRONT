@@ -1,13 +1,17 @@
 import { useState, type ChangeEvent } from 'react';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import {
+  isAcceptableFile,
+  isFileSizeValid,
+  isImageSizeValid,
+} from '@shared/utils/image';
 import {
   CANNOT_UPLOAD_FILE_MB,
   NOT_ALLOWED_FILE_TYPE,
+  IMAGE_SIZE_MESSAGE,
 } from '@shared/constant/image';
 
 export const MAX_IMAGE_COUNT = 9;
 
-export const CANNOT_UPLOAD_FILE = '파일 업로드 실패';
 export const useFoodTruck = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -24,6 +28,10 @@ export const useFoodTruck = () => {
     }
     if (!isFileSizeValid(selectedFile)) {
       setError(CANNOT_UPLOAD_FILE_MB);
+      return;
+    }
+    if (!isImageSizeValid(selectedFile)) {
+      setError(IMAGE_SIZE_MESSAGE);
       return;
     }
 
