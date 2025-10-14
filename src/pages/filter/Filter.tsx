@@ -107,23 +107,22 @@ export default function Filter() {
       <BottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseCalendar}
-        sheetContent={
-          currentDateIndex !== null ? (
-            <Calendar
-              selectedDate={
-                localFilters.schedules?.[currentDateIndex] ?? {
-                  startDate: null,
-                  endDate: null,
-                }
-              }
-              handleApplyDate={date => handleApplyDate(date, currentDateIndex)}
-              handleCloseBottomSheet={handleCloseCalendar}
-              isOpen={isBottomSheetOpen}
-            />
-          ) : null
-        }
         sheetHeight={490}
-      />
+      >
+        {currentDateIndex !== null && (
+          <Calendar
+            selectedDate={
+              filters.date?.[currentDateIndex] ?? {
+                startDate: null,
+                endDate: null,
+              }
+            }
+            handleApplyDate={date => handleApplyDate(date, currentDateIndex)}
+            handleCloseBottomSheet={handleCloseCalendar}
+            isOpen={isBottomSheetOpen}
+          />
+        )}
+      </BottomSheet>
 
       <footer
         className={cn(
