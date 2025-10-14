@@ -34,5 +34,6 @@ export const useReservations = (
     fetchNextPage: query.fetchNextPage,
     hasNextPage: query.hasNextPage,
     isLoading: query.isLoading,
+    isFetchingNextPage: query.isFetchingNextPage,
   };
 };

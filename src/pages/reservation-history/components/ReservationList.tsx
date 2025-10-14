@@ -18,7 +18,6 @@ export default function ReservationList({
   reservationState,
 }: ReservationListProps) {
   const navigate = useNavigate();
-
   const { ref, inView } = useInView()
 
   const {
@@ -26,6 +25,7 @@ export default function ReservationList({
     fetchNextPage,
     hasNextPage,
     isLoading,
+    isFetchingNextPage,
   } = useReservations(isProvider, reservationState);
 
   const handleReservationDetail = () => {
@@ -33,10 +33,14 @@ export default function ReservationList({
   }
 
   useEffect(() => {
-    if (inView && hasNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (reservations?.[0]?.content?.length === 0) {
     return (
@@ -69,7 +73,7 @@ export default function ReservationList({
         </div>
       ))}
 
-      {isLoading && <Loading />}
+      {isFetchingNextPage && <Loading />}
       {hasNextPage && <div ref={ref} className='h-[10rem] w-full' />}
     </div>
   );
