@@ -107,6 +107,35 @@ export interface UpdateReservationRequest {
   etcRequest?: string;
 }
 
+export interface UpdateMenuRequest {
+  /**
+   * 메뉴 이름
+   * @minLength 0
+   * @maxLength 18
+   * @example "불고기버거"
+   */
+  name: string;
+  /**
+   * 메뉴 설명
+   * @minLength 0
+   * @maxLength 50
+   * @example "신선한 채소와 불고기를 듬뿍 넣은 수제 버거"
+   */
+  description: string;
+  /**
+   * 메뉴 가격 (원화 단위)
+   * @format int32
+   * @example 7500
+   */
+  price: number;
+  /**
+   * 대표 메뉴 이미지 URL
+   * @minLength 1
+   * @example "https://cdn.example.com/menus/bulgogi-burger.jpg"
+   */
+  photoUrl: string;
+}
+
 export interface UpdateChatTemplateRequest {
   /**
    * 자주 쓰는 채팅 내용
@@ -1088,6 +1117,11 @@ export interface FoodTruckResponse {
    */
   description?: string;
   /**
+   * 푸드트럭 음식 카테고리 (라벨 리스트)
+   * @example ["한식","분식"]
+   */
+  menuCategories?: string[];
+  /**
    * 푸드트럭 평균 평점
    * @format double
    * @example 4.5
@@ -1158,6 +1192,10 @@ export type UpdateUserInfoData = BaseResponseVoid;
 export type GetReservationData = BaseResponseReservationResponse;
 
 export type UpdateReservationData = BaseResponseVoid;
+
+export type UpdateMenuData = BaseResponseVoid;
+
+export type DeleteMenuData = BaseResponseVoid;
 
 export type UpdateChatTemplateData = BaseResponseVoid;
 
