@@ -19,7 +19,7 @@ import ReservationList from '@pages/reservation-history/components/ReservationLi
 
 export default function ReservationHistory() {
   const { role } = useRole();
-  const isProvider = role !== ROLE.PROVIDER;
+  const isProvider = role === ROLE.PROVIDER;
 
   const [reservationState, setReservationState] = useState<ReservationState>(
     RESERVATION_STATE.UPCOMING

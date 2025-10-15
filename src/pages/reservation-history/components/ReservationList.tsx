@@ -42,7 +42,7 @@ export default function ReservationList({
     return <Loading />;
   }
 
-  if (reservations?.[0]?.content?.length === 0) {
+  if (!reservations || reservations.every(page => page?.content?.length === 0)) {
     return (
       <EmptyView
         isProvider={isProvider}
