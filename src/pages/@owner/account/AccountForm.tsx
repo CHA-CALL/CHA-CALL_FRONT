@@ -3,10 +3,7 @@ import Information from '@shared/components/information/Information';
 import Navigation from '@shared/components/navigation/Navigation';
 import { useState, useEffect } from 'react';
 import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
-import {
-  useAccount,
-  type AccountFormData,
-} from '@pages/@owner/account/hooks/use-account';
+import { useAccount } from '@pages/@owner/account/hooks/use-account';
 import Input from '@shared/components/input/Input';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
@@ -27,7 +24,7 @@ export default function Account() {
   const { id } = useParams();
   const isEditMode = !!id;
 
-  const { data, isPending } = useFetchAccountData();
+  const { data: existedData, isPending } = useFetchAccountData();
   const { mutate: registerAccount, isPending: isRegistering } =
     useCreateNewAccount({
       onSuccess: () => {
@@ -69,7 +66,6 @@ export default function Account() {
     formatAccountNumber,
     handleSubmit,
     isFormValid,
-    trigger,
   } = useAccount();
 
   const handleUpdateBank = (option: Bank) => {
@@ -97,21 +93,13 @@ export default function Account() {
     setIsSelectBankOpen(false);
   };
 
-  const handleSubmitButton = () => {
-    trigger();
-    if (isFormValid) {
-      console.log('handlesubmit발생');
-      setIsSaveOpen(true);
-    }
-  };
-
   const handleCloseConfirm = () => {
     setIsConfirmOpen(false);
   };
 
   const handleConfirm = () => {
     setIsConfirmOpen(false);
-    navigate(-1);
+    navigate(ROUTES.ACCOUNT);
   };
 
   const handleCancel = () => {
@@ -122,8 +110,8 @@ export default function Account() {
     setIsSaveOpen(false);
   };
 
-  const onValid = (data: AccountFormData) => {
-    console.log('폼 유효성 검사 통과! 저장 확인 모달을 엽니다.', data);
+  const onValid = () => {
+    setIsSaveOpen(false);
   };
 
   const handleConfirmSave = () => {
@@ -149,26 +137,23 @@ export default function Account() {
     return (BANK as readonly string[]).includes(name);
   };
 
-  const fetchAccountData = async () => {
-    if (
-      !data?.accountHolderName ||
-      !data.accountNumber ||
-      !data.bankName ||
-      !isValidBank(data.bankName)
-    ) {
-      return;
-    }
-    updateBank(data?.bankName);
-    updateName(data?.accountHolderName);
-    updateAccountNumber(data?.accountNumber);
-  };
-
   // 수정 모드일 때 계좌 정보 가져오기
   useEffect(() => {
-    if (isEditMode && id) {
-      fetchAccountData();
+    if (isEditMode && existedData) {
+      if (
+        existedData.accountHolderName &&
+        existedData.accountNumber &&
+        existedData.bankName &&
+        isValidBank(existedData.bankName)
+      ) {
+        updateBank(existedData.bankName);
+        updateName(existedData.accountHolderName);
+        updateAccountNumber(existedData.accountNumber);
+      } else {
+        console.error('기존 데이터가 유효하지 않습니다.');
+      }
     }
-  }, [isEditMode, id]);
+  }, [isEditMode, existedData]);
 
   if (isPending || isRegistering || isUpdating) {
     <div>기존 계좌 데이터 로딩중</div>;
@@ -267,7 +252,6 @@ export default function Account() {
           buttonStyle={isFormValid ? 'active' : 'disabled'}
           children='저장하기'
           disabled={!isFormValid}
-          handleClickButton={handleSubmitButton}
         />
       </footer>
     </form>
