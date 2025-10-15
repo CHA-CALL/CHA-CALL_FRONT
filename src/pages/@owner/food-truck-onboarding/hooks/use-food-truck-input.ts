@@ -10,6 +10,9 @@ import {
   useFoodTruckName,
 } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
+import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import { CANNOT_UPLOAD_FILE_MB } from '@shared/constant/image';
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,
@@ -52,10 +55,35 @@ export const useFoodTruckInput = () => {
   };
 
   const updateBizRegCertFile = (bizRegCert: File | undefined) => {
+    if (!bizRegCert) {
+      setValue('bizRegCert', undefined, { shouldValidate: true });
+      return;
+    }
+    if (!isAcceptableFile(bizRegCert)) {
+      setError('bizRegCert', { message: NOT_ALLOWED_FILE_TYPE });
+      return;
+    }
+    if (!isFileSizeValid(bizRegCert)) {
+      setError('bizRegCert', { message: CANNOT_UPLOAD_FILE_MB });
+      return;
+    }
     setValue('bizRegCert', bizRegCert, { shouldValidate: true });
   };
 
   const updateOtherDocsFiles = (otherDocs: File[] | undefined) => {
+    if (!otherDocs) {
+      return;
+    }
+    for (const doc of otherDocs) {
+      if (!isAcceptableFile(doc)) {
+        setError('otherDocs', { message: NOT_ALLOWED_FILE_TYPE });
+        return;
+      }
+      if (!isFileSizeValid(doc)) {
+        setError('otherDocs', { message: CANNOT_UPLOAD_FILE_MB });
+        return;
+      }
+    }
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 
