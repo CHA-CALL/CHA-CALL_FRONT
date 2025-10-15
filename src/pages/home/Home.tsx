@@ -64,8 +64,8 @@ const Home = () => {
       {/* BottomSheet */}
 
       <RatingBottomSheet
-        reservationId={18}
-        foodTruckId={2}
+        reservationId={4}
+        foodTruckId={1}
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
       />

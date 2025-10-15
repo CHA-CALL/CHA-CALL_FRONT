@@ -118,7 +118,7 @@ export default function useStarRating({
     registerRating({
       reservationId,
       foodTruckId,
-      rating: String(selectedRate),
+      rating: selectedRate.toFixed(1),
     });
   }, [reservationId, foodTruckId, selectedRate, registerRating]);
 
