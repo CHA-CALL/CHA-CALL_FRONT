@@ -7,7 +7,7 @@ import {
   MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT,
   MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER,
 } from '@pages/reservation-detail/constant/reservation-detail';
-import { ROLE } from '@shared/constant/role';
+// import { ROLE } from '@shared/constant/role';
 import type { ReservationDetailTopContentProps } from '../components/ReservationDetailTopContent';
 
 export interface ReservationPartialInfo {
@@ -18,8 +18,8 @@ export interface ReservationPartialInfo {
 export const useReservationDetail = () => {
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
-  const role = ROLE.PROVIDER;
-  const isProvider = role === ROLE.PROVIDER;
+  // const isProvider = role === ROLE.PROVIDER;
+  const isProvider = false;
 
   const [reservationData, setReservationData] =
     useState<ReservationResponse>(INITIAL_DATA);
@@ -81,17 +81,16 @@ export const useReservationDetail = () => {
 
   useEffect(() => {
     // TODO : API 확정되면 로직 개선
-    if (role === ROLE.PROVIDER) {
+    if (isProvider) {
       setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER);
       setReservationData(MOCKUP_DATA_PROVIDER);
-    } else if (role === ROLE.CLIENT) {
+    } else {
       setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT);
       setReservationData(MOCKUP_DATA_CLIENT);
     }
-  }, [role]);
+  }, [isProvider]);
 
   return {
-    role,
     isProvider,
     reservationInfo,
     operationInfo,
