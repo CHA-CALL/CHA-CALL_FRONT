@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Navigation from '@shared/components/navigation/Navigation';
@@ -27,7 +27,6 @@ export default function FoodTruckManagement() {
   };
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleOpenDeleteConfirm = () => {
     setIsDeleteConfirmModalOpen(true);
@@ -43,21 +42,6 @@ export default function FoodTruckManagement() {
     setIsDeleteConfirmModalOpen(false);
     setIsDeleteBottomSheetOpen(false);
   };
-
-  useEffect(() => {
-    const checkScrollbar = () => {
-      const hasScrollbar =
-        document.documentElement.scrollHeight > window.innerHeight;
-      setIsScrolled(hasScrollbar);
-    };
-
-    checkScrollbar();
-
-    window.addEventListener('resize', checkScrollbar);
-    return () => {
-      window.removeEventListener('resize', checkScrollbar);
-    };
-  }, [data]);
 
   return (
     <>
@@ -88,7 +72,7 @@ export default function FoodTruckManagement() {
             text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'
           />
         </div>
-        <div className='flex flex-col gap-[2rem]'>
+        <div className='mt-[8rem] flex flex-col gap-[2rem]'>
           {data &&
             data.map((item, index) => (
               <div key={item.id}>
@@ -107,8 +91,7 @@ export default function FoodTruckManagement() {
         className={cn(
           data.length > 0 &&
             'fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
-          'px-[2rem]',
-          isScrolled && 'shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'
+          'px-[2rem]'
         )}
       >
         <Button
