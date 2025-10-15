@@ -20,21 +20,23 @@ export default function CardButton({
   const handleClickButton = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleClick();
-  }
+  };
 
   return (
     <button
       type='button'
       onClick={handleClickButton}
-      className={cn(
-        'ml-auto text-grayscale-700',
-        className,
-      )}
+      className={cn('text-grayscale-700 ml-auto', className)}
     >
-      {isHeart
-        ? (isLiked ? <Icon name='ic_heart_fill' className='text-primary-700' /> : <Icon name='ic_heart_empty' />)
-        : <Icon name={buttonIcon} />
-      }
+      {isHeart ? (
+        isLiked ? (
+          <Icon name='ic_heart_fill' className='text-primary-700' />
+        ) : (
+          <Icon name='ic_heart_empty' />
+        )
+      ) : (
+        <Icon name={buttonIcon} />
+      )}
     </button>
   );
 }
