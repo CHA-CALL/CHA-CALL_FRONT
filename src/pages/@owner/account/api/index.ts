@@ -10,10 +10,10 @@ import type {
 
 export const getBankAccountInfo = async () => {
   const response = await apiRequest<GetBankAccountData>({
-    endPoint: 'owners/me/bank-accounts',
+    endPoint: '/owners/me/bank-accounts',
     method: 'GET',
   });
-  if (!response.isSuccess || !response.data) {
+  if (!response.isSuccess) {
     throw new Error(
       response.message || '사장님의 계좌 정보를 가져오는데 실패했습니다.'
     );
@@ -25,7 +25,7 @@ export const createBankAccountInfo = async (
   newAccountData: RegisterBankAccountRequest
 ) => {
   const response = await apiRequest<RegisterBankAccountData>({
-    endPoint: 'owners/me/bank-accounts',
+    endPoint: '/owners/me/bank-accounts',
     method: 'POST',
     data: newAccountData,
   });

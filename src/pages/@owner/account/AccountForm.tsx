@@ -2,8 +2,11 @@ import Button from '@shared/components/button/Button';
 import Information from '@shared/components/information/Information';
 import Navigation from '@shared/components/navigation/Navigation';
 import { useState, useEffect } from 'react';
-import { type Bank } from '@pages/@owner/account/constants/bank';
-import { useAccount } from '@pages/@owner/account/hooks/use-account';
+import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
+import {
+  useAccount,
+  type AccountFormData,
+} from '@pages/@owner/account/hooks/use-account';
 import Input from '@shared/components/input/Input';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
@@ -13,12 +16,24 @@ import ErrorText from '@shared/components/error-text/ErrorText';
 import ConfirmExitModal from '@pages/@owner/account/@modal/(.)confirm-exit-modal/ConfirmExitModal';
 import { ROUTES } from '@router/constant/routes';
 import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal/SaveAccountModal';
+import {
+  useCreateNewAccount,
+  useFetchAccountData,
+} from './hooks/use-account-query';
 
 export default function Account() {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditMode = !!id;
 
+  const { data, isPending } = useFetchAccountData();
+  const { mutate: registerAccount, isPending: isRegistering } =
+    useCreateNewAccount({
+      onSuccess: () => {
+        setIsSaveOpen(false);
+        navigate(ROUTES.ACCOUNT);
+      },
+    });
   const [isSelectBankOpen, setIsSelectBankOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isSaveOpen, setIsSaveOpen] = useState(false);
@@ -43,7 +58,8 @@ export default function Account() {
 
   const handleClickBack = () => {
     // 폼에 수정사항이 있는지 확인
-    const hasChanges = formData.name || formData.bank || formData.accountNumber;
+    const hasChanges =
+      formData.accountHolderName || formData.bankName || formData.accountNumber;
 
     if (hasChanges) {
       setIsConfirmOpen(true);
@@ -84,11 +100,24 @@ export default function Account() {
     setIsSaveOpen(false);
   };
 
+  // const onValid = async (data: AccountFormData) => {
+  //   console.log('유효성 검사 통과!', data);
+  //   try{
+  //   registerAccount({ data });
+  //   }
+  // };
+
+  const onValid = (data: AccountFormData) => {
+    console.log('폼 유효성 검사 통과! 저장 확인 모달을 엽니다.', data);
+    setIsSaveOpen(true);
+  };
+
   const handleConfirmSave = () => {
-    setIsSaveOpen(false);
-    //TODO: 계좌 등록 제출
-    handleSubmit();
-    navigate(ROUTES.ACCOUNT);
+    registerAccount({ data: formData });
+    // setIsSaveOpen(false);
+    // //TODO: 계좌 등록 제출
+    // handleSubmit();
+    // navigate(ROUTES.ACCOUNT);
   };
 
   const handleCancelSave = () => {
@@ -99,31 +128,44 @@ export default function Account() {
     reset();
   };
 
+  const isValidBank = (name: string): name is Bank => {
+    return (BANK as readonly string[]).includes(name);
+  };
+
   // TODO: 수정 모드일 때 API로 계좌 정보를 가져와서 폼에 초기값으로 설정
-  const fetchAccountData = async (accountId: string) => {
+  const fetchAccountData = async () => {
     // TODO: 받아온 데이터로 폼 초기값 설정
-    if (accountId) {
+    if (
+      !data?.accountHolderName ||
+      !data.accountNumber ||
+      !data.bankName ||
+      !isValidBank(data.bankName)
+    ) {
       return;
     }
-    // updateBank(accountData.bank);
-    // updateName(accountData.name);
-    // updateAccountNumber(accountData.accountNumber);
+    updateBank(data?.bankName);
+    updateName(data?.accountHolderName);
+    updateAccountNumber(data?.accountNumber);
   };
 
   // 수정 모드일 때 계좌 정보 가져오기
   useEffect(() => {
     if (isEditMode && id) {
-      fetchAccountData(id);
+      fetchAccountData();
     }
   }, [isEditMode, id]);
 
+  if (isPending || isRegistering) {
+    <div>기존 계좌 데이터 로딩중</div>;
+  }
+
   return (
-    <>
+    <form onSubmit={e => void handleSubmit(onValid)(e)}>
       <SelectBankBottomSheet
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}
         handleChange={handleUpdateBank}
-        bank={formData.bank as Bank}
+        bank={formData.bankName as Bank}
       />
       <ConfirmExitModal
         isOpen={isConfirmOpen}
@@ -167,24 +209,28 @@ export default function Account() {
               <p
                 className={cn(
                   'body-m-14',
-                  formData.bank ? 'text-grayscale-700' : 'text-grayscale-300'
+                  formData.bankName
+                    ? 'text-grayscale-700'
+                    : 'text-grayscale-300'
                 )}
               >
-                {formData.bank || '옵션을 선택해주세요.'}
+                {formData.bankName || '옵션을 선택해주세요.'}
               </p>
               <Icon name='ic_down' className='text-grayscale-500' />
             </button>
-            {errors.bank && <ErrorText text={errors.bank} />}
+            {errors.bankName && <ErrorText text={errors.bankName} />}
           </div>
           <div className='flex flex-col gap-[1rem]'>
             <p className='text-grayscale-900 title-sb-12'>예금주</p>
             <Input
-              value={formData.name}
+              value={formData.accountHolderName}
               placeholder='예금주를 입력해주세요.'
               onChange={e => updateName(e.target.value)}
               maxLength={15}
             />
-            {errors.name && <ErrorText text={errors.name} />}
+            {errors.accountHolderName && (
+              <ErrorText text={errors.accountHolderName} />
+            )}
           </div>
           <div className='flex flex-col gap-[1rem]'>
             <p className='text-grayscale-900 title-sb-12'>계좌번호</p>
@@ -207,6 +253,6 @@ export default function Account() {
           handleClickButton={handleSubmitButton}
         />
       </footer>
-    </>
+    </form>
   );
 }
