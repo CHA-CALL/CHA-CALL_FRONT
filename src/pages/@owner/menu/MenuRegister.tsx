@@ -41,7 +41,7 @@ export default function MenuRegister() {
 
   const handleRemoveFile = () => {
     setImageUrl(null);
-    updateImage(null);
+    updateImage(undefined);
   };
 
   const handleClearName = () => {
