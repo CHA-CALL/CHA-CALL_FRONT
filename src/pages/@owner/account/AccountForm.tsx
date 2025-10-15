@@ -32,14 +32,26 @@ export default function Account() {
     useCreateNewAccount({
       onSuccess: () => {
         setIsSaveOpen(false);
-        navigate(ROUTES.ACCOUNT);
+        navigate(ROUTES.ACCOUNT, {
+          state: {
+            showToast: true,
+            isSuccess: true,
+            toastMessage: '저장이 완료되었습니다.',
+          },
+        });
       },
     });
 
   const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount({
     onSuccess: () => {
       setIsSaveOpen(false);
-      navigate(ROUTES.ACCOUNT);
+      navigate(ROUTES.ACCOUNT, {
+        state: {
+          showToast: true,
+          isSuccess: true,
+          toastMessage: '저장이 완료되었습니다.',
+        },
+      });
     },
   });
 
@@ -88,6 +100,7 @@ export default function Account() {
   const handleSubmitButton = () => {
     trigger();
     if (isFormValid) {
+      console.log('handlesubmit발생');
       setIsSaveOpen(true);
     }
   };
@@ -111,7 +124,6 @@ export default function Account() {
 
   const onValid = (data: AccountFormData) => {
     console.log('폼 유효성 검사 통과! 저장 확인 모달을 엽니다.', data);
-    setIsSaveOpen(true);
   };
 
   const handleConfirmSave = () => {
@@ -164,6 +176,7 @@ export default function Account() {
 
   return (
     <form onSubmit={e => void handleSubmit(onValid)(e)}>
+      {/* <form onSubmit={e => void handleSubmit(e)}> */}
       <SelectBankBottomSheet
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}
@@ -206,6 +219,7 @@ export default function Account() {
           <div className='flex flex-col gap-[1rem] pt-[1rem]'>
             <p className='text-grayscale-900 title-sb-12'>은행</p>
             <button
+              type='button'
               onClick={handleClickSelectBank}
               className='border-grayscale-200 flex w-full items-center justify-between rounded-[1.6rem] border bg-white py-[1.5rem] pl-[2rem] pr-[1.6rem] text-left'
             >
