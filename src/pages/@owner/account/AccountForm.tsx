@@ -19,6 +19,7 @@ import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal
 import {
   useCreateNewAccount,
   useFetchAccountData,
+  useUpdateAccount,
 } from './hooks/use-account-query';
 
 export default function Account() {
@@ -34,6 +35,14 @@ export default function Account() {
         navigate(ROUTES.ACCOUNT);
       },
     });
+
+  const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount({
+    onSuccess: () => {
+      setIsSaveOpen(false);
+      navigate(ROUTES.ACCOUNT);
+    },
+  });
+
   const [isSelectBankOpen, setIsSelectBankOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isSaveOpen, setIsSaveOpen] = useState(false);
@@ -100,24 +109,20 @@ export default function Account() {
     setIsSaveOpen(false);
   };
 
-  // const onValid = async (data: AccountFormData) => {
-  //   console.log('유효성 검사 통과!', data);
-  //   try{
-  //   registerAccount({ data });
-  //   }
-  // };
-
   const onValid = (data: AccountFormData) => {
     console.log('폼 유효성 검사 통과! 저장 확인 모달을 엽니다.', data);
     setIsSaveOpen(true);
   };
 
   const handleConfirmSave = () => {
-    registerAccount({ data: formData });
-    // setIsSaveOpen(false);
-    // //TODO: 계좌 등록 제출
-    // handleSubmit();
-    // navigate(ROUTES.ACCOUNT);
+    if (isEditMode) {
+      updateAccount({
+        data: formData,
+        accountId: Number(id),
+      });
+    } else {
+      registerAccount({ data: formData });
+    }
   };
 
   const handleCancelSave = () => {
@@ -132,9 +137,7 @@ export default function Account() {
     return (BANK as readonly string[]).includes(name);
   };
 
-  // TODO: 수정 모드일 때 API로 계좌 정보를 가져와서 폼에 초기값으로 설정
   const fetchAccountData = async () => {
-    // TODO: 받아온 데이터로 폼 초기값 설정
     if (
       !data?.accountHolderName ||
       !data.accountNumber ||
@@ -155,7 +158,7 @@ export default function Account() {
     }
   }, [isEditMode, id]);
 
-  if (isPending || isRegistering) {
+  if (isPending || isRegistering || isUpdating) {
     <div>기존 계좌 데이터 로딩중</div>;
   }
 
