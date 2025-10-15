@@ -15,7 +15,7 @@ import {
   getMemberReservationDetail,
   getOwnerReservationDetail,
 } from '@pages/reservation-detail/api';
-import type { ReservationDetailTopContentProps } from '@pages/reservation-detail//components/ReservationDetailTopContent';
+import type { ReservationDetailTopContentProps } from '@pages/reservation-detail/components/ReservationDetailTopContent';
 
 export interface ReservationPartialInfo {
   label: string;
