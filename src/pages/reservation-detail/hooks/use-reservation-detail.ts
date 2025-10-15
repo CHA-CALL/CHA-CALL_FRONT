@@ -41,10 +41,14 @@ export const useReservationDetail = () => {
     | undefined
   >({
     queryKey: RESERVATION_DETAIL_KEY.DETAIL(isProvider, reservationId),
-    queryFn: () =>
-      isProvider
-        ? getOwnerReservationDetail(reservationId!)
-        : getMemberReservationDetail(reservationId!),
+    queryFn: () => {
+      if (!reservationId) {
+        throw new Error('요청이 잘못되었습니다.');
+      }
+      return isProvider
+        ? getOwnerReservationDetail(reservationId)
+        : getMemberReservationDetail(reservationId);
+    },
     enabled: Boolean(reservationId),
   });
 
