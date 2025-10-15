@@ -14,6 +14,7 @@ import {
   getMemberReservationDetail,
   getOwnerReservationDetail,
 } from '@pages/reservation-detail/api';
+import type { ReservationDetailTopContentProps } from '@pages/reservation-detail//components/ReservationDetailTopContent';
 
 export interface ReservationPartialInfo {
   label: string;
@@ -43,7 +44,7 @@ export const useReservationDetail = () => {
         : getMemberReservationDetail(reservationId!),
   });
 
-  const topContents = isProvider
+  const topContents: ReservationDetailTopContentProps = isProvider
     ? {
         role: ROLE.PROVIDER,
         foodTruckName: '푸드트럭 이름',
