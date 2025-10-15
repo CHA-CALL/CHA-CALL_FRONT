@@ -23,11 +23,15 @@ export type ReservationClientProps = BaseFoodTruckCardProps & {
 export type FoodTruckProviderProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckProvider';
   data: MyFoodTruckResponse;
-  handleClickCard: () => void;
+  isRemovable: boolean;
+  isRemove: boolean;
+  isOn: boolean;
+  handleCardRemove: () => void;
 };
 
 export type FoodTruckClientProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckClient';
   data: FoodTruckResponse;
-  handleClickCard: () => void;
+  handleClickCard: (_foodTruckId: number) => void;
+  handleClickButton: (_foodTruckId: number, _isSavedRequest: boolean) => void;
 };

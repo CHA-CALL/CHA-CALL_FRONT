@@ -1,21 +1,14 @@
-import type { FoodTruckResponse } from 'apis/data-contracts';
-
 import CardImage from '@components/food-truck-card/components/CardImage';
 import CardButton from '@components/food-truck-card/components/CardButton';
 import { Icon } from '@components/icon/Icon';
 import Tag from '@components/tag/Tag';
-
-interface FoodTruckClientCardProps {
-  data: FoodTruckResponse;
-  handleCard: (_foodTruckId: number) => void;
-  handleCardButton: (_foodTruckId: number, _isSavedRequest: boolean) => void;
-}
+import type { FoodTruckClientProps } from '@components/food-truck-card/types/food-truck-card-types';
 
 export default function FoodTruckClientCard({
   data,
-  handleCard,
-  handleCardButton,
-}: FoodTruckClientCardProps) {
+  handleClickCard,
+  handleClickButton,
+}: FoodTruckClientProps) {
   const {
     foodTruckId = 0,
     name = '',
@@ -30,7 +23,7 @@ export default function FoodTruckClientCard({
   return (
     <div
       role='button'
-      onClick={() => handleCard(foodTruckId)}
+      onClick={() => handleClickCard(foodTruckId)}
       className='flex w-full cursor-pointer'
     >
       <CardImage
@@ -70,7 +63,7 @@ export default function FoodTruckClientCard({
       <CardButton
         isHeart={true}
         isLiked={isSaved}
-        handleClick={() => handleCardButton(foodTruckId, !isSaved)}
+        handleClick={() => handleClickButton(foodTruckId, !isSaved)}
         buttonIcon='ic_heart_fill'
         className='mb-auto'
       />
