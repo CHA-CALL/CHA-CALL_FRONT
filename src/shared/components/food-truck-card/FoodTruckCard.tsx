@@ -22,8 +22,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
   const handleClickCard =
     'handleClickCard' in props ? props.handleClickCard : () => {};
-  const isLiked = 'isLiked' in props ? props.isLiked : false;
-  const tags = 'tags' in props ? props.tags : [];
+
   const isRemovable = 'isRemovable' in props ? props.isRemovable : false;
   const isRemove = 'isRemove' in props ? props.isRemove : false;
   const handleCardRemove =
@@ -60,8 +59,6 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
       <FoodTruckClientCard
         variant='foodtruckClient'
         data={data}
-        isLiked={isLiked}
-        tags={tags}
         handleClickCard={handleClickCard}
         handleClickButton={handleClickButton}
       />

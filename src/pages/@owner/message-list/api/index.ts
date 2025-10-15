@@ -2,7 +2,7 @@ import type {
   GetChatTemplatesData,
   DeleteChatTemplateData,
   RegisterChatTemplateData,
-} from '@/../apis/data-contracts';
+} from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 
 export const getOwnerChatTemplates = async () => {

@@ -20,7 +20,7 @@ export default function Depth2Item({
       onClick={handleSelectDepth2}
       className={cn(
         BaseClass,
-        isSelected && 'bg-primary-50 title-sb-14 text-primary-700'
+        isSelected && 'bg-primary-50 text-primary-700 title-sb-14'
       )}
     >
       {title}

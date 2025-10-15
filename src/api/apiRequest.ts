@@ -1,7 +1,7 @@
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 type Primitive = string | number | boolean;
-type ParamValue = Primitive | Primitive[] | null | undefined;
+export type ParamValue = Primitive | Primitive[] | null | undefined;
 
 export interface ApiRequestProps {
   endPoint: string;
