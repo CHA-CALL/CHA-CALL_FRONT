@@ -54,6 +54,7 @@ export const useReservationDetail = () => {
         role: ROLE.CLIENT,
         photoUrl: reservationDetailData?.photoUrl,
         foodTruckName: reservationDetailData?.name,
+        // TODO: 푸드트럭 상세정보로 이동 라우트 설정
         handleTruckDetail: () => alert('푸드트럭 상세 정보로 이동'),
       };
 

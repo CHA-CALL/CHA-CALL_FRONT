@@ -13,7 +13,6 @@ export const ROUTES = {
   RESERVATION_HISTORY: '/reservation-history',
   RESERVATION_DETAIL: (reservationId: string) =>
     `/reservation-history/detail/${reservationId}`,
-  RESERVATION_DETAIL_PATH: '/reservation-history/detail/:reservationId',
   SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
   UPLOAD_FOOD_TRUCK: '/owner/upload-food-truck',
   PROFILE_SETTING: '/profile-setting',
