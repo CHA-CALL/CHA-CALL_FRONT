@@ -1,11 +1,14 @@
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useState } from 'react';
-import Button from '@shared/components/button/Button';
 import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '@router/constant/routes';
-import Tooltip from '@shared/components/tooltip/Tooltip';
+import useToast from '@shared/hooks/use-toast';
+import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@components/icon/Icon';
+import Loading from '@components/loading/Loading';
+import Button from '@components/button/Button';
+import Tooltip from '@components/tooltip/Tooltip';
+import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
 import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';
 
@@ -13,13 +16,17 @@ export default function ReservationDetail() {
   // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리
   const [isOpenTip, setIsOpenTip] = useState(true);
   const navigate = useNavigate();
+  const toast = useToast();
 
   const {
     reservationInfo,
     operationInfo,
     etcInfo,
-    contentProps,
+    topContents,
     handleDownload,
+    isPending,
+    error,
+    isError,
   } = useReservationDetail();
 
   const handleClickBack = () => {
@@ -27,6 +34,14 @@ export default function ReservationDetail() {
   };
 
   const handleCloseTooltip = () => setIsOpenTip(false);
+
+  if (isPending) {
+    return <Loading />;
+  }
+  if (isError) {
+    navigate(ROUTES.RESERVATION_HISTORY);
+    toast.error(error?.message ?? '잘못된 접근입니다.');
+  }
 
   return (
     <>
@@ -61,7 +76,7 @@ export default function ReservationDetail() {
       />
 
       <div className='flex flex-col pb-[1.6rem]'>
-        {contentProps && <ReservationDetailTopContent {...contentProps} />}
+        {topContents && <ReservationDetailTopContent {...topContents} />}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
           <div className='my-[2.4rem] border border-grayscale-100' />

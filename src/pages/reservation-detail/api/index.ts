@@ -10,7 +10,7 @@ export const getMemberReservationDetail = async (reservationId?: string) => {
       endPoint: `/members/me/reservations/${reservationId}`,
       method: 'GET',
     });
-  return response;
+  return response.data;
 };
 
 export const getOwnerReservationDetail = async (reservationId?: string) => {
@@ -20,5 +20,5 @@ export const getOwnerReservationDetail = async (reservationId?: string) => {
       method: 'GET',
     }
   );
-  return response;
+  return response.data;
 };

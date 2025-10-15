@@ -1,107 +1,110 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { ReservationResponse } from 'apis/data-contracts';
+import { useQuery } from '@tanstack/react-query';
+
+import type {
+  MemberReservationDetailResponse,
+  OwnerReservationDetailResponse,
+} from 'apis/data-contracts';
+
+import { RESERVATION_DETAIL_KEY } from '@shared/querykey/reservation-detail';
+
+import { ROLE } from '@shared/constant/role';
 
 import {
-  INITIAL_DATA,
-  MOCKUP_DATA_CLIENT,
-  MOCKUP_DATA_PROVIDER,
-  MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT,
-  MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER,
-} from '@pages/reservation-detail/constant/reservation-detail';
-// import { ROLE } from '@shared/constant/role';
-import type { ReservationDetailTopContentProps } from '@pages/reservation-detail/components/ReservationDetailTopContent';
-import { useGetMemberReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail-query';
+  getMemberReservationDetail,
+  getOwnerReservationDetail,
+} from '@pages/reservation-detail/api';
 
 export interface ReservationPartialInfo {
   label: string;
-  data: string | undefined;
+  data: string | string[] | undefined;
 }
 
 export const useReservationDetail = () => {
-  // const { reservationId } = useParams<{ reservationId: string }>();
+  const { reservationId } = useParams<{ reservationId: string }>();
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   // const isProvider = role === ROLE.PROVIDER;
   const isProvider = false;
 
-  // const {} = useGetMemberReservationDetail(reservationId);
-
-  const [reservationData, setReservationData] =
-    useState<ReservationResponse>(INITIAL_DATA);
-  const [contentProps, setContentProps] =
-    useState<ReservationDetailTopContentProps | null>(null);
-
-  const handleDownload = () => {
-    //TODO : 다운로드 API 연동 예정
-    alert('다운로드 버튼 클릭');
-  };
-
   const {
-    address,
-    detailAddress,
-    reservationDates,
-    operationHour,
-    menu,
-    deposit,
-    isUseElectricity,
-    etcRequest,
-  } = reservationData;
+    data: reservationDetailData,
+    isPending,
+    error,
+    isError,
+  } = useQuery<
+    | (MemberReservationDetailResponse & OwnerReservationDetailResponse)
+    | undefined
+  >({
+    queryKey: RESERVATION_DETAIL_KEY.DETAIL(isProvider, reservationId),
+    queryFn: () =>
+      isProvider
+        ? getOwnerReservationDetail(reservationId!)
+        : getMemberReservationDetail(reservationId!),
+  });
+
+  const topContents = isProvider
+    ? {
+        role: ROLE.PROVIDER,
+        foodTruckName: '푸드트럭 이름',
+        clientName: reservationDetailData?.name,
+        profileImage: reservationDetailData?.profileImage,
+      }
+    : {
+        role: ROLE.CLIENT,
+        photoUrl: reservationDetailData?.photoUrl,
+        foodTruckName: reservationDetailData?.name,
+        handleTruckDetail: () => alert('푸드트럭 상세 정보로 이동'),
+      };
 
   const reservationInfo = [
     {
       label: '장소',
-      data: `${address} ${detailAddress}`,
+      data: reservationDetailData?.address,
     },
     {
       label: '날짜',
-      data: reservationDates?.join('\n'),
-    },
-    {
-      label: '시간',
-      data: operationHour,
+      data: reservationDetailData?.dateTimeInfos,
     },
   ];
 
   const operationInfo = [
     {
       label: '음식',
-      data: menu,
+      data: reservationDetailData?.menu,
     },
     {
       label: '결제금',
-      data: `${deposit?.toLocaleString('ko-kr')} 원`,
+      data:
+        reservationDetailData?.deposit &&
+        `${parseInt(reservationDetailData?.deposit).toLocaleString()} 원`,
     },
   ];
 
   const etcInfo = [
     {
       label: '전기 사용 유무',
-      data: isUseElectricity ? '가능' : '불가능',
+      data: reservationDetailData?.electricityInfo,
     },
     {
       label: '기타 요청 사항',
-      data: etcRequest,
+      data: reservationDetailData?.etcRequest,
     },
   ];
 
-  useEffect(() => {
-    // TODO : API 확정되면 로직 개선
-    if (isProvider) {
-      setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER);
-      setReservationData(MOCKUP_DATA_PROVIDER);
-    } else {
-      setContentProps(MOCKUP_DATA_TOP_CONTENT_FOR_CLIENT);
-      setReservationData(MOCKUP_DATA_CLIENT);
-    }
-  }, [isProvider]);
+  const handleDownload = () => {
+    //TODO : 다운로드 API 연동 예정
+    alert('다운로드 버튼 클릭');
+  };
 
   return {
-    isProvider,
     reservationInfo,
     operationInfo,
     etcInfo,
-    contentProps,
+    topContents,
     handleDownload,
+    isPending,
+    error,
+    isError,
   };
 };

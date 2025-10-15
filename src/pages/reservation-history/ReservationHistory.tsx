@@ -38,7 +38,7 @@ export default function ReservationHistory() {
   };
 
   useEffect(() => {
-    alert(reservationState);
+    // alert(reservationState);
   }, [reservationState]);
 
   return (
