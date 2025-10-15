@@ -34,7 +34,7 @@ export default function ReservationDetailTopContent(
             <img
               src={profileImage}
               alt='client-portrait'
-              className='rounded-[1.6rem]'
+              className='max-h-[5rem] min-h-[5rem] min-w-[5rem] max-w-[5rem] rounded-[1.6rem] border border-grayscale-200'
             />
           </div>
 
