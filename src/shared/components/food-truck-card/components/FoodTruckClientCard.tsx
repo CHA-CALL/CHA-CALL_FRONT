@@ -51,7 +51,7 @@ export default function FoodTruckClientCard({
             className='ml-[0.7rem] text-grayscale-500'
           />
           <span className='ml-[0.3rem] text-grayscale-500 caption-m-11'>
-            {averageRating}
+            {averageRating.toFixed(1)}
           </span>
           <span className='ml-[0.2rem] text-grayscale-300 caption-m-10'>
             ({ratingCount})
