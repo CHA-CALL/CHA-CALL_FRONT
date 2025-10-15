@@ -4,7 +4,7 @@ import { Icon } from '@components/icon/Icon';
 import { cn } from '@shared/utils/cn';
 import { RATES } from '@shared/constant/rate';
 
-import useStarRating from '@components/rating-bottom-sheet/use-star-rating';
+import useStarRating from '@components/rating-bottom-sheet/hooks/use-star-rating';
 
 interface RatingBottomSheetProps {
   reservationId: number;
