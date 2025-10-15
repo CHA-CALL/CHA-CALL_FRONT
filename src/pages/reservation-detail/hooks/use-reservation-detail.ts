@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import type {
@@ -6,10 +7,10 @@ import type {
   OwnerReservationDetailResponse,
 } from 'apis/data-contracts';
 
+import useToast from '@shared/hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 import { RESERVATION_DETAIL_KEY } from '@shared/querykey/reservation-detail';
-
 import { ROLE } from '@shared/constant/role';
-
 import {
   getMemberReservationDetail,
   getOwnerReservationDetail,
@@ -22,7 +23,9 @@ export interface ReservationPartialInfo {
 }
 
 export const useReservationDetail = () => {
+  const navigate = useNavigate();
   const { reservationId } = useParams<{ reservationId: string }>();
+  const toast = useToast();
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   // const isProvider = role === ROLE.PROVIDER;
@@ -42,11 +45,13 @@ export const useReservationDetail = () => {
       isProvider
         ? getOwnerReservationDetail(reservationId!)
         : getMemberReservationDetail(reservationId!),
+    enabled: Boolean(reservationId),
   });
 
   const topContents: ReservationDetailTopContentProps = isProvider
     ? {
         role: ROLE.PROVIDER,
+        // TODO : 서버 api 수정 후 반영.(푸드트럭 이름 추가)
         foodTruckName: '푸드트럭 이름',
         clientName: reservationDetailData?.name,
         profileImage: reservationDetailData?.profileImage,
@@ -98,6 +103,13 @@ export const useReservationDetail = () => {
     //TODO : 다운로드 API 연동 예정
     alert('다운로드 버튼 클릭');
   };
+
+  useEffect(() => {
+    if (isError) {
+      navigate(ROUTES.RESERVATION_HISTORY);
+      toast.error(error?.message ?? '잘못된 접근입니다.');
+    }
+  }, [isError, error, navigate, toast]);
 
   return {
     reservationInfo,

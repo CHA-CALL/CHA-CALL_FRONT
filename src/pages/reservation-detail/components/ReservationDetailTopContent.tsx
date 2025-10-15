@@ -60,7 +60,7 @@ export default function ReservationDetailTopContent(
         <img
           src={photoUrl}
           alt='foodtruck-banner'
-          className='object-fit h-[21.1rem] w-full'
+          className='h-[21.1rem] w-full object-cover'
         />
         <button
           type='button'

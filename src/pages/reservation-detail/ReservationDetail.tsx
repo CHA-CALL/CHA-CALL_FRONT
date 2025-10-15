@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@router/constant/routes';
-import useToast from '@shared/hooks/use-toast';
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Loading from '@components/loading/Loading';
@@ -16,7 +15,6 @@ export default function ReservationDetail() {
   // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리
   const [isOpenTip, setIsOpenTip] = useState(true);
   const navigate = useNavigate();
-  const toast = useToast();
 
   const {
     reservationInfo,
@@ -25,8 +23,6 @@ export default function ReservationDetail() {
     topContents,
     handleDownload,
     isPending,
-    error,
-    isError,
   } = useReservationDetail();
 
   const handleClickBack = () => {
@@ -37,10 +33,6 @@ export default function ReservationDetail() {
 
   if (isPending) {
     return <Loading />;
-  }
-  if (isError) {
-    navigate(ROUTES.RESERVATION_HISTORY);
-    toast.error(error?.message ?? '잘못된 접근입니다.');
   }
 
   return (
