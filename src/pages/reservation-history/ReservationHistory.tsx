@@ -17,8 +17,11 @@ import {
 } from '@pages/reservation-history/types/reservation';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 import { mockup } from '@pages/reservation-history/mockup';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 
 export default function ReservationHistory() {
+  const navigate = useNavigate();
   const { role } = useRole();
   const isProvider = role !== ROLE.PROVIDER;
 
@@ -28,6 +31,10 @@ export default function ReservationHistory() {
 
   const handleSelectReservationState = (state: string) => {
     setReservationState(state);
+  };
+
+  const handleToReservationDetail = (reservationId: string) => {
+    navigate(ROUTES.RESERVATION_DETAIL(reservationId));
   };
 
   useEffect(() => {
@@ -52,12 +59,16 @@ export default function ReservationHistory() {
       ) : (
         <div className='flex flex-col gap-[2rem] px-[2rem] pb-[2.6rem] pt-[9rem]'>
           {mockup.map((reservation, index) => (
-            <div key={reservation.id} className='flex flex-col gap-[2rem]'>
+            <button
+              key={reservation.id}
+              className='flex flex-col gap-[2rem]'
+              onClick={() => handleToReservationDetail(String(reservation.id))}
+            >
               <span className='heading-sb-20'>{reservation.name}</span>
               {index !== mockup.length - 1 && (
                 <div className='h-[0.1rem] w-full bg-grayscale-100' />
               )}
-            </div>
+            </button>
           ))}
         </div>
       )}

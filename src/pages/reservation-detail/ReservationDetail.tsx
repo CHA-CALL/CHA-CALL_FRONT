@@ -23,7 +23,7 @@ export default function ReservationDetail() {
   } = useReservationDetail();
 
   const handleClickBack = () => {
-    navigate(ROUTES.RESERVATION);
+    navigate(ROUTES.RESERVATION_HISTORY);
   };
 
   const handleCloseTooltip = () => setIsOpenTip(false);
@@ -44,7 +44,7 @@ export default function ReservationDetail() {
             >
               <Icon
                 name='ic_download'
-                className='text-grayscale-500 h-[1.2rem] w-[1.1rem]'
+                className='h-[1.2rem] w-[1.1rem] text-grayscale-500'
               />
             </Button>
             <Tooltip
@@ -64,9 +64,9 @@ export default function ReservationDetail() {
         {contentProps && <ReservationDetailTopContent {...contentProps} />}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
-          <div className='border-grayscale-100 my-[2.4rem] border' />
+          <div className='my-[2.4rem] border border-grayscale-100' />
           <ReservationDetailRow title='운영 내용' infoList={operationInfo} />
-          <div className='border-grayscale-100 my-[2.4rem] border' />
+          <div className='my-[2.4rem] border border-grayscale-100' />
           <ReservationDetailRow title='기타 내용' infoList={etcInfo} />
         </div>
       </div>

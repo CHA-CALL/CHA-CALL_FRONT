@@ -9,14 +9,15 @@ import type {
   GetReservationDetailData,
 } from 'apis/data-contracts';
 
-export const useGetMemberReservationDetail = (reservationId: number) => {
+export const useGetMemberReservationDetail = (reservationId?: string) => {
   return useQuery<GetMemberReservationDetailData>({
     queryKey: MEMBER_RESERVATION_DETAIL_KEY.DETAIL(reservationId),
     queryFn: () => getMemberReservationDetail(reservationId),
+    enabled: !!reservationId,
   });
 };
 
-export const useGetOwnerReservationDetail = (reservationId: number) => {
+export const useGetOwnerReservationDetail = (reservationId: string) => {
   return useQuery<GetReservationDetailData>({
     queryKey: OWNER_RESERVATION_DETAIL_KEY.DETAIL(reservationId),
     queryFn: () => getOwnerReservationDetail(reservationId),

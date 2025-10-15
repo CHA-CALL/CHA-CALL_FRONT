@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
         element: <Reservation />,
       },
       {
-        path: ROUTES.RESERVATION_DETAIL,
+        path: ROUTES.RESERVATION_DETAIL(':reservationId'),
         element: <ReservationDetail />,
       },
       {

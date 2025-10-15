@@ -1,5 +1,7 @@
-import type { ReservationResponse } from 'apis/data-contracts';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import type { ReservationResponse } from 'apis/data-contracts';
+
 import {
   INITIAL_DATA,
   MOCKUP_DATA_CLIENT,
@@ -8,7 +10,8 @@ import {
   MOCKUP_DATA_TOP_CONTENT_FOR_PROVIDER,
 } from '@pages/reservation-detail/constant/reservation-detail';
 // import { ROLE } from '@shared/constant/role';
-import type { ReservationDetailTopContentProps } from '../components/ReservationDetailTopContent';
+import type { ReservationDetailTopContentProps } from '@pages/reservation-detail/components/ReservationDetailTopContent';
+import { useGetMemberReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail-query';
 
 export interface ReservationPartialInfo {
   label: string;
@@ -16,10 +19,13 @@ export interface ReservationPartialInfo {
 }
 
 export const useReservationDetail = () => {
+  // const { reservationId } = useParams<{ reservationId: string }>();
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   // const isProvider = role === ROLE.PROVIDER;
   const isProvider = false;
+
+  // const {} = useGetMemberReservationDetail(reservationId);
 
   const [reservationData, setReservationData] =
     useState<ReservationResponse>(INITIAL_DATA);
