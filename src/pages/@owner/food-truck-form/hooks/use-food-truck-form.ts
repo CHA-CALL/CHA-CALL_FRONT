@@ -10,6 +10,7 @@ import { FOOD_CATEGORIES } from '@shared/constant/food';
 import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
 import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import { PAYMENT_METHOD } from '@shared/constant/payment-method';
+import type { SelectedDate } from '@shared/types/calendar-types';
 
 const foodTruckSchema = z.object({
   name: z
@@ -62,6 +63,12 @@ const foodTruckSchema = z.object({
     .string()
     .max(FOOD_TRUCK_MAX_LENGTH.etc, FOOD_TRUCK_ERROR_MESSAGE.etc.max)
     .optional(),
+  date: z
+    .object({
+      startDate: z.date().nullable().optional(),
+      endDate: z.date().nullable().optional(),
+    })
+    .optional(),
 });
 
 export type FoodTruckFormData = z.infer<typeof foodTruckSchema>;
@@ -90,6 +97,10 @@ export const useFoodTruckForm = (
       images: [],
       operationalInformation: undefined,
       etc: undefined,
+      date: {
+        startDate: undefined,
+        endDate: undefined,
+      },
     },
     mode: 'onChange',
   });
@@ -193,6 +204,17 @@ export const useFoodTruckForm = (
     setValue('etc', etc, { shouldValidate: true });
   };
 
+  const updateDate = (date: SelectedDate | undefined) => {
+    setValue(
+      'date',
+      {
+        startDate: date?.startDate,
+        endDate: date?.endDate,
+      },
+      { shouldValidate: true }
+    );
+  };
+
   const onSubmit = async (formData: FoodTruckFormData) => {
     //TODO: 계좌 등록 제출
     if (isValid && formData) {
@@ -212,6 +234,7 @@ export const useFoodTruckForm = (
     images: formData.images,
     operationalInformation: formData.operationalInformation,
     etc: formData.etc,
+    date: formData.date,
   };
 
   const compatibleErrors = {
@@ -226,6 +249,7 @@ export const useFoodTruckForm = (
     images: errors.images?.message,
     operationalInformation: errors.operationalInformation?.message,
     etc: errors.etc?.message,
+    date: errors.date?.message,
   };
 
   return {
@@ -242,6 +266,7 @@ export const useFoodTruckForm = (
     updateMenus,
     updateOperationalInformation,
     updateEtc,
+    updateDate,
     handleSubmit: handleSubmit(onSubmit),
     isFormValid: isValid,
     trigger,

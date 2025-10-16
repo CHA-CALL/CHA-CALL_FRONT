@@ -14,6 +14,12 @@ import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-t
 import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
 import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import { PAYMENT_METHOD } from '@shared/constant/payment-method';
+import Calendar from '@shared/components/calendar/Calendar';
+import DateInput from '@pages/@owner/food-truck-form/components/DateInput';
+import { useState } from 'react';
+import { dateFormatter } from '@shared/utils/date-formatter';
+import type { SelectedDate } from '@shared/types/calendar-types';
+import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
 
 export default function FoodTruckForm() {
   const { id } = useParams();
@@ -27,7 +33,6 @@ export default function FoodTruckForm() {
     updatePhoneNumber,
     updateMenus,
     updateDescription,
-    updateRegionCodes,
     updateNeedElectricity,
     updateAvailableQuantity,
     updatePaymentMethod,
@@ -35,16 +40,46 @@ export default function FoodTruckForm() {
     updateEtc,
     handleSubmit,
     isFormValid,
+    updateDate,
   } = useFoodTruckForm(undefined);
   //:TODO: id 값이 있을 시푸드트럭 정보 가져오기
   const navigate = useNavigate();
+
+  const [isDateInputOpen, setIsDateInputOpen] = useState(false);
+
+  const handleClickDate = () => {
+    setIsDateInputOpen(true);
+  };
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
+  const handleApplyDate = (date: SelectedDate) => {
+    updateDate(date);
+  };
+
+  const handleCloseDateInput = () => {
+    setIsDateInputOpen(false);
+  };
+
   return (
     <>
+      <BottomSheet
+        isOpen={isDateInputOpen}
+        handleCloseBottomSheet={handleCloseDateInput}
+        sheetHeight={490}
+      >
+        <Calendar
+          selectedDate={{
+            startDate: formData.date?.startDate ?? null,
+            endDate: formData.date?.endDate ?? null,
+          }}
+          handleApplyDate={handleApplyDate}
+          handleCloseBottomSheet={handleCloseDateInput}
+          isOpen={isDateInputOpen}
+        />
+      </BottomSheet>
       <Navigation
         text={isEditMode ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'}
         leftIcon={<Icon name='ic_back' />}
@@ -172,7 +207,17 @@ export default function FoodTruckForm() {
           <div></div>
         </FormLayout>
         <FormLayout isRequired={true} title='가능한 일정대'>
-          ,
+          <DateInput
+            startDate={
+              formData.date?.startDate
+                ? dateFormatter(formData.date.startDate)
+                : ''
+            }
+            endDate={
+              formData.date?.endDate ? dateFormatter(formData.date.endDate) : ''
+            }
+            handleClick={handleClickDate}
+          />
         </FormLayout>
         <FormLayout isRequired={true} title='운영 정보'>
           <Textarea
