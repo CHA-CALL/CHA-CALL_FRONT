@@ -111,7 +111,7 @@ export default function Account() {
   };
 
   const onValid = () => {
-    setIsSaveOpen(false);
+    setIsSaveOpen(true);
   };
 
   const handleConfirmSave = () => {
@@ -247,6 +247,7 @@ export default function Account() {
       </div>
       <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
         <Button
+          type='submit'
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}
           children='저장하기'
