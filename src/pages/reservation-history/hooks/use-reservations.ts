@@ -30,8 +30,10 @@ export const useReservations = (
     enabled: !!viewType,
   });
 
+  const reservations = query.data?.pages.flatMap(page => page?.content || []) || [];
+
   return {
-    reservations: query.data?.pages,
+    reservations,
     fetchNextPage: query.fetchNextPage,
     hasNextPage: query.hasNextPage,
     isLoading: query.isLoading,

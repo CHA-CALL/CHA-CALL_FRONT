@@ -42,7 +42,7 @@ export default function ReservationList({
     return <Loading />;
   }
 
-  if (!reservations || reservations.every(page => page?.content?.length === 0)) {
+  if (!reservations || reservations.length === 0) {
     return (
       <EmptyView
         isProvider={isProvider}
@@ -53,21 +53,14 @@ export default function ReservationList({
 
   return (
     <div className='flex flex-col pb-[7.6rem] pt-[7rem]'>
-      {reservations?.map((reservation, reservationIndex) => (
-        <div key={reservationIndex}>
-          {reservation?.content?.map((content, contentIndex) => (
-            <div key={content?.reservationId} className='flex flex-col'>
-              <FoodTruckCard
-                variant={isProvider ? 'reservationProvider' : 'reservationClient'}
-                data={content}
-                handleClickButton={handleReservationDetail}
-              />
-              {contentIndex !== (reservation?.content?.length ?? 0) - 1 && (
-                <div className='h-[0.1rem] w-full bg-grayscale-100' />
-              )}
-            </div>
-          ))}
-          {reservationIndex !== reservations.length - 1 && (
+      {reservations.map((reservation, index) => (
+        <div key={reservation?.reservationId} className='flex flex-col'>
+          <FoodTruckCard
+            variant={isProvider ? 'reservationProvider' : 'reservationClient'}
+            data={reservation}
+            handleClickButton={handleReservationDetail}
+          />
+          {index !== reservations.length - 1 && (
             <div className='h-[0.1rem] w-full bg-grayscale-100' />
           )}
         </div>
