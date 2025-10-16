@@ -5,8 +5,8 @@ import { useInView } from 'react-intersection-observer';
 import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 import Loading from '@components/loading/Loading';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
-import { useReservations } from '@pages/reservation-history/hooks/use-reservations';
-import type { ReservationState } from '@pages/reservation-history/types/reservation';
+import { useReservations } from '@pages/reservation-history/hooks/use-reservation-history';
+import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
 
 interface ReservationListProps {
   isProvider: boolean;

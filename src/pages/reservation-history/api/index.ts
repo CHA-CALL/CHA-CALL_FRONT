@@ -3,14 +3,14 @@ import type {
   GetMemberReservationsData
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
-import type { ReservationState } from '@pages/reservation-history/types/reservation';
+import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
+import { PAGE_SIZE } from '@shared/constant/page-size';
 
 export const getReservationHistory = async (
   isProvider: boolean,
   params: {
     viewType: ReservationState;
     'cursorPagingRequest.cursor'?: number;
-    'cursorPagingRequest.size'?: number;
   }
 ) => {
   const endPoint = isProvider
@@ -22,7 +22,10 @@ export const getReservationHistory = async (
   >({
     endPoint,
     method: 'GET',
-    params,
+    params: {
+      ...params,
+      'cursorPagingRequest.size': PAGE_SIZE,
+    },
   });
 
   return response.data;

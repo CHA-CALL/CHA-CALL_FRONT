@@ -5,7 +5,7 @@ import Button from '@shared/components/button/Button';
 import {
   RESERVATION_STATE,
   type ReservationState,
-} from '@pages/reservation-history/types/reservation';
+} from '@pages/reservation-history/types/reservation-history';
 
 interface EmptyViewProps {
   isProvider: boolean;

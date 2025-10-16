@@ -14,12 +14,12 @@ import {
 import {
   RESERVATION_STATE,
   type ReservationState,
-} from '@pages/reservation-history/types/reservation';
+} from '@pages/reservation-history/types/reservation-history';
 import ReservationList from '@pages/reservation-history/components/ReservationList';
 
 export default function ReservationHistory() {
   const { role } = useRole();
-  const isProvider = role !== ROLE.PROVIDER;
+  const isProvider = role === ROLE.PROVIDER;
 
   const [reservationState, setReservationState] = useState<ReservationState>(
     RESERVATION_STATE.UPCOMING

@@ -1,7 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import type { ReservationState } from '@pages/reservation-history/types/reservation';
+import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
 import { getReservationHistory } from '@pages/reservation-history/api';
-import { PAGE_SIZE } from '@shared/constant/infinite-scroll';
 import { RESERVATION_QUERY_KEY } from '@shared/querykey/reservations';
 
 export const useReservations = (
@@ -16,7 +15,6 @@ export const useReservations = (
         {
           viewType,
           ...(pageParam !== undefined && { 'cursorPagingRequest.cursor': pageParam }),
-          'cursorPagingRequest.size': PAGE_SIZE,
         }
       );
     },

@@ -16,10 +16,10 @@ export default function ReservationInfos({ address, dateTimeInfos }: Reservation
       <div className='flex gap-[0.8rem]'>
         <span className='body-s-11 text-grayscale-700'>일시</span>
         <div className='flex flex-col'>
-          {dateTimeInfos.map((dateTimeInfo) => {
+          {dateTimeInfos.map((dateTimeInfo, index) => {
             const [startDateShort, endDateShort, startTime, endTime] = formatDateTimeInfos(dateTimeInfo);
             return (
-              <div className='flex items-center justify-start gap-[0.2rem]'>
+              <div key={index} className='flex items-center justify-start gap-[0.2rem]'>
                 <span className='caption-m-11 text-grayscale-700'>{startDateShort} - {endDateShort}</span>
                 <div className='h-[0.8rem] mx-[0.4rem] border-r border-grayscale-500' />
                 <span className='caption-m-11 text-grayscale-700'>{startTime} - {endTime}</span>
