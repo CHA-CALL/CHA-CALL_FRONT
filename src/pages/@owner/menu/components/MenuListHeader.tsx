@@ -1,10 +1,10 @@
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
-import { SORT_OPTIONS } from '@pages/@owner/menu/constant/menu-list-sort';
+import { SORT_OPTIONS, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 interface MenuListHeaderProps {
-  isSorted: string;
+  isSorted: SortType;
   handleClickBack: () => void;
   handleRegister: () => void;
   handleOpenBottomSheet: () => void;

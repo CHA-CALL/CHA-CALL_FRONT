@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
@@ -6,9 +6,11 @@ import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
 import useToast from '@shared/hooks/use-toast';
 
 export default function MenuRegister() {
+  const navigate = useNavigate();
   const toast = useToast();
 
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
+  const parsedFoodTruckId = Number(foodTruckId);
 
   const {
     formData,
@@ -21,7 +23,20 @@ export default function MenuRegister() {
     handleSubmit,
   } = useMenuForm();
 
-  const { mutate: registerMenu } = useRegisterMenu(Number(foodTruckId));
+  const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
+
+  if (!foodTruckId) {
+    alert('잘못된 접근입니다.');
+    navigate(-1);
+    return null;
+  }
+
+  if (isNaN(parsedFoodTruckId)) {
+    alert('잘못된 접근입니다.');
+    navigate(-1);
+    return null;
+  }
+
 
   const onSubmit = (formData: MenuFormData) => {
     if (!formData.image) return;

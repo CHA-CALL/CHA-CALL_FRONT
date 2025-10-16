@@ -46,7 +46,7 @@ export default function Menus({
     <div className='flex flex-col bg-white px-[2rem] pb-[15.5rem] pt-[11.9rem]'>
       {menus.map((menu, index) => (
         <MenuItem
-          key={menu.menuId}
+          key={menu.menuId ?? `menu-${index}`}
           menuImage={menu.imageUrl || ''}
           menuName={menu.name || ''}
           menuDescription={menu.description || ''}

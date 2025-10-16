@@ -67,7 +67,9 @@ export default function MenuEdit() {
   useEffect(() => {
     if (menuData) {
       const loadImage = async () => {
-        const formattedPrice = Number(menuData.price.replace(/\D/g, '')).toLocaleString();
+        const formattedPrice = menuData.price
+          ? Number(menuData.price.replace(/\D/g, '')).toLocaleString()
+          : '';
         let imageFile: File | undefined;
 
         try {
