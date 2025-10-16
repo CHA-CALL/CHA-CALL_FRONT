@@ -2,14 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import {
-  AVAILABLE_QUANTITY,
-  NEED_ELECTRICITY,
-  PAYMENT_METHOD,
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
-} from '../constants/index';
+} from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useState } from 'react';
 import { FOOD_CATEGORIES } from '@shared/constant/food';
+import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
+import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
+import { PAYMENT_METHOD } from '@shared/constant/payment-method';
 
 const foodTruckSchema = z.object({
   name: z

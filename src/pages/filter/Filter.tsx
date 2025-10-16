@@ -11,14 +11,12 @@ import Calendar from '@shared/components/calendar/Calendar';
 import type { SelectedDate } from '@shared/types/calendar-types';
 import ButtonDate from '@shared/components/button-date/ButtonDate';
 import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
-import {
-  ELECTRICITY_USAGE,
-  EVENT_TYPE,
-  FOOD_TYPE,
-  PAYMENT_TYPE,
-  SERVING_SIZE,
-} from '@pages/filter/constant/filter-option-constants';
+import { EVENT_TYPE } from '@pages/filter/constant/filter-option-constants';
 import Button from '@shared/components/button/Button';
+import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
+import { FOOD_CATEGORIES } from '@shared/constant/food';
+import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
+import { PAYMENT_METHOD } from '@shared/constant/payment-method';
 
 interface FilterState {
   eventType: string | null;
@@ -133,11 +131,11 @@ export default function Filter() {
           options={EVENT_TYPE}
           handleSelectFilter={value => handleSelectSingle('eventType', value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <div className='mb-[2rem] flex flex-col gap-[2rem]'>
           <div className='flex flex-row items-center justify-between'>
-            <h2 className='px-[0.5rem] title-b-14'>일정</h2>
+            <h2 className='title-b-14 px-[0.5rem]'>일정</h2>
             <ButtonText handleClick={handleAddSchedule}>
               일정 추가하기
             </ButtonText>
@@ -151,39 +149,39 @@ export default function Filter() {
             />
           ))}
         </div>
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='수량'
           selectedOption={filters.servingSize ?? ''}
-          options={SERVING_SIZE}
+          options={Object.values(AVAILABLE_QUANTITY)}
           handleSelectFilter={value => handleSelectSingle('servingSize', value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='음식 종류'
           selectedOption={filters.foodType ?? []}
-          options={FOOD_TYPE}
+          options={Object.values(FOOD_CATEGORIES)}
           multiSelectable
           handleSelectFilter={value => handleSelectMulti('foodType', value)}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='전기 사용'
           selectedOption={filters.electricityUsage ?? ''}
-          options={ELECTRICITY_USAGE}
+          options={Object.values(NEED_ELECTRICITY)}
           handleSelectFilter={value =>
             handleSelectSingle('electricityUsage', value)
           }
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <FilterChipGroup
           filterTitle='결제 방법'
           selectedOption={filters.paymentType ?? ''}
-          options={PAYMENT_TYPE}
+          options={Object.values(PAYMENT_METHOD)}
           handleSelectFilter={value => handleSelectSingle('paymentType', value)}
         />
       </div>

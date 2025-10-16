@@ -9,13 +9,11 @@ import Button from '@shared/components/button/Button';
 import Textarea from '@shared/components/text-area/Textarea';
 import { FOOD_CATEGORIES } from '@shared/constant/food';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import {
-  FOOD_TRUCK_MAX_LENGTH,
-  NEED_ELECTRICITY,
-  PAYMENT_METHOD,
-  AVAILABLE_QUANTITY,
-} from '@pages/@owner/food-truck-form/constants/index';
+import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
+import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
+import { PAYMENT_METHOD } from '@shared/constant/payment-method';
 
 export default function FoodTruckForm() {
   const { id } = useParams();
