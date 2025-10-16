@@ -95,7 +95,7 @@ export default function SetLocation() {
           />
         )}
 
-        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
+        <div className='flex gap-[0.7rem] border-t-[0.1rem] border-grayscale-200 px-[2rem] py-[1.7rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'
