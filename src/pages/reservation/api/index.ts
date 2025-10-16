@@ -7,20 +7,21 @@ import { apiRequest, type ParamValue } from '@api/apiRequest';
 
 import { formatParams } from '@pages/reservation/utils/format-params';
 
-import type {
-  AVAILABLE_QUANTITY,
-  NEED_ELECTRICITY,
-  PAYMENT_METHOD,
-} from '@pages/filter/constant/filter-option-constants';
 import { PAGE_SIZE } from '@shared/constant/page-size';
+import type {
+  AvailableQuantityValue,
+  FoodTruckCategoryValue,
+  NeedElectricityValue,
+  PaymentMethodValue,
+} from '@shared/types/category-types';
 
 export interface FoodTrucksFilterType {
   regionCodes?: string[] | null;
   schedules?: string[] | null;
-  availableQuantity?: (typeof AVAILABLE_QUANTITY)[number] | null;
-  categories?: string[] | null;
-  needElectricity?: (typeof NEED_ELECTRICITY)[number] | null;
-  paymentMethod?: (typeof PAYMENT_METHOD)[number] | null;
+  availableQuantity: AvailableQuantityValue | null;
+  categories: FoodTruckCategoryValue[] | null;
+  needElectricity: NeedElectricityValue | null;
+  paymentMethod: PaymentMethodValue | null;
 
   [key: string]: ParamValue;
 }

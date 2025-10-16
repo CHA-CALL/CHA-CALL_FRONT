@@ -1,3 +1,4 @@
+import { cn } from '@utils/cn';
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import ButtonText from '@components/button-text/ButtonText';
@@ -5,15 +6,21 @@ import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import Button from '@components/button/Button';
 import ButtonDate from '@components/button-date/ButtonDate';
-import { cn } from '@utils/cn';
-import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import {
   AVAILABLE_QUANTITY,
-  CATEGORIES,
+  FOOD_TRUCK_CATEGORIES,
   NEED_ELECTRICITY,
   PAYMENT_METHOD,
-} from '@pages/filter/constant/filter-option-constants';
+} from '@shared/constant/categories';
+import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import useFilterLogic from '@pages/filter/hooks/use-filter-logic';
+import type {
+  AvailableQuantityValue,
+  FoodTruckCategoryValue,
+  NeedElectricityValue,
+  PaymentMethodValue,
+} from '@shared/types/category-types';
+import { omit } from 'lodash';
 
 export default function Filter() {
   const {
@@ -31,6 +38,8 @@ export default function Filter() {
     handleCloseCalendar,
     handleApplyFilter,
   } = useFilterLogic();
+
+  const CATEGORY_WITHOUT_ALL = omit(FOOD_TRUCK_CATEGORIES, 'ALL');
 
   return (
     <>
@@ -65,7 +74,7 @@ export default function Filter() {
         </div>
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
-        <FilterChipGroup
+        <FilterChipGroup<AvailableQuantityValue>
           filterTitle='수량'
           selectedOption={localFilters.availableQuantity ?? ''}
           options={AVAILABLE_QUANTITY}
@@ -75,16 +84,16 @@ export default function Filter() {
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
-        <FilterChipGroup
+        <FilterChipGroup<FoodTruckCategoryValue>
           filterTitle='음식 종류'
           selectedOption={localFilters.categories ?? []}
-          options={CATEGORIES}
+          options={CATEGORY_WITHOUT_ALL}
           multiSelectable
           handleSelectFilter={value => handleSelectMulti('categories', value)}
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
-        <FilterChipGroup
+        <FilterChipGroup<NeedElectricityValue>
           filterTitle='전기 사용'
           selectedOption={localFilters.needElectricity ?? ''}
           options={NEED_ELECTRICITY}
@@ -94,7 +103,7 @@ export default function Filter() {
         />
         <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
-        <FilterChipGroup
+        <FilterChipGroup<PaymentMethodValue>
           filterTitle='결제 방법'
           selectedOption={localFilters.paymentMethod ?? ''}
           options={PAYMENT_METHOD}

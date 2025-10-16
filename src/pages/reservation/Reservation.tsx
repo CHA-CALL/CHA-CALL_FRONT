@@ -6,7 +6,7 @@ import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/categories';
 import useReservation from '@pages/reservation/hooks/use-reservation';
 import Loading from '@shared/components/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
@@ -80,7 +80,7 @@ export default function Reservation() {
       <div
         className={`top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide fixed-center`}
       >
-        {FOOD_TRUCK_CATEGORIES.map(category => (
+        {Object.values(FOOD_TRUCK_CATEGORIES).map(category => (
           <Button
             key={category}
             variant='chip'
