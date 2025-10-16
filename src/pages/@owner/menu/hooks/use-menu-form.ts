@@ -11,7 +11,7 @@ import {
 } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
-const menuSchema = z.object({
+export const menuSchema = z.object({
   name: z
     .string()
     .min(
@@ -61,12 +61,9 @@ const menuSchema = z.object({
       }
     )
     .optional()
-    .refine(
-      (file) => file !== undefined,
-      {
-        message: '이미지를 선택해주세요',
-      }
-    ),
+    .refine(file => file !== undefined, {
+      message: '이미지를 선택해주세요',
+    }),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
