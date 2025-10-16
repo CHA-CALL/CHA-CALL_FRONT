@@ -81,9 +81,6 @@ export const WithMaxLength: Story = {
           value={value}
           handleChange={e => setValue(e.target.value)}
         />
-        <div className='mt-2 text-sm text-gray-500'>
-          {value.length}/{args.maxLength} 글자
-        </div>
       </div>
     );
   },

@@ -116,13 +116,6 @@ export default function MenuRegister() {
               maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
               className='h-[12.2rem]'
             />
-            <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
-              <p className='text-primary-700'>{formData.description.length}</p>
-              <p className='text-grayscale-700'>/</p>
-              <p className='text-grayscale-700'>
-                {MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
-              </p>
-            </div>
           </div>
         </MenuInput>
 
@@ -139,7 +132,12 @@ export default function MenuRegister() {
           />
         </MenuInput>
 
-        <MenuInput title='사진 등록' error={errors.image} maxLength={1} currentLength={imageUrl ? 1 : 0}>
+        <MenuInput
+          title='사진 등록'
+          error={errors.image}
+          maxLength={1}
+          currentLength={imageUrl ? 1 : 0}
+        >
           <div className='flex'>
             {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
             {imageUrl && (
