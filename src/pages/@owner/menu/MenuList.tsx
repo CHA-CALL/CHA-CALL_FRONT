@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import Button from '@components/button/Button';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import MenuListHeader from '@pages/@owner/menu/components/MenuListHeader';
@@ -5,9 +6,10 @@ import Menus from '@pages/@owner/menu/components/Menus';
 import ListSortBottomSheet from '@pages/@owner/menu/components/ListSortBottomSheet';
 import { useMenuList } from '@pages/@owner/menu/hooks/use-menu-list';
 
-const TEST_FOOD_TRUCK_ID = 1;
-
 export default function MenuList() {
+  const { foodTruckId } = useParams<{ foodTruckId: string }>();
+  const parsedFoodTruckId = Number(foodTruckId);
+
   const {
     menus,
     fetchNextPage,
@@ -30,10 +32,15 @@ export default function MenuList() {
     handleClickToggle,
 
     handleSave,
-  } = useMenuList(TEST_FOOD_TRUCK_ID);
+  } = useMenuList(parsedFoodTruckId);
 
   const handleClickRegister = () => {
-    handleRegister(TEST_FOOD_TRUCK_ID.toString());
+    handleRegister(parsedFoodTruckId.toString());
+  }
+
+  if (!foodTruckId || isNaN(parsedFoodTruckId)) {
+    alert('잘못된 접근입니다.');
+    return null;
   }
 
   return (
@@ -46,7 +53,7 @@ export default function MenuList() {
       />
 
       <Menus
-        foodTruckId={TEST_FOOD_TRUCK_ID}
+        foodTruckId={parsedFoodTruckId}
         menus={menus}
         isLoading={isLoading}
         isFetchingNextPage={isFetchingNextPage}

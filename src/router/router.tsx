@@ -101,7 +101,7 @@ export const router = createBrowserRouter([
         element: <FoodTruckManagement />,
       },
       {
-        path: ROUTES.MENU_LIST,
+        path: ROUTES.MENU_LIST(':foodTruckId'),
         element: <MenuList />,
       },
       {

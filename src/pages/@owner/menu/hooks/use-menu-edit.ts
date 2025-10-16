@@ -22,7 +22,7 @@ export const useEditMenu = (
       queryClient.invalidateQueries({
         queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
       });
-      navigate(ROUTES.MENU_LIST);
+      navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
     },
     onError: (error) => {
       console.error('메뉴 수정 실패:', error);

@@ -25,18 +25,11 @@ export default function MenuRegister() {
 
   const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
 
-  if (!foodTruckId) {
+  if (!foodTruckId || isNaN(parsedFoodTruckId)) {
     alert('잘못된 접근입니다.');
     navigate(-1);
     return null;
   }
-
-  if (isNaN(parsedFoodTruckId)) {
-    alert('잘못된 접근입니다.');
-    navigate(-1);
-    return null;
-  }
-
 
   const onSubmit = (formData: MenuFormData) => {
     if (!formData.image) return;

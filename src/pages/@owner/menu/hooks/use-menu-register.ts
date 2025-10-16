@@ -19,7 +19,7 @@ export const useRegisterMenu = (foodTruckId: number) => {
       queryClient.invalidateQueries({
         queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
       });
-      navigate(ROUTES.MENU_LIST);
+      navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
     },
     onError: (error) => {
       console.error('메뉴 등록 실패:', error);
