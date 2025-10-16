@@ -11,12 +11,7 @@ import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 
 interface MenuFormProps {
-  initialData?: {
-    name: string;
-    description: string;
-    price: string;
-    imageUrl?: string;
-  };
+  initialImageUrl?: string;
   footerContent: React.ReactNode;
   formData: MenuFormData;
   errors: {
@@ -32,7 +27,7 @@ interface MenuFormProps {
 }
 
 export default function MenuForm({
-  initialData,
+  initialImageUrl,
   footerContent,
   formData,
   errors,
@@ -42,7 +37,8 @@ export default function MenuForm({
   updateImage,
 }: MenuFormProps) {
   const navigate = useNavigate();
-  const [imageUrl, setImageUrl] = useState<string | null>(initialData?.imageUrl || null);
+
+  const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
   const canAdd = !imageUrl;
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,22 +64,11 @@ export default function MenuForm({
       reader.onload = e => {
         setImageUrl(e.target?.result as string);
       };
-      reader.onerror = () => {
-        setImageUrl(null);
-      };
       reader.readAsDataURL(formData.image);
-    } else if (!initialData?.imageUrl) {
-      setImageUrl(null);
+    } else {
+      setImageUrl(initialImageUrl || null);
     }
-  }, [formData.image, initialData?.imageUrl]);
-
-  // useEffect(() => {
-  //   if (initialData) {
-  //     updateName(initialData.name);
-  //     updateDescription(initialData.description);
-  //     updatePrice(initialData.price);
-  //   }
-  // }, [initialData, updateName, updateDescription, updatePrice]);
+  }, [formData.image, initialImageUrl]);
 
   const handleClickBack = () => {
     navigate(-1);

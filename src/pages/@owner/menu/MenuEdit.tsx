@@ -15,21 +15,11 @@ export default function MenuEdit() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const menuData = location.state?.menuData;
   const { foodTruckId, menuId } = useParams<{ foodTruckId: string, menuId: string }>();
   const { mutate: editMenu } = useEditMenu(Number(foodTruckId), Number(menuId));
   const { mutate: deleteMenu } = useDeleteMenu(Number(foodTruckId), Number(menuId));
 
-  const onSubmit = (formData: MenuFormData) => {
-    if (!formData.image) return;
-
-    editMenu({
-      name: formData.name,
-      description: formData.description,
-      price: Number(formData.price.replace(/,/g, '')),
-      photoUrl: formData.image.name,
-    });
-  };
+  const menuData = location.state?.menuData;
 
   const {
     formData,
@@ -41,26 +31,18 @@ export default function MenuEdit() {
     isValid,
     handleSubmit,
     reset,
-  } = useMenuForm(menuData);
+  } = useMenuForm();
 
-  useEffect(() => {
-    const loadImage = async () => {
-      if (menuData?.imageUrl) {
-        try {
-          const file = await convertURLtoFile(menuData.imageUrl);
-          reset({
-            name: menuData.name,
-            description: menuData.description,
-            price: menuData.price,
-            image: file,
-          });
-        } catch (error) {
-          console.error('이미지 파일로 변환 실패.', error);
-        }
-      }
-    };
-    loadImage();
-  }, [menuData, reset]);
+  const onSubmit = (formData: MenuFormData) => {
+    if (!formData.image) return;
+
+    editMenu({
+      name: formData.name,
+      description: formData.description,
+      price: Number(formData.price.replace(/,/g, '')),
+      photoUrl: formData.image.name,
+    });
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -81,6 +63,32 @@ export default function MenuEdit() {
     });
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    if (menuData) {
+      const loadImage = async () => {
+        const formattedPrice = Number(menuData.price.replace(/\D/g, '')).toLocaleString();
+        let imageFile: File | undefined;
+
+        try {
+          // 이미지 URL을 File 객체로 변환
+          if (menuData.imageUrl) {
+            imageFile = await convertURLtoFile(menuData.imageUrl);
+          }
+        } catch (error) {
+          console.error('이미지 파일로 변환 실패.', error);
+        }
+
+        reset({
+          name: menuData.name,
+          description: menuData.description,
+          price: formattedPrice,
+          image: imageFile,
+        });
+      };
+      loadImage();
+    }
+  }, [menuData, reset]);
 
   return (
     <>
@@ -118,6 +126,7 @@ export default function MenuEdit() {
       </Overlay>
 
       <MenuForm
+        initialImageUrl={menuData?.imageUrl}
         formData={formData}
         errors={errors}
         updateName={updateName}

@@ -71,14 +71,7 @@ const menuSchema = z.object({
 
 export type MenuFormData = z.infer<typeof menuSchema>;
 
-interface InitialData {
-  name: string;
-  description: string;
-  price: string;
-  imageUrl: string;
-}
-
-export const useMenuForm = (initialData?: InitialData) => {
+export const useMenuForm = () => {
   const {
     handleSubmit,
     setValue,
@@ -90,9 +83,9 @@ export const useMenuForm = (initialData?: InitialData) => {
   } = useForm<MenuFormData>({
     resolver: zodResolver(menuSchema),
     defaultValues: {
-      name: initialData?.name || '',
-      description: initialData?.description || '',
-      price: initialData?.price || '',
+      name: '',
+      description: '',
+      price: '',
       image: undefined,
     },
     mode: 'onChange',
