@@ -3,8 +3,11 @@ import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
+import useToast from '@shared/hooks/use-toast';
 
 export default function MenuRegister() {
+  const toast = useToast();
+
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
 
   const {
@@ -28,6 +31,13 @@ export default function MenuRegister() {
       description: formData.description,
       price: Number(formData.price.replace(/,/g, '')),
       photoUrl: formData.image.name,
+    }, {
+      onSuccess: () => {
+        toast.success('메뉴가 등록되었습니다.');
+      },
+      onError: () => {
+        toast.error('메뉴 등록에 실패했습니다.');
+      },
     });
   };
 
