@@ -82,7 +82,7 @@ export default function MenuForm({
         text='메뉴 등록'
       />
 
-      <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[10rem]'>
+      <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[16rem]'>
         <MenuInput title='메뉴 이름' error={errors.name}>
           <Input
             placeholder='텍스트를 입력해주세요.'
