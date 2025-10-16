@@ -22,6 +22,7 @@ import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
+import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 
 export const router = createBrowserRouter([
   {
@@ -92,7 +93,7 @@ export const router = createBrowserRouter([
         element: <UploadFoodTruck />,
       },
       {
-        path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
+        path: ROUTES.PROFILE_SETTING_DETAIL + '/:field',
         element: <SetUserInfo />,
       },
       {
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MENU_REGISTER,
         element: <MenuRegister />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_FORM + '/:id?',
+        element: <FoodTruckForm />,
       },
     ],
   },
