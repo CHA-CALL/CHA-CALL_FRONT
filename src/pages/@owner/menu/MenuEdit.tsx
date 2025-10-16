@@ -6,15 +6,19 @@ import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-men
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
+import { useDeleteMenu } from '@pages/@owner/menu/hooks/use-menu-delete';
+import useToast from '@shared/hooks/use-toast';
 
 export default function MenuEdit() {
   const location = useLocation();
+  const toast = useToast();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const menuData = location.state?.menuData;
   const { foodTruckId, menuId } = useParams<{ foodTruckId: string, menuId: string }>();
   const { mutate: editMenu } = useEditMenu(Number(foodTruckId), Number(menuId));
+  const { mutate: deleteMenu } = useDeleteMenu(Number(foodTruckId), Number(menuId));
 
   const onSubmit = (formData: MenuFormData) => {
     if (!formData.image) return;
@@ -66,6 +70,18 @@ export default function MenuEdit() {
     setIsModalOpen(true);
   };
 
+  const handleConfirmDelete = () => {
+    deleteMenu(undefined, {
+      onSuccess: () => {
+        toast.success('삭제되었습니다.');
+      },
+      onError: () => {
+        toast.error('메뉴 삭제에 실패했습니다.');
+      },
+    });
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Overlay
@@ -92,7 +108,7 @@ export default function MenuEdit() {
             <Button
               variant='cta'
               buttonStyle='active'
-              handleClickButton={handleCloseModal}
+              handleClickButton={handleConfirmDelete}
               className='w-[12.4rem]'
             >
               삭제
