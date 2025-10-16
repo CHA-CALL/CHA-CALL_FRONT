@@ -2,13 +2,14 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import type { ReservationState } from '@pages/reservation-history/types/reservation';
 import { getReservationHistory } from '@pages/reservation-history/api';
 import { PAGE_SIZE } from '@shared/constant/infinite-scroll';
+import { RESERVATION_QUERY_KEY } from '@shared/querykey/reservations';
 
 export const useReservations = (
   isProvider: boolean,
   viewType: ReservationState
 ) => {
   const query = useInfiniteQuery({
-    queryKey: ['reservations', isProvider, viewType],
+    queryKey: RESERVATION_QUERY_KEY.LIST(isProvider, viewType),
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getReservationHistory(
         isProvider,
