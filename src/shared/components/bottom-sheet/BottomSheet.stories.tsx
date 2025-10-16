@@ -21,7 +21,7 @@ const meta: Meta<typeof BottomSheet> = {
       action: 'close',
       description: '배경 클릭/드래그 종료 시 호출되는 닫기 핸들러',
     },
-    sheetContent: {
+    children: {
       control: 'text',
       description: '바텀시트 내부에 렌더될 콘텐츠(ReactNode)',
     },
@@ -48,7 +48,7 @@ export const Playground: Story = {
   args: {
     isOpen: true,
     sheetHeight: 400,
-    sheetContent: (
+    children: (
       <div>
         <h3 className='heading-sb-20'>샘플 콘텐츠</h3>
         <p className='body-m-16'>예시입니다!</p>
@@ -61,7 +61,7 @@ export const Closed: Story = {
   args: {
     isOpen: false,
     sheetHeight: 420,
-    sheetContent: '닫힌 상태',
+    children: '닫힌 상태',
   },
   parameters: { controls: { disable: true } },
 };
@@ -73,7 +73,7 @@ export const Open: Story = {
   args: {
     isOpen: true,
     sheetHeight: 420,
-    sheetContent: '열린 상태',
+    children: '열린 상태',
   },
   parameters: { controls: { disable: true } },
 };

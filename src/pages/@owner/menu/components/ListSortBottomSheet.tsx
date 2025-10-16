@@ -19,32 +19,31 @@ export default function ListSortBottomSheet({
     <BottomSheet
       isOpen={isBottomSheetOpen}
       handleCloseBottomSheet={handleCloseBottomSheet}
-      sheetContent={
-        <>
-          <button
-            type='button'
-            onClick={handleSortByLatest}
-            className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
-          >
-            {SORT_OPTIONS[SORT_TYPES.LATEST]}
-          </button>
-          <button
-            type='button'
-            onClick={handleSortByOldest}
-            className='w-full p-[2rem] title-sb-14 text-grayscale-700'
-          >
-            {SORT_OPTIONS[SORT_TYPES.OLDEST]}
-          </button>
-          <Button
-            variant='cta'
-            buttonStyle='sub'
-            handleClickButton={handleCloseBottomSheet}
-          >
-            취소
-          </Button>
-        </>
-      }
       sheetHeight={200}
-    />
+    >
+      <>
+        <button
+          type='button'
+          onClick={handleSortByLatest}
+          className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
+        >
+          {SORT_OPTIONS[SORT_TYPES.LATEST]}
+        </button>
+        <button
+          type='button'
+          onClick={handleSortByOldest}
+          className='w-full p-[2rem] title-sb-14 text-grayscale-700'
+        >
+          {SORT_OPTIONS[SORT_TYPES.OLDEST]}
+        </button>
+        <Button
+          variant='cta'
+          buttonStyle='sub'
+          handleClickButton={handleCloseBottomSheet}
+        >
+          취소
+        </Button>
+      </>
+    </BottomSheet>
   );
 }

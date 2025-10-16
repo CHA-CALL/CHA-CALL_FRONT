@@ -22,33 +22,45 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
 
   const handleClickCard =
     'handleClickCard' in props ? props.handleClickCard : () => {};
-  const isLiked = 'isLiked' in props ? props.isLiked : false;
-  const tags = 'tags' in props ? props.tags : [];
+
+  const isRemovable = 'isRemovable' in props ? props.isRemovable : false;
+  const isRemove = 'isRemove' in props ? props.isRemove : false;
+  const handleCardRemove =
+    'handleCardRemove' in props ? props.handleCardRemove : () => {};
+  const isOn = 'isOn' in props ? props.isOn : false;
 
   const cardComponents = {
     [FOOD_TRUCK_CARD_VARIANTS.RESERVATION_PROVIDER]: (
       <ReservationProviderCard
+        variant='reservationProvider'
         data={data}
-        handleCardButton={handleClickButton}
+        handleClickButton={handleClickButton}
       />
     ),
     [FOOD_TRUCK_CARD_VARIANTS.RESERVATION_CLIENT]: (
-      <ReservationClientCard data={data} handleCardButton={handleClickButton} />
+      <ReservationClientCard
+        variant='reservationClient'
+        data={data}
+        handleClickButton={handleClickButton}
+      />
     ),
     [FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER]: (
       <FoodTruckProviderCard
+        variant='foodtruckProvider'
         data={data}
-        handleCard={handleClickCard}
-        handleCardButton={handleClickButton}
+        isRemovable={isRemovable}
+        isRemove={isRemove}
+        isOn={isOn}
+        handleCardRemove={handleCardRemove}
+        handleClickButton={handleClickButton}
       />
     ),
     [FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_CLIENT]: (
       <FoodTruckClientCard
+        variant='foodtruckClient'
         data={data}
-        isLiked={isLiked}
-        tags={tags}
-        handleCard={handleClickCard}
-        handleCardButton={handleClickButton}
+        handleClickCard={handleClickCard}
+        handleClickButton={handleClickButton}
       />
     ),
   };

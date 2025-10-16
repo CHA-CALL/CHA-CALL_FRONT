@@ -24,39 +24,38 @@ export default function ProfileImageBottomSheet({
     <BottomSheet
       isOpen={isBottomSheetOpen}
       handleCloseBottomSheet={handleCloseBottomSheet}
-      sheetContent={
-        <>
-          <button
-            type='button'
-            className='flex w-full justify-center border-b border-grayscale-100 py-[2rem] text-grayscale-700 title-sb-14'
-            onClick={handleEditImage}
-          >
-            <span>수정하기</span>
-          </button>
-          <input
-            className='hidden'
-            type='file'
-            accept='image/*'
-            ref={fileInputRef}
-            onChange={handleFileChange}
-          />
-          <button
-            type='button'
-            className='flex w-full justify-center py-[2rem] text-grayscale-700 title-sb-14'
-            onClick={handleDeleteImage}
-          >
-            <span>삭제하기</span>
-          </button>
-          <Button
-            variant='cta'
-            buttonStyle='sub'
-            handleClickButton={handleCloseBottomSheet}
-          >
-            취소
-          </Button>
-        </>
-      }
       sheetHeight={230}
-    />
+    >
+      <>
+        <button
+          type='button'
+          className='flex w-full justify-center border-b border-grayscale-100 py-[2rem] text-grayscale-700 title-sb-14'
+          onClick={handleEditImage}
+        >
+          <span>수정하기</span>
+        </button>
+        <input
+          className='hidden'
+          type='file'
+          accept='image/*'
+          ref={fileInputRef}
+          onChange={handleFileChange}
+        />
+        <button
+          type='button'
+          className='flex w-full justify-center py-[2rem] text-grayscale-700 title-sb-14'
+          onClick={handleDeleteImage}
+        >
+          <span>삭제하기</span>
+        </button>
+        <Button
+          variant='cta'
+          buttonStyle='sub'
+          handleClickButton={handleCloseBottomSheet}
+        >
+          취소
+        </Button>
+      </>
+    </BottomSheet>
   );
 }

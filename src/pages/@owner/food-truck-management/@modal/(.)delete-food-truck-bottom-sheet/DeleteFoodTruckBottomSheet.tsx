@@ -19,27 +19,26 @@ export default function DeleteFoodTruckBottomSheet({
     <BottomSheet
       isOpen={isOpen}
       handleCloseBottomSheet={handleClose}
-      sheetContent={
-        <div>
-          <Button
-            variant='default'
-            buttonStyle='large'
-            onClick={handleDeleteFoodTruck}
-            className='title-sb-14 text-grayscale-700 border-0 p-[2rem]'
-          >
-            삭제하기
-          </Button>
-          <Button
-            variant='default'
-            buttonStyle='large'
-            onClick={handleCloseModal}
-            className='title-sb-14 text-grayscale-700 rounded-[1.6rem] p-[2rem]'
-          >
-            취소
-          </Button>
-        </div>
-      }
       sheetHeight={500}
-    />
+    >
+      <div>
+        <Button
+          variant='default'
+          buttonStyle='large'
+          onClick={handleDeleteFoodTruck}
+          className='border-0 p-[2rem] text-grayscale-700 title-sb-14'
+        >
+          삭제하기
+        </Button>
+        <Button
+          variant='default'
+          buttonStyle='large'
+          onClick={handleCloseModal}
+          className='rounded-[1.6rem] p-[2rem] text-grayscale-700 title-sb-14'
+        >
+          취소
+        </Button>
+      </div>
+    </BottomSheet>
   );
 }
