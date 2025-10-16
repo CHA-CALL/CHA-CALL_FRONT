@@ -17,7 +17,7 @@ import {
   useCreateNewAccount,
   useFetchAccountData,
   useUpdateAccount,
-} from './hooks/use-account-query';
+} from '@pages/@owner/account/hooks/use-account-query';
 
 export default function Account() {
   const navigate = useNavigate();
@@ -161,7 +161,6 @@ export default function Account() {
 
   return (
     <form onSubmit={e => void handleSubmit(onValid)(e)}>
-      {/* <form onSubmit={e => void handleSubmit(e)}> */}
       <SelectBankBottomSheet
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}

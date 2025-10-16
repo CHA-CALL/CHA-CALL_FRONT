@@ -4,7 +4,7 @@ import {
   deleteBankAccountInfo,
   getBankAccountInfo,
   updateBankAccountInfo,
-} from '../api';
+} from '@pages/@owner/account/api';
 import type {
   BankAccountResponse,
   GetBankAccountData,

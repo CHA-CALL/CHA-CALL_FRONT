@@ -57,13 +57,6 @@ export const useAccount = () => {
     setValue('accountNumber', numbersOnly, { shouldValidate: true });
   };
 
-  // const onSubmit = async (formData: AccountFormData) => {
-  //   //TODO: 계좌 등록 제출
-  //   if (isValid && formData) {
-  //     alert('계좌 등록 제출');
-  //   }
-  // };
-
   const compatibleFormData = {
     accountHolderName: formData.accountHolderName,
     bankName: formData.bankName,
@@ -84,7 +77,6 @@ export const useAccount = () => {
     updateBank,
     updateAccountNumber,
     formatAccountNumber,
-    // handleSubmit: handleSubmit(onSubmit),
     handleSubmit,
     isFormValid: isValid,
     trigger,
