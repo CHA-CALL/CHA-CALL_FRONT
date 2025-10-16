@@ -32,16 +32,21 @@ export default function MenuList() {
     handleSave,
   } = useMenuList(TEST_FOOD_TRUCK_ID);
 
+  const handleClickRegister = () => {
+    handleRegister(TEST_FOOD_TRUCK_ID.toString());
+  }
+
   return (
     <>
       <MenuListHeader
         isSorted={isSorted}
         handleClickBack={handleClickBack}
-        handleRegister={handleRegister}
+        handleRegister={handleClickRegister}
         handleOpenBottomSheet={handleOpenBottomSheet}
       />
 
       <Menus
+        foodTruckId={TEST_FOOD_TRUCK_ID}
         menus={menus}
         isLoading={isLoading}
         isFetchingNextPage={isFetchingNextPage}

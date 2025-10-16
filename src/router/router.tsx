@@ -105,11 +105,11 @@ export const router = createBrowserRouter([
         element: <MenuList />,
       },
       {
-        path: ROUTES.MENU_REGISTER,
+        path: ROUTES.MENU_REGISTER(':foodTruckId'),
         element: <MenuRegister />,
       },
       {
-        path: ROUTES.MENU_EDIT(':menuId'),
+        path: ROUTES.MENU_EDIT(':foodTruckId', ':menuId'),
         element: <MenuEdit />,
       },
     ],

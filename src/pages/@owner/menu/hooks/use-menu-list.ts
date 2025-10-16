@@ -63,8 +63,8 @@ export const useMenuList = (foodTruckId: number) => {
     navigate(-1);
   };
 
-  const handleRegister = () => {
-    navigate(ROUTES.MENU_REGISTER);
+  const handleRegister = (foodTruckId?: string) => {
+    navigate(ROUTES.MENU_REGISTER(foodTruckId || ''));
   };
 
   // 바텀 시트 핸들러
@@ -87,10 +87,11 @@ export const useMenuList = (foodTruckId: number) => {
   };
 
   // 메뉴 핸들러
-  const handleMenuClick = (menuId?: string) => () => {
-    if (menuId) {
-      navigate(ROUTES.MENU_EDIT(menuId));
-    }
+  const handleMenuClick = (foodTruckId?: string, menuId?: string) => () => {
+    const selectedMenu = menus.find(menu => menu.menuId === Number(menuId));
+    navigate(ROUTES.MENU_EDIT(foodTruckId || '', menuId || ''), {
+      state: { menuData: selectedMenu },
+    });
   };
 
   const handleClickToggle = (menuId?: number) => () => {

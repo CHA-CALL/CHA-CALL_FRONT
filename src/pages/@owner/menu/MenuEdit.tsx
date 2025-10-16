@@ -1,38 +1,30 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ROUTES } from '@/router/constant/routes';
+import { useParams, useLocation } from 'react-router-dom';
 import Button from '@components/button/Button';
 import Overlay from '@components/overlay/Overlay';
-import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
+import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
-
-import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
-
-// const TEST_FOOD_TRUCK_ID = 1;
-
-const convertURLtoFile = async (url: string) => {
-  const response = await fetch(url);
-  const data = await response.blob();
-  const ext = data.type.split('/')[1] || 'jpg';
-  const filename = url.split('/').pop() || `image.${ext}`;
-  const metadata = { type: data.type };
-
-  return new File([data], filename, metadata);
-};
+import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
+import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 
 export default function MenuEdit() {
-  const navigate = useNavigate();
-  const { menuId } = useParams<{ menuId: string }>();
+  const location = useLocation();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // TODO: menuId를 사용해서 기존 메뉴 데이터 불러오기
-  const menuData = mockMenuData.find(menu => menu.menuId === Number(menuId)) || mockMenuData[0];
+  const menuData = location.state?.menuData;
+  const { foodTruckId, menuId } = useParams<{ foodTruckId: string, menuId: string }>();
+  const { mutate: editMenu } = useEditMenu(Number(foodTruckId), Number(menuId));
 
-  const initialData = {
-    name: menuData.name || '',
-    description: menuData.description || '',
-    price: menuData.price || '',
-    imageUrl: menuData.imageUrl || '',
+  const onSubmit = (formData: MenuFormData) => {
+    if (!formData.image) return;
+
+    editMenu({
+      name: formData.name,
+      description: formData.description,
+      price: Number(formData.price.replace(/,/g, '')),
+      photoUrl: formData.image.name,
+    });
   };
 
   const {
@@ -43,9 +35,9 @@ export default function MenuEdit() {
     updatePrice,
     updateImage,
     isValid,
-    // handleSubmit,
+    handleSubmit,
     reset,
-  } = useMenuForm(initialData);
+  } = useMenuForm(menuData);
 
   useEffect(() => {
     const loadImage = async () => {
@@ -59,7 +51,7 @@ export default function MenuEdit() {
             image: file,
           });
         } catch (error) {
-          console.error("이미지 파일로 변환 실패.", error);
+          console.error('이미지 파일로 변환 실패.', error);
         }
       }
     };
@@ -72,11 +64,6 @@ export default function MenuEdit() {
 
   const handleClickDelete = () => {
     setIsModalOpen(true);
-  };
-
-  const handleClickUpdate = () => {
-    // handleSubmit();
-    navigate(ROUTES.MENU_LIST);
   };
 
   return (
@@ -121,7 +108,6 @@ export default function MenuEdit() {
         updateDescription={updateDescription}
         updatePrice={updatePrice}
         updateImage={updateImage}
-        initialData={initialData}
         footerContent={
           <div className='flex gap-[1rem]'>
             <Button
@@ -135,7 +121,7 @@ export default function MenuEdit() {
             <Button
               variant='cta'
               buttonStyle={isValid ? 'active' : 'disabled'}
-              handleClickButton={handleClickUpdate}
+              handleClickButton={handleSubmit(onSubmit)}
             >
               저장하기
             </Button>

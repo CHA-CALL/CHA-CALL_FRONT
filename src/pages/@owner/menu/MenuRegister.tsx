@@ -1,11 +1,12 @@
+import { useParams } from 'react-router-dom';
 import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
 
-const TEST_FOOD_TRUCK_ID = 1;
-
 export default function MenuRegister() {
+  const { foodTruckId } = useParams<{ foodTruckId: string }>();
+
   const {
     formData,
     errors,
@@ -17,10 +18,7 @@ export default function MenuRegister() {
     handleSubmit,
   } = useMenuForm();
 
-  const {
-    mutate: registerMenu,
-    // isPending,
-  } = useRegisterMenu(TEST_FOOD_TRUCK_ID);
+  const { mutate: registerMenu } = useRegisterMenu(Number(foodTruckId));
 
   const onSubmit = (formData: MenuFormData) => {
     if (!formData.image) return;
