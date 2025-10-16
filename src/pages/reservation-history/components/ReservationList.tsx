@@ -52,23 +52,23 @@ export default function ReservationList({
   }
 
   return (
-    <div className='flex flex-col gap-[2rem] px-[2rem] pb-[5.6rem] pt-[9rem]'>
+    <div className='flex flex-col pb-[7.6rem] pt-[7rem]'>
       {reservations?.map((reservation, reservationIndex) => (
         <div key={reservationIndex}>
           {reservation?.content?.map((content, contentIndex) => (
-            <div key={content?.reservationId} className='flex flex-col gap-[2rem]'>
+            <div key={content?.reservationId} className='flex flex-col'>
               <FoodTruckCard
                 variant={isProvider ? 'reservationProvider' : 'reservationClient'}
                 data={content}
                 handleClickButton={handleReservationDetail}
               />
               {contentIndex !== (reservation?.content?.length ?? 0) - 1 && (
-                <div className='h-[0.1rem] w-full mb-[2rem] bg-grayscale-100' />
+                <div className='h-[0.1rem] w-full bg-grayscale-100' />
               )}
             </div>
           ))}
           {reservationIndex !== reservations.length - 1 && (
-            <div className='h-[0.1rem] w-full mt-[2rem] bg-grayscale-100' />
+            <div className='h-[0.1rem] w-full bg-grayscale-100' />
           )}
         </div>
       ))}

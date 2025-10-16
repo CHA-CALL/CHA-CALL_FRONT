@@ -1,7 +1,6 @@
 import CardImage from '@components/food-truck-card/components/CardImage';
 import CardButton from '@components/food-truck-card/components/CardButton';
-import InfoRow from '@components/food-truck-card/components/InfoRow';
-import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
+import ReservationInfos from '@components/food-truck-card/components/ReservationInfos';
 import type { ReservationClientProps } from '@components/food-truck-card/types/food-truck-card-types';
 
 export default function ReservationClientCard({
@@ -9,8 +8,6 @@ export default function ReservationClientCard({
   handleClickButton,
 }: ReservationClientProps) {
   const { photoUrl = '', name = '', address = '', dateTimeInfos = [] } = data;
-
-  const { period, time } = formatDateTimeInfos(dateTimeInfos);
 
   return (
     <div className='flex w-full items-start gap-[1.8rem] p-[2rem]'>
@@ -24,9 +21,7 @@ export default function ReservationClientCard({
         <span className='title-sb-16 text-grayscale-900 mb-[0.2rem]'>
           {name}
         </span>
-        <InfoRow iconId='ic_locate'>{address}</InfoRow>
-        <InfoRow iconId='ic_calendar'>{period}</InfoRow>
-        <InfoRow iconId='ic_time'>{time}</InfoRow>
+        <ReservationInfos address={address} dateTimeInfos={dateTimeInfos} />
       </div>
 
       <CardButton handleClick={handleClickButton} buttonIcon='ic_next' />
