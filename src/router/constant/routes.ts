@@ -17,4 +17,6 @@ export const ROUTES = {
   PROFILE_SETTING: '/profile-setting',
   PROFILE_SETTING_DETAIL: (field: string) => `/profile-setting/${field}`,
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
+  MENU_LIST: '/owner/menu-list',
+  MENU_REGISTER: '/owner/menu-register',
 };

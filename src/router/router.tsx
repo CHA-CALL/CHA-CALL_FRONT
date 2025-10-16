@@ -20,6 +20,8 @@ import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
+import MenuList from '@pages/@owner/menu/MenuList';
+import MenuRegister from '@pages/@owner/menu/MenuRegister';
 
 export const router = createBrowserRouter([
   {
@@ -96,6 +98,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.FOOD_TRUCK_MANAGEMENT,
         element: <FoodTruckManagement />,
+      },
+      {
+        path: ROUTES.MENU_LIST,
+        element: <MenuList />,
+      },
+      {
+        path: ROUTES.MENU_REGISTER,
+        element: <MenuRegister />,
       },
     ],
   },

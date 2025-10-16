@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
+import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 
-export default function ButtonFloating() {
+interface ButtonFloatingProps {
+  className?: string;
+}
+
+export default function ButtonFloating({ className }: ButtonFloatingProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleScrollToTop = () => {
@@ -31,7 +36,10 @@ export default function ButtonFloating() {
     <button
       type='button'
       onClick={handleScrollToTop}
-      className={`fixed bottom-[2.6rem] right-[2.4rem] flex h-[5rem] w-[5rem] items-center justify-center rounded-full bg-white pb-[0.3rem] pr-[0.1rem] shadow-[0_0_8px_0_rgba(0,0,0,0.08)]`}
+      className={cn(
+        'fixed bottom-[2.6rem] right-[2.3rem] flex h-[5rem] w-[5rem] items-center justify-center rounded-full bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.08)]',
+        className
+      )}
     >
       <Icon name='ic_up' />
     </button>

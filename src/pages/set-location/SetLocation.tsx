@@ -1,38 +1,45 @@
-import DongEupMeonItem from '@pages/set-location/components/DongEupMeonItem';
-import LocationCategoryLabels from '@pages/set-location/components/LocationCategoryLabels';
-import SearchResultItem from '@pages/set-location/components/SearchResultItem';
-import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
-import SiDoItem from '@pages/set-location/components/SiDoItem';
-import SiGunGuItem from '@pages/set-location/components/SiGunGuItem';
-import { getSearchedRegionsResponse } from '@pages/set-location/constant/mocks';
-import { useLocations } from '@pages/set-location/hooks/use-locations';
+import { useNavigate } from 'react-router-dom';
+import useLocation from '@pages/set-location/hooks/use-location';
+
+import useRegionSearch from '@pages/set-location/hooks/use-region-search';
+import { useDepths } from '@pages/set-location/hooks/use-depths';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Navigation from '@shared/components/navigation/Navigation';
 import Input from '@shared/components/input/Input';
-import { useNavigate } from 'react-router-dom';
+
+import SearchSection from '@pages/set-location/components/SearchSection';
+import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
+import DepthSection from '@pages/set-location/components/DepthSection';
 
 export default function SetLocation() {
   const navigate = useNavigate();
   const handleClickBack = () => navigate(-1);
 
   const {
-    siDoList,
-    siGunGuList,
-    locationList,
-    selectedSiDoId,
-    selectedSiGunGuId,
-    selectedLocations,
     searchText,
-    setSearchText,
+    handleSetSearchText,
     handleClearSearchBar,
-    handleSelectSiDo,
-    handleSelectSiGunGu,
-    handleToggleLocation,
-    handleClearLocations,
+    searchRegions,
+    isPending,
+  } = useRegionSearch();
+  const {
+    depth1,
+    depth2,
+    handleSelectDepth1,
+    handleSelectDepth2,
+    depth1List,
+    depth2List,
+    depth3List,
+  } = useDepths();
+
+  const {
+    selectedLocations,
+    handleSelectLocation,
     handleDeleteLocation,
     handleConfirmLocation,
-  } = useLocations();
+    handleResetLocations,
+  } = useLocation();
 
   return (
     <>
@@ -46,7 +53,7 @@ export default function SetLocation() {
           <Input
             placeholder='검색어를 입력해주세요.'
             value={searchText}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={e => handleSetSearchText(e.target.value)}
             rightComponent={
               searchText === '' ? (
                 <Icon name='ic_search' />
@@ -58,55 +65,28 @@ export default function SetLocation() {
             }
           />
         </div>
-        {searchText === '' && <LocationCategoryLabels />}
-        <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
-          {searchText !== '' ? (
-            <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
-              {/* TODO: 장소 검색 API 확정되면 개선 */}
-              {(getSearchedRegionsResponse.results ?? []).map(item => (
-                <SearchResultItem
-                  locationName={item.name}
-                  isChecked={selectedLocations.has(item.id)}
-                  handleToggle={() => handleToggleLocation(item)}
-                  searchText={searchText}
-                />
-              ))}
-            </ul>
-          ) : (
-            <div className='grid flex-1 grid-cols-[106fr_135fr_134fr] grid-rows-[1fr] overflow-hidden'>
-              <div className='scrollbar-hide overflow-auto'>
-                {siDoList.map(item => (
-                  <SiDoItem
-                    title={item.name}
-                    isSelected={item.id === selectedSiDoId}
-                    handleSelectSiDo={() => handleSelectSiDo(item.id)}
-                    key={item.name}
-                  />
-                ))}
-              </div>
-              <div className='outline-grayscale-200 scrollbar-hide overflow-auto outline-1'>
-                {siGunGuList.map(item => (
-                  <SiGunGuItem
-                    title={item.name}
-                    isSelected={item.id === selectedSiGunGuId}
-                    handleSelectSiGunGu={() => handleSelectSiGunGu(item.id)}
-                    key={item.name}
-                  />
-                ))}
-              </div>
-              <div className='scrollbar-hide overflow-auto'>
-                {locationList.map(item => (
-                  <DongEupMeonItem
-                    title={item.name}
-                    isSelected={selectedLocations.has(item.id)}
-                    handleSelectDongEupMeon={() => handleToggleLocation(item)}
-                    key={item.name}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        {searchText && (
+          <SearchSection
+            searchText={searchText}
+            searchRegions={searchRegions?.data ?? []}
+            selectedLocations={selectedLocations}
+            handleSelectLocation={handleSelectLocation}
+            isPending={isPending}
+          />
+        )}
+        {!searchText && (
+          <DepthSection
+            depth1={depth1}
+            depth2={depth2}
+            handleSelectDepth1={handleSelectDepth1}
+            handleSelectDepth2={handleSelectDepth2}
+            depth1List={depth1List}
+            depth2List={depth2List}
+            depth3List={depth3List}
+            handleToggleLocation={handleSelectLocation}
+            selectedLocations={selectedLocations}
+          />
+        )}
 
         {selectedLocations.size > 0 && (
           <SelectedChipsSheet
@@ -115,11 +95,11 @@ export default function SetLocation() {
           />
         )}
 
-        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
+        <div className='flex gap-[0.7rem] border-t-[0.1rem] border-grayscale-200 px-[2rem] py-[1.7rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'
-            handleClickButton={handleClearLocations}
+            handleClickButton={handleResetLocations}
           >
             초기화
           </Button>

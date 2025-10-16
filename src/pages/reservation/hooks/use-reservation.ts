@@ -1,0 +1,105 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { useInView } from 'react-intersection-observer';
+import _ from 'lodash';
+
+import {
+  extractLocationCodes,
+  extractLocationName,
+} from '@utils/extract-location';
+import { formatSelectedDateToSchedules } from '@utils/date-formatter';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
+import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
+import { confirmedRegionsAtom } from '@shared/store/regions-store';
+import {
+  useFoodTruckListQuery,
+  useUpdateFoodTruckSaveStatus,
+} from '@pages/reservation/hooks/use-food-truck-list-query';
+
+export default function useReservation() {
+  const navigate = useNavigate();
+  const { ref: listBottomRef, inView } = useInView();
+
+  const [isTooltipOpen, setIsTooltipOpen] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    FOOD_TRUCK_CATEGORIES[0]
+  );
+  const [locationName, setLocationName] = useState<string[]>([]);
+
+  const filters = useAtomValue(filtersAtom);
+  const notFiltered = useAtomValue(notFilteredAtom);
+  const regions = useAtomValue(confirmedRegionsAtom);
+
+  const selectedCategories = (() => {
+    if (selectedCategory === '전체보기') return filters.categories ?? [];
+    const base = filters.categories ? [...filters.categories] : [];
+    if (!base.includes(selectedCategory)) base.push(selectedCategory);
+    return base;
+  })();
+
+  const queryFilters = {
+    regionCodes: extractLocationCodes(regions),
+    schedules: formatSelectedDateToSchedules(filters.schedules),
+    availableQuantity: filters.availableQuantity,
+    categories: selectedCategories,
+    needElectricity: filters.needElectricity,
+    paymentMethod: filters.paymentMethod,
+  };
+
+  const {
+    foodTruckData,
+    isPending,
+    hasNextFoodTrucks,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useFoodTruckListQuery(queryFilters);
+
+  const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus();
+
+  const handleClickChip = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const handleUpdateFoodTruckSaveStatus = (
+    foodTruckId: number,
+    isSavedRequest: boolean
+  ) => {
+    updateSaveStatus({ foodTruckId, isSavedRequest });
+  };
+
+  const handleClickBack = () => navigate(-1);
+  const handleClickLocation = () => navigate('/set-location');
+  const handleClickFilter = () => navigate('/filter');
+  const handleClickFoodTruck = (id: number) => navigate(`/food-truck/${id}`);
+  const handleClickTooltip = () => setIsTooltipOpen(!isTooltipOpen);
+
+  useEffect(() => {
+    setLocationName(_.sortBy(extractLocationName(regions)));
+  }, [regions]);
+
+  useEffect(() => {
+    if (inView && hasNextFoodTrucks && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextFoodTrucks, isFetchingNextPage, fetchNextPage]);
+
+  return {
+    listBottomRef,
+    isTooltipOpen,
+    selectedCategory,
+    locationName,
+    notFiltered,
+    isPending,
+    foodTruckData,
+    isFetchingNextPage,
+    handleClickBack,
+    handleClickLocation,
+    handleClickFilter,
+    handleClickFoodTruck,
+    handleClickTooltip,
+    handleClickChip,
+    handleUpdateFoodTruckSaveStatus,
+    fetchNextPage,
+  };
+}

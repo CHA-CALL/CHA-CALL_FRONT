@@ -1,9 +1,8 @@
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
 import type {
   OwnerReservationHistoryResponse,
   MemberReservationHistoryResponse,
   MyFoodTruckResponse,
-  SavedFoodTruckResponse,
+  FoodTruckResponse,
 } from 'apis/data-contracts';
 
 interface BaseFoodTruckCardProps {
@@ -24,13 +23,15 @@ export type ReservationClientProps = BaseFoodTruckCardProps & {
 export type FoodTruckProviderProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckProvider';
   data: MyFoodTruckResponse;
-  handleClickCard: () => void;
+  isRemovable: boolean;
+  isRemove: boolean;
+  isOn: boolean;
+  handleCardRemove: () => void;
 };
 
 export type FoodTruckClientProps = BaseFoodTruckCardProps & {
   variant: 'foodtruckClient';
-  data: SavedFoodTruckResponse;
-  isLiked: boolean;
-  tags: (typeof FOOD_TRUCK_CATEGORIES)[number][];
-  handleClickCard: () => void;
+  data: FoodTruckResponse;
+  handleClickCard: (_foodTruckId: number) => void;
+  handleClickButton: (_foodTruckId: number, _isSavedRequest: boolean) => void;
 };

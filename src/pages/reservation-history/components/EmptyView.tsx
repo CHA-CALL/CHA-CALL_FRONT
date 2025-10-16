@@ -40,7 +40,7 @@ export default function EmptyView({
       emptyText = '';
   }
   return (
-    <div className='flex min-h-[calc(100vh-4.8rem)] w-full flex-col items-center justify-center gap-[1.6rem] pt-[6.6rem]'>
+    <div className='pointer-events-none absolute top-[0rem] flex min-h-[100dvh] w-full flex-col items-center justify-center gap-[1.6rem] pt-[6.6rem] fixed-center'>
       <img src='https://placehold.co/140' alt='' />
       <span className='text-center text-grayscale-500 body-m-14'>
         {emptyText} {isProvider ? '예약건' : '예약 내역'}이 없습니다.
