@@ -11,9 +11,6 @@ import {
 } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
-import { useMutation } from '@tanstack/react-query';
-import { postFoodTruckMenu } from '@pages/@owner/menu/api';
-
 const menuSchema = z.object({
   name: z
     .string()
@@ -81,10 +78,7 @@ interface InitialData {
   imageUrl: string;
 }
 
-export const useMenuForm = (
-  foodTruckId: number,
-  initialData?: InitialData,
-) => {
+export const useMenuForm = (initialData?: InitialData) => {
   const {
     handleSubmit,
     setValue,
@@ -105,23 +99,6 @@ export const useMenuForm = (
   });
 
   const formData = watch();
-
-  const { mutate: registerMenu } = useMutation({
-    mutationFn: async (data: {
-      name: string;
-      description: string;
-      price: number;
-      photoUrl: string;
-    }) => {
-      return postFoodTruckMenu({
-        foodTruckId: foodTruckId,
-        data,
-      });
-    },
-    onSuccess: () => {
-      alert('메뉴가 등록되었습니다.');
-    },
-  });
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
@@ -154,28 +131,6 @@ export const useMenuForm = (
     setValue('image', image, { shouldValidate: true });
   };
 
-  const onSubmit = async (formData: MenuFormData) => {
-    if (!isValid || !formData.image) {
-      return;
-    }
-
-    const price = Number(formData.price.replace(/,/g, ''));
-
-    registerMenu({
-      name: formData.name,
-      description: formData.description,
-      price: price,
-      photoUrl: formData.image.name,
-    });
-  };
-
-  const FormDatas = {
-    name: formData.name,
-    description: formData.description,
-    price: formData.price,
-    image: formData.image,
-  };
-
   const Errors = {
     name: errors.name?.message,
     description: errors.description?.message,
@@ -184,14 +139,14 @@ export const useMenuForm = (
   };
 
   return {
-    formData: FormDatas,
+    formData,
     errors: Errors,
     isValid,
     updateName,
     updateDescription,
     updatePrice,
     updateImage,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit,
     trigger,
     reset,
   };

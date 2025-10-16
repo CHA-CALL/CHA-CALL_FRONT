@@ -1,14 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/router/constant/routes';
 import Button from '@components/button/Button';
-import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
+import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
+import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
 
 const TEST_FOOD_TRUCK_ID = 1;
 
 export default function MenuRegister() {
-  const navigate = useNavigate();
-
   const {
     formData,
     errors,
@@ -18,11 +15,22 @@ export default function MenuRegister() {
     updateImage,
     isValid,
     handleSubmit,
-  } = useMenuForm(TEST_FOOD_TRUCK_ID);
+  } = useMenuForm();
 
-  const handleClickSubmit = () => {
-    handleSubmit();
-    navigate(ROUTES.MENU_LIST);
+  const {
+    mutate: registerMenu,
+    // isPending,
+  } = useRegisterMenu(TEST_FOOD_TRUCK_ID);
+
+  const onSubmit = (formData: MenuFormData) => {
+    if (!formData.image) return;
+
+    registerMenu({
+      name: formData.name,
+      description: formData.description,
+      price: Number(formData.price.replace(/,/g, '')),
+      photoUrl: formData.image.name,
+    });
   };
 
   return (
@@ -41,7 +49,7 @@ export default function MenuRegister() {
           <Button
             variant='cta'
             buttonStyle={isValid ? 'active' : 'disabled'}
-            handleClickButton={handleClickSubmit}
+            handleClickButton={handleSubmit(onSubmit)}
           >
             저장하기
           </Button>

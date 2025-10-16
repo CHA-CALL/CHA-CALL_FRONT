@@ -8,7 +8,7 @@ import MenuForm from '@pages/@owner/menu/components/MenuForm';
 
 import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
 
-const TEST_FOOD_TRUCK_ID = 1;
+// const TEST_FOOD_TRUCK_ID = 1;
 
 const convertURLtoFile = async (url: string) => {
   const response = await fetch(url);
@@ -43,9 +43,9 @@ export default function MenuEdit() {
     updatePrice,
     updateImage,
     isValid,
-    handleSubmit,
+    // handleSubmit,
     reset,
-  } = useMenuForm(TEST_FOOD_TRUCK_ID, initialData);
+  } = useMenuForm(initialData);
 
   useEffect(() => {
     const loadImage = async () => {
@@ -75,7 +75,7 @@ export default function MenuEdit() {
   };
 
   const handleClickUpdate = () => {
-    handleSubmit();
+    // handleSubmit();
     navigate(ROUTES.MENU_LIST);
   };
 

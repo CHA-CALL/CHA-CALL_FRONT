@@ -4,7 +4,7 @@ import { ROUTES } from '@/router/constant/routes';
 import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 import { getFoodTruckMenus, editMenuStatus } from '@pages/@owner/menu/api';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { OWNER_GET_MENUS } from '@shared/querykey/owner/menu';
+import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 
 export const useMenuList = (foodTruckId: number) => {
@@ -16,7 +16,7 @@ export const useMenuList = (foodTruckId: number) => {
   const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
 
   const query = useInfiniteQuery({
-    queryKey: [...OWNER_GET_MENUS.ALL, foodTruckId, isSorted],
+    queryKey: MENUS_QUERY_KEY.SORTED_LIST(foodTruckId, isSorted),
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getFoodTruckMenus({
         foodTruckId,
@@ -52,7 +52,9 @@ export const useMenuList = (foodTruckId: number) => {
       return Promise.all(mutationPromises);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [...OWNER_GET_MENUS.ALL, foodTruckId] });
+      queryClient.invalidateQueries({
+        queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
+      });
     },
   });
 
