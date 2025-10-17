@@ -2,18 +2,19 @@ import { atom } from 'jotai';
 import { isEqual } from 'lodash';
 
 import type { SelectedDate } from '@shared/types/calendar-types';
-import {
-  AVAILABLE_QUANTITY,
-  NEED_ELECTRICITY,
-  PAYMENT_METHOD,
-} from '@pages/filter/constant/filter-option-constants';
+import type {
+  AvailableQuantityValue,
+  FoodTruckCategoryValue,
+  NeedElectricityValue,
+  PaymentMethodValue,
+} from '@shared/types/category-types';
 
 export interface FilterState {
   schedules: SelectedDate[];
-  availableQuantity: (typeof AVAILABLE_QUANTITY)[number] | null;
-  categories: string[] | null;
-  needElectricity: (typeof NEED_ELECTRICITY)[number] | null;
-  paymentMethod: (typeof PAYMENT_METHOD)[number] | null;
+  availableQuantity: AvailableQuantityValue | null;
+  categories: FoodTruckCategoryValue[] | null;
+  needElectricity: NeedElectricityValue | null;
+  paymentMethod: PaymentMethodValue | null;
 }
 
 export const initialFilter: FilterState = {
@@ -50,7 +51,11 @@ export const setSingleAtom = atom(
 
 export const setMultiAtom = atom(
   null,
-  (get, set, { key, value }: { key: 'categories'; value: string }) => {
+  (
+    get,
+    set,
+    { key, value }: { key: 'categories'; value: FoodTruckCategoryValue }
+  ) => {
     const filters = get(filtersAtom);
     const current = filters[key] ?? [];
     const next = current.includes(value)

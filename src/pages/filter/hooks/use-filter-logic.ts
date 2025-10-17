@@ -10,6 +10,12 @@ import {
   resetAtom,
 } from '@shared/store/filter-store';
 import { getCleanedFilters } from '@pages/filter/utils/get-cleaned-filters';
+import type {
+  AvailableQuantityValue,
+  FoodTruckCategoryValue,
+  NeedElectricityValue,
+  PaymentMethodValue,
+} from '@shared/types/category-types';
 
 export default function useFilterLogic() {
   const navigate = useNavigate();
@@ -38,7 +44,7 @@ export default function useFilterLogic() {
 
   const handleSelectSingle = (
     key: 'availableQuantity' | 'needElectricity' | 'paymentMethod',
-    value: string
+    value: AvailableQuantityValue | NeedElectricityValue | PaymentMethodValue
   ) => {
     setLocalFilters(prev => {
       const prevVal = prev[key] as string | null;
@@ -46,7 +52,10 @@ export default function useFilterLogic() {
     });
   };
 
-  const handleSelectMulti = (key: 'categories', value: string) => {
+  const handleSelectMulti = (
+    key: 'categories',
+    value: FoodTruckCategoryValue
+  ) => {
     setLocalFilters(prev => {
       const current = prev[key] ?? [];
       const next = current.includes(value)
