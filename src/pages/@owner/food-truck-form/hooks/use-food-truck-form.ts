@@ -50,7 +50,7 @@ const foodTruckSchema = z.object({
   availableQuantity: z.enum(AVAILABLE_QUANTITY),
   needElectricity: z.enum(NEED_ELECTRICITY),
   paymentMethod: z.enum(PAYMENT_METHOD),
-  menus: z.array(z.enum(FOOD_CATEGORIES)),
+  foodCategories: z.array(z.enum(FOOD_CATEGORIES)),
   images: z.array(z.instanceof(File)),
   operationalInformation: z
     .string()
@@ -93,7 +93,7 @@ export const useFoodTruckForm = (
       availableQuantity: undefined,
       needElectricity: undefined,
       paymentMethod: undefined,
-      menus: [],
+      foodCategories: [],
       images: [],
       operationalInformation: undefined,
       etc: undefined,
@@ -177,21 +177,27 @@ export const useFoodTruckForm = (
       shouldValidate: true,
     });
   };
-  const updateMenus = (
-    menus: (typeof FOOD_CATEGORIES)[keyof typeof FOOD_CATEGORIES]
+  const updateFoodCategories = (
+    foodCategories: (typeof FOOD_CATEGORIES)[keyof typeof FOOD_CATEGORIES]
   ) => {
-    if (formData.menus?.includes(menus)) {
+    if (formData.foodCategories?.includes(foodCategories)) {
       setValue(
-        'menus',
-        formData.menus?.filter(menu => menu !== menus),
+        'foodCategories',
+        formData.foodCategories?.filter(
+          foodCategory => foodCategory !== foodCategories
+        ),
         {
           shouldValidate: true,
         }
       );
     } else {
-      setValue('menus', [...(formData.menus ?? []), menus], {
-        shouldValidate: true,
-      });
+      setValue(
+        'foodCategories',
+        [...(formData.foodCategories ?? []), foodCategories],
+        {
+          shouldValidate: true,
+        }
+      );
     }
   };
 
@@ -230,7 +236,7 @@ export const useFoodTruckForm = (
     availableQuantity: formData.availableQuantity,
     needElectricity: formData.needElectricity,
     paymentMethod: formData.paymentMethod,
-    menus: formData.menus,
+    foodCategories: formData.foodCategories,
     images: formData.images,
     operationalInformation: formData.operationalInformation,
     etc: formData.etc,
@@ -245,7 +251,7 @@ export const useFoodTruckForm = (
     availableQuantity: errors.availableQuantity?.message,
     needElectricity: errors.needElectricity?.message,
     paymentMethod: errors.paymentMethod?.message,
-    menus: errors.menus?.message,
+    foodCategories: errors.foodCategories?.message,
     images: errors.images?.message,
     operationalInformation: errors.operationalInformation?.message,
     etc: errors.etc?.message,
@@ -263,7 +269,7 @@ export const useFoodTruckForm = (
     updateAvailableQuantity,
     updateNeedElectricity,
     updatePaymentMethod,
-    updateMenus,
+    updateFoodCategories,
     updateOperationalInformation,
     updateEtc,
     updateDate,

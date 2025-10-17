@@ -20,6 +20,8 @@ import { useState } from 'react';
 import { dateFormatter } from '@shared/utils/date-formatter';
 import type { SelectedDate } from '@shared/types/calendar-types';
 import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
+import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitchButton';
+import { ROUTES } from '@/router/constant/routes';
 
 export default function FoodTruckForm() {
   const { id } = useParams();
@@ -31,7 +33,7 @@ export default function FoodTruckForm() {
     handleCheckNameDuplicate,
     checkNameDuplicate,
     updatePhoneNumber,
-    updateMenus,
+    updateFoodCategories,
     updateDescription,
     updateNeedElectricity,
     updateAvailableQuantity,
@@ -141,19 +143,21 @@ export default function FoodTruckForm() {
           description='중복 선택 가능'
         >
           <div className='flex flex-wrap gap-[0.8rem]'>
-            {Object.values(FOOD_CATEGORIES).map(item => (
+            {Object.values(FOOD_CATEGORIES).map(foodCategory => (
               <Button
                 buttonStyle={
-                  formData.menus.some(menu => menu === item)
+                  formData.foodCategories.some(
+                    (category: string) => category === foodCategory
+                  )
                     ? 'selected2'
                     : 'default'
                 }
-                handleClickButton={() => updateMenus(item)}
+                handleClickButton={() => updateFoodCategories(foodCategory)}
                 variant='chip'
-                key={item}
+                key={foodCategory}
                 className='w-fit'
               >
-                {item}
+                {foodCategory}
               </Button>
             ))}
           </div>
@@ -203,7 +207,14 @@ export default function FoodTruckForm() {
             ))}
           </div>
         </FormLayout>
-        <FormLayout isRequired={true} title='이미지'>
+        <FormLayout isRequired={true} title='메뉴 정보'>
+          <PageSwitchButton
+            isSelected={true}
+            text='메뉴를 등록해주세요.'
+            handleClick={() => navigate(ROUTES.MENU_LIST)}
+          />
+        </FormLayout>
+        <FormLayout isRequired={true} title='푸드트럭 사진'>
           <div></div>
         </FormLayout>
         <FormLayout isRequired={true} title='가능한 일정대'>
