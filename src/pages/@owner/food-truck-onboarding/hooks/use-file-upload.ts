@@ -27,13 +27,7 @@ export const BIZ_REG_CERT_FILE_VALIDATOR = z
     {
       message: CANNOT_UPLOAD_FILE_MB,
     }
-  )
-  .optional()
-  .refine(file => file !== undefined, {
-    message: OWNER_MEDIA_ERROR_MESSAGE.MIN_COUNT(
-      OWNER_MEDIA_MIN_COUNT.BIZ_REG_CERT
-    ),
-  });
+  );
 
 export const OTHER_DOCS_FILES_VALIDATOR = z
   .array(z.instanceof(File))
@@ -60,5 +54,4 @@ export const OTHER_DOCS_FILES_VALIDATOR = z
     {
       message: CANNOT_UPLOAD_FILE_MB,
     }
-  )
-  .optional();
+  );

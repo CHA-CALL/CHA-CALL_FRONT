@@ -9,12 +9,16 @@ import {
   FOOD_TRUCK_NAME_VALIDATOR,
   useFoodTruckName,
 } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
-import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
+import {
+  OWNER_MEDIA_ERROR_MESSAGE,
+  OWNER_TEXT_ERROR_MESSAGE,
+} from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import {
   NOT_ALLOWED_FILE_TYPE,
   CANNOT_UPLOAD_FILE_MB,
 } from '@shared/constant/image';
+import { OWNER_MEDIA_MIN_COUNT } from '@pages/@owner/food-truck-onboarding/constants/owner';
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,
@@ -58,7 +62,11 @@ export const useFoodTruckInput = () => {
 
   const updateBizRegCertFile = (bizRegCert: File | undefined) => {
     if (!bizRegCert) {
-      setValue('bizRegCert', undefined, { shouldValidate: true });
+      setError('bizRegCert', {
+        message: OWNER_MEDIA_ERROR_MESSAGE.MAX_COUNT(
+          OWNER_MEDIA_MIN_COUNT.BIZ_REG_CERT
+        ),
+      });
       return;
     }
     if (!isAcceptableFile(bizRegCert)) {
@@ -74,6 +82,11 @@ export const useFoodTruckInput = () => {
 
   const updateOtherDocsFiles = (otherDocs: File[] | undefined) => {
     if (!otherDocs) {
+      setError('otherDocs', {
+        message: OWNER_MEDIA_ERROR_MESSAGE.MIN_COUNT(
+          OWNER_MEDIA_MIN_COUNT.OTHER_DOCS
+        ),
+      });
       return;
     }
     for (const doc of otherDocs) {

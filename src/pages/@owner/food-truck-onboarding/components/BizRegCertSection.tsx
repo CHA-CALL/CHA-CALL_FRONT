@@ -9,7 +9,7 @@ import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 interface BizRegCertSectionProps {
   file: OwnerFormData['bizRegCert'];
-  onChange: (_value: OwnerFormData['bizRegCert']) => void;
+  onChange: (_value: File | undefined) => void;
   error?: string;
 }
 
@@ -18,7 +18,7 @@ export default function BizRegCertSection({
   onChange,
   error,
 }: BizRegCertSectionProps) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -30,20 +30,18 @@ export default function BizRegCertSection({
 
   const handleRemoveFile = () => {
     onChange(undefined);
+    setImageUrl(undefined);
   };
 
   useEffect(() => {
     if (file) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        setImageUrl(e.target?.result as string);
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+      return () => {
+        URL.revokeObjectURL(url);
       };
-      reader.onerror = () => {
-        setImageUrl(null);
-      };
-      reader.readAsDataURL(file);
     } else {
-      setImageUrl(null);
+      setImageUrl(undefined);
     }
   }, [file]);
 
@@ -52,10 +50,10 @@ export default function BizRegCertSection({
       <SectionTitle
         title='사업자 등록증'
         maxLength={OWNER_MEDIA_MAX_COUNT.BIZ_REG_CERT}
-        currentLength={file ? 1 : 0}
+        currentLength={imageUrl ? 1 : 0}
       />
-      {!file && <ButtonAddImage handleFileChange={handleFileChange} />}
-      {file && (
+      {!imageUrl && <ButtonAddImage handleFileChange={handleFileChange} />}
+      {imageUrl && (
         <ImagePreview
           handleClose={handleRemoveFile}
           src={imageUrl || undefined}

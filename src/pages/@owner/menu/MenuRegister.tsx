@@ -88,13 +88,13 @@ export default function MenuRegister() {
         text='메뉴 등록'
       />
 
-      <div className='flex flex-col gap-[2.4rem] p-[2rem]'>
+      <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[8.5rem]'>
         <MenuInput title='메뉴 이름' error={errors.name}>
           <Input
             placeholder='텍스트를 입력해주세요.'
             value={formData.name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateName(e.target.value)
+              updateName(e.target.value.trim())
             }
             maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
             rightComponent={

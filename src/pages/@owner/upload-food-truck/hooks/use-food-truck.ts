@@ -12,9 +12,7 @@ export const useFoodTruck = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    return () => {
-      setError(null);
-    };
+    setError(null);
   }, [files]);
 
   const handleSubmitImage = () => {
