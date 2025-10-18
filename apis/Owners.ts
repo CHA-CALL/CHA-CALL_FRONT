@@ -14,6 +14,7 @@ import {
   DeleteBankAccountData,
   DeleteChatTemplateData,
   DeleteFoodTruckData,
+  DeleteMenuData,
   GetBankAccountData,
   GetChatTemplatesData,
   GetMenusData,
@@ -30,6 +31,8 @@ import {
   UpdateBankAccountRequest,
   UpdateChatTemplateData,
   UpdateChatTemplateRequest,
+  UpdateMenuData,
+  UpdateMenuRequest,
   UpdateMenuStatusData,
   UpdateMenuStatusRequest,
 } from "./data-contracts";
@@ -38,6 +41,61 @@ import { ContentType, HttpClient, RequestParams } from "./http-client";
 export class Owners<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
+  /**
+   * @description 사장님 - 푸드트럭 메뉴를 수정합니다.
+   *
+   * @tags Owner API
+   * @name UpdateMenu
+   * @summary 나의 푸드트럭 메뉴 수정
+   * @request PUT:/owners/me/food-trucks/{foodTruckId}/menus/{menuId}
+   * @secure
+   * @response `200` `UpdateMenuData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateMenu = (
+    foodTruckId: number,
+    menuId: number,
+    data: UpdateMenuRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateMenuData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}`,
+      method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 사장님 - 푸드트럭 메뉴를 삭제합니다.
+   *
+   * @tags Owner API
+   * @name DeleteMenu
+   * @summary 나의 푸드트럭 메뉴 삭제
+   * @request DELETE:/owners/me/food-trucks/{foodTruckId}/menus/{menuId}
+   * @secure
+   * @response `200` `DeleteMenuData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  deleteMenu = (
+    foodTruckId: number,
+    menuId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<DeleteMenuData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}`,
+      method: "DELETE",
+      secure: true,
+      ...params,
+    });
   /**
    * @description 사장님이 자주 쓰는 채팅을 수정합니다.
    *
