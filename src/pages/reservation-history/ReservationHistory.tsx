@@ -18,7 +18,6 @@ import {
 import ReservationList from '@pages/reservation-history/components/ReservationList';
 
 export default function ReservationHistory() {
-  const navigate = useNavigate();
   const { role } = useRole();
   const isProvider = role === ROLE.PROVIDER;
 
@@ -40,7 +39,10 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      <ReservationList isProvider={isProvider} reservationState={reservationState} />
+      <ReservationList
+        isProvider={isProvider}
+        reservationState={reservationState}
+      />
     </>
   );
 }
