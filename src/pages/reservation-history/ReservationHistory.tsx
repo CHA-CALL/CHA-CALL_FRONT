@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import ButtonTabGroup from '@components/button-tab/ButtonTabGroup';
@@ -14,32 +14,21 @@ import {
 import {
   RESERVATION_STATE,
   type ReservationState,
-} from '@pages/reservation-history/types/reservation';
-import EmptyView from '@pages/reservation-history/components/EmptyView';
-import { mockup } from '@pages/reservation-history/mockup';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
+} from '@pages/reservation-history/types/reservation-history';
+import ReservationList from '@pages/reservation-history/components/ReservationList';
 
 export default function ReservationHistory() {
   const navigate = useNavigate();
   const { role } = useRole();
-  const isProvider = role !== ROLE.PROVIDER;
+  const isProvider = role === ROLE.PROVIDER;
 
   const [reservationState, setReservationState] = useState<ReservationState>(
     RESERVATION_STATE.UPCOMING
   );
 
-  const handleSelectReservationState = (state: string) => {
+  const handleSelectReservationState = (state: ReservationState) => {
     setReservationState(state);
   };
-
-  const handleToReservationDetail = (reservationId: string) => {
-    navigate(ROUTES.RESERVATION_DETAIL(reservationId));
-  };
-
-  useEffect(() => {
-    // alert(reservationState);
-  }, [reservationState]);
 
   return (
     <>
@@ -51,27 +40,7 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      {mockup.length === 0 ? (
-        <EmptyView
-          isProvider={isProvider}
-          reservationState={reservationState}
-        />
-      ) : (
-        <div className='flex flex-col gap-[2rem] px-[2rem] pb-[2.6rem] pt-[9rem]'>
-          {mockup.map((reservation, index) => (
-            <button
-              key={reservation.id}
-              className='flex flex-col gap-[2rem]'
-              onClick={() => handleToReservationDetail(String(reservation.id))}
-            >
-              <span className='heading-sb-20'>{reservation.name}</span>
-              {index !== mockup.length - 1 && (
-                <div className='h-[0.1rem] w-full bg-grayscale-100' />
-              )}
-            </button>
-          ))}
-        </div>
-      )}
+      <ReservationList isProvider={isProvider} reservationState={reservationState} />
     </>
   );
 }
