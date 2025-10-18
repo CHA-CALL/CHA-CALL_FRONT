@@ -18,7 +18,7 @@ export default function ReservationList({
   reservationState,
 }: ReservationListProps) {
   const navigate = useNavigate();
-  const { ref, inView } = useInView()
+  const { ref, inView } = useInView();
 
   const {
     reservations,
@@ -28,9 +28,9 @@ export default function ReservationList({
     isFetchingNextPage,
   } = useReservations(isProvider, reservationState);
 
-  const handleReservationDetail = () => {
-    navigate(ROUTES.RESERVATION_DETAIL);
-  }
+  const handleReservationDetail = (reservationId: string) => {
+    navigate(ROUTES.RESERVATION_DETAIL(reservationId));
+  };
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -44,10 +44,7 @@ export default function ReservationList({
 
   if (!reservations || reservations.length === 0) {
     return (
-      <EmptyView
-        isProvider={isProvider}
-        reservationState={reservationState}
-      />
+      <EmptyView isProvider={isProvider} reservationState={reservationState} />
     );
   }
 
@@ -58,7 +55,9 @@ export default function ReservationList({
           <FoodTruckCard
             variant={isProvider ? 'reservationProvider' : 'reservationClient'}
             data={reservation}
-            handleClickButton={handleReservationDetail}
+            handleClickButton={() =>
+              handleReservationDetail(String(reservation.reservationId))
+            }
           />
           {index !== reservations.length - 1 && (
             <div className='h-[0.1rem] w-full bg-grayscale-100' />
