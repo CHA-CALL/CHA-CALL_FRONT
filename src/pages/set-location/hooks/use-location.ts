@@ -1,16 +1,21 @@
 import { useState } from 'react';
-import { useSetAtom } from 'jotai';
+import { useNavigate } from 'react-router-dom';
+import { useAtomValue, useSetAtom } from 'jotai';
 
-import { type RegionResponse } from '@../../apis/data-contracts';
+import { type RegionResponse } from 'apis/data-contracts';
+
+import { ROUTES } from '@router/constant/routes';
+import useToast from '@hooks/use-toast';
 import { confirmedRegionsAtom } from '@shared/store/regions-store';
 import { MAX_SELECTED } from '@pages/set-location/constant/location';
-import useToast from '@shared/hooks/use-toast';
 
 export default function useLocation() {
+  const navigate = useNavigate();
+
+  const comfirmedRegions = useAtomValue(confirmedRegionsAtom);
   const setConfirmedRegions = useSetAtom(confirmedRegionsAtom);
-  const [selectedLocations, setSelectedLocations] = useState<
-    Map<number, RegionResponse>
-  >(new Map());
+  const [selectedLocations, setSelectedLocations] =
+    useState<Map<number, RegionResponse>>(comfirmedRegions);
   const toast = useToast();
 
   const handleSelectLocation = (location: RegionResponse) => {
@@ -46,10 +51,12 @@ export default function useLocation() {
 
   const handleConfirmLocation = () => {
     setConfirmedRegions(selectedLocations);
+    navigate(ROUTES.RESERVATION);
   };
 
   const handleResetLocations = () => {
     setSelectedLocations(new Map());
+    setConfirmedRegions(new Map());
   };
 
   return {

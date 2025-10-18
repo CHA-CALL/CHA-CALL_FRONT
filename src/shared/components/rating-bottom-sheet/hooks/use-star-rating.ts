@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
-
-import { RATES } from '@shared/constant/rate';
-import useToast from '@shared/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
 import type {
   RegisterRatingRequest,
   RegisterRatingsData,
 } from 'apis/data-contracts';
-import { registerRatingFoodTruck } from '../api';
+
+import { registerRatingFoodTruck } from '@components/rating-bottom-sheet/api';
+import { RATES } from '@shared/constant/rate';
+import useToast from '@shared/hooks/use-toast';
 
 interface UseStarRatingProps {
   reservationId: number;
@@ -37,6 +37,7 @@ export default function useStarRating({
     mutationFn: (content: RegisterRatingRequest) =>
       registerRatingFoodTruck(content),
     onSuccess: () => {
+      // TODO : 예약리스트 (홈), 예약 상세 정보 페이지 에서 사용되는 쿼리키로 추가하기
       //   qc.invalidateQueries({
       //     queryKey: ???
       //   });

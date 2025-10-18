@@ -2,7 +2,7 @@ import type {
   GetChatTemplatesData,
   RegisterChatTemplateData,
   DeleteChatTemplateData,
-} from '@/../apis/data-contracts';
+} from 'apis/data-contracts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {

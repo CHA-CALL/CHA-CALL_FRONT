@@ -1,46 +1,30 @@
-import type { MemberReservationHistoryResponse } from 'apis/data-contracts';
 import CardImage from '@components/food-truck-card/components/CardImage';
 import CardButton from '@components/food-truck-card/components/CardButton';
-import InfoRow from '@components/food-truck-card/components/InfoRow';
-import { formatDateTimeInfos } from '@components/food-truck-card/utils/date-time-utils';
-
-interface ReservationClientCardProps {
-  data: MemberReservationHistoryResponse;
-  handleCardButton: () => void;
-}
+import ReservationInfos from '@components/food-truck-card/components/ReservationInfos';
+import type { ReservationClientProps } from '@components/food-truck-card/types/food-truck-card-types';
 
 export default function ReservationClientCard({
   data,
-  handleCardButton,
-}: ReservationClientCardProps) {
-  const {
-    photoUrl = '',
-    name = '',
-    address = '',
-    dateTimeInfos = [],
-  } = data;
-
-  const { period, time } = formatDateTimeInfos(dateTimeInfos);
+  handleClickButton,
+}: ReservationClientProps) {
+  const { photoUrl = '', name = '', address = '', dateTimeInfos = [] } = data;
 
   return (
-    <>
+    <div className='flex w-full items-start gap-[1.8rem] p-[2rem]'>
       <CardImage
         imageUrl={photoUrl}
         altText={name}
-        className='w-[8rem] h-[8rem] mr-[1.8rem]'
+        className='h-[8rem] w-[8rem]'
       />
 
       <div className='flex flex-col gap-[0.2rem]'>
-        <span className='title-sb-16 text-grayscale-900 mb-[0.2rem]'>{name}</span>
-        <InfoRow iconId='ic_locate'>{address}</InfoRow>
-        <InfoRow iconId='ic_calendar'>{period}</InfoRow>
-        <InfoRow iconId='ic_time'>{time}</InfoRow>
+        <span className='title-sb-16 text-grayscale-900 mb-[0.2rem]'>
+          {name}
+        </span>
+        <ReservationInfos address={address} dateTimeInfos={dateTimeInfos} />
       </div>
 
-      <CardButton
-        handleClick={handleCardButton}
-        buttonIcon='ic_next'
-      />
-    </>
+      <CardButton handleClick={handleClickButton} buttonIcon='ic_next' />
+    </div>
   );
 }

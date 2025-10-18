@@ -22,13 +22,13 @@ export default function Depth3Item({
       className={cn(
         BaseClass,
         isSelected &&
-          'title-sb-14 text-primary-700 relative flex items-center justify-center px-[1rem]'
+          'relative flex items-center justify-center px-[1rem] text-primary-700 title-sb-14'
       )}
     >
       {isSelected && (
         <Icon
           name='ic_check'
-          className='text-primary-700 absolute left-[1rem]'
+          className='absolute left-[1rem] text-primary-700'
         />
       )}
       <p className='relative flex items-center justify-center'>{title}</p>
