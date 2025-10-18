@@ -463,6 +463,14 @@ export interface UpdateMenuStatusRequest {
   status: "ON" | "OFF";
 }
 
+export interface UpdateFoodTruckViewedStatusRequest {
+  /**
+   * 변경할 푸드트럭 표시 여부
+   * @example "OFF"
+   */
+  status: "ON" | "OFF";
+}
+
 /** 푸드트럭 저장 상태 변경 요청 */
 export interface UpdateFoodTruckSaveStatusRequest {
   /**
@@ -666,6 +674,11 @@ export interface BaseResponseOwnerReservationDetailResponse {
 
 export interface OwnerReservationDetailResponse {
   /**
+   * 푸드트럭 이름
+   * @example "차콜 푸드트럭"
+   */
+  foodTruckName?: string;
+  /**
    * 상대방(손님)의 프로필 이미지 URL
    * @example "https://image.url/path/profile.jpg"
    */
@@ -697,9 +710,10 @@ export interface OwnerReservationDetailResponse {
   menu?: string;
   /**
    * 지불된 예약금액
-   * @example "50000원"
+   * @format int32
+   * @example 50000
    */
-  deposit?: string;
+  deposit?: number;
   /**
    * 전기 사용 가능 여부
    * @example "가능"
@@ -764,6 +778,11 @@ export interface MyFoodTruckResponse {
    * @example "서울 전체, 경기도 수원시 영통구, 인천 계양구"
    */
   serviceArea?: string;
+  /**
+   * 푸드트럭 표시 여부
+   * @example "ON/OFF"
+   */
+  status?: string;
 }
 
 export interface BaseResponseCursorPagingResponseMyFoodTruckMenuResponse {
@@ -960,9 +979,10 @@ export interface MemberReservationDetailResponse {
   menu?: string;
   /**
    * 지불된 예약금액
-   * @example "50000원"
+   * @format int32
+   * @example 50000
    */
-  deposit?: string;
+  deposit?: number;
   /**
    * 전기 사용 가능 여부
    * @example "가능"
@@ -1238,6 +1258,8 @@ export type GetReservationStatusData = BaseResponseReservationStatusResponse;
 export type UpdateReservationStatusData = BaseResponseReservationStatusResponse;
 
 export type UpdateMenuStatusData = BaseResponseVoid;
+
+export type UpdateFoodTruckViewedStatusData = BaseResponseVoid;
 
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
