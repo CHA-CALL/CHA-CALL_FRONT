@@ -11,6 +11,7 @@ import {
 } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import {
   OWNER_MEDIA_ERROR_MESSAGE,
+  OWNER_MEDIA_MIN_COUNT,
   OWNER_TEXT_ERROR_MESSAGE,
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
@@ -18,7 +19,6 @@ import {
   NOT_ALLOWED_FILE_TYPE,
   CANNOT_UPLOAD_FILE_MB,
 } from '@shared/constant/image';
-import { OWNER_MEDIA_MIN_COUNT } from '@pages/@owner/food-truck-onboarding/constants/owner';
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,
