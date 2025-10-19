@@ -3,6 +3,7 @@ import { Provider } from 'jotai';
 
 import { router } from '@/router/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ToastContainer from '@shared/components/custom-toast/ToastContainer';
 
 import '@styles/global.css';
@@ -18,6 +19,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <SvgSprite />
         <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </Provider>
   );
