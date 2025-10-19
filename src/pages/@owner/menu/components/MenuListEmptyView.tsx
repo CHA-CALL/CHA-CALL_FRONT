@@ -1,4 +1,4 @@
-export default function EmptyView() {
+export default function MenuListEmptyView() {
   return (
     <div className='flex flex-col items-center justify-center pt-[11.9rem]'>
       <img

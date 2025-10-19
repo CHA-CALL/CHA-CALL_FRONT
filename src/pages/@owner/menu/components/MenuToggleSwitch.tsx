@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface ToggleSwitchProps {
+interface MenuToggleSwitchProps {
   isToggled: boolean;
   handleToggle: () => void;
 }
 
-export default function ToggleSwitch({
+export default function MenuToggleSwitch({
   isToggled,
   handleToggle,
-}: ToggleSwitchProps) {
+}: MenuToggleSwitchProps) {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleToggle();

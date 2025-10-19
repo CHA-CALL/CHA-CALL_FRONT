@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Loading from '@components/loading/Loading';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
-import EmptyView from '@pages/@owner/menu/components/EmptyView';
+import MenuListEmptyView from '@pages/@owner/menu/components/MenuListEmptyView';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 
 interface MenusProps {
@@ -39,7 +39,7 @@ export default function Menus({
   }
 
   if (!menus || menus.length === 0) {
-    return <EmptyView />;
+    return <MenuListEmptyView />;
   }
 
   return (

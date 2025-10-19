@@ -1,5 +1,5 @@
 import { cn } from '@utils/cn';
-import ToggleSwitch from '@pages/@owner/menu/components/ToggleSwitch';
+import MenuToggleSwitch from '@pages/@owner/menu/components/MenuToggleSwitch';
 
 interface MenuItemProps {
   menuImage: string;
@@ -55,7 +55,7 @@ export default function MenuItem({
           <span className='caption-m-11 text-grayscale-700'>원</span>
         </div>
       </div>
-      <ToggleSwitch isToggled={isToggled} handleToggle={handleClickToggle} />
+      <MenuToggleSwitch isToggled={isToggled} handleToggle={handleClickToggle} />
     </div>
   );
 }
