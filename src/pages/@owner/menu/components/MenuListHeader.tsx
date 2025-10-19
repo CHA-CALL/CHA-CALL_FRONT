@@ -1,7 +1,7 @@
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
-import { SORT_OPTIONS, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
+import type { SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 interface MenuListHeaderProps {
   isSorted: SortType;
@@ -46,7 +46,7 @@ export default function MenuListHeader({
           onClick={handleOpenBottomSheet}
           className='flex items-center text-grayscale-700 caption-m-12'
         >
-          {SORT_OPTIONS[isSorted as keyof typeof SORT_OPTIONS]}
+          {isSorted}
           <Icon name='ic_down' />
         </button>
       </div>

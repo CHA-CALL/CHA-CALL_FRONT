@@ -9,10 +9,11 @@ import type {
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 import { PAGE_SIZE } from '@shared/constant/page-size';
+import type { SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 export const getFoodTruckMenus = async (params: {
   foodTruckId: number;
-  sort?: '최신순' | '오래된순',
+  'sort'?: SortType;
   'cursorPagingRequest.cursor'?: number;
 }) => {
   const response = await apiRequest<BaseResponseCursorPagingResponseMyFoodTruckMenuResponse>({

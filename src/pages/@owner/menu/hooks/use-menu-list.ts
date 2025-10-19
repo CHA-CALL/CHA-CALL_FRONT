@@ -20,7 +20,7 @@ export const useMenuList = (foodTruckId: number) => {
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getFoodTruckMenus({
         foodTruckId,
-        sort: isSorted === SORT_TYPES.LATEST ? '최신순' : '오래된순',
+        sort: isSorted,
         'cursorPagingRequest.cursor': pageParam,
       });
     },

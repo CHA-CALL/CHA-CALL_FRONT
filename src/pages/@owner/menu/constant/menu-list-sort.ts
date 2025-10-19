@@ -1,11 +1,6 @@
 export const SORT_TYPES = {
-  LATEST: 'latest',
-  OLDEST: 'oldest',
+  LATEST: '최신순',
+  OLDEST: '오래된순',
 } as const;
 
-export const SORT_OPTIONS = {
-  [SORT_TYPES.LATEST]: '최신순',
-  [SORT_TYPES.OLDEST]: '오래된순',
-} as const;
-
-export type SortType = keyof typeof SORT_OPTIONS;
+export type SortType = typeof SORT_TYPES[keyof typeof SORT_TYPES];

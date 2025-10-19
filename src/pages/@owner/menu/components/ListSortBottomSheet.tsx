@@ -1,6 +1,6 @@
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import Button from '@components/button/Button';
-import { SORT_OPTIONS, SORT_TYPES } from '@pages/@owner/menu/constant/menu-list-sort';
+import { SORT_TYPES } from '@pages/@owner/menu/constant/menu-list-sort';
 
 interface ListSortBottomSheetProps {
   isBottomSheetOpen: boolean;
@@ -27,14 +27,14 @@ export default function ListSortBottomSheet({
           onClick={handleSortByLatest}
           className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
         >
-          {SORT_OPTIONS[SORT_TYPES.LATEST]}
+          {SORT_TYPES.LATEST}
         </button>
         <button
           type='button'
           onClick={handleSortByOldest}
           className='w-full p-[2rem] title-sb-14 text-grayscale-700'
         >
-          {SORT_OPTIONS[SORT_TYPES.OLDEST]}
+          {SORT_TYPES.OLDEST}
         </button>
         <Button
           variant='cta'

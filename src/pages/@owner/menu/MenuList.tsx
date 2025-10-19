@@ -5,8 +5,11 @@ import MenuListHeader from '@pages/@owner/menu/components/MenuListHeader';
 import Menus from '@pages/@owner/menu/components/Menus';
 import ListSortBottomSheet from '@pages/@owner/menu/components/ListSortBottomSheet';
 import { useMenuList } from '@pages/@owner/menu/hooks/use-menu-list';
+import useToast from '@shared/hooks/use-toast';
 
 export default function MenuList() {
+  const toast = useToast();
+
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
   const parsedFoodTruckId = Number(foodTruckId);
 
@@ -39,7 +42,7 @@ export default function MenuList() {
   }
 
   if (!foodTruckId || isNaN(parsedFoodTruckId)) {
-    alert('잘못된 접근입니다.');
+    toast.error('잘못된 접근입니다.');
     return null;
   }
 
