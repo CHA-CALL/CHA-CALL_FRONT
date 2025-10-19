@@ -19,7 +19,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <SvgSprite />
         <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <div className='text-[1.5rem]'>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </div>
       </QueryClientProvider>
     </Provider>
   );
