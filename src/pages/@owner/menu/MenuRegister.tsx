@@ -3,6 +3,8 @@ import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
 import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
+import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
+import { uploadImage } from '@pages/@owner/menu/api';
 import useToast from '@shared/hooks/use-toast';
 
 export default function MenuRegister() {
@@ -24,6 +26,7 @@ export default function MenuRegister() {
   } = useMenuForm();
 
   const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
+  const { mutateAsync: getPresignedUrl } = useMenuImage();
 
   if (!foodTruckId || isNaN(parsedFoodTruckId)) {
     alert('잘못된 접근입니다.');
@@ -31,22 +34,31 @@ export default function MenuRegister() {
     return null;
   }
 
-  const onSubmit = (formData: MenuFormData) => {
+  const onSubmit = async (formData: MenuFormData) => {
     if (!formData.image) return;
 
-    registerMenu({
-      name: formData.name,
-      description: formData.description,
-      price: Number(formData.price.replace(/,/g, '')),
-      photoUrl: formData.image.name,
-    }, {
-      onSuccess: () => {
-        toast.success('메뉴가 등록되었습니다.');
-      },
-      onError: () => {
-        toast.error('메뉴 등록에 실패했습니다.');
-      },
-    });
+    try {
+      const fileExtension = formData.image.name.split('.').pop() || '';
+      const imageInfo = await getPresignedUrl(fileExtension);
+
+      await uploadImage(imageInfo.presignedUrl!, formData.image);
+
+      registerMenu({
+        name: formData.name,
+        description: formData.description,
+        price: Number(formData.price.replace(/,/g, '')),
+        photoUrl: imageInfo.fileUrl!,
+      }, {
+        onSuccess: () => {
+          toast.success('메뉴가 등록되었습니다.');
+        },
+        onError: () => {
+          toast.error('메뉴 등록에 실패했습니다.');
+        },
+      });
+    } catch (error) {
+      console.error('메뉴 등록에 실패했습니다.:', error);
+    }
   };
 
   return (

@@ -4,6 +4,8 @@ import type {
   UpdateMenuStatusRequest,
   UpdateMenuRequest,
   BaseResponseVoid,
+  ImageInfo,
+  BaseResponseImageResponse,
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 import { PAGE_SIZE } from '@shared/constant/page-size';
@@ -75,4 +77,42 @@ export const deleteFoodTruckMenu = async (params: {
     method: 'DELETE',
   });
   return response.data;
+};
+
+export const getPresignedUrl = async (fileExtension: string): Promise<ImageInfo> => {
+  const response = await apiRequest<BaseResponseImageResponse>({
+    endPoint: `/food-trucks/menus/images`,
+    method: 'POST',
+    data: {
+      fileExtensions: [fileExtension],
+    },
+  });
+
+  const imageInfo = response.data?.presignedUrls?.[0];
+
+  if (!imageInfo) {
+    throw new Error('Presigned URL을 받아오지 못했습니다.');
+  }
+
+  return imageInfo;
+};
+
+export const uploadImage = async (presignedUrl: string, file: File) => {
+  // TODO: 삭제 및 presignedUrl로 수정 (이미지 업로드 테스트용)
+  const url = new URL(presignedUrl);
+  const proxiedUrl = `/s3-proxy${url.pathname}${url.search}`;
+
+  const response = await fetch(proxiedUrl, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': file.type,
+    },
+    body: file,
+  });
+
+  if (!response.ok) {
+    throw new Error('이미지 업로드를 실패했습니다.');
+  }
+
+  return response;
 };

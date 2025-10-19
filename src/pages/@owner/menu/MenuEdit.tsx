@@ -7,6 +7,8 @@ import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import { useDeleteMenu } from '@pages/@owner/menu/hooks/use-menu-delete';
+import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
+import { uploadImage } from '@pages/@owner/menu/api';
 import useToast from '@shared/hooks/use-toast';
 
 export default function MenuEdit() {
@@ -20,6 +22,7 @@ export default function MenuEdit() {
   const { mutate: deleteMenu } = useDeleteMenu(Number(foodTruckId), Number(menuId));
 
   const menuData = location.state?.menuData;
+  const { mutateAsync: getPresignedUrl } = useMenuImage();
 
   const {
     formData,
@@ -33,15 +36,31 @@ export default function MenuEdit() {
     reset,
   } = useMenuForm();
 
-  const onSubmit = (formData: MenuFormData) => {
+  const onSubmit = async (formData: MenuFormData) => {
     if (!formData.image) return;
 
-    editMenu({
-      name: formData.name,
-      description: formData.description,
-      price: Number(formData.price.replace(/,/g, '')),
-      photoUrl: formData.image.name,
-    });
+    try {
+      const fileExtension = formData.image.name.split('.').pop() || '';
+      const imageInfo = await getPresignedUrl(fileExtension);
+
+      await uploadImage(imageInfo.presignedUrl!, formData.image);
+
+      editMenu({
+        name: formData.name,
+        description: formData.description,
+        price: Number(formData.price.replace(/,/g, '')),
+        photoUrl: imageInfo.fileUrl!,
+      }, {
+        onSuccess: () => {
+          toast.success('메뉴가 수정되었습니다.');
+        },
+        onError: () => {
+          toast.error('메뉴 수정에 실패했습니다.');
+        },
+      });
+    } catch (error) {
+      console.error('메뉴 수정에 실패했습니다.:', error);
+    }
   };
 
   const handleCloseModal = () => {
