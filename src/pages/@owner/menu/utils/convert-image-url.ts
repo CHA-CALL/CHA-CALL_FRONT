@@ -1,5 +1,9 @@
 export const convertURLtoFile = async (url: string) => {
-  const response = await fetch(url);
+  // TODO: 삭제 및 url로 수정 (이미지 수정 테스트용)
+  const newUrl = new URL(url);
+  const proxiedUrl = `/image-proxy${newUrl.pathname}${newUrl.search}`;
+
+  const response = await fetch(proxiedUrl);
   if (!response.ok) {
     throw new Error(`이미지 요청 실패: ${response.status} ${response.statusText}`);
   }

@@ -14,6 +14,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/s3-proxy/, ''),
       },
+      '/image-proxy': {
+        target: 'https://d170atr2wm1a71.cloudfront.net',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/image-proxy/, ''),
+      },
     },
   },
 });
