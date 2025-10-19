@@ -112,14 +112,7 @@ export const useFormValidation = () => {
       });
       return;
     }
-    if (!isAcceptableFile(image)) {
-      setError('image', { message: NOT_ALLOWED_FILE_TYPE });
-      return;
-    }
-    if (!isFileSizeValid(image)) {
-      setError('image', { message: CANNOT_UPLOAD_FILE_MB });
-      return;
-    }
+
     setValue('image', image, { shouldValidate: true });
   };
 
