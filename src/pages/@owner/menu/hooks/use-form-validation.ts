@@ -59,13 +59,6 @@ const menuSchema = z.object({
       {
         message: CANNOT_UPLOAD_FILE_MB,
       }
-    )
-    .optional()
-    .refine(
-      (file) => file !== undefined,
-      {
-        message: '이미지를 선택해주세요',
-      }
     ),
 });
 
@@ -98,19 +91,25 @@ export const useFormValidation = () => {
   };
 
   const updateDescription = (description: string) => {
-    setValue('description', description, { shouldValidate: true });
+    const truncatedDescription = description.slice(
+      0,
+      MENU_LIMIT.DESCRIPTION_MAX_LENGTH
+    );
+    setValue('description', truncatedDescription, { shouldValidate: true });
   };
 
   const updatePrice = (price: string) => {
-    const formattedPrice = price
-      .replace(/\D/g, '')
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const numbersOnly = price.replace(/[^\d]/g, '');
+    const formattedPrice = numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
     setValue('price', formattedPrice, { shouldValidate: true });
   };
 
   const updateImage = (image: File | null) => {
-    if (image === null) {
-      setValue('image', undefined, { shouldValidate: true });
+    if (!image) {
+      setError('image', {
+        message: MENU_ERROR_MESSAGE.IMAGE_MIN_COUNT(MENU_LIMIT.IMAGE_MIN_COUNT),
+      });
       return;
     }
     if (!isAcceptableFile(image)) {

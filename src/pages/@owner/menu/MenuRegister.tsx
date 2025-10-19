@@ -90,9 +90,6 @@ export default function MenuRegister() {
       updatePrice={updatePrice}
       footerContent={
         <div className='flex flex-col gap-[1.7rem]'>
-          <span className='caption-m-12 text-grayscale-300'>
-            1280 x 960 (가로x세로) 사이즈 이상, 5MB 이하의 JPG/PNG으로만 첨부가 가능합니다.
-          </span>
           <Button
             variant='cta'
             buttonStyle={isValid ? 'active' : 'disabled'}

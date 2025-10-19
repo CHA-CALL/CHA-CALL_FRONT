@@ -8,6 +8,7 @@ import ImagePreview from '@components/image-preview/ImagePreview';
 import MenuInput from '@pages/@owner/menu/components/MenuInput';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
+import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 interface MenuFormProps {
   footerContent: React.ReactNode;
@@ -57,7 +58,7 @@ export default function MenuForm({
             placeholder='텍스트를 입력해주세요.'
             value={formData.name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateName(e.target.value)
+              updateName(e.target.value.trim())
             }
             maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
             rightComponent={
@@ -103,7 +104,12 @@ export default function MenuForm({
           />
         </MenuInput>
 
-        <MenuInput title='사진 등록' error={errors.image} maxLength={1} currentLength={imageUrl ? 1 : 0}>
+        <MenuInput
+          title='사진 등록'
+          error={errors.image}
+          maxLength={1}
+          currentLength={imageUrl ? 1 : 0}
+        >
           <div className='flex'>
             {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
             {imageUrl && (
@@ -115,6 +121,9 @@ export default function MenuForm({
               />
             )}
           </div>
+          <p className='caption-m-12 text-grayscale-300'>
+            {IMAGE_INFO_MESSAGE}
+          </p>
         </MenuInput>
       </div>
 

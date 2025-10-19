@@ -22,10 +22,6 @@ export default function MenuItem({
   handleToggle,
   isLast = false,
 }: MenuItemProps) {
-  const handleClickToggle = () => {
-    handleToggle();
-  };
-
   return (
     <div
       role='button'
@@ -55,7 +51,7 @@ export default function MenuItem({
           <span className='caption-m-11 text-grayscale-700'>원</span>
         </div>
       </div>
-      <MenuToggleSwitch isToggled={isToggled} handleToggle={handleClickToggle} />
+      <MenuToggleSwitch isToggled={isToggled} handleToggle={handleToggle} />
     </div>
   );
 }

@@ -88,8 +88,12 @@ export const useMenuList = (foodTruckId: number) => {
 
   // 메뉴 핸들러
   const handleMenuClick = (foodTruckId?: string, menuId?: string) => () => {
+    if (!foodTruckId || !menuId) {
+      return;
+    }
+
     const selectedMenu = menus.find(menu => menu.menuId === Number(menuId));
-    navigate(ROUTES.MENU_EDIT(foodTruckId || '', menuId || ''), {
+    navigate(ROUTES.MENU_EDIT(foodTruckId, menuId), {
       state: { menuData: selectedMenu },
     });
   };
