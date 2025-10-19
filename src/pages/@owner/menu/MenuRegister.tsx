@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
-import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
+import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
 import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
 import { uploadImage } from '@pages/@owner/menu/api';
+import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
 
 export default function MenuRegister() {
@@ -23,7 +24,20 @@ export default function MenuRegister() {
     updateImage,
     isValid,
     handleSubmit,
-  } = useMenuForm();
+  } = useFormValidation();
+
+  const {
+    imageUrl,
+    canAdd,
+    handleFileChange,
+    handleRemoveFile,
+    handleClearName,
+    handleClickBack,
+  } = useMenuForm({
+    formData,
+    updateName,
+    updateImage,
+  });
 
   const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
   const { mutateAsync: getPresignedUrl } = useMenuImage();
@@ -65,10 +79,15 @@ export default function MenuRegister() {
     <MenuForm
       formData={formData}
       errors={errors}
+      imageUrl={imageUrl}
+      canAdd={canAdd}
+      handleFileChange={handleFileChange}
+      handleRemoveFile={handleRemoveFile}
+      handleClickBack={handleClickBack}
+      handleClearName={handleClearName}
       updateName={updateName}
       updateDescription={updateDescription}
       updatePrice={updatePrice}
-      updateImage={updateImage}
       footerContent={
         <div className='flex flex-col gap-[1.7rem]'>
           <span className='caption-m-12 text-grayscale-300'>

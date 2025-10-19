@@ -1,5 +1,4 @@
-import React, { useState, useEffect, type ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { type ChangeEvent } from 'react';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Input from '@components/input/Input';
@@ -8,10 +7,9 @@ import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 import ImagePreview from '@components/image-preview/ImagePreview';
 import MenuInput from '@pages/@owner/menu/components/MenuInput';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
-import type { MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
+import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 
 interface MenuFormProps {
-  initialImageUrl?: string;
   footerContent: React.ReactNode;
   formData: MenuFormData;
   errors: {
@@ -20,60 +18,31 @@ interface MenuFormProps {
     price?: string;
     image?: string;
   };
+  imageUrl: string;
+  canAdd?: boolean;
+  handleFileChange: (_e: ChangeEvent<HTMLInputElement>) => void;
+  handleRemoveFile: () => void;
+  handleClickBack: () => void;
+  handleClearName: () => void;
   updateName: (_name: string) => void;
   updateDescription: (_description: string) => void;
   updatePrice: (_price: string) => void;
-  updateImage: (_image: File | null) => void;
 }
 
 export default function MenuForm({
-  initialImageUrl,
   footerContent,
   formData,
   errors,
+  imageUrl,
+  canAdd,
+  handleFileChange,
+  handleRemoveFile,
+  handleClickBack,
+  handleClearName,
   updateName,
   updateDescription,
   updatePrice,
-  updateImage,
 }: MenuFormProps) {
-  const navigate = useNavigate();
-
-  const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
-  const canAdd = !imageUrl;
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      updateImage(selectedFile);
-    }
-    e.target.value = '';
-  };
-
-  const handleRemoveFile = () => {
-    setImageUrl(null);
-    updateImage(null);
-  };
-
-  const handleClearName = () => {
-    updateName('');
-  };
-
-  useEffect(() => {
-    if (formData.image) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        setImageUrl(e.target?.result as string);
-      };
-      reader.readAsDataURL(formData.image);
-    } else {
-      setImageUrl(initialImageUrl || null);
-    }
-  }, [formData.image, initialImageUrl]);
-
-  const handleClickBack = () => {
-    navigate(-1);
-  };
-
   return (
     <>
       <Navigation

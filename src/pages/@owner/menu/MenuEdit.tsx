@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Button from '@components/button/Button';
 import Overlay from '@components/overlay/Overlay';
-import { useMenuForm, type MenuFormData } from '@pages/@owner/menu/hooks/use-menu-form';
+import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import { useDeleteMenu } from '@pages/@owner/menu/hooks/use-menu-delete';
 import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
 import { uploadImage } from '@pages/@owner/menu/api';
+import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
 
 export default function MenuEdit() {
@@ -34,7 +35,21 @@ export default function MenuEdit() {
     isValid,
     handleSubmit,
     reset,
-  } = useMenuForm();
+  } = useFormValidation();
+
+  const {
+    imageUrl,
+    canAdd,
+    handleFileChange,
+    handleRemoveFile,
+    handleClearName,
+    handleClickBack,
+  } = useMenuForm({
+    initialImageUrl: menuData?.imageUrl,
+    formData,
+    updateName,
+    updateImage,
+  });
 
   const onSubmit = async (formData: MenuFormData) => {
     if (!formData.image) return;
@@ -147,13 +162,17 @@ export default function MenuEdit() {
       </Overlay>
 
       <MenuForm
-        initialImageUrl={menuData?.imageUrl}
         formData={formData}
         errors={errors}
+        imageUrl={imageUrl}
+        canAdd={canAdd}
+        handleFileChange={handleFileChange}
+        handleRemoveFile={handleRemoveFile}
+        handleClickBack={handleClickBack}
+        handleClearName={handleClearName}
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}
-        updateImage={updateImage}
         footerContent={
           <div className='flex gap-[1rem]'>
             <Button
