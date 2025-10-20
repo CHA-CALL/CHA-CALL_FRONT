@@ -87,8 +87,9 @@ export const useReservationDetail = () => {
     {
       label: '결제금',
       data:
-        reservationDetailData?.deposit &&
-        reservationDetailData.deposit.toLocaleString() + ' 원',
+        reservationDetailData?.deposit !== undefined
+          ? `${reservationDetailData?.deposit.toLocaleString()} 원`
+          : undefined,
     },
   ];
 
