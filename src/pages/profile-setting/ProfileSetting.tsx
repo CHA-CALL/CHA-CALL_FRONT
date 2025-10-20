@@ -1,6 +1,7 @@
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import {
+  DEFAULT_PROFILE_IMAGE,
   useGetUserInfo,
   useUpdateUserInfo,
 } from '@pages/mypage/hooks/use-user-data';
@@ -18,8 +19,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // TODO : 백엔드 측에 이미지 삭제한 경우 어떻게 보내는지 질문.
-const DEFAULT_PROFILE_IMAGE =
-  'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg';
 
 export default function ProfileSetting() {
   // TODO: 커스텀 훅으로 분리 - 수정 api, 편집 가능한지 확인 후에.
@@ -94,10 +93,6 @@ export default function ProfileSetting() {
     // TODO : 타입 단언 제거 필요한가? ➡️ api 편집 요청 후 진행
     updateUser({
       profileImageUrl: imageUrl,
-      name: userData.name!,
-      email: userData.email!,
-      gender: userData.gender!,
-      termAgreed: userData.termAgreed!,
     });
     handleCloseBottomSheet();
   };
@@ -105,12 +100,7 @@ export default function ProfileSetting() {
   const handleDeleteImage = () => {
     updateUser({
       profileImageUrl: DEFAULT_PROFILE_IMAGE,
-      name: userData.name!,
-      email: userData.email!,
-      gender: userData.gender!,
-      termAgreed: userData.termAgreed!,
     });
-
     handleCloseBottomSheet();
   };
 
