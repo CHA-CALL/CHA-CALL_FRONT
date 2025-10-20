@@ -25,7 +25,7 @@ export default function ButtonCheck({
     <button
       type={isInteractive ? 'button' : undefined}
       className={cn(
-        'flex h-[1.8rem] w-[1.8rem] items-center justify-center rounded-[0.6rem]',
+        'flex h-[1.8rem] w-[1.8rem] flex-shrink-0 items-center justify-center rounded-[0.6rem]',
         isChecked ? ButtonCheckClasses.checked : ButtonCheckClasses.unchecked,
         className
       )}
