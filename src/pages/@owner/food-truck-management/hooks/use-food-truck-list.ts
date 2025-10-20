@@ -1,7 +1,18 @@
-import type { CursorPagingResponseMyFoodTruckResponse } from 'apis/data-contracts';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getOwnerFoodTrucks } from '@pages/@owner/food-truck-management/api';
+import type {
+  CursorPagingResponseMyFoodTruckResponse,
+  DeleteFoodTruckData,
+} from 'apis/data-contracts';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import {
+  deleteOwnerFoodTrucks,
+  getOwnerFoodTrucks,
+} from '@pages/@owner/food-truck-management/api';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/food-trucks';
+import useToast from '@shared/hooks/use-toast';
 
 const PAGE_SIZE = 20;
 
@@ -28,6 +39,25 @@ export const useGetOwnerFoodTrucks = () => {
         return lastPage.lastCursor;
       }
       return undefined;
+    },
+  });
+};
+
+export const useDeleteOwnerFoodTrucks = () => {
+  const queryClient = useQueryClient();
+
+  const toast = useToast();
+
+  return useMutation<DeleteFoodTruckData, Error, number>({
+    mutationFn: (foodTruckId: number) => deleteOwnerFoodTrucks({ foodTruckId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+      });
+      toast.success('푸드트럭이 성공적으로 삭제되었습니다.');
+    },
+    onError: () => {
+      toast.error('푸드트럭 삭제에 실패했습니다.');
     },
   });
 };

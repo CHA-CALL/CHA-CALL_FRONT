@@ -9,7 +9,6 @@ import Button from '@shared/components/button/Button';
 import { useGetOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
 import { cn } from '@shared/utils/cn';
 import { ROUTES } from '@router/constant/routes';
-
 import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
 import Loading from '@shared/components/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
@@ -26,16 +25,9 @@ export default function FoodTruckManagement() {
     navigate(ROUTES.UPLOAD_FOOD_TRUCK);
   };
 
-  const {
-    data,
-    isLoading,
-    isError,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useGetOwnerFoodTrucks();
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useGetOwnerFoodTrucks();
 
-  // 모든 페이지의 데이터를 하나의 배열로 합치기
   const allFoodTrucks = data?.pages.flatMap(page => page?.content || []) || [];
 
   const {
@@ -56,10 +48,6 @@ export default function FoodTruckManagement() {
 
   if (isLoading) {
     return <Loading />;
-  }
-
-  if (isError) {
-    return <div>Error</div>;
   }
 
   return (
@@ -89,7 +77,7 @@ export default function FoodTruckManagement() {
           allFoodTrucks.length > 0 && 'pb-[10rem]'
         )}
       >
-        <div className='fixed-center top-0 bg-white px-[2rem] pb-[1.6rem] pt-[2rem]'>
+        <div className='fixed-center top-0 bg-white px-[2rem] py-[2rem]'>
           <Information
             iconId='ic_chat_dot'
             text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'
@@ -118,9 +106,7 @@ export default function FoodTruckManagement() {
 
           {isFetchingNextPage && (
             <div className='flex justify-center py-[2rem]'>
-              <p className='text-grayscale-500'>
-                더 많은 데이터를 불러오는 중...
-              </p>
+              더 많은 데이터를 불러오는 중...
             </div>
           )}
         </div>

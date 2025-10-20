@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDeleteOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
 
 export const useFoodTruckDelete = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +27,10 @@ export const useFoodTruckDelete = () => {
 
   const handleDeleteFoodTrucks = () => {
     handleConfirmModal();
+    const { mutate } = useDeleteOwnerFoodTrucks();
+    deleteFoodTruckIds.forEach(foodTruckId => {
+      mutate(foodTruckId);
+    });
     setDeleteFoodTruckIds([]);
   };
 

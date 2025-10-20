@@ -1,4 +1,7 @@
-import type { GetMyFoodTrucksData } from 'apis/data-contracts';
+import type {
+  DeleteFoodTruckData,
+  GetMyFoodTrucksData,
+} from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 
 export interface GetOwnerFoodTrucksParams {
@@ -20,6 +23,18 @@ export const getOwnerFoodTrucks = async ({
       cursor,
       size,
     },
+  });
+  return response.data;
+};
+
+export const deleteOwnerFoodTrucks = async ({
+  foodTruckId,
+}: {
+  foodTruckId: number;
+}) => {
+  const response = await apiRequest<DeleteFoodTruckData>({
+    endPoint: `/owners/me/food-trucks/${foodTruckId}`,
+    method: 'DELETE',
   });
   return response.data;
 };
