@@ -4,12 +4,14 @@ import type {
   UpdateUserInfoRequest,
   UserResponse,
 } from 'apis/data-contracts';
-import { getUserInfo, setUserInfo } from '../api';
+import { getUserInfo, updateUserInfo } from '@pages/mypage/api';
+import { USER_INFO } from '@shared/querykey/user-info';
 
-export const useFetchUserData = () => {
+export const useGetUserInfo = () => {
   return useQuery<GetUserInfoData, Error, UserResponse>({
-    queryKey: ['userInfo'],
+    queryKey: USER_INFO.ALL,
     queryFn: () => getUserInfo(),
+    staleTime: Infinity,
     select: response => {
       if (!response.data) {
         throw new Error('불러온 유저 정보가 없습니다.');
@@ -19,19 +21,19 @@ export const useFetchUserData = () => {
   });
 };
 
-interface UsePatchUserDataOptions {
+interface useUpdateUserInfoOptions {
   onSuccess?: () => void;
   onError?: (_error: Error) => void;
 }
 
-export const usePatchUserData = (options?: UsePatchUserDataOptions) => {
+export const useUpdateUserInfo = (options?: useUpdateUserInfoOptions) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (newUserInfo: UpdateUserInfoRequest) =>
-      setUserInfo(newUserInfo),
+      updateUserInfo(newUserInfo),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ALL });
       options?.onSuccess?.();
     },
     onError: error => {

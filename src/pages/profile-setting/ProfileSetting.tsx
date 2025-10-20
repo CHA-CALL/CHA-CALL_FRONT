@@ -1,8 +1,8 @@
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import {
-  useFetchUserData,
-  usePatchUserData,
+  useGetUserInfo,
+  useUpdateUserInfo,
 } from '@pages/mypage/hooks/use-user-data';
 import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
 import AgreementSection from '@pages/profile-setting/components/AgreementSection';
@@ -10,6 +10,7 @@ import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileIm
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import { ROUTES } from '@router/constant/routes';
+import Loading from '@shared/components/loading/Loading';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
 import useToast from '@shared/hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
@@ -27,9 +28,9 @@ export default function ProfileSetting() {
   const toast = useToast();
   const { showToast, isSuccess, toastMessage } = location.state || {};
 
-  const { data: userData, isPending: isUserDataPending } = useFetchUserData();
+  const { data: userData, isPending: isUserDataPending } = useGetUserInfo();
   const { mutate: updateUser, isPending: isUpdateUserPending } =
-    usePatchUserData();
+    useUpdateUserInfo();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
@@ -45,7 +46,7 @@ export default function ProfileSetting() {
   }, [isSuccess, navigate, showToast, toast, toastMessage]);
 
   if (isUserDataPending || isUpdateUserPending || !userData) {
-    return <div>...사용자 정보 불러오는 중</div>;
+    return <Loading />;
   }
 
   const handleGoBack = () => {
@@ -113,7 +114,7 @@ export default function ProfileSetting() {
     handleCloseBottomSheet();
   };
 
-  const handleToogleTermAgreed = () => {
+  const handleToggleTermAgreed = () => {
     updateUser({
       profileImageUrl: userData.profileImageUrl!,
       name: userData.name!,
@@ -139,7 +140,7 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userData || null} />
           <AgreementSection
             termAgreed={userData?.termAgreed}
-            handleToogleTermAgreed={handleToogleTermAgreed}
+            handleToggleTermAgreed={handleToggleTermAgreed}
           />
         </div>
         <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>

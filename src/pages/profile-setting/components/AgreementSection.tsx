@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface AgreementSectionProps {
   termAgreed: boolean | undefined;
-  handleToogleTermAgreed: () => void;
+  handleToggleTermAgreed: () => void;
 }
 
 export default function AgreementSection({
   termAgreed,
-  handleToogleTermAgreed,
+  handleToggleTermAgreed,
 }: AgreementSectionProps) {
   const navigate = useNavigate();
   // TODO: 추후 약관 페이지로
@@ -27,7 +27,7 @@ export default function AgreementSection({
       <div className='flex flex-row gap-[0.8rem]'>
         <ButtonCheck
           isChecked={termAgreed}
-          handleToggle={handleToogleTermAgreed}
+          handleToggle={handleToggleTermAgreed}
         />
         <span className='text-grayscale-900 caption-m-12'>
           개인정보수집 및 이용 동의 - 푸드트럭 추천

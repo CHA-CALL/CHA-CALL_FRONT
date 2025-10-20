@@ -51,11 +51,9 @@ export default function SetUserName({
         placeholder={userName}
         maxLength={userName === '' ? undefined : USER_NAME_MAX_LENGTH}
         rightComponent={
-          userName !== '' && (
-            <button className='translate-y-[0.2rem]'>
-              <Icon name='ic_close' />
-            </button>
-          )
+          <button className='translate-y-[0.2rem]'>
+            <Icon name='ic_close' />
+          </button>
         }
         handleRightClick={handleClearName}
         onChange={handleChangeName}

@@ -1,7 +1,6 @@
-import DefaultProfile from '@assets/img/img_avatar.png';
 import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@shared/components/icon/Icon';
-import { useFetchUserData } from '../hooks/use-user-data';
+import { useGetUserInfo } from '../hooks/use-user-data';
 
 interface MyInfoSectionProps {
   isProvider: boolean;
@@ -12,13 +11,13 @@ export default function MyInfoSection({
   isProvider,
   handleNavigateTo,
 }: MyInfoSectionProps) {
-  const { data: userData, isLoading } = useFetchUserData();
+  const { data: userData, isPending } = useGetUserInfo();
 
   const handleNavigateToProfileSetting = () => {
     handleNavigateTo(ROUTES.PROFILE_SETTING);
   };
 
-  if (isLoading) {
+  if (isPending) {
     return <div>...사용자 정보 불러오는 중</div>;
   }
 
@@ -32,7 +31,7 @@ export default function MyInfoSection({
       >
         <img
           className='border-grayscale-200 h-[5rem] w-[5rem] rounded-full border object-cover'
-          src={userData?.profileImageUrl || DefaultProfile}
+          src={userData?.profileImageUrl}
           alt='프로필 사진'
         />
         <div className='flex flex-col'>

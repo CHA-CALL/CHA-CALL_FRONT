@@ -1,6 +1,6 @@
 import {
-  useFetchUserData,
-  usePatchUserData,
+  useGetUserInfo,
+  useUpdateUserInfo,
 } from '@pages/mypage/hooks/use-user-data';
 import {
   COMPONENT_MAP,
@@ -12,6 +12,7 @@ import {
 import { ROUTES } from '@router/constant/routes';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
+import Loading from '@shared/components/loading/Loading';
 import Navigation from '@shared/components/navigation/Navigation';
 import type { UserResponse } from 'apis/data-contracts';
 import { useEffect, useState } from 'react';
@@ -21,8 +22,8 @@ export default function SetUserInfo() {
   const { field } = useParams<{ field: ValidField }>();
   const navigate = useNavigate();
 
-  const { data: userData, isLoading } = useFetchUserData();
-  const { mutate: updateUser, isPending } = usePatchUserData({
+  const { data: userData, isLoading } = useGetUserInfo();
+  const { mutate: updateUser, isPending } = useUpdateUserInfo({
     onSuccess: () => {
       if (!field) {
         navigate(ROUTES.PROFILE_SETTING, {
@@ -61,7 +62,7 @@ export default function SetUserInfo() {
 
   const ComponentToRender = field ? COMPONENT_MAP[field] : null;
   if (isLoading || isPending || !userData) {
-    return <div>...사용자 정보 불러오는 중</div>;
+    return <Loading />;
   }
 
   const { name: userName, email: userEmail, gender: userGender } = userInfo;
