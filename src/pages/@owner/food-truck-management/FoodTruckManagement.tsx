@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
@@ -10,8 +10,10 @@ import { useGetOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks
 import { cn } from '@shared/utils/cn';
 import { ROUTES } from '@router/constant/routes';
 
-import DeleteFoodTruckBottomSheet from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-bottom-sheet/DeleteFoodTruckBottomSheet';
 import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
+import Loading from '@shared/components/loading/Loading';
+import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
+import { useFoodTruckDelete } from '@pages/@owner/food-truck-management/hooks/use-food-truck-delete';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -36,54 +38,54 @@ export default function FoodTruckManagement() {
   // 모든 페이지의 데이터를 하나의 배열로 합치기
   const allFoodTrucks = data?.pages.flatMap(page => page?.content || []) || [];
 
-  const [isDeleteBottomSheetOpen, setIsDeleteBottomSheetOpen] = useState(false);
-  const handleCloseDeleteBottomSheet = () => {
-    setIsDeleteBottomSheetOpen(false);
-  };
-  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
-    useState(false);
+  const {
+    deleteFoodTruckIds,
+    handleClickFoodTruck,
+    handleDeleteFoodTrucks,
+    isDeleteConfirmModalOpen,
+    handleConfirmModal,
+    isEditing,
+    handleToggleEditing,
+  } = useFoodTruckDelete();
 
-  const handleOpenDeleteConfirm = () => {
-    setIsDeleteConfirmModalOpen(true);
-  };
-
-  const handleConfirmDelete = () => {
-    setIsDeleteConfirmModalOpen(false);
-    setIsDeleteBottomSheetOpen(false);
-  };
-
-  const handleCancelDelete = () => {
-    setIsDeleteConfirmModalOpen(false);
-    setIsDeleteBottomSheetOpen(false);
-  };
-
-  // 무한 스크롤 처리
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
+
   return (
     <>
-      <DeleteFoodTruckBottomSheet
-        isOpen={isDeleteBottomSheetOpen}
-        handleClose={handleCloseDeleteBottomSheet}
-        handleDeleteFoodTruck={handleOpenDeleteConfirm}
-      />
       <DeleteFoodTruckConfirm
-        handleClickConfirm={handleConfirmDelete}
         isOpen={isDeleteConfirmModalOpen}
-        handleClose={handleCancelDelete}
+        handleClose={handleConfirmModal}
+        handleClickConfirm={handleDeleteFoodTrucks}
       />
       <Navigation
         text='나의 푸드트럭 관리'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
+        rightIcon={
+          <Button
+            variant='default'
+            buttonStyle='edit'
+            handleClickButton={handleToggleEditing}
+          >
+            편집
+          </Button>
+        }
       />
       <div
         className={cn(
-          'flex flex-col px-[2rem]',
+          'flex flex-col',
           allFoodTrucks.length > 0 && 'pb-[10rem]'
         )}
       >
@@ -93,38 +95,27 @@ export default function FoodTruckManagement() {
             text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'
           />
         </div>
-        <div className='mt-[8rem] flex flex-col gap-[2rem]'>
-          {isLoading ? (
-            <div className='flex justify-center py-[4rem]'>
-              <p className='text-grayscale-500'>로딩 중...</p>
-            </div>
-          ) : isError ? (
-            <div className='flex justify-center py-[4rem]'>
-              <p className='text-red-500'>
-                데이터를 불러오는 중 오류가 발생했습니다.
-              </p>
-            </div>
-          ) : allFoodTrucks.length === 0 ? (
-            <div className='flex justify-center py-[4rem]'>
-              <p className='text-grayscale-500'>등록된 푸드트럭이 없습니다.</p>
-            </div>
-          ) : (
-            allFoodTrucks.map((item, index) => (
-              <div key={item.foodTruckId}>
-                <div className={cn(index !== 0 && 'mt-[2rem]')}>
-                  <p>{item.name}</p>
-                </div>
-                {index !== allFoodTrucks.length - 1 && (
-                  <div className='bg-grayscale-100 h-[0.1rem] w-full' />
-                )}
-              </div>
-            ))
-          )}
+        <div className='mt-[8rem] flex flex-col'>
+          {allFoodTrucks.length > 0 &&
+            allFoodTrucks.map(item => (
+              <FoodTruckCard
+                variant='foodtruckProvider'
+                isRemovable={isEditing}
+                isRemove={deleteFoodTruckIds.includes(item.foodTruckId ?? 0)}
+                isOn={item.status === 'ON'}
+                key={item.foodTruckId}
+                data={item}
+                handleClickButton={() => {
+                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                }}
+                handleCardRemove={() => {
+                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                }}
+              />
+            ))}
 
-          {/* 무한 스크롤 트리거 요소 */}
           <div ref={listBottomRef} className='h-[1px]' />
 
-          {/* 무한 스크롤 로딩 인디케이터 */}
           {isFetchingNextPage && (
             <div className='flex justify-center py-[2rem]'>
               <p className='text-grayscale-500'>
@@ -145,10 +136,12 @@ export default function FoodTruckManagement() {
         <Button
           variant='default'
           buttonStyle='large'
-          handleClickButton={handleNavigateToAdd}
+          handleClickButton={
+            isEditing ? handleConfirmModal : handleNavigateToAdd
+          }
           className='rounded-[1.6rem]'
         >
-          + 추가하기
+          {isEditing ? '삭제하기' : '+ 추가하기'}
         </Button>
       </footer>
     </>

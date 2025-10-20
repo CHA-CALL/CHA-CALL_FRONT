@@ -38,8 +38,8 @@ export default function FoodTruckProviderCard({
         className='h-[7.4rem] w-[7.4rem]'
       />
 
-      <div className='flex flex-col'>
-        <div className='flex items-center justify-between'>
+      <div className='flex w-full flex-col'>
+        <div className='flex w-full items-center justify-between'>
           <span className='title-sb-16 text-grayscale-900 text-left'>
             {name}
           </span>
