@@ -29,7 +29,7 @@ export const useReservationDetail = () => {
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   // const isProvider = role === ROLE.PROVIDER;
-  const isProvider = false;
+  const isProvider = true;
 
   const {
     data: reservationDetailData,
@@ -56,7 +56,7 @@ export const useReservationDetail = () => {
     ? {
         role: ROLE.PROVIDER,
         // TODO : 서버 api 수정 후 반영.(푸드트럭 이름 추가)
-        foodTruckName: '푸드트럭 이름',
+        foodTruckName: reservationDetailData?.foodTruckName,
         clientName: reservationDetailData?.name,
         profileImage: reservationDetailData?.profileImage,
       }
@@ -88,7 +88,7 @@ export const useReservationDetail = () => {
       label: '결제금',
       data:
         reservationDetailData?.deposit &&
-        `${parseInt(reservationDetailData?.deposit).toLocaleString()} 원`,
+        reservationDetailData.deposit.toLocaleString() + ' 원',
     },
   ];
 

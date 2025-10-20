@@ -107,6 +107,35 @@ export interface UpdateReservationRequest {
   etcRequest?: string;
 }
 
+export interface UpdateMenuRequest {
+  /**
+   * 메뉴 이름
+   * @minLength 0
+   * @maxLength 18
+   * @example "불고기버거"
+   */
+  name: string;
+  /**
+   * 메뉴 설명
+   * @minLength 0
+   * @maxLength 50
+   * @example "신선한 채소와 불고기를 듬뿍 넣은 수제 버거"
+   */
+  description: string;
+  /**
+   * 메뉴 가격 (원화 단위)
+   * @format int32
+   * @example 7500
+   */
+  price: number;
+  /**
+   * 대표 메뉴 이미지 URL
+   * @minLength 1
+   * @example "https://cdn.example.com/menus/bulgogi-burger.jpg"
+   */
+  photoUrl: string;
+}
+
 export interface UpdateChatTemplateRequest {
   /**
    * 자주 쓰는 채팅 내용
@@ -434,6 +463,14 @@ export interface UpdateMenuStatusRequest {
   status: "ON" | "OFF";
 }
 
+export interface UpdateFoodTruckViewedStatusRequest {
+  /**
+   * 변경할 푸드트럭 표시 여부
+   * @example "OFF"
+   */
+  status: "ON" | "OFF";
+}
+
 /** 푸드트럭 저장 상태 변경 요청 */
 export interface UpdateFoodTruckSaveStatusRequest {
   /**
@@ -637,6 +674,11 @@ export interface BaseResponseOwnerReservationDetailResponse {
 
 export interface OwnerReservationDetailResponse {
   /**
+   * 푸드트럭 이름
+   * @example "차콜 푸드트럭"
+   */
+  foodTruckName?: string;
+  /**
    * 상대방(손님)의 프로필 이미지 URL
    * @example "https://image.url/path/profile.jpg"
    */
@@ -668,9 +710,10 @@ export interface OwnerReservationDetailResponse {
   menu?: string;
   /**
    * 지불된 예약금액
-   * @example "50000원"
+   * @format int32
+   * @example 50000
    */
-  deposit?: string;
+  deposit?: number;
   /**
    * 전기 사용 가능 여부
    * @example "가능"
@@ -735,6 +778,11 @@ export interface MyFoodTruckResponse {
    * @example "서울 전체, 경기도 수원시 영통구, 인천 계양구"
    */
   serviceArea?: string;
+  /**
+   * 푸드트럭 표시 여부
+   * @example "ON/OFF"
+   */
+  status?: string;
 }
 
 export interface BaseResponseCursorPagingResponseMyFoodTruckMenuResponse {
@@ -931,9 +979,10 @@ export interface MemberReservationDetailResponse {
   menu?: string;
   /**
    * 지불된 예약금액
-   * @example "50000원"
+   * @format int32
+   * @example 50000
    */
-  deposit?: string;
+  deposit?: number;
   /**
    * 전기 사용 가능 여부
    * @example "가능"
@@ -1164,6 +1213,10 @@ export type GetReservationData = BaseResponseReservationResponse;
 
 export type UpdateReservationData = BaseResponseVoid;
 
+export type UpdateMenuData = BaseResponseVoid;
+
+export type DeleteMenuData = BaseResponseVoid;
+
 export type UpdateChatTemplateData = BaseResponseVoid;
 
 export type DeleteChatTemplateData = BaseResponseVoid;
@@ -1205,6 +1258,8 @@ export type GetReservationStatusData = BaseResponseReservationStatusResponse;
 export type UpdateReservationStatusData = BaseResponseReservationStatusResponse;
 
 export type UpdateMenuStatusData = BaseResponseVoid;
+
+export type UpdateFoodTruckViewedStatusData = BaseResponseVoid;
 
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
