@@ -55,14 +55,17 @@ export default function ButtonDate({
           )}
         </div>
         {startDate && (
-          <Icon
-            name='ic_close'
-            className='text-grayscale-500'
+          <button
+            type='button'
+            aria-label='일정 삭제'
+            className='flex items-center'
             onClick={e => {
               e.stopPropagation();
               handleDeleteSchedule();
             }}
-          />
+          >
+            <Icon name='ic_close' className='text-grayscale-500' />
+          </button>
         )}
       </div>
     </button>

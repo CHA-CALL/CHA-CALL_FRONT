@@ -110,9 +110,7 @@ export default function useFilterLogic() {
 
   const handleDeleteSchedule = (index: number) => {
     setLocalFilters(prev => {
-      const newScheduleArray = [...prev.schedules];
-      newScheduleArray.splice(index, 1);
-
+      const newScheduleArray = prev.schedules.filter((_, i) => i !== index);
       if (newScheduleArray.length === 0) {
         newScheduleArray.push({ startDate: null, endDate: null });
       }
