@@ -1,31 +1,15 @@
 import Button from '@shared/components/button/Button';
 import Information from '@shared/components/information/Information';
 import Navigation from '@shared/components/navigation/Navigation';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import { ROUTES } from '@router/constant/routes';
 import { useFetchAccountData } from './hooks/use-account-query';
-import useToast from '@shared/hooks/use-toast';
-import { useEffect } from 'react';
 
 export default function Account() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const toast = useToast();
-  const { showToast, isSuccess, toastMessage } = location.state || {};
 
   const { data, isPending } = useFetchAccountData();
-
-  useEffect(() => {
-    if (showToast && toastMessage) {
-      if (isSuccess) {
-        toast.success(toastMessage);
-      } else {
-        toast.error(toastMessage);
-      }
-      navigate('.', { replace: true, state: {} });
-    }
-  }, [isSuccess, navigate, showToast, toast, toastMessage]);
 
   const handleClickBack = () => {
     navigate(-1);

@@ -18,6 +18,7 @@ import {
   useFetchAccountData,
   useUpdateAccount,
 } from '@pages/@owner/account/hooks/use-account-query';
+import Loading from '@shared/components/loading/Loading';
 
 export default function Account() {
   const navigate = useNavigate();
@@ -29,26 +30,14 @@ export default function Account() {
     useCreateNewAccount({
       onSuccess: () => {
         setIsSaveOpen(false);
-        navigate(ROUTES.ACCOUNT, {
-          state: {
-            showToast: true,
-            isSuccess: true,
-            toastMessage: '저장이 완료되었습니다.',
-          },
-        });
+        navigate(ROUTES.ACCOUNT);
       },
     });
 
   const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount({
     onSuccess: () => {
       setIsSaveOpen(false);
-      navigate(ROUTES.ACCOUNT, {
-        state: {
-          showToast: true,
-          isSuccess: true,
-          toastMessage: '저장이 완료되었습니다.',
-        },
-      });
+      navigate(ROUTES.ACCOUNT);
     },
   });
 
@@ -76,12 +65,14 @@ export default function Account() {
   const handleClickBack = () => {
     // 폼에 수정사항이 있는지 확인
     const hasChanges =
-      formData.accountHolderName || formData.bankName || formData.accountNumber;
+      existedData?.accountHolderName !== formData.accountHolderName ||
+      existedData?.bankName !== formData.bankName ||
+      existedData?.accountNumber !== formData.accountNumber;
 
     if (hasChanges) {
       setIsConfirmOpen(true);
     } else {
-      navigate(-1);
+      navigate(ROUTES.ACCOUNT);
     }
   };
 
@@ -156,7 +147,7 @@ export default function Account() {
   }, [isEditMode, existedData]);
 
   if (isPending || isRegistering || isUpdating) {
-    <div>기존 계좌 데이터 로딩중</div>;
+    return <Loading />;
   }
 
   return (
