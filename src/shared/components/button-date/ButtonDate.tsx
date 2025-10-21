@@ -10,7 +10,7 @@ interface ButtonDateProps
   handleOpenCalendar: () => void;
   startDate: Date | null;
   endDate: Date | null;
-  handleDeleteDate: () => void;
+  handleDeleteSchedule: () => void;
 }
 
 export default function ButtonDate({
@@ -18,7 +18,7 @@ export default function ButtonDate({
   className,
   startDate,
   endDate,
-  handleDeleteDate,
+  handleDeleteSchedule,
   ...props
 }: ButtonDateProps) {
   return (
@@ -60,7 +60,7 @@ export default function ButtonDate({
             className='text-grayscale-500'
             onClick={e => {
               e.stopPropagation();
-              handleDeleteDate();
+              handleDeleteSchedule();
             }}
           />
         )}

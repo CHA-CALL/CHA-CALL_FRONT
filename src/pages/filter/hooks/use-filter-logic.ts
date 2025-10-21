@@ -38,7 +38,7 @@ export default function useFilterLogic() {
     [localFilters]
   );
 
-  const notFiltered = isEqual(cleanedLocalFilters, initialFilter);
+  const notFiltered = isEqual(cleanedLocalFilters, globalFilters);
 
   const handleGoBack = () => navigate(-1);
 
@@ -74,10 +74,18 @@ export default function useFilterLogic() {
   };
 
   const handleAddSchedule = () => {
-    setLocalFilters(prev => ({
-      ...prev,
-      schedules: [...prev.schedules, { startDate: null, endDate: null }],
-    }));
+    setLocalFilters(prev => {
+      const hasEmptySchedule = prev.schedules.some(
+        s => s.startDate === null && s.endDate === null
+      );
+
+      if (hasEmptySchedule) return prev;
+
+      return {
+        ...prev,
+        schedules: [...prev.schedules, { startDate: null, endDate: null }],
+      };
+    });
   };
 
   const handleResetFilter = () => {
@@ -100,6 +108,19 @@ export default function useFilterLogic() {
     navigate('/reservation');
   };
 
+  const handleDeleteSchedule = (index: number) => {
+    setLocalFilters(prev => {
+      const newScheduleArray = [...prev.schedules];
+      newScheduleArray.splice(index, 1);
+
+      if (newScheduleArray.length === 0) {
+        newScheduleArray.push({ startDate: null, endDate: null });
+      }
+
+      return { ...prev, schedules: newScheduleArray };
+    });
+  };
+
   return {
     localFilters,
     isBottomSheetOpen,
@@ -114,5 +135,6 @@ export default function useFilterLogic() {
     handleOpenCalendar,
     handleCloseCalendar,
     handleApplyFilter,
+    handleDeleteSchedule,
   };
 }
