@@ -1,15 +1,15 @@
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@components/icon/Icon';
-import Information from '@shared/components/information/Information';
-import {
-  useFoodTruck,
-  MAX_IMAGE_COUNT,
-} from '@pages/@owner/upload-food-truck/hooks/use-food-truck';
-import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import { useEffect, useState } from 'react';
-import Button from '@shared/components/button/Button';
-import ErrorText from '@shared/components/error-text/ErrorText';
 import { useNavigate } from 'react-router-dom';
+
+import { Icon } from '@components/icon/Icon';
+import Navigation from '@components/navigation/Navigation';
+import Information from '@components/information/Information';
+import Button from '@components/button/Button';
+import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
+import ErrorText from '@components/error-text/ErrorText';
+
+import { useFoodTruck } from '@pages/@owner/upload-food-truck/hooks/use-food-truck';
+import { MAX_IMAGE_COUNT } from '@pages/@owner/upload-food-truck/constant/food-truck-image';
 
 import {
   DndContext,
@@ -34,8 +34,8 @@ export default function UploadFoodTruck() {
     error,
     handleFileChange,
     handleRemoveFile,
-    handleSubmitImage,
     handleReorderFiles,
+    handleSubmitImage,
   } = useFoodTruck();
 
   const sensors = useSensors(
