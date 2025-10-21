@@ -4,6 +4,7 @@ import {
   CANNOT_UPLOAD_FILE_MB,
   NOT_ALLOWED_FILE_TYPE,
 } from '@shared/constant/image';
+import { arrayMove } from '@dnd-kit/sortable';
 
 export const MAX_IMAGE_COUNT = 9;
 
@@ -37,12 +38,17 @@ export const useFoodTruck = () => {
     setFiles(updatedFiles);
   };
 
+  const handleReorderFiles = (oldIndex: number, newIndex: number) => {
+    setFiles(prevFiles => arrayMove(prevFiles, oldIndex, newIndex));
+  };
+
   return {
     files,
     setFiles,
     handleFileChange,
     handleRemoveFile,
     handleSubmitImage,
+    handleReorderFiles,
     error,
   };
 };

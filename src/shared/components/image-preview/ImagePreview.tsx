@@ -1,5 +1,6 @@
 import { Icon } from '@shared/components/icon/Icon';
 import { cn } from '@utils/cn';
+import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 
 interface ImagePreviewProps {
   handleClose: () => void;
@@ -7,6 +8,7 @@ interface ImagePreviewProps {
   alt: string;
   className?: string;
   isMain?: boolean;
+  dragListeners?: DraggableSyntheticListeners;
 }
 
 export default function ImagePreview({
@@ -15,6 +17,7 @@ export default function ImagePreview({
   alt,
   className,
   isMain,
+  dragListeners,
   ...props
 }: ImagePreviewProps) {
   if (!src) {
@@ -33,6 +36,7 @@ export default function ImagePreview({
         className='flex h-full w-full cursor-pointer items-center justify-center rounded-[1.6rem] object-cover'
         src={src}
         alt={alt}
+        {...dragListeners}
       />
       {isMain && (
         <div className='bg-black70 absolute bottom-[0rem] left-[0rem] right-[0rem] flex h-[2.4rem] items-center justify-center rounded-b-[1.6rem] text-white'>

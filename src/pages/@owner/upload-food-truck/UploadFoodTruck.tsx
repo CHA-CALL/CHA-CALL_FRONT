@@ -6,11 +6,25 @@ import {
   MAX_IMAGE_COUNT,
 } from '@pages/@owner/upload-food-truck/hooks/use-food-truck';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
-import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import { useEffect, useState } from 'react';
 import Button from '@shared/components/button/Button';
 import ErrorText from '@shared/components/error-text/ErrorText';
 import { useNavigate } from 'react-router-dom';
+
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  rectSwappingStrategy,
+} from '@dnd-kit/sortable';
+import SortableImagePreview from '@pages/@owner/upload-food-truck/components/SortableImagePreview';
 
 export default function UploadFoodTruck() {
   const navigate = useNavigate();
@@ -21,7 +35,23 @@ export default function UploadFoodTruck() {
     handleFileChange,
     handleRemoveFile,
     handleSubmitImage,
+    handleReorderFiles,
   } = useFoodTruck();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = Number(active.id);
+      const newIndex = Number(over.id);
+      handleReorderFiles(oldIndex, newIndex);
+    }
+  };
 
   const handleLeftClick = () => {
     navigate(-1);
@@ -38,6 +68,8 @@ export default function UploadFoodTruck() {
   }, [files]);
 
   const canAdd = files.length < MAX_IMAGE_COUNT;
+
+  const fileIds = files.map((_, index) => index);
 
   return (
     <>
@@ -62,19 +94,27 @@ export default function UploadFoodTruck() {
         />
       </div>
 
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] justify-start gap-[1.2rem] p-[2rem]'>
-        {files &&
-          files.map((_, index) => (
-            <ImagePreview
-              isMain={index === 0}
-              key={`foodTruck-${index}`}
-              handleClose={() => handleRemoveFile(index)}
-              src={imageUrl?.[index] || undefined}
-              alt='foodTruck'
-            />
-          ))}
-        {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
-      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={fileIds} strategy={rectSwappingStrategy}>
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-x-[1.4rem] gap-y-[2rem] p-[2rem]'>
+            {canAdd && <ButtonAddImage handleFileChange={handleFileChange} className='h-[9rem] w-[9rem] m-[1rem]' />}
+            {files.map((_, index) => (
+              <SortableImagePreview
+                id={index}
+                isMain={index === 0}
+                key={`foodTruck-${index}`}
+                handleClose={() => handleRemoveFile(index)}
+                src={imageUrl?.[index] || undefined}
+                alt='foodTruck'
+              />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
 
       <div className='p-[2rem]'>{error && <ErrorText text={error} />}</div>
       <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>
