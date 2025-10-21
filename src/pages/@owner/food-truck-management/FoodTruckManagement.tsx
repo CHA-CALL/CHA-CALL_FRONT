@@ -13,7 +13,6 @@ import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(
 import Loading from '@shared/components/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
 import { useFoodTruckDelete } from '@pages/@owner/food-truck-management/hooks/use-food-truck-delete';
-import Spinner from '@shared/components/spinner/Spinner';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -105,7 +104,7 @@ export default function FoodTruckManagement() {
 
           <div ref={listBottomRef} className='h-[1px]' />
 
-          {isFetchingNextPage && <Spinner />}
+          {isFetchingNextPage && <Loading />}
         </div>
       </div>
 
