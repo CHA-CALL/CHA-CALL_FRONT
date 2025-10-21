@@ -3,13 +3,16 @@ import { useDeleteOwnerFoodTrucks } from '@pages/@owner/food-truck-management/ho
 
 export const useFoodTruckDelete = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [deleteFoodTruckIds, setDeleteFoodTruckIds] = useState<number[]>([]);
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
+    useState(false);
+
+  const { mutate } = useDeleteOwnerFoodTrucks();
+
   const handleToggleEditing = () => {
     setIsEditing(!isEditing);
     setDeleteFoodTruckIds([]);
   };
-  const [deleteFoodTruckIds, setDeleteFoodTruckIds] = useState<number[]>([]);
-  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
-    useState(false);
 
   const handleConfirmModal = () => {
     setIsDeleteConfirmModalOpen(prev => !prev);
@@ -27,7 +30,6 @@ export const useFoodTruckDelete = () => {
 
   const handleDeleteFoodTrucks = () => {
     handleConfirmModal();
-    const { mutate } = useDeleteOwnerFoodTrucks();
     deleteFoodTruckIds.forEach(foodTruckId => {
       mutate(foodTruckId);
     });
