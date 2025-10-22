@@ -20,6 +20,7 @@ export default function ProfileImageBottomSheet({
   const handleEditImage = () => {
     fileInputRef.current?.click();
   };
+
   return (
     <BottomSheet
       isOpen={isBottomSheetOpen}
@@ -28,7 +29,7 @@ export default function ProfileImageBottomSheet({
         <>
           <button
             type='button'
-            className='flex w-full justify-center border-b border-grayscale-100 py-[2rem] text-grayscale-700 title-sb-14'
+            className='border-grayscale-100 text-grayscale-700 title-sb-14 flex w-full justify-center border-b py-[2rem]'
             onClick={handleEditImage}
           >
             <span>수정하기</span>
@@ -42,7 +43,7 @@ export default function ProfileImageBottomSheet({
           />
           <button
             type='button'
-            className='flex w-full justify-center py-[2rem] text-grayscale-700 title-sb-14'
+            className='text-grayscale-700 title-sb-14 flex w-full justify-center py-[2rem]'
             onClick={handleDeleteImage}
           >
             <span>삭제하기</span>

@@ -38,7 +38,7 @@ export const useSetUserInfo = () => {
       const formValues: UserFormData = {
         name: userData.name ?? '',
         email: userData.email ?? '',
-        gender: userData.gender ?? '남성', // API 값이 없으면 기본값
+        gender: userData.gender ?? '남성',
         termAgreed: userData.termAgreed ?? false,
         profileImageUrl: userData.profileImageUrl ?? DEFAULT_PROFILE_IMAGE,
       };
@@ -54,7 +54,8 @@ export const useSetUserInfo = () => {
   return {
     formMethods,
     handleSubmit: formMethods.handleSubmit(onSubmit),
-    isLoading: isLoading || isPending,
+    isFetching: isLoading || isPending,
+    isValid: formMethods.formState.isValid,
     userData,
   };
 };

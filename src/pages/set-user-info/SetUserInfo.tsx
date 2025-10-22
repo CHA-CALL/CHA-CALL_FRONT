@@ -1,15 +1,8 @@
-import {
-  DEFAULT_PROFILE_IMAGE,
-  useGetUserInfo,
-  useUpdateUserInfo,
-} from '@pages/mypage/hooks/use-user-data';
-import { INITIAL_USER_INFO } from '@pages/set-user-info/constant/set-user-constant';
-import { ROUTES } from '@router/constant/routes';
+import { DEFAULT_PROFILE_IMAGE } from '@pages/mypage/hooks/use-user-data';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Loading from '@shared/components/loading/Loading';
 import Navigation from '@shared/components/navigation/Navigation';
-import type { UserResponse } from 'apis/data-contracts';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SetUserName from '@pages/set-user-info/components/SetUserName';
@@ -22,29 +15,16 @@ import useToast from '@shared/hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
 import { FormProvider } from 'react-hook-form';
-import { useSetUserInfo } from './hooks/use-set-user-info';
+import { useSetUserInfo } from '@pages/set-user-info/hooks/use-set-user-info';
 
 export default function SetUserInfo() {
   const navigate = useNavigate();
   const toast = useToast();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const { formMethods, handleSubmit, isLoading, userData } = useSetUserInfo();
+  const { formMethods, handleSubmit, isFetching, isValid, userData } =
+    useSetUserInfo();
 
-  // const { data: userData, isLoading } = useGetUserInfo();
-  const { mutate: updateUser, isPending } = useUpdateUserInfo({
-    onSuccess: () => {
-      navigate(ROUTES.PROFILE_SETTING);
-    },
-  });
-  // const [userInfo, setUserInfo] = useState<UserResponse>(
-  //   userData ?? INITIAL_USER_INFO
-  // );
-
-  // const isValid =
-  //   userInfo.name === '' ||
-  //   userInfo.email === '' ||
-  //   userInfo.gender === undefined;
   const handleOpenBottomSheet = () => {
     setIsBottomSheetOpen(true);
   };
@@ -70,20 +50,16 @@ export default function SetUserInfo() {
     // TODO : 추후 presignedURL api로 대체
     const imageUrl = URL.createObjectURL(file);
 
-    updateUser({
-      profileImageUrl: imageUrl,
-    });
+    formMethods.setValue('profileImageUrl', imageUrl);
     handleCloseBottomSheet();
   };
 
   const handleDeleteImage = () => {
-    updateUser({
-      profileImageUrl: DEFAULT_PROFILE_IMAGE,
-    });
+    formMethods.setValue('profileImageUrl', DEFAULT_PROFILE_IMAGE);
     handleCloseBottomSheet();
   };
 
-  if (isLoading || isPending || !userData) {
+  if (isFetching || !userData) {
     return <Loading />;
   }
 
@@ -102,10 +78,7 @@ export default function SetUserInfo() {
           handleLeftClick={handleClickBack}
         />
         <div className='flex flex-col items-center gap-[2rem] p-[2rem]'>
-          <SetUserImage
-            profileImageUrl={userData?.profileImageUrl}
-            handleOpenBottomSheet={handleOpenBottomSheet}
-          />
+          <SetUserImage handleOpenBottomSheet={handleOpenBottomSheet} />
           <div className='flex w-full flex-col gap-[3rem]'>
             <SetUserName />
             <SetUserEmail />
@@ -118,10 +91,8 @@ export default function SetUserInfo() {
           <Button
             type='submit'
             variant='cta'
-            buttonStyle='active'
-            // buttonStyle={isValid ? 'disabled' : 'active'}
+            buttonStyle={isValid ? 'active' : 'disabled'}
             className='h-[5.4rem]'
-            // handleClickButton={handleClickSave}
           >
             저장하기
           </Button>
