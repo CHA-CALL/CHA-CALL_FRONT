@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-
+import { ROUTES } from '@router/constant/routes';
+import { Icon } from '@shared/components/icon/Icon';
+import Button from '@shared/components/button/Button';
 import {
   RESERVATION_STATE,
   type ReservationState,
-} from '@pages/reservation-history/types/reservation';
-import { ROUTES } from '@router/constant/routes';
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
+} from '@pages/reservation-history/types/reservation-history';
 
 interface EmptyViewProps {
   isProvider: boolean;
@@ -41,7 +40,7 @@ export default function EmptyView({
       emptyText = '';
   }
   return (
-    <div className='flex min-h-[calc(100vh-4.8rem)] w-full flex-col items-center justify-center gap-[1.6rem] pt-[6.6rem]'>
+    <div className='pointer-events-none absolute top-[0rem] flex min-h-[100dvh] w-full flex-col items-center justify-center gap-[1.6rem] pt-[6.6rem] fixed-center'>
       <img src='https://placehold.co/140' alt='' />
       <span className='text-center text-grayscale-500 body-m-14'>
         {emptyText} {isProvider ? '예약건' : '예약 내역'}이 없습니다.

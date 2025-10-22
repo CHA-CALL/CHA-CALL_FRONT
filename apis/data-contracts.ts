@@ -1088,6 +1088,11 @@ export interface FoodTruckResponse {
    */
   description?: string;
   /**
+   * 푸드트럭 음식 카테고리 (라벨 리스트)
+   * @example ["한식","분식"]
+   */
+  menuCategories?: string[];
+  /**
    * 푸드트럭 평균 평점
    * @format double
    * @example 4.5

@@ -26,7 +26,10 @@ export default function CardButton({
     <button
       type='button'
       onClick={handleClickButton}
-      className={cn('text-grayscale-700 ml-auto', className)}
+      className={cn(
+        'ml-auto pb-[1rem] pl-[1rem] text-grayscale-700',
+        className
+      )}
     >
       {isHeart ? (
         isLiked ? (

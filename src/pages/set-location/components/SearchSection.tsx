@@ -1,7 +1,8 @@
-import SearchResultItem from '@pages/set-location/components/(.)section/(.)search/SearchResultItem';
+import { type RegionResponse } from 'apis/data-contracts';
 
-import { type RegionResponse } from '@../../apis/data-contracts';
 import Loading from '@shared/components/loading/Loading';
+
+import SearchResultItem from '@pages/set-location/components/(.)section/(.)search/SearchResultItem';
 
 interface SearchSectionProps {
   searchText: string;
@@ -24,7 +25,7 @@ export default function SearchSection({
 
   return (
     <>
-      <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
+      <div className='flex w-full flex-1 flex-col overflow-y-auto scrollbar-hide'>
         <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
           {searchRegions.length > 0 ? (
             searchRegions.map((item: RegionResponse) => (
