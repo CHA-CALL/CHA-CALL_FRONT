@@ -16,6 +16,7 @@ import type {
   NeedElectricityValue,
   PaymentMethodValue,
 } from '@shared/types/category-types';
+import { ROUTES } from '@router/constant/routes';
 
 export default function useFilterLogic() {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ export default function useFilterLogic() {
 
   const handleApplyFilter = () => {
     setGlobalFilters(cleanedLocalFilters);
-    navigate('/reservation');
+    navigate(ROUTES.RESERVATION);
   };
 
   const handleDeleteSchedule = (index: number) => {

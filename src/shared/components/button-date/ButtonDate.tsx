@@ -21,6 +21,12 @@ export default function ButtonDate({
   handleDeleteSchedule,
   ...props
 }: ButtonDateProps) {
+  const handleCloseButton = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    handleDeleteSchedule();
+  };
   return (
     <button
       type='button'
@@ -58,10 +64,7 @@ export default function ButtonDate({
           <Icon
             name='ic_close'
             className='text-grayscale-500'
-            onClick={e => {
-              e.stopPropagation();
-              handleDeleteSchedule();
-            }}
+            onClick={handleCloseButton}
             role='button'
             aria-label='일정 삭제'
           />
