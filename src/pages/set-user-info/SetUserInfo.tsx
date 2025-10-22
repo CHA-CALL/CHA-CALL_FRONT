@@ -21,35 +21,30 @@ import ProfileImageBottomSheet from '@pages/set-user-info/components/ProfileImag
 import useToast from '@shared/hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import { FormProvider } from 'react-hook-form';
+import { useSetUserInfo } from './hooks/use-set-user-info';
 
 export default function SetUserInfo() {
   const navigate = useNavigate();
   const toast = useToast();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const { data: userData, isLoading } = useGetUserInfo();
+
+  const { formMethods, handleSubmit, isLoading, userData } = useSetUserInfo();
+
+  // const { data: userData, isLoading } = useGetUserInfo();
   const { mutate: updateUser, isPending } = useUpdateUserInfo({
     onSuccess: () => {
-      navigate(ROUTES.PROFILE_SETTING, {
-        state: {
-          showToast: true,
-          isSuccess: true,
-          toastMessage: '정보가 수정되었습니다.',
-        },
-      });
+      navigate(ROUTES.PROFILE_SETTING);
     },
   });
-  const [userInfo, setUserInfo] = useState<UserResponse>(
-    userData ?? INITIAL_USER_INFO
-  );
+  // const [userInfo, setUserInfo] = useState<UserResponse>(
+  //   userData ?? INITIAL_USER_INFO
+  // );
 
-  if (isLoading || isPending || !userData) {
-    return <Loading />;
-  }
-
-  const { name: userName, email: userEmail, gender: userGender } = userInfo;
-
-  const isValid =
-    userName === '' || userEmail === '' || userGender === undefined;
+  // const isValid =
+  //   userInfo.name === '' ||
+  //   userInfo.email === '' ||
+  //   userInfo.gender === undefined;
   const handleOpenBottomSheet = () => {
     setIsBottomSheetOpen(true);
   };
@@ -57,15 +52,7 @@ export default function SetUserInfo() {
     setIsBottomSheetOpen(false);
   };
   const handleClickBack = () => navigate(-1);
-  const handleClickSave = () => {
-    updateUser({
-      profileImageUrl: userData.profileImageUrl!,
-      name: userName ?? INITIAL_USER_INFO.name,
-      email: userEmail ?? INITIAL_USER_INFO.email,
-      gender: userGender ?? INITIAL_USER_INFO.gender,
-      termAgreed: userData.termAgreed!,
-    });
-  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -83,7 +70,6 @@ export default function SetUserInfo() {
     // TODO : 추후 presignedURL api로 대체
     const imageUrl = URL.createObjectURL(file);
 
-    // TODO : 타입 단언 제거 필요한가? ➡️ api 편집 요청 후 진행
     updateUser({
       profileImageUrl: imageUrl,
     });
@@ -97,42 +83,50 @@ export default function SetUserInfo() {
     handleCloseBottomSheet();
   };
 
-  return (
-    <div className='relative'>
-      <ProfileImageBottomSheet
-        isBottomSheetOpen={isBottomSheetOpen}
-        handleCloseBottomSheet={handleCloseBottomSheet}
-        handleFileChange={handleFileChange}
-        handleDeleteImage={handleDeleteImage}
-      />
-      <Navigation
-        text={'프로필 수정'}
-        leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={handleClickBack}
-      />
-      <div className='flex flex-col items-center gap-[2rem] p-[2rem]'>
-        <SetUserImage
-          profileImageUrl={userData?.profileImageUrl}
-          handleOpenBottomSheet={handleOpenBottomSheet}
-        />
-        <div className='flex flex-col gap-[3rem]'>
-          <SetUserName userInfo={userInfo} setUserInfo={setUserInfo} />
-          <SetUserEmail userInfo={userInfo} setUserInfo={setUserInfo} />
-          <SetUserGender userInfo={userInfo} setUserInfo={setUserInfo} />
-          <SetAgreement userInfo={userInfo} setUserInfo={setUserInfo} />
-        </div>
-      </div>
+  if (isLoading || isPending || !userData) {
+    return <Loading />;
+  }
 
-      <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>
-        <Button
-          variant='cta'
-          buttonStyle={isValid ? 'disabled' : 'active'}
-          className='h-[5.4rem]'
-          handleClickButton={handleClickSave}
-        >
-          저장하기
-        </Button>
-      </footer>
-    </div>
+  return (
+    <FormProvider {...formMethods}>
+      <form onSubmit={handleSubmit} className='relative'>
+        <ProfileImageBottomSheet
+          isBottomSheetOpen={isBottomSheetOpen}
+          handleCloseBottomSheet={handleCloseBottomSheet}
+          handleFileChange={handleFileChange}
+          handleDeleteImage={handleDeleteImage}
+        />
+        <Navigation
+          text={'프로필 수정'}
+          leftIcon={<Icon name='ic_back' />}
+          handleLeftClick={handleClickBack}
+        />
+        <div className='flex flex-col items-center gap-[2rem] p-[2rem]'>
+          <SetUserImage
+            profileImageUrl={userData?.profileImageUrl}
+            handleOpenBottomSheet={handleOpenBottomSheet}
+          />
+          <div className='flex w-full flex-col gap-[3rem]'>
+            <SetUserName />
+            <SetUserEmail />
+            <SetUserGender />
+            <SetAgreement />
+          </div>
+        </div>
+
+        <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>
+          <Button
+            type='submit'
+            variant='cta'
+            buttonStyle='active'
+            // buttonStyle={isValid ? 'disabled' : 'active'}
+            className='h-[5.4rem]'
+            // handleClickButton={handleClickSave}
+          >
+            저장하기
+          </Button>
+        </footer>
+      </form>
+    </FormProvider>
   );
 }

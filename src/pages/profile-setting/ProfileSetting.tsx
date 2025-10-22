@@ -51,7 +51,7 @@ export default function ProfileSetting() {
         text='프로필 설정'
         rightIcon={
           <Button
-            style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
+            style={{ paddingLeft: '2rem', paddingRight: '2rem' }}
             children={'편집'}
             variant={'default'}
             buttonStyle={'edit'}

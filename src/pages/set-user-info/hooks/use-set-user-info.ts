@@ -1,0 +1,60 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  DEFAULT_PROFILE_IMAGE,
+  useGetUserInfo,
+  useUpdateUserInfo,
+} from '@pages/mypage/hooks/use-user-data';
+import { ROUTES } from '@router/constant/routes';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import z from 'zod';
+
+const userSchema = z.object({
+  profileImageUrl: z.string().url().optional(),
+  name: z.string().min(1, '이름은 필수입니다.'),
+  email: z.string().email('이메일 형식이 올바르지 않습니다.'),
+  gender: z.string().min(1, '성별은 필수입니다.'),
+  termAgreed: z.boolean(),
+});
+
+type UserFormData = z.infer<typeof userSchema>;
+
+export const useSetUserInfo = () => {
+  const navigate = useNavigate();
+  const { data: userData, isLoading } = useGetUserInfo();
+  const { mutate: updateUser, isPending } = useUpdateUserInfo({
+    onSuccess: () => {
+      navigate(ROUTES.PROFILE_SETTING);
+    },
+  });
+  const formMethods = useForm<UserFormData>({
+    resolver: zodResolver(userSchema),
+    mode: 'onChange',
+  });
+  const { reset } = formMethods;
+  useEffect(() => {
+    if (userData) {
+      const formValues: UserFormData = {
+        name: userData.name ?? '',
+        email: userData.email ?? '',
+        gender: userData.gender ?? '남성', // API 값이 없으면 기본값
+        termAgreed: userData.termAgreed ?? false,
+        profileImageUrl: userData.profileImageUrl ?? DEFAULT_PROFILE_IMAGE,
+      };
+
+      reset(formValues);
+    }
+  }, [userData, reset]);
+
+  const onSubmit = (data: UserFormData) => {
+    updateUser(data);
+  };
+
+  return {
+    formMethods,
+    handleSubmit: formMethods.handleSubmit(onSubmit),
+    isLoading: isLoading || isPending,
+    userData,
+  };
+};

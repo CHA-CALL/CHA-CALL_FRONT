@@ -6,6 +6,7 @@ import type {
 } from 'apis/data-contracts';
 import { getUserInfo, updateUserInfo } from '@pages/mypage/api';
 import { USER_INFO } from '@shared/querykey/user-info';
+import useToast from '@shared/hooks/use-toast';
 
 export const DEFAULT_PROFILE_IMAGE =
   'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg';
@@ -48,7 +49,7 @@ export const useUpdateUserInfo2 = (options?: useUpdateUserInfoOptions) => {
 
 export const useUpdateUserInfo = (options?: useUpdateUserInfoOptions) => {
   const queryClient = useQueryClient();
-
+  const toast = useToast();
   return useMutation({
     mutationFn: (changedUserInfo: Partial<UpdateUserInfoRequest>) => {
       const previousUserData = queryClient.getQueryData<GetUserInfoData>(
@@ -81,9 +82,11 @@ export const useUpdateUserInfo = (options?: useUpdateUserInfoOptions) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: USER_INFO.ALL });
+      toast.success('정보가 수정되었습니다.');
       options?.onSuccess?.();
     },
     onError: error => {
+      toast.error('정보 수정에 실패했습니다.');
       console.error('유저 정보 갱신 실패:', error.message);
       options?.onError?.(error);
     },

@@ -1,34 +1,17 @@
 import { Icon } from '@shared/components/icon/Icon';
 import Input from '@shared/components/input/Input';
-import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
 import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import type { ChangeEvent } from 'react';
-
-export default function SetUserName({
-  userInfo,
-  setUserInfo,
-}: SetUserInfoItemProps) {
-  const userName = userInfo?.name ?? '';
-
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserInfo(prev => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        name: e.target.value,
-      };
-    });
-  };
+export default function SetUserName() {
+  const {
+    control,
+    formState: { errors }, // 폼의 에러 상태
+    setValue,
+  } = useFormContext();
 
   const handleClearName = () => {
-    setUserInfo(prev => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        name: '',
-      };
-    });
+    setValue('name', '', { shouldValidate: true });
   };
   return (
     <div className='flex flex-1 flex-col gap-[1rem]'>
@@ -36,18 +19,27 @@ export default function SetUserName({
         <h2 className='title-sb-14'>이름</h2>
       </nav>
 
-      <Input
-        value={userName}
-        placeholder={userName}
-        maxLength={userName === '' ? undefined : USER_NAME_MAX_LENGTH}
-        rightComponent={
-          <button className='translate-y-[0.2rem]'>
-            <Icon name='ic_close' />
-          </button>
-        }
-        handleRightClick={handleClearName}
-        onChange={handleChangeName}
+      <Controller
+        name='name'
+        control={control}
+        render={({ field }) => (
+          <Input
+            value={field.value}
+            placeholder='이름 입력'
+            maxLength={field.value === '' ? undefined : USER_NAME_MAX_LENGTH}
+            rightComponent={
+              <button className='translate-y-[0.2rem]' type='button'>
+                <Icon name='ic_close' />
+              </button>
+            }
+            handleRightClick={handleClearName}
+            onChange={field.onChange}
+          />
+        )}
       />
+      {errors.name && (
+        <span className='text-red-500'>{errors.name.message?.toString()}</span>
+      )}
     </div>
   );
 }
