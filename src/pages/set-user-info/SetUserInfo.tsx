@@ -16,11 +16,10 @@ import SetUserName from './components/SetUserName';
 import SetUserEmail from './components/SetUserEmail';
 import SetUserGender from './components/SetUserGender';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
-import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileImageBottomSheet';
+import ProfileImageBottomSheet from '@pages/set-user-info/components/ProfileImageBottomSheet';
 import useToast from '@shared/hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
-import AgreementSection from '@pages/profile-setting/components/AgreementSection';
 import SetAgreement from './components/SetAgreement';
 
 export default function SetUserInfo() {
