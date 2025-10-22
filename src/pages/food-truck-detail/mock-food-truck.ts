@@ -1,0 +1,58 @@
+export const mockFoodTruck = {
+  photoUrl: 'https://placehold.co/300',
+  foodTruckName: '푸드트럭 이름',
+  desc: '푸드트럭 한줄 소개 들어갈 공간',
+  location: '서울 광진구',
+  time: '9:00-19:00',
+  availableDiscussion: '논의 가능',
+  phoneNumber: '010-xxxx-xxxx',
+  rating: '4.8',
+  foodCategories: [
+    '간식',
+    '음료',
+    '디저트',
+    '커피',
+    '간식',
+    '음료',
+    '디저트',
+    '커피',
+  ],
+  operationInfo:
+    '지역 행사·축제·기업 이벤트 중심으로 운영 중입니다.\n상시 예약 문의 가능해요.',
+  availableQuantity: '300인분 이상',
+  needElectricity: '불필요',
+  paymentMethod: '논의 가능',
+  menus: [
+    {
+      menuId: 1,
+      menuUrl: 'https://placehold.co/100',
+      name: 'Fajitas 화이타',
+      price: 10000,
+    },
+    {
+      menuId: 2,
+      menuUrl: 'https://placehold.co/100',
+      name: 'Fajitas 화이타2',
+      price: 50000,
+    },
+    {
+      menuId: 3,
+      menuUrl: 'https://placehold.co/100',
+      name: 'Fajitas 화이타3',
+      price: 100000,
+    },
+    {
+      menuId: 4,
+      menuUrl: 'https://placehold.co/100',
+      name: 'Fajitas 화이타4',
+      price: 8000,
+    },
+    {
+      menuId: 5,
+      menuUrl: 'https://placehold.co/100',
+      name: 'Fajitas 화이타5',
+      price: 10000,
+    },
+  ],
+  etc: '행사 콘셉트에 맞게 메뉴\n구성과 트럭 외관을 자유롭게 커스터마이징할 수 있습니다.\n\n기업 이벤트나 웨딩, 축제 등 테마에 맞춘 데코레이션 서비스가\n포함되어 있으며, 포토존 세팅·음악 플레이리스트 조정 등\n고객 요청에 맞춘 분위기 연출이 가능합니다.',
+};

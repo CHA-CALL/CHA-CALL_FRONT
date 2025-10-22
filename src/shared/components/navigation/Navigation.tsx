@@ -6,6 +6,7 @@ interface NavigationProps {
   rightIcon?: React.ReactNode;
   handleRightClick?: () => void;
   text?: string;
+  backgroundColor?: string;
 }
 
 export default function Navigation({
@@ -14,9 +15,12 @@ export default function Navigation({
   rightIcon,
   handleRightClick,
   text,
+  backgroundColor = 'bg-white',
 }: NavigationProps) {
   return (
-    <nav className='fixed-center top-[0] z-30 flex h-[4.8rem] items-center bg-white'>
+    <nav
+      className={`top-[0] z-30 flex h-[4.8rem] items-center ${backgroundColor} fixed-center`}
+    >
       <div className='flex flex-[1] items-center justify-start px-[1.3rem]'>
         {leftIcon && <button onClick={handleLeftClick}>{leftIcon}</button>}
       </div>
