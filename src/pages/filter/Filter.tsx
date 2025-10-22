@@ -6,12 +6,10 @@ import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import Button from '@components/button/Button';
 import ButtonDate from '@components/button-date/ButtonDate';
-import {
-  AVAILABLE_QUANTITY,
-  FOOD_TRUCK_CATEGORIES,
-  NEED_ELECTRICITY,
-  PAYMENT_METHOD,
-} from '@shared/constant/categories';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
+import { PAYMENT_METHOD } from '@shared/constant/payment-method';
+import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
+import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import useFilterLogic from '@pages/filter/hooks/use-filter-logic';
 import type {
