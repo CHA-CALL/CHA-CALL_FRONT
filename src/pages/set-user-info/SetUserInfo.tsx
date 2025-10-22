@@ -12,15 +12,15 @@ import Navigation from '@shared/components/navigation/Navigation';
 import type { UserResponse } from 'apis/data-contracts';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SetUserName from './components/SetUserName';
-import SetUserEmail from './components/SetUserEmail';
-import SetUserGender from './components/SetUserGender';
-import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
+import SetUserName from '@pages/set-user-info/components/SetUserName';
+import SetUserEmail from '@pages/set-user-info/components/SetUserEmail';
+import SetUserGender from '@pages/set-user-info/components/SetUserGender';
+import SetAgreement from '@pages/set-user-info/components/SetAgreement';
+import SetUserImage from '@pages/set-user-info/components/SetUserImage';
 import ProfileImageBottomSheet from '@pages/set-user-info/components/ProfileImageBottomSheet';
 import useToast from '@shared/hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
-import SetAgreement from './components/SetAgreement';
 
 export default function SetUserInfo() {
   const navigate = useNavigate();
@@ -111,7 +111,7 @@ export default function SetUserInfo() {
         handleLeftClick={handleClickBack}
       />
       <div className='flex flex-col items-center gap-[2rem] p-[2rem]'>
-        <ProfileImageSection
+        <SetUserImage
           profileImageUrl={userData?.profileImageUrl}
           handleOpenBottomSheet={handleOpenBottomSheet}
         />

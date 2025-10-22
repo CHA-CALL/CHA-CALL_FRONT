@@ -27,7 +27,7 @@ export default function SetAgreement({
     return <Loading />;
   }
   return (
-    <div className='border-grayscale-200 flex flex-row items-center justify-between border-t-[0.1rem] px-[1.8rem] py-[1.6rem]'>
+    <div className='border-grayscale-200 flex flex-row items-center gap-[1.8rem] border-t-[0.1rem] py-[2rem]'>
       <div className='flex flex-row gap-[0.8rem]'>
         <ButtonCheck
           isChecked={userInfo.termAgreed}

@@ -11,10 +11,7 @@ import Loading from '@shared/components/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// TODO : 백엔드 측에 이미지 삭제한 경우 어떻게 보내는지 질문.
-
 export default function ProfileSetting() {
-  // TODO: 커스텀 훅으로 분리 - 수정 api, 편집 가능한지 확인 후에.
   const navigate = useNavigate();
 
   const { data: userData, isPending: isUserDataPending } = useGetUserInfo();
@@ -62,7 +59,7 @@ export default function ProfileSetting() {
           />
         }
       />
-      <div className='flex flex-col items-center gap-[3rem] p-[2rem] pt-[3rem]'>
+      <div className='flex flex-col items-center gap-[3rem] p-[2rem]'>
         <ProfileImageSection profileImageUrl={userData?.profileImageUrl} />
         <div className='flex w-full flex-col gap-[2.4rem]'>
           <UserDataSection userInfo={userData || null} />
