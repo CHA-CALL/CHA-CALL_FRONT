@@ -1,3 +1,4 @@
+import ErrorText from '@shared/components/error-text/ErrorText';
 import { Icon } from '@shared/components/icon/Icon';
 import Input from '@shared/components/input/Input';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -33,8 +34,8 @@ export default function SetUserEmail() {
           />
         )}
       />
-      {errors.email && (
-        <span className='text-red-500'>{errors.email.message?.toString()}</span>
+      {errors.email?.message && (
+        <ErrorText text={errors.email.message?.toString()} />
       )}
     </div>
   );

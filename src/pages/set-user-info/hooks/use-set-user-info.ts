@@ -12,8 +12,14 @@ import z from 'zod';
 
 const userSchema = z.object({
   profileImageUrl: z.string().url().optional(),
-  name: z.string().min(1, '이름은 필수입니다.'),
-  email: z.string().email('이메일 형식이 올바르지 않습니다.'),
+  name: z
+    .string()
+    .min(1, '이름은 필수입니다.')
+    .max(24, '이름은 최대 25자까지 가능합니다.'),
+  email: z
+    .string()
+    .min(1, '이메일은 필수입니다.')
+    .email('이메일 형식이 올바르지 않습니다.'),
   gender: z.string().min(1, '성별은 필수입니다.'),
   termAgreed: z.boolean(),
 });

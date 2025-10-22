@@ -2,6 +2,7 @@ import { Icon } from '@shared/components/icon/Icon';
 import Input from '@shared/components/input/Input';
 import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
 import { Controller, useFormContext } from 'react-hook-form';
+import ErrorText from '@shared/components/error-text/ErrorText';
 
 export default function SetUserName() {
   const {
@@ -37,8 +38,8 @@ export default function SetUserName() {
           />
         )}
       />
-      {errors.name && (
-        <span className='text-red-500'>{errors.name.message?.toString()}</span>
+      {errors.name?.message && (
+        <ErrorText text={errors.name.message?.toString()} />
       )}
     </div>
   );
