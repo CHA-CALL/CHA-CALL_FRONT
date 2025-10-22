@@ -1,45 +1,40 @@
 import {
+  DEFAULT_PROFILE_IMAGE,
   useGetUserInfo,
   useUpdateUserInfo,
 } from '@pages/mypage/hooks/use-user-data';
-import {
-  COMPONENT_MAP,
-  INITIAL_USER_INFO,
-  SET_USER_INFO_TITLES,
-  VALID_FIELDS,
-  type ValidField,
-} from '@pages/set-user-info/constant/set-user-constant';
+import { INITIAL_USER_INFO } from '@pages/set-user-info/constant/set-user-constant';
 import { ROUTES } from '@router/constant/routes';
 import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import Loading from '@shared/components/loading/Loading';
 import Navigation from '@shared/components/navigation/Navigation';
 import type { UserResponse } from 'apis/data-contracts';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SetUserName from './components/SetUserName';
+import SetUserEmail from './components/SetUserEmail';
+import SetUserGender from './components/SetUserGender';
+import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
+import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileImageBottomSheet';
+import useToast from '@shared/hooks/use-toast';
+import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
+import AgreementSection from '@pages/profile-setting/components/AgreementSection';
+import SetAgreement from './components/SetAgreement';
 
 export default function SetUserInfo() {
-  const { field } = useParams<{ field: ValidField }>();
   const navigate = useNavigate();
-
+  const toast = useToast();
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const { data: userData, isLoading } = useGetUserInfo();
   const { mutate: updateUser, isPending } = useUpdateUserInfo({
     onSuccess: () => {
-      if (!field) {
-        navigate(ROUTES.PROFILE_SETTING, {
-          state: {
-            showToast: true,
-            isSuccess: false,
-            toastMessage: '잘못된 주소로의 접근입니다.',
-          },
-        });
-        throw new Error('허용되지 않은 프로필 수정 url 입니다.');
-      }
       navigate(ROUTES.PROFILE_SETTING, {
         state: {
           showToast: true,
           isSuccess: true,
-          toastMessage: `${SET_USER_INFO_TITLES[field]}이 완료되었습니다.`,
+          toastMessage: '정보가 수정되었습니다.',
         },
       });
     },
@@ -48,19 +43,6 @@ export default function SetUserInfo() {
     userData ?? INITIAL_USER_INFO
   );
 
-  useEffect(() => {
-    if (!field || !VALID_FIELDS.includes(field)) {
-      navigate(ROUTES.PROFILE_SETTING, {
-        state: {
-          showToast: true,
-          isSuccess: false,
-          toastMessage: '잘못된 주소로의 접근입니다.',
-        },
-      });
-    }
-  }, [field, navigate]);
-
-  const ComponentToRender = field ? COMPONENT_MAP[field] : null;
   if (isLoading || isPending || !userData) {
     return <Loading />;
   }
@@ -69,7 +51,12 @@ export default function SetUserInfo() {
 
   const isValid =
     userName === '' || userEmail === '' || userGender === undefined;
-
+  const handleOpenBottomSheet = () => {
+    setIsBottomSheetOpen(true);
+  };
+  const handleCloseBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
   const handleClickBack = () => navigate(-1);
   const handleClickSave = () => {
     updateUser({
@@ -80,18 +67,61 @@ export default function SetUserInfo() {
       termAgreed: userData.termAgreed!,
     });
   };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!isAcceptableFile(file)) {
+      toast.error(NOT_ALLOWED_FILE_TYPE);
+      return;
+    }
+
+    if (!isFileSizeValid(file)) {
+      toast.error(`파일 용량은 ${MAX_MB}MB 이하여야 합니다.`);
+      return;
+    }
+
+    // TODO : 추후 presignedURL api로 대체
+    const imageUrl = URL.createObjectURL(file);
+
+    // TODO : 타입 단언 제거 필요한가? ➡️ api 편집 요청 후 진행
+    updateUser({
+      profileImageUrl: imageUrl,
+    });
+    handleCloseBottomSheet();
+  };
+
+  const handleDeleteImage = () => {
+    updateUser({
+      profileImageUrl: DEFAULT_PROFILE_IMAGE,
+    });
+    handleCloseBottomSheet();
+  };
 
   return (
     <div className='relative'>
+      <ProfileImageBottomSheet
+        isBottomSheetOpen={isBottomSheetOpen}
+        handleCloseBottomSheet={handleCloseBottomSheet}
+        handleFileChange={handleFileChange}
+        handleDeleteImage={handleDeleteImage}
+      />
       <Navigation
-        text={SET_USER_INFO_TITLES[field ?? 'name']}
+        text={'프로필 수정'}
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='px-[2rem]'>
-        {ComponentToRender && (
-          <ComponentToRender userInfo={userInfo} setUserInfo={setUserInfo} />
-        )}
+      <div className='flex flex-col items-center gap-[2rem] p-[2rem]'>
+        <ProfileImageSection
+          profileImageUrl={userData?.profileImageUrl}
+          handleOpenBottomSheet={handleOpenBottomSheet}
+        />
+        <div className='flex flex-col gap-[3rem]'>
+          <SetUserName userInfo={userInfo} setUserInfo={setUserInfo} />
+          <SetUserEmail userInfo={userInfo} setUserInfo={setUserInfo} />
+          <SetUserGender userInfo={userInfo} setUserInfo={setUserInfo} />
+          <SetAgreement userInfo={userInfo} setUserInfo={setUserInfo} />
+        </div>
       </div>
 
       <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>

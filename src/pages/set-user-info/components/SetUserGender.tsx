@@ -7,7 +7,7 @@ export default function SetUserGender({
   userInfo,
   setUserInfo,
 }: SetUserInfoItemProps) {
-  const { title, male, female } = SET_USER_GENDER_TEXT;
+  const { male, female } = SET_USER_GENDER_TEXT;
   const userGender = userInfo?.gender;
   const handleChangeGender = (value: string) => () => {
     setUserInfo(prev => {
@@ -20,8 +20,8 @@ export default function SetUserGender({
   };
 
   return (
-    <div className='flex flex-1 flex-col gap-[1rem] py-[2rem]'>
-      <h2 className='title-sb-16 px-[0.5rem]'>{title}</h2>
+    <div className='flex flex-1 flex-col gap-[1rem]'>
+      <h2 className='title-sb-14 px-[0.5rem]'>성별</h2>
       <div className='flex w-full gap-[1rem]'>
         <Button
           children={male}

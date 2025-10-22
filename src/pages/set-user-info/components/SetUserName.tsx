@@ -1,21 +1,14 @@
 import { Icon } from '@shared/components/icon/Icon';
 import Input from '@shared/components/input/Input';
 import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
-import {
-  SET_USER_NAME_TEXT,
-  USER_NAME_MAX_LENGTH,
-} from '@pages/set-user-info/constant/set-user-constant';
-import { useRole } from '@shared/hooks/use-role';
-import { ROLE } from '@shared/constant/role';
+import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
+
 import type { ChangeEvent } from 'react';
 
 export default function SetUserName({
   userInfo,
   setUserInfo,
 }: SetUserInfoItemProps) {
-  const { title, ownerText, memberText } = SET_USER_NAME_TEXT;
-  const { role } = useRole();
-  const isProvider = role === ROLE.PROVIDER;
   const userName = userInfo?.name ?? '';
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,12 +31,9 @@ export default function SetUserName({
     });
   };
   return (
-    <div className='flex flex-1 flex-col gap-[1rem] pt-[2rem]'>
+    <div className='flex flex-1 flex-col gap-[1rem]'>
       <nav className='flex flex-col gap-[0.2rem] px-[0.5rem]'>
-        <h2 className='title-sb-16'>{title}</h2>
-        <p className='caption-m-11 text-grayscale-500'>
-          {isProvider ? ownerText : memberText}
-        </p>
+        <h2 className='title-sb-14'>이름</h2>
       </nav>
 
       <Input

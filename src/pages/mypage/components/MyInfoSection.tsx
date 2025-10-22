@@ -1,6 +1,7 @@
 import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@shared/components/icon/Icon';
 import { useGetUserInfo } from '../hooks/use-user-data';
+import Loading from '@shared/components/loading/Loading';
 
 interface MyInfoSectionProps {
   isProvider: boolean;
@@ -18,7 +19,7 @@ export default function MyInfoSection({
   };
 
   if (isPending) {
-    return <div>...사용자 정보 불러오는 중</div>;
+    return <Loading />;
   }
 
   return (

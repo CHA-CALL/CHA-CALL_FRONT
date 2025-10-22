@@ -11,6 +11,7 @@ import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileIm
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import { ROUTES } from '@router/constant/routes';
+import Button from '@shared/components/button/Button';
 import Loading from '@shared/components/loading/Loading';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@shared/constant/image';
 import useToast from '@shared/hooks/use-toast';
@@ -114,12 +115,25 @@ export default function ProfileSetting() {
     });
   };
 
+  const handleEditProfile = () => {
+    navigate(ROUTES.PROFILE_SETTING_EDIT);
+  };
+
   return (
     <>
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
         text='프로필 설정'
+        rightIcon={
+          <Button
+            style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
+            children={'편집'}
+            variant={'default'}
+            buttonStyle={'edit'}
+            onClick={handleEditProfile}
+          />
+        }
       />
       <div className='flex flex-col items-center gap-[3rem] p-[2rem] pt-[3rem]'>
         <ProfileImageSection

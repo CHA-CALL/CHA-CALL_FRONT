@@ -18,11 +18,11 @@ export default function ProfileImageSection({
       onClick={handleOpenBottomSheet}
     >
       <img
-        className='h-[8rem] w-[8rem] rounded-full border border-grayscale-200 object-cover'
+        className='border-grayscale-200 h-[8rem] w-[8rem] rounded-full border object-cover'
         src={profileImage}
         alt='프로필사진'
       />
-      <div className='absolute bottom-[0.8rem] right-[0] z-50 flex h-[3rem] w-[3rem] items-center rounded-[1.5rem] border border-grayscale-200 bg-white p-[0.5rem]'>
+      <div className='border-grayscale-200 absolute bottom-[0.8rem] right-[0] z-50 flex h-[3rem] w-[3rem] items-center rounded-[1.5rem] border bg-white p-[0.5rem]'>
         <Icon name='ic_camera' className='text-grayscale-500' />
       </div>
     </button>
