@@ -45,6 +45,7 @@ export default function MenuEdit() {
     handleClearName,
     handleClickBack,
   } = useMenuForm({
+    foodTruckId: foodTruckId || '',
     initialImageUrl: menuData?.imageUrl,
     formData,
     updateName,

@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
@@ -34,6 +35,7 @@ export default function MenuRegister() {
     handleClearName,
     handleClickBack,
   } = useMenuForm({
+    foodTruckId: foodTruckId || '',
     formData,
     updateName,
     updateImage,
@@ -44,7 +46,7 @@ export default function MenuRegister() {
 
   if (!foodTruckId || isNaN(parsedFoodTruckId)) {
     alert('잘못된 접근입니다.');
-    navigate(-1);
+    navigate(ROUTES.MENU_LIST(parsedFoodTruckId.toString()));
     return null;
   }
 

@@ -1,8 +1,10 @@
 import { useState, useEffect, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 
 interface UseMenuFormProps {
+  foodTruckId: string;
   initialImageUrl?: string;
   formData: MenuFormData;
   updateName: (_name: string) => void;
@@ -10,6 +12,7 @@ interface UseMenuFormProps {
 }
 
 export const useMenuForm = ({
+  foodTruckId,
   initialImageUrl,
   formData,
   updateName,
@@ -50,7 +53,7 @@ export const useMenuForm = ({
   };
 
   const handleClickBack = () => {
-    navigate(-1);
+    navigate(ROUTES.MENU_LIST(foodTruckId));
   };
 
   return {
