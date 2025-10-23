@@ -17,6 +17,7 @@ import AccountForm from '@pages/@owner/account/AccountForm';
 import ReservationHistory from '@pages/reservation-history/ReservationHistory';
 import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
 import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
+import UploadFoodTruckImages from '@pages/@owner/upload-food-truck/UploadFoodTruckImage';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.UPLOAD_FOOD_TRUCK,
         element: <UploadFoodTruck />,
+      },
+      {
+        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES,
+        element: <UploadFoodTruckImages />,
       },
       {
         path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
