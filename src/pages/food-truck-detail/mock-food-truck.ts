@@ -19,7 +19,12 @@ export const mockFoodTruck = {
   availableQuantity: '200인분 미만',
   needElectricity: '필요',
   paymentMethod: '무관',
-  availableDates: '2025-10-01~2025-10-10',
+  availableDates: [
+    '2025-10-01~2025-10-10',
+    '2025-10-15~2025-10-28',
+    '2025-10-31~2025-11-03',
+    '2025-11-10~2025-11-21',
+  ],
   photoUrl: [
     'https://placehold.co/300',
     'https://placehold.co/300',
