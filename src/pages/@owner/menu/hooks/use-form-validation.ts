@@ -10,6 +10,7 @@ import {
   NOT_ALLOWED_FILE_TYPE,
 } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { formatPrice } from '@shared/utils/price-formatter';
 
 const menuSchema = z.object({
   name: z
@@ -40,7 +41,7 @@ const menuSchema = z.object({
       val => val.replace(/,/g, '').length >= MENU_LIMIT.PRICE_MIN_LENGTH,
       MENU_ERROR_MESSAGE.PRICE_MIN
     )
-    .transform(val => Number(val.replace(/,/g, '')).toLocaleString()),
+    .transform(val => formatPrice(val)),
 
   imageUrl: z
     .instanceof(File)
@@ -99,10 +100,7 @@ export const useFormValidation = () => {
   };
 
   const updatePrice = (price: string) => {
-    const numbersOnly = price.replace(/[^\d]/g, '');
-    const formattedPrice = numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    setValue('price', formattedPrice, { shouldValidate: true });
+    setValue('price', formatPrice(price), { shouldValidate: true });
   };
 
   const updateImageUrl = (image: File | null) => {

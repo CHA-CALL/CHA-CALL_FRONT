@@ -11,6 +11,7 @@ import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
 import { uploadImage } from '@pages/@owner/menu/api';
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
+import { formatPrice } from '@shared/utils/price-formatter';
 
 export default function MenuEdit() {
   const location = useLocation();
@@ -103,7 +104,7 @@ export default function MenuEdit() {
     if (menuData) {
       const loadImage = async () => {
         const formattedPrice = menuData.price
-          ? Number(menuData.price.replace(/\D/g, '')).toLocaleString()
+          ? formatPrice(menuData.price)
           : '';
         let imageFile: File | undefined;
 

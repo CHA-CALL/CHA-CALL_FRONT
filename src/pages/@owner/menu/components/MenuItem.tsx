@@ -1,5 +1,6 @@
 import { cn } from '@utils/cn';
 import MenuToggleSwitch from '@pages/@owner/menu/components/MenuToggleSwitch';
+import { formatPrice } from '@shared/utils/price-formatter';
 
 interface MenuItemProps {
   menuImage: string;
@@ -44,7 +45,7 @@ export default function MenuItem({
         <div className='flex items-center gap-[0.2rem]'>
           <span className='title-sb-16 text-grayscale-900'>
             {menuPrice
-              ? Number(menuPrice.replace(/\D/g, '')).toLocaleString()
+              ? formatPrice(menuPrice)
               : '0'
             }
           </span>
