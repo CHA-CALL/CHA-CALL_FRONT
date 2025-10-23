@@ -7,8 +7,7 @@ import MenuDeleteModal from '@pages/@owner/menu/components/MenuDeleteModal';
 import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import { useDeleteMenu } from '@pages/@owner/menu/hooks/use-menu-delete';
-import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
-import { uploadImage } from '@pages/@owner/menu/api';
+import { uploadImage, getPresignedUrl } from '@pages/@owner/menu/api';
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
 import { formatPrice } from '@shared/utils/price-formatter';
@@ -24,7 +23,6 @@ export default function MenuEdit() {
   const { mutate: deleteMenu } = useDeleteMenu(Number(foodTruckId), Number(menuId));
 
   const menuData = location.state?.menuData;
-  const { mutateAsync: getPresignedUrl } = useMenuImage();
 
   const {
     formData,

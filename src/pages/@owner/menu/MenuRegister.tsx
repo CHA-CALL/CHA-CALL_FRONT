@@ -4,8 +4,7 @@ import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
-import { useMenuImage } from '@pages/@owner/menu/hooks/use-menu-image';
-import { uploadImage } from '@pages/@owner/menu/api';
+import { uploadImage, getPresignedUrl } from '@pages/@owner/menu/api';
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
 
@@ -42,7 +41,6 @@ export default function MenuRegister() {
   });
 
   const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
-  const { mutateAsync: getPresignedUrl } = useMenuImage();
 
   if (!foodTruckId || isNaN(parsedFoodTruckId)) {
     alert('잘못된 접근입니다.');

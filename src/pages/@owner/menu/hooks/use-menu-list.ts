@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
-import { getFoodTruckMenus, editMenuStatus } from '@pages/@owner/menu/api';
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { editMenuStatus } from '@pages/@owner/menu/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMenus } from '@pages/@owner/menu/hooks/use-menus';
 import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 
@@ -15,24 +16,7 @@ export const useMenuList = (foodTruckId: number) => {
   const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
   const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
 
-  const query = useInfiniteQuery({
-    queryKey: MENUS_QUERY_KEY.SORTED_LIST(foodTruckId, isSorted),
-    queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
-      return getFoodTruckMenus({
-        foodTruckId,
-        sort: isSorted,
-        'cursorPagingRequest.cursor': pageParam,
-      });
-    },
-    initialPageParam: undefined,
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.hasNext) {
-        return lastPage.lastCursor;
-      }
-      return undefined;
-    },
-    enabled: !!foodTruckId,
-  });
+  const query = useMenus(foodTruckId, isSorted);
 
   useEffect(() => {
     if (query.data) {

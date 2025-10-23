@@ -13,7 +13,7 @@ import type { SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 export const getFoodTruckMenus = async (params: {
   foodTruckId: number;
-  'sort'?: SortType;
+  sort?: SortType;
   'cursorPagingRequest.cursor'?: number;
 }) => {
   const response = await apiRequest<BaseResponseCursorPagingResponseMyFoodTruckMenuResponse>({
