@@ -1,77 +1,42 @@
 export const mockup = [
   {
-    title: '푸드트럭 1',
+    foodTruckId: 1,
+    name: '푸드트럭',
+    photoUrl: 'https://placehold.co/100',
+    description: '맛있는 푸드트럭입니다.',
+    averageRating: 4.5,
+    ratingCount: 100,
   },
   {
-    title: '푸드트럭 2',
+    foodTruckId: 2,
+    name: '푸드트럭',
+    photoUrl: 'https://placehold.co/80',
+    description: '맛있는 푸드트럭입니다.',
+    averageRating: 4.5,
+    ratingCount: 100,
   },
   {
-    title: '푸드트럭 3',
+    foodTruckId: 3,
+    name: '푸드트럭',
+    photoUrl: 'https://placehold.co/80',
+    description: '맛있는 푸드트럭입니다.',
+    averageRating: 4.5,
+    ratingCount: 100,
   },
   {
-    title: '푸드트럭 4',
+    foodTruckId: 4,
+    name: '푸드트럭',
+    photoUrl: 'https://placehold.co/80',
+    description: '맛있는 푸드트럭입니다.',
+    averageRating: 4.5,
+    ratingCount: 100,
   },
   {
-    title: '푸드트럭 5',
-  },
-  {
-    title: '푸드트럭 1',
-  },
-  {
-    title: '푸드트럭 2',
-  },
-  {
-    title: '푸드트럭 3',
-  },
-  {
-    title: '푸드트럭 4',
-  },
-  {
-    title: '푸드트럭 5',
-  },
-  {
-    title: '푸드트럭 1',
-  },
-  {
-    title: '푸드트럭 2',
-  },
-  {
-    title: '푸드트럭 3',
-  },
-  {
-    title: '푸드트럭 4',
-  },
-  {
-    title: '푸드트럭 5',
-  },
-  {
-    title: '푸드트럭 1',
-  },
-  {
-    title: '푸드트럭 2',
-  },
-  {
-    title: '푸드트럭 3',
-  },
-  {
-    title: '푸드트럭 4',
-  },
-  {
-    title: '푸드트럭 5',
-  },
-  {
-    title: '푸드트럭 1',
-  },
-  {
-    title: '푸드트럭 2',
-  },
-  {
-    title: '푸드트럭 3',
-  },
-  {
-    title: '푸드트럭 4',
-  },
-  {
-    title: '푸드트럭 5',
+    foodTruckId: 5,
+    name: '푸드트럭',
+    photoUrl: 'https://placehold.co/80',
+    description: '맛있는 푸드트럭입니다.',
+    averageRating: 4.5,
+    ratingCount: 100,
   },
 ];
