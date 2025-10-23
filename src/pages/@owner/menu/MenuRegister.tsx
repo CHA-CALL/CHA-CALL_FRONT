@@ -22,7 +22,7 @@ export default function MenuRegister() {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     isValid,
     handleSubmit,
   } = useFormValidation();
@@ -38,7 +38,7 @@ export default function MenuRegister() {
     foodTruckId: foodTruckId || '',
     formData,
     updateName,
-    updateImage,
+    updateImageUrl,
   });
 
   const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
@@ -51,13 +51,13 @@ export default function MenuRegister() {
   }
 
   const onSubmit = async (formData: MenuFormData) => {
-    if (!formData.image) return;
+    if (!formData.imageUrl) return;
 
     try {
-      const fileExtension = formData.image.name.split('.').pop() || '';
+      const fileExtension = formData.imageUrl.name.split('.').pop() || '';
       const imageInfo = await getPresignedUrl(fileExtension);
 
-      await uploadImage(imageInfo.presignedUrl!, formData.image);
+      await uploadImage(imageInfo.presignedUrl!, formData.imageUrl);
 
       registerMenu({
         name: formData.name,

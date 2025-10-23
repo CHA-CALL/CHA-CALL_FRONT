@@ -31,7 +31,7 @@ export default function MenuEdit() {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     isValid,
     handleSubmit,
     reset,
@@ -49,17 +49,17 @@ export default function MenuEdit() {
     initialImageUrl: menuData?.imageUrl,
     formData,
     updateName,
-    updateImage,
+    updateImageUrl,
   });
 
   const onSubmit = async (formData: MenuFormData) => {
-    if (!formData.image) return;
+    if (!formData.imageUrl) return;
 
     try {
-      const fileExtension = formData.image.name.split('.').pop() || '';
+      const fileExtension = formData.imageUrl.name.split('.').pop() || '';
       const imageInfo = await getPresignedUrl(fileExtension);
 
-      await uploadImage(imageInfo.presignedUrl!, formData.image);
+      await uploadImage(imageInfo.presignedUrl!, formData.imageUrl);
 
       editMenu({
         name: formData.name,
@@ -120,7 +120,7 @@ export default function MenuEdit() {
           name: menuData.name,
           description: menuData.description,
           price: formattedPrice,
-          image: imageFile,
+          imageUrl: imageFile,
         });
       };
       loadImage();

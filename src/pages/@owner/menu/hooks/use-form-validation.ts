@@ -42,7 +42,7 @@ const menuSchema = z.object({
     )
     .transform(val => Number(val.replace(/,/g, '')).toLocaleString()),
 
-  image: z
+  imageUrl: z
     .instanceof(File)
     .refine(
       file => {
@@ -79,7 +79,7 @@ export const useFormValidation = () => {
       name: '',
       description: '',
       price: '',
-      image: undefined,
+      imageUrl: undefined,
     },
     mode: 'onChange',
   });
@@ -105,22 +105,22 @@ export const useFormValidation = () => {
     setValue('price', formattedPrice, { shouldValidate: true });
   };
 
-  const updateImage = (image: File | null) => {
+  const updateImageUrl = (image: File | null) => {
     if (!image) {
-      setError('image', {
+      setError('imageUrl', {
         message: MENU_ERROR_MESSAGE.IMAGE_MIN_COUNT(MENU_LIMIT.IMAGE_MIN_COUNT),
       });
       return;
     }
 
-    setValue('image', image, { shouldValidate: true });
+    setValue('imageUrl', image, { shouldValidate: true });
   };
 
   const Errors = {
     name: errors.name?.message,
     description: errors.description?.message,
     price: errors.price?.message,
-    image: errors.image?.message,
+    imageUrl: errors.imageUrl?.message,
   };
 
   return {
@@ -130,7 +130,7 @@ export const useFormValidation = () => {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     handleSubmit,
     trigger,
     reset,

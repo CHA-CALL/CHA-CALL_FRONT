@@ -8,7 +8,7 @@ interface UseMenuFormProps {
   initialImageUrl?: string;
   formData: MenuFormData;
   updateName: (_name: string) => void;
-  updateImage: (_image: File | null) => void;
+  updateImageUrl: (_image: File | null) => void;
 }
 
 export const useMenuForm = ({
@@ -16,7 +16,7 @@ export const useMenuForm = ({
   initialImageUrl,
   formData,
   updateName,
-  updateImage,
+  updateImageUrl,
 }: UseMenuFormProps) => {
   const navigate = useNavigate();
 
@@ -24,28 +24,28 @@ export const useMenuForm = ({
   const canAdd = !imageUrl;
 
   useEffect(() => {
-    if (formData.image) {
+    if (formData.imageUrl) {
       const reader = new FileReader();
       reader.onload = e => {
         setImageUrl(e.target?.result as string);
       };
-      reader.readAsDataURL(formData.image);
+      reader.readAsDataURL(formData.imageUrl);
     } else {
       setImageUrl(initialImageUrl || '');
     }
-  }, [formData.image, initialImageUrl]);
+  }, [formData.imageUrl, initialImageUrl]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      updateImage(selectedFile);
+      updateImageUrl(selectedFile);
     }
     e.target.value = '';
   };
 
   const handleRemoveFile = () => {
     setImageUrl('');
-    updateImage(null);
+    updateImageUrl(null);
   };
 
   const handleClearName = () => {
