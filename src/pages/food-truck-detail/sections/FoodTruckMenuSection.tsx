@@ -2,11 +2,13 @@ import Button from '@shared/components/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 // import { useNavigate } from 'react-router-dom';
 
+// TODO: 추후 swagger 타입으로 변경
 interface MenuType {
   menuId: number;
-  menuUrl: string;
   name: string;
-  price: number;
+  price: string;
+  description: string;
+  imageUrl: string;
 }
 
 interface FoodTruckMenuSectionProps {
@@ -30,7 +32,7 @@ export default function FoodTruckMenuSection({
         {menus.map(menu => (
           <div key={menu.menuId} className='flex flex-col gap-[0.7rem]'>
             <img
-              src={menu.menuUrl}
+              src={menu.imageUrl}
               alt='메뉴 사진'
               className='h-[10rem] w-[10rem] rounded-[1.6rem] border border-grayscale-200'
             />
@@ -38,7 +40,7 @@ export default function FoodTruckMenuSection({
               <span className='body-m-14'>{menu.name}</span>
               <div className='flex flex-row items-center gap-[0.2rem]'>
                 <span className='title-sb-16'>
-                  {menu.price.toLocaleString()}
+                  {parseInt(menu.price).toLocaleString()}
                 </span>
                 <span className='text-grayscale-700 caption-m-11'>원</span>
               </div>

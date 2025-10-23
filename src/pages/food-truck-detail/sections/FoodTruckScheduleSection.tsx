@@ -1,6 +1,13 @@
 import ScheduleCalendar from '@pages/food-truck-detail/components/ScheduleCalendar';
 
-export default function FoodTruckScheduleSection() {
+interface FoodTruckScheduleSectionProps {
+  availableDates: string;
+}
+
+export default function FoodTruckScheduleSection({
+  availableDates,
+}: FoodTruckScheduleSectionProps) {
+  console.log(availableDates);
   return (
     <div className='flex flex-col gap-[2rem] p-[2rem]'>
       <h3 className='text-grayscale-900 title-sb-12'>가능한 일정대</h3>

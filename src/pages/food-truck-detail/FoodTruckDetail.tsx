@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Navigation from '@components/navigation/Navigation';
@@ -8,63 +9,99 @@ import FoodTruckHeaderSection from '@pages/food-truck-detail/sections/FoodTruckH
 import FoodTruckInfoSection from '@pages/food-truck-detail/sections/FoodTruckInfoSection';
 import FoodTruckMenuSection from '@pages/food-truck-detail/sections/FoodTruckMenuSection';
 import FoodTruckScheduleSection from '@pages/food-truck-detail/sections/FoodTruckScheduleSection';
-import FoodTruckEtcSection from '@pages/food-truck-detail/sections/FoodTruckEtcSection';
+import FoodTruckOptionSection from '@pages/food-truck-detail/sections/FoodTruckOptionSection';
 
 import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
-import { mockFoodTruck } from '@pages/food-truck-detail/mock-food-truck';
+import {
+  mockFoodTruck,
+  mockMenus,
+} from '@pages/food-truck-detail/mock-food-truck';
 
 export default function FoodTruckDetail() {
   const navigate = useNavigate();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // 스크롤 감지 로직
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 210);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // TODO: mock 대신 React Query로 받아오기
   const {
     photoUrl,
-    foodTruckName,
-    desc,
-    location,
-    time,
-    availableDiscussion,
+    name,
+    isSaved,
+    description,
+    foodTruckServiceAreas,
+    activeTime,
+    timeDiscussRequired,
     phoneNumber,
-    rating,
-    foodCategories,
-    operationInfo,
+    averageRating,
+    menuCategories,
+    operatingInfo,
     availableQuantity,
     needElectricity,
     paymentMethod,
-    menus,
-    etc,
+    availableDates,
+    option,
   } = mockFoodTruck;
+  const menus = mockMenus;
 
-  const handleClickBack = () => {
-    navigate(-1);
-  };
+  // TODO: 핸들러는 서버 api 호출로 변경될 예정. 상태는 제거 예정
+  const [isLiked, setIsLiked] = useState(isSaved);
+  const handleClickSaveButton = () => setIsLiked(!isLiked);
 
-  const handleToChatPage = () => {
-    alert('채팅 페이지로');
-  };
+  const handleClickBack = () => navigate(-1);
+  const handleToChatPage = () => alert('채팅 페이지로');
 
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
-        handleLeftClick={handleClickBack}
-        backgroundColor=''
-      />
+      <div>
+        <Navigation
+          leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
+          handleLeftClick={handleClickBack}
+          text={isScrolled ? name : undefined}
+          rightIcon={
+            isScrolled ? (
+              <Icon
+                name={isLiked ? 'ic_heart_fill' : 'ic_heart_empty'}
+                width={24}
+                height={24}
+                className='text-primary-700'
+                onClick={handleClickSaveButton}
+              />
+            ) : undefined
+          }
+          className={`transition-colors duration-100 ${
+            isScrolled ? 'bg-white' : 'bg-transparent'
+          } `}
+        />
+      </div>
+
       <div className='mt-[-4.8rem] pb-[12rem]'>
         <FoodTruckHeaderSection
           photoUrl={photoUrl}
-          foodTruckName={foodTruckName}
-          desc={desc}
-          location={location}
-          time={time}
-          availableDiscussion={availableDiscussion}
+          name={name}
+          isSaved={isLiked}
+          description={description}
+          foodTruckServiceAreas={foodTruckServiceAreas}
+          activeTime={activeTime}
+          timeDiscussRequired={timeDiscussRequired}
           phoneNumber={phoneNumber}
+          handleClickSaveButton={handleClickSaveButton}
         />
         <SectionDivider />
         <FoodTruckInfoSection
-          rating={rating}
-          foodCategories={foodCategories}
-          operationInfo={operationInfo}
+          averageRating={averageRating}
+          menuCategories={menuCategories}
+          operatingInfo={operatingInfo}
           availableQuantity={availableQuantity}
           needElectricity={needElectricity}
           paymentMethod={paymentMethod}
@@ -72,9 +109,9 @@ export default function FoodTruckDetail() {
         <SectionDivider />
         <FoodTruckMenuSection menus={menus} />
         <SectionDivider />
-        <FoodTruckScheduleSection />
+        <FoodTruckScheduleSection availableDates={availableDates} />
         <SectionDivider />
-        <FoodTruckEtcSection etc={etc} />
+        <FoodTruckOptionSection option={option} />
       </div>
       <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
         <Button
