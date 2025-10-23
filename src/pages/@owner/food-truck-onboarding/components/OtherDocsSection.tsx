@@ -44,7 +44,7 @@ export default function OtherDocsSection({
   }, [files]);
 
   return (
-    <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
+    <section className='flex w-full flex-col items-start justify-center gap-[1.6rem]'>
       <div className='flex w-full flex-col items-start justify-center gap-[0.2rem]'>
         <SectionTitle
           title='기타 서류'

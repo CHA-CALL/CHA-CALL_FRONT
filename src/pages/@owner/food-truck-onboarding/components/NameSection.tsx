@@ -6,6 +6,7 @@ import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/us
 import ErrorText from '@shared/components/error-text/ErrorText';
 
 interface NameSectionProps {
+  isNameVerified?: boolean;
   value: OwnerFormData['name'];
   onChange: (_name: string) => void;
   handleCheckNameDuplicate: (_name: string) => void;
@@ -13,6 +14,7 @@ interface NameSectionProps {
 }
 
 export default function NameSection({
+  isNameVerified,
   value,
   onChange,
   handleCheckNameDuplicate,
@@ -23,13 +25,14 @@ export default function NameSection({
       <SectionTitle title='이름' />
       <Input
         value={value}
+        placeholder='푸드트럭 명을 입력하세요.'
         onChange={e => onChange(e.target.value)}
         maxLength={OWNER_TEXT.MAX_LENGTH}
         error={!!error}
         rightComponent={
           <Button
             variant='verify'
-            buttonStyle={'active'}
+            buttonStyle={isNameVerified ? 'disabled' : 'active'}
             handleClickButton={() => handleCheckNameDuplicate(value)}
           >
             중복확인

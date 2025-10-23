@@ -47,7 +47,7 @@ export default function BizRegCertSection({
   }, [file]);
 
   return (
-    <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
+    <section className='flex w-full flex-col items-start justify-center gap-[1.6rem]'>
       <SectionTitle
         title='사업자 등록증'
         maxLength={OWNER_MEDIA_MAX_COUNT.BIZ_REG_CERT}

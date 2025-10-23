@@ -11,11 +11,15 @@ import {
 } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
 
-const ownerSchema = z.object({
-  name: FOOD_TRUCK_NAME_VALIDATOR,
-  bizRegCert: BIZ_REG_CERT_FILE_VALIDATOR,
-  otherDocs: OTHER_DOCS_FILES_VALIDATOR,
-});
+const ownerSchema = z
+  .object({
+    name: FOOD_TRUCK_NAME_VALIDATOR,
+    bizRegCert: BIZ_REG_CERT_FILE_VALIDATOR,
+    otherDocs: OTHER_DOCS_FILES_VALIDATOR,
+  })
+  .refine((data) => {
+    return !!data.bizRegCert && (!!data.otherDocs && data.otherDocs.length > 0);
+  });
 
 export type OwnerFormData = z.infer<typeof ownerSchema>;
 
@@ -23,7 +27,7 @@ export const useFoodTruckInput = () => {
   const {
     isNameVerified,
     isCheckingDuplicate,
-    handleCheckNameDuplicate,
+    handleCheckNameDuplicate: checkNameDuplicate,
     resetVerification,
   } = useFoodTruckName();
 
@@ -49,6 +53,14 @@ export const useFoodTruckInput = () => {
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
     resetVerification();
+  };
+
+  const handleCheckNameDuplicate = async () => {
+    const name = formData.name;
+    const isAvailable = await checkNameDuplicate(name);
+    if (!isAvailable) {
+      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
+    }
   };
 
   const updateBizRegCertFile = (bizRegCert: File | undefined) => {
@@ -134,5 +146,6 @@ export const useFoodTruckInput = () => {
     handleCheckNameDuplicate,
     handleSubmit: handleSubmit(onSubmit),
     isFormValid: isValid && isNameVerified,
+    isNameVerified,
   };
 };
