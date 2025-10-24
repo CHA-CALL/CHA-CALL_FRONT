@@ -32,6 +32,7 @@ const iconIds: IconId[] = [
   'ic_heart_empty',
   'ic_time',
   'ic_phone',
+  'ic_dropdown',
 ];
 
 const meta: Meta<typeof Icon> = {

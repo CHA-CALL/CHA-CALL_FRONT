@@ -1,6 +1,6 @@
 import { Icon } from '@components/icon/Icon';
-import useImageDrag from '@pages/food-truck-detail/hooks/use-image-drag';
-// import { useState } from 'react';
+import { cn } from '@utils/cn';
+import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 
 interface FoodTruckHeaderSectionProps {
   photoUrl: string[];
@@ -25,16 +25,16 @@ export default function FoodTruckHeaderSection({
   phoneNumber,
   handleClickSaveButton,
 }: FoodTruckHeaderSectionProps) {
-  // const [isFullLocation,setIsFullLocation]=useState(false);
-
   const {
     imageRef,
     currentImageIndex,
     translateImageX,
+    isViewAllLocation,
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
-  } = useImageDrag(photoUrl);
+    handleViewAllLocation,
+  } = useFoodTruckDetailView(photoUrl);
 
   return (
     <>
@@ -95,9 +95,28 @@ export default function FoodTruckHeaderSection({
               height={18}
               className='min-w-[1.8rem] text-grayscale-300'
             />
-            <div className='whitespace-normal break-keep text-grayscale-700 body-m-13'>
+            <div
+              className={cn(
+                `text-grayscale-700 body-m-13`,
+                isViewAllLocation
+                  ? 'whitespace-normal'
+                  : 'overflow-hidden text-ellipsis whitespace-nowrap'
+              )}
+            >
               {foodTruckServiceAreas.join(', ')}
             </div>
+
+            <button type='button' onClick={handleViewAllLocation}>
+              <Icon
+                name='ic_dropdown'
+                width={18}
+                height={18}
+                className={cn(
+                  `min-w-[1.8rem] text-grayscale-700 transition-all duration-300`,
+                  isViewAllLocation && 'rotate-180'
+                )}
+              />
+            </button>
           </div>
           <div className='flex flex-row items-center gap-[0.8rem]'>
             <Icon

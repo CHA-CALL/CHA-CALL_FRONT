@@ -14,6 +14,7 @@ export type IconId =
   | 'ic_dot'
   | 'ic_down'
   | 'ic_download'
+  | 'ic_dropdown'
   | 'ic_error'
   | 'ic_error_small'
   | 'ic_filter'
