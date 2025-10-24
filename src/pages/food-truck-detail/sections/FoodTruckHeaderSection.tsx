@@ -77,13 +77,19 @@ export default function FoodTruckHeaderSection({
         <div className='flex flex-col gap-[0.2rem]'>
           <div className='flex flex-row items-center justify-between'>
             <h1 className='text-grayscale-900 heading-sb-20'>{name}</h1>
-            <Icon
-              name={isSaved ? 'ic_heart_fill' : 'ic_heart_empty'}
-              width={24}
-              height={24}
-              className='text-primary-700'
+            <button
+              type='button'
               onClick={handleClickSaveButton}
-            />
+              aria-label={isSaved ? '찜하기 취소' : '찜하기'}
+            >
+              <Icon
+                name={isSaved ? 'ic_heart_fill' : 'ic_heart_empty'}
+                width={24}
+                height={24}
+                className='text-primary-700'
+                onClick={handleClickSaveButton}
+              />
+            </button>
           </div>
           <span className='text-grayscale-700 body-m-14'>{description}</span>
         </div>

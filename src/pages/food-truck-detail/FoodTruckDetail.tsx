@@ -46,13 +46,18 @@ export default function FoodTruckDetail() {
         text={isScrolled ? name : undefined}
         rightIcon={
           isScrolled ? (
-            <Icon
-              name={isLiked ? 'ic_heart_fill' : 'ic_heart_empty'}
-              width={24}
-              height={24}
-              className='text-primary-700'
+            <button
+              type='button'
               onClick={handleClickSaveButton}
-            />
+              aria-label={isLiked ? '찜하기 취소' : '찜하기'}
+            >
+              <Icon
+                name={isLiked ? 'ic_heart_fill' : 'ic_heart_empty'}
+                width={24}
+                height={24}
+                className='text-primary-700'
+              />
+            </button>
           ) : undefined
         }
         className={`transition-colors duration-300 ${
