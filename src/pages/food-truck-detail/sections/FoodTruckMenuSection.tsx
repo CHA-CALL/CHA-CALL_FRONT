@@ -6,7 +6,7 @@ import { Icon } from '@shared/components/icon/Icon';
 interface MenuType {
   menuId: number;
   name: string;
-  price: string;
+  price: number;
   description: string;
   imageUrl: string;
 }
@@ -40,7 +40,7 @@ export default function FoodTruckMenuSection({
               <span className='body-m-14'>{menu.name}</span>
               <div className='flex flex-row items-center gap-[0.2rem]'>
                 <span className='title-sb-16'>
-                  {parseInt(menu.price).toLocaleString()}
+                  {menu.price.toLocaleString()}
                 </span>
                 <span className='text-grayscale-700 caption-m-11'>원</span>
               </div>
