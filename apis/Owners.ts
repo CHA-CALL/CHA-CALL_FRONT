@@ -11,10 +11,12 @@
  */
 
 import {
+  CreateNewFoodTruckData,
   DeleteBankAccountData,
   DeleteChatTemplateData,
   DeleteFoodTruckData,
   DeleteMenuData,
+  FoodTruckCreateRequest,
   GetBankAccountData,
   GetChatTemplatesData,
   GetMenusData,
@@ -198,6 +200,33 @@ export class Owners<
       path: `/owners/me/bank-accounts/${bankAccountId}`,
       method: "DELETE",
       secure: true,
+      ...params,
+    });
+  /**
+   * @description 푸드트럭을 최초로 등록하는 API 입니다.
+   *
+   * @tags Owner API
+   * @name CreateNewFoodTruck
+   * @summary 사장님 등록(서류 검증) & 푸드트럭 최초 등록
+   * @request POST:/owners
+   * @secure
+   * @response `200` `CreateNewFoodTruckData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  createNewFoodTruck = (
+    data: FoodTruckCreateRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<CreateNewFoodTruckData, void>({
+      path: `/owners`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     });
   /**

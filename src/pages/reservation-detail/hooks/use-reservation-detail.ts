@@ -29,7 +29,7 @@ export const useReservationDetail = () => {
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   // const isProvider = role === ROLE.PROVIDER;
-  const isProvider = true;
+  const isProvider = false;
 
   const {
     data: reservationDetailData,
@@ -55,7 +55,6 @@ export const useReservationDetail = () => {
   const topContents: ReservationDetailTopContentProps = isProvider
     ? {
         role: ROLE.PROVIDER,
-        // TODO : 서버 api 수정 후 반영.(푸드트럭 이름 추가)
         foodTruckName: reservationDetailData?.foodTruckName,
         clientName: reservationDetailData?.name,
         profileImage: reservationDetailData?.profileImage,
@@ -64,7 +63,7 @@ export const useReservationDetail = () => {
         role: ROLE.CLIENT,
         photoUrl: reservationDetailData?.photoUrl,
         foodTruckName: reservationDetailData?.name,
-        // TODO: 푸드트럭 상세정보로 이동 라우트 설정
+        // TODO: 푸드트럭 상세정보로 이동 라우트 설정. 푸드트럭 상세 페이지 머지 후 수정
         handleTruckDetail: () => alert('푸드트럭 상세 정보로 이동'),
       };
 
@@ -105,8 +104,11 @@ export const useReservationDetail = () => {
   ];
 
   const handleDownload = () => {
-    //TODO : 다운로드 API 연동 예정
-    alert('다운로드 버튼 클릭');
+    if (!reservationDetailData?.pdfUrl) {
+      toast.error('현재 견적서가 없어 다운로드할 수 없습니다.');
+      return;
+    }
+    window.open(reservationDetailData?.pdfUrl);
   };
 
   useEffect(() => {

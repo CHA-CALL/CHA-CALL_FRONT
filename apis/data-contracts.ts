@@ -253,6 +253,29 @@ export interface ReservationIdResponse {
   reservationId?: number;
 }
 
+export interface FoodTruckCreateRequest {
+  /**
+   * 푸드트럭 이름
+   * @minLength 1
+   * @maxLength 10
+   * @example "차콜 푸드트럭"
+   */
+  name: string;
+  /**
+   * 사업자등록증 url
+   * @minLength 1
+   * @example "https://cdn.chacall.com/foodtrucks/osori/business-license.jpg"
+   */
+  businessRegistrationUrl: string;
+  /**
+   * 기타 서류 URL 목록 (정확히 5장)
+   * @maxItems 5
+   * @minItems 5
+   * @example ["https://cdn.chacall.com/foodtrucks/osori/doc1.jpg","https://cdn.chacall.com/foodtrucks/osori/doc2.jpg","https://cdn.chacall.com/foodtrucks/osori/doc3.jpg","https://cdn.chacall.com/foodtrucks/osori/doc4.jpg","https://cdn.chacall.com/foodtrucks/osori/doc5.jpg"]
+   */
+  otherDocumentUrls?: string[];
+}
+
 export interface RegisterMenuRequest {
   /**
    * 메뉴 이름
@@ -421,9 +444,9 @@ export interface BaseResponseAuthTokenResponse {
 export interface ApproveFoodTruckStatusRequest {
   /**
    * 변경할 푸드트럭 승인 상태
-   * @example "OFF"
+   * @example "APPROVED"
    */
-  status: "PENDING" | "ON" | "OFF" | "REJECTED";
+  status: "PENDING" | "APPROVED" | "REJECTED";
 }
 
 export interface UpdateReservationStatusRequest {
@@ -602,6 +625,12 @@ export interface RegionResponse {
    * @example "서울"
    */
   name?: string;
+  /**
+   * 지역 식별자 (PK값)
+   * @format int64
+   * @example 1
+   */
+  id?: number;
   /**
    * 지역 행정동 코드
    * @format int64
@@ -1226,6 +1255,8 @@ export type UpdateBankAccountData = BaseResponseVoid;
 export type DeleteBankAccountData = BaseResponseVoid;
 
 export type CreateReservationData = BaseResponseReservationIdResponse;
+
+export type CreateNewFoodTruckData = BaseResponseVoid;
 
 export type GetMenusData =
   BaseResponseCursorPagingResponseMyFoodTruckMenuResponse;
