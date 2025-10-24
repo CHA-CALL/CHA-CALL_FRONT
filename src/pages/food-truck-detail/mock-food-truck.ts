@@ -5,7 +5,17 @@ export const mockFoodTruck = {
   phoneNumber: '010-1234-5678',
   activeTime: '09:00-20:00',
   timeDiscussRequired: false,
-  foodTruckServiceAreas: ['서울 광진구', '서울 강남구', '서울 영등포구'],
+  foodTruckServiceAreas: [
+    '서울 광진구',
+    '서울 강남구',
+    '서울 영등포구',
+    '서울 광진구',
+    '서울 강남구',
+    '서울 영등포구',
+    '서울 광진구',
+    '서울 강남구',
+    '서울 영등포구',
+  ],
   menuCategories: [
     '한식',
     '분식',

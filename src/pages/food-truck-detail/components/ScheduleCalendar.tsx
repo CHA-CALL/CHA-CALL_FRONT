@@ -64,7 +64,11 @@ export default function ScheduleCalendar({
       </div>
       <div className='grid grid-cols-7 body-m-14'>
         {calendarDays.map(day => (
-          <ScheduleCalendarDay availableDates={availableDates} day={day} />
+          <ScheduleCalendarDay
+            key={`${day.getFullYear()}-${day.getMonth()}-${day.getDate()}`}
+            availableDates={availableDates}
+            day={day}
+          />
         ))}
       </div>
     </div>
