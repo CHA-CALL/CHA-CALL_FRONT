@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { addMonths, format } from 'date-fns';
 
 import { Icon } from '@components/icon/Icon';
@@ -25,8 +25,6 @@ export default function ScheduleCalendar({
   const handlePrevMonth = () => setCalendarMonth(prev => addMonths(prev, -1));
 
   const handleNextMonth = () => setCalendarMonth(prev => addMonths(prev, 1));
-
-  useEffect(() => {}, [availableDates]);
 
   const calendarDays = getScheduleDays(Number(year), Number(month));
 
