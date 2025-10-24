@@ -112,6 +112,9 @@ export const useFoodTruckInput = () => {
         businessRegistrationUrl: bizRegCertUrl,
         otherDocumentUrls: otherDocsUrls,
       });
+
+      // TODO: 다음 페이지로 이동
+      console.info('등록 성공');
     } catch (error) {
       console.error('등록 실패:', error);
     }
