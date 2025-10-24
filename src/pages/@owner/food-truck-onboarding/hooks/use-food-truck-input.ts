@@ -10,6 +10,11 @@ import {
   useFoodTruckName,
 } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
+import {
+  createNewFoodTruck,
+  getPresignedUrls,
+  uploadImage,
+} from '@pages/@owner/food-truck-onboarding/api';
 
 const ownerSchema = z
   .object({
@@ -71,10 +76,6 @@ export const useFoodTruckInput = () => {
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 
-  const parsePresignedUrl = (rawPresignedUrl: string) => {
-    return rawPresignedUrl.split('?')[0] || '';
-  };
-
   const onSubmit = async (formData: OwnerFormData) => {
     if (!isCheckingDuplicate) {
       setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.NOT_VERIFIED });
@@ -85,42 +86,34 @@ export const useFoodTruckInput = () => {
       return;
     }
 
+    const { bizRegCert, otherDocs } = formData;
+    if (!bizRegCert || !otherDocs || otherDocs.length === 0) {
+      return;
+    }
+
     try {
-      // 1. 사업자 등록증 파일 presigned URL 요청
-      let bizRegCertUrl: string = '';
-      if (formData.bizRegCert) {
-        //TODO: 사업자 등록증 파일 presigned URL 요청
-        bizRegCertUrl = '';
-      }
+      const allFiles = [bizRegCert, ...otherDocs];
+      const fileExtensions = allFiles.map((file) => {
+        return file.name.split('.').pop() || '';
+      });
 
-      // 2. 영수증 파일 presigned URL 요청
-      let otherDocsUrls: string[] = [];
-      if (formData.otherDocs) {
-        //TODO: 기타 서류 파일 presigned URL 요청
-        otherDocsUrls = [''];
-      }
+      const imageInfos = await getPresignedUrls(fileExtensions);
+      imageInfos.map((info, index) => {
+        if (info.presignedUrl) {
+          uploadImage(info.presignedUrl, allFiles[index]);
+        }
+      });
 
-      // 3. Presigned URL로 파일 업로드
-      if (bizRegCertUrl.length > 0 && formData.bizRegCert) {
-        //TODO: 사업자 등록증 파일 업로드
-      }
+      const bizRegCertUrl = imageInfos[0].fileUrl || '';
+      const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
 
-      if (otherDocsUrls.length > 0 && formData.otherDocs) {
-        //TODO: 기타 서류 파일 업로드
-      }
-
-      // 4. 오너 등록 제출
-      const ownerRequest = {
+      await createNewFoodTruck({
         name: formData.name,
-        bizRegCertUrl: parsePresignedUrl(bizRegCertUrl),
-        otherDocsUrls: otherDocsUrls.map(url => parsePresignedUrl(url)),
-      };
-
-      if (ownerRequest) {
-        //TODO: 오너 등록 제출
-      }
+        businessRegistrationUrl: bizRegCertUrl,
+        otherDocumentUrls: otherDocsUrls,
+      });
     } catch (error) {
-      console.error('오너 등록 실패:', error);
+      console.error('등록 실패:', error);
     }
   };
 

@@ -4,7 +4,7 @@ import {
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { z } from 'zod';
 import { useState } from 'react';
-import { checkDuplicateName } from '@pages/@owner/food-truck-onboarding/api';
+import { checkNameDuplicate } from '@pages/@owner/food-truck-onboarding/api';
 import useToast from '@shared/hooks/use-toast';
 
 export const FOOD_TRUCK_NAME_VALIDATOR = z
@@ -30,7 +30,7 @@ export const useFoodTruckName = () => {
     handleIsCheckingDuplicate();
 
     try {
-      const response = await checkDuplicateName(_name);
+      const response = await checkNameDuplicate(_name);
       const isAvailable = !response?.duplicated;
 
       if (isAvailable) {

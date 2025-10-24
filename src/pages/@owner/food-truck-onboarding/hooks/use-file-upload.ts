@@ -40,6 +40,8 @@ export const OTHER_DOCS_FILES_VALIDATOR = z
     OWNER_MEDIA_MAX_COUNT.OTHER_DOCS,
     OWNER_MEDIA_ERROR_MESSAGE.MAX_COUNT(OWNER_MEDIA_MAX_COUNT.OTHER_DOCS)
   )
+  // TODO: 요구사항에 따라 기타서류 개수 수정
+  // .length(5, '기타 서류는 정확히 5장을 업로드해야합니다.')
   .refine(
     files => {
       return files.every(file => isAcceptableFile(file));
