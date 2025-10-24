@@ -7,6 +7,7 @@ import {
 } from '@pages/food-truck-detail/mock-food-truck';
 
 export default function useFoodTruckDetail() {
+  // TODO: 쿼리 파라미터를 통해 푸드트럭 아이디 받아와서 서버에 요청하는 로직 필요
   const navigate = useNavigate();
 
   const {
