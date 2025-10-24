@@ -87,7 +87,6 @@ export default function FoodTruckHeaderSection({
                 width={24}
                 height={24}
                 className='text-primary-700'
-                onClick={handleClickSaveButton}
               />
             </button>
           </div>
