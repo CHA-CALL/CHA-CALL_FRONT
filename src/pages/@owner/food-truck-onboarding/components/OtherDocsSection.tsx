@@ -52,7 +52,7 @@ export default function OtherDocsSection({
           currentLength={files?.length || 0}
         />
         <p className='text-grayscale-500 caption-m-11'>
-          영업신고증 (자동차등록증, 위생증, 보건증, 가스완성검사증명서) 필요
+          영업신고증, 자동차등록증, 위생증, 보건증, 가스완성검사증명서 필요
         </p>
       </div>
       <div className='scrollbar-hide flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem]'>

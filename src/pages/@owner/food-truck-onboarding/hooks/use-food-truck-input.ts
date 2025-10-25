@@ -39,7 +39,6 @@ export const useFoodTruckInput = () => {
   const {
     handleSubmit,
     setValue,
-    reset,
     formState: { errors, isValid },
     watch,
     setError,
@@ -93,16 +92,22 @@ export const useFoodTruckInput = () => {
 
     try {
       const allFiles = [bizRegCert, ...otherDocs];
-      const fileExtensions = allFiles.map((file) => {
-        return file.name.split('.').pop() || '';
-      });
+      const fileExtensions = allFiles.map((file) =>
+        file.name.split('.').pop() || ''
+      );
 
       const imageInfos = await getPresignedUrls(fileExtensions);
-      imageInfos.map((info, index) => {
-        if (info.presignedUrl) {
-          uploadImage(info.presignedUrl, allFiles[index]);
-        }
-      });
+      if (imageInfos.length !== allFiles.length) {
+        throw new Error('Presigned URL 발급 실패');
+      }
+      await Promise.all(
+        imageInfos.map((info, index) => {
+          if (!info.presignedUrl) {
+            throw new Error('Presigned URL 누락');
+          }
+          return uploadImage(info.presignedUrl, allFiles[index]);
+        })
+      );
 
       const bizRegCertUrl = imageInfos[0].fileUrl || '';
       const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
@@ -135,7 +140,6 @@ export const useFoodTruckInput = () => {
   return {
     formData: compatibleFormData,
     errors: compatibleErrors,
-    reset,
     updateName,
     updateBizRegCertFile,
     updateOtherDocsFiles,

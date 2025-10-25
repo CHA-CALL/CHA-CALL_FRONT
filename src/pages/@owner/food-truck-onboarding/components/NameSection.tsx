@@ -9,7 +9,7 @@ interface NameSectionProps {
   isNameVerified?: boolean;
   value: OwnerFormData['name'];
   onChange: (_name: string) => void;
-  handleCheckNameDuplicate: (_name: string) => void;
+  handleCheckNameDuplicate: () => void;
   error?: string;
 }
 
@@ -33,7 +33,7 @@ export default function NameSection({
           <Button
             variant='verify'
             buttonStyle={isNameVerified ? 'disabled' : 'active'}
-            handleClickButton={() => handleCheckNameDuplicate(value)}
+            handleClickButton={handleCheckNameDuplicate}
           >
             중복확인
           </Button>

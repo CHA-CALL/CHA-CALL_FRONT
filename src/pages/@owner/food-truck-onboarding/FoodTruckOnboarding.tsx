@@ -5,6 +5,8 @@ import { useFoodTruckInput } from '@pages/@owner/food-truck-onboarding/hooks/use
 import NameSection from '@pages/@owner/food-truck-onboarding/components/NameSection';
 import BizRegCertSection from '@pages/@owner/food-truck-onboarding/components/BizRegCertSection';
 import OtherDocsSection from '@pages/@owner/food-truck-onboarding/components/OtherDocsSection';
+import { useOnboardingModal } from '@pages/@owner/food-truck-onboarding/hooks/use-onboarding-modal';
+import OnboardingModal from '@pages/@owner/food-truck-onboarding/components/OnboardingModal';
 import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 export default function FoodTruckOnboarding() {
@@ -20,9 +22,35 @@ export default function FoodTruckOnboarding() {
     isNameVerified,
   } = useFoodTruckInput();
 
+  const {
+    isCancelModalOpen,
+    isOnboardingModalOpen,
+    handleClickBack,
+    handleClickRegister,
+    handleCloseModal,
+    handleNavigate,
+  } = useOnboardingModal();
+
   return (
     <>
-      <Navigation text='푸드트럭 등록' leftIcon={<Icon name='ic_back' />} />
+      <OnboardingModal
+        isModalOpen={isCancelModalOpen}
+        handleConfirm={handleNavigate}
+        handleCloseModal={handleCloseModal}
+      />
+      <OnboardingModal
+        isOnboarding={true}
+        isModalOpen={isOnboardingModalOpen}
+        handleConfirm={handleSubmit}
+        handleCloseModal={handleCloseModal}
+      />
+
+      <Navigation
+        text='푸드트럭 등록'
+        leftIcon={<Icon name='ic_back' />}
+        handleLeftClick={handleClickBack}
+      />
+
       <div className='flex flex-col gap-[2.6rem] w-full p-[2rem]'>
         <NameSection
           isNameVerified={isNameVerified}
@@ -45,6 +73,7 @@ export default function FoodTruckOnboarding() {
           error={errors.otherDocs}
         />
       </div>
+
       <footer className='flex flex-col bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center gap-[1.3rem]'>
         <p className='caption-m-12 text-grayscale-300'>
           {IMAGE_INFO_MESSAGE}
@@ -52,7 +81,7 @@ export default function FoodTruckOnboarding() {
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}
-          handleClickButton={handleSubmit}
+          handleClickButton={handleClickRegister}
           disabled={!isFormValid}
         >
           등록하기
