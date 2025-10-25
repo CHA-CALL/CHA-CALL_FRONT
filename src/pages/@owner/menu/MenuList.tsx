@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FormProvider } from 'react-hook-form';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
@@ -13,28 +12,19 @@ import {
   SORT_TYPES,
   type SortType,
 } from '@pages/@owner/menu/constant/menu-list-sort';
-import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
-import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 
 export default function MenuList() {
-  const methods = useFoodTruckForm(undefined);
-
-  return (
-    <FormProvider {...methods.methods}>
-      <MenuListContent />
-    </FormProvider>
-  );
+  return <MenuListContent />;
 }
 
 function MenuListContent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { updateMenus } = useMenuInfo();
   const { foodTruckId } = useParams();
   const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
   const [sortOption, setSortOption] = useState<SortType>(SORT_TYPES.LATEST);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
+  const formData = location.state?.formData;
   if (foodTruckId) {
     //TODO: 메뉴 목록 조회 로직 구현
     setMenus([]);
@@ -42,9 +32,12 @@ function MenuListContent() {
 
   const handleClickBack = () => {
     const fromPage = location.state?.from;
-    updateMenus(menus.length > 0 ? true : false);
+    const updatedFormData = {
+      ...formData,
+      menus: menus.length > 0,
+    };
     navigate(ROUTES.FOOD_TRUCK_FORM, {
-      state: { from: fromPage || 'food-truck-form' },
+      state: { from: fromPage || 'food-truck-form', formData: updatedFormData },
     });
   };
 

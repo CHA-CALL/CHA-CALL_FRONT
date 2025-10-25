@@ -34,14 +34,14 @@ export default function FoodTruckForm() {
   const location = useLocation();
 
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
-  const methods = useFoodTruckForm(undefined);
+  const methods = useFoodTruckForm();
 
-  // 업로드 페이지에서 돌아온 경우 폼 데이터 업데이트
+  // 다른 페이지에서 돌아온 경우 폼 데이터 업데이트
   useEffect(() => {
-    if (location.state?.formData && location.state?.fromUpload) {
+    if (location.state?.formData && location.state?.from) {
       methods.reset(location.state.formData);
     }
-  }, [location.state, methods]);
+  }, [location.state, methods.reset]);
 
   const handleNavigateBack = () => {
     navigate(-1);

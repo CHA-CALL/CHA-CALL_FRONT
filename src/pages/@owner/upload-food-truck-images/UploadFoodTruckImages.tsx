@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, useFormContext } from 'react-hook-form';
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Information from '@shared/components/information/Information';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
-import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import {
+  useFoodTruckForm,
+  type FoodTruckFormData,
+} from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import Button from '@shared/components/button/Button';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import ErrorText from '@shared/components/error-text/ErrorText';
+import { ROUTES } from '@router/constant/routes';
 
 export default function UploadFoodTruckImages() {
   const location = useLocation();
@@ -26,6 +30,10 @@ export default function UploadFoodTruckImages() {
 
 function UploadFoodTruck() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { watch } = useFormContext<FoodTruckFormData>();
+  const formData = watch();
+
   const {
     photoUrls,
     photoUrlsError,
@@ -35,7 +43,13 @@ function UploadFoodTruck() {
   } = useBasicInfo();
 
   const handleLeftClick = () => {
-    navigate(-1);
+    const fromPage = location.state?.from;
+    navigate(ROUTES.FOOD_TRUCK_FORM, {
+      state: {
+        from: fromPage || 'food-truck-form',
+        formData: formData,
+      },
+    });
   };
 
   const [imageUrl, setImageUrl] = useState<string[] | null>([]);

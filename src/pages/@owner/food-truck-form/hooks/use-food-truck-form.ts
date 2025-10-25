@@ -8,11 +8,6 @@ import {
 import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
 import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import { PAYMENT_METHOD } from '@shared/constant/payment-method';
-import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
-import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
-import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
-import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
-//import { useRegion } from '@pages/@owner/food-truck-form/hooks/use-region';
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
 import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
 
@@ -77,9 +72,7 @@ const foodTruckSchema = z.object({
 
 export type FoodTruckFormData = z.infer<typeof foodTruckSchema>;
 
-export const useFoodTruckForm = (
-  initialData: FoodTruckFormData | undefined
-) => {
+export const useFoodTruckForm = (initialData?: FoodTruckFormData) => {
   const methods = useForm<FoodTruckFormData>({
     resolver: zodResolver(foodTruckSchema),
     defaultValues: initialData ?? {
@@ -129,12 +122,5 @@ export const useFoodTruckForm = (
 
     // Form data
     formData,
-
-    // Sub-hooks
-    useBasicInfo,
-    useTime,
-    useCategories,
-    useMenuInfo,
-    // useRegion,
   };
 };

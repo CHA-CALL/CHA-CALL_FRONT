@@ -110,7 +110,7 @@ export const useBasicInfo = () => {
     navigate(ROUTES.FOOD_TRUCK_FORM, {
       state: {
         formData: currentFormData,
-        fromUpload: true,
+        from: 'food-truck-form',
       },
     });
   };
