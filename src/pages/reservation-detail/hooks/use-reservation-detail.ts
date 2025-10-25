@@ -108,7 +108,11 @@ export const useReservationDetail = () => {
       toast.error('현재 견적서가 없어 다운로드할 수 없습니다.');
       return;
     }
-    window.open(reservationDetailData?.pdfUrl);
+    window.open(
+      reservationDetailData?.pdfUrl,
+      '예약 견적서 다운로드',
+      'noopener,noreferrer'
+    );
   };
 
   useEffect(() => {
