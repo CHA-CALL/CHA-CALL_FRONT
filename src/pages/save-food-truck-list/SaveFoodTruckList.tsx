@@ -3,19 +3,30 @@ import { Icon } from '@shared/components/icon/Icon';
 import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
 import { useNavigate } from 'react-router-dom';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
-import { useGetSaveFoodTrucks } from '@pages/save-food-truck-list/hooks/use-save-food-truck';
+import {
+  useGetSaveFoodTrucks,
+  useUnsaveFoodTrucks,
+} from '@pages/save-food-truck-list/hooks/use-save-food-truck';
 import Loading from '@shared/components/loading/Loading';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 export default function SaveFoodTruckList() {
-  const { data, isPending } = useGetSaveFoodTrucks();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
+    useGetSaveFoodTrucks();
+  const { mutate: unsaveFoodTruck } = useUnsaveFoodTrucks();
+  const { ref, inView } = useInView();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [inView]);
+
   const handleClickBack = () => {
     navigate(-1);
   };
 
   const handleClickCard = () => {};
-
-  const handleClickButton = () => {};
 
   if (isPending || !data) {
     return <Loading />;
@@ -33,19 +44,22 @@ export default function SaveFoodTruckList() {
           총 {data.foodTrucks.length}개
         </p>
         <div className='flex flex-col gap-[4rem]'>
-          {(data.foodTrucks ?? []).map(item => (
-            <>
-              {item && (
-                <FoodTruckCard
-                  key={item?.foodTruckId}
-                  variant='foodtruckClient'
-                  data={item}
-                  handleClickCard={handleClickCard}
-                  handleClickButton={handleClickButton}
-                />
-              )}
-            </>
-          ))}
+          {data.foodTrucks
+            .filter(item => item.foodTruckId !== null)
+            .map(item => (
+              <>
+                {item && (
+                  <FoodTruckCard
+                    key={item.foodTruckId}
+                    variant='foodtruckClient'
+                    data={item}
+                    handleClickCard={handleClickCard}
+                    handleClickButton={() => unsaveFoodTruck(item.foodTruckId!)}
+                  />
+                )}
+              </>
+            ))}
+          <div ref={ref}></div>
         </div>
       </div>
       <ButtonFloating />

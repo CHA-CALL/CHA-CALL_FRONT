@@ -12,10 +12,12 @@ type SaveFoodTruckQueryContext = QueryFunctionContext<
   number | undefined
 >;
 
+const PAGE_SIZE = 20;
+
 export const getSavedFoodTruckList = async ({
   pageParam,
 }: SaveFoodTruckQueryContext) => {
-  const params: { size: number; cursor?: number } = { size: 20 };
+  const params: { size: number; cursor?: number } = { size: PAGE_SIZE };
   if (pageParam !== undefined) {
     params.cursor = pageParam;
   }
@@ -33,6 +35,9 @@ export const updateSavedFoodTruckList = async (foodTruckId: number) => {
   const response = await apiRequest<UpdateFoodTruckSaveStatusData>({
     endPoint: `/members/me/food-trucks/${foodTruckId}`,
     method: 'PATCH',
+    data: {
+      isSavedRequest: false,
+    },
   });
   return response.data;
 };
