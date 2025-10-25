@@ -12,6 +12,18 @@ import Button from '@shared/components/button/Button';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import ErrorText from '@shared/components/error-text/ErrorText';
 
+export default function UploadFoodTruckImages() {
+  const location = useLocation();
+  const formData = location.state?.formData;
+  const methods = createFoodTruckFormMethods(formData);
+
+  return (
+    <FormProvider {...methods}>
+      <UploadFoodTruck />
+    </FormProvider>
+  );
+}
+
 function UploadFoodTruck() {
   const navigate = useNavigate();
   const {
@@ -90,17 +102,5 @@ function UploadFoodTruck() {
         </Button>
       </footer>
     </>
-  );
-}
-
-export default function UploadFoodTruckImages() {
-  const location = useLocation();
-  const formData = location.state?.formData;
-  const methods = createFoodTruckFormMethods(formData);
-
-  return (
-    <FormProvider {...methods}>
-      <UploadFoodTruck />
-    </FormProvider>
   );
 }
