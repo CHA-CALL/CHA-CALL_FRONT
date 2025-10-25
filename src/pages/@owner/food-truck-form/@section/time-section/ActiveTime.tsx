@@ -1,9 +1,19 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
 import ButtonCheck from '@shared/components/button-check/ButtonCheck';
+import ErrorText from '@shared/components/error-text/ErrorText';
+import TimePicker from '@pages/@owner/food-truck-form/components/TimePicker';
 
 export default function ActiveTime() {
-  const { timeDiscussRequired, updateTimeDiscussRequired } = useTime();
+  const {
+    startActiveTime,
+    endActiveTime,
+    timeDiscussRequired,
+    activeTimeError,
+    updateActiveTimeStart,
+    updateActiveTimeEnd,
+    updateTimeDiscussRequired,
+  } = useTime();
   return (
     <FormLayout
       isRequired={true}
@@ -20,7 +30,17 @@ export default function ActiveTime() {
         </div>
       }
     >
-      <></>
+      <TimePicker
+        value={startActiveTime}
+        handleChange={updateActiveTimeStart}
+        timeTitle='시간을 선택해주세요.'
+      />
+      <TimePicker
+        value={endActiveTime}
+        handleChange={updateActiveTimeEnd}
+        timeTitle='시간을 선택해주세요.'
+      />
+      {activeTimeError && <ErrorText text={activeTimeError} />}
     </FormLayout>
   );
 }

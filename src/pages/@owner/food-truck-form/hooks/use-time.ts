@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import {
@@ -16,12 +17,57 @@ export const useTime = () => {
     setValue,
     watch,
     formState: { errors },
+    setError,
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
   const toast = useToast();
-  const updateActiveTime = (activeTime: string) => {
-    setValue('activeTime', activeTime, { shouldValidate: true });
+  const [startActiveTime, setStartActiveTime] = useState<string>('');
+  const [endActiveTime, setEndActiveTime] = useState<string>('');
+  const updateActiveTimeStart = (activeTime: string) => {
+    setStartActiveTime(activeTime);
+  };
+  const updateActiveTimeEnd = (activeTime: string) => {
+    setEndActiveTime(activeTime);
+  };
+  useEffect(() => {
+    if (!startActiveTime && !endActiveTime) {
+      return;
+    }
+    updateActiveTime();
+  }, [startActiveTime, endActiveTime]);
+
+  const updateActiveTime = () => {
+    if (!startActiveTime) {
+      setError('activeTime', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.start,
+      });
+      return;
+    }
+    if (!endActiveTime) {
+      setError('activeTime', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.end,
+      });
+      return;
+    }
+    if (startActiveTime && endActiveTime) {
+      if (
+        new Date(`1970-01-01T${startActiveTime}`).getTime() >=
+        new Date(`1970-01-01T${endActiveTime}`).getTime()
+      ) {
+        setError('activeTime', {
+          message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.invalid,
+        });
+        return;
+      }
+      setValue('activeTime', startActiveTime + '-' + endActiveTime, {
+        shouldValidate: true,
+      });
+    } else {
+      setValue('activeTime', '', {
+        shouldValidate: true,
+      });
+    }
   };
 
   const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {
@@ -115,6 +161,8 @@ export const useTime = () => {
 
   return {
     // Data
+    startActiveTime,
+    endActiveTime,
     activeTime: formData.activeTime,
     timeDiscussRequired: formData.timeDiscussRequired,
     availableDates: availableDatesWithId,
@@ -125,7 +173,8 @@ export const useTime = () => {
     availableDatesError: errors.availableDates?.message,
 
     // Actions
-    updateActiveTime,
+    updateActiveTimeStart,
+    updateActiveTimeEnd,
     updateTimeDiscussRequired,
     updateAvailableDateById,
     removeAvailableDateById,
