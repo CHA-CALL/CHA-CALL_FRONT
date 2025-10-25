@@ -1,0 +1,22 @@
+import { type ChangeEvent } from 'react';
+import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
+import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import Input from '@shared/components/input/Input';
+import ErrorText from '@shared/components/error-text/ErrorText';
+
+export default function FoodTruckPhoneNumber() {
+  const { phoneNumber, phoneNumberError, updatePhoneNumber } = useBasicInfo();
+  return (
+    <FormLayout isRequired={true} title='전화번호'>
+      <Input
+        placeholder='000-0000-0000'
+        error={!!phoneNumberError}
+        value={phoneNumber}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          updatePhoneNumber(e.target.value)
+        }
+      />
+      {phoneNumberError && <ErrorText text={phoneNumberError} />}
+    </FormLayout>
+  );
+}
