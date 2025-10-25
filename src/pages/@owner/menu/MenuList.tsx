@@ -14,13 +14,13 @@ import {
   type SortType,
 } from '@pages/@owner/menu/constant/menu-list-sort';
 import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
-import { createFoodTruckFormMethods } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 
 export default function MenuList() {
-  const methods = createFoodTruckFormMethods();
+  const methods = useFoodTruckForm(undefined);
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...methods.methods}>
       <MenuListContent />
     </FormProvider>
   );

@@ -5,7 +5,7 @@ import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Information from '@shared/components/information/Information';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
-import { createFoodTruckFormMethods } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import Button from '@shared/components/button/Button';
@@ -15,10 +15,10 @@ import ErrorText from '@shared/components/error-text/ErrorText';
 export default function UploadFoodTruckImages() {
   const location = useLocation();
   const formData = location.state?.formData;
-  const methods = createFoodTruckFormMethods(formData);
+  const methods = useFoodTruckForm(formData);
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...methods.methods}>
       <UploadFoodTruck />
     </FormProvider>
   );
