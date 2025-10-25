@@ -1,3 +1,4 @@
+import { type MouseEvent } from 'react';
 import { Icon, type IconId } from '@shared/components/icon/Icon';
 import { cn } from '@shared/utils/cn';
 
@@ -8,7 +9,7 @@ interface InputButtonProps {
   handleClick: () => void;
   className?: string;
   isRemovable?: boolean;
-  handleRemove?: (_event: React.MouseEvent<SVGSVGElement>) => void;
+  handleRemove?: (_event: MouseEvent<SVGSVGElement>) => void;
 }
 
 export default function InputButton({

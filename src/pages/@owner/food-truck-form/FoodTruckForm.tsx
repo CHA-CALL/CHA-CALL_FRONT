@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { FormProvider, useFormContext } from 'react-hook-form';
-
+import { FormProvider } from 'react-hook-form';
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
-
 import Button from '@shared/components/button/Button';
 import {
   FoodTruckName,
@@ -13,19 +11,19 @@ import {
   FoodTruckOperatingInfo,
   FoodTruckOption,
   FoodTruckPhoto,
-} from '@pages/@owner/food-truck-form/@section/basic-info-section';
+} from '@pages/@owner/food-truck-form/@section/basic-info-section/index';
 import {
   ActiveTime,
   ActiveDate,
-} from '@pages/@owner/food-truck-form/@section/time-section';
+} from '@pages/@owner/food-truck-form/@section/time-section/index';
 import {
   AvailableQuantity,
   NeedElectricity,
   PaymentMethod,
-} from './@section/category-section';
-import { MenuCategory } from './@section/category-section';
-import { createFoodTruckFormMethods } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
-import RegionSection from '@pages/@owner/food-truck-form/@section/RegionSection';
+} from '@pages/@owner/food-truck-form/@section/category-section/index';
+import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-section';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 
 // 메인 컴포넌트
@@ -36,7 +34,7 @@ export default function FoodTruckForm() {
   const location = useLocation();
 
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
-  const methods = createFoodTruckFormMethods(undefined);
+  const methods = useFoodTruckForm(undefined);
 
   // 업로드 페이지에서 돌아온 경우 폼 데이터 업데이트
   useEffect(() => {
@@ -50,7 +48,7 @@ export default function FoodTruckForm() {
   };
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...methods.methods}>
       <Navigation
         text={isEditMode ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'}
         leftIcon={<Icon name='ic_back' />}
@@ -78,33 +76,15 @@ export default function FoodTruckForm() {
       </div>
 
       <footer className='fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]'>
-        <SubmitButton />
+        <Button
+          variant='cta'
+          buttonStyle={methods.isFormValid ? 'active' : 'disabled'}
+          handleClickButton={methods.handleSubmit}
+          disabled={!methods.isFormValid}
+        >
+          저장하기
+        </Button>
       </footer>
     </FormProvider>
-  );
-}
-
-// 제출 버튼 컴포넌트
-function SubmitButton() {
-  const {
-    handleSubmit,
-    formState: { isValid },
-  } = useFormContext();
-
-  const onSubmit = async (data: any) => {
-    if (isValid && data) {
-      // TODO: 폼 제출 로직
-    }
-  };
-
-  return (
-    <Button
-      variant='cta'
-      buttonStyle={isValid ? 'active' : 'disabled'}
-      handleClickButton={handleSubmit(onSubmit)}
-      disabled={!isValid}
-    >
-      저장하기
-    </Button>
   );
 }

@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form';
-
 import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
 import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import { PAYMENT_METHOD } from '@shared/constant/payment-method';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
+
 export const useCategories = () => {
   const {
     setValue,

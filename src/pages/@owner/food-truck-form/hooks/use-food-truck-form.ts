@@ -1,12 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
 import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-
 import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
 import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import { PAYMENT_METHOD } from '@shared/constant/payment-method';
@@ -15,8 +13,9 @@ import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
 import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
 import { useRegion } from '@pages/@owner/food-truck-form/hooks/use-region';
-import type { AvailableDate } from '../types/available-date';
+import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
 import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
+
 const foodTruckSchema = z.object({
   name: z
     .string()
@@ -138,28 +137,4 @@ export const useFoodTruckForm = (
     useMenuInfo,
     useRegion,
   };
-};
-
-export const createFoodTruckFormMethods = (initialData?: FoodTruckFormData) => {
-  return useForm<FoodTruckFormData>({
-    resolver: zodResolver(foodTruckSchema),
-    defaultValues: initialData ?? {
-      name: '',
-      description: '',
-      phoneNumber: '',
-      regionCodes: [],
-      availableQuantity: undefined,
-      needElectricity: undefined,
-      paymentMethod: undefined,
-      menuCategories: [],
-      photoUrls: [],
-      operatingInfo: undefined,
-      option: undefined,
-      availableDates: [],
-      activeTime: undefined,
-      timeDiscussRequired: false,
-      menus: false,
-    },
-    mode: 'onChange',
-  });
 };

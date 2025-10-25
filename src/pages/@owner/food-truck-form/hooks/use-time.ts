@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, type MouseEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import {
@@ -30,14 +30,8 @@ export const useTime = () => {
   const updateActiveTimeEnd = (activeTime: string) => {
     setEndActiveTime(activeTime);
   };
-  useEffect(() => {
-    if (!startActiveTime && !endActiveTime) {
-      return;
-    }
-    updateActiveTime();
-  }, [startActiveTime, endActiveTime]);
 
-  const updateActiveTime = () => {
+  const updateActiveTime = useCallback(() => {
     if (!startActiveTime) {
       setError('activeTime', {
         message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.start,
@@ -68,7 +62,14 @@ export const useTime = () => {
         shouldValidate: true,
       });
     }
-  };
+  }, [startActiveTime, endActiveTime, setError, setValue]);
+
+  useEffect(() => {
+    if (!startActiveTime && !endActiveTime) {
+      return;
+    }
+    updateActiveTime();
+  }, [startActiveTime, endActiveTime, updateActiveTime]);
 
   const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {
     setValue('timeDiscussRequired', timeDiscussRequired, {
@@ -115,7 +116,7 @@ export const useTime = () => {
   };
 
   const removeAvailableDateById = (
-    event: React.MouseEvent<SVGSVGElement>,
+    event: MouseEvent<SVGSVGElement>,
     id: string
   ) => {
     event.stopPropagation();

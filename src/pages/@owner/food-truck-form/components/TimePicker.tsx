@@ -4,7 +4,7 @@ import { cn } from '@shared/utils/cn';
 
 interface TimePickerProps {
   value?: string;
-  handleChange?: (time: string) => void;
+  handleChange?: (_time: string) => void;
   timeTitle?: string;
   className?: string;
 }
