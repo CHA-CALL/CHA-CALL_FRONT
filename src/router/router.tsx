@@ -16,7 +16,7 @@ import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import ReservationHistory from '@pages/reservation-history/ReservationHistory';
 import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
-import UploadFoodTruckImages from '@pages/@owner/food-truck-form/@section/menu-section/UploadFoodTruckImages';
+import UploadFoodTruckImages from '@pages/@owner/food-truck-form/@section/basic-info-section/UploadFoodTruckImages';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
