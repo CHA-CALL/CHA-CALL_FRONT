@@ -1,6 +1,8 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitchButton';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+
 export default function FoodTruckPhoto() {
   const { photoUrls, handleClickRouteToUploadFoodTruckImages } = useBasicInfo();
   return (
@@ -13,8 +15,8 @@ export default function FoodTruckPhoto() {
         isSelected={photoUrls.length > 0 ? true : false}
         text={
           photoUrls.length > 0
-            ? '사진이 등록되었습니다.'
-            : '푸드트럭 사진을 등록해주세요.'
+            ? FOOD_TRUCK_ERROR_MESSAGE.photoUrls.success
+            : FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required
         }
         handleClick={handleClickRouteToUploadFoodTruckImages}
       />

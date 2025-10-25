@@ -13,7 +13,7 @@ export const ROUTES = {
   ACCOUNT_FORM: '/owner/account-form',
   RESERVATION_HISTORY: '/reservation-history',
   SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
-  UPLOAD_FOOD_TRUCK: '/owner/upload-food-truck',
+  UPLOAD_FOOD_TRUCK_IMAGES: '/owner/food-truck-form/upload-food-truck-images',
   PROFILE_SETTING: '/profile-setting',
   PROFILE_SETTING_DETAIL: '/profile-setting',
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
