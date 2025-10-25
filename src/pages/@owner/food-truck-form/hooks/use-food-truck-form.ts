@@ -12,7 +12,7 @@ import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info
 import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
 import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
-import { useRegion } from '@pages/@owner/food-truck-form/hooks/use-region';
+//import { useRegion } from '@pages/@owner/food-truck-form/hooks/use-region';
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
 import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
 
@@ -36,16 +36,16 @@ const foodTruckSchema = z.object({
       FOOD_TRUCK_MAX_LENGTH.phoneNumber.min,
       FOOD_TRUCK_ERROR_MESSAGE.phoneNumber.required
     ),
-  regionCodes: z
-    .array(z.string())
-    .min(
-      FOOD_TRUCK_MAX_LENGTH.regionCodes.min,
-      FOOD_TRUCK_ERROR_MESSAGE.regionCodes.required
-    )
-    .max(
-      FOOD_TRUCK_MAX_LENGTH.regionCodes.max,
-      FOOD_TRUCK_ERROR_MESSAGE.regionCodes.max
-    ),
+  // regionCodes: z
+  //   .array(z.string())
+  //   .min(
+  //     FOOD_TRUCK_MAX_LENGTH.regionCodes.min,
+  //     FOOD_TRUCK_ERROR_MESSAGE.regionCodes.required
+  //   )
+  //   .max(
+  //     FOOD_TRUCK_MAX_LENGTH.regionCodes.max,
+  //     FOOD_TRUCK_ERROR_MESSAGE.regionCodes.max
+  //   ),
   availableQuantity: z.enum(AVAILABLE_QUANTITY),
   needElectricity: z.enum(NEED_ELECTRICITY),
   paymentMethod: z.enum(PAYMENT_METHOD),
@@ -86,7 +86,7 @@ export const useFoodTruckForm = (
       name: '',
       description: '',
       phoneNumber: '',
-      regionCodes: [],
+      // regionCodes: [],
       availableQuantity: undefined,
       needElectricity: undefined,
       paymentMethod: undefined,
@@ -135,6 +135,6 @@ export const useFoodTruckForm = (
     useTime,
     useCategories,
     useMenuInfo,
-    useRegion,
+    // useRegion,
   };
 };
