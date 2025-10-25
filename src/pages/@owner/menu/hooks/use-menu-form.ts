@@ -42,7 +42,7 @@ export const menuSchema = z.object({
     )
     .transform(val => Number(val.replace(/,/g, '')).toLocaleString()),
 
-  image: z
+  imageUrl: z
     .instanceof(File)
     .refine(
       file => {
@@ -82,7 +82,7 @@ export const useMenuForm = () => {
       name: '',
       description: '',
       price: '',
-      image: undefined,
+      imageUrl: undefined,
     },
     mode: 'onChange',
   });
@@ -104,20 +104,20 @@ export const useMenuForm = () => {
     setValue('price', formattedPrice, { shouldValidate: true });
   };
 
-  const updateImage = (image: File | null) => {
-    if (image === null) {
-      setValue('image', undefined, { shouldValidate: true });
+  const updateImageUrl = (imageUrl: File | null) => {
+    if (imageUrl === null) {
+      setValue('imageUrl', undefined, { shouldValidate: true });
       return;
     }
-    if (!isAcceptableFile(image)) {
-      setError('image', { message: NOT_ALLOWED_FILE_TYPE });
+    if (!isAcceptableFile(imageUrl)) {
+      setError('imageUrl', { message: NOT_ALLOWED_FILE_TYPE });
       return;
     }
-    if (!isFileSizeValid(image)) {
-      setError('image', { message: CANNOT_UPLOAD_FILE_MB });
+    if (!isFileSizeValid(imageUrl)) {
+      setError('imageUrl', { message: CANNOT_UPLOAD_FILE_MB });
       return;
     }
-    setValue('image', image, { shouldValidate: true });
+    setValue('imageUrl', imageUrl, { shouldValidate: true });
   };
 
   const onSubmit = async (formData: MenuFormData) => {
@@ -130,14 +130,14 @@ export const useMenuForm = () => {
     name: formData.name,
     description: formData.description,
     price: formData.price,
-    image: formData.image,
+    imageUrl: formData.imageUrl,
   };
 
   const Errors = {
     name: errors.name?.message,
     description: errors.description?.message,
     price: errors.price?.message,
-    image: errors.image?.message,
+    imageUrl: errors.imageUrl?.message,
   };
 
   return {
@@ -147,7 +147,7 @@ export const useMenuForm = () => {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     handleSubmit: handleSubmit(onSubmit),
     trigger,
   };
