@@ -16,6 +16,7 @@ const foodTruckSchema = z.object({
     .string()
     .min(FOOD_TRUCK_MAX_LENGTH.name.min, FOOD_TRUCK_ERROR_MESSAGE.name.required)
     .max(FOOD_TRUCK_MAX_LENGTH.name.max),
+  nameDuplicate: z.boolean(),
   description: z
     .string()
     .min(
@@ -45,7 +46,9 @@ const foodTruckSchema = z.object({
   needElectricity: z.enum(NEED_ELECTRICITY),
   paymentMethod: z.enum(PAYMENT_METHOD),
   menuCategories: z.array(z.enum(FOOD_CATEGORIES)),
-  photoUrls: z.array(z.instanceof(File)),
+  photoUrls: z.array(z.instanceof(File)).refine(files => files.length > 0, {
+    message: FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required,
+  }),
   operatingInfo: z
     .string()
     .max(
@@ -67,7 +70,9 @@ const foodTruckSchema = z.object({
       FOOD_TRUCK_MAX_LENGTH.availableDates.max,
       FOOD_TRUCK_ERROR_MESSAGE.availableDates.max
     ),
-  menus: z.boolean(),
+  menus: z.boolean().refine(menus => menus, {
+    message: FOOD_TRUCK_ERROR_MESSAGE.menus.required,
+  }),
 });
 
 export type FoodTruckFormData = z.infer<typeof foodTruckSchema>;
@@ -77,6 +82,7 @@ export const useFoodTruckForm = (initialData?: FoodTruckFormData) => {
     resolver: zodResolver(foodTruckSchema),
     defaultValues: initialData ?? {
       name: '',
+      nameDuplicate: false,
       description: '',
       phoneNumber: '',
       // regionCodes: [],
@@ -101,13 +107,20 @@ export const useFoodTruckForm = (initialData?: FoodTruckFormData) => {
     trigger,
     formState: { isValid },
     watch,
+    setError,
   } = methods;
 
   const formData = watch();
 
   const onSubmit = async (formData: FoodTruckFormData) => {
-    //TODO: 계좌 등록 제출
+    if (!formData.nameDuplicate) {
+      setError('name', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
+      });
+      return;
+    }
     if (isValid && formData) {
+      //TODO: 계좌 등록 제출
       alert('푸드트럭 등록 제출');
     }
   };

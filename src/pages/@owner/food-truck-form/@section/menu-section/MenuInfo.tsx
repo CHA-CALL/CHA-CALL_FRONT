@@ -6,12 +6,10 @@ import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitc
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
-import ErrorText from '@shared/components/error-text/ErrorText';
-import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
 
 export default function MenuInfo() {
   const navigate = useNavigate();
-  const { menusError } = useMenuInfo();
+
   const { watch } = useFormContext<FoodTruckFormData>();
   const formData = watch();
   const handleClick = () => {
@@ -35,7 +33,6 @@ export default function MenuInfo() {
         }
         handleClick={handleClick}
       />
-      {menusError && <ErrorText text={menusError} />}
     </FormLayout>
   );
 }

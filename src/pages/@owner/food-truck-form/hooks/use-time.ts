@@ -5,7 +5,7 @@ import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-import useToast from '@hooks/use-toast';
+
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
 import { generateDateId } from '@pages/@owner/food-truck-form/utils/generate-date-Id';
 import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
@@ -19,7 +19,6 @@ export const useTime = () => {
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
-  const toast = useToast();
   const [startActiveTime, setStartActiveTime] = useState<string>('');
   const [endActiveTime, setEndActiveTime] = useState<string>('');
   const updateActiveTimeStart = (activeTime: string) => {
@@ -67,7 +66,12 @@ export const useTime = () => {
       return;
     }
     updateActiveTime();
-  }, [startActiveTime, endActiveTime, updateActiveTime]);
+  }, [startActiveTime, endActiveTime]);
+
+  useEffect(() => {
+    setStartActiveTime(formData.activeTime?.split('-')[0] ?? '');
+    setEndActiveTime(formData.activeTime?.split('-')[1] ?? '');
+  }, [formData.activeTime]);
 
   const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {
     setValue('timeDiscussRequired', timeDiscussRequired, {
@@ -137,7 +141,9 @@ export const useTime = () => {
   const handleAddAvailableDate = () => {
     const currentDates = formData.availableDates ?? [];
     if (currentDates.length >= FOOD_TRUCK_MAX_LENGTH.availableDates.max) {
-      toast.error(FOOD_TRUCK_ERROR_MESSAGE.availableDates.max);
+      setError('availableDates', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.availableDates.max,
+      });
       return;
     }
     const newId = generateDateId();

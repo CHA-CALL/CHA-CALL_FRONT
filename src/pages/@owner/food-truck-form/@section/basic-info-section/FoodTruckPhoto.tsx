@@ -7,10 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
-import ErrorText from '@shared/components/error-text/ErrorText';
 
 export default function FoodTruckPhoto() {
-  const { photoUrls, photoUrlsError } = useBasicInfo();
+  const { photoUrls } = useBasicInfo();
   const { watch } = useFormContext<FoodTruckFormData>();
   const navigate = useNavigate();
   const formData = watch();
@@ -36,7 +35,6 @@ export default function FoodTruckPhoto() {
         }
         handleClick={handleClick}
       />
-      {photoUrlsError && <ErrorText text={photoUrlsError} />}
     </FormLayout>
   );
 }

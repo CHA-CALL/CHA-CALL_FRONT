@@ -126,7 +126,6 @@ export const useBasicInfo = () => {
     nameError: errors.name?.message,
     descriptionError: errors.description?.message,
     phoneNumberError: errors.phoneNumber?.message,
-    photoUrlsError: errors.photoUrls?.message,
     operatingInfoError: errors.operatingInfo?.message,
     optionError: errors.option?.message,
     // Actions
