@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   BIZ_REG_CERT_FILE_VALIDATOR,
   OTHER_DOCS_FILES_VALIDATOR,
-} from '@pages/@owner/food-truck-onboarding/hooks/use-file-upload';
+} from '@pages/@owner/food-truck-onboarding/utils/onboarding-validator';
 import {
   FOOD_TRUCK_NAME_VALIDATOR,
   useFoodTruckName,
@@ -15,6 +15,9 @@ import {
   getPresignedUrls,
   uploadImage,
 } from '@pages/@owner/food-truck-onboarding/api';
+import { useMutation } from '@tanstack/react-query';
+import { ONBOARDING_QUERY_KEY } from '@shared/querykey/food-truck-onboarding';
+import type { FoodTruckCreateRequest } from 'apis/data-contracts';
 
 const ownerSchema = z
   .object({
@@ -28,11 +31,15 @@ const ownerSchema = z
 
 export type OwnerFormData = z.infer<typeof ownerSchema>;
 
+interface UploadFilesParams {
+  bizRegCert: File;
+  otherDocs: File[];
+}
+
 export const useFoodTruckInput = () => {
   const {
     isNameVerified,
-    isCheckingDuplicate,
-    handleCheckNameDuplicate: checkNameDuplicate,
+    handleCheckName,
     resetVerification,
   } = useFoodTruckName();
 
@@ -61,8 +68,9 @@ export const useFoodTruckInput = () => {
 
   const handleCheckNameDuplicate = async () => {
     const name = formData.name;
-    const isAvailable = await checkNameDuplicate(name);
-    if (!isAvailable) {
+    const response = await handleCheckName(name);
+
+    if (response?.duplicated) {
       setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
     }
   };
@@ -75,22 +83,13 @@ export const useFoodTruckInput = () => {
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 
-  const onSubmit = async (formData: OwnerFormData) => {
-    if (!isCheckingDuplicate) {
-      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.NOT_VERIFIED });
-      return;
-    }
-    if (!isNameVerified) {
-      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
-      return;
-    }
-
-    const { bizRegCert, otherDocs } = formData;
-    if (!bizRegCert || !otherDocs || otherDocs.length === 0) {
-      return;
-    }
-
-    try {
+const useUploadFiles = useMutation<
+    { bizRegCertUrl: string; otherDocsUrls: string[] },
+    Error,
+    UploadFilesParams
+  >({
+    mutationKey: ONBOARDING_QUERY_KEY.UPLOAD_FILES,
+    mutationFn: async ({ bizRegCert, otherDocs }: UploadFilesParams) => {
       const allFiles = [bizRegCert, ...otherDocs];
       const fileExtensions = allFiles.map((file) =>
         file.name.split('.').pop() || ''
@@ -100,6 +99,7 @@ export const useFoodTruckInput = () => {
       if (imageInfos.length !== allFiles.length) {
         throw new Error('Presigned URL 발급 실패');
       }
+
       await Promise.all(
         imageInfos.map((info, index) => {
           if (!info.presignedUrl) {
@@ -112,14 +112,50 @@ export const useFoodTruckInput = () => {
       const bizRegCertUrl = imageInfos[0].fileUrl || '';
       const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
 
-      await createNewFoodTruck({
+      return { bizRegCertUrl, otherDocsUrls };
+    },
+  });
+
+  const useCreateFoodTruck = useMutation<
+    void,
+    Error,
+    FoodTruckCreateRequest
+  >({
+    mutationKey: ONBOARDING_QUERY_KEY.CREATE,
+    mutationFn: async (params: FoodTruckCreateRequest) => {
+      await createNewFoodTruck(params);
+    },
+    onSuccess: () => {
+      // TODO: 다음 페이지로 이동
+      console.info('등록 성공');
+    },
+    onError: (error) => {
+      console.error('등록 실패:', error);
+    },
+  });
+
+  const onSubmit = async (formData: OwnerFormData) => {
+    if (!isNameVerified) {
+      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
+      return;
+    }
+
+    const { bizRegCert, otherDocs } = formData;
+    if (!bizRegCert || !otherDocs || otherDocs.length === 0) {
+      return;
+    }
+
+    try {
+      const { bizRegCertUrl, otherDocsUrls } = await useUploadFiles.mutateAsync({
+        bizRegCert,
+        otherDocs,
+      });
+
+      await useCreateFoodTruck.mutateAsync({
         name: formData.name,
         businessRegistrationUrl: bizRegCertUrl,
         otherDocumentUrls: otherDocsUrls,
       });
-
-      // TODO: 다음 페이지로 이동
-      console.info('등록 성공');
     } catch (error) {
       console.error('등록 실패:', error);
     }
