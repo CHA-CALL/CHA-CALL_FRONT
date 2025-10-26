@@ -55,9 +55,11 @@ export default function ReservationList({
           <FoodTruckCard
             variant={isProvider ? 'reservationProvider' : 'reservationClient'}
             data={reservation}
-            handleClickButton={() =>
-              handleReservationDetail(String(reservation.reservationId))
-            }
+            handleClickButton={() => {
+              if (reservation.reservationId != null) {
+                handleReservationDetail(String(reservation.reservationId));
+              }
+            }}
           />
           {index !== reservations.length - 1 && (
             <div className='h-[0.1rem] w-full bg-grayscale-100' />

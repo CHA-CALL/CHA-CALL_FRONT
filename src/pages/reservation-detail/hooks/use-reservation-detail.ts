@@ -37,7 +37,7 @@ export const useReservationDetail = () => {
     error,
     isError,
   } = useQuery<
-    | (MemberReservationDetailResponse & OwnerReservationDetailResponse)
+    | (MemberReservationDetailResponse | OwnerReservationDetailResponse)
     | undefined
   >({
     queryKey: RESERVATION_DETAIL_KEY.DETAIL(isProvider, reservationId),
@@ -52,20 +52,26 @@ export const useReservationDetail = () => {
     enabled: Boolean(reservationId),
   });
 
-  const topContents: ReservationDetailTopContentProps = isProvider
-    ? {
-        role: ROLE.PROVIDER,
-        foodTruckName: reservationDetailData?.foodTruckName,
-        clientName: reservationDetailData?.name,
-        profileImage: reservationDetailData?.profileImage,
-      }
-    : {
-        role: ROLE.CLIENT,
-        photoUrl: reservationDetailData?.photoUrl,
-        foodTruckName: reservationDetailData?.name,
-        // TODO: 푸드트럭 상세정보로 이동 라우트 설정. 푸드트럭 상세 페이지 머지 후 수정
-        handleTruckDetail: () => alert('푸드트럭 상세 정보로 이동'),
-      };
+  let topContents: ReservationDetailTopContentProps;
+
+  if (isProvider) {
+    const ownerData = reservationDetailData as OwnerReservationDetailResponse;
+    topContents = {
+      role: ROLE.PROVIDER,
+      foodTruckName: ownerData?.foodTruckName,
+      clientName: ownerData?.name,
+      profileImage: ownerData?.profileImage,
+    };
+  } else {
+    const memberData = reservationDetailData as MemberReservationDetailResponse;
+    topContents = {
+      role: ROLE.CLIENT,
+      photoUrl: memberData?.photoUrl,
+      foodTruckName: memberData?.name,
+      // TODO: 푸드트럭 상세정보로 이동 라우트 설정. 푸드트럭 상세 페이지 머지 후 수정
+      handleTruckDetail: () => alert('푸드트럭 상세 정보로 이동'),
+    };
+  }
 
   const reservationInfo = [
     {
