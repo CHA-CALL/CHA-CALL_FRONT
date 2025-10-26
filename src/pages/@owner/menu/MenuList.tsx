@@ -12,6 +12,7 @@ import {
   SORT_TYPES,
   type SortType,
 } from '@pages/@owner/menu/constant/menu-list-sort';
+import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export default function MenuList() {
   return <MenuListContent />;
@@ -31,13 +32,12 @@ function MenuListContent() {
   }
 
   const handleClickBack = () => {
-    const fromPage = location.state?.from;
     const updatedFormData = {
       ...formData,
-      menus: menus.length > 0,
+      menus: true,
     };
     navigate(ROUTES.FOOD_TRUCK_FORM, {
-      state: { from: fromPage || 'food-truck-form', formData: updatedFormData },
+      state: getNavigateState(updatedFormData),
     });
   };
 
