@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
-import type { ImageData } from '@pages/@owner/upload-food-truck/hooks/use-upload-image';
+import type { ImageData } from '@pages/@owner/upload-food-truck/hooks/use-food-truck-image';
 import { useQueryClient } from '@tanstack/react-query';
 import { FOOD_TRUCK_IMAGE_QUERY_KEY } from '@shared/querykey/food-trucks/food-truck-image';
 
