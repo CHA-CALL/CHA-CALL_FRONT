@@ -14,30 +14,39 @@ import ConfirmExitModal from '@pages/@owner/account/@modal/(.)confirm-exit-modal
 import { ROUTES } from '@router/constant/routes';
 import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal/SaveAccountModal';
 import {
-  useCreateNewAccount,
+  usePostNewAccount,
   useFetchAccountData,
   useUpdateAccount,
 } from '@pages/@owner/account/hooks/use-account-query';
 import Loading from '@shared/components/loading/Loading';
+import useToast from '@shared/hooks/use-toast';
 
 export default function Account() {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditMode = !!id;
-
+  const toast = useToast();
   const { data: existedData, isPending } = useFetchAccountData();
   const { mutate: registerAccount, isPending: isRegistering } =
-    useCreateNewAccount({
+    usePostNewAccount({
       onSuccess: () => {
         setIsSaveOpen(false);
+        toast.success('저장이 완료되었습니다.');
         navigate(ROUTES.ACCOUNT);
+      },
+      onError: () => {
+        toast.error('저장에 실패했습니다.');
       },
     });
 
   const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount({
     onSuccess: () => {
       setIsSaveOpen(false);
+      toast.success('저장이 완료되었습니다.');
       navigate(ROUTES.ACCOUNT);
+    },
+    onError: () => {
+      toast.error('저장에 실패했습니다.');
     },
   });
 
@@ -125,7 +134,10 @@ export default function Account() {
   };
 
   const isValidBank = (name: string): name is Bank => {
-    return (BANK as readonly string[]).includes(name);
+    for (const b of BANK) {
+      if (b === name) return true;
+    }
+    return false;
   };
 
   // 수정 모드일 때 계좌 정보 가져오기
@@ -137,9 +149,9 @@ export default function Account() {
         existedData.bankName &&
         isValidBank(existedData.bankName)
       ) {
-        updateBank(existedData.bankName);
-        updateName(existedData.accountHolderName);
-        updateAccountNumber(existedData.accountNumber);
+        updateBank(existedData.bankName ?? '은행을 선택해주세요');
+        updateName(existedData.accountHolderName ?? '');
+        updateAccountNumber(existedData.accountNumber ?? '');
       } else {
         console.error('기존 데이터가 유효하지 않습니다.');
       }
@@ -156,7 +168,7 @@ export default function Account() {
         isOpen={isSelectBankOpen}
         handleClose={handleCloseSelectBank}
         handleChange={handleUpdateBank}
-        bank={formData.bankName as Bank}
+        bank={formData.bankName}
       />
       <ConfirmExitModal
         isOpen={isConfirmOpen}

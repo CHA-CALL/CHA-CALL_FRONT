@@ -4,7 +4,8 @@ import Navigation from '@shared/components/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import { ROUTES } from '@router/constant/routes';
-import { useFetchAccountData } from './hooks/use-account-query';
+import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
+import Loading from '@shared/components/loading/Loading';
 
 export default function Account() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Account() {
   };
 
   if (isPending) {
-    return <div>계좌 정보 로딩중</div>;
+    return <Loading />;
   }
 
   return (

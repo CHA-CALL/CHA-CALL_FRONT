@@ -6,12 +6,9 @@ import { ERROR_MESSAGE } from '@pages/@owner/account/constants/account-schema';
 import { formatAccountNumber } from '@pages/@owner/account/utils/format-account-number';
 
 const accountSchema = z.object({
-  bankName: z
-    .string()
-    .min(1, ERROR_MESSAGE.bank)
-    .refine(bank => Object.values(BANK).includes(bank as Bank), {
-      message: ERROR_MESSAGE.bank,
-    }),
+  bankName: z.enum([...BANK], {
+    message: ERROR_MESSAGE.bank,
+  }),
   accountHolderName: z
     .string()
     .min(1, ERROR_MESSAGE.name)
@@ -37,7 +34,7 @@ export const useAccount = () => {
     defaultValues: {
       accountHolderName: '',
       accountNumber: '',
-      bankName: '',
+      bankName: '은행을 선택해주세요',
     },
     mode: 'onChange',
   });

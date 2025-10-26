@@ -12,7 +12,6 @@ import type {
   UpdateBankAccountRequest,
 } from 'apis/data-contracts';
 import { ACCOUNT_INFO } from '@shared/querykey/owner/account';
-import useToast from '@shared/hooks/use-toast';
 
 interface UsePatchAccountDataOptions {
   onSuccess?: () => void;
@@ -32,21 +31,17 @@ export const useFetchAccountData = () => {
   });
 };
 
-export const useCreateNewAccount = (options?: UsePatchAccountDataOptions) => {
+export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: ({ data }: { data: RegisterBankAccountRequest }) =>
       createBankAccountInfo(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
-      toast.success('저장이 완료되었습니다.');
       options?.onSuccess?.();
     },
     onError: error => {
-      console.error('계좌 정보 추가 실패:', error.message);
-      toast.error('저장에 실패했습니다.');
       options?.onError?.(error);
     },
   });
@@ -54,7 +49,6 @@ export const useCreateNewAccount = (options?: UsePatchAccountDataOptions) => {
 
 export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
   const queryClient = useQueryClient();
-  const toast = useToast();
 
   return useMutation({
     mutationFn: ({
@@ -66,12 +60,9 @@ export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
     }) => updateBankAccountInfo(accountId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
-      toast.success('저장이 완료되었습니다.');
       options?.onSuccess?.();
     },
     onError: error => {
-      console.error('계좌 정보 갱신 실패:', error.message);
-      toast.error('저장에 실패했습니다.');
       options?.onError?.(error);
     },
   });
