@@ -1,7 +1,6 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import {
@@ -10,7 +9,7 @@ import {
 } from '@shared/constant/image';
 import { ROUTES } from '@router/constant/routes';
 import { formatPhoneNumber } from '@shared/utils/phone-number';
-import { FOOD_TRUCK_ERROR_MESSAGE } from '../constants/food-truck';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 
 //푸드트럭 이름, 한줄소개, 전화번호, 푸드트럭 사진, 운영정보, 기타 필드
 export const useBasicInfo = () => {
@@ -23,25 +22,31 @@ export const useBasicInfo = () => {
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
-  const [isCheckingDuplicate, setIsCheckingDuplicate] = useState(false);
-  const [nameDuplicateMessage, setNameDuplicateMessage] = useState<
-    string | undefined
-  >(undefined);
-
-  const handleCheckNameDuplicate = () => {
-    // TODO: 이름 중복 체크 로직 추가
-    setNameDuplicateMessage(FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.success);
-    setIsCheckingDuplicate(true);
-  };
+  // 중복체크 버튼을 누를 수 있는 상태: 이름이 있고, 중복체크가 완료되지 않은 경우
+  const canCheckNameDuplicate =
+    formData.name.trim() !== '' && !formData.nameDuplicate;
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
-    setIsCheckingDuplicate(false);
-    setNameDuplicateMessage(undefined);
+    setValue('nameDuplicate', false, { shouldValidate: true });
   };
 
   const updateDescription = (description: string) => {
     setValue('description', description, { shouldValidate: true });
+  };
+
+  const updateNameDuplicate = () => {
+    //TODO: 추후 중복확인 로직 추가
+    const isDuplicateSuccess = Math.random() > 0.5;
+
+    if (isDuplicateSuccess) {
+      setValue('nameDuplicate', true, { shouldValidate: true });
+    } else {
+      setValue('nameDuplicate', false, { shouldValidate: true });
+      setError('name', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.duplicated,
+      });
+    }
   };
 
   const updatePhoneNumber = (phoneNumber: string) => {
@@ -63,14 +68,6 @@ export const useBasicInfo = () => {
     setValue('option', option, { shouldValidate: true });
   };
 
-  const handleClickRouteToUploadFoodTruckImages = () => {
-    const currentFormData = watch();
-    navigate(ROUTES.UPLOAD_FOOD_TRUCK_IMAGES, {
-      state: {
-        formData: currentFormData,
-      },
-    });
-  };
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) {
@@ -123,8 +120,8 @@ export const useBasicInfo = () => {
     photoUrls: formData.photoUrls,
     operatingInfo: formData.operatingInfo,
     option: formData.option,
-    isCheckingDuplicate: isCheckingDuplicate,
-
+    nameDuplicate: formData.nameDuplicate,
+    canCheckNameDuplicate,
     // Errors
     nameError: errors.name?.message,
     descriptionError: errors.description?.message,
@@ -132,19 +129,15 @@ export const useBasicInfo = () => {
     photoUrlsError: errors.photoUrls?.message,
     operatingInfoError: errors.operatingInfo?.message,
     optionError: errors.option?.message,
-    nameDuplicateMessage: nameDuplicateMessage,
-
     // Actions
     updateName,
     updateDescription,
     updatePhoneNumber,
     updateOperatingInfo,
     updateOption,
-    handleCheckNameDuplicate,
-
+    updateNameDuplicate,
     // Photo actions
     handleFileChange,
-    handleClickRouteToUploadFoodTruckImages,
     handleRemoveFile,
     handleSubmit,
   };

@@ -5,15 +5,16 @@ import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import Input from '@shared/components/input/Input';
 import Button from '@shared/components/button/Button';
 import ErrorText from '@shared/components/error-text/ErrorText';
+import { Icon } from '@shared/components/icon/Icon';
 
 export default function FoodTruckNameInput() {
   const {
     name,
     nameError,
     updateName,
-    handleCheckNameDuplicate,
-    nameDuplicateMessage,
-    isCheckingDuplicate,
+    updateNameDuplicate,
+    canCheckNameDuplicate,
+    nameDuplicate,
   } = useBasicInfo();
   return (
     <FormLayout isRequired={true} title='푸드트럭 이름'>
@@ -23,13 +24,13 @@ export default function FoodTruckNameInput() {
         maxLength={FOOD_TRUCK_MAX_LENGTH.name.max}
         error={!!nameError}
         value={name}
-        handleRightClick={handleCheckNameDuplicate}
+        handleRightClick={updateNameDuplicate}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           updateName(e.target.value)
         }
         rightComponent={
           <Button
-            buttonStyle={!isCheckingDuplicate ? 'active' : 'disabled'}
+            buttonStyle={canCheckNameDuplicate ? 'active' : 'disabled'}
             variant='verify'
           >
             중복확인
@@ -37,7 +38,12 @@ export default function FoodTruckNameInput() {
         }
       />
       {nameError && <ErrorText text={nameError} />}
-      {nameDuplicateMessage && <ErrorText text={nameDuplicateMessage} />}
+      {nameDuplicate && (
+        <div className='flex w-full items-center gap-[0.2rem]'>
+          <Icon name='ic_check' />
+          <p className='caption-m-12 text-green-500'>사용 가능한 이름입니다.</p>
+        </div>
+      )}
     </FormLayout>
   );
 }
