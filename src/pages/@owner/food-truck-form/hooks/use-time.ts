@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, type MouseEvent } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import {
@@ -7,10 +7,8 @@ import {
 } from '@pages/@owner/food-truck-form/constants/food-truck';
 import useToast from '@hooks/use-toast';
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
-
-const generateDateId = () => {
-  return `date_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-};
+import { generateDateId } from '@pages/@owner/food-truck-form/utils/generate-date-Id';
+import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
 
 export const useTime = () => {
   const {
@@ -31,7 +29,7 @@ export const useTime = () => {
     setEndActiveTime(activeTime);
   };
 
-  const updateActiveTime = useCallback(() => {
+  const updateActiveTime = () => {
     if (!startActiveTime) {
       setError('activeTime', {
         message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.start,
@@ -62,7 +60,7 @@ export const useTime = () => {
         shouldValidate: true,
       });
     }
-  }, [startActiveTime, endActiveTime, setError, setValue]);
+  };
 
   useEffect(() => {
     if (!startActiveTime && !endActiveTime) {
@@ -105,10 +103,18 @@ export const useTime = () => {
       return;
     }
 
-    // 기존 날짜 업데이트
     const updatedDates = currentDates.map(date =>
       date.id === id ? { ...date, ...dateData } : date
     );
+
+    if (
+      isDateOverlapping(id, dateData.startDate, dateData.endDate, currentDates)
+    ) {
+      setError('availableDates', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.availableDates.invalid,
+      });
+      return;
+    }
 
     setValue('availableDates', updatedDates, {
       shouldValidate: true,

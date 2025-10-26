@@ -7,6 +7,7 @@ import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import ButtonText from '@shared/components/button-text/ButtonText';
 import InputButton from '@pages/@owner/food-truck-form/components/InputButton';
 import { dateFormatter } from '@shared/utils/date-formatter';
+import ErrorText from '@shared/components/error-text/ErrorText';
 
 export default function ActiveDate() {
   const {
@@ -14,6 +15,7 @@ export default function ActiveDate() {
     handleAddAvailableDate,
     updateAvailableDateById,
     removeAvailableDateById,
+    availableDatesError,
   } = useTime();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -91,6 +93,7 @@ export default function ActiveDate() {
             isRemovable={false}
           />
         )}
+        {availableDatesError && <ErrorText text={availableDatesError} />}
       </FormLayout>
     </>
   );
