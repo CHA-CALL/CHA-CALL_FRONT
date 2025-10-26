@@ -5,11 +5,21 @@ import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitchButton';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
+import ErrorText from '@shared/components/error-text/ErrorText';
+import { useMenuInfo } from '@pages/@owner/food-truck-form/hooks/use-menu-info';
 
 export default function MenuInfo() {
   const navigate = useNavigate();
+  const { menusError } = useMenuInfo();
   const { watch } = useFormContext<FoodTruckFormData>();
   const formData = watch();
+  const handleClick = () => {
+    navigate(ROUTES.MENU_LIST, {
+      state: getNavigateState(formData),
+    });
+  };
+
   return (
     <FormLayout
       isRequired={true}
@@ -23,15 +33,9 @@ export default function MenuInfo() {
             ? FOOD_TRUCK_ERROR_MESSAGE.menus.success
             : FOOD_TRUCK_ERROR_MESSAGE.menus.required
         }
-        handleClick={() =>
-          navigate(ROUTES.MENU_LIST, {
-            state: {
-              from: 'food-truck-form',
-              formData: formData,
-            },
-          })
-        }
+        handleClick={handleClick}
       />
+      {menusError && <ErrorText text={menusError} />}
     </FormLayout>
   );
 }
