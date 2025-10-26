@@ -4,18 +4,17 @@ import {
   useGetUserInfo,
   useUpdateUserInfo,
 } from '@pages/mypage/hooks/use-user-data';
-import { ROUTES } from '@router/constant/routes';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import z from 'zod';
+import { z } from 'zod';
+import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
 
 const userSchema = z.object({
   profileImageUrl: z.string().url().optional(),
   name: z
     .string()
     .min(1, '이름은 필수입니다.')
-    .max(24, '이름은 최대 25자까지 가능합니다.'),
+    .max(USER_NAME_MAX_LENGTH, '이름은 최대 25자까지 가능합니다.'),
   email: z
     .string()
     .min(1, '이메일은 필수입니다.')
@@ -27,13 +26,8 @@ const userSchema = z.object({
 type UserFormData = z.infer<typeof userSchema>;
 
 export const useSetUserInfo = () => {
-  const navigate = useNavigate();
   const { data: userData, isLoading } = useGetUserInfo();
-  const { mutate: updateUser, isPending } = useUpdateUserInfo({
-    onSuccess: () => {
-      navigate(ROUTES.PROFILE_SETTING);
-    },
-  });
+  const { mutate: updateUser, isPending } = useUpdateUserInfo();
   const formMethods = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     mode: 'onChange',
@@ -54,7 +48,11 @@ export const useSetUserInfo = () => {
   }, [userData, reset]);
 
   const onSubmit = (data: UserFormData) => {
-    updateUser(data);
+    const payload = {
+      ...data,
+      profileImageUrl: data.profileImageUrl ?? DEFAULT_PROFILE_IMAGE,
+    };
+    updateUser(payload);
   };
 
   return {

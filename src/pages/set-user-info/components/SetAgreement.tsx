@@ -27,12 +27,9 @@ export default function SetAgreement() {
               <span className='text-grayscale-500'> (선택)</span>
             </span>
           </div>
-          <Icon
-            name='ic_next'
-            width={18}
-            height={18}
-            onClick={handleNavigateToTerm}
-          />
+          <button type='button' onClick={handleNavigateToTerm}>
+            <Icon name='ic_next' width={18} height={18} />
+          </button>
         </div>
       )}
     />

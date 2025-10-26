@@ -26,7 +26,7 @@ export default function SetUserEmail() {
             onChange={field.onChange}
             placeholder={'이메일 입력'}
             rightComponent={
-              <button className='translate-y-[0.2rem]'>
+              <button className='translate-y-[0.2rem]' type='button'>
                 <Icon name='ic_close' />
               </button>
             }
