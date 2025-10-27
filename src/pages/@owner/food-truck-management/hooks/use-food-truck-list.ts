@@ -13,8 +13,7 @@ import {
 } from '@pages/@owner/food-truck-management/api';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/food-trucks';
 import useToast from '@shared/hooks/use-toast';
-
-const PAGE_SIZE = 20;
+import { PAGE_SIZE } from '@shared/constant/page-size';
 
 const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
   content: [],
@@ -23,7 +22,7 @@ const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
 };
 
 export const useGetOwnerFoodTrucks = () => {
-  return useInfiniteQuery<CursorPagingResponseMyFoodTruckResponse>({
+  const query = useInfiniteQuery<CursorPagingResponseMyFoodTruckResponse>({
     queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
     queryFn: async ({ pageParam }) => {
       const cursor = pageParam === null ? undefined : Number(pageParam);
@@ -41,6 +40,14 @@ export const useGetOwnerFoodTrucks = () => {
       return undefined;
     },
   });
+
+  const foodTrucks =
+    query.data?.pages.flatMap(page => page?.content || []) || [];
+
+  return {
+    ...query,
+    foodTrucks,
+  };
 };
 
 export const useDeleteOwnerFoodTrucks = () => {
