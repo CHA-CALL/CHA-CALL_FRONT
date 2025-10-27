@@ -12,12 +12,15 @@ import { ROUTES } from '@router/constant/routes';
 import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
 import Loading from '@shared/components/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
-import { useFoodTruckDelete } from '@pages/@owner/food-truck-management/hooks/use-food-truck-delete';
+import { useFoodTruckEditMode } from '@pages/@owner/food-truck-management/hooks/use-food-truck-edit-mode';
 import Spinner from '@shared/components/spinner/Spinner';
+import type { MyFoodTruckResponse } from 'apis/data-contracts';
+import useToast from '@shared/hooks/use-toast';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
   const { ref: listBottomRef, inView } = useInView();
+  const toast = useToast();
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -26,10 +29,14 @@ export default function FoodTruckManagement() {
     navigate(ROUTES.UPLOAD_FOOD_TRUCK);
   };
 
-  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useGetOwnerFoodTrucks();
-
-  const allFoodTrucks = data?.pages.flatMap(page => page?.content || []) || [];
+  const {
+    foodTrucks,
+    isPending,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isError,
+  } = useGetOwnerFoodTrucks();
 
   const {
     deleteFoodTruckIds,
@@ -39,7 +46,7 @@ export default function FoodTruckManagement() {
     handleConfirmModal,
     isEditing,
     handleToggleEditing,
-  } = useFoodTruckDelete();
+  } = useFoodTruckEditMode();
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -47,8 +54,12 @@ export default function FoodTruckManagement() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isLoading) {
+  if (isPending) {
     return <Loading />;
+  }
+
+  if (isError) {
+    toast.error('푸드트럭 목록을 불러오는 중에 오류가 발생했습니다.');
   }
 
   return (
@@ -68,15 +79,12 @@ export default function FoodTruckManagement() {
             buttonStyle='edit'
             handleClickButton={handleToggleEditing}
           >
-            편집
+            {isEditing ? '선택해제' : '편집'}
           </Button>
         }
       />
       <div
-        className={cn(
-          'flex flex-col',
-          allFoodTrucks.length > 0 && 'pb-[10rem]'
-        )}
+        className={cn('flex flex-col', foodTrucks.length > 0 && 'pb-[10rem]')}
       >
         <div className='fixed-center top-0 bg-white px-[2rem] py-[2rem]'>
           <Information
@@ -85,8 +93,8 @@ export default function FoodTruckManagement() {
           />
         </div>
         <div className='mt-[8rem] flex flex-col'>
-          {allFoodTrucks.length > 0 &&
-            allFoodTrucks.map(item => (
+          {foodTrucks.length > 0 &&
+            foodTrucks.map((item: MyFoodTruckResponse) => (
               <FoodTruckCard
                 variant='foodtruckProvider'
                 isRemovable={isEditing}
@@ -111,7 +119,7 @@ export default function FoodTruckManagement() {
 
       <footer
         className={cn(
-          allFoodTrucks.length > 0 &&
+          foodTrucks.length > 0 &&
             'fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]',
           'px-[2rem]'
         )}
@@ -124,7 +132,14 @@ export default function FoodTruckManagement() {
           }
           className='rounded-[1.6rem]'
         >
-          {isEditing ? '삭제하기' : '+ 추가하기'}
+          {isEditing ? (
+            '삭제하기'
+          ) : (
+            <div className='flex items-center gap-[0.2rem]'>
+              <Icon name='ic_plus' />
+              <span> 추가하기</span>
+            </div>
+          )}
         </Button>
       </footer>
     </>
