@@ -2,7 +2,6 @@ export const ROUTES = {
   HOME: '/',
   FILTER: '/filter',
   RESERVATION: '/reservation',
-  RESERVATION_DETAIL: '/reservation/detail',
   FOOD_TRUCK_ONBOARDING: '/owner/food-truck-onboarding',
   SET_LOCATION: '/set-location',
   CHATLIST: '/chat-list',
@@ -12,6 +11,8 @@ export const ROUTES = {
   ACCOUNT: '/owner/account',
   ACCOUNT_FORM: '/owner/account-form',
   RESERVATION_HISTORY: '/reservation-history',
+  RESERVATION_DETAIL: (reservationId: string) =>
+    `/reservation-history/detail/${reservationId}`,
   SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
   UPLOAD_FOOD_TRUCK: '/owner/upload-food-truck',
   PROFILE_SETTING: '/profile-setting',

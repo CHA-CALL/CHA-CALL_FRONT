@@ -11,9 +11,12 @@
  */
 
 import {
+  CreateNewFoodTruckData,
   DeleteBankAccountData,
   DeleteChatTemplateData,
   DeleteFoodTruckData,
+  DeleteMenuData,
+  FoodTruckCreateRequest,
   GetBankAccountData,
   GetChatTemplatesData,
   GetMenusData,
@@ -30,6 +33,10 @@ import {
   UpdateBankAccountRequest,
   UpdateChatTemplateData,
   UpdateChatTemplateRequest,
+  UpdateFoodTruckViewedStatusData,
+  UpdateFoodTruckViewedStatusRequest,
+  UpdateMenuData,
+  UpdateMenuRequest,
   UpdateMenuStatusData,
   UpdateMenuStatusRequest,
 } from "./data-contracts";
@@ -38,6 +45,61 @@ import { ContentType, HttpClient, RequestParams } from "./http-client";
 export class Owners<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
+  /**
+   * @description 사장님 - 푸드트럭 메뉴를 수정합니다.
+   *
+   * @tags Owner API
+   * @name UpdateMenu
+   * @summary 나의 푸드트럭 메뉴 수정
+   * @request PUT:/owners/me/food-trucks/{foodTruckId}/menus/{menuId}
+   * @secure
+   * @response `200` `UpdateMenuData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateMenu = (
+    foodTruckId: number,
+    menuId: number,
+    data: UpdateMenuRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateMenuData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}`,
+      method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 사장님 - 푸드트럭 메뉴를 삭제합니다.
+   *
+   * @tags Owner API
+   * @name DeleteMenu
+   * @summary 나의 푸드트럭 메뉴 삭제
+   * @request DELETE:/owners/me/food-trucks/{foodTruckId}/menus/{menuId}
+   * @secure
+   * @response `200` `DeleteMenuData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  deleteMenu = (
+    foodTruckId: number,
+    menuId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<DeleteMenuData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}`,
+      method: "DELETE",
+      secure: true,
+      ...params,
+    });
   /**
    * @description 사장님이 자주 쓰는 채팅을 수정합니다.
    *
@@ -138,6 +200,33 @@ export class Owners<
       path: `/owners/me/bank-accounts/${bankAccountId}`,
       method: "DELETE",
       secure: true,
+      ...params,
+    });
+  /**
+   * @description 푸드트럭을 최초로 등록하는 API 입니다.
+   *
+   * @tags Owner API
+   * @name CreateNewFoodTruck
+   * @summary 사장님 등록(서류 검증) & 푸드트럭 최초 등록
+   * @request POST:/owners
+   * @secure
+   * @response `200` `CreateNewFoodTruckData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  createNewFoodTruck = (
+    data: FoodTruckCreateRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<CreateNewFoodTruckData, void>({
+      path: `/owners`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     });
   /**
@@ -337,6 +426,34 @@ export class Owners<
   ) =>
     this.request<UpdateMenuStatusData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}/change-status`,
+      method: "PATCH",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 사장님 - 푸드트럭의 표시 상태를 변경합니다.
+   *
+   * @tags Owner API
+   * @name UpdateFoodTruckViewedStatus
+   * @summary 나의 푸드트럭 표시 상태 변경
+   * @request PATCH:/owners/me/food-trucks/{foodTruckId}/change-status
+   * @secure
+   * @response `200` `UpdateFoodTruckViewedStatusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateFoodTruckViewedStatus = (
+    foodTruckId: number,
+    data: UpdateFoodTruckViewedStatusRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateFoodTruckViewedStatusData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/change-status`,
       method: "PATCH",
       body: data,
       secure: true,
