@@ -49,28 +49,36 @@ export default function FoodTruckHeaderSection({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div
-          className='flex transition-transform duration-300 ease-out'
-          style={{
-            transform: `translateX(calc(${-currentImageIndex * 100}% + ${translateImageX}px))`,
-          }}
-        >
-          {photoUrl.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              draggable={false}
-              alt={`푸드트럭 이미지 ${index + 1}`}
-              className='h-[21.1rem] w-full flex-shrink-0 object-cover'
-            />
-          ))}
-        </div>
+        {!photoUrl || photoUrl.length === 0 ? (
+          <div className='flex h-[21.1rem] w-full items-center justify-center bg-grayscale-300 text-grayscale-500 body-m-16'>
+            등록된 사진이 없습니다.
+          </div>
+        ) : (
+          <>
+            <div
+              className='flex transition-transform duration-300 ease-out'
+              style={{
+                transform: `translateX(calc(${-currentImageIndex * 100}% + ${translateImageX}px))`,
+              }}
+            >
+              {photoUrl.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  draggable={false}
+                  alt={`푸드트럭 이미지 ${index + 1}`}
+                  className='h-[21.1rem] w-full flex-shrink-0 object-cover'
+                />
+              ))}
+            </div>
 
-        <div className='absolute bottom-[2rem] right-[2rem] flex h-[2rem] w-[4rem] flex-row items-center justify-between rounded-full bg-black/50 px-[0.8rem] text-white caption-m-10'>
-          <span>{currentImageIndex + 1}</span>
-          <span>/</span>
-          <span>{photoUrl.length}</span>
-        </div>
+            <div className='absolute bottom-[2rem] right-[2rem] flex h-[2rem] w-[4rem] flex-row items-center justify-between rounded-full bg-black/50 px-[0.8rem] text-white caption-m-10'>
+              <span>{currentImageIndex + 1}</span>
+              <span>/</span>
+              <span>{photoUrl.length}</span>
+            </div>
+          </>
+        )}
       </div>
 
       <div className='flex flex-col gap-[1.6rem] p-[2rem]'>
