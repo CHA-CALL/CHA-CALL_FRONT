@@ -5,12 +5,11 @@ import { Icon } from '@components/icon/Icon';
 
 import ScheduleCalendarDay from '@pages/food-truck-detail/components/ScheduleCalendarDay';
 import getScheduleDays from '@pages/food-truck-detail/utils/get-schedule-days';
+import { DAY_OF_THE_WEEK_LABELS } from '@shared/constant/day-of-week-labels';
 
 interface ScheduleCalendarProps {
   availableDates: string[];
 }
-
-const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function ScheduleCalendar({
   availableDates,

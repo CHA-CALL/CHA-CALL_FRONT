@@ -1,3 +1,4 @@
+import { cn } from '@shared/utils/cn';
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/button/Button';
@@ -9,8 +10,8 @@ import FoodTruckScheduleSection from '@pages/food-truck-detail/sections/FoodTruc
 import FoodTruckOptionSection from '@pages/food-truck-detail/sections/FoodTruckOptionSection';
 
 import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
-import useFoodTruckDetail from './hooks/use-food-truck-detail';
-import useFoodTruckDetailView from './hooks/use-food-truck-detail-view';
+import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
+import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 
 export default function FoodTruckDetail() {
   const { isScrolled } = useFoodTruckDetailView();
@@ -55,14 +56,15 @@ export default function FoodTruckDetail() {
                 name={isLiked ? 'ic_heart_fill' : 'ic_heart_empty'}
                 width={24}
                 height={24}
-                className='text-primary-700'
+                className='mx-[0.7rem] text-primary-700'
               />
             </button>
           ) : undefined
         }
-        className={`transition-colors duration-300 ${
+        className={cn(
+          'transition-colors duration-300',
           isScrolled ? 'bg-white' : 'bg-transparent'
-        } `}
+        )}
       />
 
       <div className='mt-[-4.8rem] pb-[12rem]'>
