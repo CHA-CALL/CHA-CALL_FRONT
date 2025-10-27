@@ -37,6 +37,7 @@ export default function Filter() {
     handleOpenCalendar,
     handleCloseCalendar,
     handleApplyFilter,
+    handleDeleteSchedule,
   } = useFilterLogic();
 
   const CATEGORY_WITHOUT_ALL = omit(FOOD_TRUCK_CATEGORIES, 'ALL');
@@ -69,6 +70,7 @@ export default function Filter() {
               startDate={schedule.startDate}
               endDate={schedule.endDate}
               handleOpenCalendar={() => handleOpenCalendar(index)}
+              handleDeleteSchedule={() => handleDeleteSchedule(index)}
             />
           ))}
         </div>
