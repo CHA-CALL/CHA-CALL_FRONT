@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
