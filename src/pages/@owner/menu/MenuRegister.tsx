@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect, type ChangeEvent } from 'react';
+import { useState, useEffect } from 'react';
 
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
@@ -31,7 +31,7 @@ export default function MenuRegister() {
     trigger,
   } = useMenuForm();
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       updateImage(selectedFile);
@@ -93,9 +93,7 @@ export default function MenuRegister() {
           <Input
             placeholder='텍스트를 입력해주세요.'
             value={formData.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateName(e.target.value.trim())
-            }
+            onChange={e => updateName(e.target.value)}
             maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
             rightComponent={
               <button onClick={handleClearName} className='flex items-center'>
@@ -111,9 +109,7 @@ export default function MenuRegister() {
             <Textarea
               placeholder='텍스트를 입력해주세요.'
               value={formData.description}
-              handleChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                updateDescription(e.target.value)
-              }
+              handleChange={e => updateDescription(e.target.value)}
               maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
               className='h-[12.2rem]'
             />
@@ -133,9 +129,7 @@ export default function MenuRegister() {
             inputMode='numeric'
             placeholder='텍스트를 입력해주세요.'
             value={formData.price}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updatePrice(e.target.value)
-            }
+            onChange={e => updatePrice(e.target.value)}
             className='border-grayscale-300 focus-within:border-grayscale-700'
           />
         </MenuInput>
