@@ -1,6 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import type {
+  RegisterRatingRequest,
+  RegisterRatingsData,
+} from 'apis/data-contracts';
 
+import { registerRatingFoodTruck } from '@components/rating-bottom-sheet/api';
 import { RATES } from '@shared/constant/rate';
+import useToast from '@shared/hooks/use-toast';
 
 interface UseStarRatingProps {
   reservationId: number;
@@ -13,12 +20,36 @@ export default function useStarRating({
   foodTruckId,
   handleCloseBottomSheet,
 }: UseStarRatingProps) {
+  const toast = useToast();
+
   const [selectedRate, setSelectedRate] = useState<number>(0);
 
   const [isDragging, setIsDragging] = useState(false);
 
   const rowRef = useRef<HTMLDivElement | null>(null);
   const starRefs = useRef<(SVGSVGElement | null)[]>([]);
+
+  const { mutate: registerRating } = useMutation<
+    RegisterRatingsData,
+    Error,
+    RegisterRatingRequest
+  >({
+    mutationFn: (content: RegisterRatingRequest) =>
+      registerRatingFoodTruck(content),
+    onSuccess: () => {
+      // TODO : 예약리스트 (홈), 예약 상세 정보 페이지 에서 사용되는 쿼리키로 추가하기
+      //   qc.invalidateQueries({
+      //     queryKey: ???
+      //   });
+      toast.success('별점이 반영되었어요. 소중한 의견 감사합니다!');
+    },
+    onError: error => {
+      toast.error(`다시 시도해주세요. ${JSON.parse(error.message).message}`);
+    },
+    onSettled: () => {
+      handleCloseBottomSheet();
+    },
+  });
 
   // x좌표로부터  판단
   const calculateRateFromClientX = useCallback((clientX: number) => {
@@ -82,11 +113,12 @@ export default function useStarRating({
   }, []);
 
   const handleRegisterRate = useCallback(() => {
-    alert(
-      `${reservationId} / ${foodTruckId}에 대한 별점: ${String(selectedRate)}`
-    );
-    handleCloseBottomSheet();
-  }, [reservationId, foodTruckId, selectedRate, handleCloseBottomSheet]);
+    registerRating({
+      reservationId,
+      foodTruckId,
+      rating: selectedRate.toFixed(1),
+    });
+  }, [reservationId, foodTruckId, selectedRate, registerRating]);
 
   return {
     selectedRate,

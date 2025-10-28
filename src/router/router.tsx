@@ -44,10 +44,7 @@ export const router = createBrowserRouter([
         path: ROUTES.RESERVATION,
         element: <Reservation />,
       },
-      {
-        path: ROUTES.RESERVATION_DETAIL,
-        element: <ReservationDetail />,
-      },
+
       {
         path: ROUTES.FOOD_TRUCK_ONBOARDING,
         element: <FoodTruckOnboarding />,
@@ -83,6 +80,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.RESERVATION_HISTORY,
         element: <ReservationHistory />,
+      },
+      {
+        path: ROUTES.RESERVATION_DETAIL(':reservationId'),
+        element: <ReservationDetail />,
       },
       {
         path: ROUTES.SAVE_FOOD_TRUCK_LIST,
