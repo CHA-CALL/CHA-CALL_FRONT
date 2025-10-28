@@ -40,7 +40,7 @@ export default function FoodTruckForm() {
     if (location.state?.formData && location.state?.from) {
       methods.reset(location.state.formData);
     }
-  }, [location.state, methods]);
+  }, [location.state]);
 
   const handleNavigateBack = () => {
     navigate(-1);
