@@ -6,20 +6,34 @@ export const isDateOverlapping = (
   newEndDate: string,
   dates: AvailableDate[]
 ) => {
-  const newStart = new Date(newStartDate);
-  const newEnd = new Date(newEndDate);
+  const newStart = toDateOnly(newStartDate);
+  const newEnd = toDateOnly(newEndDate);
+
+  if (!newStart) return false;
+
+  const newRangeStart = newStart;
+  const newRangeEnd = newEnd || newStart;
 
   return dates.some(date => {
     if (newId && date.id === newId) return false;
 
-    const existingStart = new Date(date.startDate);
-    const existingEnd = new Date(date.endDate);
+    const existingStartOnly = toDateOnly(date.startDate);
+    const existingEndOnly = toDateOnly(date.endDate);
 
-    return (
-      (newStart > existingStart && newStart < existingEnd) ||
-      (newEnd > existingStart && newEnd < existingEnd) ||
-      (newStart < existingStart && newEnd > existingEnd) ||
-      (newStart === existingStart && newEnd === existingEnd)
-    );
+    if (!existingStartOnly) return false;
+
+    const existingRangeStart = existingStartOnly;
+    const existingRangeEnd = existingEndOnly || existingStartOnly;
+
+    const noOverlap =
+      newRangeEnd < existingRangeStart || existingRangeEnd < newRangeStart;
+    return !noOverlap;
   });
+};
+
+const toDateOnly = (isoLike: string): string => {
+  if (!isoLike) return '';
+  const d = new Date(isoLike);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toISOString().split('T')[0];
 };
