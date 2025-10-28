@@ -2,6 +2,7 @@ import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import Input from '@shared/components/input/Input';
 import ErrorText from '@shared/components/error-text/ErrorText';
+import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 
 export default function FoodTruckPhoneNumber() {
   const { phoneNumber, phoneNumberError, updatePhoneNumber } = useBasicInfo();
@@ -12,6 +13,7 @@ export default function FoodTruckPhoneNumber() {
         error={!!phoneNumberError}
         value={phoneNumber}
         onChange={e => updatePhoneNumber(e.target.value)}
+        maxLength={FOOD_TRUCK_MAX_LENGTH.phoneNumber.max}
       />
       {phoneNumberError && <ErrorText text={phoneNumberError} />}
     </FormLayout>

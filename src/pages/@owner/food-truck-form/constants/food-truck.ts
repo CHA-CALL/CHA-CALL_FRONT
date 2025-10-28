@@ -9,6 +9,7 @@ export const FOOD_TRUCK_MAX_LENGTH = {
   },
   phoneNumber: {
     min: 1,
+    max: 13,
   },
   regionCodes: {
     min: 1,
