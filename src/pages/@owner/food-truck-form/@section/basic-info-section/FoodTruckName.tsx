@@ -1,4 +1,3 @@
-import { type ChangeEvent } from 'react';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
@@ -25,9 +24,7 @@ export default function FoodTruckNameInput() {
         error={!!nameError}
         value={name}
         handleRightClick={updateNameDuplicate}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          updateName(e.target.value)
-        }
+        onChange={e => updateName(e.target.value)}
         rightComponent={
           <Button
             buttonStyle={canCheckNameDuplicate ? 'active' : 'disabled'}

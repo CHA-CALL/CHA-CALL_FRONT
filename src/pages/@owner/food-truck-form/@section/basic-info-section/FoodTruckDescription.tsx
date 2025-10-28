@@ -1,4 +1,3 @@
-import { type ChangeEvent } from 'react';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import Input from '@shared/components/input/Input';
@@ -14,9 +13,7 @@ export default function FoodTruckDescription() {
         maxLength={FOOD_TRUCK_MAX_LENGTH.description.max}
         error={!!descriptionError}
         value={description}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          updateDescription(e.target.value)
-        }
+        onChange={e => updateDescription(e.target.value)}
         className='whitespace-normal break-words'
       />
       {descriptionError && <ErrorText text={descriptionError} />}

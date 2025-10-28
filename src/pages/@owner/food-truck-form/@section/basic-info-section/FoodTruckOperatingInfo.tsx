@@ -1,4 +1,3 @@
-import { type ChangeEvent } from 'react';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import Textarea from '@shared/components/text-area/Textarea';
@@ -13,9 +12,7 @@ export default function FoodTruckOperatingInfo() {
       <Textarea
         placeholder='텍스트를 입력해주세요.'
         value={operatingInfo ?? ''}
-        handleChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-          updateOperatingInfo(e.target.value)
-        }
+        handleChange={e => updateOperatingInfo(e.target.value)}
         maxLength={FOOD_TRUCK_MAX_LENGTH.operationalInformation.max}
         className='min-h-[34rem]'
       />
