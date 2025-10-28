@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import {
@@ -124,11 +124,7 @@ export const useTime = () => {
     });
   };
 
-  const removeAvailableDateById = (
-    event: MouseEvent<SVGSVGElement>,
-    id: string
-  ) => {
-    event.stopPropagation();
+  const removeAvailableDateById = (id: string) => {
     const currentDates = formData.availableDates ?? [];
     const filteredDates = currentDates.filter(date => date.id !== id);
 
@@ -139,6 +135,15 @@ export const useTime = () => {
 
   const handleAddAvailableDate = () => {
     const currentDates = formData.availableDates ?? [];
+
+    const hasIncompleteDates = currentDates.some(date => !date.startDate);
+    if (hasIncompleteDates) {
+      setError('availableDates', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.availableDates.incomplete,
+      });
+      return;
+    }
+
     if (currentDates.length >= FOOD_TRUCK_MAX_LENGTH.availableDates.max) {
       setError('availableDates', {
         message: FOOD_TRUCK_ERROR_MESSAGE.availableDates.max,

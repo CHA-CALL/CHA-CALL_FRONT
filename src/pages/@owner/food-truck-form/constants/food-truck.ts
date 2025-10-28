@@ -78,6 +78,7 @@ export const FOOD_TRUCK_ERROR_MESSAGE = {
     min: `가능한 일정대는 ${FOOD_TRUCK_MAX_LENGTH.availableDates.min}개 이상 선택해주세요.`,
     max: `가능한 일정대는 ${FOOD_TRUCK_MAX_LENGTH.availableDates.max}개 이하로 선택해주세요.`,
     invalid: '가능한 일정대는 겹치지 않게 설정해주세요.',
+    incomplete: '기존 일정을 완성한 후 새로운 일정을 추가해주세요.',
   },
   photoUrls: {
     max: `푸드트럭 사진은 ${FOOD_TRUCK_MAX_LENGTH.photoUrls.max}개까지 업로드할 수 있습니다.`,
