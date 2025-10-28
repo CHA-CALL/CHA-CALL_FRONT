@@ -14,11 +14,6 @@ interface TimePickerItemProps {
   handleClick: () => void;
 }
 
-const PERIODS = {
-  AM: '오전',
-  PM: '오후',
-} as const;
-
 function TimePickerItem({
   time,
   isSelected,
@@ -45,11 +40,10 @@ export default function TimePicker({
   className = '',
 }: TimePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
   const [selectedHour, setSelectedHour] = useState<string | null>(null);
   const [selectedMinute, setSelectedMinute] = useState<string | null>(null);
-  const HOURS = Array.from({ length: 12 }, (_, i) =>
-    (i + 1).toString().padStart(2, '0')
+  const HOURS = Array.from({ length: 24 }, (_, i) =>
+    i.toString().padStart(2, '0')
   );
 
   const MINUTES = Array.from({ length: 60 }, (_, i) =>
@@ -59,29 +53,18 @@ export default function TimePicker({
   useEffect(() => {
     if (value) {
       const [hour, minute] = value.split(':');
-
-      setSelectedPeriod(parseInt(hour) >= 12 ? PERIODS.PM : PERIODS.AM);
       setSelectedHour(hour);
       setSelectedMinute(minute);
     }
   }, [value]);
 
-  const handleTimeChange = (
-    type: 'period' | 'hour' | 'minute',
-    newValue: string
-  ) => {
-    if (type === 'period') {
-      setSelectedPeriod(newValue);
-      setSelectedHour(null);
-      setSelectedMinute(null);
-    } else if (type === 'hour') {
+  const handleTimeChange = (type: 'hour' | 'minute', newValue: string) => {
+    if (type === 'hour') {
       setSelectedHour(newValue);
       setSelectedMinute(null);
     } else if (type === 'minute') {
       setSelectedMinute(newValue);
-      handleChange?.(
-        `${selectedPeriod === PERIODS.PM && selectedHour !== '12' ? parseInt(selectedHour ?? '0') + 12 : selectedHour}:${newValue}`
-      );
+      handleChange?.(`${selectedHour}:${newValue}`);
     }
   };
 
@@ -98,22 +81,19 @@ export default function TimePicker({
         onClick={() => setIsOpen(!isOpen)}
         className='flex w-full items-center justify-between px-[2rem] py-[1.2rem]'
       >
-        <p className='body-m-14 text-grayscale-700'>{timeTitle}</p>
+        <p className='title-sb-12 text-grayscale-500'>{timeTitle}</p>
         <div className='flex items-center gap-[1.2rem]'>
           <span
             className={cn(
               'body-m-14',
-              isOpen && value ? 'text-primary-700' : 'text-grayscale-500'
+              isOpen && value ? 'text-primary-700' : 'text-grayscale-700'
             )}
           >
-            {selectedPeriod && selectedHour && selectedMinute ? (
-              <div className='flex items-center gap-[0.6rem]'>
-                <span>{selectedPeriod}</span>
-                <div className='body-m-16 flex items-center gap-[0.2rem]'>
-                  <span>{selectedHour}</span>
-                  <span>:</span>
-                  <span>{selectedMinute}</span>
-                </div>
+            {selectedHour && selectedMinute ? (
+              <div className='body-m-16 flex items-center gap-[0.2rem]'>
+                <span>{selectedHour}</span>
+                <span>:</span>
+                <span>{selectedMinute}</span>
               </div>
             ) : (
               timeTitle
@@ -127,18 +107,6 @@ export default function TimePicker({
       </button>
       {isOpen && (
         <div className='flex items-center justify-center gap-[1.8rem] py-[3rem]'>
-          {/* 오전/오후 선택 */}
-          <div className='scrollbar-hide flex flex-col items-center gap-[0.8rem]'>
-            {Object.values(PERIODS).map(period => (
-              <TimePickerItem
-                key={period}
-                time={period}
-                isSelected={selectedPeriod === period}
-                handleClick={() => handleTimeChange('period', period)}
-              />
-            ))}
-          </div>
-
           {/* 시간 선택 */}
           <div className='scrollbar-hide flex max-h-[8.4rem] flex-col items-center overflow-y-auto'>
             <div className='flex flex-col gap-[0.4rem]'>

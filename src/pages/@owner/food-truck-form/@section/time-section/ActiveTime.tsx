@@ -33,12 +33,12 @@ export default function ActiveTime() {
       <TimePicker
         value={startActiveTime}
         handleChange={updateActiveTimeStart}
-        timeTitle='시간을 선택해주세요.'
+        timeTitle='운영 시작'
       />
       <TimePicker
         value={endActiveTime}
         handleChange={updateActiveTimeEnd}
-        timeTitle='시간을 선택해주세요.'
+        timeTitle='운영 종료'
       />
       {activeTimeError && <ErrorText text={activeTimeError} />}
     </FormLayout>
