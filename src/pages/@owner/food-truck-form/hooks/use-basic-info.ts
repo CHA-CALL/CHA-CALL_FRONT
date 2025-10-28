@@ -1,7 +1,7 @@
 import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import {
   CANNOT_UPLOAD_FILE_MB,
@@ -35,7 +35,7 @@ export const useBasicInfo = () => {
     setValue('description', description, { shouldValidate: true });
   };
 
-  const updateNameDuplicate = () => {
+  const checkNameDuplicated = () => {
     //TODO: 추후 중복확인 로직 추가
     const isDuplicateSuccess = Math.random() > 0.5;
 
@@ -135,7 +135,7 @@ export const useBasicInfo = () => {
     updatePhoneNumber,
     updateOperatingInfo,
     updateOption,
-    updateNameDuplicate,
+    checkNameDuplicated,
     // Photo actions
     handleFileChange,
     handleRemoveFile,

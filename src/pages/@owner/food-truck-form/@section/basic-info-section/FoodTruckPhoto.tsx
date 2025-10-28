@@ -5,7 +5,7 @@ import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constant
 import { ROUTES } from '@router/constant/routes';
 import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export default function FoodTruckPhoto() {

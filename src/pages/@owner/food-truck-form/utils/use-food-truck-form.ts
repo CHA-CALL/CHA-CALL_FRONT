@@ -42,10 +42,10 @@ const foodTruckSchema = z.object({
   //     FOOD_TRUCK_MAX_LENGTH.regionCodes.max,
   //     FOOD_TRUCK_ERROR_MESSAGE.regionCodes.max
   //   ),
-  availableQuantity: z.enum(AVAILABLE_QUANTITY),
-  needElectricity: z.enum(NEED_ELECTRICITY),
-  paymentMethod: z.enum(PAYMENT_METHOD),
-  menuCategories: z.array(z.enum(FOOD_CATEGORIES)),
+  availableQuantity: z.nativeEnum(AVAILABLE_QUANTITY),
+  needElectricity: z.nativeEnum(NEED_ELECTRICITY),
+  paymentMethod: z.nativeEnum(PAYMENT_METHOD),
+  menuCategories: z.array(z.nativeEnum(FOOD_CATEGORIES)),
   photoUrls: z.array(z.instanceof(File)).refine(files => files.length > 0, {
     message: FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required,
   }),

@@ -11,7 +11,7 @@ export default function FoodTruckNameInput() {
     name,
     nameError,
     updateName,
-    updateNameDuplicate,
+    checkNameDuplicated,
     canCheckNameDuplicate,
     nameDuplicate,
   } = useBasicInfo();
@@ -23,7 +23,7 @@ export default function FoodTruckNameInput() {
         maxLength={FOOD_TRUCK_MAX_LENGTH.name.max}
         error={!!nameError}
         value={name}
-        handleRightClick={updateNameDuplicate}
+        handleRightClick={checkNameDuplicated}
         onChange={e => updateName(e.target.value)}
         rightComponent={
           <Button

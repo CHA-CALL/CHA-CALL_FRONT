@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
@@ -26,10 +26,12 @@ function MenuListContent() {
   const [sortOption, setSortOption] = useState<SortType>(SORT_TYPES.LATEST);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const formData = location.state?.formData;
-  if (foodTruckId) {
-    //TODO: 메뉴 목록 조회 로직 구현
-    setMenus([]);
-  }
+  useEffect(() => {
+    if (foodTruckId) {
+      //TODO: 메뉴 목록 조회 로직 구현
+      setMenus([]);
+    }
+  }, [foodTruckId]);
 
   const handleClickBack = () => {
     const updatedFormData = {

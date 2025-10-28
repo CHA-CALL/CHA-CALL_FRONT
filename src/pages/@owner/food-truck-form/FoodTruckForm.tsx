@@ -22,7 +22,7 @@ import {
   PaymentMethod,
 } from '@pages/@owner/food-truck-form/@section/category-section/index';
 import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-section';
-import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 

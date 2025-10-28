@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,

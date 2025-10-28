@@ -8,7 +8,7 @@ import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info
 import {
   useFoodTruckForm,
   type FoodTruckFormData,
-} from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+} from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import ImagePreview from '@shared/components/image-preview/ImagePreview';
 import Button from '@shared/components/button/Button';
