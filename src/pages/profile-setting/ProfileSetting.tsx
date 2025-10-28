@@ -17,7 +17,7 @@ export default function ProfileSetting() {
   const { data: userData, isPending: isUserDataPending } = useGetUserInfo();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (isUserDataPending || !userData) {
+  if (isUserDataPending) {
     return <Loading />;
   }
 

@@ -11,7 +11,7 @@ export default function ProfileImageSection({
   return (
     <div className='p-[0.5rem]'>
       <img
-        className='border-grayscale-200 h-[8rem] w-[8rem] rounded-full border object-cover'
+        className='border-grayscale-200 h-[8rem] min-h-[8rem] w-[8rem] min-w-[8rem] rounded-full border object-cover'
         src={profileImage}
         alt='프로필사진'
       />

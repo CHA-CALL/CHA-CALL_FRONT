@@ -17,7 +17,7 @@ export default function SetUserImage({
       onClick={handleOpenBottomSheet}
     >
       <img
-        className='border-grayscale-200 h-[8rem] w-[8rem] rounded-full border object-cover'
+        className='border-grayscale-200 h-[8rem] min-h-[8rem] w-[8rem] min-w-[8rem] rounded-full border object-cover'
         src={profileImageUrl}
         alt='프로필사진'
       />
