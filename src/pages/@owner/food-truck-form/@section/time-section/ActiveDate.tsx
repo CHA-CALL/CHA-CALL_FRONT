@@ -5,8 +5,7 @@ import Calendar from '@shared/components/calendar/Calendar';
 import type { SelectedDate } from '@shared/types/calendar-types';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import ButtonText from '@shared/components/button-text/ButtonText';
-import InputButton from '@pages/@owner/food-truck-form/components/InputButton';
-import { dateFormatter } from '@shared/utils/date-formatter';
+import ButtonDate from '@shared/components/button-date/ButtonDate';
 import ErrorText from '@shared/components/error-text/ErrorText';
 
 export default function ActiveDate() {
@@ -61,36 +60,28 @@ export default function ActiveDate() {
       >
         {availableDates.length > 0 ? (
           availableDates.map(date => (
-            <InputButton
+            <ButtonDate
               key={date.id}
-              id={date.id}
-              iconId='ic_calendar'
-              text={
-                date.startDate
-                  ? `${dateFormatter(new Date(date.startDate))}` +
-                    (date.endDate
-                      ? `- ${dateFormatter(new Date(date.endDate))}`
-                      : '')
-                  : '일정을 선택해주세요.'
-              }
-              handleClick={() => {
+              startDate={date.startDate ? new Date(date.startDate) : null}
+              endDate={date.endDate ? new Date(date.endDate) : null}
+              handleOpenCalendar={() => {
                 setSelectedId(date.id);
                 setIsCalendarOpen(true);
               }}
-              handleRemove={event => removeAvailableDateById(event, date.id)}
-              isRemovable={!!date.startDate}
+              handleDeleteSchedule={() => {
+                removeAvailableDateById(date.id);
+              }}
             />
           ))
         ) : (
-          <InputButton
-            id='default-date'
-            iconId='ic_calendar'
-            text='일정을 선택해주세요.'
-            handleClick={() => {
+          <ButtonDate
+            startDate={null}
+            endDate={null}
+            handleOpenCalendar={() => {
               setSelectedId('default-date');
               setIsCalendarOpen(true);
             }}
-            isRemovable={false}
+            handleDeleteSchedule={() => {}}
           />
         )}
         {availableDatesError && <ErrorText text={availableDatesError} />}
