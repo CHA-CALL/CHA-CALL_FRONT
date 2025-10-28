@@ -26,15 +26,20 @@ export default function FoodTruckPhoto() {
       title='푸드트럭 사진'
       description='첫번째 사진이 메인 사진으로 노출됩니다.'
     >
-      <PageSwitchButton
-        isSelected={photoUrls.length > 0 ? true : false}
-        text={
-          photoUrls.length > 0
-            ? FOOD_TRUCK_ERROR_MESSAGE.photoUrls.success
-            : FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required
-        }
-        handleClick={handleClick}
-      />
+      {(() => {
+        const hasPhotos = (photoUrls?.length ?? 0) > 0;
+        return (
+          <PageSwitchButton
+            isSelected={hasPhotos}
+            text={
+              hasPhotos
+                ? FOOD_TRUCK_ERROR_MESSAGE.photoUrls.success
+                : FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required
+            }
+            handleClick={handleClick}
+          />
+        );
+      })()}
     </FormLayout>
   );
 }
