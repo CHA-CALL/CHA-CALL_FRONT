@@ -1,39 +1,32 @@
 import { useState, useEffect, type ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
+import { useFormContext } from 'react-hook-form';
 
 interface UseMenuFormProps {
-  foodTruckId: string;
   initialImageUrl?: string;
-  formData: MenuFormData;
   updateName: (_name: string) => void;
   updateImageUrl: (_image: File | null) => void;
 }
 
 export const useMenuForm = ({
-  foodTruckId,
   initialImageUrl,
-  formData,
   updateName,
   updateImageUrl,
 }: UseMenuFormProps) => {
-  const navigate = useNavigate();
+  const { watch } = useFormContext<MenuFormData>();
+  const imageFile = watch('imageUrl');
 
-  const [imageUrl, setImageUrl] = useState<string>(initialImageUrl || '');
+  const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
   const canAdd = !imageUrl;
 
   useEffect(() => {
-    if (formData.imageUrl) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        setImageUrl(e.target?.result as string);
-      };
-      reader.readAsDataURL(formData.imageUrl);
-    } else {
-      setImageUrl(initialImageUrl || '');
+    if (imageFile) {
+      const newUrl = URL.createObjectURL(imageFile);
+      setImageUrl(newUrl);
+      return () => URL.revokeObjectURL(newUrl);
     }
-  }, [formData.imageUrl, initialImageUrl]);
+    setImageUrl(null);
+  }, [imageFile]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -44,16 +37,11 @@ export const useMenuForm = ({
   };
 
   const handleRemoveFile = () => {
-    setImageUrl('');
     updateImageUrl(null);
   };
 
   const handleClearName = () => {
     updateName('');
-  };
-
-  const handleClickBack = () => {
-    navigate(ROUTES.MENU_LIST(foodTruckId));
   };
 
   return {
@@ -62,6 +50,5 @@ export const useMenuForm = ({
     handleFileChange,
     handleRemoveFile,
     handleClearName,
-    handleClickBack,
   };
 };

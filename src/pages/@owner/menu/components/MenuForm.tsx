@@ -1,6 +1,5 @@
-import React, { type ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
 import Input from '@components/input/Input';
 import Textarea from '@components/text-area/Textarea';
 import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
@@ -8,52 +7,48 @@ import ImagePreview from '@components/image-preview/ImagePreview';
 import MenuInput from '@pages/@owner/menu/components/MenuInput';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
+import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
+import { useFormContext } from 'react-hook-form';
 
 interface MenuFormProps {
-  footerContent: React.ReactNode;
-  formData: MenuFormData;
-  errors: {
-    name?: string;
-    description?: string;
-    price?: string;
-    image?: string;
-  };
-  imageUrl: string;
-  canAdd?: boolean;
-  handleFileChange: (_e: ChangeEvent<HTMLInputElement>) => void;
-  handleRemoveFile: () => void;
-  handleClickBack: () => void;
-  handleClearName: () => void;
+  initialImageUrl?: string;
   updateName: (_name: string) => void;
   updateDescription: (_description: string) => void;
   updatePrice: (_price: string) => void;
+  updateImageUrl: (_image: File | null) => void;
 }
 
 export default function MenuForm({
-  footerContent,
-  formData,
-  errors,
-  imageUrl,
-  canAdd,
-  handleFileChange,
-  handleRemoveFile,
-  handleClickBack,
-  handleClearName,
+  initialImageUrl,
   updateName,
   updateDescription,
   updatePrice,
+  updateImageUrl,
 }: MenuFormProps) {
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext<MenuFormData>();
+
+  const formData = watch();
+
+  const {
+    imageUrl,
+    canAdd,
+    handleFileChange,
+    handleRemoveFile,
+    handleClearName,
+  } = useMenuForm({
+    initialImageUrl,
+    updateName,
+    updateImageUrl,
+  });
+
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={handleClickBack}
-        text='메뉴 등록'
-      />
-
       <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[16rem]'>
-        <MenuInput title='메뉴 이름' error={errors.name}>
+        <MenuInput title='메뉴 이름' error={errors.name?.message}>
           <Input
             placeholder='텍스트를 입력해주세요.'
             value={formData.name}
@@ -70,7 +65,7 @@ export default function MenuForm({
           />
         </MenuInput>
 
-        <MenuInput title='메뉴 설명' error={errors.description}>
+        <MenuInput title='메뉴 설명' error={errors.description?.message}>
           <div className='flex flex-col gap-[0.6rem]'>
             <Textarea
               placeholder='텍스트를 입력해주세요.'
@@ -91,7 +86,7 @@ export default function MenuForm({
           </div>
         </MenuInput>
 
-        <MenuInput title='가격' error={errors.price}>
+        <MenuInput title='가격' error={errors.price?.message}>
           <Input
             type='text'
             inputMode='numeric'
@@ -106,7 +101,7 @@ export default function MenuForm({
 
         <MenuInput
           title='사진 등록'
-          error={errors.image}
+          error={errors.imageUrl?.message}
           maxLength={1}
           currentLength={imageUrl ? 1 : 0}
         >
@@ -126,10 +121,6 @@ export default function MenuForm({
           </p>
         </MenuInput>
       </div>
-
-      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
-        {footerContent}
-      </footer>
     </>
   );
 }

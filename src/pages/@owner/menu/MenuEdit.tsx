@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Button from '@components/button/Button';
 import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
@@ -8,51 +8,65 @@ import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import { useDeleteMenu } from '@pages/@owner/menu/hooks/use-menu-delete';
 import { uploadImage, getPresignedUrl } from '@pages/@owner/menu/api';
-import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
 import { formatPrice } from '@shared/utils/price-formatter';
+import { FormProvider } from 'react-hook-form';
+import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@components/icon/Icon';
 
 export default function MenuEdit() {
+  const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isInitialized = useRef(false);
 
   const { foodTruckId, menuId } = useParams<{ foodTruckId: string, menuId: string }>();
-  const { mutate: editMenu } = useEditMenu(Number(foodTruckId), Number(menuId));
-  const { mutate: deleteMenu } = useDeleteMenu(Number(foodTruckId), Number(menuId));
+  const parsedFoodTruckId = Number(foodTruckId);
+  const parsedMenuId = Number(menuId);
 
   const menuData = location.state?.menuData;
+  const [initialImageUrl, setInitialImageUrl] = useState(menuData?.imageUrl);
 
-  const {
-    formData,
-    errors,
-    updateName,
-    updateDescription,
-    updatePrice,
-    updateImageUrl,
-    isValid,
-    handleSubmit,
-    reset,
-  } = useFormValidation();
+  const { methods, updateName, updateDescription, updatePrice, updateImageUrl } = useFormValidation();
+  const { mutate: editMenu } = useEditMenu(parsedFoodTruckId, parsedMenuId);
+  const { mutate: deleteMenu } = useDeleteMenu(parsedFoodTruckId, parsedMenuId);
 
-  const {
-    imageUrl,
-    canAdd,
-    handleFileChange,
-    handleRemoveFile,
-    handleClearName,
-    handleClickBack,
-  } = useMenuForm({
-    foodTruckId: foodTruckId || '',
-    initialImageUrl: menuData?.imageUrl,
-    formData,
-    updateName,
-    updateImageUrl,
-  });
+  useEffect(() => {
+    if (menuData && !isInitialized.current) {
+      const setInitialData = async () => {
+        try {
+          const imageFile = menuData.imageUrl
+            ? await convertURLtoFile(menuData.imageUrl)
+            : undefined;
+
+          methods.reset({
+            name: menuData.name,
+            description: menuData.description,
+            price: formatPrice(String(menuData.price)),
+            imageUrl: imageFile,
+          });
+
+          isInitialized.current = true;
+
+          if (imageFile) {
+            setInitialImageUrl(undefined);
+          }
+        } catch (error) {
+          console.error("이미지를 파일로 변환하는 데 실패했습니다:", error);
+          toast.error("메뉴 정보를 불러오는 데 실패했습니다.");
+        }
+      };
+      setInitialData();
+    }
+  }, [menuData, methods, toast]);
 
   const onSubmit = async (formData: MenuFormData) => {
-    if (!formData.imageUrl) return;
+    if (!formData.imageUrl) {
+      toast.error('이미지를 업로드해주세요.');
+      return;
+    }
 
     try {
       const fileExtension = formData.imageUrl.name.split('.').pop() || '';
@@ -98,74 +112,45 @@ export default function MenuEdit() {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    if (menuData) {
-      const loadImage = async () => {
-        const formattedPrice = menuData.price
-          ? formatPrice(menuData.price)
-          : '';
-        let imageFile: File | undefined;
-
-        try {
-          // 이미지 URL을 File 객체로 변환
-          if (menuData.imageUrl) {
-            imageFile = await convertURLtoFile(menuData.imageUrl);
-          }
-        } catch (error) {
-          console.error('이미지 파일로 변환 실패.', error);
-        }
-
-        reset({
-          name: menuData.name,
-          description: menuData.description,
-          price: formattedPrice,
-          imageUrl: imageFile,
-        });
-      };
-      loadImage();
-    }
-  }, [menuData, reset]);
-
   return (
-    <>
+    <FormProvider {...methods}>
       <MenuDeleteModal
         isModalOpen={isModalOpen}
         handleCloseModal={handleCloseModal}
         handleConfirmDelete={handleConfirmDelete}
       />
 
+      <Navigation
+        leftIcon={<Icon name='ic_back' />}
+        handleLeftClick={() => navigate(-1)}
+        text='메뉴 등록'
+      />
       <MenuForm
-        formData={formData}
-        errors={errors}
-        imageUrl={imageUrl}
-        canAdd={canAdd}
-        handleFileChange={handleFileChange}
-        handleRemoveFile={handleRemoveFile}
-        handleClickBack={handleClickBack}
-        handleClearName={handleClearName}
+        initialImageUrl={initialImageUrl}
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}
-        footerContent={
-          <div className='flex gap-[1rem]'>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleClickDelete}
-              className='w-[50%]'
-            >
-              삭제
-            </Button>
-            <Button
-              variant='cta'
-              buttonStyle={isValid ? 'active' : 'disabled'}
-              handleClickButton={handleSubmit(onSubmit)}
-            >
-              저장하기
-            </Button>
-          </div>
-        }
+        updateImageUrl={updateImageUrl}
       />
-    </>
+      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+        <div className='flex gap-[1rem]'>
+          <Button
+            variant='cta'
+            buttonStyle='sub'
+            handleClickButton={handleClickDelete}
+            className='w-[50%]'
+          >
+            삭제
+          </Button>
+          <Button
+            variant='cta'
+            buttonStyle={methods.formState.isValid ? 'active' : 'disabled'}
+            handleClickButton={methods.handleSubmit(onSubmit)}
+          >
+            저장하기
+          </Button>
+        </div>
+      </footer>
+    </FormProvider>
   );
 }

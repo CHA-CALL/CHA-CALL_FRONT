@@ -44,59 +44,54 @@ const menuSchema = z.object({
     .transform(val => formatPrice(val)),
 
   imageUrl: z
-    .instanceof(File)
+    .union([z.instanceof(File), z.undefined(), z.null()])
+    .refine(file => file instanceof File, {
+      message: MENU_ERROR_MESSAGE.IMAGE_MIN_COUNT(MENU_LIMIT.IMAGE_MIN_COUNT),
+    })
     .refine(
-      file => {
-        return isAcceptableFile(file);
-      },
-      {
-        message: NOT_ALLOWED_FILE_TYPE,
-      }
+      file => (file ? isAcceptableFile(file) : true),
+      { message: NOT_ALLOWED_FILE_TYPE }
     )
     .refine(
-      file => {
-        return isFileSizeValid(file);
-      },
-      {
-        message: CANNOT_UPLOAD_FILE_MB,
-      }
+      file => (file ? isFileSizeValid(file) : true),
+      { message: CANNOT_UPLOAD_FILE_MB }
     ),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
 
-export const useFormValidation = () => {
-  const {
-    handleSubmit,
-    setValue,
-    trigger,
-    formState: { errors, isValid },
-    setError,
-    watch,
-    reset,
-  } = useForm<MenuFormData>({
+export const useFormValidation = (initialData?: Partial<MenuFormData>) => {
+  const methods = useForm<MenuFormData>({
     resolver: zodResolver(menuSchema),
     defaultValues: {
       name: '',
       description: '',
       price: '',
       imageUrl: undefined,
+      ...initialData,
     },
     mode: 'onChange',
   });
 
-  const formData = watch();
+  const {
+    setValue,
+    formState: { isValid, errors },
+    // watch,
+  } = methods;
+
+  // const formData = watch();
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
   };
 
   const updateDescription = (description: string) => {
-    const truncatedDescription = description.slice(
-      0,
-      MENU_LIMIT.DESCRIPTION_MAX_LENGTH
-    );
-    setValue('description', truncatedDescription, { shouldValidate: true });
+    // const truncatedDescription = description.slice(
+    //   0,
+    //   MENU_LIMIT.DESCRIPTION_MAX_LENGTH
+    // );
+    // setValue('description', truncatedDescription, { shouldValidate: true });
+    setValue('description', description, { shouldValidate: true });
   };
 
   const updatePrice = (price: string) => {
@@ -104,14 +99,7 @@ export const useFormValidation = () => {
   };
 
   const updateImageUrl = (image: File | null) => {
-    if (!image) {
-      setError('imageUrl', {
-        message: MENU_ERROR_MESSAGE.IMAGE_MIN_COUNT(MENU_LIMIT.IMAGE_MIN_COUNT),
-      });
-      return;
-    }
-
-    setValue('imageUrl', image, { shouldValidate: true });
+    setValue('imageUrl', image || undefined, { shouldValidate: true });
   };
 
   const Errors = {
@@ -122,15 +110,13 @@ export const useFormValidation = () => {
   };
 
   return {
-    formData,
+    methods,
+    // formData,
     errors: Errors,
     isValid,
     updateName,
     updateDescription,
     updatePrice,
     updateImageUrl,
-    handleSubmit,
-    trigger,
-    reset,
   };
 };

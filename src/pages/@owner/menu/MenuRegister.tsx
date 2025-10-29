@@ -5,8 +5,10 @@ import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
 import { uploadImage, getPresignedUrl } from '@pages/@owner/menu/api';
-import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import useToast from '@shared/hooks/use-toast';
+import { FormProvider } from 'react-hook-form';
+import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@shared/components/icon/Icon';
 
 export default function MenuRegister() {
   const navigate = useNavigate();
@@ -16,52 +18,37 @@ export default function MenuRegister() {
   const parsedFoodTruckId = Number(foodTruckId);
 
   const {
-    formData,
-    errors,
+    methods,
     updateName,
     updateDescription,
     updatePrice,
     updateImageUrl,
     isValid,
-    handleSubmit,
   } = useFormValidation();
-
-  const {
-    imageUrl,
-    canAdd,
-    handleFileChange,
-    handleRemoveFile,
-    handleClearName,
-    handleClickBack,
-  } = useMenuForm({
-    foodTruckId: foodTruckId || '',
-    formData,
-    updateName,
-    updateImageUrl,
-  });
-
   const { mutate: registerMenu } = useRegisterMenu(parsedFoodTruckId);
 
-  if (!foodTruckId || isNaN(parsedFoodTruckId)) {
-    alert('잘못된 접근입니다.');
-    navigate(ROUTES.MENU_LIST(parsedFoodTruckId.toString()));
-    return null;
-  }
-
   const onSubmit = async (formData: MenuFormData) => {
-    if (!formData.imageUrl) return;
+    if (!formData.imageUrl) {
+      toast.error('이미지를 업로드해주세요.');
+      return;
+    }
 
     try {
       const fileExtension = formData.imageUrl.name.split('.').pop() || '';
       const imageInfo = await getPresignedUrl(fileExtension);
 
-      await uploadImage(imageInfo.presignedUrl!, formData.imageUrl);
+      if (!imageInfo.presignedUrl || !imageInfo.fileUrl) {
+        toast.error('이미지 업로드 URL을 가져오는데 실패했습니다.');
+        return;
+      }
+
+      await uploadImage(imageInfo.presignedUrl, formData.imageUrl);
 
       registerMenu({
         name: formData.name,
         description: formData.description,
         price: Number(formData.price.replace(/,/g, '')),
-        photoUrl: imageInfo.fileUrl!,
+        photoUrl: imageInfo.fileUrl,
       }, {
         onSuccess: () => {
           toast.success('메뉴가 등록되었습니다.');
@@ -70,35 +57,35 @@ export default function MenuRegister() {
           toast.error('메뉴 등록에 실패했습니다.');
         },
       });
-    } catch (error) {
-      console.error('메뉴 등록에 실패했습니다.:', error);
+    } catch {
+      toast.error('메뉴 등록 중 오류가 발생했습니다.');
     }
   };
 
   return (
-    <MenuForm
-      formData={formData}
-      errors={errors}
-      imageUrl={imageUrl}
-      canAdd={canAdd}
-      handleFileChange={handleFileChange}
-      handleRemoveFile={handleRemoveFile}
-      handleClickBack={handleClickBack}
-      handleClearName={handleClearName}
-      updateName={updateName}
-      updateDescription={updateDescription}
-      updatePrice={updatePrice}
-      footerContent={
+    <FormProvider {...methods}>
+      <Navigation
+        leftIcon={<Icon name='ic_back' />}
+        handleLeftClick={() => navigate(ROUTES.MENU_LIST(foodTruckId || ''))}
+        text='메뉴 등록'
+      />
+      <MenuForm
+        updateName={updateName}
+        updateDescription={updateDescription}
+        updatePrice={updatePrice}
+        updateImageUrl={updateImageUrl}
+      />
+      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
         <div className='flex flex-col gap-[1.7rem]'>
           <Button
             variant='cta'
             buttonStyle={isValid ? 'active' : 'disabled'}
-            handleClickButton={handleSubmit(onSubmit)}
+            handleClickButton={methods.handleSubmit(onSubmit)}
           >
             저장하기
           </Button>
         </div>
-      }
-    />
+      </footer>
+    </FormProvider>
   );
 }
