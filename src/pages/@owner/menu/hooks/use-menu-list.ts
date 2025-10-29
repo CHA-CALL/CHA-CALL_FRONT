@@ -7,10 +7,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useMenus } from '@pages/@owner/menu/hooks/use-menus';
 import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
+import useToast from '@shared/hooks/use-toast';
 
 export const useMenuList = (foodTruckId: number) => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const toast = useToast();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
@@ -109,7 +111,7 @@ export const useMenuList = (foodTruckId: number) => {
       .map((menu) => ({ menuId: menu.menuId!, status: menu.status! as 'ON' | 'OFF' }));
 
     if (changedMenusPayload.length === 0) {
-      alert('변경사항이 없습니다.');
+      toast.error('변경사항이 없습니다.');
       return;
     }
     saveMenuChanges(changedMenusPayload);

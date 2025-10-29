@@ -3,6 +3,7 @@ import { editFoodTruckMenu } from '@pages/@owner/menu/api';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
+import useToast from '@shared/hooks/use-toast';
 
 export const useEditMenu = (
   foodTruckId: number,
@@ -10,6 +11,7 @@ export const useEditMenu = (
 ) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const toast = useToast();
 
   return useMutation({
     mutationFn: (data: {
@@ -24,8 +26,8 @@ export const useEditMenu = (
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
     },
-    onError: (error) => {
-      console.error('메뉴 수정 실패:', error);
+    onError: () => {
+      toast.error('메뉴 수정에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };
