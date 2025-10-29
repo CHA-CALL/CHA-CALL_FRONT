@@ -16,7 +16,7 @@ export const getBankAccountInfo = async () => {
   return response;
 };
 
-export const createBankAccountInfo = async (
+export const postBankAccountInfo = async (
   newAccountData: RegisterBankAccountRequest
 ) => {
   const response = await apiRequest<RegisterBankAccountData>({

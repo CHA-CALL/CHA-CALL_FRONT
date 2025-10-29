@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  createBankAccountInfo,
+  postBankAccountInfo,
   deleteBankAccountInfo,
   getBankAccountInfo,
   updateBankAccountInfo,
@@ -36,7 +36,7 @@ export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
 
   return useMutation({
     mutationFn: ({ data }: { data: RegisterBankAccountRequest }) =>
-      createBankAccountInfo(data),
+      postBankAccountInfo(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
       options?.onSuccess?.();

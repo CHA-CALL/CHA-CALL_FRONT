@@ -142,21 +142,19 @@ export default function Account() {
 
   // 수정 모드일 때 계좌 정보 가져오기
   useEffect(() => {
-    if (isEditMode && existedData) {
-      if (
-        existedData.accountHolderName &&
-        existedData.accountNumber &&
-        existedData.bankName &&
-        isValidBank(existedData.bankName)
-      ) {
-        updateBank(existedData.bankName ?? '은행을 선택해주세요');
-        updateName(existedData.accountHolderName ?? '');
-        updateAccountNumber(existedData.accountNumber ?? '');
-      } else {
-        console.error('기존 데이터가 유효하지 않습니다.');
-      }
+    if (!isEditMode || !existedData) return;
+    const { accountHolderName, accountNumber, bankName } = existedData;
+    if (
+      accountHolderName &&
+      accountNumber &&
+      bankName &&
+      isValidBank(bankName)
+    ) {
+      reset({ accountHolderName, accountNumber, bankName });
+    } else {
+      console.error('기존 데이터가 유효하지 않습니다.');
     }
-  }, [isEditMode, existedData]);
+  }, [isEditMode, existedData, reset]);
 
   if (isPending || isRegistering || isUpdating) {
     return <Loading />;
