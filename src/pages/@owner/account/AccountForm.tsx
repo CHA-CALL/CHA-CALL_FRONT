@@ -1,162 +1,61 @@
 import Button from '@shared/components/button/Button';
 import Information from '@shared/components/information/Information';
 import Navigation from '@shared/components/navigation/Navigation';
-import { useState, useEffect } from 'react';
-import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
-import { useAccount } from '@pages/@owner/account/hooks/use-account';
 import Input from '@shared/components/input/Input';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
 import { cn } from '@shared/utils/cn';
 import ErrorText from '@shared/components/error-text/ErrorText';
 import ConfirmExitModal from '@pages/@owner/account/@modal/(.)confirm-exit-modal/ConfirmExitModal';
-import { ROUTES } from '@router/constant/routes';
 import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal/SaveAccountModal';
-import {
-  usePostNewAccount,
-  useFetchAccountData,
-  useUpdateAccount,
-} from '@pages/@owner/account/hooks/use-account-query';
 import Loading from '@shared/components/loading/Loading';
-import useToast from '@shared/hooks/use-toast';
+import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
 
 export default function Account() {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const isEditMode = !!id;
-  const toast = useToast();
-  const { data: existedData, isPending } = useFetchAccountData();
-  const { mutate: registerAccount, isPending: isRegistering } =
-    usePostNewAccount({
-      onSuccess: () => {
-        setIsSaveOpen(false);
-        toast.success('저장이 완료되었습니다.');
-        navigate(ROUTES.ACCOUNT);
-      },
-      onError: () => {
-        toast.error('저장에 실패했습니다.');
-      },
-    });
-
-  const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount({
-    onSuccess: () => {
-      setIsSaveOpen(false);
-      toast.success('저장이 완료되었습니다.');
-      navigate(ROUTES.ACCOUNT);
-    },
-    onError: () => {
-      toast.error('저장에 실패했습니다.');
-    },
-  });
-
-  const [isSelectBankOpen, setIsSelectBankOpen] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [isSaveOpen, setIsSaveOpen] = useState(false);
+  const {
+    isEditMode,
+    isLoading,
+    form,
+    handleClickBack,
+    bankModal,
+    exitModal,
+    saveModal,
+  } = useAccountPage();
 
   const {
     formData,
     errors,
-    reset,
+    isFormValid,
     updateName,
-    updateBank,
     updateAccountNumber,
     formatAccountNumber,
     handleSubmit,
-    isFormValid,
-  } = useAccount();
+    onValid,
+    handleClickReset,
+  } = form;
 
-  const handleUpdateBank = (option: Bank) => {
-    updateBank(option);
-    setIsSelectBankOpen(false);
-  };
+  const {
+    isOpen: isSelectBankOpen,
+    handleClose: handleCloseSelectBank,
+    handleChange: handleUpdateBank,
+    handleClick: handleClickSelectBank,
+  } = bankModal;
 
-  const handleClickBack = () => {
-    // 폼에 수정사항이 있는지 확인
-    const hasChanges =
-      existedData?.accountHolderName !== formData.accountHolderName ||
-      existedData?.bankName !== formData.bankName ||
-      existedData?.accountNumber !== formData.accountNumber;
+  const {
+    isOpen: isConfirmOpen,
+    handleClose: handleCloseConfirm,
+    handleConfirm: handleConfirm,
+    handleCancel: handleCancel,
+  } = exitModal;
 
-    if (hasChanges) {
-      setIsConfirmOpen(true);
-    } else {
-      navigate(ROUTES.ACCOUNT);
-    }
-  };
+  const {
+    isOpen: isSaveOpen,
+    handleClose: handleCloseSave,
+    handleConfirm: handleConfirmSave,
+    handleCancel: handleCancelSave,
+  } = saveModal;
 
-  const handleClickSelectBank = () => {
-    setIsSelectBankOpen(true);
-  };
-
-  const handleCloseSelectBank = () => {
-    setIsSelectBankOpen(false);
-  };
-
-  const handleCloseConfirm = () => {
-    setIsConfirmOpen(false);
-  };
-
-  const handleConfirm = () => {
-    setIsConfirmOpen(false);
-    navigate(ROUTES.ACCOUNT);
-  };
-
-  const handleCancel = () => {
-    setIsConfirmOpen(false);
-  };
-
-  const handleCloseSave = () => {
-    setIsSaveOpen(false);
-  };
-
-  const onValid = () => {
-    setIsSaveOpen(true);
-  };
-
-  const handleConfirmSave = () => {
-    if (isEditMode) {
-      updateAccount({
-        data: formData,
-        accountId: Number(id),
-      });
-    } else {
-      registerAccount({ data: formData });
-    }
-  };
-
-  const handleCancelSave = () => {
-    setIsSaveOpen(false);
-  };
-
-  const handleClickReset = () => {
-    reset();
-  };
-
-  const isValidBank = (name: string): name is Bank => {
-    for (const b of BANK) {
-      if (b === name) return true;
-    }
-    return false;
-  };
-
-  // 수정 모드일 때 계좌 정보 가져오기
-  useEffect(() => {
-    if (!isEditMode || !existedData) return;
-    const { accountHolderName, accountNumber, bankName } = existedData;
-    if (
-      accountHolderName &&
-      accountNumber &&
-      bankName &&
-      isValidBank(bankName)
-    ) {
-      reset({ accountHolderName, accountNumber, bankName });
-    } else {
-      console.error('기존 데이터가 유효하지 않습니다.');
-    }
-  }, [isEditMode, existedData, reset]);
-
-  if (isPending || isRegistering || isUpdating) {
+  if (isLoading) {
     return <Loading />;
   }
 
