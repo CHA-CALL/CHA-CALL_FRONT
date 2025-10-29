@@ -34,7 +34,6 @@ export const useAccount = () => {
     defaultValues: {
       accountHolderName: '',
       accountNumber: '',
-      bankName: '은행을 선택해주세요',
     },
     mode: 'onChange',
   });
