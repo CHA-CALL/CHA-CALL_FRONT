@@ -57,7 +57,7 @@ export const Default: Story = {
     menuImage: 'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
     menuName: '화이타',
     menuDescription: '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
-    menuPrice: '18,000',
+    menuPrice: 18000,
     handleMenuClick: () => {},
     isLast: false,
   },
@@ -70,7 +70,7 @@ export const Toggled: Story = {
     menuImage: 'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
     menuName: '화이타',
     menuDescription: '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
-    menuPrice: '20,000',
+    menuPrice: 20000,
     isToggled: true,
     handleMenuClick: () => {},
     handleToggle: () => {},
@@ -86,21 +86,21 @@ export const MenuList: Story = {
         menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
         menuName='화이타'
         menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice='18,000'
+        menuPrice={18000}
         handleMenuClick={() => {}}
       />
       <MenuItem
         menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
         menuName='화이타'
         menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice='20,000'
+        menuPrice={20000}
         handleMenuClick={() => {}}
       />
       <MenuItem
         menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
         menuName='화이타'
         menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice='19,000'
+        menuPrice={19000}
         handleMenuClick={() => {}}
         isLast={true}
       />
@@ -117,7 +117,7 @@ export const ToggledMenuList: Story = {
         menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
         menuName='화이타'
         menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice='18,000'
+        menuPrice={18000}
         isToggled={true}
         handleMenuClick={() => {}}
         handleToggle={() => {}}
@@ -127,7 +127,7 @@ export const ToggledMenuList: Story = {
         menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
         menuName='화이타'
         menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice='20,000'
+        menuPrice={20000}
         isToggled={false}
         handleMenuClick={() => {}}
         handleToggle={() => {}}
@@ -137,7 +137,7 @@ export const ToggledMenuList: Story = {
         menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
         menuName='화이타'
         menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice='19,000'
+        menuPrice={19000}
         isToggled={true}
         handleMenuClick={() => {}}
         handleToggle={() => {}}

@@ -1,12 +1,13 @@
 import { cn } from '@utils/cn';
 import MenuToggleSwitch from '@components/menu-item/MenuToggleSwitch';
+import { formatPrice } from '@shared/utils/price-formatter';
 
 interface MenuItemProps {
   hasToggleSwitch?: boolean;
   menuImage: string;
   menuName: string;
   menuDescription: string;
-  menuPrice: string;
+  menuPrice: number;
   isToggled?: boolean;
   handleMenuClick: () => void;
   handleToggle?: () => void;
@@ -48,10 +49,7 @@ export default function MenuItem({
         </span>
         <div className='flex items-center gap-[0.2rem]'>
           <span className='title-sb-16 text-grayscale-900'>
-            {menuPrice
-              ? menuPrice
-              : '0'
-            }
+            {formatPrice(menuPrice)}
           </span>
           <span className='caption-m-11 text-grayscale-700'>원</span>
         </div>
