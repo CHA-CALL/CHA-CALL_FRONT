@@ -1,5 +1,5 @@
-import Overlay from '@shared/components/overlay/Overlay';
-import Button from '@shared/components/button/Button';
+import Overlay from '@shared/components/layout/overlay/Overlay';
+import Button from '@shared/components/ui/button/Button';
 
 interface ConfirmModalProps {
   isOpen: boolean;

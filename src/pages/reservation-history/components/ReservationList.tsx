@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { useInView } from 'react-intersection-observer';
-import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
-import Loading from '@components/loading/Loading';
+import FoodTruckCard from '@shared/components/food-truck/FoodTruckCard';
+import Loading from '@shared/components/layout/loading/Loading';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 import { useReservations } from '@pages/reservation-history/hooks/use-reservation-history';
 import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
@@ -62,7 +62,7 @@ export default function ReservationList({
             }}
           />
           {index !== reservations.length - 1 && (
-            <div className='h-[0.1rem] w-full bg-grayscale-100' />
+            <div className='bg-grayscale-100 h-[0.1rem] w-full' />
           )}
         </div>
       ))}

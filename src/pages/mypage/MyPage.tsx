@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import { ROLE } from '@shared/constant/role';
 import { useRole } from '@hooks/use-role';

@@ -1,4 +1,4 @@
-import ButtonCheck from '@shared/components/button-check/ButtonCheck';
+import ButtonCheck from '@shared/components/ui/button-check/ButtonCheck';
 import { cn } from '@shared/utils/cn';
 import { type RegionResponse } from '@../../apis/data-contracts';
 

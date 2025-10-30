@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Button from '@shared/components/button/Button';
-import Overlay from '@shared/components/overlay/Overlay';
-import Input from '@shared/components/input/Input';
+import Button from '@shared/components/ui/button/Button';
+import Overlay from '@shared/components/layout/overlay/Overlay';
+import Input from '@shared/components/ui/input/Input';
 import { Icon } from '@shared/components/icon/Icon';
 import RatingBottomSheet from '@shared/components/rating-bottom-sheet/RatingBottomSheet';
 

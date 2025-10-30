@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
-import Button from '@components/button/Button';
-import ButtonFloating from '@components/button-floating/ButtonFloating';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Navigation from '@shared/components/layout/navigation/Navigation';
+import Button from '@shared/components/ui/button/Button';
+import ButtonFloating from '@shared/components/ui/button-floating/ButtonFloating';
+import BottomSheet from '@shared/components/ui/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
 import { type MyFoodTruckMenuResponse } from 'apis/data-contracts';
 import {

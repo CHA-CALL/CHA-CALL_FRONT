@@ -1,8 +1,8 @@
-import Textarea from '@shared/components/text-area/Textarea';
+import Textarea from '@shared/components/ui/text-area/Textarea';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
-import ErrorText from '@shared/components/error-text/ErrorText';
+import ErrorText from '@shared/components/form/error-text/ErrorText';
 
 export default function FoodTruckOption() {
   const { option, optionError, updateOption } = useBasicInfo();

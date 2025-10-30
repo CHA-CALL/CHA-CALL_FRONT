@@ -1,5 +1,5 @@
 import type { ReservationPartialInfo } from '@pages/reservation-detail/hooks/use-reservation-detail';
-import { formatDateTimeInfos } from '@shared/components/food-truck-card/utils/date-time-utils';
+import { formatDateTimeInfos } from '@shared/components/food-truck/utils/date-time-utils';
 
 interface ReservationDetailRowProps {
   title: string;
@@ -15,14 +15,14 @@ export default function ReservationDetailRow({
     return (
       <div
         key={`${date}-${index}`}
-        className='flex flex-row items-center justify-end gap-[0.7rem] text-grayscale-700 body-m-13'
+        className='text-grayscale-700 body-m-13 flex flex-row items-center justify-end gap-[0.7rem]'
       >
         <div className='flex flex-row items-center gap-[0.2rem]'>
           <span>{formattedSchedule[0]}</span>
           <span>-</span>
           <span>{formattedSchedule[1]}</span>
         </div>
-        <div className='h-[1.05rem] w-[0.1rem] bg-grayscale-500' />
+        <div className='bg-grayscale-500 h-[1.05rem] w-[0.1rem]' />
         <div className='flex flex-row items-center gap-[0.2rem]'>
           <span>{formattedSchedule[2]}</span>
           <span>-</span>
@@ -33,12 +33,12 @@ export default function ReservationDetailRow({
   };
 
   return (
-    <div className='flex flex-col gap-[1.6rem] p-[0.5rem] title-sb-12'>
+    <div className='title-sb-12 flex flex-col gap-[1.6rem] p-[0.5rem]'>
       <h2 className='text-grayscale-900 title-sb-14'>{title}</h2>
       {infoList.map(({ label, data }) => (
         <div key={label} className='flex justify-between'>
-          <span className='whitespace-nowrap text-grayscale-500'>{label}</span>
-          <span className='w-[40ch] whitespace-pre-line text-balance text-end text-grayscale-700'>
+          <span className='text-grayscale-500 whitespace-nowrap'>{label}</span>
+          <span className='text-grayscale-700 w-[40ch] whitespace-pre-line text-balance text-end'>
             {Array.isArray(data)
               ? data.map((date, index) => renderSchedule(date, index))
               : data}

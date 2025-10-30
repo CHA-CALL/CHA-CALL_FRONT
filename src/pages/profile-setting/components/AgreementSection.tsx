@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ButtonCheck from '@components/button-check/ButtonCheck';
+import ButtonCheck from '@shared/components/ui/button-check/ButtonCheck';
 import { Icon } from '@components/icon/Icon';
 import { ROUTES } from '@router/constant/routes';
 

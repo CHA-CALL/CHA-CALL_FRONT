@@ -1,11 +1,11 @@
 import { cn } from '@utils/cn';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import ButtonText from '@components/button-text/ButtonText';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import ButtonText from '@shared/components/ui/button-text/ButtonText';
+import BottomSheet from '@shared/components/ui/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
-import Button from '@components/button/Button';
-import ButtonDate from '@components/button-date/ButtonDate';
+import Button from '@shared/components/ui/button/Button';
+import ButtonDate from '@shared/components/ui/button-date/ButtonDate';
 import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
 import { PAYMENT_METHOD } from '@shared/constant/payment-method';
 import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';

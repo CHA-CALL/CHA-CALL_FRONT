@@ -1,8 +1,8 @@
-import Navigation from '@shared/components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
 import { mockup } from '@pages/save-food-truck-list/mockup';
 import { cn } from '@shared/utils/cn';
-import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
+import ButtonFloating from '@shared/components/ui/button-floating/ButtonFloating';
 import { useNavigate } from 'react-router-dom';
 
 export default function SaveFoodTruckList() {

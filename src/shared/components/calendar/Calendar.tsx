@@ -1,4 +1,4 @@
-import Button from '@shared/components/button/Button';
+import Button from '@shared/components/ui/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
 import type { SelectedDate } from '@shared/types/calendar-types';
 

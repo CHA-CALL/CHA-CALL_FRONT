@@ -1,5 +1,5 @@
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
-import Button from '@shared/components/button/Button';
+import BottomSheet from '@shared/components/ui/bottom-sheet/BottomSheet';
+import Button from '@shared/components/ui/button/Button';
 
 interface DeleteFoodTruckBottomSheetProps {
   isOpen: boolean;
@@ -26,7 +26,7 @@ export default function DeleteFoodTruckBottomSheet({
           variant='default'
           buttonStyle='large'
           onClick={handleDeleteFoodTruck}
-          className='border-0 p-[2rem] text-grayscale-700 title-sb-14'
+          className='text-grayscale-700 title-sb-14 border-0 p-[2rem]'
         >
           삭제하기
         </Button>
@@ -34,7 +34,7 @@ export default function DeleteFoodTruckBottomSheet({
           variant='default'
           buttonStyle='large'
           onClick={handleCloseModal}
-          className='rounded-[1.6rem] p-[2rem] text-grayscale-700 title-sb-14'
+          className='text-grayscale-700 title-sb-14 rounded-[1.6rem] p-[2rem]'
         >
           취소
         </Button>

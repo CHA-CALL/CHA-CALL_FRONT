@@ -1,5 +1,5 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import Button from '@shared/components/button/Button';
+import Button from '@shared/components/ui/button/Button';
 import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
 

@@ -1,11 +1,11 @@
 import ChatListManageBar from '@pages/chat-list/components/ChatListManageBar';
 import { useChatList } from '@pages/chat-list/hooks/use-chat-list';
-import ChatListItem from '@shared/components/chat-list-item/ChatListItem';
+import ChatListItem from '@shared/components/chat/chat-list-item/ChatListItem';
 import { Icon } from '@shared/components/icon/Icon';
-import OverlayModal from '@shared/components/overlay/Overlay';
-import Navigation from '@shared/components/navigation/Navigation';
+import OverlayModal from '@shared/components/layout/overlay/Overlay';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
-import Button from '@shared/components/button/Button';
+import Button from '@shared/components/ui/button/Button';
 
 export default function ChatList() {
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ export default function ChatList() {
           </div>
         </div>
       </OverlayModal>
-      <div className='flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem] scrollbar-hide'>
+      <div className='scrollbar-hide flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem]'>
         {(chatList ?? []).map(item => {
           return (
             <ChatListItem

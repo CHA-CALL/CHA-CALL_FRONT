@@ -1,15 +1,15 @@
 import { useState, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
-import Button from '@shared/components/button/Button';
+import Button from '@shared/components/ui/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/ConfirmModal';
 
 import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
 import useToast from '@shared/hooks/use-toast';
-import Loading from '@shared/components/loading/Loading';
-import Textarea from '@shared/components/text-area/Textarea';
+import Loading from '@shared/components/layout/loading/Loading';
+import Textarea from '@shared/components/ui/text-area/Textarea';
 
 export default function MessageForm() {
   const navigate = useNavigate();

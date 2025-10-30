@@ -1,6 +1,6 @@
-import Button from '@shared/components/button/Button';
+import Button from '@shared/components/ui/button/Button';
 import Information from '@shared/components/information/Information';
-import Navigation from '@shared/components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import { ROUTES } from '@router/constant/routes';
@@ -53,7 +53,7 @@ export default function Account() {
 
         {data ? (
           <div
-            className='flex flex-col gap-[2.4rem] rounded-[1.6rem] border border-grayscale-200 px-[2.6rem] py-[2.4rem]'
+            className='border-grayscale-200 flex flex-col gap-[2.4rem] rounded-[1.6rem] border px-[2.6rem] py-[2.4rem]'
             key={data.id}
           >
             <div className='flex items-center justify-between'>

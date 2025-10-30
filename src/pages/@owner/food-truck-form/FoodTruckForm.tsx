@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FormProvider } from 'react-hook-form';
-import Navigation from '@shared/components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
-import Button from '@shared/components/button/Button';
+import Button from '@shared/components/ui/button/Button';
 import {
   FoodTruckName,
   FoodTruckDescription,

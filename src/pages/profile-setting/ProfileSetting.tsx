@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { type UserResponse } from 'apis/data-contracts';
 
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@shared/components/layout/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { ROUTES } from '@router/constant/routes';
 import {

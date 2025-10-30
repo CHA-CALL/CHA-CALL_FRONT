@@ -1,5 +1,5 @@
-import Overlay from '@components/overlay/Overlay';
-import Button from '@shared/components/button/Button';
+import Overlay from '@shared/components/layout/overlay/Overlay';
+import Button from '@shared/components/ui/button/Button';
 import { useNavigate } from 'react-router-dom';
 
 interface DeleteAccountModalProps {

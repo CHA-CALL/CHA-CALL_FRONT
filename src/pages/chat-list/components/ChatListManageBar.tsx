@@ -1,6 +1,6 @@
 import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
-import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
-import Button from '@shared/components/button/Button';
+import ButtonIcon from '@shared/components/ui/button-icon/ButtonIcon';
+import Button from '@shared/components/ui/button/Button';
 import { cn } from '@shared/utils/cn';
 
 interface ChatListManageBarProps {
@@ -36,8 +36,8 @@ export default function ChatListManageBar({
     if (selectChatList.size !== 0) handleDeleteChat();
   };
   return (
-    <div className='fixed-center top-[4.8rem] flex justify-between border-b-[0.1rem] border-grayscale-100 bg-white px-[2rem] pt-[2.8rem]'>
-      <div className='flex w-full gap-[1rem] pt-[0.2rem] text-grayscale-900 title-sb-14'>
+    <div className='fixed-center border-grayscale-100 top-[4.8rem] flex justify-between border-b-[0.1rem] bg-white px-[2rem] pt-[2.8rem]'>
+      <div className='text-grayscale-900 title-sb-14 flex w-full gap-[1rem] pt-[0.2rem]'>
         {FILTERS.map(filter => {
           return (
             <button
