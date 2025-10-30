@@ -29,11 +29,12 @@ import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuIn
 // 메인 컴포넌트
 export default function FoodTruckForm() {
   const { id } = useParams();
-  const isEditMode = !!id;
+
   const navigate = useNavigate();
   const location = useLocation();
 
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
+  console.log(id);
   const methods = useFoodTruckForm();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function FoodTruckForm() {
   return (
     <FormProvider {...methods.methods}>
       <Navigation
-        text={isEditMode ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'}
+        text='나의 푸드트럭 수정'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />

@@ -61,7 +61,7 @@ export const useTime = () => {
         shouldValidate: true,
       });
     }
-  }, [startActiveTime, endActiveTime, setError]);
+  }, [startActiveTime, endActiveTime, setError, setValue]);
 
   useEffect(() => {
     setStartActiveTime(formData.activeTime?.split('-')[0] ?? '');

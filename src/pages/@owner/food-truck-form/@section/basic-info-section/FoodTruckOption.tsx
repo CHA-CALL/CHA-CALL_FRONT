@@ -7,7 +7,7 @@ import ErrorText from '@shared/components/error-text/ErrorText';
 export default function FoodTruckOption() {
   const { option, optionError, updateOption } = useBasicInfo();
   return (
-    <FormLayout isRequired={false} title='기타 옵션'>
+    <FormLayout isRequired={false} title='기타 옵션' isLast={true}>
       <Textarea
         placeholder='텍스트를 입력해주세요.'
         value={option ?? ''}

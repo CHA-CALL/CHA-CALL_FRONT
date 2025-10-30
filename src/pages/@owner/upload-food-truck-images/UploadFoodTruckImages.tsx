@@ -31,8 +31,7 @@ export default function UploadFoodTruckImages() {
 function UploadFoodTruck() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { watch } = useFormContext<FoodTruckFormData>();
-  const formData = watch();
+  const { getValues } = useFormContext<FoodTruckFormData>();
 
   const {
     photoUrls,
@@ -47,7 +46,7 @@ function UploadFoodTruck() {
     navigate(ROUTES.FOOD_TRUCK_FORM, {
       state: {
         from: fromPage || 'food-truck-form',
-        formData: formData,
+        formData: getValues(),
       },
     });
   };
