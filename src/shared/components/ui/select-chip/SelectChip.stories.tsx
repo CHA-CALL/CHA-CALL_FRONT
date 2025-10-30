@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import SelectChip from '@ui/select-chip/SelectChip';
 
 const meta: Meta<typeof SelectChip> = {
-  title: 'Components/SelectChip',
+  title: 'Components/UI/SelectChip',
   component: SelectChip,
   parameters: {
     layout: 'centered',

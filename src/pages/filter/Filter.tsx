@@ -2,7 +2,7 @@ import { cn } from '@utils/cn';
 import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import ButtonText from '@ui/button-text/ButtonText';
-import BottomSheet from '@ui/bottom-sheet/BottomSheet';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import Button from '@ui/button/Button';
 import ButtonDate from '@ui/button-date/ButtonDate';
@@ -17,7 +17,7 @@ import type {
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@types/category-types';
+} from '@type/category-types';
 import { omit } from 'lodash';
 
 export default function Filter() {

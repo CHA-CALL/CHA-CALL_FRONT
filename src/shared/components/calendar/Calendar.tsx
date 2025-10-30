@@ -1,6 +1,6 @@
 import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
-import type { SelectedDate } from '@types/calendar-types';
+import type { SelectedDate } from '@type/calendar-types';
 
 import CalendarDayButton from '@components/calendar/components/CalendarDayButton';
 import useCalendar from '@components/calendar/hooks/use-calendar';

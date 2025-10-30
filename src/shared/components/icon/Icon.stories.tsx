@@ -34,7 +34,7 @@ const iconIds: IconId[] = [
 ];
 
 const meta: Meta<typeof Icon> = {
-  title: 'Components/Icon',
+  title: 'Components/Icon/Icon',
   component: Icon,
   tags: ['autodocs'],
   argTypes: {

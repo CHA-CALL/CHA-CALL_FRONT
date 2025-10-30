@@ -37,7 +37,7 @@
       "@form/*": ["./src/shared/components/form/*"],
       "@hooks/*": ["./src/shared/hooks/*"],            
       "@utils/*": ["./src/shared/utils/*"],            
-      "@types/*": ["./src/shared/types/*"],  
+      "@type/*": ["src/shared/types/*"],  
       "@constant/*": ["./src/shared/constant/*"],
       "@styles/*": ["./src/shared/styles/*"], 
       "@router/*": ["./src/router/*"], 

@@ -5,7 +5,7 @@ import FoodTruckCard, {
 import { FOOD_TRUCK_CARD_VARIANTS } from '@constant/food-truck-card-variants';
 
 const meta: Meta<typeof FoodTruckCard> = {
-  title: 'Components/FoodTruckCard',
+  title: 'Components/FoodTruck/FoodTruckCard',
   component: FoodTruckCard,
   parameters: {
     layout: 'padded',

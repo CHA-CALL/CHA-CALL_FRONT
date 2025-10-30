@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import ErrorText from '@form/error-text/ErrorText';
 
 const meta: Meta<typeof ErrorText> = {
-  title: 'Components/ErrorText',
+  title: 'Components/Form/ErrorText',
   component: ErrorText,
   parameters: {
     layout: 'centered',

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import ImagePreview from '@ui/image-preview/ImagePreview';
 
 const meta: Meta<typeof ImagePreview> = {
-  title: 'Components/ImagePreview',
+  title: 'Components/UI/ImagePreview',
   component: ImagePreview,
   parameters: {
     layout: 'centered',

@@ -13,7 +13,7 @@ import type {
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@types/category-types';
+} from '@type/category-types';
 
 export interface FoodTrucksFilterType {
   regionCodes?: string[] | null;

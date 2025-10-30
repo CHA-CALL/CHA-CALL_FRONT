@@ -1,4 +1,4 @@
-import type { CalendarDate, SelectedDate } from '@types/calendar-types';
+import type { CalendarDate, SelectedDate } from '@type/calendar-types';
 import { cn } from '@utils/cn';
 
 // prop으로 들어온 SelectedDate를 CalendarDate로 변환하는 함수

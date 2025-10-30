@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import Tooltip from '@ui/tooltip/Tooltip';
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: 'Components/UI/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

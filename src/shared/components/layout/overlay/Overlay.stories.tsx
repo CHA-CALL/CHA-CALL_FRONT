@@ -4,7 +4,7 @@ import Overlay from '@layout/overlay/Overlay';
 import Button from '@ui/button/Button';
 
 const meta: Meta<typeof Overlay> = {
-  title: 'Components/Overlay',
+  title: 'Components/Layout/Overlay',
   component: Overlay,
   parameters: {
     layout: 'fullscreen',

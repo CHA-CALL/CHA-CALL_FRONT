@@ -1,4 +1,4 @@
-import type { CalendarDate, SelectedDate } from '@types/calendar-types';
+import type { CalendarDate, SelectedDate } from '@type/calendar-types';
 
 /**
  * 날짜 객체를 'YYYY / MM / DD' 형식의 문자열로 변환합니다.

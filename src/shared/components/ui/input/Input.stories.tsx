@@ -4,7 +4,7 @@ import Button from '@ui/button/Button';
 import Input from '@ui/input/Input';
 
 const meta: Meta<typeof Input> = {
-  title: 'Components/Input',
+  title: 'Components/UI/Input',
   component: Input,
   parameters: {
     layout: 'centered',

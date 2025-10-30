@@ -1,6 +1,6 @@
 import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Button from '@ui/button/Button';
-import { Icon } from '@icon/Icon';
+import { Icon } from '@components/icon/Icon';
 import { cn } from '@utils/cn';
 import { RATES } from '@constant/rate';
 

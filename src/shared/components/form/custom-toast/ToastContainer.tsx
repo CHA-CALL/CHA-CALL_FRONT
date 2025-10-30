@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { ToastDataAtom } from '@utils/toast';
-import { CustomToast } from '@components/custom-toast/CustomToast';
+import { CustomToast } from '@form/custom-toast/CustomToast';
 
 const ToastContainer = () => {
   const toast = useAtomValue(ToastDataAtom);

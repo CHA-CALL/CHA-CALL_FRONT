@@ -4,7 +4,7 @@ import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
 
 const meta: Meta<typeof Navigation> = {
-  title: 'Components/Navigation',
+  title: 'Components/Layout/Navigation',
   component: Navigation,
   parameters: {
     layout: 'fullscreen',

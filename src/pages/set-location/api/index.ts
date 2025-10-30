@@ -2,7 +2,7 @@ import { apiRequest } from '@api/apiRequest';
 import {
   type GetRegionsData,
   type SearchRegionsData,
-} from '@../../apis/data-contracts';
+} from 'apis/data-contracts';
 
 const getRegions = async (depth: number, parentCode?: number | null) => {
   const response = await apiRequest<GetRegionsData>({

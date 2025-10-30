@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
 const meta: Meta<typeof ChatListItem> = {
-  title: 'Components/ChatListItem',
+  title: 'Components/Chat/ChatListItem',
   component: ChatListItem,
   parameters: {
     layout: 'fullscreen',

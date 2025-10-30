@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CustomToast } from '@components/custom-toast/CustomToast';
+import { CustomToast } from '@form/custom-toast/CustomToast';
 
 const meta: Meta<typeof CustomToast> = {
-  title: 'Components/CustomToast',
+  title: 'Components/Form/CustomToast',
   component: CustomToast,
   parameters: {
     layout: 'centered',

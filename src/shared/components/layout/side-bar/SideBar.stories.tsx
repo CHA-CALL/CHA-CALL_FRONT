@@ -4,7 +4,7 @@ import SideBar from '@layout/side-bar/SideBar';
 import Button from '@ui/button/Button';
 
 const meta: Meta<typeof SideBar> = {
-  title: 'Components/SideBar',
+  title: 'Components/Layout/SideBar',
   component: SideBar,
   parameters: {
     layout: 'fullscreen',
