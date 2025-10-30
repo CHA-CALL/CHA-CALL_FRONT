@@ -53,7 +53,7 @@ export const useMenuList = (foodTruckId: number) => {
       ...formData,
       menus: menus.length > 0,
     };
-    navigate(ROUTES.FOOD_TRUCK_FORM, {
+    navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId.toString()}`, {
       state: getNavigateState(updatedFormData),
     });
   };

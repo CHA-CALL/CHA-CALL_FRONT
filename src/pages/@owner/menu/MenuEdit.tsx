@@ -53,7 +53,7 @@ export default function MenuEdit() {
           methods.reset({
             name: menuData.name,
             description: menuData.description,
-            price: formatPrice(String(menuData.price)),
+            price: formatPrice(menuData.price),
             imageUrl: imageFile,
           });
 

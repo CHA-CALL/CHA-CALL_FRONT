@@ -46,7 +46,7 @@ export const useFormValidation = (initialData?: Partial<MenuFormData>) => {
   };
 
   const updatePrice = (price: string) => {
-    setValue('price', formatPrice(price), { shouldValidate: true });
+    setValue('price', formatPrice(Number(price)), { shouldValidate: true });
   };
 
   const updateImageUrl = (image: File | null) => {

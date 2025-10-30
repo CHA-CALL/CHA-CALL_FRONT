@@ -38,7 +38,7 @@ export const MENU_PRICE_VALIDATOR = z
     val => val.replace(/,/g, '').length >= MENU_LIMIT.PRICE_MIN_LENGTH,
     MENU_ERROR_MESSAGE.PRICE_MIN
   )
-  .transform(val => formatPrice(val));
+  .transform(val => formatPrice(Number(val)));
 
 export const MENU_IMAGE_VALIDATOR = z
   .union([z.instanceof(File), z.undefined(), z.null()])
