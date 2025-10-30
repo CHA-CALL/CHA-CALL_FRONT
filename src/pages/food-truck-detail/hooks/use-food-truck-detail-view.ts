@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export default function useFoodTruckDetailView(photoUrl?: string[]) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchMode, setIsSearchMode] = useState(false);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [startImageDragX, setStartImageDragX] = useState(0);
@@ -42,6 +43,14 @@ export default function useFoodTruckDetailView(photoUrl?: string[]) {
     setIsViewAllLocation(!isViewAllLocation);
   };
 
+  const handleCloseSearchMode = () => {
+    setIsSearchMode(false);
+  };
+
+  const handleOpenSearchMode = () => {
+    setIsSearchMode(true);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -58,9 +67,12 @@ export default function useFoodTruckDetailView(photoUrl?: string[]) {
     currentImageIndex,
     translateImageX,
     isViewAllLocation,
+    isSearchMode,
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
     handleViewAllLocation,
+    handleOpenSearchMode,
+    handleCloseSearchMode,
   };
 }

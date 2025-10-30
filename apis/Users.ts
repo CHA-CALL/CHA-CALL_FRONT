@@ -13,7 +13,9 @@
 import {
   ApproveFoodTruckStatusData,
   ApproveFoodTruckStatusRequest,
+  GetProfilePresignedUrlData,
   GetUserInfoData,
+  ImageRequest,
   UpdateUserInfoData,
   UpdateUserInfoRequest,
 } from "./data-contracts";
@@ -61,6 +63,29 @@ export class Users<
     this.request<UpdateUserInfoData, void>({
       path: `/users/me`,
       method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 프로필 변경을 위한 presigned URL을 발급합니다.
+   *
+   * @tags User API
+   * @name GetProfilePresignedUrl
+   * @summary 프로필 변경을 위한 presigned URL 발급
+   * @request POST:/users/me/images
+   * @secure
+   * @response `200` `GetProfilePresignedUrlData` OK
+   * @response `400` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getProfilePresignedUrl = (data: ImageRequest, params: RequestParams = {}) =>
+    this.request<GetProfilePresignedUrlData, void>({
+      path: `/users/me/images`,
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,

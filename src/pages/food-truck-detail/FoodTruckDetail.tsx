@@ -12,9 +12,16 @@ import FoodTruckOptionSection from '@pages/food-truck-detail/sections/FoodTruckO
 import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
+import FoodTruckMenuSearch from '@pages/food-truck-detail/sections/FoodTruckMenuSearch';
+import { useFoodTruckMenus } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
 
 export default function FoodTruckDetail() {
-  const { isScrolled } = useFoodTruckDetailView();
+  const {
+    isScrolled,
+    isSearchMode,
+    handleOpenSearchMode,
+    handleCloseSearchMode,
+  } = useFoodTruckDetailView();
 
   const {
     photoUrl,
@@ -33,13 +40,16 @@ export default function FoodTruckDetail() {
     availableDates,
     option,
     isLiked,
-    menus,
     handleClickSaveButton,
     handleClickBack,
     handleToChatPage,
   } = useFoodTruckDetail();
 
-  return (
+  const { menusPreview } = useFoodTruckMenus();
+
+  return isSearchMode ? (
+    <FoodTruckMenuSearch handleCloseSearchMode={handleCloseSearchMode} />
+  ) : (
     <>
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
@@ -89,7 +99,10 @@ export default function FoodTruckDetail() {
           paymentMethod={paymentMethod}
         />
         <SectionDivider />
-        <FoodTruckMenuSection menus={menus} />
+        <FoodTruckMenuSection
+          menus={menusPreview}
+          handleOpenSearchMode={handleOpenSearchMode}
+        />
         <SectionDivider />
         <FoodTruckScheduleSection availableDates={availableDates} />
         <SectionDivider />

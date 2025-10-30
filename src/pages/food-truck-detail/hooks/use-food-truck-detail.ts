@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  mockFoodTruck,
-  mockMenus,
-} from '@pages/food-truck-detail/mock-food-truck';
+import { mockFoodTruck } from '@pages/food-truck-detail/mock-food-truck';
 
 export default function useFoodTruckDetail() {
   // TODO: 쿼리 파라미터를 통해 푸드트럭 아이디 받아와서 서버에 요청하는 로직 필요
@@ -28,13 +25,13 @@ export default function useFoodTruckDetail() {
     availableDates,
     option,
   } = mockFoodTruck;
-  const menus = mockMenus;
 
-  // TODO: 핸들러는 서버 api 호출로 변경될 예정. 상태는 제거 예정
+  // TODO: 핸들러는 서버 api 호출로 변경될 예정. 상태는 제거 예정. FoodTruckDetail 페이지에서는 isSaved로 사용
   const [isLiked, setIsLiked] = useState(isSaved);
   const handleClickSaveButton = () => setIsLiked(!isLiked);
 
   const handleClickBack = () => navigate(-1);
+
   const handleToChatPage = () => alert('채팅 페이지로');
 
   return {
@@ -55,7 +52,6 @@ export default function useFoodTruckDetail() {
     availableDates,
     option,
     isLiked,
-    menus,
     handleClickSaveButton,
     handleClickBack,
     handleToChatPage,
