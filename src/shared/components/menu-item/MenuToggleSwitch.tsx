@@ -18,6 +18,9 @@ export default function MenuToggleSwitch({
   return (
     <button
       type='button'
+      role='switch'
+      aria-checked={isToggled}
+      aria-label='메뉴 토글'
       onClick={handleClick}
       className={`
         relative inline-flex items-center
