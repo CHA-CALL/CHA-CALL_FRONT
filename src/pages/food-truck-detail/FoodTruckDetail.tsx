@@ -8,12 +8,12 @@ import FoodTruckInfoSection from '@pages/food-truck-detail/sections/FoodTruckInf
 import FoodTruckMenuSection from '@pages/food-truck-detail/sections/FoodTruckMenuSection';
 import FoodTruckScheduleSection from '@pages/food-truck-detail/sections/FoodTruckScheduleSection';
 import FoodTruckOptionSection from '@pages/food-truck-detail/sections/FoodTruckOptionSection';
+import FoodTruckMenuSearch from '@pages/food-truck-detail/FoodTruckMenuSearch';
 
 import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
-import FoodTruckMenuSearch from '@pages/food-truck-detail/sections/FoodTruckMenuSearch';
-import { useFoodTruckMenus } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
+import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
 
 export default function FoodTruckDetail() {
   const {
@@ -45,7 +45,7 @@ export default function FoodTruckDetail() {
     handleToChatPage,
   } = useFoodTruckDetail();
 
-  const { menusPreview } = useFoodTruckMenus();
+  const { menusPreview, isPendingMenusPreview } = useFoodTruckMenusPreview();
 
   return isSearchMode ? (
     <FoodTruckMenuSearch handleCloseSearchMode={handleCloseSearchMode} />
@@ -101,6 +101,7 @@ export default function FoodTruckDetail() {
         <SectionDivider />
         <FoodTruckMenuSection
           menus={menusPreview}
+          isPending={isPendingMenusPreview}
           handleOpenSearchMode={handleOpenSearchMode}
         />
         <SectionDivider />

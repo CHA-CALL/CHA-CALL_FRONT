@@ -1,13 +1,14 @@
 import { cn } from '@utils/cn';
 import MenuToggleSwitch from '@components/menu-item/MenuToggleSwitch';
 import { formatPrice } from '@shared/utils/price-formatter';
+import type {
+  FoodTruckMenuResponse,
+  MyFoodTruckMenuResponse,
+} from 'apis/data-contracts';
 
 interface MenuItemProps {
   hasToggleSwitch?: boolean;
-  menuImage: string;
-  menuName: string;
-  menuDescription: string;
-  menuPrice: number;
+  menu: FoodTruckMenuResponse | MyFoodTruckMenuResponse;
   isToggled?: boolean;
   handleMenuClick?: () => void;
   handleToggle?: () => void;
@@ -16,10 +17,7 @@ interface MenuItemProps {
 
 export default function MenuItem({
   hasToggleSwitch = false,
-  menuImage,
-  menuName,
-  menuDescription,
-  menuPrice,
+  menu,
   isToggled,
   handleMenuClick,
   handleToggle,
@@ -30,29 +28,31 @@ export default function MenuItem({
       role={handleMenuClick ? 'button' : undefined}
       onClick={handleMenuClick}
       className={cn(
-        'flex items-center justify-between py-[2rem] pr-[1rem] bg-white',
-        !isLast && 'border-grayscale-100 border-b',
+        'flex items-center justify-between bg-white py-[2rem] pr-[1rem]',
+        !isLast && 'border-b border-grayscale-100',
         handleMenuClick && 'cursor-pointer'
       )}
     >
       <img
-        src={menuImage}
-        alt={menuName}
+        src={menu.imageUrl}
+        alt={menu.name}
         className='flex h-[8rem] w-[8rem] items-center justify-center rounded-[1.6rem] object-cover'
       />
       <div className='ml-[1.4rem] flex flex-1 flex-col'>
-        <span className='title-sb-14 text-grayscale-900'>{menuName}</span>
-        <span className={cn(
-          'caption-m-10 text-grayscale-500 mb-[0.8rem]',
-          hasToggleSwitch && 'line-clamp-1'
-        )}>
-          {menuDescription}
+        <span className='text-grayscale-900 title-sb-14'>{menu.name}</span>
+        <span
+          className={cn(
+            'mb-[0.8rem] text-grayscale-500 caption-m-10',
+            hasToggleSwitch && 'line-clamp-1'
+          )}
+        >
+          {menu.description}
         </span>
         <div className='flex items-center gap-[0.2rem]'>
-          <span className='title-sb-16 text-grayscale-900'>
-            {formatPrice(menuPrice)}
+          <span className='text-grayscale-900 title-sb-16'>
+            {formatPrice(menu.price)}
           </span>
-          <span className='caption-m-11 text-grayscale-700'>원</span>
+          <span className='text-grayscale-700 caption-m-11'>원</span>
         </div>
       </div>
       {hasToggleSwitch && handleToggle && (

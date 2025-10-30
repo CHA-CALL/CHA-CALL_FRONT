@@ -2,21 +2,27 @@ import type { FoodTruckMenuResponse } from 'apis/data-contracts';
 
 import Button from '@components/button/Button';
 import { Icon } from '@components/icon/Icon';
+import Loading from '@shared/components/loading/Loading';
 
 interface FoodTruckMenuSectionProps {
   menus?: FoodTruckMenuResponse[];
+  isPending?: boolean;
   handleOpenSearchMode: () => void;
 }
 
 export default function FoodTruckMenuSection({
   menus,
+  isPending,
   handleOpenSearchMode,
 }: FoodTruckMenuSectionProps) {
   return (
     <div className='flex flex-col gap-[2rem] py-[2rem]'>
       <h3 className='pl-[2.5rem] text-grayscale-900 title-sb-12'>메뉴 정보</h3>
       <div className='flex flex-row gap-[1.6rem] overflow-x-scroll px-[2rem]'>
-        {menus &&
+        {isPending ? (
+          <Loading />
+        ) : (
+          menus &&
           menus.map(menu => (
             <div key={menu.menuId} className='flex flex-col gap-[0.7rem]'>
               <img
@@ -34,7 +40,8 @@ export default function FoodTruckMenuSection({
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
       <div className='px-[2rem]'>
         <Button
