@@ -39,7 +39,10 @@ export default function ReservationHistory() {
         handleTabChange={handleSelectReservationState}
       />
       <ButtonFloating />
-      <ReservationList isProvider={isProvider} reservationState={reservationState} />
+      <ReservationList
+        isProvider={isProvider}
+        reservationState={reservationState}
+      />
     </>
   );
 }
