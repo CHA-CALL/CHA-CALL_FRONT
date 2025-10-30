@@ -9,7 +9,7 @@ interface MenuItemProps {
   menuDescription: string;
   menuPrice: number;
   isToggled?: boolean;
-  handleMenuClick: () => void;
+  handleMenuClick?: () => void;
   handleToggle?: () => void;
   isLast?: boolean;
 }
@@ -27,11 +27,12 @@ export default function MenuItem({
 }: MenuItemProps) {
   return (
     <div
-      role='button'
+      role={handleMenuClick ? 'button' : undefined}
       onClick={handleMenuClick}
       className={cn(
-        'flex items-center justify-between py-[2rem] pr-[1rem] cursor-pointer bg-white',
-        !isLast && 'border-grayscale-100 border-b'
+        'flex items-center justify-between py-[2rem] pr-[1rem] bg-white',
+        !isLast && 'border-grayscale-100 border-b',
+        handleMenuClick && 'cursor-pointer'
       )}
     >
       <img
