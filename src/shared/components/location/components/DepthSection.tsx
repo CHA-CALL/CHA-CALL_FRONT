@@ -1,9 +1,9 @@
 import { type RegionResponse } from 'apis/data-contracts';
 
-import DepthTitle from '@pages/set-location/components/(.)section/(.)depths/DepthTitle';
-import Depth1Item from '@pages/set-location/components/(.)section/(.)depths/Depth1Item';
-import Depth2Item from '@pages/set-location/components/(.)section/(.)depths/Depth2Item';
-import Depth3Item from '@pages/set-location/components/(.)section/(.)depths/Depth3Item';
+import DepthTitle from '@components/location/components/(.)section/(.)depths/DepthTitle';
+import Depth1Item from '@components/location/components/(.)section/(.)depths/Depth1Item';
+import Depth2Item from '@components/location/components/(.)section/(.)depths/Depth2Item';
+import Depth3Item from '@components/location/components/(.)section/(.)depths/Depth3Item';
 
 interface DepthSectionProps {
   depth1List: RegionResponse[];
@@ -31,9 +31,9 @@ export default function DepthSection({
   return (
     <>
       <DepthTitle />
-      <div className='flex w-full flex-1 flex-col overflow-y-auto scrollbar-hide'>
+      <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
         <div className='grid flex-1 grid-cols-[1fr_1fr_1fr] overflow-hidden'>
-          <div className='overflow-auto border-r border-grayscale-200 scrollbar-hide'>
+          <div className='border-grayscale-200 scrollbar-hide overflow-auto border-r'>
             {depth1List?.map((item: RegionResponse) => (
               <Depth1Item
                 title={item.name ?? ''}
@@ -43,7 +43,7 @@ export default function DepthSection({
               />
             ))}
           </div>
-          <div className='overflow-auto border-r border-grayscale-200 scrollbar-hide'>
+          <div className='border-grayscale-200 scrollbar-hide overflow-auto border-r'>
             {depth2List?.map((item: RegionResponse) => (
               <Depth2Item
                 title={item.name ?? ''}
@@ -53,7 +53,7 @@ export default function DepthSection({
               />
             ))}
           </div>
-          <div className='overflow-auto scrollbar-hide'>
+          <div className='scrollbar-hide overflow-auto'>
             {depth3List?.map((item: RegionResponse) => {
               const fullName = item.name?.includes('전체')
                 ? `${depth1?.name} ${item?.name}`

@@ -5,11 +5,11 @@ import {
   useDepth1Regions,
   useDepth2Regions,
   useDepth3Regions,
-} from '@pages/set-location/hooks/use-regions';
+} from '@components/location/hooks/use-regions';
 
 import { REGION_QUERY_KEY } from '@shared/querykey/regions';
-import { type RegionResponse } from '@../../apis/data-contracts';
-import { DEPTHS } from '@pages/set-location/constant/location';
+import { type RegionResponse } from 'apis/data-contracts';
+import { DEPTHS } from '@components/location/constant/location';
 
 export const useDepths = () => {
   const [depth1, setDepth1] = useState<RegionResponse | null>(null);

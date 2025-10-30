@@ -1,7 +1,7 @@
 import type { RegionResponse } from 'apis/data-contracts';
 
 import SelectChip from '@ui/select-chip/SelectChip';
-import { MAX_SELECTED } from '@pages/set-location/constant/location';
+import { MAX_SELECTED } from '@components/location/constant/location';
 
 interface SelectedChipsSheetProps {
   selectedLocations: Map<number, RegionResponse>;

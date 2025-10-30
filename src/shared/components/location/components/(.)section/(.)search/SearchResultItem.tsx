@@ -1,6 +1,6 @@
 import ButtonCheck from '@ui/button-check/ButtonCheck';
 import { cn } from '@utils/cn';
-import { type RegionResponse } from '@../../apis/data-contracts';
+import { type RegionResponse } from 'apis/data-contracts';
 
 interface SearchResultItemProps {
   location: RegionResponse;

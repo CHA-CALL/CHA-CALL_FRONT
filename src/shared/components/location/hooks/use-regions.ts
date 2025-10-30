@@ -4,8 +4,8 @@ import {
 } from 'apis/data-contracts';
 import { useQuery } from '@tanstack/react-query';
 
-import { REGION_QUERY_KEY } from '@/shared/querykey/regions';
-import { getRegions, searchRegions } from '@pages/set-location/api';
+import { REGION_QUERY_KEY } from '@shared/querykey/regions';
+import { getRegions, searchRegions } from '@components/location/api';
 
 export const useDepth1Regions = () => {
   return useQuery<GetRegionsData>({
