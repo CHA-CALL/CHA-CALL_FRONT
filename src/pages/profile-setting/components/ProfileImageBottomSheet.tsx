@@ -1,4 +1,4 @@
-import BottomSheet from '@ui/bottom-sheet/BottomSheet';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Button from '@ui/button/Button';
 import React, { useRef } from 'react';
 

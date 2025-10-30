@@ -3,7 +3,7 @@ import Button from '@ui/button/Button';
 import Overlay from '@layout/overlay/Overlay';
 import Input from '@ui/input/Input';
 import { Icon } from '@icon/Icon';
-import RatingBottomSheet from '@components/rating-bottom-sheet/RatingBottomSheet';
+import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
 
 const Home = () => {
   // BottomSheet states

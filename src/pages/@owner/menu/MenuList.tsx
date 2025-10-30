@@ -5,7 +5,7 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
 import Button from '@ui/button/Button';
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
-import BottomSheet from '@ui/bottom-sheet/BottomSheet';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
 import { type MyFoodTruckMenuResponse } from 'apis/data-contracts';
 import {

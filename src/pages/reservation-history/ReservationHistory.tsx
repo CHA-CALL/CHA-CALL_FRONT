@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
-import ButtonTabGroup from '@components/button-tab/ButtonTabGroup';
+import ButtonTabGroup from '@ui/button-tab/ButtonTabGroup';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
 import { useRole } from '@hooks/use-role';

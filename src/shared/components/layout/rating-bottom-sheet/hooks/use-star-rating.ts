@@ -5,7 +5,7 @@ import type {
   RegisterRatingsData,
 } from 'apis/data-contracts';
 
-import { registerRatingFoodTruck } from '@components/rating-bottom-sheet/api';
+import { registerRatingFoodTruck } from '@layout/rating-bottom-sheet/api';
 import { RATES } from '@constant/rate';
 import useToast from '@hooks/use-toast';
 

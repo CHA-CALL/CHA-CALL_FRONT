@@ -1,4 +1,4 @@
-import BottomSheet from '@ui/bottom-sheet/BottomSheet';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
 import { cn } from '@utils/cn';
 import { Icon } from '@icon/Icon';
