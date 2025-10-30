@@ -31,10 +31,14 @@ export default function ActiveDate() {
       >
         <Calendar
           selectedDate={{
-            startDate: selectedId
-              ? new Date(selectedDate?.startDate ?? '')
-              : null,
-            endDate: selectedId ? new Date(selectedDate?.endDate ?? '') : null,
+            startDate:
+              selectedId && selectedDate?.startDate
+                ? new Date(selectedDate.startDate)
+                : null,
+            endDate:
+              selectedId && selectedDate?.endDate
+                ? new Date(selectedDate.endDate)
+                : null,
           }}
           handleApplyDate={(date: SelectedDate) => {
             updateAvailableDateById(selectedId ?? '', {

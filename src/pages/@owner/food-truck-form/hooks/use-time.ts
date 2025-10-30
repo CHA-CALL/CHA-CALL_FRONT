@@ -27,7 +27,10 @@ export const useTime = () => {
     setEndActiveTime(activeTime);
   };
 
-  const updateActiveTime = () => {
+  useEffect(() => {
+    if (!startActiveTime && !endActiveTime) {
+      return;
+    }
     if (!startActiveTime) {
       setError('activeTime', {
         message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.start,
@@ -58,14 +61,7 @@ export const useTime = () => {
         shouldValidate: true,
       });
     }
-  };
-
-  useEffect(() => {
-    if (!startActiveTime && !endActiveTime) {
-      return;
-    }
-    updateActiveTime();
-  }, [startActiveTime, endActiveTime]);
+  }, [startActiveTime, endActiveTime, setError]);
 
   useEffect(() => {
     setStartActiveTime(formData.activeTime?.split('-')[0] ?? '');
