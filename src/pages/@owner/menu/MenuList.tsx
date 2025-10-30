@@ -37,13 +37,13 @@ export default function MenuList() {
     handleSave,
   } = useMenuList(parsedFoodTruckId);
 
-  const handleClickRegister = () => {
-    handleRegister(parsedFoodTruckId.toString());
-  }
-
-  if (!foodTruckId || isNaN(parsedFoodTruckId)) {
+  if (!foodTruckId) {
     toast.error('잘못된 접근입니다.');
     return null;
+  }
+
+  const handleClickRegister = () => {
+    handleRegister(foodTruckId);
   }
 
   return (

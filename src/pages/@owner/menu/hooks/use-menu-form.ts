@@ -25,8 +25,8 @@ export const useMenuForm = ({
       setImageUrl(newUrl);
       return () => URL.revokeObjectURL(newUrl);
     }
-    setImageUrl(null);
-  }, [imageFile]);
+    setImageUrl(initialImageUrl || null);
+  }, [imageFile, initialImageUrl]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];

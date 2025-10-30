@@ -43,7 +43,12 @@ export const useMenuList = (foodTruckId: number) => {
       queryClient.invalidateQueries({
         queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
       });
+      toast.success('메뉴 표시 상태가 저장되었습니다.');
     },
+    onError: (error) => {
+      console.error('메뉴 표시 상태 저장 실패:', error);
+      toast.error('메뉴 표시 상태 저장에 실패했습니다.');
+    }
   });
 
   // 네비게이션 핸들러
@@ -58,9 +63,9 @@ export const useMenuList = (foodTruckId: number) => {
     });
   };
 
-  const handleRegister = (foodTruckId?: string) => {
+  const handleRegister = (foodTruckId: string) => {
     const formData = location.state?.formData;
-    navigate(ROUTES.MENU_REGISTER(foodTruckId || ''), {
+    navigate(ROUTES.MENU_REGISTER(foodTruckId), {
       state: getNavigateState(formData),
     });
   };
@@ -110,17 +115,29 @@ export const useMenuList = (foodTruckId: number) => {
     );
   };
 
+  const isValidMenuStatus = (status: string | undefined): status is 'ON' | 'OFF' => {
+    return status === 'ON' || status === 'OFF';
+  };
+
   // 표시 상태 저장 핸들러
   const handleSave = () => {
     const originalMenus = query.data?.pages.flatMap((page) => page?.content || []) || [];
     const originalStatusMap = new Map(originalMenus.map((m) => [m.menuId, m.status]));
 
     const changedMenusPayload = menus
-      .filter((menu) => {
+      .filter((menu): menu is MyFoodTruckMenuResponse & { menuId: number; status: 'ON' | 'OFF' } => {
         const originalStatus = originalStatusMap.get(menu.menuId);
-        return menu.menuId && originalStatus && originalStatus !== menu.status;
+        return (
+          typeof menu.menuId === 'number' &&
+          originalStatus !== undefined &&
+          originalStatus !== menu.status &&
+          isValidMenuStatus(menu.status)
+        );
       })
-      .map((menu) => ({ menuId: menu.menuId!, status: menu.status! as 'ON' | 'OFF' }));
+      .map((menu) => ({
+        menuId: menu.menuId,
+        status: menu.status
+      }));
 
     if (changedMenusPayload.length === 0) {
       toast.error('변경사항이 없습니다.');

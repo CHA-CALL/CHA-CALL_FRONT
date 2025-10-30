@@ -59,5 +59,12 @@ export const useRegisterMenu = (foodTruckId: number) => {
     }
   };
 
-  return handleRegisterSubmit;
+  const handleClickBack = () => {
+    navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
+  };
+
+  return {
+    handleRegisterSubmit,
+    handleClickBack,
+  };
 };

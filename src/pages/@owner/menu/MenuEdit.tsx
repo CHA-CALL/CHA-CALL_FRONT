@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Button from '@components/button/Button';
 import { useFormValidation } from '@pages/@owner/menu/hooks/use-form-validation';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
@@ -13,7 +13,6 @@ import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 
 export default function MenuEdit() {
-  const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
 
@@ -40,6 +39,7 @@ export default function MenuEdit() {
     handleConfirmDelete,
     handleCloseModal,
     handleClickDelete,
+    handleClickBack,
    } = useEditMenu(parsedFoodTruckId, parsedMenuId);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function MenuEdit() {
 
       <Navigation
         leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={() => navigate(-1)}
+        handleLeftClick={handleClickBack}
         text='메뉴 등록'
       />
       <MenuForm

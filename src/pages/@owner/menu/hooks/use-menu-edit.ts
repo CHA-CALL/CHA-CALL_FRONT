@@ -83,11 +83,16 @@ export const useEditMenu = (
     setIsModalOpen(false);
   };
 
+  const handleClickBack = () => {
+    navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
+  }
+
   return {
     isModalOpen,
     handleEditSubmit,
     handleConfirmDelete,
     handleCloseModal,
     handleClickDelete,
+    handleClickBack,
   };
 };

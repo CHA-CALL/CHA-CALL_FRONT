@@ -1,5 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
+import { useParams } from 'react-router-dom';
 import Button from '@components/button/Button';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import { useFormValidation } from '@pages/@owner/menu/hooks/use-form-validation';
@@ -9,12 +8,13 @@ import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@shared/components/icon/Icon';
 
 export default function MenuRegister() {
-  const navigate = useNavigate();
-
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
   const parsedFoodTruckId = Number(foodTruckId);
 
-  const handleRegisterSubmit = useRegisterMenu(parsedFoodTruckId);
+  const {
+    handleRegisterSubmit,
+    handleClickBack,
+  } = useRegisterMenu(parsedFoodTruckId);
 
   const {
     methods,
@@ -29,7 +29,7 @@ export default function MenuRegister() {
     <FormProvider {...methods}>
       <Navigation
         leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={() => navigate(ROUTES.MENU_LIST(foodTruckId || ''))}
+        handleLeftClick={handleClickBack}
         text='메뉴 등록'
       />
 
