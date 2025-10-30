@@ -26,7 +26,7 @@ export default function MenuRegister() {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     handleSubmit,
     trigger,
   } = useMenuForm();
@@ -34,14 +34,14 @@ export default function MenuRegister() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      updateImage(selectedFile);
+      updateImageUrl(selectedFile);
     }
     e.target.value = '';
   };
 
   const handleRemoveFile = () => {
     setImageUrl(null);
-    updateImage(undefined);
+    updateImageUrl(null);
   };
 
   const handleClearName = () => {
@@ -49,7 +49,7 @@ export default function MenuRegister() {
   };
 
   useEffect(() => {
-    if (formData.image) {
+    if (formData.imageUrl) {
       const reader = new FileReader();
       reader.onload = e => {
         setImageUrl(e.target?.result as string);
@@ -57,11 +57,11 @@ export default function MenuRegister() {
       reader.onerror = () => {
         setImageUrl(null);
       };
-      reader.readAsDataURL(formData.image);
+      reader.readAsDataURL(formData.imageUrl);
     } else {
       setImageUrl(null);
     }
-  }, [formData.image]);
+  }, [formData.imageUrl]);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -113,13 +113,6 @@ export default function MenuRegister() {
               maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
               className='h-[12.2rem]'
             />
-            <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
-              <p className='text-primary-700'>{formData.description.length}</p>
-              <p className='text-grayscale-700'>/</p>
-              <p className='text-grayscale-700'>
-                {MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
-              </p>
-            </div>
           </div>
         </MenuInput>
 
@@ -136,17 +129,21 @@ export default function MenuRegister() {
 
         <MenuInput
           title='사진 등록'
-          error={errors.image}
+          error={errors.imageUrl}
           maxLength={1}
-          currentLength={imageUrl ? 1 : 0}
+          currentLength={formData.imageUrl ? 1 : 0}
         >
           <div className='flex'>
             {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
-            {imageUrl && (
+            {formData.imageUrl && (
               <ImagePreview
-                key='image-preview'
+                key='photo-preview'
                 handleClose={handleRemoveFile}
-                src={imageUrl}
+                src={
+                  formData.imageUrl
+                    ? URL.createObjectURL(formData.imageUrl)
+                    : undefined
+                }
                 alt='image-preview'
               />
             )}
