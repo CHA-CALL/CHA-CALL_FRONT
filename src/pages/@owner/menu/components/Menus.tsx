@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Loading from '@components/loading/Loading';
+// TODO: MenuItem 공통 컴포넌트 사용
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
 import MenuListEmptyView from '@pages/@owner/menu/components/MenuListEmptyView';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';

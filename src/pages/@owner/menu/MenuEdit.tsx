@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Button from '@components/button/Button';
-import { useFormValidation, type MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
+import { useFormValidation } from '@pages/@owner/menu/hooks/use-form-validation';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import MenuDeleteModal from '@pages/@owner/menu/components/MenuDeleteModal';
 import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
-import { useDeleteMenu } from '@pages/@owner/menu/hooks/use-menu-delete';
-import { uploadImage, getPresignedUrl } from '@pages/@owner/menu/api';
 import useToast from '@shared/hooks/use-toast';
 import { formatPrice } from '@shared/utils/price-formatter';
 import { FormProvider } from 'react-hook-form';
@@ -19,7 +17,6 @@ export default function MenuEdit() {
   const location = useLocation();
   const toast = useToast();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const isInitialized = useRef(false);
 
   const { foodTruckId, menuId } = useParams<{ foodTruckId: string, menuId: string }>();
@@ -29,9 +26,21 @@ export default function MenuEdit() {
   const menuData = location.state?.menuData;
   const [initialImageUrl, setInitialImageUrl] = useState(menuData?.imageUrl);
 
-  const { methods, updateName, updateDescription, updatePrice, updateImageUrl } = useFormValidation();
-  const { mutate: editMenu } = useEditMenu(parsedFoodTruckId, parsedMenuId);
-  const { mutate: deleteMenu } = useDeleteMenu(parsedFoodTruckId, parsedMenuId);
+  const {
+    methods,
+    updateName,
+    updateDescription,
+    updatePrice,
+    updateImageUrl
+  } = useFormValidation();
+
+  const {
+    isModalOpen,
+    handleEditSubmit,
+    handleConfirmDelete,
+    handleCloseModal,
+    handleClickDelete,
+   } = useEditMenu(parsedFoodTruckId, parsedMenuId);
 
   useEffect(() => {
     if (menuData && !isInitialized.current) {
@@ -61,56 +70,6 @@ export default function MenuEdit() {
       setInitialData();
     }
   }, [menuData, methods, toast]);
-
-  const onSubmit = async (formData: MenuFormData) => {
-    if (!formData.imageUrl) {
-      toast.error('이미지를 업로드해주세요.');
-      return;
-    }
-
-    try {
-      const fileExtension = formData.imageUrl.name.split('.').pop() || '';
-      const imageInfo = await getPresignedUrl(fileExtension);
-
-      await uploadImage(imageInfo.presignedUrl!, formData.imageUrl);
-
-      editMenu({
-        name: formData.name,
-        description: formData.description,
-        price: Number(formData.price.replace(/,/g, '')),
-        photoUrl: imageInfo.fileUrl!,
-      }, {
-        onSuccess: () => {
-          toast.success('메뉴가 수정되었습니다.');
-        },
-        onError: () => {
-          toast.error('메뉴 수정에 실패했습니다.');
-        },
-      });
-    } catch (error) {
-      console.error('메뉴 수정에 실패했습니다.:', error);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleClickDelete = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleConfirmDelete = () => {
-    deleteMenu(undefined, {
-      onSuccess: () => {
-        toast.success('삭제되었습니다.');
-      },
-      onError: () => {
-        toast.error('메뉴 삭제에 실패했습니다.');
-      },
-    });
-    setIsModalOpen(false);
-  };
 
   return (
     <FormProvider {...methods}>
@@ -145,7 +104,7 @@ export default function MenuEdit() {
           <Button
             variant='cta'
             buttonStyle={methods.formState.isValid ? 'active' : 'disabled'}
-            handleClickButton={methods.handleSubmit(onSubmit)}
+            handleClickButton={methods.handleSubmit(handleEditSubmit)}
           >
             저장하기
           </Button>
