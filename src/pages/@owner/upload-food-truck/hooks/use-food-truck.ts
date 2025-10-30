@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, useEffect } from 'react';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 import {
   CANNOT_UPLOAD_FILE_MB,
@@ -7,10 +7,13 @@ import {
 
 export const MAX_IMAGE_COUNT = 9;
 
-export const CANNOT_UPLOAD_FILE = '파일 업로드 실패';
 export const useFoodTruck = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setError(null);
+  }, [files]);
 
   const handleSubmitImage = () => {
     //TODO: 이미지 제출 로직
