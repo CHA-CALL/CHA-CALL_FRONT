@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ImagePreview from '@shared/components/ui/image-preview/ImagePreview';
+import ImagePreview from '@ui/image-preview/ImagePreview';
 
 const meta: Meta<typeof ImagePreview> = {
   title: 'Components/ImagePreview',

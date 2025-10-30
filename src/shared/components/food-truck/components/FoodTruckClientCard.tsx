@@ -1,8 +1,8 @@
-import CardImage from '@shared/components/food-truck/components/CardImage';
-import CardButton from '@shared/components/food-truck/components/CardButton';
+import CardImage from '@components/food-truck/components/CardImage';
+import CardButton from '@components/food-truck/components/CardButton';
 import { Icon } from '@components/icon/Icon';
-import Tag from '@shared/components/ui/tag/Tag';
-import type { FoodTruckClientProps } from '@shared/components/food-truck/types/food-truck-card-types';
+import Tag from '@ui/tag/Tag';
+import type { FoodTruckClientProps } from '@components/food-truck/types/food-truck-card-types';
 
 export default function FoodTruckClientCard({
   data,

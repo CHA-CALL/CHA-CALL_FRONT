@@ -14,11 +14,11 @@ import {
   OWNER_MEDIA_MIN_COUNT,
   OWNER_TEXT_ERROR_MESSAGE,
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import {
   NOT_ALLOWED_FILE_TYPE,
   CANNOT_UPLOAD_FILE_MB,
-} from '@shared/constant/image';
+} from '@constant/image';
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,

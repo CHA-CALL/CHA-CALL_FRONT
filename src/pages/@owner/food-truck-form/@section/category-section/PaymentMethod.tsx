@@ -1,7 +1,7 @@
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import Button from '@shared/components/ui/button/Button';
-import { PAYMENT_METHOD } from '@shared/constant/payment-method';
+import Button from '@ui/button/Button';
+import { PAYMENT_METHOD } from '@constant/payment-method';
 
 export default function PaymentMethod() {
   const { paymentMethod, updatePaymentMethod } = useCategories();

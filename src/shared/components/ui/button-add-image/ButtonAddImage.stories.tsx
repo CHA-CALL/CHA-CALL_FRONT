@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonAddImage from '@shared/components/ui/button-add-image/ButtonAddImage';
+import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
 
 const meta: Meta<typeof ButtonAddImage> = {
   title: 'Components/Button/ButtonAddImage',

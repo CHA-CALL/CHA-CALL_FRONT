@@ -1,5 +1,5 @@
 import type { ReservationPartialInfo } from '@pages/reservation-detail/hooks/use-reservation-detail';
-import { formatDateTimeInfos } from '@shared/components/food-truck/utils/date-time-utils';
+import { formatDateTimeInfos } from '@components/food-truck/utils/date-time-utils';
 
 interface ReservationDetailRowProps {
   title: string;

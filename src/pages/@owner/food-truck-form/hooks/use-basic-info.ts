@@ -2,13 +2,13 @@ import { type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import {
   CANNOT_UPLOAD_FILE_MB,
   NOT_ALLOWED_FILE_TYPE,
-} from '@shared/constant/image';
+} from '@constant/image';
 import { ROUTES } from '@router/constant/routes';
-import { formatPhoneNumber } from '@shared/utils/phone-number';
+import { formatPhoneNumber } from '@utils/phone-number';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 
 //푸드트럭 이름, 한줄소개, 전화번호, 푸드트럭 사진, 운영정보, 기타 필드

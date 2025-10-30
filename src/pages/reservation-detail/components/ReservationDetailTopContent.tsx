@@ -1,6 +1,6 @@
 import { Icon } from '@components/icon/Icon';
-import Tag from '@shared/components/ui/tag/Tag';
-import { ROLE } from '@shared/constant/role';
+import Tag from '@ui/tag/Tag';
+import { ROLE } from '@constant/role';
 
 interface CommonInfo {
   foodTruckName?: string;

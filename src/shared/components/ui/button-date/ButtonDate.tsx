@@ -1,8 +1,8 @@
 import React from 'react';
-import { Icon } from '@shared/components/icon/Icon';
-import { dateFormatter } from '@shared/utils/date-formatter';
-import { cn } from '@shared/utils/cn';
-import type { SelectedDate } from '@shared/types/calendar-types';
+import { Icon } from '@icon/Icon';
+import { dateFormatter } from '@utils/date-formatter';
+import { cn } from '@utils/cn';
+import type { SelectedDate } from '@types/calendar-types';
 
 interface ButtonDateProps
   extends SelectedDate,

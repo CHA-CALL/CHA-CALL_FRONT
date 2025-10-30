@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorText from '@shared/components/form/error-text/ErrorText';
+import ErrorText from '@form/error-text/ErrorText';
 
 interface MenuInputProps {
   title: string;

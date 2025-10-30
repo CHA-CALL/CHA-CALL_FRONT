@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@router/constant/routes';
-import Navigation from '@shared/components/layout/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import Loading from '@shared/components/layout/loading/Loading';
-import Button from '@shared/components/ui/button/Button';
-import Tooltip from '@shared/components/ui/tooltip/Tooltip';
+import Loading from '@layout/loading/Loading';
+import Button from '@ui/button/Button';
+import Tooltip from '@ui/tooltip/Tooltip';
 import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
 import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';

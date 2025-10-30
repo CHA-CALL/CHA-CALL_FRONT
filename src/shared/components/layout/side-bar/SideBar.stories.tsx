@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import SideBar from '@shared/components/layout/side-bar/SideBar';
-import Button from '@shared/components/ui/button/Button';
+import SideBar from '@layout/side-bar/SideBar';
+import Button from '@ui/button/Button';
 
 const meta: Meta<typeof SideBar> = {
   title: 'Components/SideBar',

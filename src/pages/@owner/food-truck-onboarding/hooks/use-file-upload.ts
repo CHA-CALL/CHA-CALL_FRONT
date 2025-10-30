@@ -7,8 +7,8 @@ import {
 import {
   CANNOT_UPLOAD_FILE_MB,
   NOT_ALLOWED_FILE_TYPE,
-} from '@shared/constant/image';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+} from '@constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 
 export const BIZ_REG_CERT_FILE_VALIDATOR = z
   .instanceof(File)

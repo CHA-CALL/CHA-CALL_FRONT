@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormProvider, useFormContext } from 'react-hook-form';
-import Navigation from '@shared/components/layout/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import Information from '@shared/components/information/Information';
+import Information from '@components/information/Information';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import {
   useFoodTruckForm,
   type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
-import ButtonAddImage from '@shared/components/ui/button-add-image/ButtonAddImage';
-import ImagePreview from '@shared/components/ui/image-preview/ImagePreview';
-import Button from '@shared/components/ui/button/Button';
+import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
+import ImagePreview from '@ui/image-preview/ImagePreview';
+import Button from '@ui/button/Button';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
-import ErrorText from '@shared/components/form/error-text/ErrorText';
+import ErrorText from '@form/error-text/ErrorText';
 import { ROUTES } from '@router/constant/routes';
 
 export default function UploadFoodTruckImages() {

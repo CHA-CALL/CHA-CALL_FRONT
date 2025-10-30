@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 
-import Overlay from '@shared/components/layout/overlay/Overlay';
-import useBottomSheetDrag from '@shared/hooks/use-bottom-sheet-drag';
-import { cn } from '@shared/utils/cn';
+import Overlay from '@layout/overlay/Overlay';
+import useBottomSheetDrag from '@hooks/use-bottom-sheet-drag';
+import { cn } from '@utils/cn';
 
 interface BottomSheetProps {
   isOpen: boolean;

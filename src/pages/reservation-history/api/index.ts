@@ -4,7 +4,7 @@ import type {
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
-import { PAGE_SIZE } from '@shared/constant/page-size';
+import { PAGE_SIZE } from '@constant/page-size';
 
 export const getReservationHistory = async (
   isProvider: boolean,

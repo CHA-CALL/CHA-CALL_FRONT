@@ -1,7 +1,7 @@
 import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
-import ButtonIcon from '@shared/components/ui/button-icon/ButtonIcon';
-import Button from '@shared/components/ui/button/Button';
-import { cn } from '@shared/utils/cn';
+import ButtonIcon from '@ui/button-icon/ButtonIcon';
+import Button from '@ui/button/Button';
+import { cn } from '@utils/cn';
 
 interface ChatListManageBarProps {
   activeFilter: string;

@@ -1,4 +1,4 @@
-import ChatListItem from '@shared/components/chat/chat-list-item/ChatListItem';
+import ChatListItem from '@components/chat/chat-list-item/ChatListItem';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 

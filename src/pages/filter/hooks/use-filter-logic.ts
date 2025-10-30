@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { isEqual } from 'lodash';
 
-import type { SelectedDate } from '@shared/types/calendar-types';
+import type { SelectedDate } from '@types/calendar-types';
 import {
   filtersAtom,
   initialFilter,
@@ -15,7 +15,7 @@ import type {
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@shared/types/category-types';
+} from '@types/category-types';
 import { ROUTES } from '@router/constant/routes';
 
 export default function useFilterLogic() {

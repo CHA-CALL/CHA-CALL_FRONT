@@ -1,4 +1,4 @@
-import { Icon } from '@shared/components/icon/Icon';
+import { Icon } from '@icon/Icon';
 
 interface MessageProps {
   number: number;

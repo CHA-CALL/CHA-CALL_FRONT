@@ -1,6 +1,6 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import Button from '@shared/components/ui/button/Button';
-import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
+import Button from '@ui/button/Button';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
 
 export default function AvailableQuantity() {

@@ -3,10 +3,10 @@ import useLocation from '@pages/set-location/hooks/use-location';
 
 import useRegionSearch from '@pages/set-location/hooks/use-region-search';
 import { useDepths } from '@pages/set-location/hooks/use-depths';
-import Button from '@shared/components/ui/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/layout/navigation/Navigation';
-import Input from '@shared/components/ui/input/Input';
+import Button from '@ui/button/Button';
+import { Icon } from '@icon/Icon';
+import Navigation from '@layout/navigation/Navigation';
+import Input from '@ui/input/Input';
 
 import SearchSection from '@pages/set-location/components/SearchSection';
 import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';

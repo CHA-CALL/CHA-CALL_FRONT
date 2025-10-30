@@ -1,5 +1,5 @@
-import BottomSheet from '@shared/components/ui/bottom-sheet/BottomSheet';
-import Button from '@shared/components/ui/button/Button';
+import BottomSheet from '@ui/bottom-sheet/BottomSheet';
+import Button from '@ui/button/Button';
 
 interface DeleteFoodTruckBottomSheetProps {
   isOpen: boolean;

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Navigation from '@shared/components/layout/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import Information from '@shared/components/information/Information';
-import Button from '@shared/components/ui/button/Button';
+import Navigation from '@layout/navigation/Navigation';
+import { Icon } from '@icon/Icon';
+import Information from '@components/information/Information';
+import Button from '@ui/button/Button';
 import { mockup } from '@pages/@owner/food-truck-management/mockup';
-import { cn } from '@shared/utils/cn';
+import { cn } from '@utils/cn';
 import { ROUTES } from '@router/constant/routes';
 
 import DeleteFoodTruckBottomSheet from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-bottom-sheet/DeleteFoodTruckBottomSheet';

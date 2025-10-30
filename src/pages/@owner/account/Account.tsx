@@ -1,8 +1,8 @@
-import Button from '@shared/components/ui/button/Button';
-import Information from '@shared/components/information/Information';
-import Navigation from '@shared/components/layout/navigation/Navigation';
+import Button from '@ui/button/Button';
+import Information from '@components/information/Information';
+import Navigation from '@layout/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
-import { Icon } from '@shared/components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import { ROUTES } from '@router/constant/routes';
 import { mockup } from '@pages/@owner/account/mockup';
 

@@ -1,4 +1,4 @@
-import { formatDateTimeInfos } from '@shared/components/food-truck/utils/date-time-utils';
+import { formatDateTimeInfos } from '@components/food-truck/utils/date-time-utils';
 
 interface ReservationInfosProps {
   address: string;

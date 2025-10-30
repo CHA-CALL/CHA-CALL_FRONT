@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import type { UserResponse } from 'apis/data-contracts';
 
-import { Icon } from '@shared/components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import { ROUTES } from '@router/constant/routes';
 
 interface UserDataSectionProps {

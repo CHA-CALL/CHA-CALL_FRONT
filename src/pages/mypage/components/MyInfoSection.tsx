@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import DefaultProfile from '@assets/img/img_avatar.png';
-import { Icon } from '@shared/components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import { user_mockup } from '@pages/mypage/constant/mockup';
 import type { UserResponse } from 'apis/data-contracts';
 import { ROUTES } from '@router/constant/routes';

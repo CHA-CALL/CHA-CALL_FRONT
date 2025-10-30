@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Navigation from '@shared/components/layout/navigation/Navigation';
-import Button from '@shared/components/ui/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
+import Navigation from '@layout/navigation/Navigation';
+import Button from '@ui/button/Button';
+import { Icon } from '@icon/Icon';
 
 const meta: Meta<typeof Navigation> = {
   title: 'Components/Navigation',

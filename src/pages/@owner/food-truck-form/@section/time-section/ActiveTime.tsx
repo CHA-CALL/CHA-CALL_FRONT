@@ -1,7 +1,7 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
-import ButtonCheck from '@shared/components/ui/button-check/ButtonCheck';
-import ErrorText from '@shared/components/form/error-text/ErrorText';
+import ButtonCheck from '@ui/button-check/ButtonCheck';
+import ErrorText from '@form/error-text/ErrorText';
 import TimePicker from '@pages/@owner/food-truck-form/components/TimePicker';
 
 export default function ActiveTime() {

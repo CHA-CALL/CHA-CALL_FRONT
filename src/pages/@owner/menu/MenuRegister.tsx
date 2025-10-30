@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@shared/components/layout/navigation/Navigation';
-import Button from '@shared/components/ui/button/Button';
+import Navigation from '@layout/navigation/Navigation';
+import Button from '@ui/button/Button';
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import MenuInput from '@pages/@owner/menu/components/MenuInput';
-import ButtonAddImage from '@shared/components/ui/button-add-image/ButtonAddImage';
-import ImagePreview from '@shared/components/ui/image-preview/ImagePreview';
+import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
+import ImagePreview from '@ui/image-preview/ImagePreview';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
-import Input from '@shared/components/ui/input/Input';
-import Textarea from '@shared/components/ui/text-area/Textarea';
-import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
+import Input from '@ui/input/Input';
+import Textarea from '@ui/text-area/Textarea';
+import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 export default function MenuRegister() {
   const navigate = useNavigate();

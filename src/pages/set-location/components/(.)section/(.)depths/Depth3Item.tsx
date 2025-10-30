@@ -1,5 +1,5 @@
-import { Icon } from '@shared/components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { Icon } from '@icon/Icon';
+import { cn } from '@utils/cn';
 
 interface Depth3ItemProps {
   title: string;

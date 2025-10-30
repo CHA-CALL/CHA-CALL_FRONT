@@ -1,15 +1,15 @@
 import { cn } from '@utils/cn';
-import Navigation from '@shared/components/layout/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import ButtonText from '@shared/components/ui/button-text/ButtonText';
-import BottomSheet from '@shared/components/ui/bottom-sheet/BottomSheet';
+import ButtonText from '@ui/button-text/ButtonText';
+import BottomSheet from '@ui/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
-import Button from '@shared/components/ui/button/Button';
-import ButtonDate from '@shared/components/ui/button-date/ButtonDate';
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
-import { PAYMENT_METHOD } from '@shared/constant/payment-method';
-import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
-import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
+import Button from '@ui/button/Button';
+import ButtonDate from '@ui/button-date/ButtonDate';
+import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
+import { PAYMENT_METHOD } from '@constant/payment-method';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
+import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import FilterChipGroup from '@pages/filter/components/FilterChipGroup';
 import useFilterLogic from '@pages/filter/hooks/use-filter-logic';
 import type {
@@ -17,7 +17,7 @@ import type {
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@shared/types/category-types';
+} from '@types/category-types';
 import { omit } from 'lodash';
 
 export default function Filter() {

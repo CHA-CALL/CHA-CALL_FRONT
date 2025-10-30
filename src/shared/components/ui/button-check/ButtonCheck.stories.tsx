@@ -1,4 +1,4 @@
-import ButtonCheck from '@shared/components/ui/button-check/ButtonCheck';
+import ButtonCheck from '@ui/button-check/ButtonCheck';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 

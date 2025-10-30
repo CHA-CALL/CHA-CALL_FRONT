@@ -1,6 +1,6 @@
 import { useRef, type ChangeEvent } from 'react';
 import { Icon } from '@components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { cn } from '@utils/cn';
 
 interface ButtonAddImageProps {
   handleFileChange?: (_event: ChangeEvent<HTMLInputElement>) => void;

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Tag from '@shared/components/ui/tag/Tag';
+import Tag from '@ui/tag/Tag';
 
 const meta: Meta<typeof Tag> = {
   title: 'Components/Tag',

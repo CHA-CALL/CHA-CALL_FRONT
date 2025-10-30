@@ -1,16 +1,16 @@
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@shared/components/layout/navigation/Navigation';
-import Button from '@shared/components/ui/button/Button';
-import ButtonIcon from '@shared/components/ui/button-icon/ButtonIcon';
-import Tooltip from '@shared/components/ui/tooltip/Tooltip';
-import ButtonFloating from '@shared/components/ui/button-floating/ButtonFloating';
+import Navigation from '@layout/navigation/Navigation';
+import Button from '@ui/button/Button';
+import ButtonIcon from '@ui/button-icon/ButtonIcon';
+import Tooltip from '@ui/tooltip/Tooltip';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
 
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
+import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
 import useReservation from '@pages/reservation/hooks/use-reservation';
-import Loading from '@shared/components/layout/loading/Loading';
-import FoodTruckCard from '@shared/components/food-truck/FoodTruckCard';
-import FoodTruckEmptyView from './components/FoodTruckEmptyView';
+import Loading from '@layout/loading/Loading';
+import FoodTruckCard from '@components/food-truck/FoodTruckCard';
+import FoodTruckEmptyView from '@pages/reservation/components/FoodTruckEmptyView';
 
 export default function Reservation() {
   const {

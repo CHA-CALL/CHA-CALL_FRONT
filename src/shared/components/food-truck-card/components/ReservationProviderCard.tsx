@@ -1,8 +1,8 @@
-import CardImage from '@shared/components/food-truck/components/CardImage';
-import CardButton from '@shared/components/food-truck/components/CardButton';
-import ReservationInfos from '@shared/components/food-truck/components/ReservationInfos';
-import Tag from '@shared/components/ui/tag/Tag';
-import type { ReservationProviderProps } from '@shared/components/food-truck/types/food-truck-card-types';
+import CardImage from '@components/food-truck/components/CardImage';
+import CardButton from '@components/food-truck/components/CardButton';
+import ReservationInfos from '@components/food-truck/components/ReservationInfos';
+import Tag from '@ui/tag/Tag';
+import type { ReservationProviderProps } from '@components/food-truck/types/food-truck-card-types';
 
 export default function ReservationProviderCard({
   data,

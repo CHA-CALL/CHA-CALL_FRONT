@@ -1,7 +1,7 @@
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import Input from '@shared/components/ui/input/Input';
-import ErrorText from '@shared/components/form/error-text/ErrorText';
+import Input from '@ui/input/Input';
+import ErrorText from '@form/error-text/ErrorText';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 
 export default function FoodTruckPhoneNumber() {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ButtonTab from '@shared/components/button-tab/ButtonTab';
+import ButtonTab from '@components/button-tab/ButtonTab';
 
 interface Tab {
   id: string;

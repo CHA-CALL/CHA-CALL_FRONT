@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import FoodTruckCard, {
   type FoodTruckCardProps,
-} from '@shared/components/food-truck/FoodTruckCard';
-import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
+} from '@components/food-truck/FoodTruckCard';
+import { FOOD_TRUCK_CARD_VARIANTS } from '@constant/food-truck-card-variants';
 
 const meta: Meta<typeof FoodTruckCard> = {
   title: 'Components/FoodTruckCard',

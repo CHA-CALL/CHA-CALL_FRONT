@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { type UserResponse } from 'apis/data-contracts';
 
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@shared/components/layout/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { ROUTES } from '@router/constant/routes';
 import {
   NOT_ALLOWED_FILE_TYPE,
   CANNOT_UPLOAD_FILE_MB,
-} from '@shared/constant/image';
+} from '@constant/image';
 
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';

@@ -1,8 +1,8 @@
 import { Icon, type IconId } from '@components/icon/Icon';
-import Button from '@shared/components/ui/button/Button';
-import Overlay from '@shared/components/layout/overlay/Overlay';
-import { useRole } from '@shared/hooks/use-role';
-import { ROLE } from '@shared/constant/role';
+import Button from '@ui/button/Button';
+import Overlay from '@layout/overlay/Overlay';
+import { useRole } from '@hooks/use-role';
+import { ROLE } from '@constant/role';
 
 interface MenuItemProps {
   icon: IconId;

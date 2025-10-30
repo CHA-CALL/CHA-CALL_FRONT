@@ -1,11 +1,11 @@
-import ButtonAddImage from '@shared/components/ui/button-add-image/ButtonAddImage';
+import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
 import { OWNER_MEDIA_MAX_COUNT } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import SectionTitle from '@pages/@owner/food-truck-onboarding/components/SectionTitle';
 import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-input';
 import { useEffect, useState, type ChangeEvent } from 'react';
-import ImagePreview from '@shared/components/ui/image-preview/ImagePreview';
-import ErrorText from '@shared/components/form/error-text/ErrorText';
-import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
+import ImagePreview from '@ui/image-preview/ImagePreview';
+import ErrorText from '@form/error-text/ErrorText';
+import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 interface BizRegCertSectionProps {
   file: OwnerFormData['bizRegCert'];

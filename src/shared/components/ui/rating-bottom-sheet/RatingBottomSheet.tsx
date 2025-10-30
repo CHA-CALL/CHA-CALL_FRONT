@@ -1,8 +1,8 @@
-import BottomSheet from '@shared/components/ui/bottom-sheet/BottomSheet';
-import Button from '@shared/components/ui/button/Button';
+import BottomSheet from '@ui/bottom-sheet/BottomSheet';
+import Button from '@ui/button/Button';
 import { Icon } from '@components/icon/Icon';
-import { cn } from '@shared/utils/cn';
-import { RATES } from '@shared/constant/rate';
+import { cn } from '@utils/cn';
+import { RATES } from '@constant/rate';
 
 import useStarRating from '@components/rating-bottom-sheet/hooks/use-star-rating';
 

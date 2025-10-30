@@ -1,13 +1,13 @@
 import { atom } from 'jotai';
 import { isEqual } from 'lodash';
 
-import type { SelectedDate } from '@shared/types/calendar-types';
+import type { SelectedDate } from '@types/calendar-types';
 import type {
   AvailableQuantityValue,
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@shared/types/category-types';
+} from '@types/category-types';
 
 export interface FilterState {
   schedules: SelectedDate[];

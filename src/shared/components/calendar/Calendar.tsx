@@ -1,9 +1,9 @@
-import Button from '@shared/components/ui/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import type { SelectedDate } from '@shared/types/calendar-types';
+import Button from '@ui/button/Button';
+import { Icon } from '@icon/Icon';
+import type { SelectedDate } from '@types/calendar-types';
 
-import CalendarDayButton from '@shared/components/calendar/components/CalendarDayButton';
-import useCalendar from '@shared/components/calendar/hooks/use-calendar';
+import CalendarDayButton from '@components/calendar/components/CalendarDayButton';
+import useCalendar from '@components/calendar/hooks/use-calendar';
 
 interface CalendarProps {
   selectedDate: SelectedDate;

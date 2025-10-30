@@ -1,6 +1,6 @@
 import { type RegionResponse } from 'apis/data-contracts';
 
-import Loading from '@shared/components/layout/loading/Loading';
+import Loading from '@layout/loading/Loading';
 
 import SearchResultItem from '@pages/set-location/components/(.)section/(.)search/SearchResultItem';
 

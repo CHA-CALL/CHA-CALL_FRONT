@@ -1,6 +1,6 @@
-import Navigation from '@shared/components/layout/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import Button from '@shared/components/ui/button/Button';
+import Button from '@ui/button/Button';
 import { useFoodTruckInput } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-input';
 import NameSection from '@pages/@owner/food-truck-onboarding/components/NameSection';
 import BizRegCertSection from '@pages/@owner/food-truck-onboarding/components/BizRegCertSection';
