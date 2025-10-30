@@ -7,7 +7,10 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { ROUTES } from '@router/constant/routes';
-import { NOT_ALLOWED_FILE_TYPE, MAX_MB } from '@shared/constant/image';
+import {
+  NOT_ALLOWED_FILE_TYPE,
+  CANNOT_UPLOAD_FILE_MB,
+} from '@shared/constant/image';
 
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
@@ -60,7 +63,7 @@ export default function ProfileSetting() {
 
     // TODO: 토스트메시지로 보여주기
     if (!isFileSizeValid(file)) {
-      alert(`파일 용량은 ${MAX_MB}MB 이하여야 합니다.`);
+      alert(CANNOT_UPLOAD_FILE_MB);
       return;
     }
 
@@ -101,15 +104,15 @@ export default function ProfileSetting() {
         <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
             type='button'
-            className='px-[1rem] py-[0.6rem] text-grayscale-500'
+            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
             onClick={handleLogout}
           >
             로그아웃
           </button>
-          <div className='mx-[0.4rem] h-[1rem] w-[0.1rem] bg-grayscale-500' />
+          <div className='bg-grayscale-500 mx-[0.4rem] h-[1rem] w-[0.1rem]' />
           <button
             type='button'
-            className='px-[1rem] py-[0.6rem] text-grayscale-500'
+            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
             onClick={handleOpenModal}
           >
             회원탈퇴

@@ -85,6 +85,7 @@ function UploadFoodTruck() {
         <Information
           iconId='ic_check'
           text='사진은 16:9 비율로, 가능하면 고화질 이미지를 올려주세요!'
+          className='w-full'
         />
       </div>
 

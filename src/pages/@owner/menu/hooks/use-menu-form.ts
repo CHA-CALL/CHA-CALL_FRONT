@@ -94,13 +94,16 @@ export const useMenuForm = () => {
   };
 
   const updateDescription = (description: string) => {
-    setValue('description', description, { shouldValidate: true });
+    const truncatedDescription = description.slice(
+      0,
+      MENU_LIMIT.DESCRIPTION_MAX_LENGTH
+    );
+    setValue('description', truncatedDescription, { shouldValidate: true });
   };
 
   const updatePrice = (price: string) => {
-    const formattedPrice = price
-      .replace(/\D/g, '')
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const numbersOnly = price.replace(/[^\d]/g, '');
+    const formattedPrice = numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     setValue('price', formattedPrice, { shouldValidate: true });
   };
 
