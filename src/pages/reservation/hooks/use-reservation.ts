@@ -11,7 +11,7 @@ import {
 import { formatSelectedDateToSchedules } from '@utils/date-formatter';
 import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
-import { confirmedRegionsAtom } from '@shared/store/regions-store';
+import { regionsAtom } from '@shared/store/regions-store';
 import {
   useFoodTruckListQuery,
   useUpdateFoodTruckSaveStatus,
@@ -29,7 +29,7 @@ export default function useReservation() {
 
   const filters = useAtomValue(filtersAtom);
   const notFiltered = useAtomValue(notFilteredAtom);
-  const regions = useAtomValue(confirmedRegionsAtom);
+  const regions = useAtomValue(regionsAtom);
 
   const selectedCategories = (() => {
     if (selectedCategory === FOOD_TRUCK_CATEGORIES.ALL)
