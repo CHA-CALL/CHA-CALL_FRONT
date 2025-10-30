@@ -76,13 +76,6 @@ export default function MenuForm({
               maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
               className='h-[12.2rem]'
             />
-            <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
-              <p className='text-primary-700'>{formData.description.length}</p>
-              <p className='text-grayscale-700'>/</p>
-              <p className='text-grayscale-700'>
-                {MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
-              </p>
-            </div>
           </div>
         </MenuInput>
 
