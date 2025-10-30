@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 import { editMenuStatus } from '@pages/@owner/menu/api';
@@ -8,10 +8,12 @@ import { useMenus } from '@pages/@owner/menu/hooks/use-menus';
 import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 import useToast from '@shared/hooks/use-toast';
+import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export const useMenuList = (foodTruckId: number) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const location = useLocation();
   const toast = useToast();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
@@ -46,11 +48,21 @@ export const useMenuList = (foodTruckId: number) => {
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
-    navigate(-1);
+    const formData = location.state?.formData;
+    const updatedFormData = {
+      ...formData,
+      menus: menus.length > 0,
+    };
+    navigate(ROUTES.FOOD_TRUCK_FORM, {
+      state: getNavigateState(updatedFormData),
+    });
   };
 
   const handleRegister = (foodTruckId?: string) => {
-    navigate(ROUTES.MENU_REGISTER(foodTruckId || ''));
+    const formData = location.state?.formData;
+    navigate(ROUTES.MENU_REGISTER(foodTruckId || ''), {
+      state: getNavigateState(formData),
+    });
   };
 
   // 바텀 시트 핸들러

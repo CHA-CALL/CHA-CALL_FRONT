@@ -25,7 +25,6 @@ export default function MenuRegister() {
     isValid,
   } = useFormValidation();
 
-
   return (
     <FormProvider {...methods}>
       <Navigation
@@ -33,12 +32,14 @@ export default function MenuRegister() {
         handleLeftClick={() => navigate(ROUTES.MENU_LIST(foodTruckId || ''))}
         text='메뉴 등록'
       />
+
       <MenuForm
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}
         updateImageUrl={updateImageUrl}
       />
+
       <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
         <div className='flex flex-col gap-[1.7rem]'>
           <Button

@@ -3,4 +3,4 @@ export const SORT_TYPES = {
   OLDEST: '오래된순',
 } as const;
 
-export type SortType = typeof SORT_TYPES[keyof typeof SORT_TYPES];
+export type SortType = (typeof SORT_TYPES)[keyof typeof SORT_TYPES];

@@ -10,6 +10,13 @@ import {
   resetAtom,
 } from '@shared/store/filter-store';
 import { getCleanedFilters } from '@pages/filter/utils/get-cleaned-filters';
+import type {
+  AvailableQuantityValue,
+  FoodTruckCategoryValue,
+  NeedElectricityValue,
+  PaymentMethodValue,
+} from '@shared/types/category-types';
+import { ROUTES } from '@router/constant/routes';
 
 export default function useFilterLogic() {
   const navigate = useNavigate();
@@ -32,13 +39,13 @@ export default function useFilterLogic() {
     [localFilters]
   );
 
-  const notFiltered = isEqual(cleanedLocalFilters, initialFilter);
+  const notFiltered = isEqual(cleanedLocalFilters, globalFilters);
 
   const handleGoBack = () => navigate(-1);
 
   const handleSelectSingle = (
     key: 'availableQuantity' | 'needElectricity' | 'paymentMethod',
-    value: string
+    value: AvailableQuantityValue | NeedElectricityValue | PaymentMethodValue
   ) => {
     setLocalFilters(prev => {
       const prevVal = prev[key] as string | null;
@@ -46,7 +53,10 @@ export default function useFilterLogic() {
     });
   };
 
-  const handleSelectMulti = (key: 'categories', value: string) => {
+  const handleSelectMulti = (
+    key: 'categories',
+    value: FoodTruckCategoryValue
+  ) => {
     setLocalFilters(prev => {
       const current = prev[key] ?? [];
       const next = current.includes(value)
@@ -65,10 +75,18 @@ export default function useFilterLogic() {
   };
 
   const handleAddSchedule = () => {
-    setLocalFilters(prev => ({
-      ...prev,
-      schedules: [...prev.schedules, { startDate: null, endDate: null }],
-    }));
+    setLocalFilters(prev => {
+      const hasEmptySchedule = prev.schedules.some(
+        s => s.startDate === null && s.endDate === null
+      );
+
+      if (hasEmptySchedule) return prev;
+
+      return {
+        ...prev,
+        schedules: [...prev.schedules, { startDate: null, endDate: null }],
+      };
+    });
   };
 
   const handleResetFilter = () => {
@@ -88,7 +106,18 @@ export default function useFilterLogic() {
 
   const handleApplyFilter = () => {
     setGlobalFilters(cleanedLocalFilters);
-    navigate('/reservation');
+    navigate(ROUTES.RESERVATION);
+  };
+
+  const handleDeleteSchedule = (index: number) => {
+    setLocalFilters(prev => {
+      const newScheduleArray = prev.schedules.filter((_, i) => i !== index);
+      if (newScheduleArray.length === 0) {
+        newScheduleArray.push({ startDate: null, endDate: null });
+      }
+
+      return { ...prev, schedules: newScheduleArray };
+    });
   };
 
   return {
@@ -105,5 +134,6 @@ export default function useFilterLogic() {
     handleOpenCalendar,
     handleCloseCalendar,
     handleApplyFilter,
+    handleDeleteSchedule,
   };
 }

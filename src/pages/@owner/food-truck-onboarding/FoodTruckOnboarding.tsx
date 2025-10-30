@@ -21,20 +21,20 @@ export default function FoodTruckOnboarding() {
   return (
     <>
       <Navigation text='푸드트럭 등록' leftIcon={<Icon name='ic_back' />} />
-      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem]'>
+      <div className='flex w-full flex-col items-start justify-start gap-[2.6rem] p-[2rem] pb-[10rem]'>
         <NameSection
           value={formData.name}
           onChange={updateName}
           handleCheckNameDuplicate={handleCheckNameDuplicate}
           error={errors.name}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <BizRegCertSection
           file={formData.bizRegCert}
           onChange={updateBizRegCertFile}
           error={errors.bizRegCert}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
 
         <OtherDocsSection
           files={formData.otherDocs}
@@ -42,7 +42,7 @@ export default function FoodTruckOnboarding() {
           error={errors.otherDocs}
         />
       </div>
-      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center'>
+      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}

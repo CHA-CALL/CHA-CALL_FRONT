@@ -13,19 +13,19 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
   const navigate = useNavigate();
 
   const handleNavigateToName = () => {
-    navigate(ROUTES.PROFILE_SETTING_DETAIL('name'));
+    navigate(ROUTES.PROFILE_SETTING_DETAIL + '/name');
   };
   const handleNavigateToEmail = () => {
-    navigate(ROUTES.PROFILE_SETTING_DETAIL('email'));
+    navigate(ROUTES.PROFILE_SETTING_DETAIL + '/email');
   };
   const handleNavigateToGender = () => {
-    navigate(ROUTES.PROFILE_SETTING_DETAIL('gender'));
+    navigate(ROUTES.PROFILE_SETTING_DETAIL + '/gender');
   };
 
   return (
     userInfo && (
-      <div className='rounded-[1.6rem] border border-grayscale-200'>
-        <div className='flex flex-row items-center justify-between border-b border-grayscale-200 py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
+      <div className='border-grayscale-200 rounded-[1.6rem] border'>
+        <div className='border-grayscale-200 flex flex-row items-center justify-between border-b py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
           <span className='text-grayscale-500 title-sb-12'>이름</span>
           <button
             type='button'
@@ -38,7 +38,7 @@ export default function UserDataSection({ userInfo }: UserDataSectionProps) {
             <Icon name='ic_next' width={18} height={18} />
           </button>
         </div>
-        <div className='flex flex-row items-center justify-between border-b border-grayscale-200 py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
+        <div className='border-grayscale-200 flex flex-row items-center justify-between border-b py-[1.6rem] pl-[2rem] pr-[1.4rem]'>
           <span className='text-grayscale-500 title-sb-12'>이메일</span>
           <button
             type='button'

@@ -6,7 +6,7 @@ import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
 import useReservation from '@pages/reservation/hooks/use-reservation';
 import Loading from '@shared/components/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
@@ -38,7 +38,7 @@ export default function Reservation() {
         handleLeftClick={handleClickBack}
         text='예약하기'
       />
-      <div className='z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem] fixed-center'>
+      <div className='border-b-grayscale-100 fixed-center z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]'>
         <button
           type='button'
           onClick={handleClickLocation}
@@ -78,9 +78,9 @@ export default function Reservation() {
       </div>
 
       <div
-        className={`top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide fixed-center`}
+        className={`scrollbar-hide fixed-center top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
       >
-        {FOOD_TRUCK_CATEGORIES.map(category => (
+        {Object.values(FOOD_TRUCK_CATEGORIES).map(category => (
           <Button
             key={category}
             variant='chip'
@@ -122,7 +122,7 @@ export default function Reservation() {
                 }}
               />
               {index < foodTruckData.length - 1 && (
-                <div className='mb-[2.2rem] mt-[2.4rem] h-[0.1rem] w-full bg-grayscale-100' />
+                <div className='bg-grayscale-100 mb-[2.2rem] mt-[2.4rem] h-[0.1rem] w-full' />
               )}
             </div>
           ))
@@ -131,7 +131,7 @@ export default function Reservation() {
 
       <div ref={listBottomRef} className='h-[0.1rem] w-full' />
       {isFetchingNextPage && (
-        <div className='py-4 text-center text-grayscale-500'>
+        <div className='text-grayscale-500 py-4 text-center'>
           더 불러오는 중…
         </div>
       )}

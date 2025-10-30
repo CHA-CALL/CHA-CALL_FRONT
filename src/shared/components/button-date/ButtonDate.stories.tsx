@@ -21,6 +21,10 @@ const meta: Meta<typeof ButtonDate> = {
       action: 'open-calendar',
       description: '달력 열기 핸들러(바텀시트/모달 등)',
     },
+    handleDeleteSchedule: {
+      action: 'delete-date',
+      description: '선택된 날짜 삭제하는 핸들러',
+    },
   },
 };
 

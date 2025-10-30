@@ -1,59 +1,34 @@
 /**
- * 날짜/시간 정보 배열을 포맷팅하여 기간과 시간을 반환합니다.
+ * 날짜/시간 정보 문자열을 파싱하여 배열로 반환합니다.
  *
- * @param dateTimeInfos - 입력 형식: ["2024-10-03 14시~18시", "2024-10-04 14시~18시"]
- * @returns {DateTime}
- *   - period: "2024.10.03 - 2024.10.04" (단일 날짜인 경우: "2024.10.03")
- *   - time: "14:00 - 18:00"
+ * @param dateTimeInfos - 입력 형식: "2025.10.13 ~ 2025.10.13 12:00-14:00"
+ * @returns {string[]}
+ *   - ['25.10.13', '25.10.13', '12:00', '14:00']
  *
  * @example
- * // 여러 날짜인 경우
- * formatDateTimeInfos(["2024-10-03 14시~18시", "2024-10-04 14시~18시"])
- * // 결과: { period: "2024.10.03 - 2024.10.04", time: "14:00 - 18:00" }
+ * formatDateTimeInfos("2025.10.13 ~ 2025.11.19 09:00-17:00")
+ * // 결과: ['25.10.13', '25.11.19', '09:00', '17:00']
  *
- * // 단일 날짜인 경우
- * formatDateTimeInfos(["2024-10-03 9시~17시"])
- * // 결과: { period: "2024.10.03", time: "09:00 - 17:00" }
+ * formatDateTimeInfos("2025.09.30 ~ 2025.09.30 13:00-19:00")
+ * // 결과: ['25.09.30', '25.09.30', '13:00', '19:00']
  */
 
-interface DateTime {
-  period: string;
-  time: string;
-}
-
-export const formatDateTimeInfos = (dateTimeInfos?: string[]): DateTime => {
+export const formatDateTimeInfos = (dateTimeInfos?: string): string[] => {
   if (!dateTimeInfos || dateTimeInfos.length === 0) {
-    return { period: '', time: '' };
+    return [];
   }
 
-  const dateTimeRegex = /(\d{4}-\d{2}-\d{2})\s+(\d+)시~(\d+)시/;
+  const dateTimeRegex = /(\d{4})\.(\d{2})\.(\d{2})\s*~\s*(\d{4})\.(\d{2})\.(\d{2})\s+(\d{2}:\d{2})-(\d{2}:\d{2})/;
 
-  const dates: string[] = [];
-  let startTime = '';
-  let endTime = '';
+  const match = dateTimeInfos.match(dateTimeRegex);
+  if (!match) {
+    return [];
+  }
 
-  dateTimeInfos.forEach((info) => {
-    const match = info.match(dateTimeRegex);
-    if (match) {
-      const [, date, start, end] = match;
+  const [, startYear, startMonth, startDay, endYear, endMonth, endDay, startTime, endTime] = match;
 
-      dates.push(date.replace(/-/g, '.'));
+  const startDateShort = `${startYear.slice(2)}.${startMonth}.${startDay}`;
+  const endDateShort = `${endYear.slice(2)}.${endMonth}.${endDay}`;
 
-      if (!startTime) {
-        startTime = start.padStart(2, '0');
-        endTime = end.padStart(2, '0');
-      }
-    }
-  });
-
-
-  const period = dates.length > 1
-    ? `${dates[0]} - ${dates[dates.length - 1]}`
-    : dates[0] || '';
-
-  const time = startTime && endTime
-    ? `${startTime}:00 - ${endTime}:00`
-    : '';
-
-  return { period, time };
-}
+  return [startDateShort, endDateShort, startTime, endTime];
+};

@@ -9,22 +9,22 @@ import {
   extractLocationName,
 } from '@utils/extract-location';
 import { formatSelectedDateToSchedules } from '@utils/date-formatter';
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
+import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
 import { confirmedRegionsAtom } from '@shared/store/regions-store';
 import {
   useFoodTruckListQuery,
   useUpdateFoodTruckSaveStatus,
 } from '@pages/reservation/hooks/use-food-truck-list-query';
+import type { FoodTruckCategoryValue } from '@shared/types/category-types';
 
 export default function useReservation() {
   const navigate = useNavigate();
   const { ref: listBottomRef, inView } = useInView();
 
   const [isTooltipOpen, setIsTooltipOpen] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    FOOD_TRUCK_CATEGORIES[0]
-  );
+  const [selectedCategory, setSelectedCategory] =
+    useState<FoodTruckCategoryValue>(FOOD_TRUCK_CATEGORIES.ALL);
   const [locationName, setLocationName] = useState<string[]>([]);
 
   const filters = useAtomValue(filtersAtom);
@@ -32,7 +32,8 @@ export default function useReservation() {
   const regions = useAtomValue(confirmedRegionsAtom);
 
   const selectedCategories = (() => {
-    if (selectedCategory === '전체보기') return filters.categories ?? [];
+    if (selectedCategory === FOOD_TRUCK_CATEGORIES.ALL)
+      return filters.categories ?? [];
     const base = filters.categories ? [...filters.categories] : [];
     if (!base.includes(selectedCategory)) base.push(selectedCategory);
     return base;
@@ -57,7 +58,7 @@ export default function useReservation() {
 
   const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus();
 
-  const handleClickChip = (category: string) => {
+  const handleClickChip = (category: FoodTruckCategoryValue) => {
     setSelectedCategory(category);
   };
 

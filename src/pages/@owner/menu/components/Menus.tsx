@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Loading from '@components/loading/Loading';
-// TODO: MenuItem 공통 컴포넌트 사용
-import MenuItem from '@pages/@owner/menu/components/MenuItem';
+import MenuItem from '@components/menu-item/MenuItem';
 import MenuListEmptyView from '@pages/@owner/menu/components/MenuListEmptyView';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 
@@ -47,11 +46,12 @@ export default function Menus({
     <div className='flex flex-col bg-white px-[2rem] pb-[15.5rem] pt-[11.9rem]'>
       {menus.map((menu, index) => (
         <MenuItem
+          hasToggleSwitch={true}
           key={menu.menuId ?? `menu-${index}`}
           menuImage={menu.imageUrl || ''}
           menuName={menu.name || ''}
           menuDescription={menu.description || ''}
-          menuPrice={menu.price || ''}
+          menuPrice={Number(menu.price) || 0}
           isToggled={menu.status === 'ON'}
           handleMenuClick={handleMenuClick(foodTruckId.toString(), menu.menuId?.toString())}
           handleToggle={handleClickToggle(menu.menuId)}

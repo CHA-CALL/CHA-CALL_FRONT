@@ -66,7 +66,7 @@ export default function MenuList() {
         handleClickToggle={handleClickToggle}
       />
 
-      <footer className='bottom-[0] z-10 w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
+      <footer className='fixed-center bottom-[0] z-10 w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
         <Button
           variant='cta'
           buttonStyle='active'
