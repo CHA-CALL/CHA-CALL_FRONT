@@ -1,59 +1,36 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import type { FoodTruckDetailResponse } from 'apis/data-contracts';
 
-import { mockFoodTruck } from '@pages/food-truck-detail/mock-food-truck';
+import { getFoodTruckDetail } from '@pages/food-truck-detail/api';
+import { FOOD_TRUCK_DETAIL } from '@shared/querykey/food-trucks/food-trucks';
 
 export default function useFoodTruckDetail() {
-  // TODO: 쿼리 파라미터를 통해 푸드트럭 아이디 받아와서 서버에 요청하는 로직 필요
   const navigate = useNavigate();
+  const { foodTruckId } = useParams();
 
   const {
-    photoUrl,
-    name,
-    isSaved,
-    description,
-    foodTruckServiceAreas,
-    activeTime,
-    timeDiscussRequired,
-    phoneNumber,
-    averageRating,
-    menuCategories,
-    operatingInfo,
-    availableQuantity,
-    needElectricity,
-    paymentMethod,
-    availableDates,
-    option,
-  } = mockFoodTruck;
+    data: foodTruckDetailData,
+    isPending: isPendingFoodTruckDetail,
+    isError: isErrorFoodTruckDetail,
+  } = useQuery<FoodTruckDetailResponse | undefined>({
+    queryKey: [FOOD_TRUCK_DETAIL.ALL(Number(foodTruckId))],
+    queryFn: () => getFoodTruckDetail(Number(foodTruckId)),
+    staleTime: 5000,
+  });
 
-  // TODO: 핸들러는 서버 api 호출로 변경될 예정. 상태는 제거 예정. FoodTruckDetail 페이지에서는 isSaved로 사용
-  const [isLiked, setIsLiked] = useState(isSaved);
-  const handleClickSaveButton = () => setIsLiked(!isLiked);
+  const handleClickSaveButton = () => {};
 
   const handleClickBack = () => navigate(-1);
 
   const handleToChatPage = () => alert('채팅 페이지로');
 
   return {
-    photoUrl,
-    name,
-    isSaved,
-    description,
-    foodTruckServiceAreas,
-    activeTime,
-    timeDiscussRequired,
-    phoneNumber,
-    averageRating,
-    menuCategories,
-    operatingInfo,
-    availableQuantity,
-    needElectricity,
-    paymentMethod,
-    availableDates,
-    option,
-    isLiked,
+    foodTruckDetailData,
     handleClickSaveButton,
     handleClickBack,
     handleToChatPage,
+    isPendingFoodTruckDetail,
+    isErrorFoodTruckDetail,
   };
 }

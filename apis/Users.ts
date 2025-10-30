@@ -13,6 +13,7 @@
 import {
   ApproveFoodTruckStatusData,
   ApproveFoodTruckStatusRequest,
+  GetAllFoodTrucksData,
   GetProfilePresignedUrlData,
   GetUserInfoData,
   ImageRequest,
@@ -96,7 +97,7 @@ export class Users<
    *
    * @tags User API
    * @name ApproveFoodTruckStatus
-   * @summary 푸드트럭 승인 상태 변경
+   * @summary [운영자용] 푸드트럭 승인 상태 변경
    * @request PATCH:/users/admin/food-trucks/{foodTruckId}/approval
    * @secure
    * @response `200` `ApproveFoodTruckStatusData` OK
@@ -116,6 +117,38 @@ export class Users<
       body: data,
       secure: true,
       type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 운영자 - 서비스내에 모든 푸드트럭을 조회합니다.
+   *
+   * @tags User API
+   * @name GetAllFoodTrucks
+   * @summary [운영자용] 서비스내에 모든 푸드트럭 조회
+   * @request GET:/users/admin/food-trucks
+   * @secure
+   * @response `200` `GetAllFoodTrucksData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getAllFoodTrucks = (
+    query?: {
+      /**
+       * 푸드트럭 승인 상태 필터링 (승인 대기, 승인 완료, 승인 거부)
+       * @example "승인 대기"
+       */
+      status?: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<GetAllFoodTrucksData, void>({
+      path: `/users/admin/food-trucks`,
+      method: "GET",
+      query: query,
+      secure: true,
       ...params,
     });
 }

@@ -3,14 +3,14 @@ import { cn } from '@utils/cn';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 
 interface FoodTruckHeaderSectionProps {
-  photoUrl: string[];
-  name: string;
-  isSaved: boolean;
-  description: string;
-  foodTruckServiceAreas: string[];
-  activeTime: string;
-  timeDiscussRequired: boolean;
-  phoneNumber: string;
+  photoUrl?: string[];
+  name?: string;
+  isSaved?: boolean;
+  description?: string;
+  serviceAreas?: string;
+  activeTime?: string;
+  timeDiscussRequired?: boolean;
+  phoneNumber?: string;
   handleClickSaveButton: () => void;
 }
 
@@ -19,7 +19,7 @@ export default function FoodTruckHeaderSection({
   name,
   isSaved,
   description,
-  foodTruckServiceAreas,
+  serviceAreas,
   activeTime,
   timeDiscussRequired,
   phoneNumber,
@@ -116,7 +116,7 @@ export default function FoodTruckHeaderSection({
                   : 'overflow-hidden text-ellipsis whitespace-nowrap'
               )}
             >
-              {foodTruckServiceAreas.join(', ')}
+              {serviceAreas}
             </div>
 
             <button type='button' onClick={handleViewAllLocation}>

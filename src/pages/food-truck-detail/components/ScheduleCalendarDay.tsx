@@ -16,7 +16,10 @@ export default function ScheduleCalendarDay({
   const alreadyPassedDay = isBefore(currentDay, today);
 
   const isInAvailableRange = availableDates.some(range => {
-    const [start, end] = range.split('~').map(d => parseISO(d));
+    const [start, end] = range
+      .replace(/\s/g, '')
+      .split('~')
+      .map(d => parseISO(d));
     return isWithinInterval(currentDay, { start, end });
   });
 

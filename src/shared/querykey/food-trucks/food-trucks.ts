@@ -11,3 +11,7 @@ export const FOOD_TRUCKS_QUERY_KEY = {
 export const FOOD_TRUCKS_MUTATION_KEY = {
   UPDATE_SAVE_STATUS: ['food-trucks', 'update-save'],
 } as const;
+
+export const FOOD_TRUCK_DETAIL = {
+  ALL: (foodTruckId: number) => ['food-truck-detail', foodTruckId],
+} as const;

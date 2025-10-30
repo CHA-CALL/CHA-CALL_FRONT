@@ -686,6 +686,43 @@ export interface UserResponse {
   termAgreed?: boolean;
 }
 
+export interface BaseResponseListFoodTruckForAdminResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckForAdminResponse[];
+}
+
+export interface FoodTruckForAdminResponse {
+  /**
+   * 푸드트럭 ID
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
+   * 푸드트럭 이름
+   * @example "차콜 푸드트럭"
+   */
+  foodTruckName?: string;
+  /**
+   * 푸드트럭 사장님 이름
+   * @example "홍길동"
+   */
+  ownerName?: string;
+  /**
+   * 푸드트럭 상태
+   * @example "승인 대기"
+   */
+  foodTruckStatus?: string;
+  /**
+   * 푸드트럭 서류 URL 목록 (사업자 등록증 포함)
+   * @example ["https://cdn.chacall.com/foodtrucks/osori/doc1.jpg","https://cdn.chacall.com/foodtrucks/osori/doc2.jpg","https://cdn.chacall.com/foodtrucks/osori/doc3.jpg","https://cdn.chacall.com/foodtrucks/osori/doc4.jpg","https://cdn.chacall.com/foodtrucks/osori/doc5.jpg"]
+   */
+  foodTruckDocumentUrls?: string[];
+}
+
 export interface BaseResponseString {
   isSuccess?: boolean;
   /** @format int32 */
@@ -1335,6 +1372,104 @@ export interface FoodTruckResponse {
   isSaved?: boolean;
 }
 
+export interface BaseResponseFoodTruckDetailResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckDetailResponse;
+}
+
+export interface FoodTruckDetailResponse {
+  /**
+   * 푸드트럭 식별자
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
+   * 푸드트럭 이름
+   * @example "푸드트럭"
+   */
+  name?: string;
+  /**
+   * 푸드트럭 설명
+   * @example "맛있는 푸드트럭입니다."
+   */
+  description?: string;
+  /**
+   * 푸드트럭 전화번호
+   * @example "010-1234-5678"
+   */
+  phoneNumber?: string;
+  /**
+   * 푸드트럭 활동 시간
+   * @example "09:00-20:00"
+   */
+  activeTime?: string;
+  /**
+   * 시간 협의 필요 여부
+   * @example false
+   */
+  timeDiscussRequired?: boolean;
+  /**
+   * 호출 가능 지역
+   * @example "서울 광진구, 서울 강남구, 서울 영등포구"
+   */
+  serviceAreas?: string;
+  /**
+   * 푸드트럭 메뉴 카테고리 (라벨 리스트)
+   * @example ["한식","분식"]
+   */
+  menuCategories?: string[];
+  /**
+   * 푸드트럭 제공 가능 수량
+   * @example "200인분 미만"
+   */
+  availableQuantity?: string;
+  /**
+   * 전기 사용 필요 여부
+   * @example "필요"
+   */
+  needElectricity?: string;
+  /**
+   * 결제 방법
+   * @example "무관"
+   */
+  paymentMethod?: string;
+  /**
+   * 푸드트럭 제공 가능 날짜 리스트
+   * @example ["2025-10-01 ~ 2025-10-10","2025-11-01 ~ 2025-11-10"]
+   */
+  availableDates?: string[];
+  /**
+   * 푸드트럭 사진 URL 리스트
+   * @example ["http://image.png","http://image2.png","http://image3.png"]
+   */
+  photoUrl?: string[];
+  /**
+   * 운영 정보
+   * @example "운영정보"
+   */
+  operatingInfo?: string;
+  /**
+   * 추가 옵션 정보
+   * @example "안녕하세요"
+   */
+  option?: string;
+  /**
+   * 푸드트럭 평균 평점
+   * @format double
+   * @example 4.5
+   */
+  averageRating?: number;
+  /**
+   * 현재 사용자가 저장한 푸드트럭인지 여부
+   * @example true
+   */
+  isSaved?: boolean;
+}
+
 export interface BaseResponseCursorPagingResponseFoodTruckMenuResponse {
   isSuccess?: boolean;
   /** @format int32 */
@@ -1381,6 +1516,14 @@ export interface FoodTruckMenuResponse {
   imageUrl?: string;
 }
 
+export interface BaseResponseListFoodTruckMenuResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckMenuResponse[];
+}
+
 export interface DeleteFoodTruckImagesRequest {
   /**
    * 삭제할 이미지 URL 목록
@@ -1410,6 +1553,8 @@ export type DeleteChatTemplateData = BaseResponseVoid;
 export type UpdateBankAccountData = BaseResponseVoid;
 
 export type DeleteBankAccountData = BaseResponseVoid;
+
+export type GetFoodTruckDetailsData = BaseResponseFoodTruckDetailResponse;
 
 export type UpdateMyFoodTruckInfoData = BaseResponseFoodTruckIdResponse;
 
@@ -1459,6 +1604,8 @@ export type UpdateFoodTruckViewedStatusData = BaseResponseVoid;
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
 
+export type GetAllFoodTrucksData = BaseResponseListFoodTruckForAdminResponse;
+
 export type GetToken1Data = BaseResponseString;
 
 export type GetRegionsData = BaseResponseListRegionResponse;
@@ -1491,6 +1638,8 @@ export type GetFoodTrucksData =
 
 export type GetFoodTruckMenusData =
   BaseResponseCursorPagingResponseFoodTruckMenuResponse;
+
+export type SearchFoodTruckMenusData = BaseResponseListFoodTruckMenuResponse;
 
 export type DeleteFoodTruckData = BaseResponseVoid;
 

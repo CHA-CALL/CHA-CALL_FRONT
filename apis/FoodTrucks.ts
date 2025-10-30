@@ -16,10 +16,12 @@ import {
   DeleteFoodTruckImagesFromS3Data,
   DeleteFoodTruckImagesRequest,
   FoodTruckNameDuplicateCheckRequest,
+  GetFoodTruckDetailsData,
   GetFoodTruckMenusData,
   GetFoodTrucksData,
   ImageRequest,
   IsNameDuplicatedData,
+  SearchFoodTruckMenusData,
   UpdateFoodTruckInfoRequest,
   UpdateMyFoodTruckInfoData,
 } from "./data-contracts";
@@ -28,6 +30,28 @@ import { ContentType, HttpClient, RequestParams } from "./http-client";
 export class FoodTrucks<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
+  /**
+   * @description 푸드트럭의 상세 정보를 조회합니다.
+   *
+   * @tags FoodTruck API
+   * @name GetFoodTruckDetails
+   * @summary 푸드트럭 상세조회
+   * @request GET:/food-trucks/{foodTruckId}
+   * @secure
+   * @response `200` `GetFoodTruckDetailsData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getFoodTruckDetails = (foodTruckId: number, params: RequestParams = {}) =>
+    this.request<GetFoodTruckDetailsData, void>({
+      path: `/food-trucks/${foodTruckId}`,
+      method: "GET",
+      secure: true,
+      ...params,
+    });
   /**
    * @description 승인이 완료된 나의 푸드트럭 정보를 기입하거나 수정합니다.
    *
@@ -253,6 +277,39 @@ export class FoodTrucks<
   ) =>
     this.request<GetFoodTruckMenusData, void>({
       path: `/food-trucks/${foodTruckId}/menus`,
+      method: "GET",
+      query: query,
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 푸드트럭 메뉴를 이름으로 검색합니다.
+   *
+   * @tags FoodTruck API
+   * @name SearchFoodTruckMenus
+   * @summary 푸드트럭 메뉴 검색
+   * @request GET:/food-trucks/{foodTruckId}/menus/search
+   * @secure
+   * @response `200` `SearchFoodTruckMenusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  searchFoodTruckMenus = (
+    foodTruckId: number,
+    query: {
+      /**
+       * 검색 키워드
+       * @example "치킨"
+       */
+      keyword: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<SearchFoodTruckMenusData, void>({
+      path: `/food-trucks/${foodTruckId}/menus/search`,
       method: "GET",
       query: query,
       secure: true,

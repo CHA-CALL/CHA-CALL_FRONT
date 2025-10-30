@@ -14,6 +14,7 @@ import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
+import Loading from '@shared/components/loading/Loading';
 
 export default function FoodTruckDetail() {
   const {
@@ -24,28 +25,18 @@ export default function FoodTruckDetail() {
   } = useFoodTruckDetailView();
 
   const {
-    photoUrl,
-    name,
-    description,
-    foodTruckServiceAreas,
-    activeTime,
-    timeDiscussRequired,
-    phoneNumber,
-    averageRating,
-    menuCategories,
-    operatingInfo,
-    availableQuantity,
-    needElectricity,
-    paymentMethod,
-    availableDates,
-    option,
-    isLiked,
+    foodTruckDetailData,
     handleClickSaveButton,
     handleClickBack,
     handleToChatPage,
+    isPendingFoodTruckDetail,
   } = useFoodTruckDetail();
 
   const { menusPreview, isPendingMenusPreview } = useFoodTruckMenusPreview();
+
+  if (isPendingFoodTruckDetail) {
+    return <Loading />;
+  }
 
   return isSearchMode ? (
     <FoodTruckMenuSearch handleCloseSearchMode={handleCloseSearchMode} />
@@ -54,16 +45,22 @@ export default function FoodTruckDetail() {
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleClickBack}
-        text={isScrolled ? name : undefined}
+        text={isScrolled ? foodTruckDetailData?.name : undefined}
         rightIcon={
           isScrolled ? (
             <button
               type='button'
               onClick={handleClickSaveButton}
-              aria-label={isLiked ? '찜하기 취소' : '찜하기'}
+              aria-label={
+                foodTruckDetailData?.isSaved ? '찜하기 취소' : '찜하기'
+              }
             >
               <Icon
-                name={isLiked ? 'ic_heart_fill' : 'ic_heart_empty'}
+                name={
+                  foodTruckDetailData?.isSaved
+                    ? 'ic_heart_fill'
+                    : 'ic_heart_empty'
+                }
                 width={24}
                 height={24}
                 className='mx-[0.7rem] text-primary-700'
@@ -79,24 +76,24 @@ export default function FoodTruckDetail() {
 
       <div className='mt-[-4.8rem] pb-[12rem]'>
         <FoodTruckHeaderSection
-          photoUrl={photoUrl}
-          name={name}
-          isSaved={isLiked}
-          description={description}
-          foodTruckServiceAreas={foodTruckServiceAreas}
-          activeTime={activeTime}
-          timeDiscussRequired={timeDiscussRequired}
-          phoneNumber={phoneNumber}
+          photoUrl={foodTruckDetailData?.photoUrl}
+          name={foodTruckDetailData?.name}
+          isSaved={foodTruckDetailData?.isSaved}
+          description={foodTruckDetailData?.description}
+          serviceAreas={foodTruckDetailData?.serviceAreas}
+          activeTime={foodTruckDetailData?.activeTime}
+          timeDiscussRequired={foodTruckDetailData?.timeDiscussRequired}
+          phoneNumber={foodTruckDetailData?.phoneNumber}
           handleClickSaveButton={handleClickSaveButton}
         />
         <SectionDivider />
         <FoodTruckInfoSection
-          averageRating={averageRating}
-          menuCategories={menuCategories}
-          operatingInfo={operatingInfo}
-          availableQuantity={availableQuantity}
-          needElectricity={needElectricity}
-          paymentMethod={paymentMethod}
+          averageRating={foodTruckDetailData?.averageRating}
+          menuCategories={foodTruckDetailData?.menuCategories}
+          operatingInfo={foodTruckDetailData?.operatingInfo}
+          availableQuantity={foodTruckDetailData?.availableQuantity}
+          needElectricity={foodTruckDetailData?.needElectricity}
+          paymentMethod={foodTruckDetailData?.paymentMethod}
         />
         <SectionDivider />
         <FoodTruckMenuSection
@@ -104,10 +101,20 @@ export default function FoodTruckDetail() {
           isPending={isPendingMenusPreview}
           handleOpenSearchMode={handleOpenSearchMode}
         />
-        <SectionDivider />
-        <FoodTruckScheduleSection availableDates={availableDates} />
-        <SectionDivider />
-        <FoodTruckOptionSection option={option} />
+        {foodTruckDetailData?.availableDates && (
+          <>
+            <SectionDivider />
+            <FoodTruckScheduleSection
+              availableDates={foodTruckDetailData?.availableDates}
+            />
+          </>
+        )}
+        {foodTruckDetailData?.option && (
+          <>
+            <SectionDivider />
+            <FoodTruckOptionSection option={foodTruckDetailData?.option} />
+          </>
+        )}
       </div>
       <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
         <Button

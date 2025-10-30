@@ -1,7 +1,18 @@
-import type { GetFoodTruckMenusData } from 'apis/data-contracts';
+import type {
+  GetFoodTruckDetailsData,
+  GetFoodTruckMenusData,
+} from 'apis/data-contracts';
 
 import { apiRequest } from '@api/apiRequest';
 import { MENU_PREVIEW_SIZE, PAGE_SIZE } from '@shared/constant/page-size';
+
+export const getFoodTruckDetail = async (foodTruckId: number) => {
+  const response = await apiRequest<GetFoodTruckDetailsData>({
+    endPoint: `/food-trucks/${foodTruckId}`,
+    method: 'GET',
+  });
+  return response.data;
+};
 
 export const getFoodTruckMenus = async (
   foodTruckId: number,

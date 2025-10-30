@@ -4,12 +4,12 @@ import FoodCategoryChipGroup from '@pages/food-truck-detail/components/FoodCateg
 import ContentDivider from '@pages/food-truck-detail/components/ContentDivider';
 
 interface FoodTruckInfoSectionProps {
-  averageRating: number;
-  menuCategories: string[];
-  operatingInfo: string;
-  availableQuantity: string;
-  needElectricity: string;
-  paymentMethod: string;
+  averageRating?: number;
+  menuCategories?: string[];
+  operatingInfo?: string;
+  availableQuantity?: string;
+  needElectricity?: string;
+  paymentMethod?: string;
 }
 
 export default function FoodTruckInfoSection({
@@ -39,11 +39,16 @@ export default function FoodTruckInfoSection({
         </div>
       </div>
       <ContentDivider />
-      <div className='flex flex-col gap-[0.8rem] px-[0.5rem]'>
-        <h3 className='text-grayscale-900 title-sb-12'>판매 음식</h3>
-        <FoodCategoryChipGroup menuCategories={menuCategories} />
-      </div>
-      <ContentDivider />
+      {menuCategories && (
+        <>
+          <div className='flex flex-col gap-[0.8rem] px-[0.5rem]'>
+            <h3 className='text-grayscale-900 title-sb-12'>판매 음식</h3>
+            <FoodCategoryChipGroup menuCategories={menuCategories} />
+          </div>
+          <ContentDivider />
+        </>
+      )}
+
       <div className='flex flex-col gap-[0.6rem] px-[0.5rem]'>
         <h3 className='text-grayscale-900 title-sb-12'>운영 정보</h3>
         <span className='whitespace-pre-wrap text-grayscale-700 caption-m-12'>
