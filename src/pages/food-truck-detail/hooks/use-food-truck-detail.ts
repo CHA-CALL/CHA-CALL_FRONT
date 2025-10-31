@@ -4,6 +4,7 @@ import type { FoodTruckDetailResponse } from 'apis/data-contracts';
 
 import { getFoodTruckDetail } from '@pages/food-truck-detail/api';
 import { FOOD_TRUCK_DETAIL } from '@shared/querykey/food-trucks/food-trucks';
+import { useUpdateFoodTruckSaveStatus } from '@pages/reservation/hooks/use-food-truck-list-query';
 
 export default function useFoodTruckDetail() {
   const navigate = useNavigate();
@@ -14,12 +15,21 @@ export default function useFoodTruckDetail() {
     isPending: isPendingFoodTruckDetail,
     isError: isErrorFoodTruckDetail,
   } = useQuery<FoodTruckDetailResponse | undefined>({
-    queryKey: [FOOD_TRUCK_DETAIL.ALL(Number(foodTruckId))],
+    queryKey: FOOD_TRUCK_DETAIL.DETAIL(Number(foodTruckId)),
     queryFn: () => getFoodTruckDetail(Number(foodTruckId)),
     staleTime: 5000,
   });
 
-  const handleClickSaveButton = () => {};
+  const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus(
+    Number(foodTruckId)
+  );
+
+  const handleClickSaveButton = (
+    foodTruckId: number,
+    isSavedRequest: boolean
+  ) => {
+    updateSaveStatus({ foodTruckId, isSavedRequest });
+  };
 
   const handleClickBack = () => navigate(-1);
 

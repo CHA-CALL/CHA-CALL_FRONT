@@ -13,5 +13,5 @@ export const FOOD_TRUCKS_MUTATION_KEY = {
 } as const;
 
 export const FOOD_TRUCK_DETAIL = {
-  ALL: (foodTruckId: number) => ['food-truck-detail', foodTruckId],
+  DETAIL: (foodTruckId: number) => ['food-truck-detail', foodTruckId],
 } as const;

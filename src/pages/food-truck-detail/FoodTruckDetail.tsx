@@ -50,7 +50,17 @@ export default function FoodTruckDetail() {
           isScrolled ? (
             <button
               type='button'
-              onClick={handleClickSaveButton}
+              onClick={() => {
+                if (
+                  foodTruckDetailData?.foodTruckId !== undefined &&
+                  foodTruckDetailData.isSaved !== undefined
+                ) {
+                  handleClickSaveButton(
+                    foodTruckDetailData?.foodTruckId,
+                    !foodTruckDetailData?.isSaved
+                  );
+                }
+              }}
               aria-label={
                 foodTruckDetailData?.isSaved ? '찜하기 취소' : '찜하기'
               }
@@ -76,6 +86,7 @@ export default function FoodTruckDetail() {
 
       <div className='mt-[-4.8rem] pb-[12rem]'>
         <FoodTruckHeaderSection
+          foodTruckId={foodTruckDetailData?.foodTruckId}
           photoUrl={foodTruckDetailData?.photoUrl}
           name={foodTruckDetailData?.name}
           isSaved={foodTruckDetailData?.isSaved}

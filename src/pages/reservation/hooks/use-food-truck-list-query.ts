@@ -14,6 +14,7 @@ import {
   type FoodTrucksFilterType,
 } from '@pages/reservation/api';
 import {
+  FOOD_TRUCK_DETAIL,
   FOOD_TRUCKS_MUTATION_KEY,
   FOOD_TRUCKS_QUERY_KEY,
 } from '@shared/querykey/food-trucks/food-trucks';
@@ -65,7 +66,7 @@ interface UpdateFoodTruckSaveStatusProps {
   isSavedRequest: boolean;
 }
 
-export const useUpdateFoodTruckSaveStatus = () => {
+export const useUpdateFoodTruckSaveStatus = (foodTruckId?: number) => {
   const qc = useQueryClient();
 
   return useMutation({
@@ -81,6 +82,12 @@ export const useUpdateFoodTruckSaveStatus = () => {
         queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
         refetchType: 'all',
       });
+      if (foodTruckId) {
+        qc.invalidateQueries({
+          queryKey: FOOD_TRUCK_DETAIL.DETAIL(foodTruckId),
+          refetchType: 'all',
+        });
+      }
     },
   });
 };
