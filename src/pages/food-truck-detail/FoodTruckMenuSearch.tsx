@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Icon } from '@components/icon/Icon';
 import Input from '@components/input/Input';
@@ -13,6 +13,8 @@ import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
 import Loading from '@shared/components/loading/Loading';
 import MenuItem from '@shared/components/menu-item/MenuItem';
 import SearchMenuEmptyView from '@pages/food-truck-detail/components/SearchMenuEmptyView';
+import useToast from '@shared/hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 
 interface FoodTruckMenusProps {
   handleCloseSearchMode: () => void;
@@ -23,6 +25,14 @@ export default function FoodTruckMenuSearch({
 }: FoodTruckMenusProps) {
   const { foodTruckId } = useParams();
   const foodTruckIdNumber = Number(foodTruckId);
+
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  if (isNaN(foodTruckIdNumber)) {
+    navigate(ROUTES.RESERVATION);
+    toast.error('잘못된 페이지 접근입니다.');
+  }
 
   const { foodTruckMenusData, isPendingMenus, listBottomRef } =
     useFoodTruckMenus(foodTruckIdNumber);
@@ -73,7 +83,11 @@ export default function FoodTruckMenuSearch({
           onChange={handleChangeInputText}
           onFocus={() => handleInputFocus(true)}
           onBlur={() => handleInputFocus(false)}
-          onKeyDown={handleSearchMenu}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              handleSearchMenu();
+            }
+          }}
           placeholder='검색어를 입력해주세요.'
           rightComponent={
             isInputFocused ? (

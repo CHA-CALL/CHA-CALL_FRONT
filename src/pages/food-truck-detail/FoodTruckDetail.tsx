@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@shared/utils/cn';
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
@@ -16,10 +16,20 @@ import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-de
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
 import Loading from '@shared/components/loading/Loading';
+import useToast from '@shared/hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 
 export default function FoodTruckDetail() {
   const { foodTruckId } = useParams();
   const foodTruckIdNumber = Number(foodTruckId);
+
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  if (isNaN(foodTruckIdNumber)) {
+    navigate(ROUTES.RESERVATION);
+    toast.error('잘못된 페이지 접근입니다.');
+  }
 
   const {
     isScrolled,
@@ -125,6 +135,7 @@ export default function FoodTruckDetail() {
           </>
         )}
       </div>
+      {/* TODO: 채팅 페이지로 이동하도록 추가 */}
       <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
         <Button
           variant='cta'
