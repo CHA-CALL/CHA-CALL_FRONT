@@ -68,8 +68,7 @@ export const useUnsaveFoodTrucks = () => {
       }
       return { previousData };
     },
-    onError: err => {
-      console.error(err.message);
+    onError: () => {
       toast.error('저장된 푸드트럭 삭제에 실패했습니다.');
     },
     onSettled: () => {

@@ -20,17 +20,12 @@ export default function SaveFoodTruckList() {
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
-  }, [inView]);
-
+  }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage]);
   const handleClickBack = () => {
     navigate(-1);
   };
 
   const handleClickCard = () => {};
-
-  if (isPending || !data) {
-    return <Loading />;
-  }
 
   return (
     <>
@@ -41,26 +36,26 @@ export default function SaveFoodTruckList() {
       />
       <div className='flex flex-col gap-[1rem] p-[2rem]'>
         <p className='caption-m-12 text-grayscale-500'>
-          총 {data.foodTrucks.length}개
+          총 {data && data.foodTrucks.length ? data.foodTrucks.length : '0'}개
         </p>
-        <div className='flex flex-col gap-[4rem]'>
-          {data.foodTrucks
-            .filter(item => item.foodTruckId !== null)
-            .map(item => (
-              <>
-                {item && (
-                  <FoodTruckCard
-                    key={item.foodTruckId}
-                    variant='foodtruckClient'
-                    data={item}
-                    handleClickCard={handleClickCard}
-                    handleClickButton={() => unsaveFoodTruck(item.foodTruckId!)}
-                  />
-                )}
-              </>
-            ))}
-          <div ref={ref}></div>
-        </div>
+        {isPending || !data ? (
+          <Loading />
+        ) : (
+          <div className='flex flex-col gap-[4rem]'>
+            {data.foodTrucks
+              .filter(item => item.foodTruckId !== null)
+              .map(item => (
+                <FoodTruckCard
+                  key={item.foodTruckId}
+                  variant='foodtruckClient'
+                  data={{ ...item, isSaved: true }}
+                  handleClickCard={handleClickCard}
+                  handleClickButton={() => unsaveFoodTruck(item.foodTruckId!)}
+                />
+              ))}
+            <div ref={ref}></div>
+          </div>
+        )}
       </div>
       <ButtonFloating />
     </>
