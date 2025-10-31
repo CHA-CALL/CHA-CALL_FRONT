@@ -1,25 +1,23 @@
-import useLocation from '@components/location/hooks/use-location';
-
-import useRegionSearch from '@components/location/hooks/use-region-search';
-import { useDepths } from '@components/location/hooks/use-depths';
+import useRegionSearch from '@shared/components/region/hooks/use-region-search';
+import { useDepths } from '@shared/components/region/hooks/use-depths';
 import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
 import Input from '@ui/input/Input';
-
-import SearchSection from '@components/location/components/SearchSection';
-import SelectedChipsSheet from '@components/location/components/SelectedChipsSheet';
-import DepthSection from '@components/location/components/DepthSection';
+import SearchSection from '@shared/components/region/components/SearchSection';
+import SelectedChipsSheet from '@shared/components/region/components/SelectedChipsSheet';
+import DepthSection from '@shared/components/region/components/DepthSection';
 import type { RegionResponse } from 'apis/data-contracts';
+import useRegion from '@shared/components/region/hooks/use-region';
 
-interface LocationProps {
-  initialLocations?: Map<number, RegionResponse>;
-  handleConfirmLocation: (locations: Map<number, RegionResponse>) => void;
+interface RegionProps {
+  initialRegions?: RegionResponse[];
+  handleConfirmRegion: (_regions: RegionResponse[]) => void;
 }
 
-export default function Location({
-  initialLocations,
-  handleConfirmLocation,
-}: LocationProps) {
+export default function Region({
+  initialRegions,
+  handleConfirmRegion,
+}: RegionProps) {
   const {
     searchText,
     handleSetSearchText,
@@ -39,11 +37,11 @@ export default function Location({
   } = useDepths();
 
   const {
-    selectedLocations,
-    handleSelectLocation,
-    handleDeleteLocation,
-    handleResetLocations,
-  } = useLocation({ initialLocations });
+    selectedRegions,
+    handleSelectRegion,
+    handleDeleteRegion,
+    handleResetRegions,
+  } = useRegion({ initialRegions });
 
   return (
     <>
@@ -68,8 +66,8 @@ export default function Location({
           <SearchSection
             searchText={searchText}
             searchRegions={searchRegions?.data ?? []}
-            selectedLocations={selectedLocations}
-            handleSelectLocation={handleSelectLocation}
+            selectedRegions={selectedRegions}
+            handleSelectRegion={handleSelectRegion}
             isPending={isPending}
           />
         )}
@@ -82,15 +80,15 @@ export default function Location({
             depth1List={depth1List}
             depth2List={depth2List}
             depth3List={depth3List}
-            handleToggleLocation={handleSelectLocation}
-            selectedLocations={selectedLocations}
+            handleToggleRegion={handleSelectRegion}
+            selectedRegions={selectedRegions}
           />
         )}
 
-        {selectedLocations.size > 0 && (
+        {selectedRegions.length > 0 && (
           <SelectedChipsSheet
-            selectedLocations={selectedLocations}
-            handleDeleteLocation={handleDeleteLocation}
+            selectedRegions={selectedRegions}
+            handleDeleteRegion={handleDeleteRegion}
           />
         )}
 
@@ -98,14 +96,14 @@ export default function Location({
           <Button
             variant='cta'
             buttonStyle='sub'
-            handleClickButton={handleResetLocations}
+            handleClickButton={handleResetRegions}
           >
             초기화
           </Button>
           <Button
             variant='cta'
-            buttonStyle={selectedLocations.size > 0 ? 'active' : 'disabled'}
-            handleClickButton={() => handleConfirmLocation(selectedLocations)}
+            buttonStyle={selectedRegions.length > 0 ? 'active' : 'disabled'}
+            handleClickButton={() => handleConfirmRegion(selectedRegions)}
           >
             확인
           </Button>

@@ -15,10 +15,6 @@ import {
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export default function MenuList() {
-  return <MenuListContent />;
-}
-
-function MenuListContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const { foodTruckId } = useParams();

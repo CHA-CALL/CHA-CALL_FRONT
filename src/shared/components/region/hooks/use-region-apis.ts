@@ -5,7 +5,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import { REGION_QUERY_KEY } from '@shared/querykey/regions';
-import { getRegions, searchRegions } from '@components/location/api';
+import { getRegions, searchRegions } from '@shared/components/region/api';
 
 export const useDepth1Regions = () => {
   return useQuery<GetRegionsData>({

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-import { useSearchRegions } from '@components/location/hooks/use-regions';
+import { useSearchRegions } from '@shared/components/region/hooks/use-region-apis';
 
 export default function useRegionSearch() {
   const [searchText, setSearchText] = useState('');

@@ -1,9 +1,9 @@
 import { type RegionResponse } from 'apis/data-contracts';
 
-import DepthTitle from '@components/location/components/(.)section/(.)depths/DepthTitle';
-import Depth1Item from '@components/location/components/(.)section/(.)depths/Depth1Item';
-import Depth2Item from '@components/location/components/(.)section/(.)depths/Depth2Item';
-import Depth3Item from '@components/location/components/(.)section/(.)depths/Depth3Item';
+import DepthTitle from '@shared/components/region/components/(.)section/(.)depths/DepthTitle';
+import Depth1Item from '@shared/components/region/components/(.)section/(.)depths/Depth1Item';
+import Depth2Item from '@shared/components/region/components/(.)section/(.)depths/Depth2Item';
+import Depth3Item from '@shared/components/region/components/(.)section/(.)depths/Depth3Item';
 
 interface DepthSectionProps {
   depth1List: RegionResponse[];
@@ -13,8 +13,8 @@ interface DepthSectionProps {
   depth2: RegionResponse | null;
   handleSelectDepth1: (_depth1Item: RegionResponse) => void;
   handleSelectDepth2: (_depth2Item: RegionResponse) => void;
-  handleToggleLocation: (_item: RegionResponse) => void;
-  selectedLocations: Map<number, RegionResponse>;
+  handleToggleRegion: (_item: RegionResponse) => void;
+  selectedRegions: RegionResponse[];
 }
 
 export default function DepthSection({
@@ -25,8 +25,8 @@ export default function DepthSection({
   depth2,
   handleSelectDepth1,
   handleSelectDepth2,
-  handleToggleLocation,
-  selectedLocations,
+  handleToggleRegion,
+  selectedRegions,
 }: DepthSectionProps) {
   return (
     <>
@@ -61,9 +61,9 @@ export default function DepthSection({
               return (
                 <Depth3Item
                   title={item.name ?? ''}
-                  isSelected={selectedLocations.has(item.code ?? 0)}
+                  isSelected={selectedRegions.some(r => r.code === item.code)}
                   handleSelectDepth3={() =>
-                    handleToggleLocation({
+                    handleToggleRegion({
                       name: fullName,
                       code: item.code,
                     })

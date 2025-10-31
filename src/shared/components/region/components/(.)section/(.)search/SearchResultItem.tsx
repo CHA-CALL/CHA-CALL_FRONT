@@ -3,9 +3,9 @@ import { cn } from '@utils/cn';
 import { type RegionResponse } from 'apis/data-contracts';
 
 interface SearchResultItemProps {
-  location: RegionResponse;
+  region: RegionResponse;
   isChecked: boolean;
-  handleSelectLocation: (_item: RegionResponse) => void;
+  handleSelectRegion: (_item: RegionResponse) => void;
   searchText: string;
 }
 
@@ -35,18 +35,18 @@ const highlightText = (text: string, searchText: string) => {
 };
 
 export default function SearchResultItem({
-  location,
+  region,
   isChecked,
-  handleSelectLocation,
+  handleSelectRegion,
   searchText,
 }: SearchResultItemProps) {
   return (
     <li className='border-b-1 border-grayscale-100 body-m-14 text-grayscale-900 mx-[0.5rem] flex items-center gap-[1.3rem] pb-[1.6rem]'>
       <ButtonCheck
         isChecked={isChecked}
-        handleToggle={() => handleSelectLocation(location)}
+        handleToggle={() => handleSelectRegion(region)}
       />
-      <span>{highlightText(location.name ?? '', searchText)}</span>
+      <span>{highlightText(region.name ?? '', searchText)}</span>
     </li>
   );
 }

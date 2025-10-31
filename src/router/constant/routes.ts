@@ -3,7 +3,7 @@ export const ROUTES = {
   FILTER: '/filter',
   RESERVATION: '/reservation',
   FOOD_TRUCK_ONBOARDING: '/owner/food-truck-onboarding',
-  SET_LOCATION: '/set-location',
+  SET_REGION_GLOBAL: '/set-region',
   CHATLIST: '/chat-list',
   MESSAGE_LIST: '/owner/message-list',
   MESSAGE_FORM: '/owner/message-form',
@@ -21,4 +21,5 @@ export const ROUTES = {
   MENU_LIST: '/owner/menu-list',
   MENU_REGISTER: '/owner/menu-register',
   FOOD_TRUCK_FORM: '/owner/food-truck-form',
+  SET_REGION_FORM: '/owner/food-truck-form/set-region',
 };

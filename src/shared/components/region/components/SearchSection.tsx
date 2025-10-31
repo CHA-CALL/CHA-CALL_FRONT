@@ -2,21 +2,21 @@ import { type RegionResponse } from 'apis/data-contracts';
 
 import Loading from '@layout/loading/Loading';
 
-import SearchResultItem from '@components/location/components/(.)section/(.)search/SearchResultItem';
+import SearchResultItem from '@shared/components/region/components/(.)section/(.)search/SearchResultItem';
 
 interface SearchSectionProps {
   searchText: string;
   searchRegions: RegionResponse[];
-  selectedLocations: Map<number, RegionResponse>;
-  handleSelectLocation: (_item: RegionResponse) => void;
+  selectedRegions: RegionResponse[];
+  handleSelectRegion: (_item: RegionResponse) => void;
   isPending: boolean;
 }
 
 export default function SearchSection({
   searchText,
   searchRegions,
-  selectedLocations,
-  handleSelectLocation,
+  selectedRegions,
+  handleSelectRegion,
   isPending,
 }: SearchSectionProps) {
   if (isPending) {
@@ -30,9 +30,9 @@ export default function SearchSection({
           {searchRegions.length > 0 ? (
             searchRegions.map((item: RegionResponse) => (
               <SearchResultItem
-                location={item}
-                isChecked={selectedLocations.has(item.code ?? 0)}
-                handleSelectLocation={handleSelectLocation}
+                region={item}
+                isChecked={selectedRegions.some(r => r.code === item.code)}
+                handleSelectRegion={handleSelectRegion}
                 searchText={searchText}
                 key={item.code}
               />
