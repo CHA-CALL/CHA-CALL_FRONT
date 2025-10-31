@@ -144,7 +144,7 @@ export default function FoodTruckHeaderSection({
             />
             <div className='flex flex-row items-center gap-[0.4rem]'>
               <span className='text-grayscale-700 body-m-13'>{activeTime}</span>
-              <span className='title_sb_14 text-grayscale-300'>·</span>
+              <span className='text-grayscale-300 title-sb-14'>·</span>
               <span className='text-grayscale-700 body-m-13'>
                 {timeDiscussRequired ? '논의 가능' : '논의 불가능'}
               </span>
