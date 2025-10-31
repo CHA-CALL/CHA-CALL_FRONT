@@ -91,7 +91,7 @@ export default function FoodTruckMenuSearch({
       </div>
       <div className='p-[2rem] pt-[8.6rem]'>{renderMenus()}</div>
       {isPendingMenus && <Loading />}
-      <div ref={listBottomRef} />
+      {!searchText && <div ref={listBottomRef} />}
       <ButtonFloating />
     </>
   );
