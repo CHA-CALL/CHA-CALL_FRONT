@@ -10,6 +10,7 @@ import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import { PAYMENT_METHOD } from '@constant/payment-method';
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
 import { FOOD_CATEGORIES } from '@constant/food-categories';
+import type { RegionResponse } from 'apis/data-contracts';
 
 const foodTruckSchema = z.object({
   name: z
@@ -32,16 +33,7 @@ const foodTruckSchema = z.object({
       FOOD_TRUCK_MAX_LENGTH.phoneNumber.min,
       FOOD_TRUCK_ERROR_MESSAGE.phoneNumber.required
     ),
-  // regionCodes: z
-  //   .array(z.string())
-  //   .min(
-  //     FOOD_TRUCK_MAX_LENGTH.regionCodes.min,
-  //     FOOD_TRUCK_ERROR_MESSAGE.regionCodes.required
-  //   )
-  //   .max(
-  //     FOOD_TRUCK_MAX_LENGTH.regionCodes.max,
-  //     FOOD_TRUCK_ERROR_MESSAGE.regionCodes.max
-  //   ),
+  regionCodes: z.array(z.custom<RegionResponse>()),
   availableQuantity: z.nativeEnum(AVAILABLE_QUANTITY),
   needElectricity: z.nativeEnum(NEED_ELECTRICITY),
   paymentMethod: z.nativeEnum(PAYMENT_METHOD),
@@ -85,7 +77,7 @@ export const useFoodTruckForm = (initialData?: FoodTruckFormData) => {
       nameDuplicate: false,
       description: '',
       phoneNumber: '',
-      // regionCodes: [],
+      regionCodes: [],
       availableQuantity: undefined,
       needElectricity: undefined,
       paymentMethod: undefined,
