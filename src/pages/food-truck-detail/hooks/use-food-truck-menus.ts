@@ -91,14 +91,14 @@ export const useSearchFoodTruckMenus = (foodTruckId: number) => {
   const [searchText, setSearchText] = useState('');
 
   const handleChangeInputText = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value.trim());
+    setInputText(e.target.value);
   };
   const handleDeleteInputText = () => {
     setInputText('');
     setSearchText('');
   };
   const handleSearchMenu = useCallback(() => {
-    setSearchText(inputText);
+    setSearchText(inputText.trim());
   }, [inputText]);
 
   const {
