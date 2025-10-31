@@ -1,3 +1,6 @@
+import { useCallback, useEffect, useState, type ChangeEvent } from 'react';
+import { useInView } from 'react-intersection-observer';
+
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import type {
   CursorPagingResponseFoodTruckMenuResponse,
@@ -9,8 +12,6 @@ import {
   searchFoodTruckMenus,
 } from '@pages/food-truck-detail/api';
 import { GET_FOOD_TRUCKS_MENUS_QUERY_KEY } from '@shared/querykey/food-trucks/menus';
-import { useCallback, useEffect, useState, type ChangeEvent } from 'react';
-import { useInView } from 'react-intersection-observer';
 
 const FALLBACK: CursorPagingResponseFoodTruckMenuResponse = {
   content: [],

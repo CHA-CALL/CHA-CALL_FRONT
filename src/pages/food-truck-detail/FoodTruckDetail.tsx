@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import { cn } from '@shared/utils/cn';
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
@@ -15,7 +16,6 @@ import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-de
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
 import Loading from '@shared/components/loading/Loading';
-import { useParams } from 'react-router-dom';
 
 export default function FoodTruckDetail() {
   const { foodTruckId } = useParams();

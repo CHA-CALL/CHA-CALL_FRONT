@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Icon } from '@components/icon/Icon';
 import Input from '@components/input/Input';
 import Navigation from '@components/navigation/Navigation';
@@ -9,9 +12,7 @@ import {
 import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
 import Loading from '@shared/components/loading/Loading';
 import MenuItem from '@shared/components/menu-item/MenuItem';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import SearchMenuEmptyView from './components/SearchMenuEmptyView';
+import SearchMenuEmptyView from '@pages/food-truck-detail/components/SearchMenuEmptyView';
 
 interface FoodTruckMenusProps {
   handleCloseSearchMode: () => void;
@@ -23,13 +24,9 @@ export default function FoodTruckMenuSearch({
   const { foodTruckId } = useParams();
   const foodTruckIdNumber = Number(foodTruckId);
 
-  const [isInputFocused, setIsInputFocused] = useState(false);
-  const handleInputFocus = (isFocused: boolean) => {
-    setIsInputFocused(isFocused);
-  };
-
   const { foodTruckMenusData, isPendingMenus, listBottomRef } =
     useFoodTruckMenus(foodTruckIdNumber);
+
   const {
     searchedMenus,
     isPendingMenusSearch,
@@ -39,6 +36,11 @@ export default function FoodTruckMenuSearch({
     handleDeleteInputText,
     handleSearchMenu,
   } = useSearchFoodTruckMenus(foodTruckIdNumber);
+
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const handleInputFocus = (isFocused: boolean) => {
+    setIsInputFocused(isFocused);
+  };
 
   const renderMenus = () => {
     if (searchText && isPendingMenusSearch) return <Loading />;
