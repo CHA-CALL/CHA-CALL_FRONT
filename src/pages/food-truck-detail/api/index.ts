@@ -38,8 +38,9 @@ export const searchFoodTruckMenus = async (
   keyword: string
 ) => {
   const response = await apiRequest<SearchFoodTruckMenusData>({
-    endPoint: `/food-trucks/${foodTruckId}/menus/search?keyword=${keyword}`,
+    endPoint: `/food-trucks/${foodTruckId}/menus/search`,
     method: 'GET',
+    params: { keyword },
   });
   return response.data;
 };
