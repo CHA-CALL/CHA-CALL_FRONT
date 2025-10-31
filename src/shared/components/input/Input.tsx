@@ -38,7 +38,11 @@ export default function Input({
           </div>
         )}
         {rightComponent && (
-          <div className='flex items-center' onClick={handleRightClick}>
+          <div
+            className='flex items-center'
+            onMouseDown={e => e.preventDefault()}
+            onClick={handleRightClick}
+          >
             {rightComponent}
           </div>
         )}

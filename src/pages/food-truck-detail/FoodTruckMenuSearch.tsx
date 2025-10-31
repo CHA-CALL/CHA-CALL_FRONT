@@ -2,10 +2,16 @@ import { Icon } from '@components/icon/Icon';
 import Input from '@components/input/Input';
 import Navigation from '@components/navigation/Navigation';
 
-import { useFoodTruckMenus } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
+import {
+  useFoodTruckMenus,
+  useSearchFoodTruckMenus,
+} from '@pages/food-truck-detail/hooks/use-food-truck-menus';
 import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
 import Loading from '@shared/components/loading/Loading';
 import MenuItem from '@shared/components/menu-item/MenuItem';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import SearchMenuEmptyView from './components/SearchMenuEmptyView';
 
 interface FoodTruckMenusProps {
   handleCloseSearchMode: () => void;
@@ -14,8 +20,43 @@ interface FoodTruckMenusProps {
 export default function FoodTruckMenuSearch({
   handleCloseSearchMode,
 }: FoodTruckMenusProps) {
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
+
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const handleInputFocus = (isFocused: boolean) => {
+    setIsInputFocused(isFocused);
+  };
+
   const { foodTruckMenusData, isPendingMenus, listBottomRef } =
-    useFoodTruckMenus();
+    useFoodTruckMenus(foodTruckIdNumber);
+  const {
+    searchedMenus,
+    isPendingMenusSearch,
+    inputText,
+    searchText,
+    handleChangeInputText,
+    handleDeleteInputText,
+    handleSearchMenu,
+  } = useSearchFoodTruckMenus(foodTruckIdNumber);
+
+  const renderMenus = () => {
+    if (searchText && isPendingMenusSearch) return <Loading />;
+
+    const menuList = searchText ? searchedMenus : foodTruckMenusData;
+    if (!menuList) return null;
+
+    if (menuList.length === 0) return <SearchMenuEmptyView />;
+
+    return menuList.map((menu, index) => (
+      <MenuItem
+        key={menu.menuId}
+        menu={menu}
+        isLast={menuList.length - 1 === index}
+      />
+    ));
+  };
+
   return (
     <>
       <Navigation
@@ -26,22 +67,27 @@ export default function FoodTruckMenuSearch({
       <div className='bg-white px-[2rem] py-[1.6rem] fixed-center'>
         <Input
           type='search'
+          value={inputText}
+          onChange={handleChangeInputText}
+          onFocus={() => handleInputFocus(true)}
+          onBlur={() => handleInputFocus(false)}
+          onKeyDown={handleSearchMenu}
           placeholder='검색어를 입력해주세요.'
           rightComponent={
-            <Icon name='ic_close' className='text-grayscale-500' />
+            isInputFocused ? (
+              <Icon name='ic_close' className='text-grayscale-500' />
+            ) : (
+              <Icon name='ic_search' className='text-grayscale-500' />
+            )
           }
+          handleRightClick={() => {
+            if (isInputFocused) {
+              handleDeleteInputText();
+            }
+          }}
         />
       </div>
-      <div className='p-[2rem] pt-[8.6rem]'>
-        {foodTruckMenusData &&
-          foodTruckMenusData.map((menu, index) => (
-            <MenuItem
-              key={menu.menuId}
-              menu={menu}
-              isLast={foodTruckMenusData.length - 1 === index}
-            />
-          ))}
-      </div>
+      <div className='p-[2rem] pt-[8.6rem]'>{renderMenus()}</div>
       {isPendingMenus && <Loading />}
       <div ref={listBottomRef} />
       <ButtonFloating />

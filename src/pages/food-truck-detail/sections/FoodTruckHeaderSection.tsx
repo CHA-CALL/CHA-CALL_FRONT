@@ -3,7 +3,6 @@ import { cn } from '@utils/cn';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 
 interface FoodTruckHeaderSectionProps {
-  foodTruckId?: number;
   photoUrl?: string[];
   name?: string;
   isSaved?: boolean;
@@ -12,11 +11,10 @@ interface FoodTruckHeaderSectionProps {
   activeTime?: string;
   timeDiscussRequired?: boolean;
   phoneNumber?: string;
-  handleClickSaveButton: (_foodTruckId: number, _isSaved: boolean) => void;
+  handleClickSaveButton: (_isSaved: boolean) => void;
 }
 
 export default function FoodTruckHeaderSection({
-  foodTruckId,
   photoUrl,
   name,
   isSaved,
@@ -90,8 +88,8 @@ export default function FoodTruckHeaderSection({
             <button
               type='button'
               onClick={() => {
-                if (foodTruckId !== undefined && isSaved !== undefined) {
-                  handleClickSaveButton(foodTruckId, !isSaved);
+                if (isSaved !== undefined) {
+                  handleClickSaveButton(!isSaved);
                 }
               }}
               aria-label={isSaved ? '찜하기 취소' : '찜하기'}

@@ -178,4 +178,10 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  /* 기본 내장 버튼 등 제거 */
+  input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }

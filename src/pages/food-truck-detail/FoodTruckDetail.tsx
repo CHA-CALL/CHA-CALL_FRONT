@@ -15,8 +15,12 @@ import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-de
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
 import Loading from '@shared/components/loading/Loading';
+import { useParams } from 'react-router-dom';
 
 export default function FoodTruckDetail() {
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
+
   const {
     isScrolled,
     isSearchMode,
@@ -30,9 +34,10 @@ export default function FoodTruckDetail() {
     handleClickBack,
     handleToChatPage,
     isPendingFoodTruckDetail,
-  } = useFoodTruckDetail();
+  } = useFoodTruckDetail(foodTruckIdNumber);
 
-  const { menusPreview, isPendingMenusPreview } = useFoodTruckMenusPreview();
+  const { menusPreview, isPendingMenusPreview } =
+    useFoodTruckMenusPreview(foodTruckIdNumber);
 
   if (isPendingFoodTruckDetail) {
     return <Loading />;
@@ -51,14 +56,8 @@ export default function FoodTruckDetail() {
             <button
               type='button'
               onClick={() => {
-                if (
-                  foodTruckDetailData?.foodTruckId !== undefined &&
-                  foodTruckDetailData.isSaved !== undefined
-                ) {
-                  handleClickSaveButton(
-                    foodTruckDetailData?.foodTruckId,
-                    !foodTruckDetailData?.isSaved
-                  );
+                if (foodTruckDetailData?.isSaved !== undefined) {
+                  handleClickSaveButton(!foodTruckDetailData?.isSaved);
                 }
               }}
               aria-label={
@@ -86,7 +85,6 @@ export default function FoodTruckDetail() {
 
       <div className='mt-[-4.8rem] pb-[12rem]'>
         <FoodTruckHeaderSection
-          foodTruckId={foodTruckDetailData?.foodTruckId}
           photoUrl={foodTruckDetailData?.photoUrl}
           name={foodTruckDetailData?.name}
           isSaved={foodTruckDetailData?.isSaved}

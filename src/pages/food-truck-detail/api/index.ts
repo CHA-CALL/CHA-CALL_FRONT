@@ -1,6 +1,7 @@
 import type {
   GetFoodTruckDetailsData,
   GetFoodTruckMenusData,
+  SearchFoodTruckMenusData,
 } from 'apis/data-contracts';
 
 import { apiRequest } from '@api/apiRequest';
@@ -28,6 +29,17 @@ export const getFoodTruckMenus = async (
     endPoint: `/food-trucks/${foodTruckId}/menus`,
     method: 'GET',
     params,
+  });
+  return response.data;
+};
+
+export const searchFoodTruckMenus = async (
+  foodTruckId: number,
+  keyword: string
+) => {
+  const response = await apiRequest<SearchFoodTruckMenusData>({
+    endPoint: `/food-trucks/${foodTruckId}/menus/search?keyword=${keyword}`,
+    method: 'GET',
   });
   return response.data;
 };
