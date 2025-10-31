@@ -18,6 +18,7 @@ const FALLBACK: CursorPagingResponseFoodTruckMenuResponse = {
 
 export const useFoodTruckMenus = () => {
   const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
   const { ref: listBottomRef, inView } = useInView();
 
   const {
@@ -27,14 +28,14 @@ export const useFoodTruckMenus = () => {
     isFetchingNextPage,
     fetchNextPage,
   } = useInfiniteQuery<CursorPagingResponseFoodTruckMenuResponse>({
-    queryKey: GET_FOOD_TRUCKS_MENUS_QUERY_KEY.SCROLL(Number(foodTruckId)),
+    queryKey: GET_FOOD_TRUCKS_MENUS_QUERY_KEY.SCROLL(foodTruckIdNumber),
     initialPageParam: null,
     queryFn: async ({ pageParam }) => {
       const cursor =
         pageParam === null || typeof pageParam === 'number' ? pageParam : null;
 
       const response = await getFoodTruckMenus(
-        Number(foodTruckId),
+        foodTruckIdNumber,
         false,
         cursor
       );
@@ -70,13 +71,15 @@ export const useFoodTruckMenus = () => {
 
 export const useFoodTruckMenusPreview = () => {
   const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
+
   const {
     data: menusPreviewData,
     isPending: isPendingMenusPreview,
     isError: isErrorMenusPreview,
   } = useQuery<CursorPagingResponseFoodTruckMenuResponse | undefined>({
-    queryKey: [GET_FOOD_TRUCKS_MENUS_QUERY_KEY.PREVIEW(Number(foodTruckId))],
-    queryFn: () => getFoodTruckMenus(Number(foodTruckId), true),
+    queryKey: [GET_FOOD_TRUCKS_MENUS_QUERY_KEY.PREVIEW(foodTruckIdNumber)],
+    queryFn: () => getFoodTruckMenus(foodTruckIdNumber, true),
     staleTime: 5000,
   });
 

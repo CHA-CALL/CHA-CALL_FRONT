@@ -9,20 +9,20 @@ import { useUpdateFoodTruckSaveStatus } from '@pages/reservation/hooks/use-food-
 export default function useFoodTruckDetail() {
   const navigate = useNavigate();
   const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
 
   const {
     data: foodTruckDetailData,
     isPending: isPendingFoodTruckDetail,
     isError: isErrorFoodTruckDetail,
   } = useQuery<FoodTruckDetailResponse | undefined>({
-    queryKey: FOOD_TRUCK_DETAIL.DETAIL(Number(foodTruckId)),
-    queryFn: () => getFoodTruckDetail(Number(foodTruckId)),
+    queryKey: FOOD_TRUCK_DETAIL.DETAIL(foodTruckIdNumber),
+    queryFn: () => getFoodTruckDetail(foodTruckIdNumber),
     staleTime: 5000,
   });
 
-  const { mutate: updateSaveStatus } = useUpdateFoodTruckSaveStatus(
-    Number(foodTruckId)
-  );
+  const { mutate: updateSaveStatus } =
+    useUpdateFoodTruckSaveStatus(foodTruckIdNumber);
 
   const handleClickSaveButton = (
     foodTruckId: number,
