@@ -8,6 +8,7 @@ import getScheduleDays from '@pages/food-truck-detail/utils/get-schedule-days';
 import { DAY_OF_THE_WEEK_LABELS } from '@shared/constant/day-of-week-labels';
 
 interface ScheduleCalendarProps {
+  // ["2025-10-01 ~ 2025-10-15", "2025-11-19 ~ 2025-11-21"]
   availableDates: string[];
 }
 
