@@ -1,19 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { FormProvider, useFormContext } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
 import Navigation from '@shared/components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Information from '@shared/components/information/Information';
-import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import {
   useFoodTruckForm,
-  type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
 import Button from '@shared/components/button/Button';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import ErrorText from '@shared/components/error-text/ErrorText';
-import { ROUTES } from '@router/constant/routes';
 import SortableImagePreview from '@pages/@owner/upload-food-truck-images/components/SortableImagePreview';
 import {
   DndContext,
@@ -26,10 +22,9 @@ import {
 } from '@dnd-kit/core';
 import {
   SortableContext,
-  arrayMove,
   rectSwappingStrategy,
 } from '@dnd-kit/sortable';
-import { useUploadImage } from './hooks/use-upload-image';
+import { useUploadImage } from './hooks/use-upload-images';
 
 export default function UploadFoodTruckImages() {
   const location = useLocation();
@@ -45,34 +40,15 @@ export default function UploadFoodTruckImages() {
 
 function UploadFoodTruck() {
   const {
-    photoUrls,
-    photoUrlsError,
-    // handleFileChange,
-    // handleRemoveFile,
-    handleSubmit,
-  } = useBasicInfo();
-
-  const {
     images,
     imagePreviews,
     error,
-    isProcessing,
     handleLeftClick,
     handleFileChange,
     handleRemoveFile,
     handleReorderFiles,
     handleSubmitImage,
   } = useUploadImage();
-
-  // const handleLeftClick = () => {
-  //   const fromPage = location.state?.from;
-  //   navigate(ROUTES.FOOD_TRUCK_FORM, {
-  //     state: {
-  //       from: fromPage || 'food-truck-form',
-  //       formData: getValues(),
-  //     },
-  //   });
-  // };
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -135,7 +111,7 @@ function UploadFoodTruck() {
       </DndContext>
 
       <div className='p-[2rem]'>
-        {photoUrlsError && <ErrorText text={photoUrlsError} />}
+        {error && <ErrorText text={error} />}
       </div>
 
       <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>

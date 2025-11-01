@@ -1,6 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { FOOD_TRUCK_IMAGE_QUERY_KEY } from '@shared/querykey/food-trucks/food-truck-image';
-import { getPresignedUrl, uploadImage } from '@pages/@owner/upload-food-truck-images/api';
+import {
+  getPresignedUrl,
+  uploadImage,
+  deleteFoodTruckImages,
+} from '@pages/@owner/upload-food-truck-images/api';
 import type { FoodTruckImageUrl } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-url';
 
 export const useFoodTruckImage = () => {
@@ -30,6 +34,16 @@ export const useFoodTruckImage = () => {
 
 export const useUploadImageToS3 = () => {
   return useMutation<void, Error, { presignedUrl: string; file: File }>({
-    mutationFn: ({ presignedUrl, file }) => uploadImage(presignedUrl, file),
+    mutationFn: async ({ presignedUrl, file }) => {
+      await uploadImage(presignedUrl, file);
+    },
   });
 };
+
+export const useDeleteFoodTruckImages = () => {
+  return useMutation<void, Error, { foodTruckId: string; imageUrls: string[] }>({
+    mutationFn: async ({ foodTruckId, imageUrls }) => {
+      await deleteFoodTruckImages(foodTruckId, { imageUrls });
+    },
+  });
+}

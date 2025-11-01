@@ -14,7 +14,8 @@ export const ROUTES = {
   RESERVATION_DETAIL: (reservationId: string) =>
     `/reservation-history/detail/${reservationId}`,
   SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
-  UPLOAD_FOOD_TRUCK_IMAGES: '/owner/food-truck-form/upload-food-truck-images',
+  UPLOAD_FOOD_TRUCK_IMAGES: (foodTruckId: string) =>
+    `/owner/food-truck-form/upload-food-truck-images/${foodTruckId}`,
   PROFILE_SETTING: '/profile-setting',
   PROFILE_SETTING_DETAIL: '/profile-setting',
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',

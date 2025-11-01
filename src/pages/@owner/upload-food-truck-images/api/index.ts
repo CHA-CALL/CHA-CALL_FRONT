@@ -1,6 +1,7 @@
 import type {
   ImageInfo,
   BaseResponseImageResponse,
+  DeleteFoodTruckImagesRequest,
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 
@@ -39,5 +40,17 @@ export const uploadImage = async (presignedUrl: string, file: File) => {
     throw new Error('이미지 업로드를 실패했습니다.');
   }
 
+  return response;
+};
+
+export const deleteFoodTruckImages = async (
+  foodTruckId: string,
+  data: DeleteFoodTruckImagesRequest
+) => {
+  const response = await apiRequest({
+    endPoint: `/food-trucks/${foodTruckId}/images`,
+    method: 'DELETE',
+    data,
+  });
   return response;
 };

@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
         element: <SaveFoodTruckList />,
       },
       {
-        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES,
+        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES(':foodTruckId'),
         element: <UploadFoodTruckImages />,
       },
       {
