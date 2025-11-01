@@ -11,7 +11,7 @@ import {
 } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
 
-const menuSchema = z.object({
+export const menuSchema = z.object({
   name: z
     .string()
     .min(
@@ -42,7 +42,7 @@ const menuSchema = z.object({
     )
     .transform(val => Number(val.replace(/,/g, '')).toLocaleString()),
 
-  image: z
+  imageUrl: z
     .instanceof(File)
     .refine(
       file => {
@@ -61,12 +61,9 @@ const menuSchema = z.object({
       }
     )
     .optional()
-    .refine(
-      (file) => file !== undefined,
-      {
-        message: '이미지를 선택해주세요',
-      }
-    ),
+    .refine(file => file !== undefined, {
+      message: '이미지를 선택해주세요',
+    }),
 });
 
 export type MenuFormData = z.infer<typeof menuSchema>;
@@ -85,7 +82,7 @@ export const useMenuForm = () => {
       name: '',
       description: '',
       price: '',
-      image: undefined,
+      imageUrl: undefined,
     },
     mode: 'onChange',
   });
@@ -97,30 +94,33 @@ export const useMenuForm = () => {
   };
 
   const updateDescription = (description: string) => {
-    setValue('description', description, { shouldValidate: true });
+    const truncatedDescription = description.slice(
+      0,
+      MENU_LIMIT.DESCRIPTION_MAX_LENGTH
+    );
+    setValue('description', truncatedDescription, { shouldValidate: true });
   };
 
   const updatePrice = (price: string) => {
-    const formattedPrice = price
-      .replace(/\D/g, '')
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const numbersOnly = price.replace(/[^\d]/g, '');
+    const formattedPrice = numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     setValue('price', formattedPrice, { shouldValidate: true });
   };
 
-  const updateImage = (image: File | null) => {
-    if (image === null) {
-      setValue('image', undefined, { shouldValidate: true });
+  const updateImageUrl = (imageUrl: File | null) => {
+    if (imageUrl === null) {
+      setValue('imageUrl', undefined, { shouldValidate: true });
       return;
     }
-    if (!isAcceptableFile(image)) {
-      setError('image', { message: NOT_ALLOWED_FILE_TYPE });
+    if (!isAcceptableFile(imageUrl)) {
+      setError('imageUrl', { message: NOT_ALLOWED_FILE_TYPE });
       return;
     }
-    if (!isFileSizeValid(image)) {
-      setError('image', { message: CANNOT_UPLOAD_FILE_MB });
+    if (!isFileSizeValid(imageUrl)) {
+      setError('imageUrl', { message: CANNOT_UPLOAD_FILE_MB });
       return;
     }
-    setValue('image', image, { shouldValidate: true });
+    setValue('imageUrl', imageUrl, { shouldValidate: true });
   };
 
   const onSubmit = async (formData: MenuFormData) => {
@@ -133,14 +133,14 @@ export const useMenuForm = () => {
     name: formData.name,
     description: formData.description,
     price: formData.price,
-    image: formData.image,
+    imageUrl: formData.imageUrl,
   };
 
   const Errors = {
     name: errors.name?.message,
     description: errors.description?.message,
     price: errors.price?.message,
-    image: errors.image?.message,
+    imageUrl: errors.imageUrl?.message,
   };
 
   return {
@@ -150,7 +150,7 @@ export const useMenuForm = () => {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     handleSubmit: handleSubmit(onSubmit),
     trigger,
   };

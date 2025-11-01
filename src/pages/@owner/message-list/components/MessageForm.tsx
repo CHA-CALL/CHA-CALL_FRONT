@@ -78,18 +78,13 @@ export default function MessageForm() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
-      <div className='flex flex-col gap-[1rem] p-[2rem]'>
+      <div className='flex flex-col p-[2rem]'>
         <Textarea
           placeholder='텍스트를 입력해주세요.'
           value={message}
           maxLength={MAX_LENGTH}
           handleChange={handleChangeMessage}
         />
-        <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
-          <p className='text-primary-700'>{message.length}</p>
-          <p className='text-grayscale-700'>/</p>
-          <p className='text-grayscale-700'>{MAX_LENGTH}</p>
-        </div>
       </div>
       <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
         <Button
