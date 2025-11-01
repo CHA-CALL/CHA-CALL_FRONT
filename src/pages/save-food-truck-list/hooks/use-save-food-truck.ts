@@ -29,6 +29,7 @@ export const useGetSaveFoodTrucks = () => {
     },
     select: data => ({
       foodTrucks: data.pages.flatMap(page => page?.content ?? []),
+      totalSize: data.pages[0]?.totalSize,
     }),
   });
 };

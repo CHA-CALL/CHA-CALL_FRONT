@@ -36,7 +36,7 @@ export default function SaveFoodTruckList() {
       />
       <div className='flex flex-col gap-[1rem] p-[2rem]'>
         <p className='caption-m-12 text-grayscale-500'>
-          총 {data && data.foodTrucks.length ? data.foodTrucks.length : '0'}개
+          총 {data ? data.totalSize : '0'}개
         </p>
         {isPending || !data ? (
           <Loading />
