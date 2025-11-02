@@ -10,6 +10,7 @@ import ConfirmExitModal from '@pages/@owner/account/@modal/(.)confirm-exit-modal
 import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal/SaveAccountModal';
 import Loading from '@shared/components/loading/Loading';
 import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
+import ConfirmDeleteModal from '@pages/@owner/account/@modal/(.)confirm-delete-modal/ConfirmDeleteModal';
 
 export default function Account() {
   const {
@@ -17,9 +18,11 @@ export default function Account() {
     isLoading,
     form,
     handleClickBack,
+    handleClickDelete,
     bankModal,
     exitModal,
     saveModal,
+    deleteModal,
   } = useAccountPage();
 
   const {
@@ -31,29 +34,7 @@ export default function Account() {
     formatAccountNumber,
     handleSubmit,
     onValid,
-    handleClickReset,
   } = form;
-
-  const {
-    isOpen: isSelectBankOpen,
-    handleClose: handleCloseSelectBank,
-    handleChange: handleUpdateBank,
-    handleClick: handleClickSelectBank,
-  } = bankModal;
-
-  const {
-    isOpen: isConfirmOpen,
-    handleClose: handleCloseConfirm,
-    handleConfirm: handleConfirm,
-    handleCancel: handleCancel,
-  } = exitModal;
-
-  const {
-    isOpen: isSaveOpen,
-    handleClose: handleCloseSave,
-    handleConfirm: handleConfirmSave,
-    handleCancel: handleCancelSave,
-  } = saveModal;
 
   if (isLoading) {
     return <Loading />;
@@ -62,25 +43,30 @@ export default function Account() {
   return (
     <form onSubmit={e => void handleSubmit(onValid)(e)}>
       <SelectBankBottomSheet
-        isOpen={isSelectBankOpen}
-        handleClose={handleCloseSelectBank}
-        handleChange={handleUpdateBank}
+        isOpen={bankModal.isOpen}
+        handleClose={bankModal.handleClose}
+        handleChange={bankModal.handleChange}
         bank={formData.bankName}
       />
       <ConfirmExitModal
-        isOpen={isConfirmOpen}
-        handleClose={handleCloseConfirm}
-        handleClickConfirm={handleConfirm}
-        handleClickCancel={handleCancel}
+        isOpen={exitModal.isOpen}
+        handleClose={exitModal.handleClose}
+        handleClickConfirm={exitModal.handleConfirm}
+        handleClickCancel={exitModal.handleCancel}
       />
       <SaveAccountModal
-        isOpen={isSaveOpen}
-        handleClose={handleCloseSave}
-        handleConfirm={handleConfirmSave}
-        handleCancel={handleCancelSave}
+        isOpen={saveModal.isOpen}
+        handleClose={saveModal.handleClose}
+        handleConfirm={saveModal.handleConfirm}
+        handleCancel={saveModal.handleCancel}
         formData={formData}
       />
-
+      <ConfirmDeleteModal
+        isOpen={deleteModal.isOpen}
+        handleClose={deleteModal.handleClose}
+        handleClickConfirm={deleteModal.handleConfirm}
+        handleClickCancel={deleteModal.handleCancel}
+      />
       <Navigation
         text={isEditMode ? '계좌 수정' : '계좌 등록'}
         handleLeftClick={handleClickBack}
@@ -89,8 +75,9 @@ export default function Account() {
           <Button
             variant='default'
             buttonStyle='edit'
-            children='초기화'
-            handleClickButton={handleClickReset}
+            className='px-[2rem]'
+            children='삭제'
+            handleClickButton={handleClickDelete}
           />
         }
       />
@@ -104,7 +91,7 @@ export default function Account() {
             <p className='text-grayscale-900 title-sb-12'>은행</p>
             <button
               type='button'
-              onClick={handleClickSelectBank}
+              onClick={bankModal.handleClick}
               className='border-grayscale-200 flex w-full items-center justify-between rounded-[1.6rem] border bg-white py-[1.5rem] pl-[2rem] pr-[1.6rem] text-left'
             >
               <p

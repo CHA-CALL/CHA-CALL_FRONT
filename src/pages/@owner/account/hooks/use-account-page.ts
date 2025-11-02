@@ -5,6 +5,7 @@ import {
   usePostNewAccount,
   useFetchAccountData,
   useUpdateAccount,
+  useDeleteAccount,
 } from '@pages/@owner/account/hooks/use-account-query';
 import { type Bank, BANK } from '@pages/@owner/account/constants/bank';
 import { ROUTES } from '@router/constant/routes';
@@ -28,7 +29,6 @@ export const useAccountPage = () => {
         toast.error('저장에 실패했습니다.');
       },
     });
-
   const { mutate: updateAccount, isPending: isUpdating } = useUpdateAccount({
     onSuccess: () => {
       setIsSaveOpen(false);
@@ -39,9 +39,11 @@ export const useAccountPage = () => {
       toast.error('저장에 실패했습니다.');
     },
   });
+  const { mutate: deleteAccount, isPending: isDeleting } = useDeleteAccount();
 
   const [isSelectBankOpen, setIsSelectBankOpen] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isConfirmExitOpen, setIsConfirmExitOpen] = useState(false);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const [isSaveOpen, setIsSaveOpen] = useState(false);
 
   const {
@@ -56,6 +58,7 @@ export const useAccountPage = () => {
     isFormValid,
   } = useAccount();
 
+  // 은행 선택 옵션 핸들러
   const handleUpdateBank = (option: Bank) => {
     updateBank(option);
     setIsSelectBankOpen(false);
@@ -68,7 +71,7 @@ export const useAccountPage = () => {
       existedData?.accountNumber !== formData.accountNumber;
 
     if (hasChanges) {
-      setIsConfirmOpen(true);
+      setIsConfirmExitOpen(true);
     } else {
       navigate(ROUTES.ACCOUNT);
     }
@@ -82,19 +85,21 @@ export const useAccountPage = () => {
     setIsSelectBankOpen(false);
   };
 
-  const handleCloseConfirm = () => {
-    setIsConfirmOpen(false);
+  // 수정 중 뒤로가기 모달 핸들러
+  const handleCloseConfirmExit = () => {
+    setIsConfirmExitOpen(false);
   };
 
-  const handleConfirm = () => {
-    setIsConfirmOpen(false);
+  const handleConfirmExit = () => {
+    setIsConfirmExitOpen(false);
     navigate(ROUTES.ACCOUNT);
   };
 
-  const handleCancel = () => {
-    setIsConfirmOpen(false);
+  const handleCancelExit = () => {
+    setIsConfirmExitOpen(false);
   };
 
+  // 저장하기 모달 핸들러
   const handleCloseSave = () => {
     setIsSaveOpen(false);
   };
@@ -118,8 +123,23 @@ export const useAccountPage = () => {
     setIsSaveOpen(false);
   };
 
-  const handleClickReset = () => {
-    reset();
+  // 삭제 모달 핸들러
+  const handleClickDelete = () => {
+    setIsConfirmDeleteOpen(true);
+  };
+
+  const handleCloseConfirmDelete = () => {
+    setIsConfirmDeleteOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteAccount({ accountId: Number(id) });
+    setIsConfirmDeleteOpen(false);
+    navigate(ROUTES.ACCOUNT);
+  };
+
+  const handleCancelDelete = () => {
+    setIsConfirmDeleteOpen(false);
   };
 
   const isValidBank = (name: string): name is Bank => {
@@ -145,12 +165,13 @@ export const useAccountPage = () => {
     }
   }, [isEditMode, existedData, reset]);
 
-  const isLoading = isPending || isRegistering || isUpdating;
+  const isLoading = isPending || isRegistering || isUpdating || isDeleting;
 
   return {
     isEditMode,
     isLoading,
     handleClickBack,
+    handleClickDelete,
     form: {
       formData,
       errors,
@@ -160,7 +181,6 @@ export const useAccountPage = () => {
       formatAccountNumber,
       handleSubmit,
       onValid,
-      handleClickReset,
     },
     bankModal: {
       isOpen: isSelectBankOpen,
@@ -169,10 +189,16 @@ export const useAccountPage = () => {
       handleClick: handleClickSelectBank,
     },
     exitModal: {
-      isOpen: isConfirmOpen,
-      handleClose: handleCloseConfirm,
-      handleConfirm: handleConfirm,
-      handleCancel: handleCancel,
+      isOpen: isConfirmExitOpen,
+      handleClose: handleCloseConfirmExit,
+      handleConfirm: handleConfirmExit,
+      handleCancel: handleCancelExit,
+    },
+    deleteModal: {
+      isOpen: isConfirmDeleteOpen,
+      handleClose: handleCloseConfirmDelete,
+      handleConfirm: handleConfirmDelete,
+      handleCancel: handleCancelDelete,
     },
     saveModal: {
       isOpen: isSaveOpen,
