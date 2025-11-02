@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import ImagePreview from '@components/image-preview/ImagePreview';
 
 interface SortableImagePreviewProps {
-  id: number;
+  id: number | string;
   handleClose: () => void;
   src?: string;
   alt: string;

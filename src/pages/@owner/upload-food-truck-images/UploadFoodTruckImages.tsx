@@ -24,7 +24,7 @@ import {
   SortableContext,
   rectSwappingStrategy,
 } from '@dnd-kit/sortable';
-import { useUploadImage } from './hooks/use-upload-images';
+import { useUploadImages } from '@pages/@owner/upload-food-truck-images/hooks/use-upload-images';
 
 export default function UploadFoodTruckImages() {
   const location = useLocation();
@@ -48,7 +48,7 @@ function UploadFoodTruck() {
     handleRemoveFile,
     handleReorderFiles,
     handleSubmitImage,
-  } = useUploadImage();
+  } = useUploadImages();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -58,14 +58,16 @@ function UploadFoodTruck() {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      const oldIndex = Number(active.id);
-      const newIndex = Number(over.id);
-      handleReorderFiles(oldIndex, newIndex);
+      const oldIndex = images.findIndex(img => img.id === active.id);
+      const newIndex = images.findIndex(img => img.id === over.id);
+      if (oldIndex !== -1 && newIndex !== -1) {
+        handleReorderFiles(oldIndex, newIndex);
+      }
     }
   };
 
   const canAdd = (images?.length || 0) < FOOD_TRUCK_MAX_LENGTH.photoUrls.max;
-  const fileIds = images?.map((_, index) => index) || [];
+  const fileIds = images?.map(img => img.id) || [];
 
   return (
     <>
@@ -96,11 +98,11 @@ function UploadFoodTruck() {
         <SortableContext items={fileIds} strategy={rectSwappingStrategy}>
           <div className='grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-x-[1.4rem] gap-y-[2rem] p-[2rem]'>
             {canAdd && <ButtonAddImage handleFileChange={handleFileChange} className='h-[9rem] w-[9rem] m-[1rem]'/>}
-            {images.map((_, index) => (
+            {images.map((image, index) => (
               <SortableImagePreview
-                id={index}
+                id={image.id}
                 isMain={index === 0}
-                key={`foodTruck-${index}`}
+                key={image.id}
                 handleClose={() => handleRemoveFile(index)}
                 src={imagePreviews[index] || undefined}
                 alt='foodTruck'

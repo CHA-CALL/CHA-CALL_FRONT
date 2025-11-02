@@ -11,28 +11,34 @@ export const useFoodTruckImage = () => {
   return useMutation<FoodTruckImageUrl[], Error, File[]>({
     mutationKey: FOOD_TRUCK_IMAGE_QUERY_KEY.IMAGES(),
     mutationFn: async (files: File[]) => {
-      const fileExtensions = files.map(file => file.name.split('.').pop() || '');
-      const imageInfos = await getPresignedUrl(fileExtensions);
+      const allImageInfos: FoodTruckImageUrl[] = [];
 
-      if (imageInfos.length !== files.length) {
-        throw new Error('URL 요청 수와 파일 수가 일치하지 않습니다.');
-      }
+      for (const file of files) {
+        const ext = file.name.split('.').pop() || '';
+        const imageInfos = await getPresignedUrl([ext]);
 
-      return imageInfos.map((info, index) => {
-        if (!info.presignedUrl || !info.fileUrl) {
-          throw new Error(`"${files[index].name}" 파일의 URL 정보를 받지 못했습니다.`);
+        if (imageInfos.length !== 1) {
+          throw new Error(`"${file.name}" 파일의 URL 요청 실패`);
         }
-        return {
-          file: files[index],
+
+        const info = imageInfos[0];
+        if (!info.presignedUrl || !info.fileUrl) {
+          throw new Error(`"${file.name}" 파일의 URL 정보를 받지 못했습니다.`);
+        }
+
+        allImageInfos.push({
+          file: file,
           presignedUrl: info.presignedUrl,
           fileUrl: info.fileUrl,
-        };
-      });
+        });
+      }
+
+      return allImageInfos;
     },
   });
 };
 
-export const useUploadImageToS3 = () => {
+export const useUploadImage = () => {
   return useMutation<void, Error, { presignedUrl: string; file: File }>({
     mutationFn: async ({ presignedUrl, file }) => {
       await uploadImage(presignedUrl, file);
@@ -40,7 +46,7 @@ export const useUploadImageToS3 = () => {
   });
 };
 
-export const useDeleteFoodTruckImages = () => {
+export const useDeleteImage = () => {
   return useMutation<void, Error, { foodTruckId: string; imageUrls: string[] }>({
     mutationFn: async ({ foodTruckId, imageUrls }) => {
       await deleteFoodTruckImages(foodTruckId, { imageUrls });

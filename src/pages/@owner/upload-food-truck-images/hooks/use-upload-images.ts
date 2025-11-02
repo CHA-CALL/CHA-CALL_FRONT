@@ -12,44 +12,50 @@ import {
 
 import {
   useFoodTruckImage,
-  useUploadImageToS3,
-  useDeleteFoodTruckImages,
+  useUploadImage,
+  useDeleteImage,
 } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
-import type { FoodTruckImageUrl } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-url';
+// import type { FoodTruckImageUrl } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-url';
 
-export const useUploadImage = () => {
+type DisplayImage = {
+  id: string;
+  isNew: boolean;
+  file?: File;
+  url?: string;
+};
+
+export const useUploadImages = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { id: foodTruckId } = useParams<{ id: string }>();
+  const { foodTruckId } = useParams<{ foodTruckId: string }>();
 
   const { setValue, getValues } = useFormContext<FoodTruckFormData>();
 
   const [initialImageUrls, setInitialImageUrls] = useState<string[]>([]);
-  const [images, setImages] = useState<(FoodTruckImageUrl & { isNew?: boolean })[]>([]);
+  const [images, setImages] = useState<DisplayImage[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const { mutateAsync: getPresignedUrl } = useFoodTruckImage();
-  const { mutateAsync: uploadToS3 } = useUploadImageToS3();
-  const { mutateAsync: deleteFromS3 } = useDeleteFoodTruckImages();
+  const { mutateAsync: uploadToS3 } = useUploadImage();
+  const { mutateAsync: deleteFromS3 } = useDeleteImage();
 
   useEffect(() => {
     const existingUrls: string[] = getValues('photoUrls') || [];
     setInitialImageUrls(existingUrls);
 
-    const existingImages = existingUrls.map(url => ({
-      file: new File([], ''),
-      presignedUrl: url,
-      fileUrl: url,
-      isNew: false
+    const displayImages = existingUrls.map(url => ({
+      id: url,
+      isNew: false,
+      url: url,
     }));
-    setImages(existingImages);
+    setImages(displayImages);
   }, [getValues]);
 
   useEffect(() => {
     const previews = images.map((image) => {
-      return image.isNew ? URL.createObjectURL(image.file) : image.fileUrl;
+      return image.isNew && image.file ? URL.createObjectURL(image.file) : image.url || '';
     });
     setImagePreviews(previews);
 
@@ -72,14 +78,15 @@ export const useUploadImage = () => {
     }
     setError(null);
 
-    try {
-      const newImageData = await getPresignedUrl([selectedFile]);
-      setImages(prev => [...prev, ...newImageData]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'URL 요청에 실패했습니다.');
-    } finally {
-      e.target.value = '';
-    }
+    setImages(prev => [
+      ...prev,
+      {
+        id: new Date().toISOString(),
+        isNew: true,
+        file: selectedFile,
+      },
+    ]);
+    e.target.value = '';
   };
 
   const handleRemoveFile = (indexToRemove: number) => {
@@ -102,23 +109,36 @@ export const useUploadImage = () => {
     }
 
     try {
-      const currentUrls = images.map(p => p.fileUrl);
-      const newImages = images.filter(p => p.isNew);
+      const newFiles = images.filter(img => img.isNew && img.file).map(img => img.file as File);
+      const keptUrls = images.filter(img => !img.isNew && img.url).map(img => img.url as string);
+      const urlsToDelete = initialImageUrls.filter(url => !keptUrls.includes(url));
 
-      const urlsToDelete = initialImageUrls.filter(initialUrl => !currentUrls.includes(initialUrl));
+      let newUploadedUrls: string[] = [];
+
+      if (newFiles.length > 0) {
+        const presignedData = await getPresignedUrl(newFiles);
+
+        for (const data of presignedData) {
+          await uploadToS3({ presignedUrl: data.presignedUrl, file: data.file });
+        }
+
+        newUploadedUrls = presignedData.map(data => data.fileUrl);
+      }
 
       if (urlsToDelete.length > 0) {
         await deleteFromS3({ foodTruckId, imageUrls: urlsToDelete });
       }
 
-      if (newImages.length > 0) {
-        const uploadPromises = newImages.map(image =>
-          uploadToS3({ presignedUrl: image.presignedUrl, file: image.file })
-        );
-        await Promise.all(uploadPromises);
-      }
+      let newUrlIndex = 0;
+      const finalOrderedUrls = images.map(img => {
+          if (img.isNew) {
+              return newUploadedUrls[newUrlIndex++];
+          }
+          return img.url;
+      }).filter((url): url is string => !!url);
 
-      setValue('photoUrls', currentUrls, { shouldValidate: true });
+
+      setValue('photoUrls', finalOrderedUrls, { shouldValidate: true });
 
       navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId.toString()}`, {
         state: {
@@ -126,9 +146,8 @@ export const useUploadImage = () => {
           from: 'upload-food-truck-images',
         },
       });
-
-    } catch (err) {
-      setError(err instanceof Error ? err.message : '이미지 저장에 실패했습니다.');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : '이미지 저장에 실패했습니다.');
     }
   };
 
