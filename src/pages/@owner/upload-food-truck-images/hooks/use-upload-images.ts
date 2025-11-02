@@ -16,14 +16,7 @@ import {
   useDeleteImage,
 } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
-// import type { FoodTruckImageUrl } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-url';
-
-type DisplayImage = {
-  id: string;
-  isNew: boolean;
-  file?: File;
-  url?: string;
-};
+import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-display';
 
 export const useUploadImages = () => {
   const navigate = useNavigate();
@@ -81,7 +74,7 @@ export const useUploadImages = () => {
     setImages(prev => [
       ...prev,
       {
-        id: new Date().toISOString(),
+        id: crypto.randomUUID(),
         isNew: true,
         file: selectedFile,
       },
