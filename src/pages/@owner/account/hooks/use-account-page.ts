@@ -65,10 +65,15 @@ export const useAccountPage = () => {
   };
 
   const handleClickBack = () => {
-    const hasChanges =
-      existedData?.accountHolderName !== formData.accountHolderName ||
-      existedData?.bankName !== formData.bankName ||
-      existedData?.accountNumber !== formData.accountNumber;
+    const isDirty = Boolean(
+      formData.accountHolderName || formData.accountNumber || formData.bankName
+    );
+    const hasChanges = isEditMode
+      ? existedData &&
+        (existedData.accountHolderName !== formData.accountHolderName ||
+          existedData.bankName !== formData.bankName ||
+          existedData.accountNumber !== formData.accountNumber)
+      : isDirty;
 
     if (hasChanges) {
       setIsConfirmExitOpen(true);
