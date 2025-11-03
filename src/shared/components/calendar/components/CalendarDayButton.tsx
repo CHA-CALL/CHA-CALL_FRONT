@@ -1,4 +1,4 @@
-import type { CalendarDate } from '@shared/types/calendar-types';
+import type { CalendarDate } from '@type/calendar-types';
 import { calendarBtnClass } from '@components/calendar/utils/calendar-utils';
 import CalendarSelectedCircle from '@components/calendar/components/CalendarSelectedCircle';
 

@@ -11,7 +11,7 @@ import {
   deleteOwnerFoodTrucks,
   getOwnerFoodTrucks,
 } from '@pages/@owner/food-truck-management/api';
-import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/food-trucks';
+import { FOOD_TRUCKS_QUERY_KEY } from '@query-key/food-trucks/food-trucks';
 import useToast from '@hooks/use-toast';
 import { PAGE_SIZE } from '@constant/page-size';
 

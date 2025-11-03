@@ -9,7 +9,7 @@ import type {
 
 import useToast from '@hooks/use-toast';
 import { ROUTES } from '@router/constant/routes';
-import { RESERVATION_DETAIL_KEY } from '@shared/querykey/reservation-detail';
+import { RESERVATION_DETAIL_KEY } from '@query-key/reservation-detail';
 import { ROLE } from '@constant/role';
 import {
   getMemberReservationDetail,

@@ -17,7 +17,7 @@ import type {
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@shared/types/category-types';
+} from '@type/category-types';
 import { omit } from 'lodash';
 
 export default function Filter() {

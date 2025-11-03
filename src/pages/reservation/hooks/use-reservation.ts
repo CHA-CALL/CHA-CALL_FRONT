@@ -16,7 +16,7 @@ import {
   useFoodTruckListQuery,
   useUpdateFoodTruckSaveStatus,
 } from '@pages/reservation/hooks/use-food-truck-list-query';
-import type { FoodTruckCategoryValue } from '@shared/types/category-types';
+import type { FoodTruckCategoryValue } from '@type/category-types';
 
 export default function useReservation() {
   const navigate = useNavigate();
