@@ -12,8 +12,8 @@ import {
   getOwnerFoodTrucks,
 } from '@pages/@owner/food-truck-management/api';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/food-trucks';
-import useToast from '@shared/hooks/use-toast';
-import { PAGE_SIZE } from '@shared/constant/page-size';
+import useToast from '@hooks/use-toast';
+import { PAGE_SIZE } from '@constant/page-size';
 
 const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
   content: [],

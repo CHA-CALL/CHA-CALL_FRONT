@@ -1,6 +1,6 @@
 import { Icon } from '@components/icon/Icon';
 import Tag from '@components/tag/Tag';
-import { ROLE } from '@shared/constant/role';
+import { ROLE } from '@constant/role';
 
 interface CommonInfo {
   foodTruckName?: string;
@@ -34,13 +34,13 @@ export default function ReservationDetailTopContent(
             <img
               src={profileImage}
               alt='client-portrait'
-              className='max-h-[5rem] min-h-[5rem] min-w-[5rem] max-w-[5rem] rounded-[1.6rem] border border-grayscale-200'
+              className='border-grayscale-200 max-h-[5rem] min-h-[5rem] min-w-[5rem] max-w-[5rem] rounded-[1.6rem] border'
             />
           </div>
 
           <div className='flex flex-col gap-[0.3rem] py-[0.4rem] pr-[0.4rem]'>
             {foodTruckName && <Tag title={foodTruckName} />}
-            <p className='flex items-center gap-[0.8rem] text-grayscale-700 title-sb-14'>
+            <p className='text-grayscale-700 title-sb-14 flex items-center gap-[0.8rem]'>
               <span className='text-grayscale-900 heading-sb-18'>
                 {clientName}
               </span>
@@ -48,7 +48,7 @@ export default function ReservationDetailTopContent(
             </p>
           </div>
         </div>
-        <div className='my-[1rem] border-[0.4rem] border-grayscale-50' />
+        <div className='border-grayscale-50 my-[1rem] border-[0.4rem]' />
       </>
     );
   }

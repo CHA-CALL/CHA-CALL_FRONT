@@ -5,11 +5,8 @@ import {
   MENU_LIMIT,
   MENU_ERROR_MESSAGE,
 } from '@pages/@owner/menu/constant/menu';
-import {
-  CANNOT_UPLOAD_FILE_MB,
-  NOT_ALLOWED_FILE_TYPE,
-} from '@shared/constant/image';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 
 export const menuSchema = z.object({
   name: z

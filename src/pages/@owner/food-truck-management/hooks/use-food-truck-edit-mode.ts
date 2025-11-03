@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDeleteOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
-import useToast from '@shared/hooks/use-toast';
+import useToast from '@hooks/use-toast';
 
 export const useFoodTruckEditMode = () => {
   const [isEditing, setIsEditing] = useState(false);

@@ -1,10 +1,10 @@
 import CardImage from '@components/food-truck-card/components/CardImage';
 
 import InfoRow from '@components/food-truck-card/components/InfoRow';
-import Button from '@shared/components/button/Button';
-import ButtonCheck from '@shared/components/button-check/ButtonCheck';
+import Button from '@components/button/Button';
+import ButtonCheck from '@components/button-check/ButtonCheck';
 import type { FoodTruckProviderProps } from '@components/food-truck-card/types/food-truck-card-types';
-import { cn } from '@shared/utils/cn';
+import { cn } from '@utils/cn';
 
 export default function FoodTruckProviderCard({
   data,

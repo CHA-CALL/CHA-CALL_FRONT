@@ -7,10 +7,10 @@ import type {
   OwnerReservationDetailResponse,
 } from 'apis/data-contracts';
 
-import useToast from '@shared/hooks/use-toast';
+import useToast from '@hooks/use-toast';
 import { ROUTES } from '@router/constant/routes';
 import { RESERVATION_DETAIL_KEY } from '@shared/querykey/reservation-detail';
-import { ROLE } from '@shared/constant/role';
+import { ROLE } from '@constant/role';
 import {
   getMemberReservationDetail,
   getOwnerReservationDetail,

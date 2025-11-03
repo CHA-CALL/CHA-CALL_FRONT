@@ -1,6 +1,6 @@
-import ButtonCheck from '@shared/components/button-check/ButtonCheck';
-import Tag from '@shared/components/tag/Tag';
-import { cn } from '@shared/utils/cn';
+import ButtonCheck from '@components/button-check/ButtonCheck';
+import Tag from '@components/tag/Tag';
+import { cn } from '@utils/cn';
 
 interface ChatListItemProps {
   profileImage?: string;

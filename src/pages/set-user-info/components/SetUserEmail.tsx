@@ -1,5 +1,5 @@
-import { Icon } from '@shared/components/icon/Icon';
-import Input from '@shared/components/input/Input';
+import { Icon } from '@components/icon/Icon';
+import Input from '@components/input/Input';
 import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
 import type { ChangeEvent } from 'react';
 

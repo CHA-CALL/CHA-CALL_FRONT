@@ -2,20 +2,20 @@ import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import Information from '@shared/components/information/Information';
-import Button from '@shared/components/button/Button';
+import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@components/icon/Icon';
+import Information from '@components/information/Information';
+import Button from '@components/button/Button';
 import { useGetOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
-import { cn } from '@shared/utils/cn';
+import { cn } from '@utils/cn';
 import { ROUTES } from '@router/constant/routes';
 import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
-import Loading from '@shared/components/loading/Loading';
-import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
+import Loading from '@components/loading/Loading';
+import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 import { useFoodTruckEditMode } from '@pages/@owner/food-truck-management/hooks/use-food-truck-edit-mode';
-import Spinner from '@shared/components/spinner/Spinner';
+import Spinner from '@components/spinner/Spinner';
 import type { MyFoodTruckResponse } from 'apis/data-contracts';
-import useToast from '@shared/hooks/use-toast';
+import useToast from '@hooks/use-toast';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();

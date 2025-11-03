@@ -6,8 +6,8 @@ import type {
 } from 'apis/data-contracts';
 
 import { registerRatingFoodTruck } from '@components/rating-bottom-sheet/api';
-import { RATES } from '@shared/constant/rate';
-import useToast from '@shared/hooks/use-toast';
+import { RATES } from '@constant/rate';
+import useToast from '@hooks/use-toast';
 
 interface UseStarRatingProps {
   reservationId: number;

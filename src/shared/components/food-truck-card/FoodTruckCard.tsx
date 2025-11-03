@@ -4,8 +4,8 @@ import {
   type FoodTruckProviderProps,
   type ReservationClientProps,
   type ReservationProviderProps,
-} from '@shared/components/food-truck-card/types/food-truck-card-types';
-import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
+} from '@components/food-truck-card/types/food-truck-card-types';
+import { FOOD_TRUCK_CARD_VARIANTS } from '@constant/food-truck-card-variants';
 import ReservationProviderCard from '@components/food-truck-card/components/ReservationProviderCard';
 import ReservationClientCard from '@components/food-truck-card/components/ReservationClientCard';
 import FoodTruckProviderCard from '@components/food-truck-card/components/FoodTruckProviderCard';

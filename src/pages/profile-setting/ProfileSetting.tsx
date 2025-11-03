@@ -7,11 +7,7 @@ import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { ROUTES } from '@router/constant/routes';
-import {
-  NOT_ALLOWED_FILE_TYPE,
-  CANNOT_UPLOAD_FILE_MB,
-} from '@shared/constant/image';
-
+import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import AgreementSection from '@pages/profile-setting/components/AgreementSection';

@@ -1,7 +1,7 @@
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
+import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
-import { cn } from '@shared/utils/cn';
-import { Icon } from '@shared/components/icon/Icon';
+import { cn } from '@utils/cn';
+import { Icon } from '@components/icon/Icon';
 
 interface SelectBankBottomSheetProps {
   isOpen: boolean;

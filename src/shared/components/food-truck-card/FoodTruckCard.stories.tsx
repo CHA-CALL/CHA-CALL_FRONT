@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import FoodTruckCard, {
   type FoodTruckCardProps,
 } from '@components/food-truck-card/FoodTruckCard';
-import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
+import { FOOD_TRUCK_CARD_VARIANTS } from '@constant/food-truck-card-variants';
 
 const meta: Meta<typeof FoodTruckCard> = {
   title: 'Components/FoodTruckCard',
@@ -147,9 +147,9 @@ export const ReservationProviderList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='h-[0.1rem] w-full bg-grayscale-100' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
-      <div className='h-[0.1rem] w-full bg-grayscale-100' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -171,9 +171,9 @@ export const ReservationClientList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='h-[0.1rem] w-full bg-grayscale-100' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
-      <div className='h-[0.1rem] w-full bg-grayscale-100' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -202,9 +202,9 @@ export const FoodTruckProviderList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
-      <div className='h-[0.1rem] w-full bg-grayscale-100' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
-      <div className='h-[0.1rem] w-full bg-grayscale-100' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
     </div>
   ),
@@ -229,14 +229,14 @@ export const FoodTruckClientList: Story = {
   },
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col bg-white p-[2rem]'>
-      <span className='mb-[1rem] ml-[0.4rem] text-grayscale-500 caption-m-12'>
+      <span className='text-grayscale-500 caption-m-12 mb-[1rem] ml-[0.4rem]'>
         총 14개
       </span>
       <div className='flex flex-col gap-[2rem]'>
         <FoodTruckCard {...args} />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <FoodTruckCard {...args} />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <FoodTruckCard {...args} />
       </div>
     </div>

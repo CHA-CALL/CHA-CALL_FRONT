@@ -1,7 +1,7 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import Button from '@shared/components/button/Button';
+import Button from '@components/button/Button';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
-import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
+import { FOOD_CATEGORIES } from '@constant/food-categories';
 
 export default function MenuCategory() {
   const { menuCategories, updateMenuCategories } = useCategories();

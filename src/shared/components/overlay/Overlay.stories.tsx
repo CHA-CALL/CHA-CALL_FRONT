@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import Overlay from '@shared/components/overlay/Overlay';
-import Button from '@shared/components/button/Button';
+import Overlay from '@components/overlay/Overlay';
+import Button from '@components/button/Button';
 
 const meta: Meta<typeof Overlay> = {
   title: 'Components/Overlay',

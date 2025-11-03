@@ -9,7 +9,7 @@ import {
 } from '@pages/@owner/account/hooks/use-account-query';
 import { type Bank, BANK } from '@pages/@owner/account/constants/bank';
 import { ROUTES } from '@router/constant/routes';
-import useToast from '@shared/hooks/use-toast';
+import useToast from '@hooks/use-toast';
 
 export const useAccountPage = () => {
   const navigate = useNavigate();
