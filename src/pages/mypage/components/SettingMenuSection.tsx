@@ -1,5 +1,5 @@
 import { ROUTES } from '@router/constant/routes';
-import { Icon } from '@shared/components/icon/Icon';
+import { Icon } from '@components/icon/Icon';
 
 interface SettingMenuSectionProps {
   isProvider: boolean;

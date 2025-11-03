@@ -16,12 +16,13 @@ import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import ReservationHistory from '@pages/reservation-history/ReservationHistory';
 import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
-import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
+import UploadFoodTruckImages from '@pages/@owner/upload-food-truck-images/UploadFoodTruckImages';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
+import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 
 export const router = createBrowserRouter([
   {
@@ -43,10 +44,7 @@ export const router = createBrowserRouter([
         path: ROUTES.RESERVATION,
         element: <Reservation />,
       },
-      {
-        path: ROUTES.RESERVATION_DETAIL,
-        element: <ReservationDetail />,
-      },
+
       {
         path: ROUTES.FOOD_TRUCK_ONBOARDING,
         element: <FoodTruckOnboarding />,
@@ -84,12 +82,16 @@ export const router = createBrowserRouter([
         element: <ReservationHistory />,
       },
       {
+        path: ROUTES.RESERVATION_DETAIL(':reservationId'),
+        element: <ReservationDetail />,
+      },
+      {
         path: ROUTES.SAVE_FOOD_TRUCK_LIST,
         element: <SaveFoodTruckList />,
       },
       {
-        path: ROUTES.UPLOAD_FOOD_TRUCK,
-        element: <UploadFoodTruck />,
+        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES,
+        element: <UploadFoodTruckImages />,
       },
       {
         path: ROUTES.PROFILE_SETTING_EDIT,
@@ -106,6 +108,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MENU_REGISTER,
         element: <MenuRegister />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_FORM + '/:id?',
+        element: <FoodTruckForm />,
       },
     ],
   },

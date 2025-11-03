@@ -1,7 +1,6 @@
+import { type RegionResponse } from 'apis/data-contracts';
+import Loading from '@components/loading/Loading';
 import SearchResultItem from '@pages/set-location/components/(.)section/(.)search/SearchResultItem';
-
-import { type RegionResponse } from '@../../apis/data-contracts';
-import Loading from '@shared/components/loading/Loading';
 
 interface SearchSectionProps {
   searchText: string;

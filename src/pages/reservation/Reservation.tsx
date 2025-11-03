@@ -1,63 +1,35 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import Button from '@components/button/Button';
+import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
-import FoodTruckItem from '@pages/reservation/components/FoodTruckItem';
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-category';
-import { mockFoodTruckData } from '@pages/reservation/constant/mockUp';
-import ButtonIcon from '@shared/components/button-icon/ButtonIcon';
-import { cn } from '@shared/utils/cn';
 
-interface ReservationProps {
-  location?: string;
-  categories?: string[];
-}
+import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
+import useReservation from '@pages/reservation/hooks/use-reservation';
+import Loading from '@components/loading/Loading';
+import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
+import FoodTruckEmptyView from '@pages/reservation/components/FoodTruckEmptyView';
 
-export default function Reservation({
-  location = '서울시 광진구 구의동',
-  categories = FOOD_TRUCK_CATEGORIES,
-}: ReservationProps) {
-  const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    categories[0]
-  );
-
-  const isAll = selectedCategory === categories[0];
-  const filteredFoodTrucks = isAll
-    ? mockFoodTruckData
-    : mockFoodTruckData.filter(truck => truck.category === selectedCategory);
-
-  const navigate = useNavigate();
-
-  // TODO: 필터 페이지와 연결 및 필터 상태 관리 로직 추가
-  const [isFilterApplied] = useState<boolean>(false);
-
-  const handleClickBack = () => {
-    navigate(-1);
-  };
-
-  const handleClickLocation = () => {
-    navigate('/set-location');
-  };
-
-  const handleClickFilter = () => {
-    navigate('/filter');
-  };
-
-  const handleClickFoodTruck = (name: string) => {
-    navigate(`/food-truck/${name}`);
-  };
-
-  const handleClickTooltip = () => {
-    setIsTooltipOpen(!isTooltipOpen);
-  };
-
-  const handleClickChip = (category: string) => {
-    setSelectedCategory(category);
-  };
+export default function Reservation() {
+  const {
+    listBottomRef,
+    isTooltipOpen,
+    selectedCategory,
+    locationName,
+    notFiltered,
+    isPending,
+    foodTruckData,
+    isFetchingNextPage,
+    handleClickBack,
+    handleClickLocation,
+    handleClickFilter,
+    handleClickFoodTruck,
+    handleClickTooltip,
+    handleClickChip,
+    handleUpdateFoodTruckSaveStatus,
+  } = useReservation();
 
   return (
     <>
@@ -66,30 +38,33 @@ export default function Reservation({
         handleLeftClick={handleClickBack}
         text='예약하기'
       />
-      <div className='z-50 flex items-center justify-between border-b border-b-grayscale-100 bg-white px-[2rem] pb-[1rem] pt-[1.2rem] fixed-center'>
+      <div className='border-b-grayscale-100 fixed-center z-50 flex items-center justify-between border-b bg-white px-[2rem] pb-[1rem] pt-[1.2rem]'>
         <button
           type='button'
           onClick={handleClickLocation}
           className='flex cursor-pointer items-center gap-[0.6rem]'
         >
           <Icon name='ic_locate' className='text-primary-700' />
-          <span className='text-grayscale-900 body-m-14'>{location}</span>
+          <span className='text-grayscale-900 body-m-14'>
+            {locationName.length === 0 ? '전체' : locationName[0]}
+            {locationName.length > 1 && ` 외 ${locationName.length - 1}곳`}
+          </span>
           <Icon name='ic_down' />
         </button>
 
         <ButtonIcon
           icon='ic_filter'
-          iconClassName={isFilterApplied ? 'text-primary-700' : undefined}
+          iconClassName={!notFiltered ? 'text-primary-700' : undefined}
           handleClick={handleClickFilter}
           className={cn(
             'flex h-[2.8rem] w-[2.8rem] items-center justify-center rounded-[0.4rem] border pl-[0.4rem] pt-[0.4rem]',
-            isFilterApplied
+            !notFiltered
               ? 'border-primary-700 bg-primary-50'
               : 'border-grayscale-200'
           )}
         />
 
-        {!isFilterApplied && (
+        {notFiltered && (
           <Tooltip
             text='맞춤조건을 설정할 수 있어요'
             isTooltipVisible={isTooltipOpen}
@@ -103,9 +78,9 @@ export default function Reservation({
       </div>
 
       <div
-        className={`top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem] scrollbar-hide fixed-center`}
+        className={`scrollbar-hide fixed-center top-[9.8rem] flex gap-[0.6rem] overflow-x-auto bg-white px-[2rem] py-[1.2rem]`}
       >
-        {categories.map(category => (
+        {Object.values(FOOD_TRUCK_CATEGORIES).map(category => (
           <Button
             key={category}
             variant='chip'
@@ -119,20 +94,47 @@ export default function Reservation({
         ))}
       </div>
 
-      <div className='flex flex-col gap-[2.2rem] px-[2rem] pb-[1.6rem] pt-[12.6rem]'>
-        {filteredFoodTrucks.map((item, index) => (
-          <FoodTruckItem
-            key={item.truckId}
-            image={item.image}
-            name={item.name}
-            priceRange={item.priceRange}
-            minOrder={item.minOrder}
-            tags={item.tags}
-            handleClick={() => handleClickFoodTruck(item.name)}
-            isLast={index === filteredFoodTrucks.length - 1}
-          />
-        ))}
+      <div className='flex flex-col px-[2rem] pb-[6rem] pt-[12.6rem]'>
+        {isPending && <Loading />}
+        {!isPending && foodTruckData.length === 0 ? (
+          <FoodTruckEmptyView />
+        ) : (
+          foodTruckData.map((item, index) => (
+            <div key={item.foodTruckId}>
+              <FoodTruckCard
+                variant='foodtruckClient'
+                data={item}
+                handleClickCard={() => {
+                  if (item.foodTruckId !== undefined) {
+                    handleClickFoodTruck(item.foodTruckId);
+                  }
+                }}
+                handleClickButton={() => {
+                  if (
+                    item.foodTruckId !== undefined &&
+                    item.isSaved !== undefined
+                  ) {
+                    handleUpdateFoodTruckSaveStatus(
+                      item.foodTruckId,
+                      !item.isSaved
+                    );
+                  }
+                }}
+              />
+              {index < foodTruckData.length - 1 && (
+                <div className='bg-grayscale-100 mb-[2.2rem] mt-[2.4rem] h-[0.1rem] w-full' />
+              )}
+            </div>
+          ))
+        )}
       </div>
+
+      <div ref={listBottomRef} className='h-[0.1rem] w-full' />
+      {isFetchingNextPage && (
+        <div className='text-grayscale-500 py-4 text-center'>
+          더 불러오는 중…
+        </div>
+      )}
 
       <ButtonFloating />
     </>

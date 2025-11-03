@@ -1,5 +1,5 @@
-import { Icon } from '@shared/components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { Icon } from '@components/icon/Icon';
+import { cn } from '@utils/cn';
 
 interface Depth3ItemProps {
   title: string;
@@ -22,7 +22,7 @@ export default function Depth3Item({
       className={cn(
         BaseClass,
         isSelected &&
-          'title-sb-14 text-primary-700 relative flex items-center justify-center px-[1rem]'
+          'text-primary-700 title-sb-14 relative flex items-center justify-center px-[1rem]'
       )}
     >
       {isSelected && (

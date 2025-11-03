@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-
+import { ROUTES } from '@router/constant/routes';
+import { Icon } from '@components/icon/Icon';
+import Button from '@components/button/Button';
 import {
   RESERVATION_STATE,
   type ReservationState,
-} from '@pages/reservation-history/types/reservation';
-import { ROUTES } from '@router/constant/routes';
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
+} from '@pages/reservation-history/types/reservation-history';
 
 interface EmptyViewProps {
   isProvider: boolean;
@@ -41,9 +40,9 @@ export default function EmptyView({
       emptyText = '';
   }
   return (
-    <div className='flex min-h-[calc(100vh-4.8rem)] w-full flex-col items-center justify-center gap-[1.6rem] pt-[6.6rem]'>
+    <div className='fixed-center pointer-events-none absolute top-[0rem] flex min-h-[100dvh] w-full flex-col items-center justify-center gap-[1.6rem] pt-[6.6rem]'>
       <img src='https://placehold.co/140' alt='' />
-      <span className='text-center text-grayscale-500 body-m-14'>
+      <span className='text-grayscale-500 body-m-14 text-center'>
         {emptyText} {isProvider ? '예약건' : '예약 내역'}이 없습니다.
         {!isProvider && (
           <>
@@ -56,7 +55,7 @@ export default function EmptyView({
         <Button
           variant='default'
           buttonStyle='default'
-          className='mt-[0.4rem] rounded-[9rem] bg-grayscale-900 px-[2rem] py-[1rem]'
+          className='bg-grayscale-900 mt-[0.4rem] rounded-[9rem] px-[2rem] py-[1rem]'
           handleClickButton={handleNavigateToReservation}
         >
           <div className='flex flex-row items-center gap-[0.8rem]'>
@@ -66,7 +65,7 @@ export default function EmptyView({
               height={16}
               className='text-white'
             />
-            <span className='text-white title-sb-12'>푸드트럭 둘러보기</span>
+            <span className='title-sb-12 text-white'>푸드트럭 둘러보기</span>
           </div>
         </Button>
       )}

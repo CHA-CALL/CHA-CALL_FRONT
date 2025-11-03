@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Information from '@shared/components/information/Information';
+import Information from '@components/information/Information';
 
 const meta: Meta<typeof Information> = {
   title: 'Components/Information',

@@ -6,8 +6,8 @@ import AgreementSection from '@pages/profile-setting/components/AgreementSection
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import { ROUTES } from '@router/constant/routes';
-import Button from '@shared/components/button/Button';
-import Loading from '@shared/components/loading/Loading';
+import Button from '@components/button/Button';
+import Loading from '@components/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

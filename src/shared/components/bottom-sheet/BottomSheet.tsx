@@ -1,20 +1,20 @@
 import React, { useRef } from 'react';
 
 import Overlay from '@components/overlay/Overlay';
-import useBottomSheetDrag from '@shared/hooks/use-bottom-sheet-drag';
-import { cn } from '@shared/utils/cn';
+import useBottomSheetDrag from '@hooks/use-bottom-sheet-drag';
+import { cn } from '@utils/cn';
 
 interface BottomSheetProps {
   isOpen: boolean;
   handleCloseBottomSheet: () => void;
-  sheetContent: React.ReactNode;
+  children: React.ReactNode;
   sheetHeight: number;
 }
 
 export default function BottomSheet({
   isOpen,
   handleCloseBottomSheet,
-  sheetContent,
+  children,
   sheetHeight,
 }: BottomSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -39,8 +39,8 @@ export default function BottomSheet({
         )}
         onClick={e => e.stopPropagation()}
       >
-        <div className='mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem] bg-grayscale-300' />
-        <div className='mb-[3.4rem]'>{sheetContent}</div>
+        <div className='bg-grayscale-300 mx-auto my-[1rem] h-[0.35rem] w-[4.1rem] rounded-[10rem]' />
+        <div className='mb-[3.4rem]'>{children}</div>
       </div>
     </Overlay>
   );

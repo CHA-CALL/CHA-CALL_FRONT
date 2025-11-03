@@ -1,6 +1,6 @@
-import ErrorText from '@shared/components/error-text/ErrorText';
-import { Icon } from '@shared/components/icon/Icon';
-import Input from '@shared/components/input/Input';
+import ErrorText from '@components/error-text/ErrorText';
+import { Icon } from '@components/icon/Icon';
+import Input from '@components/input/Input';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export default function SetUserEmail() {

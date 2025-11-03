@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
@@ -7,28 +7,40 @@ import Button from '@components/button/Button';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
-import { SORT_OPTIONS, SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
-
-import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
+import { type MyFoodTruckMenuResponse } from 'apis/data-contracts';
+import {
+  SORT_TYPES,
+  type SortType,
+} from '@pages/@owner/menu/constant/menu-list-sort';
+import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export default function MenuList() {
+  return <MenuListContent />;
+}
+
+function MenuListContent() {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { foodTruckId } = useParams();
+  const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
+  const [sortOption, setSortOption] = useState<SortType>(SORT_TYPES.LATEST);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
-  const [sortedMenuList, setSortedMenuList] = useState(mockMenuData);
-
+  const formData = location.state?.formData;
   useEffect(() => {
-    const sorted = [...mockMenuData].sort((a, b) => {
-      const dateA = new Date(a.dateAdded).getTime();
-      const dateB = new Date(b.dateAdded).getTime();
-      return isSorted === SORT_TYPES.LATEST ? dateB - dateA : dateA - dateB;
-    });
-    setSortedMenuList(sorted);
-  }, [isSorted]);
+    if (foodTruckId) {
+      //TODO: 메뉴 목록 조회 로직 구현
+      setMenus([]);
+    }
+  }, [foodTruckId]);
 
   const handleClickBack = () => {
-    navigate(-1);
+    const updatedFormData = {
+      ...formData,
+      menus: true,
+    };
+    navigate(ROUTES.FOOD_TRUCK_FORM, {
+      state: getNavigateState(updatedFormData),
+    });
   };
 
   const handleRegister = () => {
@@ -43,13 +55,12 @@ export default function MenuList() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleSortByLatest = () => {
-    setIsSorted(SORT_TYPES.LATEST);
-    handleCloseBottomSheet();
-  };
+  const handleSortByType = (type: SortType) => {
+    setSortOption(type);
+    if (foodTruckId) {
+      //TODO: api 요청 로직 구현 (정렬 기준 최신순)
+    }
 
-  const handleSortByOldest = () => {
-    setIsSorted(SORT_TYPES.OLDEST);
     handleCloseBottomSheet();
   };
 
@@ -57,9 +68,7 @@ export default function MenuList() {
     alert('메뉴가 등록되었습니다.');
   };
 
-  const handleSave = () => {
-    // TODO: 메뉴 노출 여부 저장 로직 구현
-  };
+  const handleSave = () => {};
 
   return (
     <>
@@ -69,19 +78,16 @@ export default function MenuList() {
         text='메뉴 등록'
       />
 
-      <div className='fixed-center top-[4.8rem] flex flex-col w-full p-[2rem] bg-white z-10'>
-        <span className='title-sb-16 text-grayscale-900'>
+      <div className='fixed-center top-[4.8rem] z-10 flex w-full flex-col bg-white p-[2rem]'>
+        <span className='text-grayscale-900 title-sb-16'>
           푸드트럭 메뉴 등록
         </span>
-        <span className='caption-m-12 text-grayscale-500'>
+        <span className='text-grayscale-500 caption-m-12'>
           숨김처리 이외의 모든 저장된 음식은 전부 노출 됩니다
         </span>
       </div>
 
-      <div className='
-        fixed-center top-[12.8rem] flex justify-between w-full px-[2rem] pb-[1rem]
-        border-b border-grayscale-100 bg-white z-10
-      '>
+      <div className='border-grayscale-100 fixed-center top-[12.8rem] z-10 flex w-full justify-between border-b bg-white px-[2rem] pb-[1rem]'>
         <Button
           variant='default'
           buttonStyle='edit'
@@ -92,24 +98,24 @@ export default function MenuList() {
         <button
           type='button'
           onClick={handleOpenBottomSheet}
-          className='flex items-center caption-m-12 text-grayscale-700'
+          className='text-grayscale-700 caption-m-12 flex items-center'
         >
-          {SORT_OPTIONS[isSorted]}
+          {sortOption}
           <Icon name='ic_down' />
         </button>
       </div>
 
-      <div className='flex flex-col pt-[11.9rem] px-[2rem] pb-[8.5rem] bg-white'>
-        {sortedMenuList.length > 0 ? (
-          sortedMenuList.map((menu, index) => (
+      <div className='flex flex-col bg-white px-[2rem] pb-[8.5rem] pt-[11.9rem]'>
+        {menus.length > 0 ? (
+          menus.map((menu, index) => (
             <MenuItem
               key={menu.menuId}
-              menuImage={menu.image}
-              menuName={menu.name}
-              menuDescription={menu.description}
-              menuPrice={menu.price}
+              imageUrl={menu.imageUrl || ''}
+              name={menu.name || ''}
+              description={menu.description || ''}
+              price={menu.price ? Number(menu.price) : 0}
               handleToggle={handleClickToggle}
-              isLast={index === sortedMenuList.length - 1}
+              isLast={index === menus.length - 1}
             />
           ))
         ) : (
@@ -117,19 +123,16 @@ export default function MenuList() {
             <img
               src='https://placehold.co/140'
               alt='No Menu Items'
-              className='w-[14rem] h-[14rem] mt-[50%] mb-[1.6rem] object-cover'
+              className='mb-[1.6rem] mt-[50%] h-[14rem] w-[14rem] object-cover'
             />
-            <span className='body-m-14 text-grayscale-500'>
+            <span className='text-grayscale-500 body-m-14'>
               등록된 메뉴가 없습니다.
             </span>
           </div>
         )}
       </div>
 
-      <footer className='
-        fixed-center bottom-[0] w-full px-[2rem] py-[1.7rem]
-        bg-white shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] z-10
-      '>
+      <footer className='fixed-center bottom-[0] z-10 w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
         <Button
           variant='cta'
           buttonStyle='active'
@@ -144,33 +147,32 @@ export default function MenuList() {
       <BottomSheet
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
-        sheetContent={
-          <>
-            <button
-              type='button'
-              onClick={handleSortByLatest}
-              className='w-full p-[2rem] title-sb-14 text-grayscale-700 border-b border-grayscale-100'
-            >
-              {SORT_OPTIONS[SORT_TYPES.LATEST]}
-            </button>
-            <button
-              type='button'
-              onClick={handleSortByOldest}
-              className='w-full p-[2rem] title-sb-14 text-grayscale-700'
-            >
-              {SORT_OPTIONS[SORT_TYPES.OLDEST]}
-            </button>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleCloseBottomSheet}
-            >
-              취소
-            </Button>
-          </>
-        }
         sheetHeight={200}
-      />
+      >
+        <>
+          <button
+            type='button'
+            onClick={() => handleSortByType(SORT_TYPES.LATEST)}
+            className='border-grayscale-100 text-grayscale-700 title-sb-14 w-full border-b p-[2rem]'
+          >
+            {SORT_TYPES.LATEST}
+          </button>
+          <button
+            type='button'
+            onClick={() => handleSortByType(SORT_TYPES.OLDEST)}
+            className='text-grayscale-700 title-sb-14 w-full p-[2rem]'
+          >
+            {SORT_TYPES.OLDEST}
+          </button>
+          <Button
+            variant='cta'
+            buttonStyle='sub'
+            handleClickButton={handleCloseBottomSheet}
+          >
+            취소
+          </Button>
+        </>
+      </BottomSheet>
     </>
   );
 }

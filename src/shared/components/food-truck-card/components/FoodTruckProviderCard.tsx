@@ -1,19 +1,19 @@
-import type { MyFoodTruckResponse } from 'apis/data-contracts';
 import CardImage from '@components/food-truck-card/components/CardImage';
-import CardButton from '@components/food-truck-card/components/CardButton';
-import InfoRow from '@components/food-truck-card/components/InfoRow';
 
-interface FoodTruckProviderCardProps {
-  data: MyFoodTruckResponse;
-  handleCard: () => void;
-  handleCardButton: () => void;
-}
+import InfoRow from '@components/food-truck-card/components/InfoRow';
+import Button from '@components/button/Button';
+import ButtonCheck from '@components/button-check/ButtonCheck';
+import type { FoodTruckProviderProps } from '@components/food-truck-card/types/food-truck-card-types';
+import { cn } from '@utils/cn';
 
 export default function FoodTruckProviderCard({
   data,
-  handleCard,
-  handleCardButton,
-}: FoodTruckProviderCardProps) {
+  isRemovable,
+  isRemove,
+  handleCardRemove,
+  handleClickButton,
+  isOn,
+}: FoodTruckProviderProps) {
   const {
     imageUrl = '',
     name = '',
@@ -21,31 +21,57 @@ export default function FoodTruckProviderCard({
     activeTime = '',
     serviceArea = '',
   } = data;
+  const splitActiveTime = activeTime.split('-').map(time => time.trim());
 
   return (
     <div
-      role='button'
-      onClick={handleCard}
-      className='flex w-full cursor-pointer'
+      className={cn(
+        'flex w-full items-start gap-[1.3rem] p-[2rem]',
+        isRemove && 'bg-primary-25'
+      )}
     >
+      {isRemovable && handleCardRemove && (
+        <ButtonCheck isChecked={isRemove} handleToggle={handleCardRemove} />
+      )}
       <CardImage
         imageUrl={imageUrl}
         altText={name}
-        className='w-[7.4rem] h-[7.4rem] mr-[1.3rem] my-[0.4rem]'
+        className='h-[7.4rem] w-[7.4rem]'
       />
 
-      <div className='flex flex-col'>
-        <span className='title-sb-16 text-grayscale-900 text-left'>{name}</span>
-        <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>{description}</span>
-        <InfoRow iconId='ic_time'>{activeTime}</InfoRow>
-        <InfoRow iconId='ic_locate'>{serviceArea}</InfoRow>
+      <div className='flex w-full flex-col'>
+        <div className='flex w-full items-center justify-between'>
+          <span className='title-sb-16 text-grayscale-900 text-left'>
+            {name}
+          </span>
+          <Button
+            variant='chip'
+            buttonStyle={isOn ? 'selected2' : 'default'}
+            handleClickButton={handleClickButton}
+            className={cn(
+              'h-[2.4rem] w-[6rem] p-0',
+              !isOn && 'border-grayscale-200 text-grayscale-200'
+            )}
+          >
+            {isOn ? 'ON' : 'OFF'}
+          </Button>
+        </div>
+        <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>
+          {description}
+        </span>
+        <InfoRow iconId='ic_time'>
+          <div className='caption-m-11 text-grayscale-700 flex items-center gap-[0.2rem]'>
+            <span>{splitActiveTime[0]}</span>
+            <span>-</span>
+            <span>{splitActiveTime[1]}</span>
+          </div>
+        </InfoRow>
+        <InfoRow iconId='ic_locate'>
+          <span className='caption-m-11 text-grayscale-700 line-clamp-1'>
+            {serviceArea}
+          </span>
+        </InfoRow>
       </div>
-
-      <CardButton
-        handleClick={handleCardButton}
-        buttonIcon='ic_dot'
-        className='mb-auto'
-      />
     </div>
   );
 }

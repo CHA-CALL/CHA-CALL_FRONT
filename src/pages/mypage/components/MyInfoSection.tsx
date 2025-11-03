@@ -1,7 +1,7 @@
 import { ROUTES } from '@router/constant/routes';
-import { Icon } from '@shared/components/icon/Icon';
-import { useGetUserInfo } from '../hooks/use-user-data';
-import Loading from '@shared/components/loading/Loading';
+import { Icon } from '@components/icon/Icon';
+import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
+import Loading from '@components/loading/Loading';
 
 interface MyInfoSectionProps {
   isProvider: boolean;

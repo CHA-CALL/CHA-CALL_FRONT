@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import FoodTruckCard, {
   type FoodTruckCardProps,
 } from '@components/food-truck-card/FoodTruckCard';
-import { FOOD_TRUCK_CARD_VARIANTS } from '@shared/constant/food-truck-card-variants';
+import { FOOD_TRUCK_CARD_VARIANTS } from '@constant/food-truck-card-variants';
 
 const meta: Meta<typeof FoodTruckCard> = {
   title: 'Components/FoodTruckCard',
@@ -10,7 +10,6 @@ const meta: Meta<typeof FoodTruckCard> = {
   parameters: {
     layout: 'padded',
   },
-  tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'radio',
@@ -22,10 +21,12 @@ const meta: Meta<typeof FoodTruckCard> = {
       ],
     },
     data: { control: 'object' },
-    isLiked: { control: 'boolean' },
-    tags: { control: 'object' },
+    isOn: { control: 'boolean' },
+    isRemovable: { control: 'boolean' },
+    isRemove: { control: 'boolean' },
     handleClickButton: { action: 'button clicked' },
     handleClickCard: { action: 'card clicked' },
+    handleCardRemove: { action: 'card removed' },
     className: { control: 'text' },
   },
 };
@@ -76,11 +77,37 @@ export const FoodTruckProvider: Story = {
       activeTime: '09:00 - 21:00',
       serviceArea: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
     },
+    isRemovable: true,
+    isRemove: false,
+    isOn: true,
+    handleCardRemove() {
+      alert('카드 제거');
+    },
     handleClickButton() {
       alert('버튼 클릭');
     },
-    handleClickCard() {
-      alert('카드 클릭');
+    className: 'p-[2rem]',
+  },
+};
+
+export const FoodTruckProviderOff: Story = {
+  args: {
+    variant: FOOD_TRUCK_CARD_VARIANTS.FOODTRUCK_PROVIDER,
+    data: {
+      imageUrl: 'https://placehold.co/74',
+      name: '오소리 푸드트럭',
+      description: '바삭한 타코로 즐거운 한입을!',
+      activeTime: '09:00 - 21:00',
+      serviceArea: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
+    },
+    isRemovable: true,
+    isRemove: false,
+    isOn: false,
+    handleCardRemove() {
+      alert('카드 제거');
+    },
+    handleClickButton() {
+      alert('버튼 클릭');
     },
     className: 'p-[2rem]',
   },
@@ -96,13 +123,8 @@ export const FoodTruckClient: Story = {
       ratingCount: 10,
       description: '바삭한 타코로 즐거운 한입을!',
     },
-    isLiked: true,
-    tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
-    },
-    handleClickCard() {
-      alert('카드 클릭');
     },
     className: 'px-[2rem] py-[2.2rem]',
   },
@@ -167,11 +189,14 @@ export const FoodTruckProviderList: Story = {
       activeTime: '09:00 - 21:00',
       serviceArea: '서울 특별시 전체, 인천광역시 계양구, 수원시 기안동',
     },
+    isRemovable: true,
+    isRemove: false,
+    isOn: true,
+    handleCardRemove() {
+      alert('카드 제거');
+    },
     handleClickButton() {
       alert('버튼 클릭');
-    },
-    handleClickCard() {
-      alert('카드 클릭');
     },
   },
   render: (args: FoodTruckCardProps) => (
@@ -195,8 +220,6 @@ export const FoodTruckClientList: Story = {
       ratingCount: 10,
       description: '바삭한 타코로 즐거운 한입을!',
     },
-    isLiked: true,
-    tags: ['피자', '양식'],
     handleClickButton() {
       alert('버튼 클릭');
     },

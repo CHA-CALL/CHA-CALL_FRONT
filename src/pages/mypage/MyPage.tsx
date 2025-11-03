@@ -3,7 +3,7 @@ import Navigation from '@components/navigation/Navigation';
 import { useRole } from '@hooks/use-role';
 import MyInfoSection from '@pages/mypage/components/MyInfoSection';
 import SettingMenuSection from '@pages/mypage/components/SettingMenuSection';
-import { ROLE } from '@shared/constant/role';
+import { ROLE } from '@constant/role';
 import { useNavigate } from 'react-router-dom';
 
 export default function MyPage() {

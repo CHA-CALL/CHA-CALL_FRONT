@@ -101,4 +101,7 @@
   <symbol fill="none" viewBox="0 0 16 17" xmlns="http://www.w3.org/2000/svg" id="ic_time">
     <path d="M8 2.5C11.3137 2.5 14 5.18629 14 8.5C14 11.8137 11.3137 14.5 8 14.5C4.68629 14.5 2 11.8137 2 8.5C2 5.18629 4.68629 2.5 8 2.5ZM8 5.25C7.58579 5.25 7.25 5.58579 7.25 6V8.92871C7.25 9.12309 7.32591 9.31037 7.46094 9.4502L9.46094 11.5205C9.74866 11.8185 10.2225 11.8268 10.5205 11.5391C10.8185 11.2513 10.8268 10.7775 10.5391 10.4795L8.75 8.62598V6C8.75 5.58579 8.41421 5.25 8 5.25Z" fill="currentColor"/>
   </symbol>
+  <symbol id="ic_plus" viewBox="0 0 18 18" fill="none">
+    <path d="M8.5 5V8.5M8.5 8.5V12M8.5 8.5L12 8.5M8.5 8.5H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonDate from '@shared/components/button-date/ButtonDate';
+import ButtonDate from '@components/button-date/ButtonDate';
 
 const meta: Meta<typeof ButtonDate> = {
   title: 'Components/ButtonDate',
@@ -20,6 +20,10 @@ const meta: Meta<typeof ButtonDate> = {
     handleOpenCalendar: {
       action: 'open-calendar',
       description: '달력 열기 핸들러(바텀시트/모달 등)',
+    },
+    handleDeleteSchedule: {
+      action: 'delete-date',
+      description: '선택된 날짜 삭제하는 핸들러',
     },
   },
 };

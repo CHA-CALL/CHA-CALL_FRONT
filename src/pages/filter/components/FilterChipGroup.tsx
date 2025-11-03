@@ -1,20 +1,19 @@
-import Button from '@shared/components/button/Button';
+import Button from '@components/button/Button';
 
-interface FilterChipGroupProps {
+interface FilterChipGroupProps<T extends string> {
   filterTitle: string;
-  selectedOption: string | string[];
-  options: string[];
-  handleSelectFilter: (_filter: string) => void;
+  selectedOption: T | T[];
+  options: Record<string, T>;
+  handleSelectFilter: (_filter: T) => void;
   multiSelectable?: boolean;
 }
-
-export default function FilterChipGroup({
+export default function FilterChipGroup<T extends string>({
   filterTitle,
   selectedOption,
   options,
   handleSelectFilter,
   multiSelectable = false,
-}: FilterChipGroupProps) {
+}: FilterChipGroupProps<T>) {
   return (
     <div className='mb-[2rem] flex flex-col gap-[1.6rem]'>
       {multiSelectable ? (
@@ -28,19 +27,19 @@ export default function FilterChipGroup({
         <h2 className='title-b-14 px-[0.5rem]'>{filterTitle}</h2>
       )}
       <div className='flex flex-row flex-wrap gap-x-[0.8rem] gap-y-[1rem]'>
-        {options.map(item => {
+        {Object.entries(options).map(([key, label]) => {
           const isSelected = Array.isArray(selectedOption)
-            ? selectedOption.includes(item)
-            : selectedOption === item;
+            ? selectedOption.includes(key as T)
+            : selectedOption === key;
 
           return (
             <Button
-              key={item}
+              key={key}
               variant='chip'
               buttonStyle={isSelected ? 'selected2' : 'default'}
-              handleClickButton={() => handleSelectFilter(item)}
+              handleClickButton={() => handleSelectFilter(key as T)}
             >
-              {item}
+              {label}
             </Button>
           );
         })}

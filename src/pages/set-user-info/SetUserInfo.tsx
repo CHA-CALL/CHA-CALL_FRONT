@@ -1,9 +1,4 @@
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Loading from '@shared/components/loading/Loading';
-import Navigation from '@shared/components/navigation/Navigation';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Loading from '@components/loading/Loading';
 import SetUserName from '@pages/set-user-info/components/SetUserName';
 import SetUserEmail from '@pages/set-user-info/components/SetUserEmail';
 import SetUserGender from '@pages/set-user-info/components/SetUserGender';
@@ -12,6 +7,11 @@ import SetUserImage from '@pages/set-user-info/components/SetUserImage';
 import ProfileImageBottomSheet from '@pages/set-user-info/components/ProfileImageBottomSheet';
 import { FormProvider } from 'react-hook-form';
 import { useSetUserInfo } from '@pages/set-user-info/hooks/use-set-user-info';
+import Button from '@components/button/Button';
+import { Icon } from '@components/icon/Icon';
+import Navigation from '@components/navigation/Navigation';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function SetUserInfo() {
   const navigate = useNavigate();
