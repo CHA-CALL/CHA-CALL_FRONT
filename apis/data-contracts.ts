@@ -168,6 +168,180 @@ export interface UpdateBankAccountRequest {
   accountNumber: string;
 }
 
+/** 조회 기간(시작~종료). 단일 날짜는 start==end */
+export interface DateRangeRequest {
+  /**
+   * 일정 시작일
+   * @format date
+   * @example "2025.09.01"
+   */
+  startDate?: string;
+  /**
+   * 일정 종료일
+   * @format date
+   * @example "2025.09.03"
+   */
+  endDate?: string;
+}
+
+export interface UpdateFoodTruckInfoRequest {
+  /**
+   * 푸드트럭 이름
+   * @minLength 1
+   * @example "맛있는 푸드트럭"
+   */
+  name: string;
+  /**
+   * 푸드트럭 설명
+   * @minLength 1
+   * @example "저희 푸드트럭은 신선한 재료로 만든 음식을 제공합니다."
+   */
+  description: string;
+  /**
+   * 푸드트럭 전화번호
+   * @minLength 1
+   * @example "010-1234-5678"
+   */
+  phoneNumber: string;
+  /**
+   * 운영 시간대 (형식: HH:MM-HH:MM)
+   * @minLength 1
+   * @pattern ^(?:[01]\d|2[0-3]):[0-5]\d-(?:[01]\d|2[0-3]):[0-5]\d$
+   * @example "10:00-18:00"
+   */
+  activeTime: string;
+  /**
+   * 시간 상의 필요 여부
+   * @example true
+   */
+  timeDiscussRequired: boolean;
+  /**
+   * 푸드트럭 서비스 가능 지역 ID 리스트
+   * @maxItems 10
+   * @minItems 1
+   * @uniqueItems true
+   * @example [1,2,3]
+   */
+  foodTruckServiceAreas?: number[];
+  /**
+   * 메뉴 카테고리 리스트
+   * @maxItems 12
+   * @minItems 1
+   * @example ["한식","분식"]
+   */
+  menuCategories?: (
+    | "MEAL"
+    | "LUNCHBOX"
+    | "FUSION"
+    | "SNACK"
+    | "WESTERN"
+    | "CHINESE"
+    | "KOREAN"
+    | "LIGHT_MEAL"
+    | "DESSERT"
+    | "BEVERAGE"
+    | "COFFEE"
+    | "UNDECIDED"
+  )[];
+  /**
+   * 제조 가능 수량
+   * @example "100인분 미만"
+   */
+  availableQuantity:
+    | "50인분 미만"
+    | "100인분 미만"
+    | "150인분 미만"
+    | "200인분 미만"
+    | "200인분 이상"
+    | "논의 필요";
+  /**
+   * 전기 필요 여부
+   * @example "필요"
+   */
+  needElectricity: "필요" | "불필요" | "논의 필요";
+  /**
+   * 결제 수단
+   * @example "계좌이체"
+   */
+  paymentMethod: "무관" | "계좌이체" | "카드";
+  /**
+   * 운영 가능 날짜 리스트
+   * @maxItems 4
+   * @minItems 1
+   * @example [{"startDate":"2024.10.01","endDate":"2024.10.10"}]
+   */
+  availableDates?: DateRangeRequest[];
+  /**
+   * 푸드트럭 사진 URL 리스트
+   * @maxItems 9
+   * @minItems 1
+   * @example ["http://image1.png","http://image2.png"]
+   */
+  photoUrls?: string[];
+  /**
+   * 운영 정보
+   * @example "맛있는 음식을 신속하게 제공합니다."
+   */
+  operatingInfo?: string;
+  /**
+   * 기타 옵션
+   * @example "추가 요청 사항이 있으면 기재해주세요."
+   */
+  option?: string;
+}
+
+export interface BaseResponseFoodTruckIdResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckIdResponse;
+}
+
+export interface FoodTruckIdResponse {
+  /** @format int64 */
+  foodTruckId?: number;
+}
+
+export interface ImageRequest {
+  /**
+   * 파일 확장자 리스트
+   * @maxItems 2147483647
+   * @minItems 1
+   * @example ["png","jpg"]
+   */
+  fileExtensions: string[];
+}
+
+export interface BaseResponseImageResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ImageResponse;
+}
+
+export interface ImageInfo {
+  /**
+   * 생성된 presigned URL
+   * @example "https://example.com/presigned-url"
+   */
+  presignedUrl?: string;
+  /**
+   * 파일 접근 URL
+   * @example "https://example.com/file-url"
+   */
+  fileUrl?: string;
+}
+
+export interface ImageResponse {
+  /**
+   * 생성된 presigned URL 리스트
+   * @example ["https://example.com/presigned-url1","https://example.com/presigned-url2"]
+   */
+  presignedUrls?: ImageInfo[];
+}
+
 export interface CreateReservationRequest {
   /**
    * 푸드트럭 ID
@@ -359,45 +533,6 @@ export interface RegisterRatingRequest {
   rating: string;
 }
 
-export interface ImageRequest {
-  /**
-   * 파일 확장자 리스트
-   * @maxItems 2147483647
-   * @minItems 1
-   * @example ["png","jpg"]
-   */
-  fileExtensions: string[];
-}
-
-export interface BaseResponseImageResponse {
-  isSuccess?: boolean;
-  /** @format int32 */
-  code?: number;
-  message?: string;
-  data?: ImageResponse;
-}
-
-export interface ImageInfo {
-  /**
-   * 생성된 presigned URL
-   * @example "https://example.com/presigned-url"
-   */
-  presignedUrl?: string;
-  /**
-   * 파일 접근 URL
-   * @example "https://example.com/file-url"
-   */
-  fileUrl?: string;
-}
-
-export interface ImageResponse {
-  /**
-   * 생성된 presigned URL 리스트
-   * @example ["https://example.com/presigned-url1","https://example.com/presigned-url2"]
-   */
-  presignedUrls?: ImageInfo[];
-}
-
 export interface FoodTruckNameDuplicateCheckRequest {
   /**
    * 중복 여부를 확인할 푸드트럭 이름
@@ -551,6 +686,43 @@ export interface UserResponse {
   termAgreed?: boolean;
 }
 
+export interface BaseResponseListFoodTruckForAdminResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckForAdminResponse[];
+}
+
+export interface FoodTruckForAdminResponse {
+  /**
+   * 푸드트럭 ID
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
+   * 푸드트럭 이름
+   * @example "차콜 푸드트럭"
+   */
+  foodTruckName?: string;
+  /**
+   * 푸드트럭 사장님 이름
+   * @example "홍길동"
+   */
+  ownerName?: string;
+  /**
+   * 푸드트럭 상태
+   * @example "승인 대기"
+   */
+  foodTruckStatus?: string;
+  /**
+   * 푸드트럭 서류 URL 목록 (사업자 등록증 포함)
+   * @example ["https://cdn.chacall.com/foodtrucks/osori/doc1.jpg","https://cdn.chacall.com/foodtrucks/osori/doc2.jpg","https://cdn.chacall.com/foodtrucks/osori/doc3.jpg","https://cdn.chacall.com/foodtrucks/osori/doc4.jpg","https://cdn.chacall.com/foodtrucks/osori/doc5.jpg"]
+   */
+  foodTruckDocumentUrls?: string[];
+}
+
 export interface BaseResponseString {
   isSuccess?: boolean;
   /** @format int32 */
@@ -652,6 +824,8 @@ export interface CursorPagingResponseOwnerReservationHistoryResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface OwnerReservationHistoryResponse {
@@ -773,6 +947,8 @@ export interface CursorPagingResponseMyFoodTruckResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface MyFoodTruckResponse {
@@ -827,6 +1003,8 @@ export interface CursorPagingResponseMyFoodTruckMenuResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 /** 메뉴 응답 */
@@ -844,9 +1022,10 @@ export interface MyFoodTruckMenuResponse {
   name?: string;
   /**
    * 가격
-   * @example "12000원"
+   * @format int32
+   * @example 12000
    */
-  price?: string;
+  price?: number;
   /**
    * 설명
    * @example "진한 크림소스와 베이컨"
@@ -931,6 +1110,8 @@ export interface CursorPagingResponseMemberReservationHistoryResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface MemberReservationHistoryResponse {
@@ -1027,6 +1208,11 @@ export interface MemberReservationDetailResponse {
    * @example "예약 확정"
    */
   reservationStatus?: string;
+  /**
+   * 리뷰 작성 필요 여부
+   * @example true
+   */
+  reviewRequired?: boolean;
 }
 
 export interface BaseResponseReservationForRatingResponse {
@@ -1090,6 +1276,8 @@ export interface CursorPagingResponseSavedFoodTruckResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface SavedFoodTruckResponse {
@@ -1114,6 +1302,11 @@ export interface SavedFoodTruckResponse {
    * @example "맛있는 푸드트럭입니다."
    */
   description?: string;
+  /**
+   * 푸드트럭 음식 카테고리 (라벨 리스트)
+   * @example ["한식","분식"]
+   */
+  menuCategories?: string[];
   /**
    * 푸드트럭 평균 평점
    * @format double
@@ -1141,6 +1334,8 @@ export interface CursorPagingResponseFoodTruckResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface FoodTruckResponse {
@@ -1189,6 +1384,104 @@ export interface FoodTruckResponse {
   isSaved?: boolean;
 }
 
+export interface BaseResponseFoodTruckDetailResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckDetailResponse;
+}
+
+export interface FoodTruckDetailResponse {
+  /**
+   * 푸드트럭 식별자
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
+   * 푸드트럭 이름
+   * @example "푸드트럭"
+   */
+  name?: string;
+  /**
+   * 푸드트럭 설명
+   * @example "맛있는 푸드트럭입니다."
+   */
+  description?: string;
+  /**
+   * 푸드트럭 전화번호
+   * @example "010-1234-5678"
+   */
+  phoneNumber?: string;
+  /**
+   * 푸드트럭 활동 시간
+   * @example "09:00-20:00"
+   */
+  activeTime?: string;
+  /**
+   * 시간 협의 필요 여부
+   * @example false
+   */
+  timeDiscussRequired?: boolean;
+  /**
+   * 호출 가능 지역
+   * @example "서울 광진구, 서울 강남구, 서울 영등포구"
+   */
+  serviceAreas?: string;
+  /**
+   * 푸드트럭 메뉴 카테고리 (라벨 리스트)
+   * @example ["한식","분식"]
+   */
+  menuCategories?: string[];
+  /**
+   * 푸드트럭 제공 가능 수량
+   * @example "200인분 미만"
+   */
+  availableQuantity?: string;
+  /**
+   * 전기 사용 필요 여부
+   * @example "필요"
+   */
+  needElectricity?: string;
+  /**
+   * 결제 방법
+   * @example "무관"
+   */
+  paymentMethod?: string;
+  /**
+   * 푸드트럭 제공 가능 날짜 리스트
+   * @example ["2025-10-01 ~ 2025-10-10","2025-11-01 ~ 2025-11-10"]
+   */
+  availableDates?: string[];
+  /**
+   * 푸드트럭 사진 URL 리스트
+   * @example ["http://image.png","http://image2.png","http://image3.png"]
+   */
+  photoUrl?: string[];
+  /**
+   * 운영 정보
+   * @example "운영정보"
+   */
+  operatingInfo?: string;
+  /**
+   * 추가 옵션 정보
+   * @example "안녕하세요"
+   */
+  option?: string;
+  /**
+   * 푸드트럭 평균 평점
+   * @format double
+   * @example 4.5
+   */
+  averageRating?: number;
+  /**
+   * 현재 사용자가 저장한 푸드트럭인지 여부
+   * @example true
+   */
+  isSaved?: boolean;
+}
+
 export interface BaseResponseCursorPagingResponseFoodTruckMenuResponse {
   isSuccess?: boolean;
   /** @format int32 */
@@ -1202,6 +1495,8 @@ export interface CursorPagingResponseFoodTruckMenuResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 /** 메뉴 응답 */
@@ -1219,9 +1514,10 @@ export interface FoodTruckMenuResponse {
   name?: string;
   /**
    * 가격
-   * @example "12000원"
+   * @format int32
+   * @example 12000
    */
-  price?: string;
+  price?: number;
   /**
    * 설명
    * @example "진한 크림소스와 베이컨"
@@ -1232,6 +1528,24 @@ export interface FoodTruckMenuResponse {
    * @example "https://cdn.example.com/menus/101.jpg"
    */
   imageUrl?: string;
+}
+
+export interface BaseResponseListFoodTruckMenuResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckMenuResponse[];
+}
+
+export interface DeleteFoodTruckImagesRequest {
+  /**
+   * 삭제할 이미지 URL 목록
+   * @maxItems 2147483647
+   * @minItems 1
+   * @example ["https://example.com/image1.jpg","https://example.com/image2.jpg"]
+   */
+  imageUrls?: string[];
 }
 
 export type GetUserInfoData = BaseResponseUserResponse;
@@ -1254,6 +1568,12 @@ export type UpdateBankAccountData = BaseResponseVoid;
 
 export type DeleteBankAccountData = BaseResponseVoid;
 
+export type GetFoodTruckDetailsData = BaseResponseFoodTruckDetailResponse;
+
+export type UpdateMyFoodTruckInfoData = BaseResponseFoodTruckIdResponse;
+
+export type GetProfilePresignedUrlData = BaseResponseImageResponse;
+
 export type CreateReservationData = BaseResponseReservationIdResponse;
 
 export type CreateNewFoodTruckData = BaseResponseVoid;
@@ -1262,6 +1582,9 @@ export type GetMenusData =
   BaseResponseCursorPagingResponseMyFoodTruckMenuResponse;
 
 export type RegisterMenuData = BaseResponseVoid;
+
+export type CreateFoodTruckDocumentPresignedUrlsData =
+  BaseResponseImageResponse;
 
 export type GetChatTemplatesData = BaseResponseListChatTemplateResponse;
 
@@ -1294,6 +1617,8 @@ export type UpdateFoodTruckViewedStatusData = BaseResponseVoid;
 
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
+
+export type GetAllFoodTrucksData = BaseResponseListFoodTruckForAdminResponse;
 
 export type GetToken1Data = BaseResponseString;
 
@@ -1328,4 +1653,8 @@ export type GetFoodTrucksData =
 export type GetFoodTruckMenusData =
   BaseResponseCursorPagingResponseFoodTruckMenuResponse;
 
+export type SearchFoodTruckMenusData = BaseResponseListFoodTruckMenuResponse;
+
 export type DeleteFoodTruckData = BaseResponseVoid;
+
+export type DeleteFoodTruckImagesFromS3Data = BaseResponseVoid;
