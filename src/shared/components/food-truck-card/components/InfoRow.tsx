@@ -1,3 +1,4 @@
+import React from 'react';
 import { Icon, type IconId } from '@components/icon/Icon';
 
 interface InfoRowProps {
