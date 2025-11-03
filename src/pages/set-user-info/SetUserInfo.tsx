@@ -1,6 +1,6 @@
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
+import Button from '@components/button/Button';
+import { Icon } from '@components/icon/Icon';
+import Navigation from '@components/navigation/Navigation';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import type { UpdateUserInfoRequest } from 'apis/data-contracts';

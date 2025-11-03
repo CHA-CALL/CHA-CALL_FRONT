@@ -1,6 +1,6 @@
 import { cn } from '@utils/cn';
 import MenuToggleSwitch from '@components/menu-item/MenuToggleSwitch';
-import { formatPrice } from '@shared/utils/price-formatter';
+import { formatPrice } from '@utils/price-formatter';
 
 interface MenuItemProps {
   hasToggleSwitch?: boolean;
@@ -30,7 +30,7 @@ export default function MenuItem({
       role={handleMenuClick ? 'button' : undefined}
       onClick={handleMenuClick}
       className={cn(
-        'flex items-center justify-between py-[2rem] pr-[1rem] bg-white',
+        'flex items-center justify-between bg-white py-[2rem] pr-[1rem]',
         !isLast && 'border-grayscale-100 border-b',
         handleMenuClick && 'cursor-pointer'
       )}
@@ -42,10 +42,12 @@ export default function MenuItem({
       />
       <div className='ml-[1.4rem] flex flex-1 flex-col'>
         <span className='title-sb-14 text-grayscale-900'>{menuName}</span>
-        <span className={cn(
-          'caption-m-10 text-grayscale-500 mb-[0.8rem]',
-          hasToggleSwitch && 'line-clamp-1'
-        )}>
+        <span
+          className={cn(
+            'caption-m-10 text-grayscale-500 mb-[0.8rem]',
+            hasToggleSwitch && 'line-clamp-1'
+          )}
+        >
           {menuDescription}
         </span>
         <div className='flex items-center gap-[0.2rem]'>

@@ -1,5 +1,5 @@
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
-import Button from '@shared/components/button/Button';
+import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Button from '@components/button/Button';
 
 interface DeleteMessageBottomSheetProps {
   isOpen: boolean;
@@ -24,7 +24,7 @@ export default function DeleteMessageBottomSheet({
         <Button
           variant='cta'
           buttonStyle='sub'
-          className='border-0 p-[2rem] text-grayscale-700 title-sb-14'
+          className='text-grayscale-700 title-sb-14 border-0 p-[2rem]'
           onClick={handleDeleteMessage}
         >
           삭제하기
@@ -32,7 +32,7 @@ export default function DeleteMessageBottomSheet({
         <Button
           variant='cta'
           buttonStyle='sub'
-          className='p-[2rem] text-grayscale-700 title-sb-14'
+          className='text-grayscale-700 title-sb-14 p-[2rem]'
           onClick={handleCloseModal}
         >
           취소

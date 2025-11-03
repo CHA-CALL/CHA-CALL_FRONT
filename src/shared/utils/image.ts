@@ -1,4 +1,4 @@
-import { ALLOWED_FILE_EXTENSIONS, MAX_MB } from '@shared/constant/image';
+import { ALLOWED_FILE_EXTENSIONS, MAX_MB } from '@constant/image';
 
 export const isAcceptableFile = (file: File) => {
   return file.type ? ALLOWED_FILE_EXTENSIONS.includes(file.type) : false;

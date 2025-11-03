@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from '@shared/components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { Icon } from '@components/icon/Icon';
+import { cn } from '@utils/cn';
 
 interface TooltipProps {
   text: string;

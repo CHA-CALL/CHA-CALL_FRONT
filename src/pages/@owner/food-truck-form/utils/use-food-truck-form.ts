@@ -5,11 +5,11 @@ import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
-import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
-import { PAYMENT_METHOD } from '@shared/constant/payment-method';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
+import { NEED_ELECTRICITY } from '@constant/need-electricity';
+import { PAYMENT_METHOD } from '@constant/payment-method';
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
-import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
+import { FOOD_CATEGORIES } from '@constant/food-categories';
 
 const foodTruckSchema = z.object({
   name: z

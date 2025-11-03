@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon } from '@shared/components/icon/Icon';
-import { dateFormatter } from '@shared/utils/date-formatter';
-import { cn } from '@shared/utils/cn';
+import { Icon } from '@components/icon/Icon';
+import { dateFormatter } from '@utils/date-formatter';
+import { cn } from '@utils/cn';
 import type { SelectedDate } from '@shared/types/calendar-types';
 
 interface ButtonDateProps
@@ -31,7 +31,7 @@ export default function ButtonDate({
     <button
       type='button'
       className={cn(
-        'flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border border-grayscale-300 px-[2rem]',
+        'border-grayscale-300 flex h-[5.4rem] w-full flex-row items-center gap-[1.2rem] rounded-[1.6rem] border px-[2rem]',
         className
       )}
       onClick={handleOpenCalendar}

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import { ROLE } from '@shared/constant/role';
+import { ROLE } from '@constant/role';
 import { useRole } from '@hooks/use-role';
 import SettingMenuSection from '@pages/mypage/components/SettingMenuSection';
 import MyInfoSection from '@pages/mypage/components/MyInfoSection';

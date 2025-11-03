@@ -1,5 +1,5 @@
-import Overlay from '@shared/components/overlay/Overlay';
-import Button from '@shared/components/button/Button';
+import Overlay from '@components/overlay/Overlay';
+import Button from '@components/button/Button';
 
 interface ConfirmDeleteModalProps {
   isOpen: boolean;
