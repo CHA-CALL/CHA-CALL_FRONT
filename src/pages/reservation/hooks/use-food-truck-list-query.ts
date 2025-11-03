@@ -7,7 +7,6 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-
 import {
   getFoodTrucksData,
   updateFoodTruckSaveStatus,
@@ -17,7 +16,7 @@ import {
   FOOD_TRUCK_DETAIL,
   FOOD_TRUCKS_MUTATION_KEY,
   FOOD_TRUCKS_QUERY_KEY,
-} from '@shared/querykey/food-trucks/food-trucks';
+} from '@query-key/food-trucks/food-trucks';
 
 const FALLBACK: CursorPagingResponseFoodTruckResponse = {
   content: [],

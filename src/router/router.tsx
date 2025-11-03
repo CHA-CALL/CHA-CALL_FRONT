@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
         element: <UploadFoodTruckImages />,
       },
       {
-        path: ROUTES.PROFILE_SETTING_DETAIL + '/:field',
+        path: ROUTES.PROFILE_SETTING_EDIT,
         element: <SetUserInfo />,
       },
       {

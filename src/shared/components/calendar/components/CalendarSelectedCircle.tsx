@@ -1,6 +1,5 @@
-import type { CalendarDate } from '@shared/types/calendar-types';
-
-import { isSelectedDate } from '@shared/components/calendar/utils/calendar-utils';
+import type { CalendarDate } from '@type/calendar-types';
+import { isSelectedDate } from '@components/calendar/utils/calendar-utils';
 
 interface CalendarSelectedCircleProps {
   year: number;

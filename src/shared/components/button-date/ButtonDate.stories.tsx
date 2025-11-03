@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonDate from '@shared/components/button-date/ButtonDate';
+import ButtonDate from '@components/button-date/ButtonDate';
 
 const meta: Meta<typeof ButtonDate> = {
   title: 'Components/ButtonDate',

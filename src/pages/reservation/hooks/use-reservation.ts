@@ -9,14 +9,14 @@ import {
   extractLocationName,
 } from '@utils/extract-location';
 import { formatSelectedDateToSchedules } from '@utils/date-formatter';
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
+import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
 import { confirmedRegionsAtom } from '@shared/store/regions-store';
 import {
   useFoodTruckListQuery,
   useUpdateFoodTruckSaveStatus,
 } from '@pages/reservation/hooks/use-food-truck-list-query';
-import type { FoodTruckCategoryValue } from '@shared/types/category-types';
+import type { FoodTruckCategoryValue } from '@type/category-types';
 
 export default function useReservation() {
   const navigate = useNavigate();

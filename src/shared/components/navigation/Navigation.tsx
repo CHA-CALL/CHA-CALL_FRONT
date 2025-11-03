@@ -26,7 +26,11 @@ export default function Navigation({
       )}
     >
       <div className='flex flex-[1] items-center justify-start px-[1.3rem]'>
-        {leftIcon && <button onClick={handleLeftClick}>{leftIcon}</button>}
+        {leftIcon && (
+          <button type='button' onClick={handleLeftClick}>
+            {leftIcon}
+          </button>
+        )}
       </div>
       <div className='flex flex-[3] items-center justify-center'>
         {text && <span className='text-grayscale-900 title-sb-16'>{text}</span>}

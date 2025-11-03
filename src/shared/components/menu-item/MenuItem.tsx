@@ -1,5 +1,6 @@
 import { cn } from '@utils/cn';
 import MenuToggleSwitch from '@components/menu-item/MenuToggleSwitch';
+
 import { formatPrice } from '@shared/utils/price-formatter';
 import type {
   FoodTruckMenuResponse,

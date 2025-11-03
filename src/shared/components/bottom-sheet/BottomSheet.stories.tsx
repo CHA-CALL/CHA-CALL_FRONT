@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import BottomSheet from '@shared/components/bottom-sheet/BottomSheet';
+import BottomSheet from '@components/bottom-sheet/BottomSheet';
 
 const meta: Meta<typeof BottomSheet> = {
   title: 'Components/BottomSheet',

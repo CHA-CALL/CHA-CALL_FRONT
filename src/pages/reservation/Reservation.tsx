@@ -6,11 +6,11 @@ import ButtonIcon from '@components/button-icon/ButtonIcon';
 import Tooltip from '@components/tooltip/Tooltip';
 import ButtonFloating from '@components/button-floating/ButtonFloating';
 
-import { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
+import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
 import useReservation from '@pages/reservation/hooks/use-reservation';
-import Loading from '@shared/components/loading/Loading';
-import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
-import FoodTruckEmptyView from './components/FoodTruckEmptyView';
+import Loading from '@components/loading/Loading';
+import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
+import FoodTruckEmptyView from '@pages/reservation/components/FoodTruckEmptyView';
 
 export default function Reservation() {
   const {

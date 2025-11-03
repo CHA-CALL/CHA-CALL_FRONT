@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import useLocation from '@pages/set-location/hooks/use-location';
-
 import useRegionSearch from '@pages/set-location/hooks/use-region-search';
 import { useDepths } from '@pages/set-location/hooks/use-depths';
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
-import Input from '@shared/components/input/Input';
-
+import Button from '@components/button/Button';
+import { Icon } from '@components/icon/Icon';
+import Navigation from '@components/navigation/Navigation';
+import Input from '@components/input/Input';
 import SearchSection from '@pages/set-location/components/SearchSection';
 import SelectedChipsSheet from '@pages/set-location/components/SelectedChipsSheet';
 import DepthSection from '@pages/set-location/components/DepthSection';
@@ -95,7 +93,7 @@ export default function SetLocation() {
           />
         )}
 
-        <div className='flex gap-[0.7rem] border-t-[0.1rem] border-grayscale-200 px-[2rem] py-[1.7rem]'>
+        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
           <Button
             variant='cta'
             buttonStyle='sub'

@@ -10,9 +10,9 @@ import MenuInput from '@pages/@owner/menu/components/MenuInput';
 import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 import ImagePreview from '@components/image-preview/ImagePreview';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
-import Input from '@shared/components/input/Input';
-import Textarea from '@shared/components/text-area/Textarea';
-import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
+import Input from '@components/input/Input';
+import Textarea from '@components/text-area/Textarea';
+import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 export default function MenuRegister() {
   const navigate = useNavigate();
