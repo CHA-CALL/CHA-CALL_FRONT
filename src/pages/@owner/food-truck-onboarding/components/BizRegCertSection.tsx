@@ -1,14 +1,15 @@
-import ButtonAddImage from '@shared/components/button-add-image/ButtonAddImage';
+import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
 import { OWNER_MEDIA_MAX_COUNT } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import SectionTitle from '@pages/@owner/food-truck-onboarding/components/SectionTitle';
 import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-input';
 import { useEffect, useState, type ChangeEvent } from 'react';
-import ImagePreview from '@shared/components/image-preview/ImagePreview';
-import ErrorText from '@shared/components/error-text/ErrorText';
+import ImagePreview from '@components/image-preview/ImagePreview';
+import ErrorText from '@components/error-text/ErrorText';
+import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 interface BizRegCertSectionProps {
   file: OwnerFormData['bizRegCert'];
-  onChange: (_value: OwnerFormData['bizRegCert']) => void;
+  onChange: (_value: File | undefined) => void;
   error?: string;
 }
 
@@ -17,7 +18,7 @@ export default function BizRegCertSection({
   onChange,
   error,
 }: BizRegCertSectionProps) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -29,20 +30,18 @@ export default function BizRegCertSection({
 
   const handleRemoveFile = () => {
     onChange(undefined);
+    setImageUrl(undefined);
   };
 
   useEffect(() => {
     if (file) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        setImageUrl(e.target?.result as string);
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+      return () => {
+        URL.revokeObjectURL(url);
       };
-      reader.onerror = () => {
-        setImageUrl(null);
-      };
-      reader.readAsDataURL(file);
     } else {
-      setImageUrl(null);
+      setImageUrl(undefined);
     }
   }, [file]);
 
@@ -51,16 +50,17 @@ export default function BizRegCertSection({
       <SectionTitle
         title='사업자 등록증'
         maxLength={OWNER_MEDIA_MAX_COUNT.BIZ_REG_CERT}
-        currentLength={file ? 1 : 0}
+        currentLength={imageUrl ? 1 : 0}
       />
-      {!file && <ButtonAddImage handleFileChange={handleFileChange} />}
-      {file && (
+      {!imageUrl && <ButtonAddImage handleFileChange={handleFileChange} />}
+      {imageUrl && (
         <ImagePreview
           handleClose={handleRemoveFile}
           src={imageUrl || undefined}
           alt='bizRegCert'
         />
       )}
+      <p className='caption-m-12 text-grayscale-300'>{IMAGE_INFO_MESSAGE}</p>
       {error && <ErrorText text={error} />}
     </section>
   );

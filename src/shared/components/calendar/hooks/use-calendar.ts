@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-
-import type { CalendarDate, SelectedDate } from '@shared/types/calendar-types';
-import { formatCalendarDayToDate } from '@shared/utils/date-formatter';
-
+import type { CalendarDate, SelectedDate } from '@type/calendar-types';
+import { formatCalendarDayToDate } from '@utils/date-formatter';
 import {
   compareDate,
   formatToCalendarDate,
   getCalendarDays,
-} from '@shared/components/calendar/utils/calendar-utils';
+} from '@components/calendar/utils/calendar-utils';
 
 export default function useCalendar(
   selectedDate: SelectedDate,

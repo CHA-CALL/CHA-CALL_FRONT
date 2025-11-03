@@ -4,6 +4,7 @@ export const MENU_LIMIT = {
   DESCRIPTION_MIN_LENGTH: 1,
   DESCRIPTION_MAX_LENGTH: 50,
   PRICE_MIN_LENGTH: 1,
+  IMAGE_MIN_COUNT: 1,
 } as const;
 
 export const MENU_ERROR_MESSAGE = {
@@ -12,4 +13,5 @@ export const MENU_ERROR_MESSAGE = {
   DESCRIPTION_MIN: (min: number) => `메뉴 설명을 ${min}자 이상 입력해주세요.`,
   DESCRIPTION_MAX: (max: number) => `메뉴 설명을 ${max}자 이하로 입력해주세요.`,
   PRICE_MIN: `가격을 입력해주세요. 숫자만 입력 가능합니다.`,
+  IMAGE_MIN_COUNT: (min: number) => `이미지를 ${min}개 이상 업로드 해주세요.`,
 } as const;

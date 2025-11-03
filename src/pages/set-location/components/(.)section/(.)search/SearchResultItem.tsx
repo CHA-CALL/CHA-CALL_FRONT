@@ -1,6 +1,6 @@
-import ButtonCheck from '@shared/components/button-check/ButtonCheck';
-import { cn } from '@shared/utils/cn';
-import { type RegionResponse } from '@../../apis/data-contracts';
+import ButtonCheck from '@components/button-check/ButtonCheck';
+import { cn } from '@utils/cn';
+import { type RegionResponse } from 'apis/data-contracts';
 
 interface SearchResultItemProps {
   location: RegionResponse;

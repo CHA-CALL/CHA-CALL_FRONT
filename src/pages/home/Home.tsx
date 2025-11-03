@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Button from '@shared/components/button/Button';
-import Overlay from '@shared/components/overlay/Overlay';
-import Input from '@shared/components/input/Input';
-import { Icon } from '@shared/components/icon/Icon';
-import RatingBottomSheet from '@shared/components/rating-bottom-sheet/RatingBottomSheet';
+import Button from '@components/button/Button';
+import Overlay from '@components/overlay/Overlay';
+import Input from '@components/input/Input';
+import { Icon } from '@components/icon/Icon';
+import RatingBottomSheet from '@components/rating-bottom-sheet/RatingBottomSheet';
 
 const Home = () => {
   // BottomSheet states
@@ -64,8 +64,8 @@ const Home = () => {
       {/* BottomSheet */}
 
       <RatingBottomSheet
-        reservationId={3}
-        foodTruckId={6}
+        reservationId={4}
+        foodTruckId={1}
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
       />

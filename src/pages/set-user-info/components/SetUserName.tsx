@@ -1,12 +1,12 @@
-import { Icon } from '@shared/components/icon/Icon';
-import Input from '@shared/components/input/Input';
+import { Icon } from '@components/icon/Icon';
+import Input from '@components/input/Input';
 import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
 import {
   SET_USER_NAME_TEXT,
   USER_NAME_MAX_LENGTH,
 } from '@pages/set-user-info/constant/set-user-constant';
-import { useRole } from '@shared/hooks/use-role';
-import { ROLE } from '@shared/constant/role';
+import { useRole } from '@hooks/use-role';
+import { ROLE } from '@constant/role';
 import type { ChangeEvent } from 'react';
 
 export default function SetUserName({

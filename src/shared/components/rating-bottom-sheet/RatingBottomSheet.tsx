@@ -1,10 +1,10 @@
 import BottomSheet from '@components/bottom-sheet/BottomSheet';
 import Button from '@components/button/Button';
 import { Icon } from '@components/icon/Icon';
-import { cn } from '@shared/utils/cn';
-import { RATES } from '@shared/constant/rate';
+import { cn } from '@utils/cn';
+import { RATES } from '@constant/rate';
 
-import useStarRating from '@components/rating-bottom-sheet/use-star-rating';
+import useStarRating from '@components/rating-bottom-sheet/hooks/use-star-rating';
 
 interface RatingBottomSheetProps {
   reservationId: number;

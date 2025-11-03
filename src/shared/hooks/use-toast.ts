@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { ToastAtom } from '@utils/toast';
-import { TOAST_TYPE } from '@shared/constant/toast';
+import { TOAST_TYPE } from '@constant/toast';
 
 const useToast = () => {
   const addToast = useSetAtom(ToastAtom);

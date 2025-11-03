@@ -1,5 +1,5 @@
-import Button from '@shared/components/button/Button';
-import { cn } from '@shared/utils/cn';
+import Button from '@components/button/Button';
+import { cn } from '@utils/cn';
 import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
 import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
 

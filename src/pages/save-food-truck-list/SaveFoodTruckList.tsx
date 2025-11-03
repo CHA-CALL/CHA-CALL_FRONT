@@ -1,13 +1,13 @@
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
+import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@components/icon/Icon';
+import ButtonFloating from '@components/button-floating/ButtonFloating';
 import { useNavigate } from 'react-router-dom';
-import FoodTruckCard from '@shared/components/food-truck-card/FoodTruckCard';
+import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
 import {
   useGetSaveFoodTrucks,
   useUnsaveFoodTrucks,
 } from '@pages/save-food-truck-list/hooks/use-save-food-truck';
-import Loading from '@shared/components/loading/Loading';
+import Loading from '@components/loading/Loading';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 
