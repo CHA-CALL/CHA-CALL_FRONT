@@ -14,6 +14,7 @@ export type IconId =
   | 'ic_dot'
   | 'ic_down'
   | 'ic_download'
+  | 'ic_dropdown'
   | 'ic_error'
   | 'ic_error_small'
   | 'ic_filter'
@@ -22,6 +23,7 @@ export type IconId =
   | 'ic_locate'
   | 'ic_mypage'
   | 'ic_next'
+  | 'ic_phone'
   | 'ic_plus'
   | 'ic_register'
   | 'ic_search'
@@ -34,7 +36,6 @@ export type IconId =
   | 'ic_time'
   | 'ic_trash'
   | 'ic_up';
-
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;

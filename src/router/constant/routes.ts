@@ -20,5 +20,6 @@ export const ROUTES = {
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
   MENU_LIST: '/owner/menu-list',
   MENU_REGISTER: '/owner/menu-register',
+  FOOD_TRUCK_DETAIL: (foodTruckId: string) => `/food-truck/${foodTruckId}`,
   FOOD_TRUCK_FORM: '/owner/food-truck-form',
 };

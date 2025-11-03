@@ -22,6 +22,7 @@ import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
+import FoodTruckDetail from '@pages/food-truck-detail/FoodTruckDetail';
 import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 
 export const router = createBrowserRouter([
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MENU_REGISTER,
         element: <MenuRegister />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_DETAIL(':foodTruckId'),
+        element: <FoodTruckDetail />,
       },
       {
         path: ROUTES.FOOD_TRUCK_FORM + '/:id?',
