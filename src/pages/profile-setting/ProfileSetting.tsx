@@ -51,12 +51,13 @@ export default function ProfileSetting() {
         text='프로필 설정'
         rightIcon={
           <Button
-            style={{ paddingLeft: '2rem', paddingRight: '2rem' }}
-            children={'편집'}
-            variant={'default'}
-            buttonStyle={'edit'}
+            variant='default'
+            buttonStyle='edit'
+            className='px-[2rem]'
             onClick={handleEditProfile}
-          />
+          >
+            편집
+          </Button>
         }
       />
       <div className='flex flex-col items-center gap-[3rem] p-[2rem]'>

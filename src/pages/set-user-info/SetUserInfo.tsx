@@ -18,8 +18,14 @@ export default function SetUserInfo() {
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const { formMethods, handleSubmit, isFetching, isValid, userData } =
-    useSetUserInfo();
+  const {
+    formMethods,
+    handleSubmit,
+    isInitialLoading,
+    isUpdating,
+    isValid,
+    userData,
+  } = useSetUserInfo();
 
   const handleOpenBottomSheet = () => {
     setIsBottomSheetOpen(true);
@@ -29,7 +35,7 @@ export default function SetUserInfo() {
   };
   const handleClickBack = () => navigate(-1);
 
-  if (isFetching || !userData) {
+  if (isInitialLoading || isUpdating || !userData) {
     return <Loading />;
   }
 

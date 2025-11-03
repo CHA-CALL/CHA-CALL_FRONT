@@ -9,14 +9,13 @@ export default function SetUserGender() {
 
   return (
     <Controller
-      name='gender' // ⭐️ Zod 스키마의 'gender' 필드와 연결
+      name='gender'
       control={control}
       render={({ field }) => (
         <div className='flex flex-1 flex-col gap-[1rem]'>
           <h2 className='title-sb-14 px-[0.5rem]'>성별</h2>
           <div className='flex w-full gap-[1rem]'>
             <Button
-              children={male}
               variant='cta'
               buttonStyle='sub'
               onClick={() => field.onChange(male)}
@@ -26,9 +25,10 @@ export default function SetUserGender() {
                   ? 'bg-primary-25 text-primary-700 border-primary-700'
                   : 'border-grayscale-300'
               )}
-            />
+            >
+              {male}
+            </Button>
             <Button
-              children={female}
               variant='cta'
               buttonStyle='sub'
               onClick={() => field.onChange(female)}
@@ -38,7 +38,9 @@ export default function SetUserGender() {
                   ? 'bg-primary-25 text-primary-700 border-primary-700'
                   : 'border-grayscale-300'
               )}
-            />
+            >
+              {female}
+            </Button>
           </div>
         </div>
       )}

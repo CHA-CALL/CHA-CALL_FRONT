@@ -12,8 +12,8 @@ import {
 } from '@pages/set-user-info/utils/user-schema';
 
 export const useSetUserInfo = () => {
-  const { data: userData, isLoading } = useGetUserInfo();
-  const { mutate: updateUser, isPending } = useUpdateUserInfo();
+  const { data: userData, isPending: isInitialLoading } = useGetUserInfo();
+  const { mutate: updateUser, isPending: isUpdating } = useUpdateUserInfo();
   const formMethods = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     mode: 'onChange',
@@ -44,7 +44,8 @@ export const useSetUserInfo = () => {
   return {
     formMethods,
     handleSubmit: formMethods.handleSubmit(onSubmit),
-    isFetching: isLoading || isPending,
+    isInitialLoading,
+    isUpdating,
     isValid: formMethods.formState.isValid,
     userData,
   };
