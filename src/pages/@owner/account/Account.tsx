@@ -4,11 +4,13 @@ import Navigation from '@shared/components/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@shared/components/icon/Icon';
 import { ROUTES } from '@router/constant/routes';
-import { mockup } from '@pages/@owner/account/mockup';
+import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
+import Loading from '@shared/components/loading/Loading';
 
 export default function Account() {
   const navigate = useNavigate();
-  const data = mockup;
+
+  const { data, isPending } = useFetchAccountData();
 
   const handleClickBack = () => {
     navigate(-1);
@@ -19,11 +21,15 @@ export default function Account() {
 
   const handleEditButton = () => {
     if (data) {
-      navigate(`${ROUTES.ACCOUNT_FORM}/${data.id}`);
+      navigate(`${ROUTES.ACCOUNT_FORM}/${data.bankAccountId}`);
     } else {
       navigate(ROUTES.ACCOUNT_FORM);
     }
   };
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -53,16 +59,18 @@ export default function Account() {
 
         {data ? (
           <div
-            className='flex flex-col gap-[2.4rem] rounded-[1.6rem] border border-grayscale-200 px-[2.6rem] py-[2.4rem]'
-            key={data.id}
+            className='border-grayscale-200 flex flex-col gap-[2.4rem] rounded-[1.6rem] border px-[2.6rem] py-[2.4rem]'
+            key={data.bankAccountId}
           >
             <div className='flex items-center justify-between'>
               <p className='text-grayscale-500 title-sb-12'>은행명</p>
-              <p className='text-grayscale-900 body-m-13'>{data.bank}</p>
+              <p className='text-grayscale-900 body-m-13'>{data.bankName}</p>
             </div>
             <div className='flex items-center justify-between'>
               <p className='text-grayscale-500 title-sb-12'>예금주</p>
-              <p className='text-grayscale-900 body-m-13'>{data.name}</p>
+              <p className='text-grayscale-900 body-m-13'>
+                {data.accountHolderName}
+              </p>
             </div>
             <div className='flex items-center justify-between'>
               <p className='text-grayscale-500 title-sb-12'>계좌번호</p>

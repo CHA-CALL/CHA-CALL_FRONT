@@ -18,16 +18,23 @@ export default function Textarea({
   ...props
 }: TextareaProps) {
   return (
-    <textarea
-      className={cn(
-        'body-m-14 text-grayscale-900 border-grayscale-300 caret-primary-700 placeholder:body-m-14 placeholder:text-grayscale-300 focus:border-grayscale-500 rounded-[1.6rem] px-[2rem] py-[1.65rem] focus:outline-none',
-        className
-      )}
-      placeholder={placeholder}
-      value={value}
-      onChange={handleChange}
-      maxLength={maxLength}
-      {...props}
-    />
+    <>
+      <textarea
+        className={cn(
+          'body-m-14 text-grayscale-900 border-grayscale-300 caret-primary-700 placeholder:body-m-14 placeholder:text-grayscale-300 focus:border-grayscale-500 rounded-[1.6rem] px-[2rem] py-[1.65rem] focus:outline-none',
+          className
+        )}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        maxLength={maxLength}
+        {...props}
+      />
+      <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
+        <p className='text-primary-700'>{value.length}</p>
+        <p className='text-grayscale-700'>/</p>
+        <p className='text-grayscale-700'>{maxLength}</p>
+      </div>
+    </>
   );
 }

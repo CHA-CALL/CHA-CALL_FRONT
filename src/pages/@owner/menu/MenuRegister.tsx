@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect, type ChangeEvent } from 'react';
 
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
@@ -12,6 +12,7 @@ import ImagePreview from '@components/image-preview/ImagePreview';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
 import Input from '@shared/components/input/Input';
 import Textarea from '@shared/components/text-area/Textarea';
+import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 export default function MenuRegister() {
   const navigate = useNavigate();
@@ -25,22 +26,22 @@ export default function MenuRegister() {
     updateName,
     updateDescription,
     updatePrice,
-    updateImage,
+    updateImageUrl,
     handleSubmit,
     trigger,
   } = useMenuForm();
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      updateImage(selectedFile);
+      updateImageUrl(selectedFile);
     }
     e.target.value = '';
   };
 
   const handleRemoveFile = () => {
     setImageUrl(null);
-    updateImage(null);
+    updateImageUrl(null);
   };
 
   const handleClearName = () => {
@@ -48,7 +49,7 @@ export default function MenuRegister() {
   };
 
   useEffect(() => {
-    if (formData.image) {
+    if (formData.imageUrl) {
       const reader = new FileReader();
       reader.onload = e => {
         setImageUrl(e.target?.result as string);
@@ -56,11 +57,11 @@ export default function MenuRegister() {
       reader.onerror = () => {
         setImageUrl(null);
       };
-      reader.readAsDataURL(formData.image);
+      reader.readAsDataURL(formData.imageUrl);
     } else {
       setImageUrl(null);
     }
-  }, [formData.image]);
+  }, [formData.imageUrl]);
 
   const handleClickBack = () => {
     navigate(-1);
@@ -87,14 +88,12 @@ export default function MenuRegister() {
         text='메뉴 등록'
       />
 
-      <div className='flex flex-col gap-[2.4rem] p-[2rem]'>
+      <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[8.5rem]'>
         <MenuInput title='메뉴 이름' error={errors.name}>
           <Input
             placeholder='텍스트를 입력해주세요.'
             value={formData.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateName(e.target.value)
-            }
+            onChange={e => updateName(e.target.value)}
             maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
             rightComponent={
               <button onClick={handleClearName} className='flex items-center'>
@@ -110,19 +109,10 @@ export default function MenuRegister() {
             <Textarea
               placeholder='텍스트를 입력해주세요.'
               value={formData.description}
-              handleChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                updateDescription(e.target.value)
-              }
+              handleChange={e => updateDescription(e.target.value)}
               maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
               className='h-[12.2rem]'
             />
-            <div className='caption-m-12 flex items-center justify-end gap-[0.1rem]'>
-              <p className='text-primary-700'>{formData.description.length}</p>
-              <p className='text-grayscale-700'>/</p>
-              <p className='text-grayscale-700'>
-                {MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
-              </p>
-            </div>
           </div>
         </MenuInput>
 
@@ -132,25 +122,35 @@ export default function MenuRegister() {
             inputMode='numeric'
             placeholder='텍스트를 입력해주세요.'
             value={formData.price}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updatePrice(e.target.value)
-            }
+            onChange={e => updatePrice(e.target.value)}
             className='border-grayscale-300 focus-within:border-grayscale-700'
           />
         </MenuInput>
 
-        <MenuInput title='사진 등록' error={errors.image} maxLength={1} currentLength={imageUrl ? 1 : 0}>
+        <MenuInput
+          title='사진 등록'
+          error={errors.imageUrl}
+          maxLength={1}
+          currentLength={formData.imageUrl ? 1 : 0}
+        >
           <div className='flex'>
             {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
-            {imageUrl && (
+            {formData.imageUrl && (
               <ImagePreview
-                key='image-preview'
+                key='photo-preview'
                 handleClose={handleRemoveFile}
-                src={imageUrl}
+                src={
+                  formData.imageUrl
+                    ? URL.createObjectURL(formData.imageUrl)
+                    : undefined
+                }
                 alt='image-preview'
               />
             )}
           </div>
+          <p className='caption-m-12 text-grayscale-300'>
+            {IMAGE_INFO_MESSAGE}
+          </p>
         </MenuInput>
       </div>
 

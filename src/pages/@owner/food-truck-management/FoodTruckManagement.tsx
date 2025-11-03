@@ -26,7 +26,7 @@ export default function FoodTruckManagement() {
     navigate(-1);
   };
   const handleNavigateToAdd = () => {
-    navigate(ROUTES.UPLOAD_FOOD_TRUCK);
+    navigate(ROUTES.FOOD_TRUCK_FORM);
   };
 
   const {
