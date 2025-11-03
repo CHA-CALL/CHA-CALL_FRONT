@@ -84,7 +84,7 @@ export default function Account() {
       <div className='flex flex-1 flex-col gap-[0.3rem] overflow-y-auto p-[2rem]'>
         <Information
           iconId='ic_error'
-          text='거래가 진행 될 계좌이므로, 꼼꼼한 확인이 필요해요! '
+          text='거래가 진행 될 계좌이므로, 꼼꼼한 확인이 필요해요!'
         />
         <section className='flex flex-col gap-[2rem]'>
           <div className='flex flex-col gap-[1rem] pt-[1rem]'>

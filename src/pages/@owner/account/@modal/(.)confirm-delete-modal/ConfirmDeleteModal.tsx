@@ -1,19 +1,19 @@
 import Overlay from '@shared/components/overlay/Overlay';
 import Button from '@shared/components/button/Button';
 
-interface ConfirmExitModalProps {
+interface ConfirmDeleteModalProps {
   isOpen: boolean;
   handleClose: () => void;
   handleClickConfirm: () => void;
   handleClickCancel: () => void;
 }
 
-export default function ConfirmExitModal({
+export default function ConfirmDeleteModal({
   isOpen,
   handleClose,
   handleClickConfirm,
   handleClickCancel,
-}: ConfirmExitModalProps) {
+}: ConfirmDeleteModalProps) {
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
       <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
