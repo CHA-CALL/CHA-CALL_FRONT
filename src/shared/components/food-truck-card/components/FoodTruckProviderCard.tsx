@@ -21,6 +21,7 @@ export default function FoodTruckProviderCard({
     activeTime = '',
     serviceArea = '',
   } = data;
+  const splitActiveTime = activeTime.split('-').map(time => time.trim());
 
   return (
     <div
@@ -58,8 +59,18 @@ export default function FoodTruckProviderCard({
         <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>
           {description}
         </span>
-        <InfoRow iconId='ic_time'>{activeTime}</InfoRow>
-        <InfoRow iconId='ic_locate'>{serviceArea}</InfoRow>
+        <InfoRow iconId='ic_time'>
+          <div className='caption-m-11 text-grayscale-700 flex items-center gap-[0.2rem]'>
+            <span>{splitActiveTime[0]}</span>
+            <span>-</span>
+            <span>{splitActiveTime[1]}</span>
+          </div>
+        </InfoRow>
+        <InfoRow iconId='ic_locate'>
+          <span className='caption-m-11 text-grayscale-700 line-clamp-1'>
+            {serviceArea}
+          </span>
+        </InfoRow>
       </div>
     </div>
   );
