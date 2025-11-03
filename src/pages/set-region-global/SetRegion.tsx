@@ -6,7 +6,8 @@ import Navigation from '@layout/navigation/Navigation';
 import Region from '@shared/components/region/Region';
 
 export default function SetRegion() {
-  const { initialRegions, handleConfirmRegion } = useRegion();
+  const { initialRegions, handleConfirmRegion, handleResetRegionGlobal } =
+    useRegion();
   const navigate = useNavigate();
   const handleClickBack = () => navigate(-1);
 
@@ -20,6 +21,7 @@ export default function SetRegion() {
       <Region
         initialRegions={Array.from(initialRegions)}
         handleConfirmRegion={handleConfirmRegion}
+        handleResetRegion={handleResetRegionGlobal}
       />
     </>
   );

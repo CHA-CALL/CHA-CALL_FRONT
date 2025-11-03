@@ -38,7 +38,8 @@ function SetRegionContent() {
     });
   };
 
-  const { regionCodes, handleSubmitRegion } = useRegion();
+  const { regionCodes, handleSubmitRegion, handleResetRegionFoodTruck } =
+    useRegion();
 
   return (
     <>
@@ -50,6 +51,7 @@ function SetRegionContent() {
       <Region
         initialRegions={regionCodes}
         handleConfirmRegion={handleSubmitRegion}
+        handleResetRegion={handleResetRegionFoodTruck}
       />
     </>
   );

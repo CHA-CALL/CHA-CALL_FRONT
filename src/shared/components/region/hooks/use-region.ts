@@ -6,9 +6,13 @@ import { MAX_SELECTED } from '@shared/components/region/constant/region';
 
 interface UseRegionProps {
   initialRegions?: RegionResponse[];
+  handleResetRegion: () => void;
 }
 
-export default function useRegion({ initialRegions }: UseRegionProps) {
+export default function useRegion({
+  initialRegions,
+  handleResetRegion,
+}: UseRegionProps) {
   const [selectedRegions, setSelectedRegions] = useState<RegionResponse[]>(
     initialRegions ?? []
   );
@@ -27,6 +31,7 @@ export default function useRegion({ initialRegions }: UseRegionProps) {
 
   const handleResetRegions = () => {
     setSelectedRegions([]);
+    handleResetRegion();
   };
 
   return {

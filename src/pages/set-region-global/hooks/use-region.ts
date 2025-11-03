@@ -15,8 +15,13 @@ export default function useRegion() {
     navigate(ROUTES.RESERVATION);
   };
 
+  const handleResetRegionGlobal = () => {
+    setRegions(new Map([]));
+  };
+
   return {
     initialRegions,
     handleConfirmRegion,
+    handleResetRegionGlobal,
   };
 }

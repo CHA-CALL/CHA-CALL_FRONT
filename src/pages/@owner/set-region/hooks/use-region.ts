@@ -29,6 +29,10 @@ export const useRegion = () => {
     });
   };
 
+  const handleResetRegionFoodTruck = () => {
+    updateRegionCodes([]);
+  };
+
   return {
     regionCodes: formData.regionCodes ?? [],
 
@@ -36,5 +40,6 @@ export const useRegion = () => {
 
     updateRegionCodes,
     handleSubmitRegion,
+    handleResetRegionFoodTruck,
   };
 };
