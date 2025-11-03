@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { type UserResponse } from 'apis/data-contracts';
-
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
-import { isAcceptableFile, isFileSizeValid } from '@utils/image';
-import { ROUTES } from '@router/constant/routes';
-import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
-import UserDataSection from '@pages/profile-setting/components/UserDataSection';
-import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
-import AgreementSection from '@pages/profile-setting/components/AgreementSection';
+import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
 import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
-import ProfileImageBottomSheet from '@pages/profile-setting/components/ProfileImageBottomSheet';
-import { user_mockup } from '@pages/mypage/constant/mockup';
+import AgreementSection from '@pages/profile-setting/components/AgreementSection';
+import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
+import UserDataSection from '@pages/profile-setting/components/UserDataSection';
+import { ROUTES } from '@router/constant/routes';
+import Button from '@components/button/Button';
+import Loading from '@components/loading/Loading';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileSetting() {
-  // TODO: 커스텀 훅으로 분리
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
+
+  const { data: userData, isPending: isUserDataPending } = useGetUserInfo();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  if (isUserDataPending) {
+    return <Loading />;
+  }
 
   const handleGoBack = () => {
     navigate(-1);
@@ -40,46 +39,9 @@ export default function ProfileSetting() {
     setIsModalOpen(false);
   };
 
-  const handleOpenBottomSheet = () => {
-    setIsBottomSheetOpen(true);
+  const handleEditProfile = () => {
+    navigate(ROUTES.PROFILE_SETTING_EDIT);
   };
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // TODO: 토스트메시지로 보여주기
-    if (!isAcceptableFile(file)) {
-      alert(NOT_ALLOWED_FILE_TYPE);
-      return;
-    }
-
-    // TODO: 토스트메시지로 보여주기
-    if (!isFileSizeValid(file)) {
-      alert(CANNOT_UPLOAD_FILE_MB);
-      return;
-    }
-
-    const imageUrl = URL.createObjectURL(file);
-    setUserInfo(prev => (prev ? { ...prev, profileImageUrl: imageUrl } : prev));
-    alert('이미지 변경 완료');
-    handleCloseBottomSheet();
-  };
-
-  const handleDeleteImage = () => {
-    // TODO: 회원정보 수정 api
-    setUserInfo(prev => (prev ? { ...prev, profileImageUrl: '' } : prev));
-    alert('이미지 삭제 완료');
-    handleCloseBottomSheet();
-  };
-
-  useEffect(() => {
-    // TODO: 추후 서버에서 api를 통해 회원정보 조회
-    setUserInfo(user_mockup);
-  }, []);
 
   return (
     <>
@@ -87,15 +49,22 @@ export default function ProfileSetting() {
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
         text='프로필 설정'
+        rightIcon={
+          <Button
+            variant='default'
+            buttonStyle='edit'
+            className='px-[2rem]'
+            onClick={handleEditProfile}
+          >
+            편집
+          </Button>
+        }
       />
-      <div className='flex flex-col items-center gap-[3rem] p-[2rem] pt-[3rem]'>
-        <ProfileImageSection
-          profileImageUrl={userInfo?.profileImageUrl}
-          handleOpenBottomSheet={handleOpenBottomSheet}
-        />
+      <div className='flex flex-col items-center gap-[3rem] p-[2rem]'>
+        <ProfileImageSection profileImageUrl={userData?.profileImageUrl} />
         <div className='flex w-full flex-col gap-[2.4rem]'>
-          <UserDataSection userInfo={userInfo} />
-          <AgreementSection termAgreed={userInfo?.termAgreed} />
+          <UserDataSection userInfo={userData || null} />
+          <AgreementSection termAgreed={userData?.termAgreed} />
         </div>
         <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
@@ -116,12 +85,6 @@ export default function ProfileSetting() {
         </footer>
       </div>
       <DeleteAccountModal isOpen={isModalOpen} handleClose={handleCloseModal} />
-      <ProfileImageBottomSheet
-        isBottomSheetOpen={isBottomSheetOpen}
-        handleCloseBottomSheet={handleCloseBottomSheet}
-        handleFileChange={handleFileChange}
-        handleDeleteImage={handleDeleteImage}
-      />
     </>
   );
 }

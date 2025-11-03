@@ -16,7 +16,7 @@ export const ROUTES = {
   SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
   UPLOAD_FOOD_TRUCK_IMAGES: '/owner/food-truck-form/upload-food-truck-images',
   PROFILE_SETTING: '/profile-setting',
-  PROFILE_SETTING_DETAIL: '/profile-setting',
+  PROFILE_SETTING_EDIT: '/profile-setting/edit',
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
   MENU_LIST: '/owner/menu-list',
   MENU_REGISTER: '/owner/menu-register',

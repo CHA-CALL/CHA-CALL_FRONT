@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react';
-
-import DefaultProfile from '@assets/img/img_avatar.png';
-import { Icon } from '@components/icon/Icon';
-import { user_mockup } from '@pages/mypage/constant/mockup';
-import type { UserResponse } from 'apis/data-contracts';
 import { ROUTES } from '@router/constant/routes';
+import { Icon } from '@components/icon/Icon';
+import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
+import Loading from '@components/loading/Loading';
 
 interface MyInfoSectionProps {
   isProvider: boolean;
@@ -15,16 +12,15 @@ export default function MyInfoSection({
   isProvider,
   handleNavigateTo,
 }: MyInfoSectionProps) {
-  const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
+  const { data: userData, isPending } = useGetUserInfo();
 
   const handleNavigateToProfileSetting = () => {
     handleNavigateTo(ROUTES.PROFILE_SETTING);
   };
 
-  useEffect(() => {
-    // TODO: 추후 서버에서 api를 통해 회원정보 조회
-    setUserInfo(user_mockup);
-  }, []);
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex flex-col gap-[2.3rem]'>
@@ -36,13 +32,13 @@ export default function MyInfoSection({
       >
         <img
           className='border-grayscale-200 h-[5rem] w-[5rem] rounded-full border object-cover'
-          src={userInfo?.profileImageUrl || DefaultProfile}
+          src={userData?.profileImageUrl}
           alt='프로필 사진'
         />
         <div className='flex flex-col'>
           <div className='flex flex-row items-center gap-[0.6rem]'>
             <span className='text-grayscale-900 heading-sb-18'>
-              {userInfo?.name}님
+              {userData?.name}님
             </span>
             <Icon name='ic_next' className='text-grayscale-900' />
           </div>

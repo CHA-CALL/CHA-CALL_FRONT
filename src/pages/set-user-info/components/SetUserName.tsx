@@ -1,65 +1,46 @@
+import { Controller, useFormContext } from 'react-hook-form';
+import ErrorText from '@shared/components/error-text/ErrorText';
 import { Icon } from '@components/icon/Icon';
 import Input from '@components/input/Input';
-import type { SetUserInfoItemProps } from '@pages/set-user-info/types/set-user-types';
-import {
-  SET_USER_NAME_TEXT,
-  USER_NAME_MAX_LENGTH,
-} from '@pages/set-user-info/constant/set-user-constant';
-import { useRole } from '@hooks/use-role';
-import { ROLE } from '@constant/role';
-import type { ChangeEvent } from 'react';
+import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
 
-export default function SetUserName({
-  userInfo,
-  setUserInfo,
-}: SetUserInfoItemProps) {
-  const { title, ownerText, memberText } = SET_USER_NAME_TEXT;
-  const { role } = useRole();
-  const isProvider = role === ROLE.PROVIDER;
-  const userName = userInfo?.name ?? '';
-
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserInfo(prev => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        name: e.target.value,
-      };
-    });
-  };
+export default function SetUserName() {
+  const {
+    control,
+    formState: { errors }, // 폼의 에러 상태
+    setValue,
+  } = useFormContext();
 
   const handleClearName = () => {
-    setUserInfo(prev => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        name: '',
-      };
-    });
+    setValue('name', '', { shouldValidate: true });
   };
   return (
-    <div className='flex flex-1 flex-col gap-[1rem] py-[2rem]'>
+    <div className='flex flex-1 flex-col gap-[1rem]'>
       <nav className='flex flex-col gap-[0.2rem] px-[0.5rem]'>
-        <h2 className='title-sb-16'>{title}</h2>
-        <p className='caption-m-11 text-grayscale-500'>
-          {isProvider ? ownerText : memberText}
-        </p>
+        <h2 className='title-sb-14'>이름</h2>
       </nav>
 
-      <Input
-        value={userName}
-        placeholder={userName}
-        maxLength={userName === '' ? undefined : USER_NAME_MAX_LENGTH}
-        rightComponent={
-          userName !== '' && (
-            <button className='translate-y-[0.2rem]'>
-              <Icon name='ic_close' />
-            </button>
-          )
-        }
-        handleRightClick={handleClearName}
-        onChange={handleChangeName}
+      <Controller
+        name='name'
+        control={control}
+        render={({ field }) => (
+          <Input
+            value={field.value}
+            placeholder='이름 입력'
+            maxLength={field.value === '' ? undefined : USER_NAME_MAX_LENGTH}
+            rightComponent={
+              <button className='translate-y-[0.2rem]' type='button'>
+                <Icon name='ic_close' />
+              </button>
+            }
+            handleRightClick={handleClearName}
+            onChange={field.onChange}
+          />
+        )}
       />
+      {errors.name?.message && (
+        <ErrorText text={errors.name.message?.toString()} />
+      )}
     </div>
   );
 }
