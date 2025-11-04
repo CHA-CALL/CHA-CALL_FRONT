@@ -4,6 +4,7 @@ import type { SelectedDate } from '@shared/types/calendar-types';
 
 import CalendarDayButton from '@shared/components/calendar/components/CalendarDayButton';
 import useCalendar from '@shared/components/calendar/hooks/use-calendar';
+import { DAY_OF_THE_WEEK_LABELS } from '@shared/constant/day-of-week-labels';
 
 interface CalendarProps {
   selectedDate: SelectedDate;
@@ -11,8 +12,6 @@ interface CalendarProps {
   handleCloseBottomSheet: () => void;
   isOpen: boolean;
 }
-
-const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({
   selectedDate,
@@ -59,7 +58,7 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className='text-grayscale-500 caption-r-12 grid grid-cols-7 text-center'>
+        <div className='grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
           {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
@@ -67,7 +66,7 @@ export default function Calendar({
           ))}
         </div>
 
-        <div className='body-m-14 grid grid-cols-7'>
+        <div className='grid grid-cols-7 body-m-14'>
           {calendarDays.prevDates.map(day => (
             <CalendarDayButton
               key={`p${day}`}

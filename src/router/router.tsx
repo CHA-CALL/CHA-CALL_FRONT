@@ -23,6 +23,7 @@ import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckMa
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
 import MenuEdit from '@pages/@owner/menu/MenuEdit';
+import FoodTruckDetail from '@pages/food-truck-detail/FoodTruckDetail';
 import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 
 export const router = createBrowserRouter([
@@ -95,7 +96,7 @@ export const router = createBrowserRouter([
         element: <UploadFoodTruckImages />,
       },
       {
-        path: ROUTES.PROFILE_SETTING_DETAIL + '/:field',
+        path: ROUTES.PROFILE_SETTING_EDIT,
         element: <SetUserInfo />,
       },
       {
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MENU_EDIT(':foodTruckId', ':menuId'),
         element: <MenuEdit />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_DETAIL(':foodTruckId'),
+        element: <FoodTruckDetail />,
       },
       {
         path: ROUTES.FOOD_TRUCK_FORM + '/:id?',

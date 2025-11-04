@@ -1,4 +1,4 @@
-import { type Role, ROLE } from '@shared/constant/role';
+import { type Role, ROLE } from '@constant/role';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 const roleAtom = atom<Role>(ROLE.LOGOUT);

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SelectChip from '@shared/components/select-chip/SelectChip';
+import SelectChip from '@components/select-chip/SelectChip';
 
 const meta: Meta<typeof SelectChip> = {
   title: 'Components/SelectChip',

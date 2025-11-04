@@ -1,7 +1,7 @@
-import type { FOOD_TRUCK_CATEGORIES } from '@shared/constant/food-truck-categories';
-import { AVAILABLE_QUANTITY } from '@shared/constant/available-quantity';
-import { NEED_ELECTRICITY } from '@shared/constant/need-electricity';
-import { PAYMENT_METHOD } from '@shared/constant/payment-method';
+import type { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
+import { NEED_ELECTRICITY } from '@constant/need-electricity';
+import { PAYMENT_METHOD } from '@constant/payment-method';
 
 export type FoodTruckCategoryKey = keyof typeof FOOD_TRUCK_CATEGORIES;
 export type FoodTruckCategoryValue =

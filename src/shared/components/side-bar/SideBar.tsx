@@ -1,8 +1,8 @@
 import { Icon, type IconId } from '@components/icon/Icon';
 import Button from '@components/button/Button';
 import Overlay from '@components/overlay/Overlay';
-import { useRole } from '@shared/hooks/use-role';
-import { ROLE } from '@shared/constant/role';
+import { useRole } from '@hooks/use-role';
+import { ROLE } from '@constant/role';
 
 interface MenuItemProps {
   icon: IconId;
@@ -20,33 +20,32 @@ const MenuItem = ({
   icon,
   text,
   handleMenuClick,
-  show = true
+  show = true,
 }: MenuItemProps) => {
   if (!show) {
     return null;
-  };
+  }
 
   return (
     <button
       type='button'
       onClick={handleMenuClick}
-      className='flex items-center gap-[0.8rem] w-full px-[0.6rem] py-[1.2rem] cursor-pointer'
+      className='flex w-full cursor-pointer items-center gap-[0.8rem] px-[0.6rem] py-[1.2rem]'
     >
       <Icon name={icon} />
-      <span className='relative top-[0.1rem] body-m-16 text-grayscale-900'>{text}</span>
+      <span className='body-m-16 text-grayscale-900 relative top-[0.1rem]'>
+        {text}
+      </span>
     </button>
   );
 };
 
-export default function SideBar({
-  isOpen,
-  handleSideBarClose,
-}: SideBarProps) {
+export default function SideBar({ isOpen, handleSideBarClose }: SideBarProps) {
   const { role, setRole } = useRole();
 
   if (!isOpen) {
     return null;
-  };
+  }
 
   const handleLogin = () => {
     // TODO: 로그인 페이지로 라우팅
@@ -87,79 +86,72 @@ export default function SideBar({
 
   const renderButtons = () => {
     switch (role) {
-    case ROLE.LOGOUT:
-      return (
-        <Button
-          variant='default'
-          buttonStyle='large'
-          handleClickButton={handleLogin}
-          className='px-[0] py-[0]'
-        >
-          로그인/회원가입
-        </Button>
-      )
-    case ROLE.CLIENT:
-      return (
-        <div className='flex gap-[1rem]'>
+      case ROLE.LOGOUT:
+        return (
           <Button
             variant='default'
             buttonStyle='large'
-            handleClickButton={handleLogout}
+            handleClickButton={handleLogin}
             className='px-[0] py-[0]'
           >
-            로그아웃
+            로그인/회원가입
           </Button>
-          <Button
-            variant='default'
-            buttonStyle='large'
-            handleClickButton={handleSwitchToManager}
-            className='px-[0] py-[0]'
-          >
-            사장님 전환
-          </Button>
-        </div>
-      )
-    case ROLE.PROVIDER:
-      return (
-        <div className='flex gap-[1rem]'>
-          <Button
-            variant='default'
-            buttonStyle='large'
-            handleClickButton={handleLogout}
-            className='px-[0] py-[0]'
-          >
-            로그아웃
-          </Button>
-          <Button
-            variant='default'
-            buttonStyle='large'
-            handleClickButton={handleSwitchToCustomer}
-            className='px-[0] py-[0]'
-          >
-            고객 전환
-          </Button>
-        </div>
-      )
+        );
+      case ROLE.CLIENT:
+        return (
+          <div className='flex gap-[1rem]'>
+            <Button
+              variant='default'
+              buttonStyle='large'
+              handleClickButton={handleLogout}
+              className='px-[0] py-[0]'
+            >
+              로그아웃
+            </Button>
+            <Button
+              variant='default'
+              buttonStyle='large'
+              handleClickButton={handleSwitchToManager}
+              className='px-[0] py-[0]'
+            >
+              사장님 전환
+            </Button>
+          </div>
+        );
+      case ROLE.PROVIDER:
+        return (
+          <div className='flex gap-[1rem]'>
+            <Button
+              variant='default'
+              buttonStyle='large'
+              handleClickButton={handleLogout}
+              className='px-[0] py-[0]'
+            >
+              로그아웃
+            </Button>
+            <Button
+              variant='default'
+              buttonStyle='large'
+              handleClickButton={handleSwitchToCustomer}
+              className='px-[0] py-[0]'
+            >
+              고객 전환
+            </Button>
+          </div>
+        );
     }
   };
 
   return (
-    <Overlay
-      isOpen={isOpen}
-      position='left'
-      handleClose={handleSideBarClose}
-    >
+    <Overlay isOpen={isOpen} position='left' handleClose={handleSideBarClose}>
       <div
         onClick={e => e.stopPropagation()}
-        className='
-          fixed top-0 left-0 flex flex-col
-          w-[80%] max-w-[30rem] h-full py-[2.3rem] px-[2rem]
-          bg-white'
+        className='fixed left-0 top-0 flex h-full w-[80%] max-w-[30rem] flex-col bg-white px-[2rem] py-[2.3rem]'
       >
         <img
           src='https://picsum.photos/id/11/120/34'
           alt='logo'
-          className='w-[12rem] h-[3.4rem] mb-[1.8rem] bg-black'
+          className='mb-[1.8rem] h-[3.4rem] w-[12rem] bg-black'
         />
         {renderButtons()}
 
@@ -181,7 +173,7 @@ export default function SideBar({
             show={role === ROLE.PROVIDER}
           />
 
-          <div className='my-[1.2rem] border-b border-grayscale-200' />
+          <div className='border-grayscale-200 my-[1.2rem] border-b' />
 
           <MenuItem
             icon='ic_support'
@@ -196,5 +188,5 @@ export default function SideBar({
         </div>
       </div>
     </Overlay>
-  )
+  );
 }

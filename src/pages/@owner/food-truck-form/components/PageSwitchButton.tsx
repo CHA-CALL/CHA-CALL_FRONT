@@ -1,5 +1,5 @@
-import { Icon } from '@shared/components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { Icon } from '@components/icon/Icon';
+import { cn } from '@utils/cn';
 
 interface PageSwitchButtonProps {
   isSelected: boolean;

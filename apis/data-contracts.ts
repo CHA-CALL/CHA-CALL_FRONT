@@ -824,6 +824,8 @@ export interface CursorPagingResponseOwnerReservationHistoryResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface OwnerReservationHistoryResponse {
@@ -945,6 +947,8 @@ export interface CursorPagingResponseMyFoodTruckResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface MyFoodTruckResponse {
@@ -999,6 +1003,8 @@ export interface CursorPagingResponseMyFoodTruckMenuResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 /** 메뉴 응답 */
@@ -1104,6 +1110,8 @@ export interface CursorPagingResponseMemberReservationHistoryResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface MemberReservationHistoryResponse {
@@ -1268,6 +1276,8 @@ export interface CursorPagingResponseSavedFoodTruckResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface SavedFoodTruckResponse {
@@ -1324,6 +1334,8 @@ export interface CursorPagingResponseFoodTruckResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 export interface FoodTruckResponse {
@@ -1483,6 +1495,8 @@ export interface CursorPagingResponseFoodTruckMenuResponse {
   /** @format int64 */
   lastCursor?: number;
   hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
 }
 
 /** 메뉴 응답 */

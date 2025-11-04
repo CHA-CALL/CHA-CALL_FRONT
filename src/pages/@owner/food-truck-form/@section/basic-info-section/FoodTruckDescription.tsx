@@ -1,8 +1,8 @@
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import Input from '@shared/components/input/Input';
+import Input from '@components/input/Input';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
-import ErrorText from '@shared/components/error-text/ErrorText';
+import ErrorText from '@components/error-text/ErrorText';
 
 export default function FoodTruckDescription() {
   const { description, descriptionError, updateDescription } = useBasicInfo();

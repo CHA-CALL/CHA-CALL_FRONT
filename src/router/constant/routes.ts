@@ -16,10 +16,11 @@ export const ROUTES = {
   SAVE_FOOD_TRUCK_LIST: '/save-food-truck-list',
   UPLOAD_FOOD_TRUCK_IMAGES: '/owner/food-truck-form/upload-food-truck-images',
   PROFILE_SETTING: '/profile-setting',
-  PROFILE_SETTING_DETAIL: '/profile-setting',
+  PROFILE_SETTING_EDIT: '/profile-setting/edit',
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
   MENU_LIST: (foodTruckId: string) => `/owner/menu-list/${foodTruckId}`,
   MENU_REGISTER: (foodTruckId: string) => `/owner/menu-register/${foodTruckId}`,
   MENU_EDIT: (foodTruckId: string, menuId: string) => `/owner/menu-edit/${foodTruckId}/${menuId}`,
+  FOOD_TRUCK_DETAIL: (foodTruckId: string) => `/food-truck/${foodTruckId}`,
   FOOD_TRUCK_FORM: '/owner/food-truck-form',
 };

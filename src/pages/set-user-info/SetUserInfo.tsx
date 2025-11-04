@@ -1,71 +1,77 @@
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import Navigation from '@shared/components/navigation/Navigation';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import type { UpdateUserInfoRequest } from 'apis/data-contracts';
-
-import { dummyUserInfo } from '@pages/set-user-info/constant/mocks';
-import {
-  INITIAL_USER_INFO,
-  COMPONENT_MAP,
-  VALID_FIELDS,
-  type ValidField,
-  SET_USER_INFO_TITLES,
-} from '@pages/set-user-info/constant/set-user-constant';
-import { ROUTES } from '@router/constant/routes';
+import Loading from '@components/loading/Loading';
+import SetUserName from '@pages/set-user-info/components/SetUserName';
+import SetUserEmail from '@pages/set-user-info/components/SetUserEmail';
+import SetUserGender from '@pages/set-user-info/components/SetUserGender';
+import SetAgreement from '@pages/set-user-info/components/SetAgreement';
+import SetUserImage from '@pages/set-user-info/components/SetUserImage';
+import ProfileImageBottomSheet from '@pages/set-user-info/components/ProfileImageBottomSheet';
+import { FormProvider } from 'react-hook-form';
+import { useSetUserInfo } from '@pages/set-user-info/hooks/use-set-user-info';
+import Button from '@components/button/Button';
+import { Icon } from '@components/icon/Icon';
+import Navigation from '@components/navigation/Navigation';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function SetUserInfo() {
-  const { field } = useParams<{ field: ValidField }>();
-  const [userInfo, setUserInfo] =
-    useState<UpdateUserInfoRequest>(INITIAL_USER_INFO);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setUserInfo(dummyUserInfo);
-  }, []);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  useEffect(() => {
-    if (!field || !VALID_FIELDS.includes(field)) {
-      navigate(ROUTES.PROFILE_SETTING, { replace: true });
-    }
-  }, [field, navigate]);
+  const {
+    formMethods,
+    handleSubmit,
+    isInitialLoading,
+    isUpdating,
+    isValid,
+    userData,
+  } = useSetUserInfo();
 
-  const ComponentToRender = field ? COMPONENT_MAP[field] : null;
-  const { name: userName, email: userEmail, gender: userGender } = userInfo;
-
-  const isValid =
-    userName === '' || userEmail === '' || userGender === undefined;
-
-  const handleClickBack = () => navigate(-1);
-  const handleClickSave = () => {
-    // TODO : 추후 이메일 변경 API 추가, 프로필 페이지로 이동 후 toast
-    alert(`변경된 사용자 정보
-      name : ${userName}
-      email: ${userEmail}
-      gender: ${userGender}`);
+  const handleOpenBottomSheet = () => {
+    setIsBottomSheetOpen(true);
   };
+  const handleCloseBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+  const handleClickBack = () => navigate(-1);
+
+  if (isInitialLoading || isUpdating || !userData) {
+    return <Loading />;
+  }
 
   return (
-    <div className='flex h-dvh flex-col'>
-      <Navigation
-        text={SET_USER_INFO_TITLES[field ?? 'name']}
-        leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={handleClickBack}
-      />
-      <div className='jusify-between flex flex-1 flex-col px-[2rem] pb-[1.7rem]'>
-        {ComponentToRender && (
-          <ComponentToRender userInfo={userInfo} setUserInfo={setUserInfo} />
-        )}
-        <Button
-          variant='cta'
-          buttonStyle={isValid ? 'disabled' : 'active'}
-          className='h-[5.4rem]'
-          handleClickButton={handleClickSave}
-        >
-          저장하기
-        </Button>
-      </div>
-    </div>
+    <FormProvider {...formMethods}>
+      <form onSubmit={handleSubmit} className='relative'>
+        <ProfileImageBottomSheet
+          isBottomSheetOpen={isBottomSheetOpen}
+          handleCloseBottomSheet={handleCloseBottomSheet}
+        />
+        <Navigation
+          text='프로필 수정'
+          leftIcon={<Icon name='ic_back' />}
+          handleLeftClick={handleClickBack}
+        />
+        <div className='flex flex-col items-center gap-[2rem] p-[2rem]'>
+          <SetUserImage handleOpenBottomSheet={handleOpenBottomSheet} />
+          <div className='flex w-full flex-col gap-[3rem]'>
+            <SetUserName />
+            <SetUserEmail />
+            <SetUserGender />
+            <SetAgreement />
+          </div>
+        </div>
+
+        <footer className='fixed bottom-[1.7rem] left-[0rem] right-[0rem] mx-auto w-full max-w-[60rem] bg-white px-[2rem]'>
+          <Button
+            type='submit'
+            variant='cta'
+            buttonStyle={isValid ? 'active' : 'disabled'}
+            className='h-[5.4rem]'
+          >
+            저장하기
+          </Button>
+        </footer>
+      </form>
+    </FormProvider>
   );
 }

@@ -13,21 +13,9 @@ const meta: Meta<typeof MenuItem> = {
       control: { type: 'boolean' },
       description: '토글 스위치 표시 여부',
     },
-    menuImage: {
-      control: { type: 'text' },
-      description: '메뉴 이미지 URL',
-    },
-    menuName: {
-      control: { type: 'text' },
-      description: '메뉴 이름',
-    },
-    menuDescription: {
-      control: { type: 'text' },
-      description: '메뉴 설명',
-    },
-    menuPrice: {
-      control: { type: 'text' },
-      description: '메뉴 가격',
+    menu: {
+      control: { type: 'object' },
+      description: '메뉴 정보',
     },
     isToggled: {
       control: { type: 'boolean' },
@@ -54,10 +42,14 @@ type Story = StoryObj<typeof meta>;
 // 기본 메뉴
 export const Default: Story = {
   args: {
-    menuImage: 'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
-    menuName: '화이타',
-    menuDescription: '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
-    menuPrice: 18000,
+    menu: {
+      imageUrl:
+        'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+      name: '화이타',
+      description:
+        '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+      price: 18000,
+    },
     isLast: false,
   },
 };
@@ -66,10 +58,14 @@ export const Default: Story = {
 export const Toggled: Story = {
   args: {
     hasToggleSwitch: true,
-    menuImage: 'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
-    menuName: '화이타',
-    menuDescription: '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
-    menuPrice: 20000,
+    menu: {
+      imageUrl:
+        'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+      name: '화이타',
+      description:
+        '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+      price: 20000,
+    },
     isToggled: true,
     handleMenuClick: () => {},
     handleToggle: () => {},
@@ -80,24 +76,36 @@ export const Toggled: Story = {
 // 기본 메뉴 리스트
 export const MenuList: Story = {
   render: () => (
-    <div className='flex flex-col w-[40rem] p-[2rem] bg-white'>
+    <div className='flex w-[40rem] flex-col bg-white p-[2rem]'>
       <MenuItem
-        menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
-        menuName='화이타'
-        menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice={18000}
+        menu={{
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+          name: '화이타',
+          description:
+            '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+          price: 18000,
+        }}
       />
       <MenuItem
-        menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
-        menuName='화이타'
-        menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice={20000}
+        menu={{
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+          name: '화이타',
+          description:
+            '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+          price: 20000,
+        }}
       />
       <MenuItem
-        menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
-        menuName='화이타'
-        menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice={19000}
+        menu={{
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+          name: '화이타',
+          description:
+            '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+          price: 19000,
+        }}
         isLast={true}
       />
     </div>
@@ -107,33 +115,45 @@ export const MenuList: Story = {
 // 토글 메뉴 리스트
 export const ToggledMenuList: Story = {
   render: () => (
-    <div className='flex flex-col w-[40rem] p-[2rem] bg-white'>
+    <div className='flex w-[40rem] flex-col bg-white p-[2rem]'>
       <MenuItem
         hasToggleSwitch={true}
-        menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
-        menuName='화이타'
-        menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice={18000}
+        menu={{
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+          name: '화이타',
+          description:
+            '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+          price: 18000,
+        }}
         isToggled={true}
         handleMenuClick={() => {}}
         handleToggle={() => {}}
       />
       <MenuItem
         hasToggleSwitch={true}
-        menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
-        menuName='화이타'
-        menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice={20000}
+        menu={{
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+          name: '화이타',
+          description:
+            '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+          price: 20000,
+        }}
         isToggled={false}
         handleMenuClick={() => {}}
         handleToggle={() => {}}
       />
       <MenuItem
         hasToggleSwitch={true}
-        menuImage='https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg'
-        menuName='화이타'
-        menuDescription='새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴'
-        menuPrice={19000}
+        menu={{
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/food-3007395_1280.jpg',
+          name: '화이타',
+          description:
+            '새우, 치킨, 돼지고기와 부재료를 또띠아와 함께 싸서 먹는 메뉴',
+          price: 19000,
+        }}
         isToggled={true}
         handleMenuClick={() => {}}
         handleToggle={() => {}}

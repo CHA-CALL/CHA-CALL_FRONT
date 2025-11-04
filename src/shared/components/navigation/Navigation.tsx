@@ -1,3 +1,4 @@
+import { cn } from '@shared/utils/cn';
 import React from 'react';
 
 interface NavigationProps {
@@ -6,6 +7,7 @@ interface NavigationProps {
   rightIcon?: React.ReactNode;
   handleRightClick?: () => void;
   text?: string;
+  className?: string;
 }
 
 export default function Navigation({
@@ -14,11 +16,21 @@ export default function Navigation({
   rightIcon,
   handleRightClick,
   text,
+  className = 'bg-white',
 }: NavigationProps) {
   return (
-    <nav className='fixed-center top-[0] z-30 flex h-[4.8rem] items-center bg-white'>
+    <nav
+      className={cn(
+        `top-[0] z-30 flex h-[4.8rem] items-center fixed-center`,
+        className
+      )}
+    >
       <div className='flex flex-[1] items-center justify-start px-[1.3rem]'>
-        {leftIcon && <button onClick={handleLeftClick}>{leftIcon}</button>}
+        {leftIcon && (
+          <button type='button' onClick={handleLeftClick}>
+            {leftIcon}
+          </button>
+        )}
       </div>
       <div className='flex flex-[3] items-center justify-center'>
         {text && <span className='text-grayscale-900 title-sb-16'>{text}</span>}

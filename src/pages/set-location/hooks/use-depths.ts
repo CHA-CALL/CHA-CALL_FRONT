@@ -7,8 +7,8 @@ import {
   useDepth3Regions,
 } from '@pages/set-location/hooks/use-regions';
 
-import { REGION_QUERY_KEY } from '@shared/querykey/regions';
-import { type RegionResponse } from '@../../apis/data-contracts';
+import { REGION_QUERY_KEY } from '@query-key/regions';
+import { type RegionResponse } from 'apis/data-contracts';
 import { DEPTHS } from '@pages/set-location/constant/location';
 
 export const useDepths = () => {
