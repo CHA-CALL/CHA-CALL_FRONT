@@ -35,11 +35,13 @@ export default function ReservationDetailTopContent(
               src={profileImage}
               alt='client-portrait'
               className='border-grayscale-200 max-h-[5rem] min-h-[5rem] min-w-[5rem] max-w-[5rem] rounded-[1.6rem] border'
+              className='border-grayscale-200 max-h-[5rem] min-h-[5rem] min-w-[5rem] max-w-[5rem] rounded-[1.6rem] border'
             />
           </div>
 
           <div className='flex flex-col gap-[0.3rem] py-[0.4rem] pr-[0.4rem]'>
             {foodTruckName && <Tag title={foodTruckName} />}
+            <p className='text-grayscale-700 title-sb-14 flex items-center gap-[0.8rem]'>
             <p className='text-grayscale-700 title-sb-14 flex items-center gap-[0.8rem]'>
               <span className='text-grayscale-900 heading-sb-18'>
                 {clientName}
@@ -48,6 +50,7 @@ export default function ReservationDetailTopContent(
             </p>
           </div>
         </div>
+        <div className='border-grayscale-50 my-[1rem] border-[0.4rem]' />
         <div className='border-grayscale-50 my-[1rem] border-[0.4rem]' />
       </>
     );

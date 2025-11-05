@@ -5,7 +5,6 @@ import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
 import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/ConfirmModal';
-
 import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
 import useToast from '@hooks/use-toast';
 import Loading from '@layout/loading/Loading';

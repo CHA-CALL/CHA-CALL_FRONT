@@ -23,11 +23,14 @@ export default function SelectBankBottomSheet({
     >
       <div className='flex flex-col'>
         <p className='heading-sb-18 py-[2rem] text-black'>은행선택</p>
+        <p className='heading-sb-18 py-[2rem] text-black'>은행선택</p>
         <div className='flex w-full flex-col'>
           {Object.values(BANK).map(option => (
             <button
+              type='button'
               key={option}
               onClick={() => handleChange(option)}
+              className='text-grayscale-700 body-m-14 flex w-full items-center justify-between py-[1.5rem]'
               className='text-grayscale-700 body-m-14 flex w-full items-center justify-between py-[1.5rem]'
             >
               <p

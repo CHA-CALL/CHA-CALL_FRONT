@@ -9,7 +9,7 @@ import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import { PAYMENT_METHOD } from '@constant/payment-method';
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
-import { FOOD_CATEGORIES } from '@constant/food-categories';
+import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
 import type { RegionResponse } from 'apis/data-contracts';
 
 const foodTruckSchema = z.object({

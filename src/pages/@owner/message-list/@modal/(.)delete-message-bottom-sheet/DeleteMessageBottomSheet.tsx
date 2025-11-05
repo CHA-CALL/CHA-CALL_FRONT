@@ -25,6 +25,7 @@ export default function DeleteMessageBottomSheet({
           variant='cta'
           buttonStyle='sub'
           className='text-grayscale-700 title-sb-14 border-0 p-[2rem]'
+          className='text-grayscale-700 title-sb-14 border-0 p-[2rem]'
           onClick={handleDeleteMessage}
         >
           삭제하기
@@ -32,6 +33,7 @@ export default function DeleteMessageBottomSheet({
         <Button
           variant='cta'
           buttonStyle='sub'
+          className='text-grayscale-700 title-sb-14 p-[2rem]'
           className='text-grayscale-700 title-sb-14 p-[2rem]'
           onClick={handleCloseModal}
         >

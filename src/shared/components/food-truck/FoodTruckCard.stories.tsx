@@ -148,7 +148,9 @@ export const ReservationProviderList: Story = {
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
       <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
     </div>
@@ -172,7 +174,9 @@ export const ReservationClientList: Story = {
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
       <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
     </div>
@@ -203,7 +207,9 @@ export const FoodTruckProviderList: Story = {
     <div className='flex flex-col gap-[2rem] bg-white p-[2rem]'>
       <FoodTruckCard {...args} />
       <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
+      <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <div className='bg-grayscale-100 h-[0.1rem] w-full' />
       <FoodTruckCard {...args} />
     </div>
@@ -230,12 +236,15 @@ export const FoodTruckClientList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col bg-white p-[2rem]'>
       <span className='text-grayscale-500 caption-m-12 mb-[1rem] ml-[0.4rem]'>
+      <span className='text-grayscale-500 caption-m-12 mb-[1rem] ml-[0.4rem]'>
         총 14개
       </span>
       <div className='flex flex-col gap-[2rem]'>
         <FoodTruckCard {...args} />
         <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <FoodTruckCard {...args} />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <FoodTruckCard {...args} />
       </div>

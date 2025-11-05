@@ -26,6 +26,7 @@ export default function SearchSection({
   return (
     <>
       <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
+      <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
         <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
           {searchRegions.length > 0 ? (
             searchRegions.map((item: RegionResponse) => (

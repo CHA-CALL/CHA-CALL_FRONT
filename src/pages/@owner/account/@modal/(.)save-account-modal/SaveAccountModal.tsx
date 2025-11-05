@@ -26,11 +26,15 @@ export default function SaveAccountModal({
         <div className='flex flex-col gap-[1rem]'>
           <div className='flex items-center justify-between'>
             <p className='title-sb-12 text-grayscale-500'>은행</p>
-            <p className='caption-m-12 text-grayscale-900'>{formData.bank}</p>
+            <p className='caption-m-12 text-grayscale-900'>
+              {formData.bankName}
+            </p>
           </div>
           <div className='flex items-center justify-between'>
             <p className='title-sb-12 text-grayscale-500'>예금주</p>
-            <p className='caption-m-12 text-grayscale-900'>{formData.name}</p>
+            <p className='caption-m-12 text-grayscale-900'>
+              {formData.accountHolderName}
+            </p>
           </div>
           <div className='flex items-center justify-between'>
             <p className='title-sb-12 text-grayscale-500'>계좌번호</p>
@@ -52,6 +56,7 @@ export default function SaveAccountModal({
             buttonStyle='active'
             children='저장'
             handleClickButton={handleConfirm}
+            type='submit'
           />
         </div>
       </div>

@@ -93,20 +93,22 @@ export default function Region({
         )}
 
         <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
-          <Button
-            variant='cta'
-            buttonStyle='sub'
-            handleClickButton={handleResetRegions}
-          >
-            초기화
-          </Button>
-          <Button
-            variant='cta'
-            buttonStyle={selectedRegions.length > 0 ? 'active' : 'disabled'}
-            handleClickButton={() => handleConfirmRegion(selectedRegions)}
-          >
-            확인
-          </Button>
+          <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
+            <Button
+              variant='cta'
+              buttonStyle='sub'
+              handleClickButton={handleResetRegions}
+            >
+              초기화
+            </Button>
+            <Button
+              variant='cta'
+              buttonStyle={selectedRegions.length > 0 ? 'active' : 'disabled'}
+              handleClickButton={() => handleConfirmRegion(selectedRegions)}
+            >
+              확인
+            </Button>
+          </div>
         </div>
       </div>
     </>

@@ -20,8 +20,8 @@ export default function ButtonTab({
         type='button'
         onClick={handleClickTab}
         className={cn(
-          'relative mt-[1.8rem] w-full py-[1.2rem] duration-200 title-sb-14',
-          isActive ? 'cursor-default text-primary-700' : 'text-grayscale-900',
+          'title-sb-14 relative mt-[1.8rem] w-full py-[1.2rem] duration-200',
+          isActive ? 'text-primary-700 cursor-default' : 'text-grayscale-900',
           className
         )}
         {...props}
@@ -29,7 +29,7 @@ export default function ButtonTab({
         {children}
       </button>
       {isActive && (
-        <div className='h-[0.2rem] rounded-[0.2rem] bg-primary-700' />
+        <div className='bg-primary-700 h-[0.2rem] rounded-[0.2rem]' />
       )}
     </div>
   );

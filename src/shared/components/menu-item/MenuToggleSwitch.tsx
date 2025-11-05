@@ -1,0 +1,41 @@
+import React from 'react';
+
+interface MenuToggleSwitchProps {
+  isToggled: boolean;
+  handleToggle: () => void;
+}
+
+export default function MenuToggleSwitch({
+  isToggled,
+  handleToggle,
+}: MenuToggleSwitchProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    handleToggle();
+  };
+
+  return (
+    <button
+      type='button'
+      role='switch'
+      aria-checked={isToggled}
+      aria-label='메뉴 토글'
+      onClick={handleClick}
+      className={`
+        relative inline-flex items-center
+        w-[4.8rem] h-[3rem] ml-[2.1rem]
+        rounded-full duration-200 ease-in-out
+        ${isToggled ? 'bg-primary-500' : 'bg-grayscale-200'}
+      `}
+    >
+      <span
+        className={`
+          inline-block w-[2.6rem] h-[2.6rem] mx-[0.2rem]
+          bg-white rounded-full duration-200 ease-in-out
+          shadow-[0_0_8px_rgba(0,0,0,0.08)]
+          ${isToggled ? 'translate-x-[1.8rem]' : 'translate-x-[0]'}
+        `}
+      />
+    </button>
+  );
+}

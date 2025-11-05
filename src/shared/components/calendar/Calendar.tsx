@@ -12,8 +12,6 @@ interface CalendarProps {
   isOpen: boolean;
 }
 
-const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
-
 export default function Calendar({
   selectedDate,
   handleApplyDate,

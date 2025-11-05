@@ -38,6 +38,8 @@ export default function ChatListManageBar({
   return (
     <div className='fixed-center border-grayscale-100 top-[4.8rem] flex justify-between border-b-[0.1rem] bg-white px-[2rem] pt-[2.8rem]'>
       <div className='text-grayscale-900 title-sb-14 flex w-full gap-[1rem] pt-[0.2rem]'>
+    <div className='fixed-center border-grayscale-100 top-[4.8rem] flex justify-between border-b-[0.1rem] bg-white px-[2rem] pt-[2.8rem]'>
+      <div className='text-grayscale-900 title-sb-14 flex w-full gap-[1rem] pt-[0.2rem]'>
         {FILTERS.map(filter => {
           return (
             <button

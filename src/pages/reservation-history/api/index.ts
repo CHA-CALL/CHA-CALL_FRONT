@@ -1,6 +1,6 @@
 import type {
   GetOwnerReservationsData,
-  GetMemberReservationsData
+  GetMemberReservationsData,
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 import type { ReservationState } from '@pages/reservation-history/types/reservation-history';

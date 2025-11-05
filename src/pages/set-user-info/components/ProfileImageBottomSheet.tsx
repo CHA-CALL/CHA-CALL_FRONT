@@ -1,24 +1,53 @@
-import BottomSheet from '@layout/bottom-sheet/BottomSheet';
-import Button from '@ui/button/Button';
+import { DEFAULT_PROFILE_IMAGE } from '@pages/mypage/hooks/use-user-data';
+import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Button from '@components/button/Button';
+import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
+import useToast from '@hooks/use-toast';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import React, { useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 interface ProfileImageBottomSheetProps {
   isBottomSheetOpen: boolean;
   handleCloseBottomSheet: () => void;
-  handleFileChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDeleteImage: () => void;
 }
 
 export default function ProfileImageBottomSheet({
   isBottomSheetOpen,
   handleCloseBottomSheet,
-  handleFileChange,
-  handleDeleteImage,
 }: ProfileImageBottomSheetProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const toast = useToast();
+  const { setValue } = useFormContext();
 
   const handleEditImage = () => {
     fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!isAcceptableFile(file)) {
+      toast.error(NOT_ALLOWED_FILE_TYPE);
+      return;
+    }
+
+    if (!isFileSizeValid(file)) {
+      toast.error(`파일 용량은 ${MAX_MB}MB 이하여야 합니다.`);
+      return;
+    }
+
+    // TODO : 추후 presignedURL api로 대체
+    const imageUrl = URL.createObjectURL(file);
+
+    setValue('profileImageUrl', imageUrl);
+    handleCloseBottomSheet();
+  };
+
+  const handleDeleteImage = () => {
+    setValue('profileImageUrl', DEFAULT_PROFILE_IMAGE);
+    handleCloseBottomSheet();
   };
   return (
     <BottomSheet

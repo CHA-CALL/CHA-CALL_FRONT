@@ -1,10 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import ChatListManageBar from '@pages/chat-list/components/ChatListManageBar';
 import { useChatList } from '@pages/chat-list/hooks/use-chat-list';
-import ChatListItem from '@components/chat/chat-list-item/ChatListItem';
+import ChatListItem from '@shared/components/chat/chat-list-item/ChatListItem';
 import { Icon } from '@icon/Icon';
 import OverlayModal from '@layout/overlay/Overlay';
 import Navigation from '@layout/navigation/Navigation';
-import { useNavigate } from 'react-router-dom';
 import Button from '@ui/button/Button';
 
 export default function ChatList() {

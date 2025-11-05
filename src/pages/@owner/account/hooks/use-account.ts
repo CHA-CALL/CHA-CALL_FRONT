@@ -6,13 +6,13 @@ import { ERROR_MESSAGE } from '@pages/@owner/account/constants/account-schema';
 import { formatAccountNumber } from '@pages/@owner/account/utils/format-account-number';
 
 const accountSchema = z.object({
-  bank: z
+  bankName: z.enum([...BANK], {
+    message: ERROR_MESSAGE.bank,
+  }),
+  accountHolderName: z
     .string()
-    .min(1, ERROR_MESSAGE.bank)
-    .refine(bank => Object.values(BANK).includes(bank as Bank), {
-      message: ERROR_MESSAGE.bank,
-    }),
-  name: z.string().min(1, ERROR_MESSAGE.name).max(15, ERROR_MESSAGE.nameMax),
+    .min(1, ERROR_MESSAGE.name)
+    .max(15, ERROR_MESSAGE.nameMax),
   accountNumber: z
     .string()
     .min(1, ERROR_MESSAGE.accountNumber)
@@ -32,9 +32,8 @@ export const useAccount = () => {
   } = useForm<AccountFormData>({
     resolver: zodResolver(accountSchema),
     defaultValues: {
-      name: '',
+      accountHolderName: '',
       accountNumber: '',
-      bank: '',
     },
     mode: 'onChange',
   });
@@ -42,11 +41,11 @@ export const useAccount = () => {
   const formData = watch();
 
   const updateName = (name: string) => {
-    setValue('name', name, { shouldValidate: true });
+    setValue('accountHolderName', name, { shouldValidate: true });
   };
 
   const updateBank = (bank: Bank) => {
-    setValue('bank', bank, { shouldValidate: true });
+    setValue('bankName', bank, { shouldValidate: true });
   };
 
   const updateAccountNumber = (accountNumber: string) => {
@@ -54,22 +53,15 @@ export const useAccount = () => {
     setValue('accountNumber', numbersOnly, { shouldValidate: true });
   };
 
-  const onSubmit = async (formData: AccountFormData) => {
-    //TODO: 계좌 등록 제출
-    if (isValid && formData) {
-      alert('계좌 등록 제출');
-    }
-  };
-
   const compatibleFormData = {
-    name: formData.name,
-    bank: formData.bank,
+    accountHolderName: formData.accountHolderName,
+    bankName: formData.bankName,
     accountNumber: formData.accountNumber,
   };
 
   const compatibleErrors = {
-    name: errors.name?.message,
-    bank: errors.bank?.message,
+    accountHolderName: errors.accountHolderName?.message,
+    bankName: errors.bankName?.message,
     accountNumber: errors.accountNumber?.message,
   };
 
@@ -81,7 +73,7 @@ export const useAccount = () => {
     updateBank,
     updateAccountNumber,
     formatAccountNumber,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit,
     isFormValid: isValid,
     trigger,
   };

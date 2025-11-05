@@ -15,10 +15,7 @@ import {
   OWNER_TEXT_ERROR_MESSAGE,
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
-import {
-  NOT_ALLOWED_FILE_TYPE,
-  CANNOT_UPLOAD_FILE_MB,
-} from '@constant/image';
+import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 
 const ownerSchema = z.object({
   name: FOOD_TRUCK_NAME_VALIDATOR,

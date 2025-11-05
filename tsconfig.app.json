@@ -43,7 +43,7 @@
       "@router/*": ["./src/router/*"], 
       "@img/*": ["./src/assets/img/*"], 
       "@svg/*": ["./src/assets/svg/*"], 
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
     }   
 
   },
