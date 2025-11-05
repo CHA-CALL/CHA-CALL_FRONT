@@ -236,7 +236,6 @@ export const FoodTruckClientList: Story = {
   render: (args: FoodTruckCardProps) => (
     <div className='flex flex-col bg-white p-[2rem]'>
       <span className='text-grayscale-500 caption-m-12 mb-[1rem] ml-[0.4rem]'>
-      <span className='text-grayscale-500 caption-m-12 mb-[1rem] ml-[0.4rem]'>
         총 14개
       </span>
       <div className='flex flex-col gap-[2rem]'>

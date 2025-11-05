@@ -1,7 +1,7 @@
 import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
 import type { SelectedDate } from '@type/calendar-types';
-
+import { DAY_OF_THE_WEEK_LABELS } from '@constant/day-of-week-labels';
 import CalendarDayButton from '@components/calendar/components/CalendarDayButton';
 import useCalendar from '@components/calendar/hooks/use-calendar';
 

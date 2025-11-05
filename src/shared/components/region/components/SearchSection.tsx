@@ -26,26 +26,27 @@ export default function SearchSection({
   return (
     <>
       <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
-      <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
-        <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
-          {searchRegions.length > 0 ? (
-            searchRegions.map((item: RegionResponse) => (
-              <SearchResultItem
-                region={item}
-                isChecked={selectedRegions.some(r => r.code === item.code)}
-                handleSelectRegion={handleSelectRegion}
-                searchText={searchText}
-                key={item.code}
-              />
-            ))
-          ) : (
-            <div className='flex items-center justify-center'>
-              <p className='text-grayscale-900 caption-m-12'>
-                검색 결과가 없습니다.
-              </p>
-            </div>
-          )}
-        </ul>
+        <div className='scrollbar-hide flex w-full flex-1 flex-col overflow-y-auto'>
+          <ul className='flex flex-col gap-[1.6rem] p-[2rem]'>
+            {searchRegions.length > 0 ? (
+              searchRegions.map((item: RegionResponse) => (
+                <SearchResultItem
+                  region={item}
+                  isChecked={selectedRegions.some(r => r.code === item.code)}
+                  handleSelectRegion={handleSelectRegion}
+                  searchText={searchText}
+                  key={item.code}
+                />
+              ))
+            ) : (
+              <div className='flex items-center justify-center'>
+                <p className='text-grayscale-900 caption-m-12'>
+                  검색 결과가 없습니다.
+                </p>
+              </div>
+            )}
+          </ul>
+        </div>
       </div>
     </>
   );

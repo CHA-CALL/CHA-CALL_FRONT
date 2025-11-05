@@ -16,7 +16,6 @@ import {
   useDeleteOwnerChatTemplates,
 } from '@pages/@owner/message-list/hooks/use-owner-message';
 import useToast from '@hooks/use-toast';
-import useToast from '@hooks/use-toast';
 
 export default function MessageList() {
   const navigate = useNavigate();

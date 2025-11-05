@@ -31,7 +31,6 @@ export default function SelectBankBottomSheet({
               key={option}
               onClick={() => handleChange(option)}
               className='text-grayscale-700 body-m-14 flex w-full items-center justify-between py-[1.5rem]'
-              className='text-grayscale-700 body-m-14 flex w-full items-center justify-between py-[1.5rem]'
             >
               <p
                 className={cn(

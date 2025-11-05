@@ -1,7 +1,7 @@
 import { ROUTES } from '@router/constant/routes';
 import { useNavigate } from 'react-router-dom';
-import ButtonCheck from '@shared/components/button-check/ButtonCheck';
-import { Icon } from '@shared/components/icon/Icon';
+import ButtonCheck from '@ui/button-check/ButtonCheck';
+import { Icon } from '@icon/Icon';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export default function SetAgreement() {

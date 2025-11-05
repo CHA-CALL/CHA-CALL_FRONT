@@ -1,4 +1,5 @@
 import type { UserResponse } from 'apis/data-contracts';
+
 interface UserDataSectionProps {
   userInfo: UserResponse | null;
 }
