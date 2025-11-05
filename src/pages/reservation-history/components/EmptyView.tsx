@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
-import { Icon } from '@components/icon/Icon';
-import Button from '@components/button/Button';
+import { Icon } from '@icon/Icon';
+import Button from '@ui/button/Button';
 import {
   RESERVATION_STATE,
   type ReservationState,

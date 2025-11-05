@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@shared/utils/cn';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import Button from '@components/button/Button';
+import Button from '@ui/button/Button';
 
 import FoodTruckHeaderSection from '@pages/food-truck-detail/sections/FoodTruckHeaderSection';
 import FoodTruckInfoSection from '@pages/food-truck-detail/sections/FoodTruckInfoSection';
@@ -15,7 +15,7 @@ import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
-import Loading from '@shared/components/loading/Loading';
+import Loading from '@layout/loading/Loading';
 import useToast from '@shared/hooks/use-toast';
 import { ROUTES } from '@router/constant/routes';
 
@@ -82,7 +82,7 @@ export default function FoodTruckDetail() {
                 }
                 width={24}
                 height={24}
-                className='mx-[0.7rem] text-primary-700'
+                className='text-primary-700 mx-[0.7rem]'
               />
             </button>
           ) : undefined
@@ -136,7 +136,7 @@ export default function FoodTruckDetail() {
         )}
       </div>
       {/* TODO: 채팅 페이지로 이동하도록 추가 */}
-      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
+      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
         <Button
           variant='cta'
           buttonStyle='active'

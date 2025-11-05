@@ -1,15 +1,15 @@
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
-import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
-import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
-import AgreementSection from '@pages/profile-setting/components/AgreementSection';
-import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
-import UserDataSection from '@pages/profile-setting/components/UserDataSection';
+import Navigation from '@layout/navigation/Navigation';
 import { ROUTES } from '@router/constant/routes';
-import Button from '@components/button/Button';
-import Loading from '@components/loading/Loading';
+import UserDataSection from '@pages/profile-setting/components/UserDataSection';
+import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
+import AgreementSection from '@pages/profile-setting/components/AgreementSection';
+import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
+import Button from '@ui/button/Button';
+import Loading from '@layout/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
 
 export default function ProfileSetting() {
   const navigate = useNavigate();

@@ -1,6 +1,7 @@
-import Overlay from '@components/overlay/Overlay';
+import Overlay from '@layout/overlay/Overlay';
 import { type AccountFormData } from '@pages/@owner/account/hooks/use-account';
-import Button from '@components/button/Button';
+
+import Button from '@ui/button/Button';
 
 interface SaveAccountModalProps {
   formData: AccountFormData;

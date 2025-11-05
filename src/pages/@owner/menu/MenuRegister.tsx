@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
-import Button from '@components/button/Button';
+import Navigation from '@layout/navigation/Navigation';
+import Button from '@ui/button/Button';
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import MenuInput from '@pages/@owner/menu/components/MenuInput';
-import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
-import ImagePreview from '@components/image-preview/ImagePreview';
+import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
+import ImagePreview from '@ui/image-preview/ImagePreview';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
-import Input from '@components/input/Input';
-import Textarea from '@components/text-area/Textarea';
+import Input from '@ui/input/Input';
+import Textarea from '@ui/text-area/Textarea';
 import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 export default function MenuRegister() {

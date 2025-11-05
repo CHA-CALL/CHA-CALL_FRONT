@@ -11,12 +11,13 @@ import {
 import { formatSelectedDateToSchedules } from '@utils/date-formatter';
 import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
-import { confirmedRegionsAtom } from '@shared/store/regions-store';
+import { regionsAtom } from '@shared/store/regions-store';
 import {
   useFoodTruckListQuery,
   useUpdateFoodTruckSaveStatus,
 } from '@pages/reservation/hooks/use-food-truck-list-query';
 import type { FoodTruckCategoryValue } from '@type/category-types';
+import { ROUTES } from '@router/constant/routes';
 
 export default function useReservation() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function useReservation() {
 
   const filters = useAtomValue(filtersAtom);
   const notFiltered = useAtomValue(notFilteredAtom);
-  const regions = useAtomValue(confirmedRegionsAtom);
+  const regions = useAtomValue(regionsAtom);
 
   const selectedCategories = (() => {
     if (selectedCategory === FOOD_TRUCK_CATEGORIES.ALL)
@@ -70,8 +71,9 @@ export default function useReservation() {
   };
 
   const handleClickBack = () => navigate(-1);
-  const handleClickLocation = () => navigate('/set-location');
-  const handleClickFilter = () => navigate('/filter');
+  const handleClickLocation = () => navigate(ROUTES.SET_REGION_GLOBAL);
+  const handleClickFilter = () => navigate(ROUTES.FILTER);
+  // TODO: 머지 후 경로 수정
   const handleClickFoodTruck = (id: number) => navigate(`/food-truck/${id}`);
   const handleClickTooltip = () => setIsTooltipOpen(!isTooltipOpen);
 

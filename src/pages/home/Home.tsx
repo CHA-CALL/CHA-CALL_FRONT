@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Button from '@components/button/Button';
-import Overlay from '@components/overlay/Overlay';
-import Input from '@components/input/Input';
-import { Icon } from '@components/icon/Icon';
-import RatingBottomSheet from '@components/rating-bottom-sheet/RatingBottomSheet';
+import Button from '@ui/button/Button';
+import Overlay from '@layout/overlay/Overlay';
+import Input from '@ui/input/Input';
+import { Icon } from '@icon/Icon';
+import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
 
 const Home = () => {
   // BottomSheet states

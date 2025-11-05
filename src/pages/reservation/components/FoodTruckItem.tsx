@@ -1,5 +1,5 @@
 import { cn } from '@utils/cn';
-import Tag from '@components/tag/Tag';
+import Tag from '@ui/tag/Tag';
 
 interface FoodTruckItemProps {
   image: string;

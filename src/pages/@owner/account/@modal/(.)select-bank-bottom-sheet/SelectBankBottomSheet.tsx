@@ -1,7 +1,7 @@
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import { BANK, type Bank } from '@pages/@owner/account/constants/bank';
 import { cn } from '@utils/cn';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 
 interface SelectBankBottomSheetProps {
   isOpen: boolean;
@@ -22,6 +22,7 @@ export default function SelectBankBottomSheet({
       sheetHeight={500}
     >
       <div className='flex flex-col'>
+        <p className='heading-sb-18 py-[2rem] text-black'>은행선택</p>
         <p className='heading-sb-18 py-[2rem] text-black'>은행선택</p>
         <div className='flex w-full flex-col'>
           {Object.values(BANK).map(option => (

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
-import Button from '@components/button/Button';
-import ButtonFloating from '@components/button-floating/ButtonFloating';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Navigation from '@layout/navigation/Navigation';
+import Button from '@ui/button/Button';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
 import { type MyFoodTruckMenuResponse } from 'apis/data-contracts';
 import {
@@ -15,10 +15,6 @@ import {
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export default function MenuList() {
-  return <MenuListContent />;
-}
-
-function MenuListContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const { foodTruckId } = useParams();

@@ -1,4 +1,4 @@
-import { DEPTHS } from '@pages/set-location/constant/location';
+import { DEPTHS } from '@shared/components/region/constant/region';
 
 export const REGION_QUERY_KEY = {
   ALL: ['regions'],

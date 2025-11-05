@@ -1,10 +1,9 @@
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import type { SelectedDate } from '@shared/types/calendar-types';
-
-import CalendarDayButton from '@shared/components/calendar/components/CalendarDayButton';
-import useCalendar from '@shared/components/calendar/hooks/use-calendar';
-import { DAY_OF_THE_WEEK_LABELS } from '@shared/constant/day-of-week-labels';
+import Button from '@ui/button/Button';
+import { Icon } from '@icon/Icon';
+import type { SelectedDate } from '@type/calendar-types';
+import { DAY_OF_THE_WEEK_LABELS } from '@constant/day-of-week-labels';
+import CalendarDayButton from '@components/calendar/components/CalendarDayButton';
+import useCalendar from '@components/calendar/hooks/use-calendar';
 
 interface CalendarProps {
   selectedDate: SelectedDate;
@@ -58,7 +57,7 @@ export default function Calendar({
           </div>
         </div>
 
-        <div className='grid grid-cols-7 text-center text-grayscale-500 caption-r-12'>
+        <div className='text-grayscale-500 caption-r-12 grid grid-cols-7 text-center'>
           {DAY_OF_THE_WEEK_LABELS.map(dayOfTheWeek => (
             <span key={dayOfTheWeek} className='my-[1.2rem]'>
               {dayOfTheWeek}
@@ -66,7 +65,7 @@ export default function Calendar({
           ))}
         </div>
 
-        <div className='grid grid-cols-7 body-m-14'>
+        <div className='body-m-14 grid grid-cols-7'>
           {calendarDays.prevDates.map(day => (
             <CalendarDayButton
               key={`p${day}`}

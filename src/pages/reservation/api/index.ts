@@ -5,13 +5,14 @@ import type {
 
 import { apiRequest, type ParamValue } from '@api/apiRequest';
 import { formatParams } from '@pages/reservation/utils/format-params';
+
 import { PAGE_SIZE } from '@constant/page-size';
 import type {
   AvailableQuantityValue,
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@shared/types/category-types';
+} from '@type/category-types';
 
 export interface FoodTrucksFilterType {
   regionCodes?: string[] | null;
