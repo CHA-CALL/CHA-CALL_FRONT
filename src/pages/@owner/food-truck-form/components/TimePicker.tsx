@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import { cn } from '@utils/cn';
 
 interface TimePickerProps {
-  value?: string;
-  handleChange?: (_time: string) => void;
-  timeTitle?: string;
-  className?: string;
+  value: string;
+  handleChange: (_time: string) => void;
+  timeTitle: string;
 }
 interface TimePickerItemProps {
   time: string;
@@ -34,10 +33,9 @@ function TimePickerItem({
 }
 
 export default function TimePicker({
-  value = '',
+  value,
   handleChange,
-  timeTitle = '시간을 선택해주세요',
-  className = '',
+  timeTitle,
 }: TimePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState<string | null>(null);
@@ -69,12 +67,7 @@ export default function TimePicker({
   };
 
   return (
-    <div
-      className={cn(
-        'border-grayscale-100 flexw-full flex-col gap-[1.6rem] rounded-[1.2rem] border',
-        className
-      )}
-    >
+    <div className='border-grayscale-100 flex w-full flex-col gap-[1.6rem] rounded-[1.2rem] border'>
       {/* 선택된 시간 표시 */}
       <button
         type='button'

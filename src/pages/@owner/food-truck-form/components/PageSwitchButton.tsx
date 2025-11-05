@@ -1,4 +1,4 @@
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import { cn } from '@utils/cn';
 
 interface PageSwitchButtonProps {

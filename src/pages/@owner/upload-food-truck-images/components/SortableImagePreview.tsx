@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import ImagePreview from '@components/image-preview/ImagePreview';
+import ImagePreview from '@components/ui/image-preview/ImagePreview';
 
 interface SortableImagePreviewProps {
   id: number | string;

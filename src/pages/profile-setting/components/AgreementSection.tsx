@@ -1,4 +1,4 @@
-import Loading from '@shared/components/loading/Loading';
+import Loading from '@layout/loading/Loading';
 
 interface AgreementSectionProps {
   termAgreed: boolean | undefined;

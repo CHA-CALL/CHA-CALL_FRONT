@@ -1,6 +1,6 @@
 import { DEFAULT_PROFILE_IMAGE } from '@pages/mypage/hooks/use-user-data';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
-import Button from '@components/button/Button';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
+import Button from '@ui/button/Button';
 import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
 import useToast from '@hooks/use-toast';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';

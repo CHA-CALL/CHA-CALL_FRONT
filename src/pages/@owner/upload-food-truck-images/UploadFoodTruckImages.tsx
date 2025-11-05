@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import { FormProvider } from 'react-hook-form';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import ErrorText from '@shared/components/error-text/ErrorText';
+import ErrorText from '@components/form/error-text/ErrorText';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import { useUploadImages } from '@pages/@owner/upload-food-truck-images/hooks/use-upload-images';
 import UploadDescription from '@pages/@owner/upload-food-truck-images/components/UploadDescription';

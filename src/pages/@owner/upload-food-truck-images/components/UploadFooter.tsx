@@ -1,4 +1,4 @@
-import Button from '@shared/components/button/Button';
+import Button from '@components/ui/button/Button';
 
 interface UploadFooterProps {
   imagesLength: number;

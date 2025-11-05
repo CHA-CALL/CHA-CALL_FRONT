@@ -1,4 +1,4 @@
-import { Icon, type IconId } from '@components/icon/Icon';
+import { Icon, type IconId } from '@icon/Icon';
 import { cn } from '@utils/cn';
 
 interface InformationProps {

@@ -12,7 +12,7 @@ import {
   SortableContext,
   rectSwappingStrategy,
 } from '@dnd-kit/sortable';
-import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
+import ButtonAddImage from '@components/ui/button-add-image/ButtonAddImage';
 import SortableImagePreview from '@pages/@owner/upload-food-truck-images/components/SortableImagePreview';
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-display';

@@ -1,7 +1,10 @@
 import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
-import ButtonIcon from '@components/button-icon/ButtonIcon';
-import Button from '@components/button/Button';
+import { Icon } from '@shared/components/icon/Icon';
+import ButtonIcon from '@ui/button-icon/ButtonIcon';
+import Button from '@ui/button/Button';
 import { cn } from '@utils/cn';
+import Navigation from '@layout/navigation/Navigation';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatListManageBarProps {
   activeFilter: string;
@@ -29,65 +32,77 @@ export default function ChatListManageBar({
   handleSelectOff,
   handleDeleteChat,
 }: ChatListManageBarProps) {
+  const navigate = useNavigate();
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
+  };
+  const handleClickBack = () => {
+    navigate(-1);
   };
   const handleClickTrash = () => {
     if (selectChatList.size !== 0) handleDeleteChat();
   };
+
   return (
-    <div className='fixed-center border-grayscale-100 top-[4.8rem] flex justify-between border-b-[0.1rem] bg-white px-[2rem] pt-[2.8rem]'>
-      <div className='text-grayscale-900 title-sb-14 flex w-full gap-[1rem] pt-[0.2rem]'>
-        {FILTERS.map(filter => {
-          return (
-            <button
-              type='button'
-              onClick={() => handleFilter(filter)}
-              className={cn(
-                baseFilterClasses,
-                activeFilter === filter
-                  ? filterClasses.selected
-                  : filterClasses.unselected
+    <>
+      <Navigation
+        text='채팅'
+        leftIcon={<Icon name='ic_back' />}
+        handleLeftClick={handleClickBack}
+      />
+      <div className='fixed-center border-grayscale-100 top-[4.8rem] flex justify-between border-b-[0.1rem] bg-white px-[2rem] pt-[2.8rem]'>
+        <div className='text-grayscale-900 title-sb-14 flex w-full gap-[1rem] pt-[0.2rem]'>
+          {FILTERS.map(filter => {
+            return (
+              <button
+                type='button'
+                onClick={() => handleFilter(filter)}
+                className={cn(
+                  baseFilterClasses,
+                  activeFilter === filter
+                    ? filterClasses.selected
+                    : filterClasses.unselected
+                )}
+                key={filter}
+              >
+                {filter}
+              </button>
+            );
+          })}
+        </div>
+        <div>
+          {isEditing ? (
+            <div className='flex gap-[1rem]'>
+              <ButtonIcon handleClick={handleClickTrash} icon='ic_trash' />
+              {selectChatList.size !== 0 ? (
+                <Button
+                  style={{ paddingLeft: '0.75rem', paddingRight: '0.85rem' }}
+                  children={'선택해제'}
+                  variant={'default'}
+                  buttonStyle={'edit'}
+                  onClick={handleSelectOff}
+                />
+              ) : (
+                <Button
+                  style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
+                  children={'취소'}
+                  variant={'default'}
+                  buttonStyle={'edit'}
+                  onClick={handleToggleEdit}
+                />
               )}
-              key={filter}
-            >
-              {filter}
-            </button>
-          );
-        })}
+            </div>
+          ) : (
+            <Button
+              style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
+              children={'편집'}
+              variant={'default'}
+              buttonStyle={'edit'}
+              onClick={handleToggleEdit}
+            />
+          )}
+        </div>
       </div>
-      <div>
-        {isEditing ? (
-          <div className='flex gap-[1rem]'>
-            <ButtonIcon handleClick={handleClickTrash} icon='ic_trash' />
-            {selectChatList.size !== 0 ? (
-              <Button
-                style={{ paddingLeft: '0.75rem', paddingRight: '0.85rem' }}
-                children={'선택해제'}
-                variant={'default'}
-                buttonStyle={'edit'}
-                onClick={handleSelectOff}
-              />
-            ) : (
-              <Button
-                style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
-                children={'취소'}
-                variant={'default'}
-                buttonStyle={'edit'}
-                onClick={handleToggleEdit}
-              />
-            )}
-          </div>
-        ) : (
-          <Button
-            style={{ paddingLeft: '1.84rem', paddingRight: '1.84rem' }}
-            children={'편집'}
-            variant={'default'}
-            buttonStyle={'edit'}
-            onClick={handleToggleEdit}
-          />
-        )}
-      </div>
-    </div>
+    </>
   );
 }

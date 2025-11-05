@@ -1,11 +1,11 @@
-import Button from '@components/button/Button';
+import Button from '@ui/button/Button';
 import Information from '@components/information/Information';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import { ROUTES } from '@router/constant/routes';
 import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
-import Loading from '@components/loading/Loading';
+import Loading from '@layout/loading/Loading';
 
 export default function Account() {
   const navigate = useNavigate();

@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Icon } from '@components/icon/Icon';
-import Input from '@components/input/Input';
-import Navigation from '@components/navigation/Navigation';
+import Input from '@ui/input/Input';
+import Navigation from '@layout/navigation/Navigation';
 
 import {
   useFoodTruckMenus,
   useSearchFoodTruckMenus,
 } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
-import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
-import Loading from '@shared/components/loading/Loading';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
+import Loading from '@layout/loading/Loading';
 import MenuItem from '@shared/components/menu-item/MenuItem';
 import SearchMenuEmptyView from '@pages/food-truck-detail/components/SearchMenuEmptyView';
 import useToast from '@shared/hooks/use-toast';
@@ -76,7 +76,7 @@ export default function FoodTruckMenuSearch({
         handleLeftClick={handleCloseSearchMode}
         text='메뉴 검색'
       />
-      <div className='bg-white px-[2rem] py-[1.6rem] fixed-center'>
+      <div className='fixed-center bg-white px-[2rem] py-[1.6rem]'>
         <Input
           type='search'
           value={inputText}

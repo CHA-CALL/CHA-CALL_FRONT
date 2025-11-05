@@ -1,5 +1,5 @@
-import Button from '@components/button/Button';
-import { cn } from '@utils/cn';
+import Button from '@ui/button/Button';
+import { cn } from '@shared/utils/cn';
 import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
 import { Controller, useFormContext } from 'react-hook-form';
 
