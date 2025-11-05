@@ -17,6 +17,7 @@ import {
   useUpdateFoodTruckSaveStatus,
 } from '@pages/reservation/hooks/use-food-truck-list-query';
 import type { FoodTruckCategoryValue } from '@type/category-types';
+import { ROUTES } from '@router/constant/routes';
 
 export default function useReservation() {
   const navigate = useNavigate();
@@ -70,8 +71,9 @@ export default function useReservation() {
   };
 
   const handleClickBack = () => navigate(-1);
-  const handleClickLocation = () => navigate('/set-location');
-  const handleClickFilter = () => navigate('/filter');
+  const handleClickLocation = () => navigate(ROUTES.SET_REGION_GLOBAL);
+  const handleClickFilter = () => navigate(ROUTES.FILTER);
+  // TODO: 머지 후 경로 수정
   const handleClickFoodTruck = (id: number) => navigate(`/food-truck/${id}`);
   const handleClickTooltip = () => setIsTooltipOpen(!isTooltipOpen);
 

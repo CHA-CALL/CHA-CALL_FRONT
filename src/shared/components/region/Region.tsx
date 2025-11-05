@@ -12,11 +12,13 @@ import useRegion from '@shared/components/region/hooks/use-region';
 interface RegionProps {
   initialRegions?: RegionResponse[];
   handleConfirmRegion: (_regions: RegionResponse[]) => void;
+  handleResetRegion: () => void;
 }
 
 export default function Region({
   initialRegions,
   handleConfirmRegion,
+  handleResetRegion,
 }: RegionProps) {
   const {
     searchText,
@@ -41,7 +43,7 @@ export default function Region({
     handleSelectRegion,
     handleDeleteRegion,
     handleResetRegions,
-  } = useRegion({ initialRegions });
+  } = useRegion({ initialRegions, handleResetRegion });
 
   return (
     <>
@@ -92,23 +94,21 @@ export default function Region({
           />
         )}
 
-        <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
-          <div className='border-grayscale-200 flex gap-[0.7rem] border-t-[0.1rem] px-[2rem] py-[1.7rem]'>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleResetRegions}
-            >
-              초기화
-            </Button>
-            <Button
-              variant='cta'
-              buttonStyle={selectedRegions.length > 0 ? 'active' : 'disabled'}
-              handleClickButton={() => handleConfirmRegion(selectedRegions)}
-            >
-              확인
-            </Button>
-          </div>
+        <div className='flex gap-[0.7rem] border-t-[0.1rem] border-grayscale-200 px-[2rem] py-[1.7rem]'>
+          <Button
+            variant='cta'
+            buttonStyle='sub'
+            handleClickButton={handleResetRegions}
+          >
+            초기화
+          </Button>
+          <Button
+            variant='cta'
+            buttonStyle={selectedRegions.length > 0 ? 'active' : 'disabled'}
+            handleClickButton={() => handleConfirmRegion(selectedRegions)}
+          >
+            확인
+          </Button>
         </div>
       </div>
     </>
