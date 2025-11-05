@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
-import type { SelectedDate } from '@shared/types/calendar-types';
+import type { SelectedDate } from '@type/calendar-types';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import ButtonText from '@components/button-text/ButtonText';
-import ButtonDate from '@components/button-date/ButtonDate';
-import ErrorText from '@components/error-text/ErrorText';
+import ButtonText from '@ui/button-text/ButtonText';
+import ButtonDate from '@ui/button-date/ButtonDate';
+import ErrorText from '@form/error-text/ErrorText';
 
 export default function ActiveDate() {
   const {

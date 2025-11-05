@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import Button from '@components/button/Button';
-import ButtonFloating from '@components/button-floating/ButtonFloating';
+import Button from '@components/ui/button/Button';
+import ButtonFloating from '@components/ui/button-floating/ButtonFloating';
 import MenuListHeader from '@pages/@owner/menu/components/MenuListHeader';
 import Menus from '@pages/@owner/menu/components/Menus';
 import ListSortBottomSheet from '@pages/@owner/menu/components/ListSortBottomSheet';

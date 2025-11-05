@@ -1,9 +1,9 @@
-import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
+import { Icon } from '@icon/Icon';
+import { ROLE } from '@constant/role';
 import { useRole } from '@hooks/use-role';
 import MyInfoSection from '@pages/mypage/components/MyInfoSection';
 import SettingMenuSection from '@pages/mypage/components/SettingMenuSection';
-import { ROLE } from '@constant/role';
 import { useNavigate } from 'react-router-dom';
 
 export default function MyPage() {

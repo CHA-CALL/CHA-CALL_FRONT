@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { type ToastType } from '@shared/constant/toast';
+import { type ToastType } from '@constant/toast';
 
 export interface ToastProps {
   type: ToastType;

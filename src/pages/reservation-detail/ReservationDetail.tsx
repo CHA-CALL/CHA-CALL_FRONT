@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@router/constant/routes';
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import Loading from '@components/loading/Loading';
-import Button from '@components/button/Button';
-import Tooltip from '@components/tooltip/Tooltip';
+import Loading from '@layout/loading/Loading';
+import Button from '@ui/button/Button';
+import Tooltip from '@ui/tooltip/Tooltip';
 import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
 import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';
@@ -51,7 +51,7 @@ export default function ReservationDetail() {
             >
               <Icon
                 name='ic_download'
-                className='h-[1.2rem] w-[1.1rem] text-grayscale-500'
+                className='text-grayscale-500 h-[1.2rem] w-[1.1rem]'
               />
             </Button>
             <Tooltip
@@ -71,9 +71,9 @@ export default function ReservationDetail() {
         {topContents && <ReservationDetailTopContent {...topContents} />}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
-          <div className='my-[2.4rem] border border-grayscale-100' />
+          <div className='border-grayscale-100 my-[2.4rem] border' />
           <ReservationDetailRow title='운영 내용' infoList={operationInfo} />
-          <div className='my-[2.4rem] border border-grayscale-100' />
+          <div className='border-grayscale-100 my-[2.4rem] border' />
           <ReservationDetailRow title='기타 내용' infoList={etcInfo} />
         </div>
       </div>

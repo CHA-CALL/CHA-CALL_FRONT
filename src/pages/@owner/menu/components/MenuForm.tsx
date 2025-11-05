@@ -1,9 +1,9 @@
 import type { ChangeEvent } from 'react';
 import { Icon } from '@components/icon/Icon';
-import Input from '@components/input/Input';
-import Textarea from '@components/text-area/Textarea';
-import ButtonAddImage from '@components/button-add-image/ButtonAddImage';
-import ImagePreview from '@components/image-preview/ImagePreview';
+import Input from '@components/ui/input/Input';
+import Textarea from '@components/ui/text-area/Textarea';
+import ButtonAddImage from '@components/ui/button-add-image/ButtonAddImage';
+import ImagePreview from '@components/ui/image-preview/ImagePreview';
 import MenuInput from '@pages/@owner/menu/components/MenuInput';
 import { MENU_LIMIT } from '@pages/@owner/menu/constant/menu';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';

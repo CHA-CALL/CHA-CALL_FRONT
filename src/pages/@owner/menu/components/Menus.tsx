@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Loading from '@components/loading/Loading';
+import Loading from '@components/layout/loading/Loading';
 import MenuItem from '@components/menu-item/MenuItem';
 import MenuListEmptyView from '@pages/@owner/menu/components/MenuListEmptyView';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';

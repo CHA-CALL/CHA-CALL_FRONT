@@ -1,6 +1,6 @@
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
-import Button from '@components/button/Button';
+import Navigation from '@components/layout/navigation/Navigation';
+import Button from '@components/ui/button/Button';
 import type { SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 interface MenuListHeaderProps {

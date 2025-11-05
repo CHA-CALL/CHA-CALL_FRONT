@@ -1,5 +1,5 @@
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
-import Button from '@components/button/Button';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
+import Button from '@ui/button/Button';
 
 interface DeleteMessageBottomSheetProps {
   isOpen: boolean;

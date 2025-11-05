@@ -1,4 +1,4 @@
-import Button from '@components/button/Button';
+import Button from '@ui/button/Button';
 
 interface FilterChipGroupProps<T extends string> {
   filterTitle: string;

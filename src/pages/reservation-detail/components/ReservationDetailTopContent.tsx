@@ -1,5 +1,5 @@
 import { Icon } from '@components/icon/Icon';
-import Tag from '@components/tag/Tag';
+import Tag from '@ui/tag/Tag';
 import { ROLE } from '@constant/role';
 
 interface CommonInfo {

@@ -1,5 +1,5 @@
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
-import Button from '@components/button/Button';
+import BottomSheet from '@components/layout/bottom-sheet/BottomSheet';
+import Button from '@components/ui/button/Button';
 import { SORT_TYPES } from '@pages/@owner/menu/constant/menu-list-sort';
 
 interface ListSortBottomSheetProps {

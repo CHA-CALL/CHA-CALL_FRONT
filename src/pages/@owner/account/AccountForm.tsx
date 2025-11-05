@@ -1,14 +1,14 @@
-import Button from '@components/button/Button';
+import Button from '@ui/button/Button';
 import Information from '@components/information/Information';
-import Navigation from '@components/navigation/Navigation';
-import Input from '@components/input/Input';
-import { Icon } from '@components/icon/Icon';
+import Navigation from '@layout/navigation/Navigation';
+import Input from '@ui/input/Input';
+import { Icon } from '@icon/Icon';
 import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
 import { cn } from '@utils/cn';
-import ErrorText from '@components/error-text/ErrorText';
+import ErrorText from '@form/error-text/ErrorText';
 import ConfirmExitModal from '@pages/@owner/account/@modal/(.)confirm-exit-modal/ConfirmExitModal';
 import SaveAccountModal from '@pages/@owner/account/@modal/(.)save-account-modal/SaveAccountModal';
-import Loading from '@components/loading/Loading';
+import Loading from '@layout/loading/Loading';
 import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
 import ConfirmDeleteModal from '@pages/@owner/account/@modal/(.)confirm-delete-modal/ConfirmDeleteModal';
 

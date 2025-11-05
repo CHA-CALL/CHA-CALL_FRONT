@@ -1,16 +1,16 @@
 import type { ChatTemplateResponse } from 'apis/data-contracts';
 
-import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
+import { Icon } from '@icon/Icon';
+import Navigation from '@layout/navigation/Navigation';
 import { useNavigate } from 'react-router-dom';
-import Button from '@components/button/Button';
+import Button from '@ui/button/Button';
 import Message from '@pages/@owner/message-list/components/Message';
 import Information from '@components/information/Information';
 import { ROUTES } from '@router/constant/routes';
 import { useState } from 'react';
 import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/(.)delete-message-bottom-sheet/DeleteMessageBottomSheet';
 import ConfirmDeleteModal from '@pages/@owner/message-list/@modal/(.)confirm-delete-modal/ConfirmExitModal';
-import ButtonFloating from '@components/button-floating/ButtonFloating';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
 import {
   useOwnerChatTemplates,
   useDeleteOwnerChatTemplates,

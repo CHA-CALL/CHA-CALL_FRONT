@@ -1,8 +1,8 @@
 import type { FoodTruckMenuResponse } from 'apis/data-contracts';
 
-import Button from '@components/button/Button';
-import { Icon } from '@components/icon/Icon';
-import Loading from '@shared/components/loading/Loading';
+import Button from '@ui/button/Button';
+import { Icon } from '@icon/Icon';
+import Loading from '@layout/loading/Loading';
 
 interface FoodTruckMenuSectionProps {
   menus?: FoodTruckMenuResponse[];
@@ -17,7 +17,7 @@ export default function FoodTruckMenuSection({
 }: FoodTruckMenuSectionProps) {
   return (
     <div className='flex flex-col gap-[2rem] py-[2rem]'>
-      <h3 className='pl-[2.5rem] text-grayscale-900 title-sb-12'>메뉴 정보</h3>
+      <h3 className='text-grayscale-900 title-sb-12 pl-[2.5rem]'>메뉴 정보</h3>
       <div className='flex flex-row gap-[1.6rem] overflow-x-scroll px-[2rem]'>
         {isPending ? (
           <Loading />
@@ -28,9 +28,9 @@ export default function FoodTruckMenuSection({
               <img
                 src={menu.imageUrl}
                 alt='메뉴 사진'
-                className='h-[10rem] w-[10rem] rounded-[1.6rem] border border-grayscale-200'
+                className='border-grayscale-200 h-[10rem] w-[10rem] rounded-[1.6rem] border'
               />
-              <div className='flex flex-col text-grayscale-900'>
+              <div className='text-grayscale-900 flex flex-col'>
                 <span className='body-m-14'>{menu.name}</span>
                 <div className='flex flex-row items-center gap-[0.2rem]'>
                   <span className='title-sb-16'>
@@ -53,7 +53,7 @@ export default function FoodTruckMenuSection({
             <span className='text-grayscale-700 body-m-14'>메뉴 더보기</span>
             <Icon
               name='ic_next'
-              className='mt-[0.1rem] text-grayscale-500'
+              className='text-grayscale-500 mt-[0.1rem]'
               width={16}
               height={16}
             />
