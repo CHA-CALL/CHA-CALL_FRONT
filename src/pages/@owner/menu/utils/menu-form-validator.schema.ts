@@ -8,7 +8,6 @@ import {
   NOT_ALLOWED_FILE_TYPE,
 } from '@shared/constant/image';
 import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
-import { formatPrice } from '@shared/utils/price-formatter';
 
 export const MENU_NAME_VALIDATOR = z
   .string()
@@ -33,12 +32,13 @@ export const MENU_DESCRIPTION_VALIDATOR = z
   );
 
 export const MENU_PRICE_VALIDATOR = z
-  .string()
-  .refine(
-    val => val.replace(/,/g, '').length >= MENU_LIMIT.PRICE_MIN_LENGTH,
+  .number({
+    message: MENU_ERROR_MESSAGE.PRICE_MIN,
+  })
+  .min(
+    MENU_LIMIT.PRICE_MIN_LENGTH,
     MENU_ERROR_MESSAGE.PRICE_MIN
-  )
-  .transform(val => formatPrice(Number(val.replace(/,/g, ''))));
+  );
 
 export const MENU_IMAGE_VALIDATOR = z
   .union([z.instanceof(File), z.undefined(), z.null()])

@@ -23,6 +23,7 @@ export default function MenuRegister() {
     updatePrice,
     updateImageUrl,
     isValid,
+    displayPrice,
   } = useFormValidation();
 
   return (
@@ -34,6 +35,7 @@ export default function MenuRegister() {
       />
 
       <MenuForm
+        displayPrice={displayPrice}
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}
@@ -41,15 +43,13 @@ export default function MenuRegister() {
       />
 
       <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
-        <div className='flex flex-col gap-[1.7rem]'>
-          <Button
-            variant='cta'
-            buttonStyle={isValid ? 'active' : 'disabled'}
-            handleClickButton={methods.handleSubmit(handleRegisterSubmit)}
-          >
-            저장하기
-          </Button>
-        </div>
+        <Button
+          variant='cta'
+          buttonStyle={isValid ? 'active' : 'disabled'}
+          handleClickButton={methods.handleSubmit(handleRegisterSubmit)}
+        >
+          저장하기
+        </Button>
       </footer>
     </FormProvider>
   );

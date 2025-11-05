@@ -13,6 +13,7 @@ import { useFormContext } from 'react-hook-form';
 
 interface MenuFormProps {
   initialImageUrl?: string;
+  displayPrice?: string;
   updateName: (_name: string) => void;
   updateDescription: (_description: string) => void;
   updatePrice: (_price: string) => void;
@@ -21,6 +22,7 @@ interface MenuFormProps {
 
 export default function MenuForm({
   initialImageUrl,
+  displayPrice,
   updateName,
   updateDescription,
   updatePrice,
@@ -84,7 +86,7 @@ export default function MenuForm({
             type='text'
             inputMode='numeric'
             placeholder='텍스트를 입력해주세요.'
-            value={formData.price}
+            value={displayPrice}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               updatePrice(e.target.value)
             }

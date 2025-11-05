@@ -1,13 +1,14 @@
-import { z } from 'zod';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formatPrice } from '@shared/utils/price-formatter';
 import {
   MENU_NAME_VALIDATOR,
   MENU_DESCRIPTION_VALIDATOR,
   MENU_PRICE_VALIDATOR,
   MENU_IMAGE_VALIDATOR,
 } from '@pages/@owner/menu/utils/menu-form-validator.schema';
+import { formatPrice } from '@shared/utils/price-formatter';
 
 const menuSchema = z
   .object({
@@ -20,17 +21,28 @@ const menuSchema = z
 export type MenuFormData = z.infer<typeof menuSchema>;
 
 export const useFormValidation = (initialData?: Partial<MenuFormData>) => {
+  const [displayPrice, setDisplayPrice] = useState(
+    initialData?.price ? formatPrice(initialData.price) : ''
+  );
+
   const methods = useForm<MenuFormData>({
     resolver: zodResolver(menuSchema),
     defaultValues: {
       name: '',
       description: '',
-      price: '',
+      price: 0,
       imageUrl: undefined,
       ...initialData,
     },
     mode: 'onChange',
   });
+
+  const currentPrice = methods.watch('price');
+  useEffect(() => {
+    if (currentPrice && currentPrice > 0) {
+      setDisplayPrice(formatPrice(currentPrice));
+    }
+  }, [currentPrice]);
 
   const {
     setValue,
@@ -48,11 +60,13 @@ export const useFormValidation = (initialData?: Partial<MenuFormData>) => {
   const updatePrice = (price: string) => {
     const numbersOnly = price.replace(/[^\d]/g, '');
     if (numbersOnly === '') {
-      setValue('price', '', { shouldValidate: true });
+      setValue('price', 0, { shouldValidate: true });
+      setDisplayPrice('');
       return;
     }
-    const formattedPrice = formatPrice(Number(numbersOnly));
-    setValue('price', formattedPrice, { shouldValidate: true });
+    const numericPrice = Number(numbersOnly);
+    setValue('price', numericPrice, { shouldValidate: true });
+    setDisplayPrice(formatPrice(numericPrice));
   };
 
   const updateImageUrl = (image: File | null) => {
@@ -70,6 +84,7 @@ export const useFormValidation = (initialData?: Partial<MenuFormData>) => {
     methods,
     errors: Errors,
     isValid,
+    displayPrice,
     updateName,
     updateDescription,
     updatePrice,

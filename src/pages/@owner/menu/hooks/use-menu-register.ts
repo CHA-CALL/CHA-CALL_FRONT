@@ -51,7 +51,7 @@ export const useRegisterMenu = (foodTruckId: number) => {
       registerMenu({
         name: formData.name,
         description: formData.description,
-        price: Number(formData.price.replace(/,/g, '')),
+        price: formData.price,
         photoUrl: imageInfo.fileUrl,
       });
     } catch {

@@ -7,7 +7,6 @@ import MenuDeleteModal from '@pages/@owner/menu/components/MenuDeleteModal';
 import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import useToast from '@shared/hooks/use-toast';
-import { formatPrice } from '@shared/utils/price-formatter';
 import { FormProvider } from 'react-hook-form';
 import Navigation from '@components/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
@@ -27,6 +26,7 @@ export default function MenuEdit() {
 
   const {
     methods,
+    displayPrice,
     updateName,
     updateDescription,
     updatePrice,
@@ -53,7 +53,7 @@ export default function MenuEdit() {
           methods.reset({
             name: menuData.name,
             description: menuData.description,
-            price: formatPrice(menuData.price),
+            price: menuData.price,
             imageUrl: imageFile,
           });
 
@@ -63,8 +63,8 @@ export default function MenuEdit() {
             setInitialImageUrl(undefined);
           }
         } catch (error) {
-          console.error("이미지를 파일로 변환하는 데 실패했습니다:", error);
-          toast.error("메뉴 정보를 불러오는 데 실패했습니다.");
+          console.error('이미지를 파일로 변환하는 데 실패했습니다:', error);
+          toast.error('메뉴 정보를 불러오는 데 실패했습니다.');
         }
       };
       setInitialData();
@@ -86,6 +86,7 @@ export default function MenuEdit() {
       />
       <MenuForm
         initialImageUrl={initialImageUrl}
+        displayPrice={displayPrice}
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}

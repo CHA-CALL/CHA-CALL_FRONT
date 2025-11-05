@@ -54,7 +54,7 @@ export const useEditMenu = (
       editMenu({
         name: formData.name,
         description: formData.description,
-        price: Number(formData.price.replace(/,/g, '')),
+        price: formData.price,
         photoUrl: imageInfo.fileUrl!,
       });
     } catch (error) {
@@ -72,14 +72,7 @@ export const useEditMenu = (
   };
 
   const handleConfirmDelete = () => {
-    deleteMenu(undefined, {
-      onSuccess: () => {
-        toast.success('삭제되었습니다.');
-      },
-      onError: () => {
-        toast.error('메뉴 삭제에 실패했습니다.');
-      },
-    });
+    deleteMenu();
     setIsModalOpen(false);
   };
 
