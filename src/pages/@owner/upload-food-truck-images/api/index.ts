@@ -24,11 +24,7 @@ export const getPresignedUrl = async (fileExtensions: string[]): Promise<ImageIn
 };
 
 export const uploadImage = async (presignedUrl: string, file: File) => {
-  // TODO: 삭제 및 presignedUrl로 수정 (이미지 업로드 테스트용)
-  const url = new URL(presignedUrl);
-  const proxiedUrl = `/s3-proxy${url.pathname}${url.search}`;
-
-  const response = await fetch(proxiedUrl, {
+  const response = await fetch(presignedUrl, {
     method: 'PUT',
     headers: {
       'Content-Type': file.type,
