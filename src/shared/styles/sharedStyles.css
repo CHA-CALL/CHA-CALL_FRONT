@@ -38,6 +38,7 @@
   --body-m-14: 1.4rem;
   --body-m-13: 1.3rem;
   --body-s-11: 1.1rem;
+  --body-sb-11: 1.1rem;
   --caption-m-12: 1.2rem;
   --caption-r-12: 1.2rem;
   --caption-m-11: 1.1rem;
@@ -136,6 +137,12 @@
     font-weight: 500;
     line-height: 150%;
   }
+  .body-sb-11 {
+    font-size: var(--body-sb-11);
+    font-weight: 600;
+    line-height: 150%;
+  }
+
   /* Caption */
   .caption-m-12 {
     font-size: var(--caption-m-12);
@@ -177,5 +184,11 @@
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  /* 기본 내장 버튼 등 제거 */
+  input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
   }
 }

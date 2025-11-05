@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ButtonTab from '@shared/components/button-tab/ButtonTab';
-import ButtonTabGroup from '@shared/components/button-tab/ButtonTabGroup';
+import ButtonTab from '@components/button-tab/ButtonTab';
+import ButtonTabGroup from '@components/button-tab/ButtonTabGroup';
 
 const meta: Meta<typeof ButtonTab> = {
   title: 'Components/ButtonTab',

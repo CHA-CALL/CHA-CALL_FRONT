@@ -5,7 +5,7 @@ import ButtonTabGroup from '@components/button-tab/ButtonTabGroup';
 import { Icon } from '@components/icon/Icon';
 import Navigation from '@components/navigation/Navigation';
 import { useRole } from '@hooks/use-role';
-import { ROLE } from '@shared/constant/role';
+import { ROLE } from '@constant/role';
 
 import {
   OwnerReservationHistoryTabs,

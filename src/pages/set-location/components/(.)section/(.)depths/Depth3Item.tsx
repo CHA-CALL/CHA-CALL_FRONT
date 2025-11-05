@@ -1,5 +1,5 @@
-import { Icon } from '@shared/components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { Icon } from '@components/icon/Icon';
+import { cn } from '@utils/cn';
 
 interface Depth3ItemProps {
   title: string;
@@ -22,13 +22,13 @@ export default function Depth3Item({
       className={cn(
         BaseClass,
         isSelected &&
-          'relative flex items-center justify-center px-[1rem] text-primary-700 title-sb-14'
+          'text-primary-700 title-sb-14 relative flex items-center justify-center px-[1rem]'
       )}
     >
       {isSelected && (
         <Icon
           name='ic_check'
-          className='absolute left-[1rem] text-primary-700'
+          className='text-primary-700 absolute left-[1rem]'
         />
       )}
       <p className='relative flex items-center justify-center'>{title}</p>

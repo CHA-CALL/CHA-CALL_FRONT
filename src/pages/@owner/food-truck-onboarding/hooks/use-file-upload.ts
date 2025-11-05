@@ -4,11 +4,8 @@ import {
   OWNER_MEDIA_MAX_COUNT,
   OWNER_MEDIA_MIN_COUNT,
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
-import {
-  CANNOT_UPLOAD_FILE_MB,
-  NOT_ALLOWED_FILE_TYPE,
-} from '@shared/constant/image';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 
 export const BIZ_REG_CERT_FILE_VALIDATOR = z
   .instanceof(File)

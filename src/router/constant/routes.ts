@@ -17,9 +17,10 @@ export const ROUTES = {
   UPLOAD_FOOD_TRUCK_IMAGES: (foodTruckId: string) =>
     `/owner/food-truck-form/upload-food-truck-images/${foodTruckId}`,
   PROFILE_SETTING: '/profile-setting',
-  PROFILE_SETTING_DETAIL: '/profile-setting',
+  PROFILE_SETTING_EDIT: '/profile-setting/edit',
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
   MENU_LIST: '/owner/menu-list',
   MENU_REGISTER: '/owner/menu-register',
+  FOOD_TRUCK_DETAIL: (foodTruckId: string) => `/food-truck/${foodTruckId}`,
   FOOD_TRUCK_FORM: '/owner/food-truck-form',
 };

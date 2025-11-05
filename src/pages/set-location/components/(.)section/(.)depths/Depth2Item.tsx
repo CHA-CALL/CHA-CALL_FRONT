@@ -1,4 +1,4 @@
-import { cn } from '@shared/utils/cn';
+import { cn } from '@utils/cn';
 
 interface Depth2ItemProps {
   title: string;

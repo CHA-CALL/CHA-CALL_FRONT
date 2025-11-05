@@ -1,4 +1,4 @@
-import { Icon } from '@shared/components/icon/Icon';
+import { Icon } from '@components/icon/Icon';
 import { cn } from '@utils/cn';
 import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 

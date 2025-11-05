@@ -1,10 +1,10 @@
 import CardImage from '@components/food-truck-card/components/CardImage';
 
 import InfoRow from '@components/food-truck-card/components/InfoRow';
-import Button from '@shared/components/button/Button';
-import ButtonCheck from '@shared/components/button-check/ButtonCheck';
+import Button from '@components/button/Button';
+import ButtonCheck from '@components/button-check/ButtonCheck';
 import type { FoodTruckProviderProps } from '@components/food-truck-card/types/food-truck-card-types';
-import { cn } from '@shared/utils/cn';
+import { cn } from '@utils/cn';
 
 export default function FoodTruckProviderCard({
   data,
@@ -21,6 +21,7 @@ export default function FoodTruckProviderCard({
     activeTime = '',
     serviceArea = '',
   } = data;
+  const splitActiveTime = activeTime.split('-').map(time => time.trim());
 
   return (
     <div
@@ -38,8 +39,8 @@ export default function FoodTruckProviderCard({
         className='h-[7.4rem] w-[7.4rem]'
       />
 
-      <div className='flex flex-col'>
-        <div className='flex items-center justify-between'>
+      <div className='flex w-full flex-col'>
+        <div className='flex w-full items-center justify-between'>
           <span className='title-sb-16 text-grayscale-900 text-left'>
             {name}
           </span>
@@ -58,8 +59,18 @@ export default function FoodTruckProviderCard({
         <span className='caption-m-11 text-grayscale-700 mb-[0.4rem] px-[0.2rem] text-left'>
           {description}
         </span>
-        <InfoRow iconId='ic_time'>{activeTime}</InfoRow>
-        <InfoRow iconId='ic_locate'>{serviceArea}</InfoRow>
+        <InfoRow iconId='ic_time'>
+          <div className='caption-m-11 text-grayscale-700 flex items-center gap-[0.2rem]'>
+            <span>{splitActiveTime[0]}</span>
+            <span>-</span>
+            <span>{splitActiveTime[1]}</span>
+          </div>
+        </InfoRow>
+        <InfoRow iconId='ic_locate'>
+          <span className='caption-m-11 text-grayscale-700 line-clamp-1'>
+            {serviceArea}
+          </span>
+        </InfoRow>
       </div>
     </div>
   );
