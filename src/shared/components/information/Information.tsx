@@ -1,5 +1,5 @@
-import { Icon, type IconId } from '@shared/components/icon/Icon';
-import { cn } from '@shared/utils/cn';
+import { Icon, type IconId } from '@icon/Icon';
+import { cn } from '@utils/cn';
 
 interface InformationProps {
   iconId: IconId;

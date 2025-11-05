@@ -7,7 +7,7 @@ import Filter from '@pages/filter/Filter';
 import ChatList from '@pages/chat-list/ChatList';
 import Reservation from '@/pages/reservation/Reservation';
 import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOnboarding';
-import SetLocation from '@pages/set-location/SetLocation';
+import SetRegionGlobal from '@pages/set-region-global/SetRegion';
 import MessageList from '@pages/@owner/message-list/MessageList';
 import MessageForm from '@pages/@owner/message-list/components/MessageForm';
 import MyPage from '@pages/mypage/MyPage';
@@ -16,12 +16,15 @@ import Account from '@pages/@owner/account/Account';
 import AccountForm from '@pages/@owner/account/AccountForm';
 import ReservationHistory from '@pages/reservation-history/ReservationHistory';
 import SaveFoodTruckList from '@pages/save-food-truck-list/SaveFoodTruckList';
-import UploadFoodTruck from '@pages/@owner/upload-food-truck/UploadFoodTruck';
+import UploadFoodTruckImages from '@pages/@owner/upload-food-truck-images/UploadFoodTruckImages';
 import SetUserInfo from '@pages/set-user-info/SetUserInfo';
 import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
+import FoodTruckDetail from '@pages/food-truck-detail/FoodTruckDetail';
+import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
+import SetRegion from '@pages/@owner/set-region/SetRegion';
 
 export const router = createBrowserRouter([
   {
@@ -32,8 +35,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: ROUTES.SET_LOCATION,
-        element: <SetLocation />,
+        path: ROUTES.SET_REGION_GLOBAL,
+        element: <SetRegionGlobal />,
       },
       {
         path: ROUTES.FILTER,
@@ -43,10 +46,7 @@ export const router = createBrowserRouter([
         path: ROUTES.RESERVATION,
         element: <Reservation />,
       },
-      {
-        path: ROUTES.RESERVATION_DETAIL,
-        element: <ReservationDetail />,
-      },
+
       {
         path: ROUTES.FOOD_TRUCK_ONBOARDING,
         element: <FoodTruckOnboarding />,
@@ -84,15 +84,19 @@ export const router = createBrowserRouter([
         element: <ReservationHistory />,
       },
       {
+        path: ROUTES.RESERVATION_DETAIL(':reservationId'),
+        element: <ReservationDetail />,
+      },
+      {
         path: ROUTES.SAVE_FOOD_TRUCK_LIST,
         element: <SaveFoodTruckList />,
       },
       {
-        path: ROUTES.UPLOAD_FOOD_TRUCK,
-        element: <UploadFoodTruck />,
+        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES,
+        element: <UploadFoodTruckImages />,
       },
       {
-        path: ROUTES.PROFILE_SETTING_DETAIL(':field'),
+        path: ROUTES.PROFILE_SETTING_EDIT,
         element: <SetUserInfo />,
       },
       {
@@ -106,6 +110,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.MENU_REGISTER,
         element: <MenuRegister />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_DETAIL(':foodTruckId'),
+        element: <FoodTruckDetail />,
+      },
+      {
+        path: ROUTES.FOOD_TRUCK_FORM + '/:id?',
+        element: <FoodTruckForm />,
+      },
+      {
+        path: ROUTES.SET_REGION_FORM,
+        element: <SetRegion />,
       },
     ],
   },

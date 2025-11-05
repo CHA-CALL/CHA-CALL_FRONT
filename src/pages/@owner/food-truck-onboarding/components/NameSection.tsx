@@ -1,9 +1,9 @@
-import Button from '@shared/components/button/Button';
+import Button from '@ui/button/Button';
 import { OWNER_TEXT } from '@pages/@owner/food-truck-onboarding/constants/owner';
-import Input from '@shared/components/input/Input';
+import Input from '@ui/input/Input';
 import SectionTitle from '@pages/@owner/food-truck-onboarding/components/SectionTitle';
 import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-input';
-import ErrorText from '@shared/components/error-text/ErrorText';
+import ErrorText from '@form/error-text/ErrorText';
 
 interface NameSectionProps {
   isNameVerified?: boolean;

@@ -3,11 +3,8 @@ import {
   OWNER_MEDIA_ERROR_MESSAGE,
   OWNER_MEDIA_MAX_COUNT,
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
-import {
-  CANNOT_UPLOAD_FILE_MB,
-  NOT_ALLOWED_FILE_TYPE,
-} from '@shared/constant/image';
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
+import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 
 export const BIZ_REG_CERT_FILE_VALIDATOR = z
   .instanceof(File)
@@ -26,8 +23,7 @@ export const BIZ_REG_CERT_FILE_VALIDATOR = z
     {
       message: CANNOT_UPLOAD_FILE_MB,
     }
-  )
-  .optional();
+  );
 
 export const OTHER_DOCS_FILES_VALIDATOR = z
   .array(z.instanceof(File))
@@ -50,5 +46,4 @@ export const OTHER_DOCS_FILES_VALIDATOR = z
     {
       message: CANNOT_UPLOAD_FILE_MB,
     }
-  )
-  .optional();
+  );

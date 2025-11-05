@@ -1,6 +1,6 @@
-import Navigation from '@components/navigation/Navigation';
+import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-import Button from '@shared/components/button/Button';
+import Button from '@ui/button/Button';
 import { useFoodTruckInput } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-input';
 import NameSection from '@pages/@owner/food-truck-onboarding/components/NameSection';
 import BizRegCertSection from '@pages/@owner/food-truck-onboarding/components/BizRegCertSection';
@@ -59,14 +59,13 @@ export default function FoodTruckOnboarding() {
           handleCheckNameDuplicate={handleCheckNameDuplicate}
           error={errors.name}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <BizRegCertSection
           file={formData.bizRegCert}
           onChange={updateBizRegCertFile}
           error={errors.bizRegCert}
         />
-        <div className='h-[0.1rem] w-full bg-grayscale-100' />
-
+        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <OtherDocsSection
           files={formData.otherDocs}
           onChange={updateOtherDocsFiles}

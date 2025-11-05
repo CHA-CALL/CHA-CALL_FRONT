@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Calendar from '@shared/components/calendar/Calendar';
+import Calendar from '@components/calendar/Calendar';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Components/Calendar',

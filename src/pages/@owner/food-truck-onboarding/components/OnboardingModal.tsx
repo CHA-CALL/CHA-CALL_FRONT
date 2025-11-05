@@ -1,5 +1,5 @@
-import Overlay from '@components/overlay/Overlay';
-import Button from '@components/button/Button';
+import Overlay from '@components/layout/overlay/Overlay';
+import Button from '@components/ui/button/Button';
 
 interface OnboardingModalProps {
   isOnboarding?: boolean;

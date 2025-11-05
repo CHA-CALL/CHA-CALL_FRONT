@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Icon, type IconId } from '@shared/components/icon/Icon';
+import { Icon, type IconId } from '@icon/Icon';
 
 const iconIds: IconId[] = [
   'ic_chat',
@@ -31,10 +31,12 @@ const iconIds: IconId[] = [
   'ic_heart_fill',
   'ic_heart_empty',
   'ic_time',
+  'ic_phone',
+  'ic_dropdown',
 ];
 
 const meta: Meta<typeof Icon> = {
-  title: 'Components/Icon',
+  title: 'Components/Icon/Icon',
   component: Icon,
   tags: ['autodocs'],
   argTypes: {

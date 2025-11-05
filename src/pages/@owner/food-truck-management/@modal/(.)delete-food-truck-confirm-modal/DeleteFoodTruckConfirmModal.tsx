@@ -1,5 +1,5 @@
-import Overlay from '@shared/components/overlay/Overlay';
-import Button from '@shared/components/button/Button';
+import Overlay from '@layout/overlay/Overlay';
+import Button from '@ui/button/Button';
 
 interface DeleteFoodTruckConfirmModalProps {
   isOpen: boolean;

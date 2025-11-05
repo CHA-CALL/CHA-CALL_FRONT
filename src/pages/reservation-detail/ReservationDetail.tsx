@@ -1,16 +1,18 @@
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useState } from 'react';
-import Button from '@shared/components/button/Button';
 import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '@router/constant/routes';
-import Tooltip from '@shared/components/tooltip/Tooltip';
+import Navigation from '@layout/navigation/Navigation';
+import { Icon } from '@components/icon/Icon';
+import Loading from '@layout/loading/Loading';
+import Button from '@ui/button/Button';
+import Tooltip from '@ui/tooltip/Tooltip';
+import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
 import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';
 
 export default function ReservationDetail() {
-  // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리
+  // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리. 언제 보여줄지 애매해서 논의 필요.
   const [isOpenTip, setIsOpenTip] = useState(true);
   const navigate = useNavigate();
 
@@ -18,15 +20,20 @@ export default function ReservationDetail() {
     reservationInfo,
     operationInfo,
     etcInfo,
-    contentProps,
+    topContents,
     handleDownload,
+    isPending,
   } = useReservationDetail();
 
   const handleClickBack = () => {
-    navigate(ROUTES.RESERVATION);
+    navigate(ROUTES.RESERVATION_HISTORY);
   };
 
   const handleCloseTooltip = () => setIsOpenTip(false);
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -61,7 +68,7 @@ export default function ReservationDetail() {
       />
 
       <div className='flex flex-col pb-[1.6rem]'>
-        {contentProps && <ReservationDetailTopContent {...contentProps} />}
+        {topContents && <ReservationDetailTopContent {...topContents} />}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
           <div className='border-grayscale-100 my-[2.4rem] border' />

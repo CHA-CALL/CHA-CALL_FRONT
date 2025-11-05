@@ -1,38 +1,42 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import { Icon } from '@components/icon/Icon';
-import Navigation from '@components/navigation/Navigation';
-import Button from '@components/button/Button';
-import ButtonFloating from '@components/button-floating/ButtonFloating';
-import BottomSheet from '@components/bottom-sheet/BottomSheet';
+import Navigation from '@layout/navigation/Navigation';
+import Button from '@ui/button/Button';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import MenuItem from '@pages/@owner/menu/components/MenuItem';
+import { type MyFoodTruckMenuResponse } from 'apis/data-contracts';
 import {
-  SORT_OPTIONS,
   SORT_TYPES,
   type SortType,
 } from '@pages/@owner/menu/constant/menu-list-sort';
-
-import { mockMenuData } from '@pages/@owner/menu/constant/mockUp';
+import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export default function MenuList() {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { foodTruckId } = useParams();
+  const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
+  const [sortOption, setSortOption] = useState<SortType>(SORT_TYPES.LATEST);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
-  const [sortedMenuList, setSortedMenuList] = useState(mockMenuData);
-
+  const formData = location.state?.formData;
   useEffect(() => {
-    const sorted = [...mockMenuData].sort((a, b) => {
-      const dateA = new Date(a.dateAdded).getTime();
-      const dateB = new Date(b.dateAdded).getTime();
-      return isSorted === SORT_TYPES.LATEST ? dateB - dateA : dateA - dateB;
-    });
-    setSortedMenuList(sorted);
-  }, [isSorted]);
+    if (foodTruckId) {
+      //TODO: 메뉴 목록 조회 로직 구현
+      setMenus([]);
+    }
+  }, [foodTruckId]);
 
   const handleClickBack = () => {
-    navigate(-1);
+    const updatedFormData = {
+      ...formData,
+      menus: true,
+    };
+    navigate(ROUTES.FOOD_TRUCK_FORM, {
+      state: getNavigateState(updatedFormData),
+    });
   };
 
   const handleRegister = () => {
@@ -47,13 +51,12 @@ export default function MenuList() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleSortByLatest = () => {
-    setIsSorted(SORT_TYPES.LATEST);
-    handleCloseBottomSheet();
-  };
+  const handleSortByType = (type: SortType) => {
+    setSortOption(type);
+    if (foodTruckId) {
+      //TODO: api 요청 로직 구현 (정렬 기준 최신순)
+    }
 
-  const handleSortByOldest = () => {
-    setIsSorted(SORT_TYPES.OLDEST);
     handleCloseBottomSheet();
   };
 
@@ -61,9 +64,7 @@ export default function MenuList() {
     alert('메뉴가 등록되었습니다.');
   };
 
-  const handleSave = () => {
-    // TODO: 메뉴 노출 여부 저장 로직 구현
-  };
+  const handleSave = () => {};
 
   return (
     <>
@@ -73,7 +74,7 @@ export default function MenuList() {
         text='메뉴 등록'
       />
 
-      <div className='top-[4.8rem] z-10 flex w-full flex-col bg-white p-[2rem] fixed-center'>
+      <div className='fixed-center top-[4.8rem] z-10 flex w-full flex-col bg-white p-[2rem]'>
         <span className='text-grayscale-900 title-sb-16'>
           푸드트럭 메뉴 등록
         </span>
@@ -82,7 +83,7 @@ export default function MenuList() {
         </span>
       </div>
 
-      <div className='top-[12.8rem] z-10 flex w-full justify-between border-b border-grayscale-100 bg-white px-[2rem] pb-[1rem] fixed-center'>
+      <div className='border-grayscale-100 fixed-center top-[12.8rem] z-10 flex w-full justify-between border-b bg-white px-[2rem] pb-[1rem]'>
         <Button
           variant='default'
           buttonStyle='edit'
@@ -93,24 +94,24 @@ export default function MenuList() {
         <button
           type='button'
           onClick={handleOpenBottomSheet}
-          className='flex items-center text-grayscale-700 caption-m-12'
+          className='text-grayscale-700 caption-m-12 flex items-center'
         >
-          {SORT_OPTIONS[isSorted]}
+          {sortOption}
           <Icon name='ic_down' />
         </button>
       </div>
 
       <div className='flex flex-col bg-white px-[2rem] pb-[8.5rem] pt-[11.9rem]'>
-        {sortedMenuList.length > 0 ? (
-          sortedMenuList.map((menu, index) => (
+        {menus.length > 0 ? (
+          menus.map((menu, index) => (
             <MenuItem
               key={menu.menuId}
-              menuImage={menu.image}
-              menuName={menu.name}
-              menuDescription={menu.description}
-              menuPrice={menu.price}
+              imageUrl={menu.imageUrl || ''}
+              name={menu.name || ''}
+              description={menu.description || ''}
+              price={menu.price ? Number(menu.price) : 0}
               handleToggle={handleClickToggle}
-              isLast={index === sortedMenuList.length - 1}
+              isLast={index === menus.length - 1}
             />
           ))
         ) : (
@@ -127,7 +128,7 @@ export default function MenuList() {
         )}
       </div>
 
-      <footer className='bottom-[0] z-10 w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
+      <footer className='fixed-center bottom-[0] z-10 w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
         <Button
           variant='cta'
           buttonStyle='active'
@@ -147,17 +148,17 @@ export default function MenuList() {
         <>
           <button
             type='button'
-            onClick={handleSortByLatest}
-            className='w-full border-b border-grayscale-100 p-[2rem] text-grayscale-700 title-sb-14'
+            onClick={() => handleSortByType(SORT_TYPES.LATEST)}
+            className='border-grayscale-100 text-grayscale-700 title-sb-14 w-full border-b p-[2rem]'
           >
-            {SORT_OPTIONS[SORT_TYPES.LATEST]}
+            {SORT_TYPES.LATEST}
           </button>
           <button
             type='button'
-            onClick={handleSortByOldest}
-            className='w-full p-[2rem] text-grayscale-700 title-sb-14'
+            onClick={() => handleSortByType(SORT_TYPES.OLDEST)}
+            className='text-grayscale-700 title-sb-14 w-full p-[2rem]'
           >
-            {SORT_OPTIONS[SORT_TYPES.OLDEST]}
+            {SORT_TYPES.OLDEST}
           </button>
           <Button
             variant='cta'

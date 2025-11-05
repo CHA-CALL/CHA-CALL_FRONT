@@ -9,7 +9,6 @@ import {
   FOOD_TRUCK_NAME_VALIDATOR,
   useFoodTruckName,
 } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
-import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import {
   createNewFoodTruck,
   getPresignedUrls,
@@ -18,6 +17,14 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { ONBOARDING_QUERY_KEY } from '@shared/querykey/food-truck-onboarding';
 import type { FoodTruckCreateRequest } from 'apis/data-contracts';
+
+import {
+  OWNER_MEDIA_ERROR_MESSAGE,
+  OWNER_MEDIA_MIN_COUNT,
+  OWNER_TEXT_ERROR_MESSAGE,
+} from '@pages/@owner/food-truck-onboarding/constants/owner';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
+import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 
 const ownerSchema = z
   .object({
@@ -76,10 +83,44 @@ export const useFoodTruckInput = () => {
   };
 
   const updateBizRegCertFile = (bizRegCert: File | undefined) => {
+    if (!bizRegCert) {
+      setError('bizRegCert', {
+        message: OWNER_MEDIA_ERROR_MESSAGE.MAX_COUNT(
+          OWNER_MEDIA_MIN_COUNT.BIZ_REG_CERT
+        ),
+      });
+      return;
+    }
+    if (!isAcceptableFile(bizRegCert)) {
+      setError('bizRegCert', { message: NOT_ALLOWED_FILE_TYPE });
+      return;
+    }
+    if (!isFileSizeValid(bizRegCert)) {
+      setError('bizRegCert', { message: CANNOT_UPLOAD_FILE_MB });
+      return;
+    }
     setValue('bizRegCert', bizRegCert, { shouldValidate: true });
   };
 
   const updateOtherDocsFiles = (otherDocs: File[] | undefined) => {
+    if (!otherDocs) {
+      setError('otherDocs', {
+        message: OWNER_MEDIA_ERROR_MESSAGE.MIN_COUNT(
+          OWNER_MEDIA_MIN_COUNT.OTHER_DOCS
+        ),
+      });
+      return;
+    }
+    for (const doc of otherDocs) {
+      if (!isAcceptableFile(doc)) {
+        setError('otherDocs', { message: NOT_ALLOWED_FILE_TYPE });
+        return;
+      }
+      if (!isFileSizeValid(doc)) {
+        setError('otherDocs', { message: CANNOT_UPLOAD_FILE_MB });
+        return;
+      }
+    }
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 

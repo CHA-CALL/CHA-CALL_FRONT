@@ -1,16 +1,32 @@
-import Navigation from '@shared/components/navigation/Navigation';
-import { Icon } from '@shared/components/icon/Icon';
-import { mockup } from '@pages/save-food-truck-list/mockup';
-import { cn } from '@shared/utils/cn';
-import ButtonFloating from '@shared/components/button-floating/ButtonFloating';
+import Navigation from '@layout/navigation/Navigation';
+import { Icon } from '@icon/Icon';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
 import { useNavigate } from 'react-router-dom';
+import FoodTruckCard from '@shared/components/food-truck/FoodTruckCard';
+import {
+  useGetSaveFoodTrucks,
+  useUnsaveFoodTrucks,
+} from '@pages/save-food-truck-list/hooks/use-save-food-truck';
+import Loading from '@layout/loading/Loading';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 export default function SaveFoodTruckList() {
-  const data = mockup;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
+    useGetSaveFoodTrucks();
+  const { mutate: unsaveFoodTruck } = useUnsaveFoodTrucks();
+  const { ref, inView } = useInView();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage]);
   const handleClickBack = () => {
     navigate(-1);
   };
+
+  const handleClickCard = () => {};
+
   return (
     <>
       <Navigation
@@ -19,19 +35,27 @@ export default function SaveFoodTruckList() {
         handleLeftClick={handleClickBack}
       />
       <div className='flex flex-col gap-[1rem] p-[2rem]'>
-        <p className='caption-m-12 text-grayscale-500'>총 {data.length}개</p>
-        <div>
-          {data.map((item, index) => (
-            <div key={`${item.title}-${index}`}>
-              <div className={cn('mb-[2rem]', index !== 0 && 'mt-[2rem]')}>
-                <p>{item.title}</p>
-              </div>
-              {index !== data.length - 1 && (
-                <div className='bg-grayscale-100 h-[0.1rem] w-full' />
-              )}
-            </div>
-          ))}
-        </div>
+        <p className='caption-m-12 text-grayscale-500'>
+          총 {data ? data.totalSize : '0'}개
+        </p>
+        {isPending || !data ? (
+          <Loading />
+        ) : (
+          <div className='flex flex-col gap-[4rem]'>
+            {data.foodTrucks
+              .filter(item => item.foodTruckId !== null)
+              .map(item => (
+                <FoodTruckCard
+                  key={item.foodTruckId}
+                  variant='foodtruckClient'
+                  data={{ ...item, isSaved: true }}
+                  handleClickCard={handleClickCard}
+                  handleClickButton={() => unsaveFoodTruck(item.foodTruckId!)}
+                />
+              ))}
+            <div ref={ref}></div>
+          </div>
+        )}
       </div>
       <ButtonFloating />
     </>

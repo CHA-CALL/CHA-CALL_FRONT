@@ -10,16 +10,15 @@ export const useReservations = (
   const query = useInfiniteQuery({
     queryKey: RESERVATION_QUERY_KEY.LIST(isProvider, viewType),
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
-      return getReservationHistory(
-        isProvider,
-        {
-          viewType,
-          ...(pageParam !== undefined && { 'cursorPagingRequest.cursor': pageParam }),
-        }
-      );
+      return getReservationHistory(isProvider, {
+        viewType,
+        ...(pageParam !== undefined && {
+          'cursorPagingRequest.cursor': pageParam,
+        }),
+      });
     },
     initialPageParam: undefined,
-    getNextPageParam: (lastPage) => {
+    getNextPageParam: lastPage => {
       if (lastPage?.hasNext) {
         return lastPage.lastCursor;
       }
@@ -28,7 +27,8 @@ export const useReservations = (
     enabled: !!viewType,
   });
 
-  const reservations = query.data?.pages.flatMap(page => page?.content || []) || [];
+  const reservations =
+    query.data?.pages.flatMap(page => page?.content || []) || [];
 
   return {
     reservations,

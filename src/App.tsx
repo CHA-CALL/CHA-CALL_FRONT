@@ -1,9 +1,10 @@
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'jotai';
 
-import { router } from '@/router/router';
+import { router } from '@router/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ToastContainer from '@shared/components/custom-toast/ToastContainer';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ToastContainer from '@form/custom-toast/ToastContainer';
 
 import '@styles/global.css';
 
@@ -18,6 +19,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <SvgSprite />
         <RouterProvider router={router} />
+        <div className='text-[1.5rem]'>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </div>
       </QueryClientProvider>
     </Provider>
   );

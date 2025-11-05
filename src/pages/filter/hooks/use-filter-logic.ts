@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { isEqual } from 'lodash';
 
-import type { SelectedDate } from '@shared/types/calendar-types';
+import type { SelectedDate } from '@type/calendar-types';
 import {
   filtersAtom,
   initialFilter,
@@ -15,7 +15,8 @@ import type {
   FoodTruckCategoryValue,
   NeedElectricityValue,
   PaymentMethodValue,
-} from '@shared/types/category-types';
+} from '@type/category-types';
+import { ROUTES } from '@router/constant/routes';
 
 export default function useFilterLogic() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function useFilterLogic() {
     [localFilters]
   );
 
-  const notFiltered = isEqual(cleanedLocalFilters, initialFilter);
+  const notFiltered = isEqual(cleanedLocalFilters, globalFilters);
 
   const handleGoBack = () => navigate(-1);
 
@@ -74,10 +75,18 @@ export default function useFilterLogic() {
   };
 
   const handleAddSchedule = () => {
-    setLocalFilters(prev => ({
-      ...prev,
-      schedules: [...prev.schedules, { startDate: null, endDate: null }],
-    }));
+    setLocalFilters(prev => {
+      const hasEmptySchedule = prev.schedules.some(
+        s => s.startDate === null && s.endDate === null
+      );
+
+      if (hasEmptySchedule) return prev;
+
+      return {
+        ...prev,
+        schedules: [...prev.schedules, { startDate: null, endDate: null }],
+      };
+    });
   };
 
   const handleResetFilter = () => {
@@ -97,7 +106,18 @@ export default function useFilterLogic() {
 
   const handleApplyFilter = () => {
     setGlobalFilters(cleanedLocalFilters);
-    navigate('/reservation');
+    navigate(ROUTES.RESERVATION);
+  };
+
+  const handleDeleteSchedule = (index: number) => {
+    setLocalFilters(prev => {
+      const newScheduleArray = prev.schedules.filter((_, i) => i !== index);
+      if (newScheduleArray.length === 0) {
+        newScheduleArray.push({ startDate: null, endDate: null });
+      }
+
+      return { ...prev, schedules: newScheduleArray };
+    });
   };
 
   return {
@@ -114,5 +134,6 @@ export default function useFilterLogic() {
     handleOpenCalendar,
     handleCloseCalendar,
     handleApplyFilter,
+    handleDeleteSchedule,
   };
 }

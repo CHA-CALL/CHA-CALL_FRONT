@@ -1,9 +1,9 @@
-import Button from '@shared/components/button/Button';
-import { Icon } from '@shared/components/icon/Icon';
-import type { SelectedDate } from '@shared/types/calendar-types';
-
-import CalendarDayButton from '@shared/components/calendar/components/CalendarDayButton';
-import useCalendar from '@shared/components/calendar/hooks/use-calendar';
+import Button from '@ui/button/Button';
+import { Icon } from '@icon/Icon';
+import type { SelectedDate } from '@type/calendar-types';
+import { DAY_OF_THE_WEEK_LABELS } from '@constant/day-of-week-labels';
+import CalendarDayButton from '@components/calendar/components/CalendarDayButton';
+import useCalendar from '@components/calendar/hooks/use-calendar';
 
 interface CalendarProps {
   selectedDate: SelectedDate;
@@ -11,8 +11,6 @@ interface CalendarProps {
   handleCloseBottomSheet: () => void;
   isOpen: boolean;
 }
-
-const DAY_OF_THE_WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function Calendar({
   selectedDate,

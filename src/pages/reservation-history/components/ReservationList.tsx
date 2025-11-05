@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { useInView } from 'react-intersection-observer';
-import FoodTruckCard from '@components/food-truck-card/FoodTruckCard';
-import Loading from '@components/loading/Loading';
+import FoodTruckCard from '@components/food-truck/FoodTruckCard';
+import Loading from '@layout/loading/Loading';
 import EmptyView from '@pages/reservation-history/components/EmptyView';
 import { useReservations } from '@pages/reservation-history/hooks/use-reservation-history';
 import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
@@ -18,7 +18,7 @@ export default function ReservationList({
   reservationState,
 }: ReservationListProps) {
   const navigate = useNavigate();
-  const { ref, inView } = useInView()
+  const { ref, inView } = useInView();
 
   const {
     reservations,
@@ -28,9 +28,9 @@ export default function ReservationList({
     isFetchingNextPage,
   } = useReservations(isProvider, reservationState);
 
-  const handleReservationDetail = () => {
-    navigate(ROUTES.RESERVATION_DETAIL);
-  }
+  const handleReservationDetail = (reservationId: string) => {
+    navigate(ROUTES.RESERVATION_DETAIL(reservationId));
+  };
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -44,10 +44,7 @@ export default function ReservationList({
 
   if (!reservations || reservations.length === 0) {
     return (
-      <EmptyView
-        isProvider={isProvider}
-        reservationState={reservationState}
-      />
+      <EmptyView isProvider={isProvider} reservationState={reservationState} />
     );
   }
 
@@ -58,10 +55,14 @@ export default function ReservationList({
           <FoodTruckCard
             variant={isProvider ? 'reservationProvider' : 'reservationClient'}
             data={reservation}
-            handleClickButton={handleReservationDetail}
+            handleClickButton={() => {
+              if (reservation.reservationId != null) {
+                handleReservationDetail(String(reservation.reservationId));
+              }
+            }}
           />
           {index !== reservations.length - 1 && (
-            <div className='h-[0.1rem] w-full bg-grayscale-100' />
+            <div className='bg-grayscale-100 h-[0.1rem] w-full' />
           )}
         </div>
       ))}
