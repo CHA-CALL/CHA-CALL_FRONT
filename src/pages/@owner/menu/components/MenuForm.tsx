@@ -55,7 +55,7 @@ export default function MenuForm({
             placeholder='텍스트를 입력해주세요.'
             value={formData.name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateName(e.target.value.trim())
+              updateName(e.target.value)
             }
             maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
             rightComponent={
