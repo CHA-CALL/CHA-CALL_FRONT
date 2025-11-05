@@ -90,7 +90,7 @@ export const useBasicInfo = () => {
     try {
       const newImageUrls = await uploadImage([selectedFile]);
       const currentPhotos = formData.photoUrls || [];
-      const newUrls = newImageUrls.map(img => typeof img);
+      const newUrls = newImageUrls.map(img => img.fileUrl);
       setValue('photoUrls', [...currentPhotos, ...newUrls], {
         shouldValidate: true,
       });

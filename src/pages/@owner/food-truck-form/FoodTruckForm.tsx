@@ -36,7 +36,6 @@ export default function FoodTruckForm() {
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
   console.log(id);
   const methods = useFoodTruckForm();
-  console.log('폼 데이터:', methods.formData);
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
