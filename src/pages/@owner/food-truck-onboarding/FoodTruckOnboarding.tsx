@@ -31,6 +31,11 @@ export default function FoodTruckOnboarding() {
     handleNavigate,
   } = useOnboardingModal();
 
+  const handleConfirmSubmit = () => {
+    handleSubmit();
+    handleCloseModal();
+  };
+
   return (
     <>
       <OnboardingModal
@@ -41,7 +46,7 @@ export default function FoodTruckOnboarding() {
       <OnboardingModal
         isOnboarding={true}
         isModalOpen={isOnboardingModalOpen}
-        handleConfirm={handleSubmit}
+        handleConfirm={handleConfirmSubmit}
         handleCloseModal={handleCloseModal}
       />
 

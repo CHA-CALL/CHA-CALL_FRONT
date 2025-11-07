@@ -1,14 +1,10 @@
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  BIZ_REG_CERT_FILE_VALIDATOR,
-  OTHER_DOCS_FILES_VALIDATOR,
-} from '@pages/@owner/food-truck-onboarding/utils/onboarding-validator';
-import {
-  FOOD_TRUCK_NAME_VALIDATOR,
-  useFoodTruckName,
-} from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
+  ONBOARDING_SCHEMA,
+  type OnboardingFormData,
+} from '@pages/@owner/food-truck-onboarding/utils/onboarding-validator.schema';
+import { useFoodTruckName } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import {
   createNewFoodTruck,
   getPresignedUrls,
@@ -25,25 +21,25 @@ import {
 } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
+import { useNavigate } from 'react-router-dom';
+import useToast from '@shared/hooks/use-toast';
 
-const ownerSchema = z
-  .object({
-    name: FOOD_TRUCK_NAME_VALIDATOR,
-    bizRegCert: BIZ_REG_CERT_FILE_VALIDATOR,
-    otherDocs: OTHER_DOCS_FILES_VALIDATOR,
-  })
-  .refine((data) => {
-    return !!data.bizRegCert && (!!data.otherDocs && data.otherDocs.length > 0);
-  });
-
-export type OwnerFormData = z.infer<typeof ownerSchema>;
+export type OwnerFormData = OnboardingFormData;
 
 interface UploadFilesParams {
   bizRegCert: File;
   otherDocs: File[];
 }
 
+interface UploadFilesResult {
+  bizRegCertUrl: string;
+  otherDocsUrls: string[];
+}
+
 export const useFoodTruckInput = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const {
     isNameVerified,
     handleCheckName,
@@ -56,8 +52,8 @@ export const useFoodTruckInput = () => {
     formState: { errors, isValid },
     watch,
     setError,
-  } = useForm<OwnerFormData>({
-    resolver: zodResolver(ownerSchema),
+  } = useForm<OnboardingFormData>({
+    resolver: zodResolver(ONBOARDING_SCHEMA),
     defaultValues: {
       name: '',
       bizRegCert: undefined,
@@ -68,8 +64,65 @@ export const useFoodTruckInput = () => {
 
   const formData = watch();
 
+  const uploadFilesMutation = useMutation<
+    UploadFilesResult,
+    Error,
+    UploadFilesParams
+  >({
+    mutationKey: ONBOARDING_QUERY_KEY.UPLOAD_FILES(),
+    mutationFn: async ({ bizRegCert, otherDocs }) => {
+      const allFiles = [bizRegCert, ...otherDocs];
+      const fileExtensions = allFiles.map((file) =>
+        file.name.split('.').pop() || ''
+      );
+
+      const imageInfos = await getPresignedUrls(fileExtensions);
+      if (imageInfos.length !== allFiles.length) {
+        throw new Error('Presigned URL 발급 실패');
+      }
+
+      await Promise.all(
+        imageInfos.map((info, index) => {
+          if (!info.presignedUrl) {
+            throw new Error('Presigned URL 누락');
+          }
+          return uploadImage(info.presignedUrl, allFiles[index]);
+        })
+      );
+
+      const bizRegCertUrl = imageInfos[0].fileUrl || '';
+      const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
+
+      return { bizRegCertUrl, otherDocsUrls };
+    },
+    onError: (error) => {
+      console.error('파일 업로드 실패:', error);
+      toast.error('파일 업로드에 실패했습니다.');
+    },
+  });
+
+  const createFoodTruckMutation = useMutation<
+    void,
+    Error,
+    FoodTruckCreateRequest
+  >({
+    mutationKey: ONBOARDING_QUERY_KEY.CREATE(),
+    mutationFn: async (params) => {
+      await createNewFoodTruck(params);
+    },
+    onSuccess: () => {
+      toast.success('푸드트럭이 등록되었습니다.');
+      navigate('/owner/food-truck-form');
+    },
+    onError: (error) => {
+      console.error('등록 실패:', error);
+      toast.error('푸드트럭 등록에 실패했습니다.');
+    },
+  });
+
   const updateName = (name: string) => {
-    setValue('name', name, { shouldValidate: true });
+    const trimmedName = name.replace(/\s{2,}/g, ' ').trim();
+    setValue('name', trimmedName, { shouldValidate: true });
     resetVerification();
   };
 
@@ -124,57 +177,6 @@ export const useFoodTruckInput = () => {
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 
-const useUploadFiles = useMutation<
-    { bizRegCertUrl: string; otherDocsUrls: string[] },
-    Error,
-    UploadFilesParams
-  >({
-    mutationKey: ONBOARDING_QUERY_KEY.UPLOAD_FILES,
-    mutationFn: async ({ bizRegCert, otherDocs }: UploadFilesParams) => {
-      const allFiles = [bizRegCert, ...otherDocs];
-      const fileExtensions = allFiles.map((file) =>
-        file.name.split('.').pop() || ''
-      );
-
-      const imageInfos = await getPresignedUrls(fileExtensions);
-      if (imageInfos.length !== allFiles.length) {
-        throw new Error('Presigned URL 발급 실패');
-      }
-
-      await Promise.all(
-        imageInfos.map((info, index) => {
-          if (!info.presignedUrl) {
-            throw new Error('Presigned URL 누락');
-          }
-          return uploadImage(info.presignedUrl, allFiles[index]);
-        })
-      );
-
-      const bizRegCertUrl = imageInfos[0].fileUrl || '';
-      const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
-
-      return { bizRegCertUrl, otherDocsUrls };
-    },
-  });
-
-  const useCreateFoodTruck = useMutation<
-    void,
-    Error,
-    FoodTruckCreateRequest
-  >({
-    mutationKey: ONBOARDING_QUERY_KEY.CREATE,
-    mutationFn: async (params: FoodTruckCreateRequest) => {
-      await createNewFoodTruck(params);
-    },
-    onSuccess: () => {
-      // TODO: 다음 페이지로 이동
-      console.info('등록 성공');
-    },
-    onError: (error) => {
-      console.error('등록 실패:', error);
-    },
-  });
-
   const onSubmit = async (formData: OwnerFormData) => {
     if (!isNameVerified) {
       setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
@@ -183,16 +185,17 @@ const useUploadFiles = useMutation<
 
     const { bizRegCert, otherDocs } = formData;
     if (!bizRegCert || !otherDocs || otherDocs.length === 0) {
+      toast.error('모든 필수 항목을 업로드해주세요.');
       return;
     }
 
     try {
-      const { bizRegCertUrl, otherDocsUrls } = await useUploadFiles.mutateAsync({
+      const { bizRegCertUrl, otherDocsUrls } = await uploadFilesMutation.mutateAsync({
         bizRegCert,
         otherDocs,
       });
 
-      await useCreateFoodTruck.mutateAsync({
+      await createFoodTruckMutation.mutateAsync({
         name: formData.name,
         businessRegistrationUrl: bizRegCertUrl,
         otherDocumentUrls: otherDocsUrls,

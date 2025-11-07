@@ -5,7 +5,7 @@ export const OWNER_TEXT = {
 
 export const OWNER_TEXT_ERROR_MESSAGE = {
   MIN: (min: number) => `${min}자 이상 입력해주세요.`,
-  MAX: (max: number) => `${max}자 미만 입력해주세요.`,
+  MAX: (max: number) => `${max}자 이하 입력해주세요.`,
   DUPLICATE: '이미 존재하는 이름입니다.',
   NOT_VERIFIED: '중복확인을 해주세요.',
 } as const;

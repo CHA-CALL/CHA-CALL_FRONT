@@ -1,6 +1,8 @@
 export const ONBOARDING_QUERY_KEY = {
-  CHECK_NAME_DUPLICATE: ['food-truck', 'check-name-duplicate'],
-  CREATE: ['food-truck', 'create'],
-  UPLOAD_FILES: ['food-truck', 'upload-files'],
-  GET_PRESIGNED_URLS: ['food-truck', 'get-presigned-urls'],
+  ALL: ['food-truck-onboarding'],
+  CHECK_NAME_DUPLICATE: (name?: string) =>
+    [...ONBOARDING_QUERY_KEY.ALL, 'check-name-duplicate', name],
+  CREATE: () => [...ONBOARDING_QUERY_KEY.ALL, 'create'],
+  UPLOAD_FILES: () => [...ONBOARDING_QUERY_KEY.ALL, 'upload-files'],
+  GET_PRESIGNED_URLS: () => [...ONBOARDING_QUERY_KEY.ALL, 'get-presigned-urls'],
 } as const;
