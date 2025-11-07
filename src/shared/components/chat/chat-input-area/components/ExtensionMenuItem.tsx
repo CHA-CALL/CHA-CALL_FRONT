@@ -4,8 +4,8 @@ import type { ReactNode } from 'react';
 interface ExtensionMenuItemProps {
   title: string;
   icon: ReactNode;
-  isDisabled: boolean;
-  handleClick: () => void;
+  isDisabled?: boolean;
+  handleClick?: () => void;
 }
 export default function ExtensionMenuItem({
   isDisabled,
@@ -16,6 +16,7 @@ export default function ExtensionMenuItem({
   return (
     <div className='flex w-[5.6rem] flex-col items-center gap-[0.5rem]'>
       <button
+        type='button'
         className={cn(
           'bg-primary-25 h-[4.8rem] w-[4.8rem] items-center justify-center rounded-full',
           isDisabled ? 'text-grayscale-500' : 'text-primary-700'

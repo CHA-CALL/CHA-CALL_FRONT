@@ -1,5 +1,5 @@
 import React, { useRef, useState, type FormEvent } from 'react';
-import useAutosizeTextarea from '@components/chat/chat-extension-menu/hooks/use-autosize-textarea';
+import useAutosizeTextarea from '@components/chat/chat-input-area/hooks/use-autosize-textarea';
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 

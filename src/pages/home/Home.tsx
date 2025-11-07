@@ -4,7 +4,7 @@ import Overlay from '@layout/overlay/Overlay';
 import Input from '@ui/input/Input';
 import { Icon } from '@icon/Icon';
 import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
-import ChatExtensionMenu from '@shared/components/chat/chat-extension-menu/ChatExtensionMenu';
+import ChatInputArea from '@components/chat/chat-input-area/ChatInputArea';
 
 const Home = () => {
   // BottomSheet states
@@ -101,7 +101,7 @@ const Home = () => {
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
       <footer className='fixed bottom-[0] w-full'>
-        <ChatExtensionMenu />
+        <ChatInputArea />
       </footer>
     </div>
   );
