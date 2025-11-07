@@ -8,11 +8,8 @@ export default function ChatExtensionMenu() {
   return (
     <div>
       <div className='flex gap-[0.5rem] px-[1.1rem] py-[0.8rem]'>
-        <button className='flex items-center justify-center rounded-full p-[0.9rem]'>
-          <Icon
-            name={'ic_plus'}
-            className='bg-grayscale-900 rounded-full text-white'
-          />
+        <button className='bg-grayscale-900 flex items-center justify-center rounded-full p-[0.9rem]'>
+          <Icon name={'ic_plus'} className='h-[0.8rem] w-[0.8rem] text-white' />
         </button>
         <form className='flex w-full'>
           <input

@@ -134,8 +134,8 @@ export default function FoodTruckManagement() {
           {isEditing ? (
             '삭제하기'
           ) : (
-            <div className='flex items-center gap-[0.2rem]'>
-              <Icon name='ic_plus' />
+            <div className='flex items-center gap-[0.8rem]'>
+              <Icon name='ic_plus' className='h-[0.8rem] w-[0.8rem]' />
               <span> 추가하기</span>
             </div>
           )}
