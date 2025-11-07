@@ -4,6 +4,7 @@ import Overlay from '@layout/overlay/Overlay';
 import Input from '@ui/input/Input';
 import { Icon } from '@icon/Icon';
 import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
+import ChatExtensionMenu from '@shared/components/chat/chat-extension-menu/ChatExtensionMenu';
 
 const Home = () => {
   // BottomSheet states
@@ -103,6 +104,7 @@ const Home = () => {
         </div>
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
+      <ChatExtensionMenu />
     </div>
   );
 };
