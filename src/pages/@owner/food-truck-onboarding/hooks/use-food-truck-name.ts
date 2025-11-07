@@ -23,6 +23,7 @@ export const useFoodTruckName = () => {
     },
     onError: (error) => {
       console.error('중복 확인 실패:', error);
+      toast.error('이름 중복 확인에 실패했습니다. 다시 시도해주세요.');
       setIsNameVerified(false);
     },
   });

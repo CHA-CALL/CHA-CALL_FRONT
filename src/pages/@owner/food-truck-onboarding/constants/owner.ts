@@ -23,8 +23,6 @@ export const OWNER_MEDIA_MAX_COUNT = {
 export const OWNER_MEDIA_ERROR_MESSAGE = {
   BIZ_REG_CERT: '사업자 등록증을 업로드해야합니다.',
   OTHER_DOCS : '기타 서류는 정확히 5장을 업로드해야합니다.',
-  MIN_COUNT: (min: number) => `${min}개 이상 업로드 해주세요.`,
-  MAX_COUNT: (max: number) => `${max}개까지 업로드 가능합니다.`,
 } as const;
 
 export const OWNER_MEDIA_TYPE = {

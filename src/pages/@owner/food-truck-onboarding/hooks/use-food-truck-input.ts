@@ -14,11 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { ONBOARDING_QUERY_KEY } from '@shared/querykey/food-truck-onboarding';
 import type { FoodTruckCreateRequest } from 'apis/data-contracts';
 
-import {
-  OWNER_MEDIA_ERROR_MESSAGE,
-  OWNER_MEDIA_MIN_COUNT,
-  OWNER_TEXT_ERROR_MESSAGE,
-} from '@pages/@owner/food-truck-onboarding/constants/owner';
+import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 import { useNavigate } from 'react-router-dom';
@@ -121,7 +117,7 @@ export const useFoodTruckInput = () => {
   });
 
   const updateName = (name: string) => {
-    const trimmedName = name.replace(/\s{2,}/g, ' ').trim();
+    const trimmedName = name.replace(/\s{2,}/g, ' ').trimStart();
     setValue('name', trimmedName, { shouldValidate: true });
     resetVerification();
   };
@@ -135,15 +131,8 @@ export const useFoodTruckInput = () => {
     }
   };
 
-  const updateBizRegCertFile = (bizRegCert: File | undefined) => {
-    if (!bizRegCert) {
-      setError('bizRegCert', {
-        message: OWNER_MEDIA_ERROR_MESSAGE.MAX_COUNT(
-          OWNER_MEDIA_MIN_COUNT.BIZ_REG_CERT
-        ),
-      });
-      return;
-    }
+  const updateBizRegCertFile = (bizRegCert: File) => {
+    if (!bizRegCert) return;
     if (!isAcceptableFile(bizRegCert)) {
       setError('bizRegCert', { message: NOT_ALLOWED_FILE_TYPE });
       return;
@@ -152,18 +141,12 @@ export const useFoodTruckInput = () => {
       setError('bizRegCert', { message: CANNOT_UPLOAD_FILE_MB });
       return;
     }
+
     setValue('bizRegCert', bizRegCert, { shouldValidate: true });
   };
 
   const updateOtherDocsFiles = (otherDocs: File[] | undefined) => {
-    if (!otherDocs) {
-      setError('otherDocs', {
-        message: OWNER_MEDIA_ERROR_MESSAGE.MIN_COUNT(
-          OWNER_MEDIA_MIN_COUNT.OTHER_DOCS
-        ),
-      });
-      return;
-    }
+    if (!otherDocs) return;
     for (const doc of otherDocs) {
       if (!isAcceptableFile(doc)) {
         setError('otherDocs', { message: NOT_ALLOWED_FILE_TYPE });
@@ -174,12 +157,13 @@ export const useFoodTruckInput = () => {
         return;
       }
     }
+
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 
   const onSubmit = async (formData: OwnerFormData) => {
     if (!isNameVerified) {
-      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
+      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.NOT_VERIFIED });
       return;
     }
 

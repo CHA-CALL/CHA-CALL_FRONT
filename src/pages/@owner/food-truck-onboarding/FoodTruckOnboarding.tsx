@@ -67,7 +67,7 @@ export default function FoodTruckOnboarding() {
         <div className='bg-grayscale-100 h-[0.1rem] w-full' />
         <BizRegCertSection
           file={formData.bizRegCert}
-          onChange={updateBizRegCertFile}
+          onChange={(file) => file && updateBizRegCertFile(file)}
           error={errors.bizRegCert}
         />
         <div className='bg-grayscale-100 h-[0.1rem] w-full' />
