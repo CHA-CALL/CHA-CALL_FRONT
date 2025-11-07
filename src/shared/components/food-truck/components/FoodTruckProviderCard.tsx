@@ -21,8 +21,9 @@ export default function FoodTruckProviderCard({
     activeTime = '',
     serviceArea = '',
   } = data;
-  const splitActiveTime = activeTime.split('-').map(time => time.trim());
-
+  const splitActiveTime = (activeTime ?? '')
+    .split('-')
+    .map(time => time.trim());
   return (
     <div
       className={cn(

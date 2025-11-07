@@ -20,7 +20,7 @@ export default function ChatExtensionMenu() {
 
   return (
     <div>
-      <ChatInputBar setIsOpenMenu={setIsOpenMenu} />
+      <ChatInputBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
       {isOpenMenu && (
         <div className='flex flex-col items-center gap-[1.6rem] px-[4rem] py-[2rem]'>
           <nav

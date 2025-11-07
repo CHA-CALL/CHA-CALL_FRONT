@@ -4,10 +4,14 @@ import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 
 interface ChatInputBarProps {
+  isOpenMenu: boolean;
   setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ChatInputBar({ setIsOpenMenu }: ChatInputBarProps) {
+export default function ChatInputBar({
+  isOpenMenu,
+  setIsOpenMenu,
+}: ChatInputBarProps) {
   const [message, setMessage] = useState('');
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,7 +43,14 @@ export default function ChatInputBar({ setIsOpenMenu }: ChatInputBarProps) {
         className='bg-grayscale-900 mb-[0.7rem] mr-[0.5rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full p-[0.5rem]'
         onClick={handleExtensionClick}
       >
-        <Icon name={'ic_plus'} className='h-[0.8rem] w-[0.8rem] text-white' />
+        {isOpenMenu ? (
+          <Icon
+            name={'ic_close'}
+            className='h-[2.2rem] w-[2.2rem] text-white'
+          />
+        ) : (
+          <Icon name={'ic_plus'} className='h-[0.8rem] w-[0.8rem] text-white' />
+        )}
       </button>
       <textarea
         ref={textAreaRef}
