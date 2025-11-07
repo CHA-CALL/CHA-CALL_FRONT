@@ -61,16 +61,13 @@ const Home = () => {
           </div>
         </div>
       </Overlay>
-
       {/* BottomSheet */}
-
       <RatingBottomSheet
         reservationId={4}
         foodTruckId={1}
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
       />
-
       {/* Search Bar */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>Search Bar</h2>
@@ -80,7 +77,6 @@ const Home = () => {
           placeholder='검색어를 입력하세요'
         />
       </section>
-
       {/* Modal and BottomSheet Triggers */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>
@@ -104,7 +100,9 @@ const Home = () => {
         </div>
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
-      <ChatExtensionMenu />
+      <footer className='fixed bottom-[0] w-full'>
+        <ChatExtensionMenu />
+      </footer>
     </div>
   );
 };
