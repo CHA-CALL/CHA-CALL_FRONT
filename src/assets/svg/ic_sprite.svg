@@ -111,4 +111,7 @@
   <symbol id="ic_plus" viewBox="0 0 18 18" fill="none">
     <path d="M8.5 5V8.5M8.5 8.5V12M8.5 8.5L12 8.5M8.5 8.5H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
+  <symbol id="ic_subtract" width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 2.00293C6.634e-08 0.485247 1.62431 -0.479018 2.95703 0.24707L19.2764 9.1377C20.6672 9.89547 20.6672 11.8926 19.2764 12.6504L2.95703 21.541C1.62431 22.2671 2.0499e-06 21.3028 0 19.7852V14.6042C0 13.6219 0.713371 12.785 1.68329 12.6294L7.92188 11.6289C8.48262 11.5387 8.48271 10.7317 7.92188 10.6416L1.68329 9.64106C0.71337 9.4855 0 8.64861 0 7.6663V2.00293Z" fill="currentColor"/>
+  </symbol>
 </svg>
