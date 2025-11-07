@@ -3,11 +3,11 @@ import useAutosizeTextarea from '@components/chat/chat-extension-menu/hooks/use-
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 
-interface ChatInputProps {
+interface ChatInputBarProps {
   setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ChatInput({ setIsOpenMenu }: ChatInputProps) {
+export default function ChatInputBar({ setIsOpenMenu }: ChatInputBarProps) {
   const [message, setMessage] = useState('');
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);

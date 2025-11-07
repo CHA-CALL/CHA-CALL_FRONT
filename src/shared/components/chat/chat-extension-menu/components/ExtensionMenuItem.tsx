@@ -25,7 +25,7 @@ export default function ExtensionMenuItem({
       >
         {icon}
       </button>
-      <p className='caption-m-11 text-center'>{title}</p>
+      <p className='caption-m-11 text-nowrap text-center'>{title}</p>
     </div>
   );
 }
