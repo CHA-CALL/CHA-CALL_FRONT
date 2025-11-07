@@ -11,7 +11,7 @@ export default function ChatExtensionMenu() {
   // const role = 'client';
 
   return (
-    <div>
+    <div className='w-full'>
       <ChatInputBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
       {isOpenMenu && (
         <div className='flex flex-col items-center gap-[1.6rem] px-[4rem] py-[2rem]'>

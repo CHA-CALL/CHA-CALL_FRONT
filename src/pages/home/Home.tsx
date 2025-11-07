@@ -100,7 +100,7 @@ const Home = () => {
         </div>
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
-      <footer className='fixed bottom-[0] w-full'>
+      <footer className='fixed-center bottom-[0] w-full'>
         <ChatInputArea />
       </footer>
     </div>
