@@ -1,7 +1,7 @@
 import React, { useRef, useState, type FormEvent } from 'react';
-import useAutosizeTextarea from '@components/chat/chat-input-area/hooks/use-autosize-textarea';
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
+import useAutosizeTextarea from '@pages/chat-room/chat-input-area/hooks/use-autosize-textarea';
 
 interface ChatInputBarProps {
   isOpenMenu: boolean;
@@ -28,6 +28,13 @@ export default function ChatInputBar({
     setIsOpenMenu(prev => !prev);
   };
 
+  const handleCloseExtension = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      setIsOpenMenu(false);
+    }
+  };
+
   const textAreaBaseClasses =
     'bg-grayscale-100 body-m-14 w-full resize-none overflow-hidden rounded-[2rem] border-none px-[1.8rem] py-[0.8rem]';
   const textAreaInputclasses =
@@ -43,18 +50,17 @@ export default function ChatInputBar({
         className='bg-grayscale-900 mb-[0.7rem] mr-[0.5rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full p-[0.5rem]'
         onClick={handleExtensionClick}
       >
+        {/* TODO : 디자이너와 상의 - 닫기 버튼 표시 여부 */}
         {isOpenMenu ? (
-          <Icon
-            name={'ic_close'}
-            className='h-[2.2rem] w-[2.2rem] text-white'
-          />
+          <Icon name='ic_close' className='h-[2.2rem] w-[2.2rem] text-white' />
         ) : (
-          <Icon name={'ic_plus'} className='h-[0.8rem] w-[0.8rem] text-white' />
+          <Icon name='ic_plus' className='h-[0.8rem] w-[0.8rem] text-white' />
         )}
       </button>
       <textarea
         ref={textAreaRef}
         value={message}
+        onFocus={handleCloseExtension}
         onChange={e => setMessage(e.target.value)}
         placeholder='메세지를 입력하세요.'
         rows={1}
@@ -62,10 +68,10 @@ export default function ChatInputBar({
       />
       <button
         type='submit'
-        disabled={message === ''}
+        disabled={message.trim() === ''}
         className={cn(
           'flex h-[3.6rem] w-[3.6rem] items-center justify-center p-[0.8rem]',
-          message !== '' ? 'text-primary-700' : 'text-grayscale-300'
+          message.trim() !== '' ? 'text-primary-700' : 'text-grayscale-300'
         )}
       >
         <Icon name='ic_subtract' />

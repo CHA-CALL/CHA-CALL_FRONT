@@ -37,7 +37,6 @@ export type IconId =
   | 'ic_trash'
   | 'ic_up'
   | 'ic_subtract'
-  | 'ic_camera'
   | 'ic_gallery'
   | 'ic_ment'
   | 'ic_cash'

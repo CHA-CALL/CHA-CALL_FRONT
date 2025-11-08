@@ -8,7 +8,7 @@ interface ExtensionMenuItemProps {
   handleClick?: () => void;
 }
 export default function ExtensionMenuItem({
-  isDisabled,
+  isDisabled = false,
   title,
   icon,
   handleClick,
@@ -18,7 +18,7 @@ export default function ExtensionMenuItem({
       <button
         type='button'
         className={cn(
-          'bg-primary-25 h-[4.8rem] w-[4.8rem] items-center justify-center rounded-full',
+          'bg-primary-25 flex h-[4.8rem] w-[4.8rem] items-center justify-center rounded-full',
           isDisabled ? 'text-grayscale-500' : 'text-primary-700'
         )}
         disabled={isDisabled}
