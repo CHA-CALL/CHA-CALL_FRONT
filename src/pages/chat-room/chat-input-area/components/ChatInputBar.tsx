@@ -29,10 +29,7 @@ export default function ChatInputBar({
   };
 
   const handleCloseExtension = () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      setIsOpenMenu(false);
-    }
+    setIsOpenMenu(false);
   };
 
   const textAreaBaseClasses =
@@ -50,12 +47,13 @@ export default function ChatInputBar({
         className='bg-grayscale-900 mb-[0.7rem] mr-[0.5rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full p-[0.5rem]'
         onClick={handleExtensionClick}
       >
-        {/* TODO : 디자이너와 상의 - 닫기 버튼 표시 여부 */}
-        {isOpenMenu ? (
-          <Icon name='ic_close' className='h-[2.2rem] w-[2.2rem] text-white' />
-        ) : (
-          <Icon name='ic_plus' className='h-[0.8rem] w-[0.8rem] text-white' />
-        )}
+        <Icon
+          name='ic_plus'
+          className={cn(
+            'h-[2.2rem] w-[2.2rem] text-white transition-transform duration-300 ease-in-out',
+            isOpenMenu ? 'rotate-45' : 'rotate-0'
+          )}
+        />
       </button>
       <textarea
         ref={textAreaRef}
