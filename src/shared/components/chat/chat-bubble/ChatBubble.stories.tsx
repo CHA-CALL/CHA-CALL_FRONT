@@ -40,7 +40,7 @@ export const OtherBubble: Story = {
 
 export const Conversation: Story = {
   render: () => (
-    <div className='flex flex-col gap-[1rem] p-[2rem] bg-white'>
+    <div className='flex flex-col gap-[1rem] h-[60rem] p-[2rem] bg-white overflow-y-auto'>
       <ChatBubble
         message='안녕하세요'
         time='오후 5:21'
@@ -67,11 +67,6 @@ export const Conversation: Story = {
         isMine={false}
         profileImage='https://placehold.co/30'
         handleReservationClick={() => {}}
-      />
-      <ChatBubble
-        message='감사합니다!'
-        time='오후 10:05'
-        isMine={true}
       />
     </div>
   ),
