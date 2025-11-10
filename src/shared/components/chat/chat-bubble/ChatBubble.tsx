@@ -73,7 +73,7 @@ export default function ChatBubble({
             {displayedMessage}
           </div>
 
-          {message!.length > TRUNCATE_LENGTH && (
+          {message.length > TRUNCATE_LENGTH && (
             <button
               type='button'
               className={cn('flex items-center justify-between w-full mt-[1rem] cursor-pointer', {
@@ -94,7 +94,7 @@ export default function ChatBubble({
         {isMine && !isRead &&
           <span className={'title-sb-12 text-grayscale-500'}>1</span>
         }
-        <span className='caption_m_11 text-grayscale-300'>{time}</span>
+        <span className='caption-m-11 text-grayscale-300'>{time}</span>
       </div>
     </div>
   );
