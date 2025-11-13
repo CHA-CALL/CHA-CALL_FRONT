@@ -4,7 +4,7 @@ import { cn } from '@utils/cn';
 interface OverlayProps {
   isOpen?: boolean;
   position?: 'center' | 'bottom' | 'top' | 'left' | 'right';
-  handleClose: () => void;
+  handleClose?: () => void;
   children?: React.ReactNode;
   className?: string;
 }
@@ -32,7 +32,7 @@ export default function Overlay({
   }, [isOpen]);
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && handleClose) {
       handleClose();
     }
   };

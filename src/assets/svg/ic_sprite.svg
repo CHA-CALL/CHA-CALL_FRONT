@@ -111,4 +111,7 @@
   <symbol id="ic_plus" viewBox="0 0 18 18" fill="none">
     <path d="M8.5 5V8.5M8.5 8.5V12M8.5 8.5L12 8.5M8.5 8.5H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
+  <symbol id="ic_check_agreement" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="none">
+    <path d="M7 14L12.3333 19L19 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>
