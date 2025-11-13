@@ -16,24 +16,32 @@ export default function AgreementItem({
 
   return (
     <div className='flex flex-row items-center gap-[1rem]'>
-      <Icon
-        name='ic_check_agreement'
-        className={
-          agreementItem.isAgreed ? 'text-primary-700' : 'text-grayscale-300'
-        }
+      <button
+        type='button'
+        className='flex cursor-pointer items-center'
         onClick={handleToggleAgree}
-        width={26}
-        height={26}
-      />
+      >
+        <Icon
+          name='ic_check_agreement'
+          className={
+            agreementItem.isAgreed ? 'text-primary-700' : 'text-grayscale-300'
+          }
+          width={26}
+          height={26}
+        />
+      </button>
+
       <div className='flex flex-1 flex-row items-center justify-between py-[0.5rem]'>
         <span className='text-grayscale-900 body-m-14'>
           {agreementItem.label}
         </span>
-        <Icon
-          name='ic_next'
-          className='text-grayscale-500'
+        <button
+          type='button'
+          className='flex cursor-pointer items-center'
           onClick={handleToDetailsPage}
-        />
+        >
+          <Icon name='ic_next' className='text-grayscale-500' />
+        </button>
       </div>
     </div>
   );
