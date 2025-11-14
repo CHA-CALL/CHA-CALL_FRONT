@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 interface UseBottomSheetDragProps {
   sheetRef: React.RefObject<HTMLDivElement | null>;
-  handleCloseBottomSheet: () => void;
+  handleCloseBottomSheet?: () => void;
   sheetHeight: number;
 }
 
@@ -57,7 +57,7 @@ export default function useBottomSheetDrag({
       if (!isDragging.current || !canDrag.current) return;
       const diff = currentY.current - startY.current;
 
-      if (diff > 100) {
+      if (diff > 100 && handleCloseBottomSheet) {
         handleCloseBottomSheet();
       }
 

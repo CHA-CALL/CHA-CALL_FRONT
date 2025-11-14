@@ -7,6 +7,7 @@ export type IconId =
   | 'ic_chat'
   | 'ic_chat_dot'
   | 'ic_check'
+  | 'ic_check_agreement'
   | 'ic_close'
   | 'ic_close_white'
   | 'ic_confirm'
