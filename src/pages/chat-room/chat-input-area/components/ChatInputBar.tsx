@@ -1,21 +1,33 @@
-import React, { useRef, useState, type FormEvent } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from 'react';
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
 import useAutosizeTextarea from '@pages/chat-room/chat-input-area/hooks/use-autosize-textarea';
 
 interface ChatInputBarProps {
   isOpenMenu: boolean;
+  selectedQuickMessage?: string;
   setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function ChatInputBar({
   isOpenMenu,
+  selectedQuickMessage,
   setIsOpenMenu,
 }: ChatInputBarProps) {
   const [message, setMessage] = useState('');
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   useAutosizeTextarea(textAreaRef.current, message);
+
+  const handleChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +44,12 @@ export default function ChatInputBar({
     setIsOpenMenu(false);
   };
 
+  useEffect(() => {
+    if (selectedQuickMessage) {
+      setMessage(selectedQuickMessage);
+    }
+  }, [selectedQuickMessage]);
+
   const textAreaBaseClasses =
     'bg-grayscale-100 body-m-14 w-full resize-none overflow-hidden rounded-[2rem] border-none px-[1.8rem] py-[0.8rem]';
   const textAreaInputclasses =
@@ -44,7 +62,7 @@ export default function ChatInputBar({
     >
       <button
         type='button'
-        className='mr-[1.4rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full bg-grayscale-900'
+        className='mr-[1.4rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full bg-grayscale-900 px-[0.6rem] py-[0.5rem]'
         onClick={handleExtensionClick}
       >
         <Icon
@@ -53,15 +71,13 @@ export default function ChatInputBar({
             'text-white transition-transform duration-300 ease-in-out',
             isOpenMenu ? 'rotate-45' : 'rotate-0'
           )}
-          width={11}
-          height={11}
         />
       </button>
       <textarea
         ref={textAreaRef}
         value={message}
         onFocus={handleCloseExtension}
-        onChange={e => setMessage(e.target.value)}
+        onChange={handleChangeMessage}
         placeholder='메세지를 입력하세요.'
         rows={1}
         className={cn(textAreaBaseClasses, textAreaInputclasses)}

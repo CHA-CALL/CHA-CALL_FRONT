@@ -1,6 +1,5 @@
 import { useState, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
 import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
@@ -30,7 +29,7 @@ export default function MessageForm() {
         onSuccess: () => {
           setSubmit(true);
           toast.success('메시지가 성공적으로 저장되었습니다.');
-          navigate(ROUTES.MESSAGE_LIST);
+          navigate(-1);
         },
         onError: () => {
           toast.error('메시지 저장에 실패했습니다.');
@@ -43,7 +42,7 @@ export default function MessageForm() {
     if (!submit && message.trim()) {
       setIsOpen(true);
     } else {
-      navigate(ROUTES.MESSAGE_LIST);
+      navigate(-1);
     }
   };
 
@@ -53,7 +52,7 @@ export default function MessageForm() {
 
   const handleClickConfirm = () => {
     setIsOpen(false);
-    navigate(ROUTES.MESSAGE_LIST);
+    navigate(-1);
   };
 
   const handleCloseModal = () => {
@@ -85,7 +84,7 @@ export default function MessageForm() {
           handleChange={handleChangeMessage}
         />
       </div>
-      <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           variant='cta'
           buttonStyle={message.length === 0 ? 'disabled' : 'active'}

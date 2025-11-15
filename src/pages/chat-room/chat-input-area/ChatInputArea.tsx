@@ -1,3 +1,5 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+
 import { Icon } from '@components/icon/Icon';
 import { ROLE } from '@constant/role';
 import ChatInputBar from '@pages/chat-room/chat-input-area/components/ChatInputBar';
@@ -6,18 +8,31 @@ import { ALL_MENU_ITEMS } from '@pages/chat-room/chat-input-area/constants/exten
 import { useOnClickOutside } from '@pages/chat-room/chat-input-area/hooks/use-click-outside';
 import { useExtensionMenu } from '@pages/chat-room/chat-input-area/hooks/use-extension-menu';
 import { cn } from '@utils/cn';
-import { useCallback, useRef, useState } from 'react';
 
-export default function ChatInputArea() {
+interface ChatInputAreaProps {
+  selectedQuickMessage?: string;
+  handleOpenMessageList: () => void;
+}
+
+export default function ChatInputArea({
+  selectedQuickMessage,
+  handleOpenMessageList,
+}: ChatInputAreaProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const { disabledStates, handlers } = useExtensionMenu();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const chatAreaRef = useRef<HTMLDivElement>(null);
+
+  const { disabledStates, handlers, handleGalleryRef, handleCameraRef } =
+    useExtensionMenu(handleOpenMessageList);
+
   const closeMenu = useCallback(() => {
     if (isOpenMenu) {
       setIsOpenMenu(false);
     }
   }, [isOpenMenu, setIsOpenMenu]);
+
   useOnClickOutside(chatAreaRef, closeMenu);
 
   const role = ROLE.PROVIDER;
@@ -25,9 +40,44 @@ export default function ChatInputArea() {
 
   const items = ALL_MENU_ITEMS.filter(item => item.roles.includes(role));
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    console.info('선택된 파일:', file);
+
+    // TODO: 파일 업로드 로직, 미리보기, 서버 전송 등
+  };
+
+  useEffect(() => {
+    handleGalleryRef(fileInputRef);
+    handleCameraRef(cameraInputRef);
+  }, [handleGalleryRef, handleCameraRef]);
+
   return (
     <div className='w-full' ref={chatAreaRef}>
-      <ChatInputBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+      <ChatInputBar
+        selectedQuickMessage={selectedQuickMessage}
+        isOpenMenu={isOpenMenu}
+        setIsOpenMenu={setIsOpenMenu}
+      />
+      {/* 파일 ref */}
+      <input
+        type='file'
+        accept='image/*'
+        ref={fileInputRef}
+        onChange={handleFileSelect}
+        className='hidden'
+      />
+      {/* 카메라 ref */}
+      <input
+        type='file'
+        accept='image/*'
+        capture='environment'
+        ref={cameraInputRef}
+        onChange={handleFileSelect}
+        className='hidden'
+      />
       {isOpenMenu && (
         <div
           className={cn(
