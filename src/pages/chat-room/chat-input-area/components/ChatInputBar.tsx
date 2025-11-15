@@ -3,7 +3,7 @@ import React, {
   useRef,
   useState,
   type ChangeEvent,
-  type FormEvent,
+  type KeyboardEvent,
 } from 'react';
 import { cn } from '@utils/cn';
 import { Icon } from '@components/icon/Icon';
@@ -29,12 +29,22 @@ export default function ChatInputBar({
     setMessage(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (!message.trim()) return;
     setMessage('');
   };
 
+  const handleKeyDownSubmit = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      if (e.shiftKey) {
+        return;
+      }
+      e.preventDefault();
+      if (message.trim() !== '') {
+        handleSubmit();
+      }
+    }
+  };
   const handleExtensionClick = () => {
     textAreaRef.current?.blur();
     setIsOpenMenu(prev => !prev);
@@ -78,6 +88,7 @@ export default function ChatInputBar({
         value={message}
         onFocus={handleCloseExtension}
         onChange={handleChangeMessage}
+        onKeyDown={handleKeyDownSubmit}
         placeholder='메세지를 입력하세요.'
         rows={1}
         className={cn(textAreaBaseClasses, textAreaInputclasses)}

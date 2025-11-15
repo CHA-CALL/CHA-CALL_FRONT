@@ -1,7 +1,13 @@
-import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
 import { useRef, type RefObject } from 'react';
 
+import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
+import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
+import useToast from '@hooks/use-toast';
+
 export const useExtensionMenu = (handleOpenMessageList: () => void) => {
+  const toast = useToast();
+  const { data: bankAccount } = useFetchAccountData();
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraRef = useRef<HTMLInputElement | null>(null);
 
@@ -15,7 +21,6 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
 
   const isMobile = () => {
     if (typeof navigator === 'undefined') return false;
-
     return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
   };
 
@@ -23,7 +28,7 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
     gallery: false, // 항상 active
     camera: !isMobile(), // 웹 환경에서 disabled
     ment: false, // 항상 active
-    cash: false, // 계좌 등록 안했을 시 disabled
+    cash: !bankAccount, // 계좌 등록 안했을 시 disabled
     write_paper: false, // 작성한 견적서가 있을 때 disabled
     edit_paper: false, // 작성한 견적서가 없을 때 disabled
     view_paper: false, // 작성한 견적서가 없을 때 disabled
@@ -35,7 +40,10 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
     gallery: () => fileInputRef.current?.click(),
     camera: () => cameraRef.current?.click(),
     ment: () => handleOpenMessageList(),
-    cash: () => console.log('계좌번호'),
+    cash: () =>
+      navigator.clipboard
+        .writeText(`${bankAccount?.bankName}  ${bankAccount?.accountNumber}`)
+        .then(() => toast.success('클립보드에 복사되었습니다.')),
     write_paper: () => {
       console.log('견적서 작성');
     },
