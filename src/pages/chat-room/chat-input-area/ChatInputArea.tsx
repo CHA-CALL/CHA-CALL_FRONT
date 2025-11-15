@@ -20,7 +20,7 @@ export default function ChatInputArea() {
   }, [isOpenMenu, setIsOpenMenu]);
   useOnClickOutside(chatAreaRef, closeMenu);
 
-  const role = 'provider';
+  const role = ROLE.PROVIDER;
   const menuLayout = role === ROLE.PROVIDER ? 'grid-cols-4' : 'grid-cols-3';
 
   const items = ALL_MENU_ITEMS.filter(item => item.roles.includes(role));

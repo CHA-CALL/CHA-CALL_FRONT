@@ -40,19 +40,21 @@ export default function ChatInputBar({
   return (
     <form
       onSubmit={handleSubmit}
-      className='border-t-1 border-grayscale-100 flex w-full items-end bg-white px-[1.1rem] py-[0.8rem]'
+      className='border-t-1 flex w-full items-center border-grayscale-100 bg-white px-[1.1rem] py-[0.8rem]'
     >
       <button
         type='button'
-        className='bg-grayscale-900 mb-[0.7rem] mr-[0.5rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full p-[0.5rem]'
+        className='mr-[1.4rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full bg-grayscale-900'
         onClick={handleExtensionClick}
       >
         <Icon
           name='ic_plus'
           className={cn(
-            'h-[2.2rem] w-[2.2rem] text-white transition-transform duration-300 ease-in-out',
+            'text-white transition-transform duration-300 ease-in-out',
             isOpenMenu ? 'rotate-45' : 'rotate-0'
           )}
+          width={11}
+          height={11}
         />
       </button>
       <textarea

@@ -3,7 +3,7 @@ import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extensi
 export const useExtensionMenu = () => {
   const disabledStates: Record<MenuKey, boolean> = {
     gallery: false,
-    camera: false,
+    camera: true,
     view_paper: false,
     cancel: false,
     download_paper: false,

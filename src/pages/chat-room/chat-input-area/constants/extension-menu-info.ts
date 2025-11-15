@@ -35,26 +35,6 @@ export const ALL_MENU_ITEMS: MenuItemConfig[] = [
     roles: [ROLE.CLIENT, ROLE.PROVIDER],
   },
   {
-    key: 'view_paper',
-    title: '견적서 보기',
-    iconId: 'ic_view_paper',
-    roles: [ROLE.CLIENT, ROLE.PROVIDER],
-  },
-  {
-    key: 'cancel',
-    title: '예약 취소 신청',
-    iconId: 'ic_cancel',
-    roles: [ROLE.CLIENT, ROLE.PROVIDER],
-  },
-  // Client 전용
-  {
-    key: 'download_paper',
-    title: '견적서 다운',
-    iconId: 'ic_download_paper',
-    roles: [ROLE.CLIENT],
-  },
-  // Provider 전용
-  {
     key: 'ment',
     title: '자주쓰는 문구',
     iconId: 'ic_ment',
@@ -77,5 +57,23 @@ export const ALL_MENU_ITEMS: MenuItemConfig[] = [
     title: '견적서 수정',
     iconId: 'ic_edit_paper',
     roles: [ROLE.PROVIDER],
+  },
+  {
+    key: 'view_paper',
+    title: '견적서 보기',
+    iconId: 'ic_view_paper',
+    roles: [ROLE.CLIENT, ROLE.PROVIDER],
+  },
+  {
+    key: 'download_paper',
+    title: '견적서 다운',
+    iconId: 'ic_download_paper',
+    roles: [ROLE.CLIENT],
+  },
+  {
+    key: 'cancel',
+    title: '예약 취소 신청',
+    iconId: 'ic_cancel',
+    roles: [ROLE.CLIENT, ROLE.PROVIDER],
   },
 ];
