@@ -26,6 +26,7 @@ import MenuEdit from '@pages/@owner/menu/MenuEdit';
 import FoodTruckDetail from '@pages/food-truck-detail/FoodTruckDetail';
 import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 import SetRegion from '@pages/@owner/set-region/SetRegion';
+import ChatRoom from '@pages/chat-room/ChatRoom';
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.CHATLIST,
         element: <ChatList />,
+      },
+      {
+        path: ROUTES.CHATROOM + '/:id?',
+        element: <ChatRoom />,
       },
       {
         path: ROUTES.MESSAGE_LIST,

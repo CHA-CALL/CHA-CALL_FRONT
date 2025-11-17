@@ -5,6 +5,7 @@ export const ROUTES = {
   FOOD_TRUCK_ONBOARDING: '/owner/food-truck-onboarding',
   SET_REGION_GLOBAL: '/set-region',
   CHATLIST: '/chat-list',
+  CHATROOM: '/chat-room',
   MESSAGE_LIST: '/owner/message-list',
   MESSAGE_FORM: '/owner/message-form',
   MYPAGE: '/mypage',

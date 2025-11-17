@@ -4,10 +4,14 @@ import Overlay from '@layout/overlay/Overlay';
 import Input from '@ui/input/Input';
 import { Icon } from '@icon/Icon';
 import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
+import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
 
 const Home = () => {
   // BottomSheet states
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  const [isAgreementBottomSheetOpen, setIsAgreementBottomSheetOpen] =
+    useState(true);
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,6 +25,10 @@ const Home = () => {
 
   const handleCloseBottomSheet = () => {
     setIsBottomSheetOpen(false);
+  };
+
+  const handleCloseAgreementBottomSheet = () => {
+    setIsAgreementBottomSheetOpen(false);
   };
 
   const handleOpenModal = () => {
@@ -60,16 +68,13 @@ const Home = () => {
           </div>
         </div>
       </Overlay>
-
       {/* BottomSheet */}
-
       <RatingBottomSheet
         reservationId={4}
         foodTruckId={1}
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
       />
-
       {/* Search Bar */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>Search Bar</h2>
@@ -79,7 +84,6 @@ const Home = () => {
           placeholder='검색어를 입력하세요'
         />
       </section>
-
       {/* Modal and BottomSheet Triggers */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>
@@ -103,6 +107,11 @@ const Home = () => {
         </div>
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
+      <AgreeToTermsBottomSheet
+        isAgreed={!isAgreementBottomSheetOpen}
+        isForOwner={false}
+        handleCloseBottomSheet={handleCloseAgreementBottomSheet}
+      />
     </div>
   );
 };
