@@ -38,6 +38,11 @@ export default function MessageListBottomSheet({
             + 추가하기
           </Button>
         </div>
+        {messageList?.data?.length === 0 && (
+          <span className='text-grayscale-500 caption-m-11'>
+            설정된 메시지가 없습니다. 자주 쓰는 문구를 설정해보세요!
+          </span>
+        )}
         <div className='flex max-h-[30rem] flex-col overflow-y-auto'>
           {messageList?.data?.map((message, index) => (
             <button
