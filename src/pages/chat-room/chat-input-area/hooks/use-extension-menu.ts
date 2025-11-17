@@ -32,8 +32,8 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
     write_paper: false, // 작성한 견적서가 있을 때 disabled
     edit_paper: false, // 작성한 견적서가 없을 때 disabled
     view_paper: false, // 작성한 견적서가 없을 때 disabled
-    download_paper: false, // 확정된 예약일 때만 disabled
-    cancel: false, // 확정된 예약일 때만 disabled
+    download_paper: false, // 작성한 견적서가 없을 때 disabled
+    cancel: false, // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
   };
 
   const handlers: Record<MenuKey, () => void> = {
