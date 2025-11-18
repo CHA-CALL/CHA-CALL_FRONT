@@ -25,15 +25,22 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
   };
 
   const disabledStates: Record<MenuKey, boolean> = {
-    gallery: false, // 항상 active
-    camera: !isMobile(), // 웹 환경에서 disabled
-    ment: false, // 항상 active
-    cash: !bankAccount, // 계좌 등록 안했을 시 disabled
-    write_paper: false, // 작성한 견적서가 있을 때 disabled
-    edit_paper: false, // 작성한 견적서가 없을 때 disabled
-    view_paper: false, // 작성한 견적서가 없을 때 disabled
-    download_paper: false, // 작성한 견적서가 없을 때 disabled
-    cancel: false, // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
+    gallery: false,
+    // 웹 환경에서 disabled
+    camera: !isMobile(),
+    ment: false,
+    // 계좌 등록 안했을 시 disabled
+    cash: !bankAccount,
+    // 작성한 견적서가 있을 때 disabled
+    write_paper: false,
+    // 작성한 견적서가 없을 때 disabled
+    edit_paper: false,
+    // 작성한 견적서가 없을 때 disabled
+    view_paper: false,
+    // 작성한 견적서가 없을 때 disabled
+    download_paper: false,
+    // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
+    cancel: false,
   };
 
   const handlers: Record<MenuKey, () => void> = {
