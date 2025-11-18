@@ -3,9 +3,12 @@ import { useRef, type RefObject } from 'react';
 import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
 import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
 import useToast from '@hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 
 export const useExtensionMenu = (handleOpenMessageList: () => void) => {
   const toast = useToast();
+  const navigate = useNavigate();
   const { data: bankAccount } = useFetchAccountData();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -52,14 +55,19 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
         .writeText(`${bankAccount?.bankName}  ${bankAccount?.accountNumber}`)
         .then(() => toast.success('클립보드에 복사되었습니다.')),
     write_paper: () => {
-      console.log('견적서 작성');
+      // TODO: 견적서 작성 페이지로
+      navigate(ROUTES.MESSAGE_LIST);
     },
     edit_paper: () => {
-      console.log('견적서 수정');
+      // TODO: 견적서 수정 페이지로
+      navigate(ROUTES.MESSAGE_LIST);
     },
-    view_paper: () => console.log('견적서 보기'),
-    download_paper: () => console.log('견적서 다운'),
-    cancel: () => console.log('예약 취소'),
+    // TODO : 견적서 pdf 띄우도록
+    view_paper: () => alert('견적서 보기'),
+    // TODO : 견적서 pdf 다운로드 되도록
+    download_paper: () => alert('견적서 다운'),
+    // TODO : 예약 취소 신청 로직
+    cancel: () => alert('예약 취소'),
   };
 
   return {
