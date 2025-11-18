@@ -7,6 +7,7 @@ export type IconId =
   | 'ic_chat'
   | 'ic_chat_dot'
   | 'ic_check'
+  | 'ic_check_agreement'
   | 'ic_close'
   | 'ic_close_white'
   | 'ic_confirm'
@@ -35,7 +36,16 @@ export type IconId =
   | 'ic_team'
   | 'ic_time'
   | 'ic_trash'
-  | 'ic_up';
+  | 'ic_up'
+  | 'ic_subtract'
+  | 'ic_gallery'
+  | 'ic_ment'
+  | 'ic_cash'
+  | 'ic_write_paper'
+  | 'ic_edit_paper'
+  | 'ic_view_paper'
+  | 'ic_cancel'
+  | 'ic_download_paper';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconId;
