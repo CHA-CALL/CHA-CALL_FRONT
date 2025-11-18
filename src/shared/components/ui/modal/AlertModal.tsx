@@ -1,5 +1,4 @@
 import CommonModalLayout from '@components/ui/modal/CommonModalLayout';
-import Button from '@components/ui/button/Button';
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -17,14 +16,13 @@ export default function AlertModal({
   confirmLabel = '확인',
 }: AlertModalProps) {
   const footer = (
-    <Button
-      variant='verify'
-      buttonStyle='active'
+    <button
+      type='button'
+      className='title-sb-14 bg-primary-700 w-full rounded-[0.8rem] py-[0.85rem] text-white'
       onClick={handleClose}
-      className='w-full py-[1.1rem]'
     >
       {confirmLabel}
-    </Button>
+    </button>
   );
 
   return (
