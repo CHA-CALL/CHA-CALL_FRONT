@@ -18,6 +18,16 @@ export const useMenuList = (foodTruckId: number) => {
   const { isSorted, handleSortByLatest, handleSortByOldest } = useMenuSort();
   const { isBottomSheetOpen, handleOpenBottomSheet, handleCloseBottomSheet } = useBottomSheet();
 
+  const handleSortByLatestWithClose = () => {
+    handleSortByLatest();
+    handleCloseBottomSheet();
+  };
+
+  const handleSortByOldestWithClose = () => {
+    handleSortByOldest();
+    handleCloseBottomSheet();
+  };
+
   const { mutate: saveMenuChanges } = useUpdateMenuStatusMutation(foodTruckId);
 
   const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
@@ -112,13 +122,13 @@ export const useMenuList = (foodTruckId: number) => {
     menus,
     fetchNextPage: query.fetchNextPage,
     hasNextPage: query.hasNextPage,
-    isLoading: query.isLoading,
+    isPending: query.isPending,
     isFetchingNextPage: query.isFetchingNextPage,
 
     // 정렬 상태
     isSorted,
-    handleSortByLatest,
-    handleSortByOldest,
+    handleSortByLatest: handleSortByLatestWithClose,
+    handleSortByOldest: handleSortByOldestWithClose,
 
     // 바텀시트 상태
     isBottomSheetOpen,

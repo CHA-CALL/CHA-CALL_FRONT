@@ -17,23 +17,22 @@ export default function MenuList() {
     menus,
     fetchNextPage,
     hasNextPage,
-    isLoading,
+    isPending,
     isFetchingNextPage,
 
-    isBottomSheetOpen,
     isSorted,
+    handleSortByLatest,
+    handleSortByOldest,
+
+    isBottomSheetOpen,
+    handleOpenBottomSheet,
+    handleCloseBottomSheet,
 
     handleClickBack,
     handleRegister,
 
-    handleOpenBottomSheet,
-    handleCloseBottomSheet,
-    handleSortByLatest,
-    handleSortByOldest,
-
     handleMenuClick,
     handleClickToggle,
-
     handleSave,
   } = useMenuList(parsedFoodTruckId);
 
@@ -58,7 +57,7 @@ export default function MenuList() {
       <Menus
         foodTruckId={parsedFoodTruckId}
         menus={menus}
-        isLoading={isLoading}
+        isPending={isPending}
         isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}
