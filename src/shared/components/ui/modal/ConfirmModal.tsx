@@ -25,12 +25,20 @@ export default function ConfirmModal({
 }: ConfirmModalProps) {
   const footer = (
     <>
-      <Button variant='cta' buttonStyle='sub' onClick={handleCancel}>
+      <button
+        type='button'
+        className='title-sb-14 text-grayscale-700 border-grayscale-200 w-full rounded-[0.8rem] border bg-white py-[0.85rem] text-center'
+        onClick={handleCancel}
+      >
         {cancelLabel}
-      </Button>
-      <Button variant='cta' buttonStyle='active' onClick={handleConfirm}>
+      </button>
+      <button
+        type='button'
+        className='title-sb-14 bg-primary-700 w-full rounded-[0.8rem] py-[0.85rem] text-white'
+        onClick={handleConfirm}
+      >
         {confirmLabel}
-      </Button>
+      </button>
     </>
   );
 
