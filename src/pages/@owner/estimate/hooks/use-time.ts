@@ -146,7 +146,6 @@ export const useEstimateTime = ({
     startActiveTime: string;
     endActiveTime: string;
   }) => {
-    console.log(startActiveTime, endActiveTime);
     if (!startActiveTime) {
       setError('activeTime', {
         message: ESTIMATE_ERROR_MESSAGE.activeTime.start,
