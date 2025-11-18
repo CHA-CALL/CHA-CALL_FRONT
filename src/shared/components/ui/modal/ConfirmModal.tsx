@@ -1,16 +1,16 @@
+import CommonModalLayout from '@components/ui/modal/CommonModalLayout';
 import Button from '@components/ui/button/Button';
-import Modal from '@components/ui/modal/Modal';
 import type { ReactNode } from 'react';
 
 interface ConfirmModalProps {
   isOpen: boolean;
-  handleClose: () => void; // Overlay 클릭 시
+  handleClose: () => void;
   title: string;
   description: string | ReactNode;
   confirmLabel?: string;
   cancelLabel?: string;
-  onConfirm: () => void; // 필수
-  onCancel: () => void; // 필수
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
 export default function ConfirmModal({
@@ -23,24 +23,24 @@ export default function ConfirmModal({
   onConfirm,
   onCancel,
 }: ConfirmModalProps) {
+  const footer = (
+    <>
+      <Button variant='cta' buttonStyle='sub' onClick={onCancel}>
+        {cancelLabel}
+      </Button>
+      <Button variant='cta' buttonStyle='active' onClick={onConfirm}>
+        {confirmLabel}
+      </Button>
+    </>
+  );
+
   return (
-    <Modal isOpen={isOpen} handleClose={handleClose}>
-      <Modal.Header>
-        <Modal.Title>{title}</Modal.Title>
-        <Modal.Body>{description}</Modal.Body>
-      </Modal.Header>
-      <Modal.Footer>
-        <Button variant='cta' buttonStyle='sub' handleClickButton={onCancel}>
-          {cancelLabel}
-        </Button>
-        <Button
-          variant='cta'
-          buttonStyle='active'
-          handleClickButton={onConfirm}
-        >
-          {confirmLabel}
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <CommonModalLayout
+      isOpen={isOpen}
+      handleClose={handleClose}
+      title={title}
+      description={description}
+      footer={footer}
+    />
   );
 }
