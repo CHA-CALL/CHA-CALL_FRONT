@@ -6,7 +6,7 @@ import { Icon } from '@components/icon/Icon';
 import { useFormValidation } from '@pages/@owner/menu/hooks/use-form-validation';
 import MenuForm from '@pages/@owner/menu/components/MenuForm';
 import MenuDeleteModal from '@pages/@owner/menu/components/MenuDeleteModal';
-import { convertURLtoFile } from '@pages/@owner/menu/utils/convert-image-url';
+import { convertURLtoFile } from '@utils/convert-image-url';
 import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import useToast from '@shared/hooks/use-toast';
 import { FormProvider } from 'react-hook-form';
@@ -26,7 +26,6 @@ export default function MenuEdit() {
 
   const {
     methods,
-    displayPrice,
     updateName,
     updateDescription,
     updatePrice,
@@ -86,7 +85,6 @@ export default function MenuEdit() {
       />
       <MenuForm
         initialImageUrl={initialImageUrl}
-        displayPrice={displayPrice}
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}

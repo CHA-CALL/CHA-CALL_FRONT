@@ -10,10 +10,10 @@ import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation'
 import { useMenuForm } from '@pages/@owner/menu/hooks/use-menu-form';
 import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 import { useFormContext } from 'react-hook-form';
+import { formatPrice } from '@utils/price-formatter';
 
 interface MenuFormProps {
   initialImageUrl?: string;
-  displayPrice?: string;
   updateName: (_name: string) => void;
   updateDescription: (_description: string) => void;
   updatePrice: (_price: string) => void;
@@ -22,7 +22,6 @@ interface MenuFormProps {
 
 export default function MenuForm({
   initialImageUrl,
-  displayPrice,
   updateName,
   updateDescription,
   updatePrice,
@@ -47,75 +46,75 @@ export default function MenuForm({
     updateImageUrl,
   });
 
+  const displayPrice = formData.price > 0 ? formatPrice(formData.price) : '';
+
   return (
-    <>
-      <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[16rem]'>
-        <MenuInput title='메뉴 이름' error={errors.name?.message}>
-          <Input
-            placeholder='텍스트를 입력해주세요.'
-            value={formData.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updateName(e.target.value)
-            }
-            maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
-            rightComponent={
-              <button onClick={handleClearName} className='flex items-center'>
-                <Icon name='ic_close' />
-              </button>
-            }
-            className='border-grayscale-300 focus-within:border-grayscale-700'
-          />
-        </MenuInput>
+    <div className='flex flex-col gap-[2.4rem] p-[2rem] pb-[16rem]'>
+      <MenuInput title='메뉴 이름' error={errors.name?.message}>
+        <Input
+          placeholder='텍스트를 입력해주세요.'
+          value={formData.name}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            updateName(e.target.value)
+          }
+          maxLength={MENU_LIMIT.NAME_MAX_LENGTH}
+          rightComponent={
+            <button onClick={handleClearName} className='flex items-center'>
+              <Icon name='ic_close' />
+            </button>
+          }
+          className='border-grayscale-300 focus-within:border-grayscale-700'
+        />
+      </MenuInput>
 
-        <MenuInput title='메뉴 설명' error={errors.description?.message}>
-          <div className='flex flex-col gap-[0.6rem]'>
-            <Textarea
-              placeholder='텍스트를 입력해주세요.'
-              value={formData.description}
-              handleChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                updateDescription(e.target.value)
-              }
-              maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
-              className='h-[12.2rem]'
+      <MenuInput title='메뉴 설명' error={errors.description?.message}>
+        <div className='flex flex-col gap-[0.6rem]'>
+          <Textarea
+            placeholder='텍스트를 입력해주세요.'
+            value={formData.description}
+            handleChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              updateDescription(e.target.value)
+            }
+            maxLength={MENU_LIMIT.DESCRIPTION_MAX_LENGTH}
+            className='h-[12.2rem]'
+          />
+        </div>
+      </MenuInput>
+
+      <MenuInput title='가격' error={errors.price?.message}>
+        <Input
+          type='text'
+          inputMode='numeric'
+          placeholder='텍스트를 입력해주세요.'
+          value={displayPrice}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            updatePrice(e.target.value)
+          }
+          className='border-grayscale-300 focus-within:border-grayscale-700'
+        />
+      </MenuInput>
+
+      <MenuInput
+        title='사진 등록'
+        error={errors.imageUrl?.message}
+        maxLength={1}
+        currentLength={imageUrl ? 1 : 0}
+      >
+        <div className='flex'>
+          {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
+          {imageUrl && (
+            <ImagePreview
+              key='image-preview'
+              handleClose={handleRemoveFile}
+              src={imageUrl}
+              alt='image-preview'
             />
-          </div>
-        </MenuInput>
-
-        <MenuInput title='가격' error={errors.price?.message}>
-          <Input
-            type='text'
-            inputMode='numeric'
-            placeholder='텍스트를 입력해주세요.'
-            value={displayPrice}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              updatePrice(e.target.value)
-            }
-            className='border-grayscale-300 focus-within:border-grayscale-700'
-          />
-        </MenuInput>
-
-        <MenuInput
-          title='사진 등록'
-          error={errors.imageUrl?.message}
-          maxLength={1}
-          currentLength={imageUrl ? 1 : 0}
-        >
-          <div className='flex'>
-            {canAdd && <ButtonAddImage handleFileChange={handleFileChange} />}
-            {imageUrl && (
-              <ImagePreview
-                key='image-preview'
-                handleClose={handleRemoveFile}
-                src={imageUrl}
-                alt='image-preview'
-              />
-            )}
-          </div>
-          <p className='caption-m-12 text-grayscale-300'>
-            {IMAGE_INFO_MESSAGE}
-          </p>
-        </MenuInput>
-      </div>
-    </>
+          )}
+        </div>
+        <p className='caption-m-12 text-grayscale-300'>
+          {IMAGE_INFO_MESSAGE}
+        </p>
+      </MenuInput>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 interface MenusProps {
   foodTruckId: number;
   menus: MyFoodTruckMenuResponse[];
-  isLoading: boolean;
+  isPending: boolean;
   isFetchingNextPage: boolean;
   hasNextPage: boolean | undefined;
   fetchNextPage: () => void;
@@ -19,7 +19,7 @@ interface MenusProps {
 export default function Menus({
   foodTruckId,
   menus,
-  isLoading,
+  isPending,
   isFetchingNextPage,
   hasNextPage,
   fetchNextPage,
@@ -34,7 +34,7 @@ export default function Menus({
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isLoading) {
+  if (isPending) {
     return <Loading />;
   }
 

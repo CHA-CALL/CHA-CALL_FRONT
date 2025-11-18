@@ -23,7 +23,6 @@ export default function MenuRegister() {
     updatePrice,
     updateImageUrl,
     isValid,
-    displayPrice,
   } = useFormValidation();
 
   return (
@@ -35,7 +34,6 @@ export default function MenuRegister() {
       />
 
       <MenuForm
-        displayPrice={displayPrice}
         updateName={updateName}
         updateDescription={updateDescription}
         updatePrice={updatePrice}

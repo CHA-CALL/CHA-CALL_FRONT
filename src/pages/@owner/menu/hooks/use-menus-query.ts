@@ -3,7 +3,7 @@ import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
 import { getFoodTruckMenus } from '@pages/@owner/menu/api';
 import type { SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
-export const useMenus = (
+export const useMenusQuery = (
   foodTruckId: number,
   isSorted: SortType,
 ) => {

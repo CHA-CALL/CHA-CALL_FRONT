@@ -8,4 +8,6 @@ export const MENUS_QUERY_KEY = {
     ...MENUS_QUERY_KEY.LIST(foodTruckId),
     { sort },
   ],
+  MENU: (menuId: number) => [...MENUS_QUERY_KEY.ALL, 'menu', menuId],
+  MENUS: () => [...MENUS_QUERY_KEY.ALL, 'menus'],
 };

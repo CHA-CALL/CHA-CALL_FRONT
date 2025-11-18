@@ -1,55 +1,34 @@
+
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
-import { SORT_TYPES, type SortType } from '@pages/@owner/menu/constant/menu-list-sort';
-import { editMenuStatus } from '@pages/@owner/menu/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useMenus } from '@pages/@owner/menu/hooks/use-menus';
-import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
+import { useMenusQuery } from '@pages/@owner/menu/hooks/use-menus-query';
+import { useUpdateMenuStatusMutation } from '@pages/@owner/menu/hooks/use-menu-mutations';
+import { useMenuSort } from '@pages/@owner/menu/hooks/use-menu-sort';
+import { useBottomSheet } from '@pages/@owner/menu/hooks/use-bottom-sheet';
 import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
 import useToast from '@shared/hooks/use-toast';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
 export const useMenuList = (foodTruckId: number) => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
 
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isSorted, setIsSorted] = useState<SortType>(SORT_TYPES.LATEST);
+  const { isSorted, handleSortByLatest, handleSortByOldest } = useMenuSort();
+  const { isBottomSheetOpen, handleOpenBottomSheet, handleCloseBottomSheet } = useBottomSheet();
+
+  const { mutate: saveMenuChanges } = useUpdateMenuStatusMutation(foodTruckId);
+
   const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
 
-  const query = useMenus(foodTruckId, isSorted);
+  const query = useMenusQuery(foodTruckId, isSorted);
 
   useEffect(() => {
     if (query.data) {
       setMenus(query.data.pages.flatMap((page) => page?.content || []));
     }
   }, [query.data]);
-
-  const { mutate: saveMenuChanges } = useMutation({
-    mutationFn: (changedMenus: { menuId: number; status: 'ON' | 'OFF' }[]) => {
-      const mutationPromises = changedMenus.map((menu) =>
-        editMenuStatus({
-          foodTruckId,
-          menuId: menu.menuId,
-          data: { status: menu.status },
-        })
-      );
-      return Promise.all(mutationPromises);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
-      });
-      toast.success('메뉴 표시 상태가 저장되었습니다.');
-    },
-    onError: (error) => {
-      console.error('메뉴 표시 상태 저장 실패:', error);
-      toast.error('메뉴 표시 상태 저장에 실패했습니다.');
-    }
-  });
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
@@ -68,25 +47,6 @@ export const useMenuList = (foodTruckId: number) => {
     navigate(ROUTES.MENU_REGISTER(foodTruckId), {
       state: getNavigateState(formData),
     });
-  };
-
-  // 바텀 시트 핸들러
-  const handleOpenBottomSheet = () => {
-    setIsBottomSheetOpen(true);
-  };
-
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleSortByLatest = () => {
-    setIsSorted(SORT_TYPES.LATEST);
-    handleCloseBottomSheet();
-  };
-
-  const handleSortByOldest = () => {
-    setIsSorted(SORT_TYPES.OLDEST);
-    handleCloseBottomSheet();
   };
 
   // 메뉴 핸들러
@@ -143,30 +103,35 @@ export const useMenuList = (foodTruckId: number) => {
       toast.error('변경사항이 없습니다.');
       return;
     }
+
     saveMenuChanges(changedMenusPayload);
   };
 
   return {
+    // 메뉴 데이터
     menus,
     fetchNextPage: query.fetchNextPage,
     hasNextPage: query.hasNextPage,
     isLoading: query.isLoading,
     isFetchingNextPage: query.isFetchingNextPage,
 
-    isBottomSheetOpen,
+    // 정렬 상태
     isSorted,
-
-    handleClickBack,
-    handleRegister,
-
-    handleOpenBottomSheet,
-    handleCloseBottomSheet,
     handleSortByLatest,
     handleSortByOldest,
 
+    // 바텀시트 상태
+    isBottomSheetOpen,
+    handleOpenBottomSheet,
+    handleCloseBottomSheet,
+
+    // 네비게이션
+    handleClickBack,
+    handleRegister,
+
+    // 메뉴 핸들러
     handleMenuClick,
     handleClickToggle,
-
     handleSave,
   };
 };
