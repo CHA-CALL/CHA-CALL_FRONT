@@ -6,7 +6,7 @@ import NameSection from '@pages/@owner/food-truck-onboarding/components/NameSect
 import BizRegCertSection from '@pages/@owner/food-truck-onboarding/components/BizRegCertSection';
 import OtherDocsSection from '@pages/@owner/food-truck-onboarding/components/OtherDocsSection';
 import { useOnboardingModal } from '@pages/@owner/food-truck-onboarding/hooks/use-onboarding-modal';
-import OnboardingModal from '@pages/@owner/food-truck-onboarding/components/OnboardingModal';
+import OnboardingModal from '@pages/@owner/food-truck-onboarding/@modal/(.)onboarding-modal/OnboardingModal';
 import { IMAGE_INFO_MESSAGE } from '@shared/constant/image';
 
 export default function FoodTruckOnboarding() {
