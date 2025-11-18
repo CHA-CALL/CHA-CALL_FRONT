@@ -9,8 +9,8 @@ interface ConfirmModalProps {
   description: string | ReactNode;
   confirmLabel?: string;
   cancelLabel?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
+  handleConfirm: () => void;
+  handleCancel: () => void;
 }
 
 export default function ConfirmModal({
@@ -20,15 +20,15 @@ export default function ConfirmModal({
   description,
   confirmLabel = '확인',
   cancelLabel = '취소',
-  onConfirm,
-  onCancel,
+  handleConfirm,
+  handleCancel,
 }: ConfirmModalProps) {
   const footer = (
     <>
-      <Button variant='cta' buttonStyle='sub' onClick={onCancel}>
+      <Button variant='cta' buttonStyle='sub' onClick={handleCancel}>
         {cancelLabel}
       </Button>
-      <Button variant='cta' buttonStyle='active' onClick={onConfirm}>
+      <Button variant='cta' buttonStyle='active' onClick={handleConfirm}>
         {confirmLabel}
       </Button>
     </>

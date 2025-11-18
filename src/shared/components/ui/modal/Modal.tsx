@@ -28,7 +28,12 @@ const Title = ({ children, className = '' }: ModalSubComponentProps) => (
 const Body = ({ children, className = '' }: ModalSubComponentProps) => {
   if (typeof children === 'string') {
     return (
-      <p className={cn('caption-m-12 text-grayscale-700', className)}>
+      <p
+        className={cn(
+          'caption-m-12 text-grayscale-700 whitespace-pre-wrap',
+          className
+        )}
+      >
         {children}
       </p>
     );
