@@ -1,55 +1,70 @@
 import Overlay from '@components/layout/overlay/Overlay';
-import Button from '@components/ui/button/Button';
-import type { ReactNode } from 'react';
+import { cn } from '@utils/cn';
+import type { MouseEvent, ReactNode } from 'react';
 
 interface ModalProps {
-  title: string;
-  description: string | ReactNode;
-  leftLabbel?: string;
-  rightLabel?: string;
-  singleLabel?: string;
   isOpen: boolean;
   handleClose: () => void;
-  handleClickConfirm: () => void;
-  handleClickCancel: () => void;
+  children: ReactNode;
+  className?: string;
+}
+interface ModalSubComponentProps {
+  children: ReactNode;
+  className?: string;
 }
 
+const Header = ({ children, className = '' }: ModalSubComponentProps) => (
+  <div
+    className={cn('flex w-full flex-col justify-start gap-[0.2rem]', className)}
+  >
+    {children}
+  </div>
+);
+
+const Title = ({ children, className = '' }: ModalSubComponentProps) => (
+  <p className={cn('title-sb-16 text-grayscale-900', className)}>{children}</p>
+);
+
+const Body = ({ children, className = '' }: ModalSubComponentProps) => {
+  if (typeof children === 'string') {
+    return (
+      <p className={cn('caption-m-12 text-grayscale-700', className)}>
+        {children}
+      </p>
+    );
+  }
+  return <div className={className}>{children}</div>;
+};
+
+const Footer = ({ children, className = '' }: ModalSubComponentProps) => (
+  <div className={cn('flex gap-[1rem]', className)}>{children}</div>
+);
+
 export default function Modal({
-  title,
-  description,
   isOpen,
   handleClose,
-  handleClickConfirm,
-  handleClickCancel,
+  children,
+  className,
 }: ModalProps) {
+  const stopPropagation = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
-      <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
-        <div className='flex w-full flex-col justify-start gap-[0.2rem]'>
-          <p className='title-sb-16 text-grayscale-900'>{title}</p>
-          {typeof description === 'string' ? (
-            <p className='caption-m-12 text-grayscale-700'>{description}</p>
-          ) : (
-            description
-          )}
-        </div>
-        <div className='flex gap-[1rem]'>
-          <Button
-            variant='cta'
-            buttonStyle='sub'
-            handleClickButton={handleClickCancel}
-          >
-            취소
-          </Button>
-          <Button
-            variant='cta'
-            buttonStyle='active'
-            handleClickButton={handleClickConfirm}
-          >
-            삭제
-          </Button>
-        </div>
+      <div
+        className={cn(
+          'flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]',
+          className
+        )}
+        onClick={stopPropagation}
+      >
+        {children}
       </div>
     </Overlay>
   );
 }
+
+Modal.Header = Header;
+Modal.Title = Title;
+Modal.Body = Body;
+Modal.Footer = Footer;
