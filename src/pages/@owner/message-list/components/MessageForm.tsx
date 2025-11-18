@@ -4,11 +4,11 @@ import { ROUTES } from '@router/constant/routes';
 import Button from '@ui/button/Button';
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
-import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/ConfirmModal';
 import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
 import useToast from '@hooks/use-toast';
 import Loading from '@layout/loading/Loading';
 import Textarea from '@ui/text-area/Textarea';
+import ConfirmModal from '@components/ui/modal/ConfirmModal';
 
 export default function MessageForm() {
   const navigate = useNavigate();
@@ -69,8 +69,10 @@ export default function MessageForm() {
       <ConfirmModal
         isOpen={isOpen}
         handleClose={handleCloseModal}
-        handleClickConfirm={handleClickConfirm}
-        handleClickCancel={handleClickCancel}
+        title='저장하지 않고 나가시겠습니까?'
+        description={`작성 중인 내용은 저장되지 않으며, \n나가면 모두 삭제됩니다.`}
+        handleConfirm={handleClickConfirm}
+        handleCancel={handleClickCancel}
       />
       <Navigation
         text='자주 쓰는 메세지 설정'

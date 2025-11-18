@@ -1,12 +1,9 @@
-import AlertModal from '@components/ui/modal/AlertModal';
 import ConfirmModal from '@components/ui/modal/ConfirmModal';
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
-import OverlayModal from '@layout/overlay/Overlay';
 import ChatListManageBar from '@pages/chat-list/components/ChatListManageBar';
 import { useChatList } from '@pages/chat-list/hooks/use-chat-list';
 import ChatListItem from '@shared/components/chat/chat-list-item/ChatListItem';
-import Button from '@ui/button/Button';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChatList() {
@@ -43,49 +40,14 @@ export default function ChatList() {
         handleSelectOff={handleSelectOff}
         handleDeleteChat={handleDeleteChat}
       />
-      {/* <OverlayModal
-        isOpen={isDeleteModalOpen}
-        position='center'
-        handleClose={handleCloseModal}
-      >
-        <div className='flex min-w-[27.4rem] flex-col gap-[1.6rem] rounded-[1.6rem] bg-white px-[2rem] pb-[2rem] pt-[2.4rem]'>
-          <div>
-            <h3 className='title-sb-16'>선택한 대화를 삭제할까요?</h3>
-            <p className='text-grayscale-700 caption-m-12'>{`${selectChatList.size}건이 삭제되며 되돌릴 수 없습니다.`}</p>
-          </div>
-          <div className='flex gap-[1rem]'>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleCloseModal}
-            >
-              취소
-            </Button>
-            <Button
-              variant='cta'
-              buttonStyle='active'
-              handleClickButton={handleCloseModal}
-            >
-              삭제
-            </Button>
-          </div>
-        </div>
-      </OverlayModal> */}
       <ConfirmModal
         isOpen={isDeleteModalOpen}
         handleClose={handleCloseModal}
         title={'선택한 대화를 삭제할까요?'}
         description={`${selectChatList.size}건이 삭제되며 되돌릴 수 없습니다.`}
-        onConfirm={handleCloseModal}
-        onCancel={handleCloseModal}
+        handleConfirm={handleCloseModal}
+        handleCancel={handleCloseModal}
       />
-      {/* <AlertModal
-        isOpen={isDeleteModalOpen}
-        handleClose={handleCloseModal}
-        title={'선택한 대화를 삭제할까요?'}
-        description={`${selectChatList.size}건이 삭제되며 되돌릴 수 없습니다.`}
-      /> */}
-
       <div className='scrollbar-hide flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem]'>
         {(chatList ?? []).map(item => {
           return (

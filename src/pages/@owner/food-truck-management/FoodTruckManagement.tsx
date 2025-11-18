@@ -8,13 +8,13 @@ import Button from '@ui/button/Button';
 import { useGetOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
 import { cn } from '@utils/cn';
 import { ROUTES } from '@router/constant/routes';
-import DeleteFoodTruckConfirm from '@pages/@owner/food-truck-management/@modal/(.)delete-food-truck-confirm-modal/DeleteFoodTruckConfirmModal';
 import Loading from '@layout/loading/Loading';
 import FoodTruckCard from '@shared/components/food-truck/FoodTruckCard';
 import { useFoodTruckEditMode } from '@pages/@owner/food-truck-management/hooks/use-food-truck-edit-mode';
 import Spinner from '@components/spinner/Spinner';
 import type { MyFoodTruckResponse } from 'apis/data-contracts';
 import useToast from '@hooks/use-toast';
+import ConfirmModal from '@components/ui/modal/ConfirmModal';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -63,10 +63,14 @@ export default function FoodTruckManagement() {
 
   return (
     <>
-      <DeleteFoodTruckConfirm
+      <ConfirmModal
         isOpen={isDeleteConfirmModalOpen}
         handleClose={handleConfirmModal}
-        handleClickConfirm={handleDeleteFoodTrucks}
+        title='이 푸드트럭을 삭제할까요?'
+        description='삭제 후에는 되돌릴 수 없습니다.'
+        confirmLabel='삭제'
+        handleConfirm={handleDeleteFoodTrucks}
+        handleCancel={handleConfirmModal}
       />
       <Navigation
         text='나의 푸드트럭 관리'

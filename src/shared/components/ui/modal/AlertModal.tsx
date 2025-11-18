@@ -18,10 +18,10 @@ export default function AlertModal({
 }: AlertModalProps) {
   const footer = (
     <Button
-      variant='cta'
+      variant='verify'
       buttonStyle='active'
       onClick={handleClose}
-      className='w-full'
+      className='w-full py-[1.1rem]'
     >
       {confirmLabel}
     </Button>

@@ -9,13 +9,13 @@ import Information from '@components/information/Information';
 import { ROUTES } from '@router/constant/routes';
 import { useState } from 'react';
 import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/(.)delete-message-bottom-sheet/DeleteMessageBottomSheet';
-import ConfirmDeleteModal from '@pages/@owner/message-list/@modal/(.)confirm-delete-modal/ConfirmExitModal';
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
 import {
   useOwnerChatTemplates,
   useDeleteOwnerChatTemplates,
 } from '@pages/@owner/message-list/hooks/use-owner-message';
 import useToast from '@hooks/use-toast';
+import ConfirmModal from '@components/ui/modal/ConfirmModal';
 
 export default function MessageList() {
   const navigate = useNavigate();
@@ -78,11 +78,13 @@ export default function MessageList() {
         handleDeleteMessage={handleConfirmDelete}
         handleCloseModal={handleCloseDeleteModal}
       />
-      <ConfirmDeleteModal
+      <ConfirmModal
         isOpen={isConfirmDeleteModalOpen}
         handleClose={handleCloseConfirmModal}
-        handleClickConfirm={handleFinalDelete}
-        handleClickCancel={handleCloseConfirmModal}
+        title='이 메시지를 삭제할까요?'
+        description='삭제 후에는 되돌릴 수 없습니다.'
+        handleConfirm={handleFinalDelete}
+        handleCancel={handleCloseConfirmModal}
       />
       <Navigation
         text='자주 쓰는 메세지 설정'

@@ -1,5 +1,4 @@
 import CommonModalLayout from '@components/ui/modal/CommonModalLayout';
-import Button from '@components/ui/button/Button';
 import type { ReactNode } from 'react';
 
 interface ConfirmModalProps {

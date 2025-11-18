@@ -5,6 +5,7 @@ import Input from '@ui/input/Input';
 import { Icon } from '@icon/Icon';
 import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
 import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
+import AlertModal from '@components/ui/modal/AlertModal';
 
 const Home = () => {
   // BottomSheet states
@@ -68,6 +69,14 @@ const Home = () => {
           </div>
         </div>
       </Overlay>
+
+      <AlertModal
+        isOpen={isModalOpen}
+        handleClose={handleCloseModal}
+        title={'모달 제목'}
+        description={'모달 내용입니다.'}
+      />
+
       {/* BottomSheet */}
       <RatingBottomSheet
         reservationId={4}

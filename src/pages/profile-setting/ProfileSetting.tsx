@@ -4,12 +4,12 @@ import { ROUTES } from '@router/constant/routes';
 import UserDataSection from '@pages/profile-setting/components/UserDataSection';
 import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
 import AgreementSection from '@pages/profile-setting/components/AgreementSection';
-import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
 import Button from '@ui/button/Button';
 import Loading from '@layout/loading/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
+import ConfirmModal from '@components/ui/modal/ConfirmModal';
 
 export default function ProfileSetting() {
   const navigate = useNavigate();
@@ -39,12 +39,26 @@ export default function ProfileSetting() {
     setIsModalOpen(false);
   };
 
+  const handleDeleteAccount = () => {
+    // TODO: 회원탈퇴 api 및 토스트 메시지 추가
+    alert('회원탈퇴 되셨습니다.');
+    navigate('/');
+  };
+
   const handleEditProfile = () => {
     navigate(ROUTES.PROFILE_SETTING_EDIT);
   };
 
   return (
     <>
+      <ConfirmModal
+        isOpen={isModalOpen}
+        handleClose={handleCloseModal}
+        title={'정말 탈퇴하시겠어요?'}
+        description={`탈퇴하면 모든 정보가 삭제되며, \n복구할 수 없습니다.`}
+        handleConfirm={handleDeleteAccount}
+        handleCancel={handleCloseModal}
+      />
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
@@ -84,7 +98,6 @@ export default function ProfileSetting() {
           </button>
         </footer>
       </div>
-      <DeleteAccountModal isOpen={isModalOpen} handleClose={handleCloseModal} />
     </>
   );
 }
