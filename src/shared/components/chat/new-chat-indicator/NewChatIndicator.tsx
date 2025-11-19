@@ -5,45 +5,45 @@ interface NewChatIndicatorProps {
   profileImage: string;
   name: string;
   message: string;
+  container: HTMLDivElement;
 }
 
 export default function NewChatIndicator({
   profileImage,
   name,
   message,
+  container,
 }: NewChatIndicatorProps) {
   const TRUNCATE_LENGTH = 30;
   const displayedMessage =
     message.length > TRUNCATE_LENGTH ? `${message.slice(0, TRUNCATE_LENGTH)}...` : message;
 
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleScrollToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
+    container.scrollTo({
+      top: container.scrollHeight,
       behavior: 'smooth',
     });
   };
 
   useEffect(() => {
     const checkScrollPosition = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const isAtBottom = scrollTop + windowHeight >= documentHeight - 10;
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
       setIsVisible(!isAtBottom);
     };
 
     checkScrollPosition();
 
-    window.addEventListener('scroll', checkScrollPosition);
+    container.addEventListener('scroll', checkScrollPosition);
     window.addEventListener('resize', checkScrollPosition);
 
     return () => {
-      window.removeEventListener('scroll', checkScrollPosition);
+      container.removeEventListener('scroll', checkScrollPosition);
       window.removeEventListener('resize', checkScrollPosition);
     };
-  }, []);
+  }, [container, message]);
 
   if (!isVisible) {
     return null;
