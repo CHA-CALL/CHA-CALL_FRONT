@@ -24,4 +24,5 @@ export const ROUTES = {
   FOOD_TRUCK_DETAIL: (foodTruckId: string) => `/food-truck/${foodTruckId}`,
   FOOD_TRUCK_FORM: '/owner/food-truck-form',
   SET_REGION_FORM: '/owner/food-truck-form/set-region',
+  OWNER_ESTIMATE: '/owner/estimate',
 };

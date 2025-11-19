@@ -1,6 +1,6 @@
 import { FOOD_TRUCK_MAX_LENGTH } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import Input from '@ui/input/Input';
 import Button from '@ui/button/Button';
 import ErrorText from '@form/error-text/ErrorText';

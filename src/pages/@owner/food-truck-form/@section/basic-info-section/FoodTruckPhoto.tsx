@@ -1,4 +1,4 @@
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitchButton';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';

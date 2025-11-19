@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import { ROUTES } from '@router/constant/routes';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';

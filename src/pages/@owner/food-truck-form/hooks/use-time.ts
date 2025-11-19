@@ -5,7 +5,7 @@ import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
+import type { AvailableDate } from '@type/available-date';
 import { generateDateId } from '@pages/@owner/food-truck-form/utils/generate-date-Id';
 import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
 
