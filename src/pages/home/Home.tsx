@@ -4,12 +4,14 @@ import Overlay from '@layout/overlay/Overlay';
 import Input from '@ui/input/Input';
 import { Icon } from '@icon/Icon';
 import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
-import ChatBubble from '@components/chat/chat-bubble/ChatBubble';
-import NewChatIndicator from '@components/chat/new-chat-indicator/NewChatIndicator';
+import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
 
 const Home = () => {
   // BottomSheet states
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  const [isAgreementBottomSheetOpen, setIsAgreementBottomSheetOpen] =
+    useState(true);
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +25,10 @@ const Home = () => {
 
   const handleCloseBottomSheet = () => {
     setIsBottomSheetOpen(false);
+  };
+
+  const handleCloseAgreementBottomSheet = () => {
+    setIsAgreementBottomSheetOpen(false);
   };
 
   const handleOpenModal = () => {
@@ -62,16 +68,13 @@ const Home = () => {
           </div>
         </div>
       </Overlay>
-
       {/* BottomSheet */}
-
       <RatingBottomSheet
         reservationId={4}
         foodTruckId={1}
         isOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
       />
-
       {/* Search Bar */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>Search Bar</h2>
@@ -81,7 +84,6 @@ const Home = () => {
           placeholder='검색어를 입력하세요'
         />
       </section>
-
       {/* Modal and BottomSheet Triggers */}
       <section>
         <h2 className='mb-[2rem] text-[2rem] font-bold'>
@@ -105,50 +107,11 @@ const Home = () => {
         </div>
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
-
-      {/* 채팅 말풍선 테스트 */}
-      <div className='flex flex-col gap-[1rem] p-[2rem] bg-white border-1 border-grayscale-900'>
-        <ChatBubble
-          message='안녕하세요'
-          time='오후 5:21'
-          isMine={false}
-          profileImage='https://placehold.co/30'
-        />
-        <ChatBubble
-          message='혹시 거래 가능할까요?'
-          time='오후 5:21'
-          isMine={false}
-        />
-        <ChatBubble
-          message='넵, 가능합니다!'
-          time='오후 9:00'
-          isRead={true}
-        />
-        <ChatBubble
-          time='오후 9:00'
-          isRead={true}
-          handleReservationClick={() => {}}
-        />
-        <ChatBubble
-          time='오후 10:00'
-          isMine={false}
-          profileImage='https://placehold.co/30'
-          handleReservationClick={() => {}}
-        />
-        {Array.from({ length: 20 }).map((_, i) => (
-          <ChatBubble
-            key={i}
-            message='감사합니다!'
-            time='오후 10:05'
-            isMine={true}
-          />
-        ))}
-        <NewChatIndicator
-          name='이현준'
-          profileImage='https://placehold.co/26'
-          message='메시지 확인해주세요!'
-        />
-      </div>
+      <AgreeToTermsBottomSheet
+        isAgreed={!isAgreementBottomSheetOpen}
+        isForOwner={false}
+        handleCloseBottomSheet={handleCloseAgreementBottomSheet}
+      />
     </div>
   );
 };

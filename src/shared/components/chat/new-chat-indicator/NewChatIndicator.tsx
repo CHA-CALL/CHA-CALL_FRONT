@@ -52,7 +52,7 @@ export default function NewChatIndicator({
   return (
     <button
       type='button'
-      className='fixed bottom-[0.8rem] flex items-center justify-between w-[calc(100%-4rem)] max-w-[55rem] py-[0.5rem] pl-[0.6rem] pr-[1rem] bg-white border-1 border-grayscale-100 rounded-[1.6rem] shadow-lg z-50'
+      className='fixed bottom-[6rem] left-1/2 -translate-x-1/2 flex items-center justify-between w-[calc(100%-4rem)] max-w-[55rem] py-[0.5rem] pl-[0.6rem] pr-[1rem] bg-white border-1 border-grayscale-100 rounded-[1.6rem] shadow-lg z-50'
       onClick={handleScrollToBottom}
     >
       <div className='flex items-center gap-[0.8rem]'>
