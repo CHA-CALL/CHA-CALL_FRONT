@@ -23,7 +23,7 @@ export const useRegisterMenuMutation = (foodTruckId: number) => {
     mutationFn: async (formData: MenuFormData) => {
       if (!formData.imageUrl) {
         toast.error('이미지를 업로드해주세요.');
-        return;
+        throw new Error('이미지 업로드해주세요.');
       }
 
       const fileExtension = formData.imageUrl.name.split('.').pop() || '';
@@ -31,7 +31,7 @@ export const useRegisterMenuMutation = (foodTruckId: number) => {
 
       if (!imageInfo.presignedUrl || !imageInfo.fileUrl) {
         toast.error('이미지 업로드 URL을 가져오는데 실패했습니다.');
-        return;
+        throw new Error('이미지 업로드 URL을 가져오는데 실패했습니다.');
       }
 
       await uploadImage(imageInfo.presignedUrl, formData.imageUrl);
@@ -69,7 +69,7 @@ export const useEditMenuMutation = (foodTruckId: number, menuId: number) => {
     mutationFn: async (formData: MenuFormData) => {
       if (!formData.imageUrl) {
         toast.error('이미지를 업로드해주세요.');
-        return;
+        throw new Error('이미지를 업로드해주세요.');
       }
 
       const fileExtension = formData.imageUrl.name.split('.').pop() || '';

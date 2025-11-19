@@ -81,7 +81,7 @@ export default function MenuEdit() {
       <Navigation
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
-        text='메뉴 등록'
+        text='메뉴 수정'
       />
       <MenuForm
         initialImageUrl={initialImageUrl}
