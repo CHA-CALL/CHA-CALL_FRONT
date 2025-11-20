@@ -61,28 +61,31 @@ export default function ChatInputBar({
   }, [selectedQuickMessage]);
 
   const textAreaBaseClasses =
-    'bg-grayscale-100 body-m-14 w-full resize-none overflow-hidden rounded-[2rem] border-none px-[1.8rem] py-[0.8rem]';
+    'bg-grayscale-100 body-m-14 w-full min-h-[4rem] resize-none overflow-hidden rounded-[2rem] border-none px-[1.8rem] py-[0.9rem]';
   const textAreaInputclasses =
     'caret-grayscale-900 placeholder:text-grayscale-500 focus:outline-none max-h-[10rem]';
 
   return (
     <form
       onSubmit={handleSubmit}
-      className='border-t-1 flex w-full items-center border-grayscale-100 bg-white px-[1.1rem] py-[0.8rem]'
+      className='border-t-1 flex w-full items-end border-grayscale-100 bg-white px-[1.1rem] py-[0.8rem]'
     >
-      <button
-        type='button'
-        className='mr-[1.4rem] flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full bg-grayscale-900 px-[0.6rem] py-[0.5rem]'
-        onClick={handleExtensionClick}
-      >
-        <Icon
-          name='ic_plus'
-          className={cn(
-            'text-white transition-transform duration-300 ease-in-out',
-            isOpenMenu ? 'rotate-45' : 'rotate-0'
-          )}
-        />
-      </button>
+      <div className='mr-[0.5rem] p-[0.9rem]'>
+        <button
+          type='button'
+          className='flex h-[2.2rem] w-[2.2rem] flex-shrink-0 items-center justify-center rounded-full bg-grayscale-900 px-[0.6rem] py-[0.5rem]'
+          onClick={handleExtensionClick}
+        >
+          <Icon
+            name='ic_plus'
+            className={cn(
+              'text-white transition-transform duration-300 ease-in-out',
+              isOpenMenu ? 'rotate-45' : 'rotate-0'
+            )}
+          />
+        </button>
+      </div>
+
       <textarea
         ref={textAreaRef}
         value={message}
@@ -97,7 +100,7 @@ export default function ChatInputBar({
         type='submit'
         disabled={message.trim() === ''}
         className={cn(
-          'flex h-[3.6rem] w-[3.6rem] items-center justify-center p-[0.8rem]',
+          'flex items-center justify-center px-[0.8rem] py-[0.9rem]',
           message.trim() !== '' ? 'text-primary-700' : 'text-grayscale-300'
         )}
       >
