@@ -19,7 +19,7 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
   };
 
   const handleCameraRef = (ref: RefObject<HTMLInputElement | null>) => {
-    fileInputRef.current = ref.current;
+    cameraRef.current = ref.current;
   };
 
   const isMobile = () => {
@@ -53,7 +53,8 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
     cash: () =>
       navigator.clipboard
         .writeText(`${bankAccount?.bankName}  ${bankAccount?.accountNumber}`)
-        .then(() => toast.success('클립보드에 복사되었습니다.')),
+        .then(() => toast.success('클립보드에 복사되었습니다.'))
+        .catch(() => toast.error('클립보드 복사에 실패했습니다.')),
     write_paper: () => {
       // TODO: 견적서 작성 페이지로
       navigate(ROUTES.MESSAGE_LIST);
