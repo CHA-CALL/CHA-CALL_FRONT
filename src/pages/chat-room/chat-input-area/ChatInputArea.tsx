@@ -24,14 +24,14 @@ export default function ChatInputArea({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const chatAreaRef = useRef<HTMLDivElement>(null);
 
-  const { disabledStates, handlers, handleGalleryRef, handleCameraRef } =
-    useExtensionMenu(handleOpenMessageList);
-
   const closeMenu = useCallback(() => {
     if (isOpenMenu) {
       setIsOpenMenu(false);
     }
   }, [isOpenMenu, setIsOpenMenu]);
+
+  const { disabledStates, handlers, handleGalleryRef, handleCameraRef } =
+    useExtensionMenu(handleOpenMessageList, closeMenu);
 
   useOnClickOutside(chatAreaRef, closeMenu);
 

@@ -6,7 +6,10 @@ import useToast from '@hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 
-export const useExtensionMenu = (handleOpenMessageList: () => void) => {
+export const useExtensionMenu = (
+  handleOpenMessageList: () => void,
+  closeMenu: () => void
+) => {
   const toast = useToast();
   const navigate = useNavigate();
   const { data: bankAccount } = useFetchAccountData();
@@ -54,7 +57,8 @@ export const useExtensionMenu = (handleOpenMessageList: () => void) => {
       navigator.clipboard
         .writeText(`${bankAccount?.bankName}  ${bankAccount?.accountNumber}`)
         .then(() => toast.success('클립보드에 복사되었습니다.'))
-        .catch(() => toast.error('클립보드 복사에 실패했습니다.')),
+        .catch(() => toast.error('클립보드 복사에 실패했습니다.'))
+        .finally(closeMenu),
     write_paper: () => {
       // TODO: 견적서 작성 페이지로
       navigate(ROUTES.MESSAGE_LIST);
