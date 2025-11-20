@@ -2,7 +2,7 @@ import ConfirmModal from '@components/ui/modal/ConfirmModal';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof ConfirmModal> = {
-  title: 'UI/Modal/ConfirmModal',
+  title: 'Components/UI/Modal/ConfirmModal',
   component: ConfirmModal,
   parameters: {
     layout: 'centered',
