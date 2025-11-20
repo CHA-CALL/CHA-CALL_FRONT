@@ -2,7 +2,7 @@ import AlertModal from '@components/ui/modal/AlertModal';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof AlertModal> = {
-  title: 'UI/Modal/AlertModal',
+  title: 'Components/UI/Modal/AlertModal',
   component: AlertModal,
   parameters: {
     layout: 'centered',

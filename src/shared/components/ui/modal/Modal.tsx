@@ -5,8 +5,11 @@ import type { MouseEvent, ReactNode } from 'react';
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
+  title?: string;
+  description?: string | ReactNode;
+  footer?: ReactNode;
 }
 interface ModalSubComponentProps {
   children: ReactNode;
@@ -50,10 +53,15 @@ export default function Modal({
   handleClose,
   children,
   className,
+  title,
+  description,
+  footer,
 }: ModalProps) {
   const stopPropagation = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
+  const isCommonLayoutMode = !!title;
+
   return (
     <Overlay isOpen={isOpen} handleClose={handleClose}>
       <div
@@ -63,7 +71,17 @@ export default function Modal({
         )}
         onClick={stopPropagation}
       >
-        {children}
+        {isCommonLayoutMode ? (
+          <>
+            <Header>
+              <Title>{title}</Title>
+              {description && <Body>{description}</Body>}
+            </Header>
+            {footer && <Footer>{footer}</Footer>}
+          </>
+        ) : (
+          children
+        )}
       </div>
     </Overlay>
   );

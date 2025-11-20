@@ -1,4 +1,4 @@
-import CommonModalLayout from '@components/ui/modal/CommonModalLayout';
+import Modal from '@components/ui/modal/Modal';
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -26,7 +26,7 @@ export default function AlertModal({
   );
 
   return (
-    <CommonModalLayout
+    <Modal
       isOpen={isOpen}
       handleClose={handleClose}
       title={title}
