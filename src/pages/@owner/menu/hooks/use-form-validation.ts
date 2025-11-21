@@ -37,25 +37,25 @@ export const useFormValidation = (initialData?: Partial<MenuFormData>) => {
   } = methods;
 
   const updateName = (name: string) => {
-    setValue('name', name, { shouldValidate: true });
+    setValue('name', name, { shouldValidate: true, shouldDirty: true });
   };
 
   const updateDescription = (description: string) => {
-    setValue('description', description, { shouldValidate: true });
+    setValue('description', description, { shouldValidate: true, shouldDirty: true });
   };
 
   const updatePrice = (price: string) => {
     const numbersOnly = price.replace(/[^\d]/g, '');
     if (numbersOnly === '') {
-      setValue('price', 0, { shouldValidate: true });
+      setValue('price', 0, { shouldValidate: true, shouldDirty: true });
       return;
     }
     const numericPrice = Number(numbersOnly);
-    setValue('price', numericPrice, { shouldValidate: true });
+    setValue('price', numericPrice, { shouldValidate: true, shouldDirty: true });
   };
 
   const updateImageUrl = (image: File | null) => {
-    setValue('imageUrl', image || undefined, { shouldValidate: true });
+    setValue('imageUrl', image || undefined, { shouldValidate: true, shouldDirty: true });
   };
 
   const Errors = {

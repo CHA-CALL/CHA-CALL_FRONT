@@ -32,6 +32,8 @@ export default function MenuEdit() {
     updateImageUrl
   } = useFormValidation();
 
+  const { isDirty, isValid } = methods.formState;
+
   const {
     isModalOpen,
     handleEditSubmit,
@@ -102,7 +104,7 @@ export default function MenuEdit() {
           </Button>
           <Button
             variant='cta'
-            buttonStyle={methods.formState.isValid ? 'active' : 'disabled'}
+            buttonStyle={isDirty && isValid ? 'active' : 'disabled'}
             handleClickButton={methods.handleSubmit(handleEditSubmit)}
           >
             저장하기
