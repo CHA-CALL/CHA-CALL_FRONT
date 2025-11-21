@@ -6,13 +6,13 @@ import useAutosizeTextarea from '@pages/chat-room/chat-input-area/hooks/use-auto
 interface ChatInputBarProps {
   isOpenMenu: boolean;
   setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  onSendMessage: (_message: string) => void;
+  handleSendMessage: (_message: string) => void;
 }
 
 export default function ChatInputBar({
   isOpenMenu,
   setIsOpenMenu,
-  onSendMessage,
+  handleSendMessage,
 }: ChatInputBarProps) {
   const [message, setMessage] = useState('');
 
@@ -22,7 +22,7 @@ export default function ChatInputBar({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!message.trim()) return;
-    onSendMessage(message);
+    handleSendMessage(message);
     setMessage('');
   };
 

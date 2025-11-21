@@ -9,10 +9,10 @@ import { cn } from '@utils/cn';
 import { useCallback, useRef, useState } from 'react';
 
 interface ChatInputAreaProps {
-  onSendMessage: (_message: string) => void;
+  handleSendMessage: (_message: string) => void;
 }
 
-export default function ChatInputArea({ onSendMessage }: ChatInputAreaProps) {
+export default function ChatInputArea({ handleSendMessage }: ChatInputAreaProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { disabledStates, handlers } = useExtensionMenu();
 
@@ -34,7 +34,7 @@ export default function ChatInputArea({ onSendMessage }: ChatInputAreaProps) {
       <ChatInputBar
         isOpenMenu={isOpenMenu}
         setIsOpenMenu={setIsOpenMenu}
-        onSendMessage={onSendMessage}
+        handleSendMessage={handleSendMessage}
       />
       {isOpenMenu && (
         <div

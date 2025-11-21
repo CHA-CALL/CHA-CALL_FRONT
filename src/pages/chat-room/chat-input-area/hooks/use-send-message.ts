@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import { MOCK_MESSAGES } from '@pages/chat-room/chat-input-area/constants/mockup';
+import { MOCK_MESSAGE_LIST } from '@pages/chat-room/chat-input-area/constants/mockup';
 
 export interface Message {
   id: number;
-  message: string;
+  isReservation?: boolean;
+  message?: string;
   time: string;
+  date?: string;
   isMine: boolean;
   profileImage?: string;
   isRead?: boolean;
 }
 
 export const useSendMessage = () => {
-  const [messages, setMessages] = useState<Message[]>(MOCK_MESSAGES);
+  const [messageList, setMessageList] = useState<Message[]>(MOCK_MESSAGE_LIST);
 
   // 현재 시간
   const getCurrentTime = () => {
@@ -24,19 +26,29 @@ export const useSendMessage = () => {
     return `${ampm} ${formattedHours}:${formattedMinutes}`;
   };
 
+  // 현재 날짜
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    return `${year}년 ${month}월 ${day}일`;
+  };
+
   // 메시지 전송 핸들러
   const handleSendMessage = (text: string) => {
     const newMessage: Message = {
       id: Date.now(),
       message: text,
       time: getCurrentTime(),
+      date: getCurrentDate(),
       isMine: true,
     };
-    setMessages((prev) => [...prev, newMessage]);
+    setMessageList((prev) => [...prev, newMessage]);
   };
 
   return {
-    messages,
+    messages: messageList,
     handleSendMessage,
   };
 }
