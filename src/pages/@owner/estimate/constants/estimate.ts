@@ -3,7 +3,7 @@ export const ESTIMATE_MAX_LENGTH = {
     min: 1,
     max: 20,
   },
-  menu: {
+  food: {
     min: 1,
     max: 100,
   },
@@ -21,9 +21,9 @@ export const ESTIMATE_ERROR_MESSAGE = {
     min: '시/군/구를 입력해주세요.',
     max: `시/군/구는 ${ESTIMATE_MAX_LENGTH.location.max}자 이하로 입력해주세요.`,
   },
-  menu: {
+  food: {
     required: '음식을 입력해주세요.',
-    max: `음식은 ${ESTIMATE_MAX_LENGTH.menu.max}자 이하로 입력해주세요.`,
+    max: `음식은 ${ESTIMATE_MAX_LENGTH.food.max}자 이하로 입력해주세요.`,
   },
   price: {
     required: '금액을 입력해주세요.',

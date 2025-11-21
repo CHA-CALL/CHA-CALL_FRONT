@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
-import { useEstimateForm } from '@pages/@owner/estimate/hooks/use-estimate';
+import { useEstimateForm } from '@pages/@owner/estimate/hooks';
 import {
-  Menu,
+  Food,
   Price,
   RegionSection,
   ActiveDate,
@@ -27,7 +27,7 @@ export default function Estimate() {
     removeAvailableDateById,
     updateStartActiveTime,
     updateEndActiveTime,
-    updateMenu,
+    updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
@@ -65,10 +65,10 @@ export default function Estimate() {
           updateEndActiveTime={updateEndActiveTime}
           error={errors.activeTime}
         />
-        <Menu
-          menu={formData.menu}
-          updateMenu={updateMenu}
-          error={errors.menu}
+        <Food
+          food={formData.food}
+          updateFood={updateFood}
+          error={errors.food}
         />
         <Price
           price={formData.price}

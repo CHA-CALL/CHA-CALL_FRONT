@@ -34,7 +34,7 @@ export default function RegionSection({
           value={location}
           onChange={e => updateLocation(e.target.value)}
           maxLength={ESTIMATE_MAX_LENGTH.location.max}
-          className='flex-shrink-1'
+          className='flex-shrink-1 min-w-0'
         />
       </div>
       <div className='flex items-center gap-[1.2rem]'>
@@ -45,7 +45,7 @@ export default function RegionSection({
           placeholder='Ex) 차콜로 123'
           value={detailLocation}
           onChange={e => updateDetailLocation(e.target.value)}
-          className='flex-shrink-1'
+          className='flex-shrink-1 min-w-0'
         />
       </div>
       {error && <ErrorText text={error} />}

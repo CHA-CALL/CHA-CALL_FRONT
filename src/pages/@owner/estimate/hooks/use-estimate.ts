@@ -5,7 +5,10 @@ import {
   type EstimateFormData,
 } from '@pages/@owner/estimate/utils/estimate.schema';
 import type { NeedElectricityKey } from '@constant/need-electricity';
-import { useEstimateTime } from '@pages/@owner/estimate/hooks/use-time';
+import {
+  useEstimateDate,
+  useEstimateTime,
+} from '@pages/@owner/estimate/hooks/index';
 
 export const useEstimateForm = () => {
   const {
@@ -26,7 +29,7 @@ export const useEstimateForm = () => {
         startActiveTime: '',
         endActiveTime: '',
       },
-      menu: '',
+      food: '',
       location: '',
       detailLocation: '',
     },
@@ -38,9 +41,11 @@ export const useEstimateForm = () => {
     updateAvailableDateById,
     removeAvailableDateById,
     handleAddAvailableDate,
-    updateStartActiveTime,
-    updateEndActiveTime,
-  } = useEstimateTime({ formData, setValue, setError });
+  } = useEstimateDate({ formData, setValue, setError });
+  const { updateStartActiveTime, updateEndActiveTime } = useEstimateTime({
+    formData,
+    setValue,
+  });
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -50,8 +55,8 @@ export const useEstimateForm = () => {
     setValue('detailLocation', detailLocation, { shouldValidate: true });
   };
 
-  const updateMenu = (menu: string) => {
-    setValue('menu', menu, { shouldValidate: true });
+  const updateFood = (food: string) => {
+    setValue('food', food, { shouldValidate: true });
   };
 
   const updatePrice = (price: string) => {
@@ -84,7 +89,7 @@ export const useEstimateForm = () => {
     detailLocation: formData.detailLocation,
     availableDates: formData.availableDates,
     activeTime: formData.activeTime,
-    menu: formData.menu,
+    food: formData.food,
     price: formData.price,
     needElectricity: formData.needElectricity,
     etc: formData.etc,
@@ -95,7 +100,7 @@ export const useEstimateForm = () => {
     detailLocation: errors.detailLocation?.message,
     availableDates: errors.availableDates?.message,
     activeTime: errors.activeTime?.message,
-    menu: errors.menu?.message,
+    food: errors.food?.message,
     price: errors.price?.message,
     needElectricity: errors.needElectricity?.message,
     etc: errors.etc?.message,
@@ -112,7 +117,7 @@ export const useEstimateForm = () => {
     removeAvailableDateById,
     updateStartActiveTime,
     updateEndActiveTime,
-    updateMenu,
+    updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
