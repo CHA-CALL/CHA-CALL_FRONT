@@ -517,6 +517,34 @@ export class Owners<
       ...params,
     });
   /**
+   * @description 사장님 - 푸드트럭의 표시 상태를 변경합니다.
+   *
+   * @tags Owner API
+   * @name UpdateFoodTruckViewedStatus
+   * @summary 나의 푸드트럭 표시 상태 변경
+   * @request PATCH:/owners/me/food-trucks/{foodTruckId}/change-status
+   * @secure
+   * @response `200` `UpdateFoodTruckViewedStatusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateFoodTruckViewedStatus = (
+    foodTruckId: number,
+    data: UpdateFoodTruckViewedStatusRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateFoodTruckViewedStatusData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/change-status`,
+      method: "PATCH",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
    * @description 사장님의 예약 내역 목록을 조회합니다.
    *
    * @tags Owner API
