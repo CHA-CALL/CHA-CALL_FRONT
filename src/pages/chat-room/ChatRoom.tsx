@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
 import ChatInputArea from '@pages/chat-room/chat-input-area/ChatInputArea';
 import ChatMessageList from '@pages/chat-room/chat-input-area/components/ChatMessageList';
@@ -68,7 +68,7 @@ export default function ChatRoom() {
         <NewChatIndicator
           profileImage={lastOtherMessage.profileImage || 'https://placehold.co/40'}
           name={otherName}
-          message={lastOtherMessage.message || '예약 확정을 요청헀어요!'}
+          message={lastOtherMessage.message || '예약 확정을 요청했어요!'}
           container={scrollElement}
         />
       )}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 
 interface NewChatIndicatorProps {
   profileImage: string;

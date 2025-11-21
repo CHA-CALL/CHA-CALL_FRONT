@@ -10,6 +10,14 @@ export default function ChatMessageList({
   messages,
   scrollRef,
 }: ChatMessageListProps) {
+  const handleReservationConfirm = () => {
+    // TODO: 예약 확정서 확인하기
+    alert('예약 확정서 확인하기');
+  }
+  const handleReservationAccept = () => {
+    // TODO: 예약 확정 수락하기
+    alert('예약 확정 수락하기');
+  }
 
   return (
     <div
@@ -50,6 +58,9 @@ export default function ChatMessageList({
                     isMine={msg.isMine}
                     profileImage={msg.profileImage}
                     isRead={msg.isRead}
+                    handleReservationClick={
+                      msg.isMine ? handleReservationConfirm : handleReservationAccept
+                    }
                   />
                 </div>
               </div>

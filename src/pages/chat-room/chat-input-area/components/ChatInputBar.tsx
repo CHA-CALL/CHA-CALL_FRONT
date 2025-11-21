@@ -1,6 +1,6 @@
 import React, { useRef, useState, type FormEvent } from 'react';
 import { cn } from '@utils/cn';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import useAutosizeTextarea from '@pages/chat-room/chat-input-area/hooks/use-autosize-textarea';
 
 interface ChatInputBarProps {
