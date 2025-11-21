@@ -1,14 +1,14 @@
-import Button from '@ui/button/Button';
 import Information from '@components/information/Information';
-import Navigation from '@layout/navigation/Navigation';
-import Input from '@ui/input/Input';
-import { Icon } from '@icon/Icon';
-import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
-import { cn } from '@utils/cn';
+import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 import ErrorText from '@form/error-text/ErrorText';
+import { Icon } from '@icon/Icon';
 import Loading from '@layout/loading/Loading';
+import Navigation from '@layout/navigation/Navigation';
+import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
 import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
-import ConfirmModal from '@components/ui/modal/ConfirmModal';
+import Button from '@ui/button/Button';
+import Input from '@ui/input/Input';
+import { cn } from '@utils/cn';
 
 export default function Account() {
   const {
