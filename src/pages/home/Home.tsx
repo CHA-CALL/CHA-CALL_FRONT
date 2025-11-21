@@ -1,6 +1,5 @@
 import AlertModal from '@components/ui/modal-alert/AlertModal';
 import { Icon } from '@icon/Icon';
-import Overlay from '@layout/overlay/Overlay';
 import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
 import Button from '@ui/button/Button';
 import Input from '@ui/input/Input';

@@ -5,7 +5,7 @@ import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 import useToast from '@hooks/use-toast';
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
-import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/(.)delete-message-bottom-sheet/DeleteMessageBottomSheet';
+import DeleteMessageBottomSheet from '@pages/@owner/message-list/@modal/DeleteMessageBottomSheet';
 import Message from '@pages/@owner/message-list/components/Message';
 import {
   useDeleteOwnerChatTemplates,

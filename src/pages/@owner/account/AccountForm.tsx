@@ -4,7 +4,7 @@ import ErrorText from '@form/error-text/ErrorText';
 import { Icon } from '@icon/Icon';
 import Loading from '@layout/loading/Loading';
 import Navigation from '@layout/navigation/Navigation';
-import SelectBankBottomSheet from '@pages/@owner/account/@modal/(.)select-bank-bottom-sheet/SelectBankBottomSheet';
+import SelectBankBottomSheet from '@pages/@owner/account/@bottom-sheet/SelectBankBottomSheet';
 import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
 import Button from '@ui/button/Button';
 import Input from '@ui/input/Input';
