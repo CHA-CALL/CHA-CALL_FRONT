@@ -48,7 +48,7 @@ export default function TimePicker({
   };
 
   return (
-    <div className='flex w-full flex-col items-center gap-[1.6rem] rounded-[1.2rem] border border-grayscale-100 px-[1rem] py-[1.2rem]'>
+    <div className='flex w-full flex-col items-center gap-[0.4rem] rounded-[1.2rem] border border-grayscale-100 px-[1rem] py-[1.2rem]'>
       <button
         type='button'
         onClick={handleTimePickerOpenState}
