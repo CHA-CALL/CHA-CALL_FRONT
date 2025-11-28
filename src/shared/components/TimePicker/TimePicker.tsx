@@ -85,9 +85,9 @@ export default function TimePicker({
             onChange={setSelectedTime}
             // 데스크톱 휠 동작
             wheelMode='natural'
-            height={120}
+            height={145}
             itemHeight={44}
-            className='w-[24rem] gap-[1.8rem] font-semibold body-m-16'
+            className='w-[24rem] font-semibold body-m-16'
           >
             <Picker.Column name='hour'>
               {HOURS.map(h => (
