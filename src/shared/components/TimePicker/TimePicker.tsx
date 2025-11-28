@@ -84,7 +84,7 @@ export default function TimePicker({
             value={selectedTime}
             onChange={setSelectedTime}
             // 데스크톱 휠 동작
-            wheelMode='natural'
+            wheelMode='normal'
             height={145}
             itemHeight={44}
             className='w-[24rem] font-semibold body-m-16'
