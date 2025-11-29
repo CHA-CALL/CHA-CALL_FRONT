@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Picker from 'react-mobile-picker';
 import _ from 'lodash';
 import Button from '@components/ui/button/Button';
@@ -43,6 +43,12 @@ export default function TimePicker({
     handleTimeChange(null);
     setSelectedTime({ hour: '12', minute: '30' });
   };
+
+  useEffect(() => {
+    if (time) {
+      setSelectedTime({ hour: time.hour, minute: time.minute });
+    }
+  }, [time]);
 
   return (
     <div className='flex w-full flex-col items-center gap-[0.4rem] rounded-[1.2rem] border border-grayscale-100 px-[1rem] py-[1.2rem]'>

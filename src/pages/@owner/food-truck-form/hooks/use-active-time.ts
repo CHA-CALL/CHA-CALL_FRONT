@@ -90,8 +90,18 @@ export const useActiveTime = () => {
       return;
     }
 
-    setStartActiveTime({ hour: startHour, minute: startMinute });
-    setEndActiveTime({ hour: endHour, minute: endMinute });
+    setStartActiveTime(prev => {
+      if (prev?.hour === startHour && prev?.minute === startMinute) {
+        return prev;
+      }
+      return { hour: startHour, minute: startMinute };
+    });
+    setEndActiveTime(prev => {
+      if (prev?.hour === endHour && prev?.minute === endMinute) {
+        return prev;
+      }
+      return { hour: endHour, minute: endMinute };
+    });
   }, [formActiveTime]);
 
   const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {

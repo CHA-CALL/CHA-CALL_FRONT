@@ -72,7 +72,7 @@ export default {
         'caption-m-12': ['1.2rem', { fontWeight: '500' }],
         'caption-r-12': ['1.2rem', { fontWeight: '400' }],
         'caption-m-11': ['1.1rem', { fontWeight: '500' }],
-        'caption-m-10': ['1.1rem', { fontWeight: '500' }],
+        'caption-m-10': ['1rem', { fontWeight: '500' }],
       },
     },
   },
@@ -133,7 +133,7 @@ export default {
           fontWeight: '500',
         },
         '.caption-m-10': {
-          fontSize: '1.1rem',
+          fontSize: '1rem',
           fontWeight: '500',
         },
 
