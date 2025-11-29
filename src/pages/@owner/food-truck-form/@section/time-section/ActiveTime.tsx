@@ -1,8 +1,8 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
-import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
 import ButtonCheck from '@ui/button-check/ButtonCheck';
 import ErrorText from '@form/error-text/ErrorText';
 import TimePicker from '@components/TimePicker/TimePicker';
+import { useActiveTime } from '@pages/@owner/food-truck-form/hooks/use-active-time';
 
 export default function ActiveTime() {
   const {
@@ -13,7 +13,8 @@ export default function ActiveTime() {
     updateActiveTimeStart,
     updateActiveTimeEnd,
     updateTimeDiscussRequired,
-  } = useTime();
+  } = useActiveTime();
+
   return (
     <FormLayout
       isRequired={true}
