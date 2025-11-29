@@ -4,11 +4,7 @@ import _ from 'lodash';
 import Button from '@components/ui/button/Button';
 import { Icon } from '@components/icon/Icon';
 import { cn } from '@utils/cn';
-
-export interface TimeType {
-  hour: string;
-  minute: string;
-}
+import type { TimeType } from '@type/time-types';
 
 interface TimePickerProps {
   timeTitle: string;
@@ -21,6 +17,7 @@ const MINUTES_STEP = 5;
 const MINUTES = _.range(0, 60, MINUTES_STEP).map(m =>
   _.padStart(String(m), 2, '0')
 );
+
 export default function TimePicker({
   timeTitle,
   time,

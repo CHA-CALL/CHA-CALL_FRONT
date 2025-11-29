@@ -1,8 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '../schemas/food-truck-form.schema';
 import { useEffect, useState } from 'react';
-import type { TimeType } from '@components/TimePicker/TimePicker';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '../constants/food-truck';
+import type { TimeType } from '@type/time-types';
 
 export const useActiveTime = () => {
   const {

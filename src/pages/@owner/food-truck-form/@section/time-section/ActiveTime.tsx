@@ -1,7 +1,7 @@
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
 import ButtonCheck from '@ui/button-check/ButtonCheck';
 import ErrorText from '@form/error-text/ErrorText';
-import TimePicker from '@components/TimePicker/TimePicker';
+import TimePicker from '@components/time-picker/TimePicker';
 import { useActiveTime } from '@pages/@owner/food-truck-form/hooks/use-active-time';
 
 export default function ActiveTime() {
