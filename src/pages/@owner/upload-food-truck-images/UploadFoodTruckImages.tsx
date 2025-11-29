@@ -5,10 +5,8 @@ import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Information from '@components/information/Information';
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
-import {
-  useFoodTruckForm,
-  type FoodTruckFormData,
-} from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
 import ImagePreview from '@ui/image-preview/ImagePreview';
 import Button from '@ui/button/Button';
@@ -76,8 +74,8 @@ function UploadFoodTruck() {
       />
       <div className='flex w-full flex-col items-start justify-start gap-[1.2rem] p-[2rem]'>
         <div className='flex w-full flex-col items-start justify-start gap-[0.2rem]'>
-          <p className='title-sb-16 grayscale-900'>푸드트럭 사진 등록</p>
-          <p className='caption-m-11 grayscale-500'>
+          <p className='grayscale-900 title-sb-16'>푸드트럭 사진 등록</p>
+          <p className='grayscale-500 caption-m-11'>
             사진은 순서대로 등록해주세요. 첫 번째 사진이 썸네일로 보여요!
           </p>
         </div>

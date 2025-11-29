@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
@@ -8,6 +8,7 @@ import {
 import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
 import { generateDateId } from '@pages/@owner/food-truck-form/utils/generate-date-Id';
 import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
+import type { TimeType } from '@components/TimePicker/TimePicker';
 
 export const useTime = () => {
   const {
@@ -18,12 +19,12 @@ export const useTime = () => {
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
-  const [startActiveTime, setStartActiveTime] = useState<string>('');
-  const [endActiveTime, setEndActiveTime] = useState<string>('');
-  const updateActiveTimeStart = (activeTime: string) => {
+  const [startActiveTime, setStartActiveTime] = useState<TimeType | null>(null);
+  const [endActiveTime, setEndActiveTime] = useState<TimeType | null>(null);
+  const updateActiveTimeStart = (activeTime: TimeType | null) => {
     setStartActiveTime(activeTime);
   };
-  const updateActiveTimeEnd = (activeTime: string) => {
+  const updateActiveTimeEnd = (activeTime: TimeType | null) => {
     setEndActiveTime(activeTime);
   };
 
@@ -45,15 +46,21 @@ export const useTime = () => {
     }
     if (startActiveTime && endActiveTime) {
       if (
-        new Date(`1970-01-01T${startActiveTime}`).getTime() >=
-        new Date(`1970-01-01T${endActiveTime}`).getTime()
+        new Date(
+          `1970-01-01T${startActiveTime.hour}:${startActiveTime.minute}`
+        ).getTime() >=
+        new Date(
+          `1970-01-01T${endActiveTime.hour}:${endActiveTime.minute}`
+        ).getTime()
       ) {
         setError('activeTime', {
           message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.invalid,
         });
         return;
       }
-      setValue('activeTime', startActiveTime + '-' + endActiveTime, {
+      const startTimeString = `${startActiveTime.hour}:${startActiveTime.minute}`;
+      const endTimeString = `${endActiveTime.hour}:${endActiveTime.minute}`;
+      setValue('activeTime', startTimeString + '-' + endTimeString, {
         shouldValidate: true,
       });
     } else {
@@ -64,8 +71,27 @@ export const useTime = () => {
   }, [startActiveTime, endActiveTime, setError, setValue]);
 
   useEffect(() => {
-    setStartActiveTime(formData.activeTime?.split('-')[0] ?? '');
-    setEndActiveTime(formData.activeTime?.split('-')[1] ?? '');
+    const activeTime = formData.activeTime;
+
+    if (!activeTime) {
+      setStartActiveTime(null);
+      setEndActiveTime(null);
+      return;
+    }
+
+    const [startTime, endTime] = activeTime.split('-');
+    const [startHour, startMinute] = startTime.split(':');
+    const [endHour, endMinute] = endTime.split(':');
+
+    setStartActiveTime({
+      hour: startHour,
+      minute: startMinute,
+    });
+
+    setEndActiveTime({
+      hour: endHour,
+      minute: endMinute,
+    });
   }, [formData.activeTime]);
 
   const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {

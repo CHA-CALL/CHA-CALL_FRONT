@@ -22,9 +22,9 @@ import {
   PaymentMethod,
 } from '@pages/@owner/food-truck-form/@section/category-section/index';
 import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-section';
-import { useFoodTruckForm } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
@@ -34,14 +34,14 @@ export default function FoodTruckForm() {
   const location = useLocation();
 
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
-  console.log(id);
+  console.info(id);
   const methods = useFoodTruckForm();
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
       methods.reset(location.state.formData);
     }
-  }, [location.state]);
+  }, [location.state, methods]);
 
   const handleNavigateBack = () => {
     navigate(-1);
