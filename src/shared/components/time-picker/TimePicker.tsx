@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react';
 import Picker from 'react-mobile-picker';
-import _ from 'lodash';
 import Button from '@components/ui/button/Button';
 import { Icon } from '@components/icon/Icon';
 import { cn } from '@utils/cn';
 import type { TimeType } from '@type/time-types';
+import { HOURS, DEFAULT_TIME, MINUTES } from '@constant/time-selections';
 
 interface TimePickerProps {
   timeTitle: string;
   time: TimeType | null;
   handleTimeChange: (_time: TimeType | null) => void;
 }
-
-const HOURS = _.range(0, 24).map(h => _.padStart(String(h), 2, '0'));
-const MINUTES_STEP = 5;
-const MINUTES = _.range(0, 60, MINUTES_STEP).map(m =>
-  _.padStart(String(m), 2, '0')
-);
 
 export default function TimePicker({
   timeTitle,
@@ -26,8 +20,8 @@ export default function TimePicker({
   const [isOpen, setIsOpen] = useState(false);
 
   const [selectedTime, setSelectedTime] = useState({
-    hour: time ? time.hour : '12',
-    minute: time ? time.minute : '30',
+    hour: time ? time.hour : DEFAULT_TIME.hour,
+    minute: time ? time.minute : DEFAULT_TIME.minute,
   });
 
   const handleTimePickerOpenState = () => {
@@ -41,12 +35,12 @@ export default function TimePicker({
 
   const handleResetTime = () => {
     handleTimeChange(null);
-    setSelectedTime({ hour: '12', minute: '30' });
+    setSelectedTime(DEFAULT_TIME);
   };
 
   useEffect(() => {
     if (time) {
-      setSelectedTime({ hour: time.hour, minute: time.minute });
+      setSelectedTime(time);
     }
   }, [time]);
 
@@ -57,7 +51,7 @@ export default function TimePicker({
         onClick={handleTimePickerOpenState}
         className='flex w-full items-center justify-between px-[1rem]'
       >
-        <p className='text-grayscale-500 title-sb-12'>{timeTitle}</p>
+        <p className='title-sb-00 text-grayscale-500'>{timeTitle}</p>
         <div className='flex items-center gap-[1.2rem]'>
           <span
             className={cn(
@@ -77,7 +71,7 @@ export default function TimePicker({
           </span>
           <Icon
             name='ic_up'
-            className={cn('transition-transform', isOpen ? '' : 'rotate-180')}
+            className={cn('transition-transform', !isOpen && 'rotate-180')}
           />
         </div>
       </button>
@@ -97,7 +91,7 @@ export default function TimePicker({
                 <Picker.Item
                   key={h}
                   value={h}
-                  className={h === selectedTime.hour ? 'text-primary-700' : ''}
+                  className={`${h === selectedTime.hour && 'text-primary-700'}`}
                 >
                   {h}
                 </Picker.Item>
@@ -108,9 +102,7 @@ export default function TimePicker({
                 <Picker.Item
                   key={m}
                   value={m}
-                  className={
-                    m === selectedTime.minute ? 'text-primary-700' : ''
-                  }
+                  className={`${m === selectedTime.minute && 'text-primary-700'}`}
                 >
                   {m}
                 </Picker.Item>
