@@ -6,10 +6,8 @@ import Navigation from '@layout/navigation/Navigation';
 import Region from '@shared/components/region/Region';
 import { ROUTES } from '@router/constant/routes';
 import { useRegion } from '@pages/@owner/set-region/hooks/use-region';
-import {
-  useFoodTruckForm,
-  type FoodTruckFormData,
-} from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
 export default function SetRegion() {
   const location = useLocation();

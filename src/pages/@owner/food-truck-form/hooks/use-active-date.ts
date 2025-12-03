@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
 import type { AvailableDate } from '@type/available-date';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { generateDateId } from '@pages/@owner/food-truck-form/utils/generate-date-Id';
 import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
 
-export const useTime = () => {
+export const useActiveDate = () => {
   const {
     setValue,
     watch,
@@ -18,62 +17,6 @@ export const useTime = () => {
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
-  const [startActiveTime, setStartActiveTime] = useState<string>('');
-  const [endActiveTime, setEndActiveTime] = useState<string>('');
-  const updateActiveTimeStart = (activeTime: string) => {
-    setStartActiveTime(activeTime);
-  };
-  const updateActiveTimeEnd = (activeTime: string) => {
-    setEndActiveTime(activeTime);
-  };
-
-  useEffect(() => {
-    if (!startActiveTime && !endActiveTime) {
-      return;
-    }
-    if (!startActiveTime) {
-      setError('activeTime', {
-        message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.start,
-      });
-      return;
-    }
-    if (!endActiveTime) {
-      setError('activeTime', {
-        message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.end,
-      });
-      return;
-    }
-    if (startActiveTime && endActiveTime) {
-      if (
-        new Date(`1970-01-01T${startActiveTime}`).getTime() >=
-        new Date(`1970-01-01T${endActiveTime}`).getTime()
-      ) {
-        setError('activeTime', {
-          message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.invalid,
-        });
-        return;
-      }
-      setValue('activeTime', startActiveTime + '-' + endActiveTime, {
-        shouldValidate: true,
-      });
-    } else {
-      setValue('activeTime', '', {
-        shouldValidate: true,
-      });
-    }
-  }, [startActiveTime, endActiveTime, setError, setValue]);
-
-  useEffect(() => {
-    setStartActiveTime(formData.activeTime?.split('-')[0] ?? '');
-    setEndActiveTime(formData.activeTime?.split('-')[1] ?? '');
-  }, [formData.activeTime]);
-
-  const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {
-    setValue('timeDiscussRequired', timeDiscussRequired, {
-      shouldValidate: true,
-    });
-  };
-
   const updateAvailableDateById = (
     id: string,
     dateData: {
@@ -174,21 +117,12 @@ export const useTime = () => {
 
   return {
     // Data
-    startActiveTime,
-    endActiveTime,
-    activeTime: formData.activeTime,
-    timeDiscussRequired: formData.timeDiscussRequired,
     availableDates: availableDatesWithId,
 
     // Errors
-    activeTimeError: errors.activeTime?.message,
-    timeDiscussRequiredError: errors.timeDiscussRequired?.message,
     availableDatesError: errors.availableDates?.message,
 
     // Actions
-    updateActiveTimeStart,
-    updateActiveTimeEnd,
-    updateTimeDiscussRequired,
     updateAvailableDateById,
     removeAvailableDateById,
     handleAddAvailableDate,

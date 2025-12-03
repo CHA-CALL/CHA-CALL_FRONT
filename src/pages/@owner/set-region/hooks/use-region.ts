@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import type { RegionResponse } from 'apis/data-contracts';
 import { ROUTES } from '@router/constant/routes';
 import { useNavigate } from 'react-router-dom';

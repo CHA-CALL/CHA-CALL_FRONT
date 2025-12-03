@@ -1,8 +1,8 @@
 import FormLayout from '@components/layout/form-layout/FormLayout';
-import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
-import ButtonCheck from '@ui/button-check/ButtonCheck';
-import ErrorText from '@form/error-text/ErrorText';
-import TimePicker from '@components/ui/time-picker/TimePicker';
+import ButtonCheck from '@components/ui/button-check/ButtonCheck';
+import TimePicker from '@components/time-picker/TimePicker';
+import ErrorText from '@components/form/error-text/ErrorText';
+import { useActiveTime } from '@pages/@owner/food-truck-form/hooks/use-active-time';
 
 export default function ActiveTime() {
   const {
@@ -13,7 +13,8 @@ export default function ActiveTime() {
     updateActiveTimeStart,
     updateActiveTimeEnd,
     updateTimeDiscussRequired,
-  } = useTime();
+  } = useActiveTime();
+
   return (
     <FormLayout
       isRequired={true}
@@ -24,21 +25,21 @@ export default function ActiveTime() {
             isChecked={timeDiscussRequired}
             handleToggle={() => updateTimeDiscussRequired(!timeDiscussRequired)}
           />
-          <span className='caption-m-12 text-grayscale-500'>
+          <span className='text-grayscale-500 caption-m-12'>
             조율이 가능해요
           </span>
         </div>
       }
     >
       <TimePicker
-        value={startActiveTime}
-        handleChange={updateActiveTimeStart}
         timeTitle='운영 시작'
+        time={startActiveTime}
+        handleTimeChange={updateActiveTimeStart}
       />
       <TimePicker
-        value={endActiveTime}
-        handleChange={updateActiveTimeEnd}
         timeTitle='운영 종료'
+        time={endActiveTime}
+        handleTimeChange={updateActiveTimeEnd}
       />
       {activeTimeError && <ErrorText text={activeTimeError} />}
     </FormLayout>

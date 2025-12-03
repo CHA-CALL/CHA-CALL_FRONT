@@ -41,8 +41,8 @@ import {
   UpdateMenuRequest,
   UpdateMenuStatusData,
   UpdateMenuStatusRequest,
-} from './data-contracts';
-import { ContentType, HttpClient, RequestParams } from './http-client';
+} from "./data-contracts";
+import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Owners<
   SecurityDataType = unknown,
@@ -66,11 +66,11 @@ export class Owners<
     foodTruckId: number,
     menuId: number,
     data: UpdateMenuRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<UpdateMenuData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}`,
-      method: 'PUT',
+      method: "PUT",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -94,11 +94,11 @@ export class Owners<
   deleteMenu = (
     foodTruckId: number,
     menuId: number,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<DeleteMenuData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}`,
-      method: 'DELETE',
+      method: "DELETE",
       secure: true,
       ...params,
     });
@@ -120,11 +120,11 @@ export class Owners<
   updateChatTemplate = (
     chatTemplateId: number,
     data: UpdateChatTemplateRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<UpdateChatTemplateData, void>({
       path: `/owners/me/chat-templates/${chatTemplateId}`,
-      method: 'PUT',
+      method: "PUT",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -148,7 +148,7 @@ export class Owners<
   deleteChatTemplate = (chatTemplateId: number, params: RequestParams = {}) =>
     this.request<DeleteChatTemplateData, void>({
       path: `/owners/me/chat-templates/${chatTemplateId}`,
-      method: 'DELETE',
+      method: "DELETE",
       secure: true,
       ...params,
     });
@@ -171,11 +171,11 @@ export class Owners<
   updateBankAccount = (
     bankAccountId: number,
     data: UpdateBankAccountRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<UpdateBankAccountData, void>({
       path: `/owners/me/bank-accounts/${bankAccountId}`,
-      method: 'PUT',
+      method: "PUT",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -200,7 +200,7 @@ export class Owners<
   deleteBankAccount = (bankAccountId: number, params: RequestParams = {}) =>
     this.request<DeleteBankAccountData, void>({
       path: `/owners/me/bank-accounts/${bankAccountId}`,
-      method: 'DELETE',
+      method: "DELETE",
       secure: true,
       ...params,
     });
@@ -221,11 +221,11 @@ export class Owners<
    */
   createNewFoodTruck = (
     data: FoodTruckCreateRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<CreateNewFoodTruckData, void>({
       path: `/owners`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -254,26 +254,26 @@ export class Owners<
        * @default "최신순"
        * @example "최신순"
        */
-      sort?: '최신순' | '오래된순';
+      sort?: "최신순" | "오래된순";
       /**
        * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
        * @format int64
        * @example 120
        */
-      'cursorPagingRequest.cursor'?: number;
+      "cursorPagingRequest.cursor"?: number;
       /**
        * 한 페이지에 조회할 개수
        * @format int32
        * @min 1
        * @default 20
        */
-      'cursorPagingRequest.size'?: number;
+      "cursorPagingRequest.size"?: number;
     },
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<GetMenusData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/menus`,
-      method: 'GET',
+      method: "GET",
       query: query,
       secure: true,
       ...params,
@@ -296,11 +296,11 @@ export class Owners<
   registerMenu = (
     foodTruckId: number,
     data: RegisterMenuRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<RegisterMenuData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/menus`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -323,11 +323,11 @@ export class Owners<
    */
   createFoodTruckDocumentPresignedUrls = (
     data: ImageRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<CreateFoodTruckDocumentPresignedUrlsData, void>({
       path: `/owners/me/food-truck-documents/images`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -378,7 +378,7 @@ export class Owners<
   getChatTemplates = (params: RequestParams = {}) =>
     this.request<GetChatTemplatesData, void>({
       path: `/owners/me/chat-templates`,
-      method: 'GET',
+      method: "GET",
       secure: true,
       ...params,
     });
@@ -399,11 +399,11 @@ export class Owners<
    */
   registerChatTemplate = (
     data: RegisterChatTemplateRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<RegisterChatTemplateData, void>({
       path: `/owners/me/chat-templates`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -427,7 +427,7 @@ export class Owners<
   getBankAccount = (params: RequestParams = {}) =>
     this.request<GetBankAccountData, void>({
       path: `/owners/me/bank-accounts`,
-      method: 'GET',
+      method: "GET",
       secure: true,
       ...params,
     });
@@ -449,11 +449,11 @@ export class Owners<
    */
   registerBankAccount = (
     data: RegisterBankAccountRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<RegisterBankAccountData, void>({
       path: `/owners/me/bank-accounts`,
-      method: 'POST',
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -478,11 +478,11 @@ export class Owners<
     foodTruckId: number,
     menuId: number,
     data: UpdateMenuStatusRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<UpdateMenuStatusData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/menus/${menuId}/change-status`,
-      method: 'PATCH',
+      method: "PATCH",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -506,11 +506,39 @@ export class Owners<
   updateFoodTruckViewedStatus = (
     foodTruckId: number,
     data: UpdateFoodTruckViewedStatusRequest,
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<UpdateFoodTruckViewedStatusData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}/change-status`,
-      method: 'PATCH',
+      method: "PATCH",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 사장님 - 푸드트럭의 표시 상태를 변경합니다.
+   *
+   * @tags Owner API
+   * @name UpdateFoodTruckViewedStatus
+   * @summary 나의 푸드트럭 표시 상태 변경
+   * @request PATCH:/owners/me/food-trucks/{foodTruckId}/change-status
+   * @secure
+   * @response `200` `UpdateFoodTruckViewedStatusData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  updateFoodTruckViewedStatus = (
+    foodTruckId: number,
+    data: UpdateFoodTruckViewedStatusRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<UpdateFoodTruckViewedStatusData, void>({
+      path: `/owners/me/food-trucks/${foodTruckId}/change-status`,
+      method: "PATCH",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -537,26 +565,26 @@ export class Owners<
        * 조회할 예약 내역 타입
        * @example "예약 대기"
        */
-      viewType: '진행 예정' | '확정 신청' | '완료 내역' | '취소 내역';
+      viewType: "진행 예정" | "확정 신청" | "완료 내역" | "취소 내역";
       /**
        * 마지막으로 조회된 데이터의 ID (다음 페이지 요청 시 사용)
        * @format int64
        * @example 120
        */
-      'cursorPagingRequest.cursor'?: number;
+      "cursorPagingRequest.cursor"?: number;
       /**
        * 한 페이지에 조회할 개수
        * @format int32
        * @min 1
        * @default 20
        */
-      'cursorPagingRequest.size'?: number;
+      "cursorPagingRequest.size"?: number;
     },
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<GetOwnerReservationsData, void>({
       path: `/owners/me/reservations`,
-      method: 'GET',
+      method: "GET",
       query: query,
       secure: true,
       ...params,
@@ -579,7 +607,7 @@ export class Owners<
   getReservationDetail = (reservationId: number, params: RequestParams = {}) =>
     this.request<GetReservationDetailData, void>({
       path: `/owners/me/reservations/${reservationId}`,
-      method: 'GET',
+      method: "GET",
       secure: true,
       ...params,
     });
@@ -614,11 +642,11 @@ export class Owners<
        */
       size?: number;
     },
-    params: RequestParams = {}
+    params: RequestParams = {},
   ) =>
     this.request<GetMyFoodTrucksData, void>({
       path: `/owners/me/food-trucks`,
-      method: 'GET',
+      method: "GET",
       query: query,
       secure: true,
       ...params,
@@ -641,7 +669,7 @@ export class Owners<
   deleteFoodTruck = (foodTruckId: number, params: RequestParams = {}) =>
     this.request<DeleteFoodTruckData, void>({
       path: `/owners/me/food-trucks/${foodTruckId}`,
-      method: 'DELETE',
+      method: "DELETE",
       secure: true,
       ...params,
     });

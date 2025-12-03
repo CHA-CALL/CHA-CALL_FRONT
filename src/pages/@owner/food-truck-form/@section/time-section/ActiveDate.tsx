@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTime } from '@pages/@owner/food-truck-form/hooks/use-time';
 import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import type { SelectedDate } from '@type/calendar-types';
@@ -7,6 +6,7 @@ import FormLayout from '@components/layout/form-layout/FormLayout';
 import ButtonText from '@ui/button-text/ButtonText';
 import ButtonDate from '@ui/button-date/ButtonDate';
 import ErrorText from '@form/error-text/ErrorText';
+import { useActiveDate } from '@pages/@owner/food-truck-form/hooks/use-active-date';
 
 export default function ActiveDate() {
   const {
@@ -15,7 +15,7 @@ export default function ActiveDate() {
     updateAvailableDateById,
     removeAvailableDateById,
     availableDatesError,
-  } = useTime();
+  } = useActiveDate();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedDate = availableDates.find(date => date.id === selectedId);

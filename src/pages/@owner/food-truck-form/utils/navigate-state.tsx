@@ -1,4 +1,4 @@
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
 export const getNavigateState = (formData: FoodTruckFormData) => {
   return {

@@ -5,7 +5,6 @@ import ButtonAddImage from '@ui/button-add-image/ButtonAddImage';
 import { useEffect, useState, type ChangeEvent } from 'react';
 import ImagePreview from '@ui/image-preview/ImagePreview';
 import ErrorText from '@form/error-text/ErrorText';
-import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 interface OtherDocsSectionProps {
   files: File[];
@@ -45,7 +44,7 @@ export default function OtherDocsSection({
   }, [files]);
 
   return (
-    <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
+    <section className='flex w-full flex-col items-start justify-center gap-[1.6rem]'>
       <div className='flex w-full flex-col items-start justify-center gap-[0.2rem]'>
         <SectionTitle
           title='기타 서류'
@@ -53,7 +52,7 @@ export default function OtherDocsSection({
           currentLength={files?.length || 0}
         />
         <p className='text-grayscale-500 caption-m-11'>
-          영업신고증 (자동차등록증, 위생증, 보건증, 가스완성검사증명서) 필요
+          영업신고증, 자동차등록증, 위생증, 보건증, 가스완성검사증명서 필요
         </p>
       </div>
       <div className='scrollbar-hide flex w-full items-start justify-start gap-[1rem] overflow-x-scroll pr-[1rem] pt-[0.8rem]'>
@@ -68,7 +67,6 @@ export default function OtherDocsSection({
             />
           ))}
       </div>
-      <p className='caption-m-12 text-grayscale-300'>{IMAGE_INFO_MESSAGE}</p>
       {error && <ErrorText text={error} />}
     </section>
   );

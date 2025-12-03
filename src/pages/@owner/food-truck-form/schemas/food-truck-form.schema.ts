@@ -1,6 +1,6 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import z from 'zod';
+import type { RegionResponse } from 'apis/data-contracts';
+
 import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
@@ -8,11 +8,10 @@ import {
 import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import { PAYMENT_METHOD } from '@constant/payment-method';
+import { FOOD_CATEGORIES } from '@constant/food-categories';
 import type { AvailableDate } from '@type/available-date';
-import { FOOD_CATEGORIES } from '@shared/constant/food-categories';
-import type { RegionResponse } from 'apis/data-contracts';
 
-const foodTruckSchema = z.object({
+export const foodTruckSchema = z.object({
   name: z
     .string()
     .min(FOOD_TRUCK_MAX_LENGTH.name.min, FOOD_TRUCK_ERROR_MESSAGE.name.required)
@@ -38,7 +37,7 @@ const foodTruckSchema = z.object({
   needElectricity: z.nativeEnum(NEED_ELECTRICITY),
   paymentMethod: z.nativeEnum(PAYMENT_METHOD),
   menuCategories: z.array(z.nativeEnum(FOOD_CATEGORIES)),
-  photoUrls: z.array(z.instanceof(File)).refine(files => files.length > 0, {
+  photoUrls: z.array(z.string()).min(1, {
     message: FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required,
   }),
   operatingInfo: z
@@ -68,64 +67,3 @@ const foodTruckSchema = z.object({
 });
 
 export type FoodTruckFormData = z.infer<typeof foodTruckSchema>;
-
-export const useFoodTruckForm = (initialData?: FoodTruckFormData) => {
-  const methods = useForm<FoodTruckFormData>({
-    resolver: zodResolver(foodTruckSchema),
-    defaultValues: initialData ?? {
-      name: '',
-      nameDuplicate: false,
-      description: '',
-      phoneNumber: '',
-      regionCodes: [],
-      availableQuantity: undefined,
-      needElectricity: undefined,
-      paymentMethod: undefined,
-      menuCategories: [],
-      photoUrls: [],
-      operatingInfo: undefined,
-      option: undefined,
-      availableDates: [],
-      activeTime: '',
-      timeDiscussRequired: false,
-      menus: false,
-    },
-    mode: 'onChange',
-  });
-
-  const {
-    handleSubmit,
-    reset,
-    trigger,
-    formState: { isValid },
-    watch,
-    setError,
-  } = methods;
-
-  const formData = watch();
-
-  const onSubmit = async (formData: FoodTruckFormData) => {
-    if (!formData.nameDuplicate) {
-      setError('name', {
-        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
-      });
-      return;
-    }
-    if (isValid && formData) {
-      //TODO: 계좌 등록 제출
-      alert('푸드트럭 등록 제출');
-    }
-  };
-
-  return {
-    // Form methods
-    methods,
-    handleSubmit: handleSubmit(onSubmit),
-    reset,
-    trigger,
-    isFormValid: isValid,
-
-    // Form data
-    formData,
-  };
-};

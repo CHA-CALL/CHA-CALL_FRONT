@@ -22,6 +22,7 @@ import ReservationDetail from '@pages/reservation-detail/ReservationDetail';
 import FoodTruckManagement from '@pages/@owner/food-truck-management/FoodTruckManagement';
 import MenuList from '@pages/@owner/menu/MenuList';
 import MenuRegister from '@pages/@owner/menu/MenuRegister';
+import MenuEdit from '@pages/@owner/menu/MenuEdit';
 import FoodTruckDetail from '@pages/food-truck-detail/FoodTruckDetail';
 import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 import SetRegion from '@pages/@owner/set-region/SetRegion';
@@ -98,7 +99,7 @@ export const router = createBrowserRouter([
         element: <SaveFoodTruckList />,
       },
       {
-        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES,
+        path: ROUTES.UPLOAD_FOOD_TRUCK_IMAGES(':foodTruckId'),
         element: <UploadFoodTruckImages />,
       },
       {
@@ -110,12 +111,16 @@ export const router = createBrowserRouter([
         element: <FoodTruckManagement />,
       },
       {
-        path: ROUTES.MENU_LIST,
+        path: ROUTES.MENU_LIST(':foodTruckId'),
         element: <MenuList />,
       },
       {
-        path: ROUTES.MENU_REGISTER,
+        path: ROUTES.MENU_REGISTER(':foodTruckId'),
         element: <MenuRegister />,
+      },
+      {
+        path: ROUTES.MENU_EDIT(':foodTruckId', ':menuId'),
+        element: <MenuEdit />,
       },
       {
         path: ROUTES.FOOD_TRUCK_DETAIL(':foodTruckId'),
