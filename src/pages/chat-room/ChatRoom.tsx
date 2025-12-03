@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@icon/Icon';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
 import Navigation from '@layout/navigation/Navigation';
 import ChatInputArea from '@pages/chat-room/chat-input-area/ChatInputArea';
-import ChatMessageList from '@pages/chat-room/chat-input-area/components/ChatMessageList';
+import ChatMessageList from '@pages/chat-room/components/ChatMessageList';
 import NewChatIndicator from '@pages/chat-room/components/NewChatIndicator';
 import LeaveChatBottomSheet from '@pages/chat-room/components/LeaveChatBottomSheet';
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
@@ -18,7 +19,43 @@ export default function ChatRoom() {
 
   const { messages, handleSendMessage } = useSendMessage();
   const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(null);
+  const [showNewChatIndicator, setShowNewChatIndicator] = useState(false);
   const [isLeaveSheetOpen, setIsLeaveSheetOpen] = useState(false);
+
+  const lastMessage = messages[messages.length - 1];
+
+  useEffect(() => {
+    if (!scrollElement) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = scrollElement;
+      const isBottom = scrollHeight - scrollTop - clientHeight < 50;
+
+      if (isBottom) {
+        setShowNewChatIndicator(false);
+      }
+    }
+    scrollElement.addEventListener('scroll', handleScroll);
+
+    return () => {
+      scrollElement.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollElement]);
+
+  useEffect(() => {
+    if (!lastMessage || !scrollElement) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = scrollElement;
+    const isBottom = scrollHeight - scrollTop - clientHeight < 50;
+
+    if (lastMessage.isMine) {
+       scrollElement.scrollTo({ top: scrollElement.scrollHeight, behavior: 'smooth' });
+    } else {
+      if (!isBottom) {
+        setShowNewChatIndicator(true);
+      }
+    }
+  }, [messages, lastMessage, scrollElement]);
 
   const handleOpenLeaveSheet = () => {
     setIsLeaveSheetOpen(true);
@@ -33,23 +70,8 @@ export default function ChatRoom() {
     // TODO: 채팅방 나가기
   }
 
-  const lastMessage = messages[messages.length - 1];
-  const lastOtherMessage = lastMessage && !lastMessage.isMine ? lastMessage : null;
-
-  useEffect(() => {
-    if (!scrollElement || messages.length === 0) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = scrollElement;
-    const isMyMessage = messages[messages.length - 1].isMine;
-    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
-
-    if (isMyMessage || isNearBottom) {
-      scrollElement.scrollTo({ top: scrollElement.scrollHeight, behavior: 'smooth' });
-    }
-  }, [messages, scrollElement]);
-
   return (
-    <div className='flex h-screen w-full flex-col bg-white'>
+    <div className='flex h-[100dvh] w-full flex-col bg-white overflow-hidden'>
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         rightIcon={<Icon name='ic_dot' className='text-grayscale-900' />}
@@ -64,12 +86,18 @@ export default function ChatRoom() {
         scrollRef={setScrollElement}
       />
 
-      {lastOtherMessage && scrollElement && (
+      {showNewChatIndicator && lastMessage && !lastMessage.isMine ? (
         <NewChatIndicator
-          profileImage={lastOtherMessage.profileImage || 'https://placehold.co/40'}
+          profileImage={lastMessage.profileImage || 'https://placehold.co/40'}
           name={otherName}
-          message={lastOtherMessage.message || '예약 확정을 요청했어요!'}
+          message={lastMessage.message || '새로운 메시지'}
+          container={scrollElement!}
+        />
+      ) : (
+        <ButtonFloating
+          isUp={false}
           container={scrollElement}
+          className='bottom-[7.4rem]'
         />
       )}
 

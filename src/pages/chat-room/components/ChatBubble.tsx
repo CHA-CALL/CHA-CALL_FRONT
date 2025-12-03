@@ -1,9 +1,14 @@
 import { cn } from '@utils/cn';
 import { Icon } from '@icon/Icon';
 import Button from '@ui/button/Button';
+import {
+  RESERVATION_MESSAGE,
+  type ReservationMessageType
+} from '@pages/chat-room/types/reservation-message-type';
 
 interface ChatBubbleProps {
-  isReservation?: boolean;
+  reservationMessageType?: ReservationMessageType;
+  isCancelled?: boolean;
   message?: string;
   time: string;
   isMine?: boolean;
@@ -13,7 +18,8 @@ interface ChatBubbleProps {
 }
 
 export default function ChatBubble({
-  isReservation = false,
+  reservationMessageType,
+  isCancelled = false,
   message,
   time,
   isMine = true,
@@ -38,11 +44,17 @@ export default function ChatBubble({
   // 프로필 이미지가 없는 상대방 말풍선 스타일
   const indentClass = !isMine && !profileImage ? 'ml-[4rem]' : '';
 
-  // 예약 확정 말풍선 스타일
+  // 예약 확정 관련 말풍선 스타일
   const reservationBubbleClass = cn(
     'flex flex-col gap-[0.8rem] w-[20rem] p-[1.6rem] bg-white border-1 border-grayscale-200 rounded-[2rem]',
     isMine ? 'rounded-tr-[0rem]' : 'rounded-tl-[0rem]',
     indentClass
+  )
+
+  // 예약 확정 관련 버튼 스타일
+  const reservationButtonClass = cn(
+    'bg-grayscale-700 text-white py-[0.9rem] rounded-[1.2rem]',
+    isCancelled && 'bg-grayscale-300 cursor-not-allowed'
   )
 
   // 일반 텍스트 말풍선 스타일
@@ -71,25 +83,8 @@ export default function ChatBubble({
         />
       )}
 
-      {/* 예약 확정 말풍선 */}
-      {isReservation && (
-        <div className={reservationBubbleClass}>
-          <span className='body-m-13 text-grayscale-900 px-[0.5rem]'>
-            {isMine ? '예약 확정서를 보냈어요!' : '예약 확정을 요청했어요!'}
-          </span>
-          <Button
-            variant='default'
-            buttonStyle='medium'
-            className='bg-grayscale-700 text-white py-[0.9rem] rounded-[1.2rem]'
-            handleClickButton={handleReservationClick}
-          >
-            {isMine ? '확인하기' : '수락하기'}
-          </Button>
-        </div>
-      )}
-
-      {/* 채팅 말풍선 */}
-      {message &&
+      {message ? (
+        // 일반 메시지 말풍선
         <div className={messageBubbleClass}>
           <div className='whitespace-pre-wrap break-words'>
             {displayedMessage}
@@ -106,7 +101,23 @@ export default function ChatBubble({
             </button>
           )}
         </div>
-      }
+      ) : reservationMessageType ? (
+        // 예약 확정 관련 말풍선
+        <div className={reservationBubbleClass}>
+          <span className='body-m-13 text-grayscale-900 px-[0.5rem]'>
+            {RESERVATION_MESSAGE[reservationMessageType].title}
+          </span>
+          <Button
+            variant='default'
+            buttonStyle='medium'
+            className={reservationButtonClass}
+            handleClickButton={handleReservationClick}
+            disabled={isCancelled}
+          >
+            {RESERVATION_MESSAGE[reservationMessageType].buttonText}
+          </Button>
+        </div>
+      ) : null}
 
       {/* 시간 및 읽음 상태 */}
       <div className='flex flex-col items-end justify-end'>

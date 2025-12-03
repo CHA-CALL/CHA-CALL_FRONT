@@ -47,7 +47,7 @@ export const MOCK_MESSAGE_LIST = [
   },
   {
     id: 7,
-    isReservation: true,
+    reservationMessageType: 'CONFIRMATION_SENT' as const,
     time: '오후 3:05',
     date: '2024년 8월 30일',
     isMine: true,
@@ -55,7 +55,7 @@ export const MOCK_MESSAGE_LIST = [
   },
   {
     id: 8,
-    isReservation: true,
+    reservationMessageType: 'CONFIRMATION_REQUEST' as const,
     time: '오후 3:05',
     date: '2024년 8월 30일',
     isMine: false,
@@ -63,6 +63,23 @@ export const MOCK_MESSAGE_LIST = [
   },
   {
     id: 9,
+    reservationMessageType: 'RESERVATION_CONFIRMED' as const,
+    time: '오후 3:10',
+    date: '2024년 8월 30일',
+    isMine: true,
+    isRead: true,
+  },
+  {
+    id: 10,
+    reservationMessageType: 'CONFIRMATION_REQUEST' as const,
+    isCancelled: true,
+    time: '오후 3:10',
+    date: '2024년 8월 30일',
+    isMine: false,
+    profileImage: 'https://placehold.co/40',
+  },
+  {
+    id: 11,
     message: 'test',
     time: '오후 3:05',
     date: '2024년 8월 31일',

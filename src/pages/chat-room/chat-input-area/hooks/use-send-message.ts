@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { MOCK_MESSAGE_LIST } from '@pages/chat-room/chat-input-area/constants/mockup';
+import type { ReservationMessageType } from '@pages/chat-room/types/reservation-message-type';
 
 export interface Message {
   id: number;
-  isReservation?: boolean;
+  reservationMessageType?: ReservationMessageType;
+  isCancelled?: boolean;
   message?: string;
   time: string;
   date?: string;
