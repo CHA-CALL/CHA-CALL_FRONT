@@ -1538,6 +1538,39 @@ export interface BaseResponseListFoodTruckMenuResponse {
   data?: FoodTruckMenuResponse[];
 }
 
+export interface BaseResponseListFoodTruckTopRateResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: FoodTruckTopRateResponse[];
+}
+
+export interface FoodTruckTopRateResponse {
+  /**
+   * 푸드트럭 식별자
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
+   * 푸드트럭 이름
+   * @example "푸드트럭"
+   */
+  name?: string;
+  /**
+   * 푸드트럭 대표 사진 URL
+   * @example "http://image.png"
+   */
+  photoUrl?: string;
+  /**
+   * 푸드트럭 평균 평점
+   * @format double
+   * @example 4.5
+   */
+  averageRating?: number;
+}
+
 export interface DeleteFoodTruckImagesRequest {
   /**
    * 삭제할 이미지 URL 목록
@@ -1654,6 +1687,9 @@ export type GetFoodTruckMenusData =
   BaseResponseCursorPagingResponseFoodTruckMenuResponse;
 
 export type SearchFoodTruckMenusData = BaseResponseListFoodTruckMenuResponse;
+
+export type GetTopRatedFoodTrucksData =
+  BaseResponseListFoodTruckTopRateResponse;
 
 export type DeleteFoodTruckData = BaseResponseVoid;
 

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Icon } from '@icon/Icon';
+import { cn } from '@utils/cn';
 
 interface NewChatIndicatorProps {
   profileImage: string;
   name: string;
   message: string;
   container: HTMLDivElement;
+  className?: string;
 }
 
 export default function NewChatIndicator({
@@ -13,6 +15,7 @@ export default function NewChatIndicator({
   name,
   message,
   container,
+  className,
 }: NewChatIndicatorProps) {
   const TRUNCATE_LENGTH = 30;
   const displayedMessage =
@@ -52,7 +55,10 @@ export default function NewChatIndicator({
   return (
     <button
       type='button'
-      className='fixed bottom-[6rem] left-1/2 -translate-x-1/2 flex items-center justify-between w-[calc(100%-4rem)] max-w-[55rem] py-[0.5rem] pl-[0.6rem] pr-[1rem] bg-white border-1 border-grayscale-100 rounded-[1.6rem] shadow-lg z-50'
+      className={cn(
+        'fixed left-1/2 -translate-x-1/2 flex items-center justify-between w-[calc(100%-4rem)] max-w-[55rem] py-[0.5rem] pl-[0.6rem] pr-[1rem] bg-white border-1 border-grayscale-100 rounded-[1.6rem] shadow-lg z-50',
+        className
+      )}
       onClick={handleScrollToBottom}
     >
       <div className='flex items-center gap-[0.8rem]'>

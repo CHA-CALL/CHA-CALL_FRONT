@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import { ROUTES } from '@router/constant/routes';
 import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
@@ -9,13 +9,16 @@ import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-s
 
 export default function MenuInfo() {
   const navigate = useNavigate();
+  const { id: foodTruckId } = useParams<{ id: string }>();
 
   const { watch } = useFormContext<FoodTruckFormData>();
   const formData = watch();
   const handleClick = () => {
-    navigate(ROUTES.MENU_LIST, {
-      state: getNavigateState(formData),
-    });
+    if (foodTruckId) {
+      navigate(ROUTES.MENU_LIST(foodTruckId), {
+        state: getNavigateState(formData),
+      });
+    }
   };
 
   return (

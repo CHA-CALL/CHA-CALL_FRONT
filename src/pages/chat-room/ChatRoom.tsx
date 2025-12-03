@@ -8,6 +8,7 @@ import ChatInputArea from '@pages/chat-room/chat-input-area/ChatInputArea';
 import ChatMessageList from '@pages/chat-room/components/ChatMessageList';
 import NewChatIndicator from '@pages/chat-room/components/NewChatIndicator';
 import LeaveChatBottomSheet from '@pages/chat-room/components/LeaveChatBottomSheet';
+import MessageListBottomSheet from '@pages/chat-room/chat-input-area/components/MessageListBottomSheet';
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
 
 export default function ChatRoom() {
@@ -21,6 +22,11 @@ export default function ChatRoom() {
   const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(null);
   const [showNewChatIndicator, setShowNewChatIndicator] = useState(false);
   const [isLeaveSheetOpen, setIsLeaveSheetOpen] = useState(false);
+  const [isMessageListOpen, setIsMessageListOpen] = useState(false);
+  const [isExtensionMenuOpen, setIsExtensionMenuOpen] = useState(false);
+  const [selectedQuickMessage, setSelectedQuickMessage] = useState<
+    string | undefined
+  >(undefined);
 
   const lastMessage = messages[messages.length - 1];
 
@@ -59,16 +65,29 @@ export default function ChatRoom() {
 
   const handleOpenLeaveSheet = () => {
     setIsLeaveSheetOpen(true);
-  }
+  };
   const handleCloseLeaveSheet = () => {
     setIsLeaveSheetOpen(false);
-  }
+  };
   const handleClickBack = () => {
     navigate(ROUTES.CHATLIST);
-  }
+  };
   const handleLeaveChat = () => {
     // TODO: 채팅방 나가기
-  }
+  };
+  const handleSelectQuickMessage = (message?: string) => {
+    setSelectedQuickMessage(message);
+    setIsMessageListOpen(false);
+  };
+  const handleOpenMessageList = () => {
+    setIsMessageListOpen(true);
+  };
+  const handleCloseMessageList = () => {
+    setIsMessageListOpen(false);
+  };
+  const handleExtensionMenuToggle = (isOpen: boolean) => {
+    setIsExtensionMenuOpen(isOpen);
+  };
 
   return (
     <div className='flex h-[100dvh] w-full flex-col bg-white overflow-hidden'>
@@ -92,12 +111,13 @@ export default function ChatRoom() {
           name={otherName}
           message={lastMessage.message || '새로운 메시지'}
           container={scrollElement!}
+          className={isExtensionMenuOpen ? 'bottom-[27rem]' : 'bottom-[7.4rem]'}
         />
       ) : (
         <ButtonFloating
           isUp={false}
           container={scrollElement}
-          className='bottom-[7.4rem]'
+          className={isExtensionMenuOpen ? 'bottom-[27rem]' : 'bottom-[7.4rem]'}
         />
       )}
 
@@ -107,9 +127,22 @@ export default function ChatRoom() {
         handleCloseBottomSheet={handleCloseLeaveSheet}
       />
 
-      <footer className='fixed-center bottom-[0] w-full'>
-        <ChatInputArea handleSendMessage={handleSendMessage} />
+      <footer className='bottom-[0] w-full fixed-center'>
+        <ChatInputArea
+          selectedQuickMessage={selectedQuickMessage}
+          handleOpenMessageList={handleOpenMessageList}
+          handleSendMessage={handleSendMessage}
+          onMenuToggle={handleExtensionMenuToggle}
+        />
       </footer>
+
+      {isMessageListOpen && (
+        <MessageListBottomSheet
+          isOpen={isMessageListOpen}
+          handleSelectQuickMessage={handleSelectQuickMessage}
+          handleCloseBottomSheet={handleCloseMessageList}
+        />
+      )}
     </div>
   );
 }
