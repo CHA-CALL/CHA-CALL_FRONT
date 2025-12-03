@@ -2,8 +2,9 @@ import { useLocation } from 'react-router-dom';
 import { FormProvider } from 'react-hook-form';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
+
 import ErrorText from '@components/form/error-text/ErrorText';
-import { useFoodTruckForm } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner//food-truck-form/hooks/use-food-truck-form';
 import { useUploadImages } from '@pages/@owner/upload-food-truck-images/hooks/use-upload-images';
 import UploadDescription from '@pages/@owner/upload-food-truck-images/components/UploadDescription';
 import UploadImagesGrid from '@pages/@owner/upload-food-truck-images/components/UploadImagesGrid';
@@ -40,6 +41,7 @@ function UploadFoodTruck() {
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleLeftClick}
       />
+
       <UploadDescription />
       <UploadImagesGrid
         images={images}
@@ -48,9 +50,7 @@ function UploadFoodTruck() {
         handleRemoveFile={handleRemoveFile}
         handleReorderFiles={handleReorderFiles}
       />
-      <div className='p-[2rem]'>
-        {error && <ErrorText text={error} />}
-      </div>
+      <div className='p-[2rem]'>{error && <ErrorText text={error} />}</div>
       <UploadFooter
         imagesLength={images.length}
         handleSubmitImage={handleSubmitImage}

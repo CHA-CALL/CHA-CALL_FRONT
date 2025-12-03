@@ -23,7 +23,7 @@ function TimePickerItem({
       type='button'
       onClick={handleClick}
       className={cn(
-        'body-m-16 text-grayscale-500 px-[1.2rem] py-[0.8rem]',
+        'px-[1.2rem] py-[0.8rem] text-grayscale-500 body-m-16',
         isSelected && 'text-primary-700'
       )}
     >
@@ -67,14 +67,14 @@ export default function TimePicker({
   };
 
   return (
-    <div className='border-grayscale-100 flex w-full flex-col gap-[1.6rem] rounded-[1.2rem] border'>
+    <div className='flex w-full flex-col gap-[1.6rem] rounded-[1.2rem] border border-grayscale-100'>
       {/* 선택된 시간 표시 */}
       <button
         type='button'
         onClick={() => setIsOpen(!isOpen)}
         className='flex w-full items-center justify-between px-[2rem] py-[1.2rem]'
       >
-        <p className='title-sb-12 text-grayscale-500'>{timeTitle}</p>
+        <p className='text-grayscale-500 title-sb-12'>{timeTitle}</p>
         <div className='flex items-center gap-[1.2rem]'>
           <span
             className={cn(
@@ -83,7 +83,7 @@ export default function TimePicker({
             )}
           >
             {selectedHour && selectedMinute ? (
-              <div className='body-m-16 flex items-center gap-[0.2rem]'>
+              <div className='flex items-center gap-[0.2rem] body-m-16'>
                 <span>{selectedHour}</span>
                 <span>:</span>
                 <span>{selectedMinute}</span>
@@ -101,7 +101,7 @@ export default function TimePicker({
       {isOpen && (
         <div className='flex items-center justify-center gap-[1.8rem] py-[3rem]'>
           {/* 시간 선택 */}
-          <div className='scrollbar-hide flex max-h-[8.4rem] flex-col items-center overflow-y-auto'>
+          <div className='flex max-h-[8.4rem] flex-col items-center overflow-y-auto scrollbar-hide'>
             <div className='flex flex-col gap-[0.4rem]'>
               {HOURS.map(hour => (
                 <TimePickerItem
@@ -115,7 +115,7 @@ export default function TimePicker({
           </div>
 
           {/* 분 선택 */}
-          <div className='scrollbar-hide flex max-h-[8.4rem] flex-col items-center overflow-y-auto'>
+          <div className='flex max-h-[8.4rem] flex-col items-center overflow-y-auto scrollbar-hide'>
             <div className='flex flex-col gap-[0.4rem]'>
               {MINUTES.map(minute => (
                 <TimePickerItem
