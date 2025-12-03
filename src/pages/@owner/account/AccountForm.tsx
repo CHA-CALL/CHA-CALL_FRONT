@@ -89,7 +89,7 @@ export default function Account() {
           iconId='ic_error'
           text='거래가 진행 될 계좌이므로, 꼼꼼한 확인이 필요해요!'
         />
-        <section className='flex flex-col gap-[2rem]'>
+        <section className='flex flex-col gap-[2rem] pt-[2.6rem]'>
           <FormFieldLayout isRequired={true} title='은행'>
             <div className='flex flex-col gap-[1rem]'>
               <button
@@ -113,37 +113,33 @@ export default function Account() {
             </div>
           </FormFieldLayout>
 
-          <div className='flex flex-col gap-[1rem]'>
-            <FormFieldLayout isRequired={true} title='예금주'>
-              <div className='flex flex-col gap-[1rem]'>
-                <Input
-                  value={formData.accountHolderName}
-                  placeholder='예금주를 입력해주세요.'
-                  onChange={e => updateName(e.target.value)}
-                  maxLength={15}
-                />
-                {errors.accountHolderName && (
-                  <ErrorText text={errors.accountHolderName} />
-                )}
-              </div>
-            </FormFieldLayout>
-          </div>
+          <FormFieldLayout isRequired={true} title='예금주'>
+            <div className='flex flex-col gap-[1rem]'>
+              <Input
+                value={formData.accountHolderName}
+                placeholder='예금주를 입력해주세요.'
+                onChange={e => updateName(e.target.value)}
+                maxLength={15}
+              />
+              {errors.accountHolderName && (
+                <ErrorText text={errors.accountHolderName} />
+              )}
+            </div>
+          </FormFieldLayout>
 
-          <div className='flex flex-col gap-[1rem]'>
-            <FormFieldLayout isRequired={true} title='계좌번호'>
-              <div className='flex flex-col gap-[1rem]'>
-                <Input
-                  value={formatAccountNumber(formData.accountNumber)}
-                  placeholder='계좌번호를 입력해주세요.'
-                  onChange={e => updateAccountNumber(e.target.value)}
-                  maxLength={16}
-                />
-                {errors.accountNumber && (
-                  <ErrorText text={errors.accountNumber} />
-                )}
-              </div>
-            </FormFieldLayout>
-          </div>
+          <FormFieldLayout isRequired={true} title='계좌번호'>
+            <div className='flex flex-col gap-[1rem]'>
+              <Input
+                value={formatAccountNumber(formData.accountNumber)}
+                placeholder='계좌번호를 입력해주세요.'
+                onChange={e => updateAccountNumber(e.target.value)}
+                maxLength={16}
+              />
+              {errors.accountNumber && (
+                <ErrorText text={errors.accountNumber} />
+              )}
+            </div>
+          </FormFieldLayout>
         </section>
       </div>
       <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>

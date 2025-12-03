@@ -25,7 +25,7 @@ export default function FormFieldLayout({
   return (
     <div
       className={cn(
-        'flex flex-col justify-start gap-[1.2rem] py-[2.6rem]',
+        'flex flex-col justify-start gap-[1.2rem]',
         borderBottom && 'border-b border-grayscale-100',
         className
       )}
