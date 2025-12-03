@@ -42,7 +42,7 @@ function SetRegionContent() {
   return (
     <>
       <Navigation
-        text='활동 가능 지역 설정'
+        centerContent='활동 가능 지역 설정'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleLeftClick}
       />

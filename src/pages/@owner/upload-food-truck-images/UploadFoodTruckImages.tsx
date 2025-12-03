@@ -37,7 +37,7 @@ function UploadFoodTruck() {
   return (
     <>
       <Navigation
-        text='사진 등록'
+        centerContent='사진 등록'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleLeftClick}
       />
