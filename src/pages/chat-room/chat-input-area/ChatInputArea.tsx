@@ -10,13 +10,17 @@ import { useExtensionMenu } from '@pages/chat-room/chat-input-area/hooks/use-ext
 import { cn } from '@utils/cn';
 
 interface ChatInputAreaProps {
+  handleSendMessage: (_message: string) => void;
   selectedQuickMessage?: string;
   handleOpenMessageList: () => void;
+  onMenuToggle?: (_isOpen: boolean) => void;
 }
 
 export default function ChatInputArea({
+  handleSendMessage,
   selectedQuickMessage,
   handleOpenMessageList,
+  onMenuToggle,
 }: ChatInputAreaProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
@@ -54,12 +58,17 @@ export default function ChatInputArea({
     handleCameraRef(cameraInputRef);
   }, [handleGalleryRef, handleCameraRef]);
 
+  useEffect(() => {
+    onMenuToggle?.(isOpenMenu);
+  }, [isOpenMenu, onMenuToggle]);
+
   return (
     <div className='w-full' ref={chatAreaRef}>
       <ChatInputBar
         selectedQuickMessage={selectedQuickMessage}
         isOpenMenu={isOpenMenu}
         setIsOpenMenu={setIsOpenMenu}
+        handleSendMessage={handleSendMessage}
       />
       {/* 파일 ref */}
       <input
@@ -82,7 +91,7 @@ export default function ChatInputArea({
         <div
           className={cn(
             'mx-auto grid justify-items-center',
-            'gap-x-[2.4rem] gap-y-[1.6rem] px-[4rem] py-[2rem]',
+            'gap-x-[2.4rem] gap-y-[1.6rem] px-[4rem] py-[2rem] bg-white',
             menuLayout
           )}
         >

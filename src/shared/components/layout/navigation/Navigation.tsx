@@ -1,5 +1,6 @@
 import { cn } from '@shared/utils/cn';
 import React from 'react';
+import Tag from '@ui/tag/Tag';
 
 interface NavigationProps {
   leftIcon?: React.ReactNode;
@@ -7,6 +8,7 @@ interface NavigationProps {
   rightIcon?: React.ReactNode;
   handleRightClick?: () => void;
   text?: string;
+  tag?: string;
   className?: string;
 }
 
@@ -16,6 +18,7 @@ export default function Navigation({
   rightIcon,
   handleRightClick,
   text,
+  tag,
   className = 'bg-white',
 }: NavigationProps) {
   return (
@@ -32,8 +35,9 @@ export default function Navigation({
           </button>
         )}
       </div>
-      <div className='flex flex-[3] items-center justify-center'>
+      <div className='flex flex-[3] items-center justify-center gap-[1rem]'>
         {text && <span className='text-grayscale-900 title-sb-16'>{text}</span>}
+        {tag && <Tag title={tag} />}
       </div>
       <div className='flex flex-[1] items-center justify-end px-[1.3rem]'>
         {rightIcon && (
