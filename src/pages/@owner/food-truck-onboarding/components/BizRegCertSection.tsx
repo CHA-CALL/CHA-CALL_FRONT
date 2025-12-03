@@ -5,7 +5,6 @@ import type { OwnerFormData } from '@pages/@owner/food-truck-onboarding/hooks/us
 import { useEffect, useState, type ChangeEvent } from 'react';
 import ImagePreview from '@ui/image-preview/ImagePreview';
 import ErrorText from '@form/error-text/ErrorText';
-import { IMAGE_INFO_MESSAGE } from '@constant/image';
 
 interface BizRegCertSectionProps {
   file: OwnerFormData['bizRegCert'];
@@ -46,7 +45,7 @@ export default function BizRegCertSection({
   }, [file]);
 
   return (
-    <section className='flex w-full flex-col items-start justify-center gap-[1.2rem]'>
+    <section className='flex w-full flex-col items-start justify-center gap-[1.6rem]'>
       <SectionTitle
         title='사업자 등록증'
         maxLength={OWNER_MEDIA_MAX_COUNT.BIZ_REG_CERT}
@@ -60,7 +59,6 @@ export default function BizRegCertSection({
           alt='bizRegCert'
         />
       )}
-      <p className='caption-m-12 text-grayscale-300'>{IMAGE_INFO_MESSAGE}</p>
       {error && <ErrorText text={error} />}
     </section>
   );

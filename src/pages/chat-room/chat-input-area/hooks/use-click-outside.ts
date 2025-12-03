@@ -7,6 +7,13 @@ export const useOnClickOutside = (
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
       const el = ref.current;
+
+      const target = event.target as HTMLElement;
+
+      if (target.closest('[data-overlay="true"]')) {
+        return;
+      }
+
       if (!el || el.contains(event.target as Node)) {
         return;
       }

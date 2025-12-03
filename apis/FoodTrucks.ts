@@ -19,6 +19,7 @@ import {
   GetFoodTruckDetailsData,
   GetFoodTruckMenusData,
   GetFoodTrucksData,
+  GetTopRatedFoodTrucksData,
   ImageRequest,
   IsNameDuplicatedData,
   SearchFoodTruckMenusData,
@@ -312,6 +313,28 @@ export class FoodTrucks<
       path: `/food-trucks/${foodTruckId}/menus/search`,
       method: "GET",
       query: query,
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 평점이 높은 푸드트럭을 조회합니다.
+   *
+   * @tags FoodTruck API
+   * @name GetTopRatedFoodTrucks
+   * @summary [홈화면용] 평점 높은 푸드트럭 조회
+   * @request GET:/food-trucks/top-rated
+   * @secure
+   * @response `200` `GetTopRatedFoodTrucksData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  getTopRatedFoodTrucks = (params: RequestParams = {}) =>
+    this.request<GetTopRatedFoodTrucksData, void>({
+      path: `/food-trucks/top-rated`,
+      method: "GET",
       secure: true,
       ...params,
     });

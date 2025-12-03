@@ -37,7 +37,7 @@ export const foodTruckSchema = z.object({
   needElectricity: z.nativeEnum(NEED_ELECTRICITY),
   paymentMethod: z.nativeEnum(PAYMENT_METHOD),
   menuCategories: z.array(z.nativeEnum(FOOD_CATEGORIES)),
-  photoUrls: z.array(z.instanceof(File)).refine(files => files.length > 0, {
+  photoUrls: z.array(z.string()).min(1, {
     message: FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required,
   }),
   operatingInfo: z
