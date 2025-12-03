@@ -361,6 +361,33 @@ export class Owners<
       ...params,
     });
   /**
+   * @description 푸드트럭 관련 서류 업로드를 위한 presigned URL을 발급받습니다.
+   *
+   * @tags Owner API
+   * @name CreateFoodTruckDocumentPresignedUrls
+   * @summary 푸드트럭 관련 서류 업로드를 위한 presigned URL 발급
+   * @request POST:/owners/me/food-truck-documents/images
+   * @secure
+   * @response `200` `CreateFoodTruckDocumentPresignedUrlsData` OK
+   * @response `400` `void`
+   * @response `403` `void`
+   * @response `404` `void`
+   * @response `405` `void`
+   * @response `500` `void`
+   */
+  createFoodTruckDocumentPresignedUrls = (
+    data: ImageRequest,
+    params: RequestParams = {},
+  ) =>
+    this.request<CreateFoodTruckDocumentPresignedUrlsData, void>({
+      path: `/owners/me/food-truck-documents/images`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
    * @description 사장님이 자주 쓰는 채팅을 조회합니다.
    *
    * @tags Owner API
