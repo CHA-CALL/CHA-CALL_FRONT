@@ -15,8 +15,9 @@ import {
   useUploadImage,
   useDeleteImage,
 } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+
 import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-display';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
 export const useUploadImages = () => {
   const navigate = useNavigate();
@@ -47,8 +48,10 @@ export const useUploadImages = () => {
   }, [getValues]);
 
   useEffect(() => {
-    const previews = images.map((image) => {
-      return image.isNew && image.file ? URL.createObjectURL(image.file) : image.url || '';
+    const previews = images.map(image => {
+      return image.isNew && image.file
+        ? URL.createObjectURL(image.file)
+        : image.url || '';
     });
     setImagePreviews(previews);
 
@@ -66,7 +69,11 @@ export const useUploadImages = () => {
     if (!selectedFile) return;
 
     if (!isAcceptableFile(selectedFile) || !isFileSizeValid(selectedFile)) {
-      setError(isAcceptableFile(selectedFile) ? CANNOT_UPLOAD_FILE_MB : NOT_ALLOWED_FILE_TYPE);
+      setError(
+        isAcceptableFile(selectedFile)
+          ? CANNOT_UPLOAD_FILE_MB
+          : NOT_ALLOWED_FILE_TYPE
+      );
       return;
     }
     setError(null);
@@ -92,8 +99,8 @@ export const useUploadImages = () => {
 
   const handleSubmitImage = async () => {
     if (!foodTruckId) {
-        setError('푸드트럭 ID가 없어 저장할 수 없습니다.');
-        return;
+      setError('푸드트럭 ID가 없어 저장할 수 없습니다.');
+      return;
     }
 
     if (images.length === 0) {
@@ -102,9 +109,15 @@ export const useUploadImages = () => {
     }
 
     try {
-      const newFiles = images.filter(img => img.isNew && img.file).map(img => img.file as File);
-      const keptUrls = images.filter(img => !img.isNew && img.url).map(img => img.url as string);
-      const urlsToDelete = initialImageUrls.filter(url => !keptUrls.includes(url));
+      const newFiles = images
+        .filter(img => img.isNew && img.file)
+        .map(img => img.file as File);
+      const keptUrls = images
+        .filter(img => !img.isNew && img.url)
+        .map(img => img.url as string);
+      const urlsToDelete = initialImageUrls.filter(
+        url => !keptUrls.includes(url)
+      );
 
       let newUploadedUrls: string[] = [];
 
@@ -112,7 +125,10 @@ export const useUploadImages = () => {
         const presignedData = await getPresignedUrl(newFiles);
 
         for (const data of presignedData) {
-          await uploadToS3({ presignedUrl: data.presignedUrl, file: data.file });
+          await uploadToS3({
+            presignedUrl: data.presignedUrl,
+            file: data.file,
+          });
         }
 
         newUploadedUrls = presignedData.map(data => data.fileUrl);
@@ -123,13 +139,14 @@ export const useUploadImages = () => {
       }
 
       let newUrlIndex = 0;
-      const finalOrderedUrls = images.map(img => {
+      const finalOrderedUrls = images
+        .map(img => {
           if (img.isNew) {
-              return newUploadedUrls[newUrlIndex++];
+            return newUploadedUrls[newUrlIndex++];
           }
           return img.url;
-      }).filter((url): url is string => !!url);
-
+        })
+        .filter((url): url is string => !!url);
 
       setValue('photoUrls', finalOrderedUrls, { shouldValidate: true });
 
@@ -140,7 +157,9 @@ export const useUploadImages = () => {
         },
       });
     } catch (error) {
-      setError(error instanceof Error ? error.message : '이미지 저장에 실패했습니다.');
+      setError(
+        error instanceof Error ? error.message : '이미지 저장에 실패했습니다.'
+      );
     }
   };
 
