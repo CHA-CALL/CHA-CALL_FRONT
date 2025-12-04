@@ -22,7 +22,14 @@ const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
 };
 
 export const useGetOwnerFoodTrucks = () => {
-  const query = useInfiniteQuery<CursorPagingResponseMyFoodTruckResponse>({
+  const {
+    data,
+    isPending,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isError,
+  } = useInfiniteQuery<CursorPagingResponseMyFoodTruckResponse>({
     queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
     queryFn: async ({ pageParam }) => {
       const cursor = pageParam === null ? undefined : Number(pageParam);
@@ -41,12 +48,15 @@ export const useGetOwnerFoodTrucks = () => {
     },
   });
 
-  const foodTrucks =
-    query.data?.pages.flatMap(page => page?.content || []) || [];
+  const foodTrucks = data?.pages.flatMap(page => page?.content || []) || [];
 
   return {
-    ...query,
     foodTrucks,
+    isPending,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isError,
   };
 };
 

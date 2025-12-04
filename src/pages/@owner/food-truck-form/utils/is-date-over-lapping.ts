@@ -1,4 +1,4 @@
-import type { AvailableDate } from '@pages/@owner/food-truck-form/types/available-date';
+import type { AvailableDate } from '@type/available-date';
 
 export const isDateOverlapping = (
   newId: string,

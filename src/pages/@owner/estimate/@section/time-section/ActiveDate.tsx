@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import type { SelectedDate } from '@type/calendar-types';
@@ -6,19 +7,53 @@ import FormLayout from '@components/layout/form-layout/FormLayout';
 import ButtonText from '@ui/button-text/ButtonText';
 import ButtonDate from '@ui/button-date/ButtonDate';
 import ErrorText from '@form/error-text/ErrorText';
-import { useActiveDate } from '@pages/@owner/food-truck-form/hooks/use-active-date';
+import type { AvailableDate } from '@type/available-date';
+import { dateFormatter } from '@shared/utils/date-formatter';
 
-export default function ActiveDate() {
-  const {
-    availableDates,
-    handleAddAvailableDate,
-    updateAvailableDateById,
-    removeAvailableDateById,
-    availableDatesError,
-  } = useActiveDate();
+interface ActiveDateProps {
+  availableDates: AvailableDate[];
+  updateAvailableDateById: (_id: string, _dateData: AvailableDate) => void;
+  removeAvailableDateById: (_id: string) => void;
+  handleAddAvailableDate: () => string | null;
+  error?: string;
+}
+
+export default function ActiveDate({
+  availableDates,
+  updateAvailableDateById,
+  error,
+  removeAvailableDateById,
+  handleAddAvailableDate,
+}: ActiveDateProps) {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedDate = availableDates.find(date => date.id === selectedId);
+
+  const openCalendarForNewDate = () => {
+    const newId = handleAddAvailableDate();
+    if (!newId) return;
+
+    setSelectedId(newId);
+    setIsCalendarOpen(true);
+  };
+  const openCalendarForExistingDate = (id: string) => {
+    setSelectedId(id);
+    setIsCalendarOpen(true);
+  };
+  const handleCalendarApplyDate = (date: SelectedDate) => {
+    if (!selectedId) {
+      setIsCalendarOpen(false);
+      return;
+    }
+
+    updateAvailableDateById(selectedId, {
+      id: selectedId,
+      startDate: date.startDate ? dateFormatter(new Date(date.startDate)) : '',
+      endDate: date.endDate ? dateFormatter(new Date(date.endDate)) : '',
+    });
+
+    setIsCalendarOpen(false);
+  };
 
   return (
     <>
@@ -40,24 +75,19 @@ export default function ActiveDate() {
                 ? new Date(selectedDate.endDate)
                 : null,
           }}
-          handleApplyDate={(date: SelectedDate) => {
-            updateAvailableDateById(selectedId ?? '', {
-              startDate: date.startDate?.toISOString().split('T')[0] ?? '',
-              endDate: date.endDate?.toISOString().split('T')[0] ?? '',
-            });
-            setIsCalendarOpen(false);
-          }}
+          handleApplyDate={handleCalendarApplyDate}
           handleCloseBottomSheet={() => {
             setIsCalendarOpen(false);
           }}
           isOpen={isCalendarOpen}
         />
       </BottomSheet>
+
       <FormLayout
         isRequired={true}
-        title='가능한 일정대'
+        title='일정'
         rightComponent={
-          <ButtonText handleClick={handleAddAvailableDate}>
+          <ButtonText handleClick={openCalendarForNewDate}>
             일정 추가하기
           </ButtonText>
         }
@@ -68,10 +98,7 @@ export default function ActiveDate() {
               key={date.id}
               startDate={date.startDate ? new Date(date.startDate) : null}
               endDate={date.endDate ? new Date(date.endDate) : null}
-              handleOpenCalendar={() => {
-                setSelectedId(date.id);
-                setIsCalendarOpen(true);
-              }}
+              handleOpenCalendar={() => openCalendarForExistingDate(date.id)}
               handleDeleteSchedule={() => {
                 removeAvailableDateById(date.id);
               }}
@@ -81,14 +108,11 @@ export default function ActiveDate() {
           <ButtonDate
             startDate={null}
             endDate={null}
-            handleOpenCalendar={() => {
-              setSelectedId('default-date');
-              setIsCalendarOpen(true);
-            }}
+            handleOpenCalendar={openCalendarForNewDate}
             handleDeleteSchedule={() => {}}
           />
         )}
-        {availableDatesError && <ErrorText text={availableDatesError} />}
+        {error && <ErrorText text={error} />}
       </FormLayout>
     </>
   );

@@ -27,6 +27,7 @@ import FoodTruckDetail from '@pages/food-truck-detail/FoodTruckDetail';
 import FoodTruckForm from '@pages/@owner/food-truck-form/FoodTruckForm';
 import SetRegion from '@pages/@owner/set-region/SetRegion';
 import ChatRoom from '@pages/chat-room/ChatRoom';
+import Estimate from '@pages/@owner/estimate/Estimate';
 
 export const router = createBrowserRouter([
   {
@@ -132,6 +133,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.SET_REGION_FORM,
         element: <SetRegion />,
+      },
+      {
+        path: ROUTES.OWNER_ESTIMATE,
+        element: <Estimate />,
       },
     ],
   },
