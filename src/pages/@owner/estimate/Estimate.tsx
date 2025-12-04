@@ -20,6 +20,7 @@ export default function Estimate() {
     handleSubmit,
     formData,
     errors,
+    activeTime,
     isValid,
     updateLocation,
     updateDetailLocation,
@@ -60,7 +61,7 @@ export default function Estimate() {
           error={errors.availableDates}
         />
         <ActiveTime
-          activeTime={formData.activeTime}
+          activeTime={activeTime}
           updateStartActiveTime={updateStartActiveTime}
           updateEndActiveTime={updateEndActiveTime}
           error={errors.activeTime}

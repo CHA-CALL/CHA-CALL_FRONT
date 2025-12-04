@@ -26,19 +26,7 @@ export const estimateSchema = z.object({
       ESTIMATE_MAX_LENGTH.availableDates.max,
       ESTIMATE_ERROR_MESSAGE.availableDates.max
     ),
-  activeTime: z
-    .object({
-      startActiveTime: z.string(),
-      endActiveTime: z.string(),
-    })
-    .refine(
-      data => {
-        return data.startActiveTime < data.endActiveTime;
-      },
-      {
-        message: ESTIMATE_ERROR_MESSAGE.activeTime.invalid,
-      }
-    ),
+  activeTime: z.string(),
   food: z
     .string()
     .min(ESTIMATE_MAX_LENGTH.food.min, ESTIMATE_ERROR_MESSAGE.food.required)

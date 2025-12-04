@@ -1,7 +1,7 @@
-import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '../schemas/food-truck-form.schema';
 import { useEffect, useState } from 'react';
-import { FOOD_TRUCK_ERROR_MESSAGE } from '../constants/food-truck';
+import { useFormContext } from 'react-hook-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import type { TimeType } from '@type/time-types';
 
 export const useActiveTime = () => {

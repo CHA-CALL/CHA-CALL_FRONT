@@ -25,10 +25,7 @@ export const useEstimateForm = () => {
       needElectricity: undefined,
       etc: '',
       availableDates: [],
-      activeTime: {
-        startActiveTime: '',
-        endActiveTime: '',
-      },
+      activeTime: '',
       food: '',
       location: '',
       detailLocation: '',
@@ -37,15 +34,19 @@ export const useEstimateForm = () => {
   });
 
   const formData = watch();
+
+  const {
+    startActiveTime,
+    endActiveTime,
+    updateStartActiveTime,
+    updateEndActiveTime,
+  } = useEstimateTime({ formData, setValue, setError });
+
   const {
     updateAvailableDateById,
     removeAvailableDateById,
     handleAddAvailableDate,
   } = useEstimateDate({ formData, setValue, setError });
-  const { updateStartActiveTime, updateEndActiveTime } = useEstimateTime({
-    formData,
-    setValue,
-  });
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -109,14 +110,18 @@ export const useEstimateForm = () => {
   return {
     handleSubmit: handleSubmit(onSubmit),
     formData: formDatas,
+    activeTime: {
+      startActiveTime,
+      endActiveTime,
+    },
     errors: combinedErrors,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateAvailableDateById,
-    removeAvailableDateById,
     updateStartActiveTime,
     updateEndActiveTime,
+    updateAvailableDateById,
+    removeAvailableDateById,
     updateFood,
     updatePrice,
     updateNeedElectricity,

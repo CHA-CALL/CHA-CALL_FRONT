@@ -1,14 +1,15 @@
 import FormLayout from '@components/layout/form-layout/FormLayout';
+import TimePicker from '@components/time-picker/TimePicker';
 import ErrorText from '@form/error-text/ErrorText';
-import TimePicker from '@components/ui/time-picker/TimePicker';
+import type { TimeType } from '@type/time-types';
 
 interface ActiveTimeProps {
   activeTime: {
-    startActiveTime: string;
-    endActiveTime: string;
+    startActiveTime: TimeType | null;
+    endActiveTime: TimeType | null;
   };
-  updateStartActiveTime: (_startActiveTime: string) => void;
-  updateEndActiveTime: (_endActiveTime: string) => void;
+  updateStartActiveTime: (_startActiveTime: TimeType | null) => void;
+  updateEndActiveTime: (_endActiveTime: TimeType | null) => void;
   error?: string;
 }
 export default function ActiveTime({
@@ -20,14 +21,14 @@ export default function ActiveTime({
   return (
     <FormLayout isRequired={true} title='운영 가능 시간대'>
       <TimePicker
-        value={activeTime.startActiveTime}
-        handleChange={startActiveTime => updateStartActiveTime(startActiveTime)}
         timeTitle='운영 시작'
+        time={activeTime.startActiveTime}
+        handleTimeChange={updateStartActiveTime}
       />
       <TimePicker
-        value={activeTime.endActiveTime}
-        handleChange={endActiveTime => updateEndActiveTime(endActiveTime)}
         timeTitle='운영 종료'
+        time={activeTime.endActiveTime}
+        handleTimeChange={updateEndActiveTime}
       />
       {error && <ErrorText text={error} />}
     </FormLayout>
