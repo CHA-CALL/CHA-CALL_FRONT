@@ -34,7 +34,7 @@ export default function Account() {
   return (
     <>
       <Navigation
-        text='결제관리'
+        centerContent='결제관리'
         handleLeftClick={handleClickBack}
         leftIcon={<Icon name='ic_back' />}
       />
@@ -59,7 +59,7 @@ export default function Account() {
 
         {data ? (
           <div
-            className='border-grayscale-200 flex flex-col gap-[2.4rem] rounded-[1.6rem] border px-[2.6rem] py-[2.4rem]'
+            className='flex flex-col gap-[2.4rem] rounded-[1.6rem] border border-grayscale-200 px-[2.6rem] py-[2.4rem]'
             key={data.bankAccountId}
           >
             <div className='flex items-center justify-between'>

@@ -47,7 +47,7 @@ export default function SetUserInfo() {
           handleCloseBottomSheet={handleCloseBottomSheet}
         />
         <Navigation
-          text='프로필 수정'
+          centerContent='프로필 수정'
           leftIcon={<Icon name='ic_back' />}
           handleLeftClick={handleClickBack}
         />

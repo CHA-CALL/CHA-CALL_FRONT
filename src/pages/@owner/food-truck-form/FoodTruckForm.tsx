@@ -50,7 +50,7 @@ export default function FoodTruckForm() {
   return (
     <FormProvider {...methods.methods}>
       <Navigation
-        text='나의 푸드트럭 수정'
+        centerContent='나의 푸드트럭 수정'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />

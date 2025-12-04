@@ -17,7 +17,10 @@ export default function MenuEdit() {
 
   const isInitialized = useRef(false);
 
-  const { foodTruckId, menuId } = useParams<{ foodTruckId: string, menuId: string }>();
+  const { foodTruckId, menuId } = useParams<{
+    foodTruckId: string;
+    menuId: string;
+  }>();
   const parsedFoodTruckId = Number(foodTruckId);
   const parsedMenuId = Number(menuId);
 
@@ -29,7 +32,7 @@ export default function MenuEdit() {
     updateName,
     updateDescription,
     updatePrice,
-    updateImageUrl
+    updateImageUrl,
   } = useFormValidation();
 
   const { isDirty, isValid } = methods.formState;
@@ -41,7 +44,7 @@ export default function MenuEdit() {
     handleCloseModal,
     handleClickDelete,
     handleClickBack,
-   } = useEditMenu(parsedFoodTruckId, parsedMenuId);
+  } = useEditMenu(parsedFoodTruckId, parsedMenuId);
 
   useEffect(() => {
     if (menuData && !isInitialized.current) {
@@ -83,7 +86,7 @@ export default function MenuEdit() {
       <Navigation
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
-        text='메뉴 수정'
+        centerContent='메뉴 수정'
       />
       <MenuForm
         initialImageUrl={initialImageUrl}
@@ -92,7 +95,7 @@ export default function MenuEdit() {
         updatePrice={updatePrice}
         updateImageUrl={updateImageUrl}
       />
-      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <div className='flex gap-[1rem]'>
           <Button
             variant='cta'

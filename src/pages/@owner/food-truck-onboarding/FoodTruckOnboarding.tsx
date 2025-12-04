@@ -51,12 +51,12 @@ export default function FoodTruckOnboarding() {
       />
 
       <Navigation
-        text='푸드트럭 등록'
+        centerContent='푸드트럭 등록'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
 
-      <div className='flex flex-col gap-[2.6rem] w-full p-[2rem]'>
+      <div className='flex w-full flex-col gap-[2.6rem] p-[2rem]'>
         <NameSection
           isNameVerified={isNameVerified}
           value={formData.name}
@@ -64,13 +64,13 @@ export default function FoodTruckOnboarding() {
           handleCheckNameDuplicate={handleCheckNameDuplicate}
           error={errors.name}
         />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <BizRegCertSection
           file={formData.bizRegCert}
-          onChange={(file) => file && updateBizRegCertFile(file)}
+          onChange={file => file && updateBizRegCertFile(file)}
           error={errors.bizRegCert}
         />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <OtherDocsSection
           files={formData.otherDocs}
           onChange={updateOtherDocsFiles}
@@ -78,10 +78,8 @@ export default function FoodTruckOnboarding() {
         />
       </div>
 
-      <footer className='flex flex-col bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center gap-[1.3rem]'>
-        <p className='caption-m-12 text-grayscale-300'>
-          {IMAGE_INFO_MESSAGE}
-        </p>
+      <footer className='bottom-[0] flex w-full flex-col gap-[1.3rem] bg-white px-[2rem] py-[1.7rem] fixed-center'>
+        <p className='text-grayscale-300 caption-m-12'>{IMAGE_INFO_MESSAGE}</p>
         <Button
           variant='cta'
           buttonStyle={isFormValid ? 'active' : 'disabled'}

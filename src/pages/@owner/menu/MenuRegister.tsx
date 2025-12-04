@@ -11,10 +11,8 @@ export default function MenuRegister() {
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
   const parsedFoodTruckId = Number(foodTruckId);
 
-  const {
-    handleRegisterSubmit,
-    handleClickBack,
-  } = useRegisterMenu(parsedFoodTruckId);
+  const { handleRegisterSubmit, handleClickBack } =
+    useRegisterMenu(parsedFoodTruckId);
 
   const {
     methods,
@@ -30,7 +28,7 @@ export default function MenuRegister() {
       <Navigation
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
-        text='메뉴 등록'
+        centerContent='메뉴 등록'
       />
 
       <MenuForm
@@ -40,7 +38,7 @@ export default function MenuRegister() {
         updateImageUrl={updateImageUrl}
       />
 
-      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
