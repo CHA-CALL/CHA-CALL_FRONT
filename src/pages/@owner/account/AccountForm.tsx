@@ -68,7 +68,7 @@ export default function Account() {
         handleClickCancel={deleteModal.handleCancel}
       />
       <Navigation
-        text={isEditMode ? '계좌 수정' : '계좌 등록'}
+        centerContent={isEditMode ? '계좌 수정' : '계좌 등록'}
         handleLeftClick={handleClickBack}
         leftIcon={<Icon name='ic_back' />}
         rightIcon={
@@ -92,7 +92,7 @@ export default function Account() {
             <button
               type='button'
               onClick={bankModal.handleClick}
-              className='border-grayscale-200 flex w-full items-center justify-between rounded-[1.6rem] border bg-white py-[1.5rem] pl-[2rem] pr-[1.6rem] text-left'
+              className='flex w-full items-center justify-between rounded-[1.6rem] border border-grayscale-200 bg-white py-[1.5rem] pl-[2rem] pr-[1.6rem] text-left'
             >
               <p
                 className={cn(
@@ -132,7 +132,7 @@ export default function Account() {
           </div>
         </section>
       </div>
-      <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
+      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>
         <Button
           type='submit'
           variant='cta'

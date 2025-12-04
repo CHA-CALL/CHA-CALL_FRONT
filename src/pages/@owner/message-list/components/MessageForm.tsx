@@ -72,7 +72,7 @@ export default function MessageForm() {
         handleClickCancel={handleClickCancel}
       />
       <Navigation
-        text='자주 쓰는 메세지 설정'
+        centerContent='자주 쓰는 메세지 설정'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />

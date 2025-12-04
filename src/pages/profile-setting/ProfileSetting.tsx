@@ -48,7 +48,7 @@ export default function ProfileSetting() {
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
-        text='프로필 설정'
+        centerContent='프로필 설정'
         rightIcon={
           <Button
             variant='default'
@@ -66,18 +66,18 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userData || null} />
           <AgreementSection termAgreed={userData?.termAgreed} />
         </div>
-        <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
+        <footer className='bottom-[3rem] flex flex-row items-center justify-center caption-m-12 fixed-center'>
           <button
             type='button'
-            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
+            className='px-[1rem] py-[0.6rem] text-grayscale-500'
             onClick={handleLogout}
           >
             로그아웃
           </button>
-          <div className='bg-grayscale-500 mx-[0.4rem] h-[1rem] w-[0.1rem]' />
+          <div className='mx-[0.4rem] h-[1rem] w-[0.1rem] bg-grayscale-500' />
           <button
             type='button'
-            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
+            className='px-[1rem] py-[0.6rem] text-grayscale-500'
             onClick={handleOpenModal}
           >
             회원탈퇴

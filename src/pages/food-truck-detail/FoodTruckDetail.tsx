@@ -60,7 +60,7 @@ export default function FoodTruckDetail() {
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleClickBack}
-        text={isScrolled ? foodTruckDetailData?.name : undefined}
+        centerContent={isScrolled ? foodTruckDetailData?.name : undefined}
         rightIcon={
           isScrolled ? (
             <button
@@ -82,7 +82,7 @@ export default function FoodTruckDetail() {
                 }
                 width={24}
                 height={24}
-                className='text-primary-700 mx-[0.7rem]'
+                className='mx-[0.7rem] text-primary-700'
               />
             </button>
           ) : undefined
@@ -136,7 +136,7 @@ export default function FoodTruckDetail() {
         )}
       </div>
       {/* TODO: 채팅 페이지로 이동하도록 추가 */}
-      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
+      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)] fixed-center'>
         <Button
           variant='cta'
           buttonStyle='active'

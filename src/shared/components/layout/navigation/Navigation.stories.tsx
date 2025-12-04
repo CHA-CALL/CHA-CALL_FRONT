@@ -11,16 +11,16 @@ const meta: Meta<typeof Navigation> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    text: {
+    centerContent: {
       control: { type: 'text' },
-      description: '네비게이션 중앙 텍스트',
+      description: '네비게이션 중앙 콘텐츠 (텍스트 혹은 ReactNode)',
     },
     leftIcon: {
-      control: { type: 'text' },
+      control: false,
       description: '왼쪽 아이콘 (예: 뒤로가기 화살표)',
     },
     rightIcon: {
-      control: { type: 'text' },
+      control: false,
       description: '오른쪽 아이콘 (예: 메뉴, 검색 등)',
     },
     handleLeftClick: {
@@ -31,6 +31,10 @@ const meta: Meta<typeof Navigation> = {
       action: 'right clicked',
       description: '오른쪽 아이콘 클릭 이벤트',
     },
+    className: {
+      control: { type: 'text' },
+      description: '네비게이션 전체 컨테이너에 적용할 추가 클래스',
+    },
   },
 };
 
@@ -40,7 +44,7 @@ type Story = StoryObj<typeof meta>;
 // 기본 네비게이션 (텍스트만)
 export const Default: Story = {
   args: {
-    text: '페이지 제목',
+    centerContent: '페이지 제목',
   },
 };
 
@@ -48,14 +52,14 @@ export const Default: Story = {
 export const WithBackButton: Story = {
   args: {
     leftIcon: <Icon name='ic_back' />,
-    text: '뒤로가기',
+    centerContent: '뒤로가기',
   },
 };
 
 // 메뉴 버튼이 있는 네비게이션
 export const WithMenuButton: Story = {
   args: {
-    text: '메뉴',
+    centerContent: '메뉴',
     rightIcon: (
       <Button variant='chip' buttonStyle='selected1'>
         버튼
@@ -68,7 +72,7 @@ export const WithMenuButton: Story = {
 export const WithBothButtons: Story = {
   args: {
     leftIcon: <Icon name='ic_back' />,
-    text: '상세 페이지',
+    centerContent: '상세 페이지',
     rightIcon: (
       <Button variant='chip' buttonStyle='selected1'>
         버튼

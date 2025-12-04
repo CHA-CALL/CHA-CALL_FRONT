@@ -25,14 +25,14 @@ export default function MyPage() {
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
-        text='마이페이지'
+        centerContent='마이페이지'
       />
       <div className='flex flex-col gap-[4rem] p-[2rem]'>
         <MyInfoSection
           isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}
         />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
         <SettingMenuSection
           isProvider={isProvider}
           handleNavigateTo={handleNavigateTo}

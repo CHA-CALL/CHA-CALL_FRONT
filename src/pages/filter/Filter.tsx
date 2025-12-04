@@ -51,13 +51,13 @@ export default function Filter() {
           </Button>
         }
         handleRightClick={handleResetFilter}
-        text='필터'
+        centerContent='필터'
       />
 
       <div className='flex flex-col gap-[2.8rem] p-[2rem] pb-[10rem]'>
         <div className='mb-[2rem] flex flex-col gap-[2rem]'>
           <div className='flex flex-row items-center justify-between'>
-            <h2 className='title-b-14 px-[0.5rem]'>일정</h2>
+            <h2 className='px-[0.5rem] title-b-14'>일정</h2>
             <ButtonText handleClick={handleAddSchedule}>
               일정 추가하기
             </ButtonText>
@@ -72,7 +72,7 @@ export default function Filter() {
             />
           ))}
         </div>
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup<AvailableQuantityValue>
           filterTitle='수량'
@@ -82,7 +82,7 @@ export default function Filter() {
             handleSelectSingle('availableQuantity', value)
           }
         />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup<FoodTruckCategoryValue>
           filterTitle='음식 종류'
@@ -91,7 +91,7 @@ export default function Filter() {
           multiSelectable
           handleSelectFilter={value => handleSelectMulti('categories', value)}
         />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup<NeedElectricityValue>
           filterTitle='전기 사용'
@@ -101,7 +101,7 @@ export default function Filter() {
             handleSelectSingle('needElectricity', value)
           }
         />
-        <div className='bg-grayscale-100 h-[0.1rem] w-full' />
+        <div className='h-[0.1rem] w-full bg-grayscale-100' />
 
         <FilterChipGroup<PaymentMethodValue>
           filterTitle='결제 방법'

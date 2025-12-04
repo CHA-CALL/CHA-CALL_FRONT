@@ -10,6 +10,7 @@ import NewChatIndicator from '@pages/chat-room/components/NewChatIndicator';
 import LeaveChatBottomSheet from '@pages/chat-room/components/LeaveChatBottomSheet';
 import MessageListBottomSheet from '@pages/chat-room/chat-input-area/components/MessageListBottomSheet';
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
+import Tag from '@components/ui/tag/Tag';
 
 export default function ChatRoom() {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ export default function ChatRoom() {
   const otherFoodTruckName = '상대방 푸드트럭';
 
   const { messages, handleSendMessage } = useSendMessage();
-  const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(null);
+  const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(
+    null
+  );
   const [showNewChatIndicator, setShowNewChatIndicator] = useState(false);
   const [isLeaveSheetOpen, setIsLeaveSheetOpen] = useState(false);
   const [isMessageListOpen, setIsMessageListOpen] = useState(false);
@@ -40,7 +43,7 @@ export default function ChatRoom() {
       if (isBottom) {
         setShowNewChatIndicator(false);
       }
-    }
+    };
     scrollElement.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -55,7 +58,10 @@ export default function ChatRoom() {
     const isBottom = scrollHeight - scrollTop - clientHeight < 50;
 
     if (lastMessage.isMine) {
-       scrollElement.scrollTo({ top: scrollElement.scrollHeight, behavior: 'smooth' });
+      scrollElement.scrollTo({
+        top: scrollElement.scrollHeight,
+        behavior: 'smooth',
+      });
     } else {
       if (!isBottom) {
         setShowNewChatIndicator(true);
@@ -90,20 +96,21 @@ export default function ChatRoom() {
   };
 
   return (
-    <div className='flex h-[100dvh] w-full flex-col bg-white overflow-hidden'>
+    <div className='flex h-[100dvh] w-full flex-col overflow-hidden bg-white'>
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         rightIcon={<Icon name='ic_dot' className='text-grayscale-900' />}
-        text={otherName}
-        tag={otherFoodTruckName}
+        centerContent={
+          <div className='flex flex-row items-center gap-[1rem]'>
+            <span className='title-sb-16'>{otherName}</span>
+            <Tag title={otherFoodTruckName} />
+          </div>
+        }
         handleLeftClick={handleClickBack}
         handleRightClick={handleOpenLeaveSheet}
       />
 
-      <ChatMessageList
-        messages={messages}
-        scrollRef={setScrollElement}
-      />
+      <ChatMessageList messages={messages} scrollRef={setScrollElement} />
 
       {showNewChatIndicator && lastMessage && !lastMessage.isMine ? (
         <NewChatIndicator

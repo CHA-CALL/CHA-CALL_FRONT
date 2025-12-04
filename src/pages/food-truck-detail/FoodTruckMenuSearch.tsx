@@ -74,9 +74,9 @@ export default function FoodTruckMenuSearch({
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleCloseSearchMode}
-        text='메뉴 검색'
+        centerContent='메뉴 검색'
       />
-      <div className='fixed-center bg-white px-[2rem] py-[1.6rem]'>
+      <div className='bg-white px-[2rem] py-[1.6rem] fixed-center'>
         <Input
           type='search'
           value={inputText}
