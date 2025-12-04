@@ -41,7 +41,7 @@ export default function Estimate() {
   return (
     <>
       <Navigation
-        text='예약 견적서 작성'
+        centerContent='예약 견적서 작성'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />
