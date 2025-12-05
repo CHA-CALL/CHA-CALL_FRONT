@@ -38,13 +38,16 @@ export default function FoodTruckManagement() {
   } = useGetOwnerFoodTrucks();
 
   const {
-    deleteFoodTruckIds,
-    handleClickFoodTruck,
-    handleDeleteFoodTrucks,
-    isDeleteConfirmModalOpen,
-    handleConfirmModal,
     isEditing,
     handleToggleEditing,
+    deleteFoodTruckIds,
+    isDeleteConfirmModalOpen,
+    handleConfirmModal,
+    // TODO: 푸드트럭 카드 클릭 시 수정페이지 이동되도록. FoodTruckProviderCard, FoodTruckCard 컴포넌트 수정 필요
+    // handleClickFoodTruck,
+    handleToggleFoodTruckStatus,
+    handleCheckToDelete,
+    handleDeleteFoodTrucks,
   } = useFoodTruckEditMode();
 
   useEffect(() => {
@@ -85,7 +88,7 @@ export default function FoodTruckManagement() {
       <div
         className={cn('flex flex-col', foodTrucks.length > 0 && 'pb-[10rem]')}
       >
-        <div className='top-0 bg-white px-[2rem] py-[2rem] fixed-center'>
+        <div className='fixed-center top-0 bg-white px-[2rem] py-[2rem]'>
           <Information
             iconId='ic_chat_dot'
             text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'
@@ -95,17 +98,17 @@ export default function FoodTruckManagement() {
           {foodTrucks.length > 0 &&
             foodTrucks.map((item: MyFoodTruckResponse) => (
               <FoodTruckCard
+                key={item.foodTruckId}
                 variant='foodtruckProvider'
                 isRemovable={isEditing}
                 isRemove={deleteFoodTruckIds.includes(item.foodTruckId ?? 0)}
                 isOn={item.status === 'ON'}
-                key={item.foodTruckId}
                 data={item}
                 handleClickButton={() => {
-                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                  handleToggleFoodTruckStatus(item.foodTruckId ?? 0);
                 }}
                 handleCardRemove={() => {
-                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                  handleCheckToDelete(item.foodTruckId ?? 0);
                 }}
               />
             ))}
