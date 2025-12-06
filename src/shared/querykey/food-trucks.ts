@@ -1,39 +1,44 @@
 import type { FoodTrucksFilterType } from '@pages/reservation/api';
 
 export const FOOD_TRUCKS_QUERY_KEY = {
-  ALL: ['food-trucks'],
-  LISTS: () => [...FOOD_TRUCKS_QUERY_KEY.ALL, 'lists'],
-  LIST: (filter: FoodTrucksFilterType | undefined) => [
-    ...FOOD_TRUCKS_QUERY_KEY.LISTS(),
-    filter,
-  ],
-  DETAILS: () => [...FOOD_TRUCKS_QUERY_KEY.ALL, 'details'],
-  DETAIL: (foodTruckId: number) => [
-    ...FOOD_TRUCKS_QUERY_KEY.ALL,
-    'detail',
-    foodTruckId,
-  ],
-  IMAGE: (foodTruckId: number) => [
-    ...FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId),
-    'image',
-  ],
+  ALL: ['foodTrucks'] as const,
 
-  MENUS: (foodTruckId: number) => [
-    ...FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId),
-    'menus',
-  ],
+  LIST: (filter?: FoodTrucksFilterType) =>
+    ['foodTrucks', 'list', filter ?? {}] as const,
 
-  MENU_LIST: (foodTruckId: number) => [
-    ...FOOD_TRUCKS_QUERY_KEY.ALL,
-    foodTruckId,
-  ],
+  DETAIL: (foodTruckId: number) =>
+    ['foodTrucks', 'detail', foodTruckId] as const,
 
-  MENU_SORTED_LIST: (foodTruckId: number, sort: string) => [
-    ...FOOD_TRUCKS_QUERY_KEY.MENU_LIST(foodTruckId),
-    { sort },
-  ],
-  MENU: (foodTruckId: number, menuId: number) => [
-    ...FOOD_TRUCKS_QUERY_KEY.MENU_LIST(foodTruckId),
-    menuId,
-  ],
+  IMAGE: (foodTruckId: number) =>
+    [...FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId), 'image'] as const,
+
+  SAVED: () => ['foodTrucks', 'saved'] as const,
+
+  menus: {
+    ROOT: (foodTruckId: number) =>
+      [...FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId), 'menus'] as const,
+
+    SORTED_LIST: (foodTruckId: number, sort: string = 'default') =>
+      [...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId), 'list', sort] as const,
+
+    ITEM: (foodTruckId: number, menuId: number) =>
+      [
+        ...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId),
+        'item',
+        menuId,
+      ] as const,
+
+    SCROLL: (foodTruckId: number) =>
+      [...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId), 'scroll'] as const,
+
+    PREVIEW: (foodTruckId: number) =>
+      [...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId), 'preview'] as const,
+
+    SEARCH: (foodTruckId: number, searchText: string) =>
+      [
+        ...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId),
+        'search',
+        searchText,
+      ] as const,
+  },
 } as const;

@@ -6,4 +6,9 @@ export const USER_INFO = {
   CHAT: (chatId: number) => [...USER_INFO.CHATS(), chatId],
   ACCOUNTS: () => [USER_INFO.ALL, 'accounts'],
   ACCOUNT: (accountId: number) => [...USER_INFO.ACCOUNTS(), accountId],
+  RESERVATIONS: () => [USER_INFO.ALL, 'reservations'],
+  RESERVATION: (reservationId: number) => [
+    ...USER_INFO.RESERVATIONS(),
+    reservationId,
+  ],
 } as const;
