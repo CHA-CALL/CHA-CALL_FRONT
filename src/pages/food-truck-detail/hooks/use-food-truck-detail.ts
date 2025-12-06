@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { FoodTruckDetailResponse } from 'apis/data-contracts';
 
 import { getFoodTruckDetail } from '@pages/food-truck-detail/api';
-import { FOOD_TRUCK_DETAIL } from '@shared/querykey/food-trucks/food-trucks';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 import { useUpdateFoodTruckSaveStatus } from '@pages/reservation/hooks/use-food-truck-list-query';
 
 export default function useFoodTruckDetail(foodTruckId: number) {
@@ -14,7 +14,7 @@ export default function useFoodTruckDetail(foodTruckId: number) {
     isPending: isPendingFoodTruckDetail,
     isError: isErrorFoodTruckDetail,
   } = useQuery<FoodTruckDetailResponse | undefined>({
-    queryKey: FOOD_TRUCK_DETAIL.DETAIL(foodTruckId),
+    queryKey: FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId),
     queryFn: () => getFoodTruckDetail(foodTruckId),
     staleTime: 5000,
   });

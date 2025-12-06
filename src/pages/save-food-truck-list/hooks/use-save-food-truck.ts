@@ -8,7 +8,7 @@ import {
   getSavedFoodTruckList,
   updateSavedFoodTruckList,
 } from '@pages/save-food-truck-list/api';
-import { SAVE_FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/save-food-trucks';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 import useToast from '@shared/hooks/use-toast';
 import type { CursorPagingResponseSavedFoodTruckResponse } from 'apis/data-contracts';
 
@@ -18,7 +18,7 @@ type CachedInfiniteData = InfiniteData<
 
 export const useGetSaveFoodTrucks = () => {
   return useInfiniteQuery({
-    queryKey: SAVE_FOOD_TRUCKS_QUERY_KEY.ALL,
+    queryKey: FOOD_TRUCKS_QUERY_KEY.SAVED(),
     queryFn: getSavedFoodTruckList,
     initialPageParam: undefined,
     getNextPageParam: lastPage => {
@@ -41,16 +41,16 @@ export const useUnsaveFoodTrucks = () => {
     mutationFn: (foodTruckId: number) => updateSavedFoodTruckList(foodTruckId),
     onMutate: async (foodTruckId: number) => {
       await queryClient.cancelQueries({
-        queryKey: SAVE_FOOD_TRUCKS_QUERY_KEY.ALL,
+        queryKey: FOOD_TRUCKS_QUERY_KEY.SAVED(),
       });
 
       const previousData = queryClient.getQueryData<CachedInfiniteData>(
-        SAVE_FOOD_TRUCKS_QUERY_KEY.ALL
+        FOOD_TRUCKS_QUERY_KEY.SAVED()
       );
 
       if (previousData) {
         queryClient.setQueryData<CachedInfiniteData>(
-          SAVE_FOOD_TRUCKS_QUERY_KEY.ALL,
+          FOOD_TRUCKS_QUERY_KEY.SAVED(),
           {
             ...previousData,
             pages: previousData.pages.map(page => {
@@ -74,7 +74,7 @@ export const useUnsaveFoodTrucks = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: SAVE_FOOD_TRUCKS_QUERY_KEY.ALL,
+        queryKey: FOOD_TRUCKS_QUERY_KEY.SAVED(),
       });
     },
   });

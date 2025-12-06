@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
-import { FOOD_TRUCK_IMAGE_QUERY_KEY } from '@shared/querykey/food-trucks/food-truck-image';
 import {
   getPresignedUrl,
   uploadImage,
   deleteFoodTruckImages,
 } from '@pages/@owner/upload-food-truck-images/api';
 import type { FoodTruckImageUrl } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-url';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 
 export const useFoodTruckImage = () => {
   return useMutation<FoodTruckImageUrl[], Error, File[]>({
-    mutationKey: FOOD_TRUCK_IMAGE_QUERY_KEY.IMAGES(),
+    mutationKey: FOOD_TRUCKS_QUERY_KEY.ALL,
     mutationFn: async (files: File[]) => {
       const allImageInfos: FoodTruckImageUrl[] = [];
 
@@ -47,9 +47,11 @@ export const useUploadImage = () => {
 };
 
 export const useDeleteImage = () => {
-  return useMutation<void, Error, { foodTruckId: string; imageUrls: string[] }>({
-    mutationFn: async ({ foodTruckId, imageUrls }) => {
-      await deleteFoodTruckImages(foodTruckId, { imageUrls });
-    },
-  });
-}
+  return useMutation<void, Error, { foodTruckId: string; imageUrls: string[] }>(
+    {
+      mutationFn: async ({ foodTruckId, imageUrls }) => {
+        await deleteFoodTruckImages(foodTruckId, { imageUrls });
+      },
+    }
+  );
+};

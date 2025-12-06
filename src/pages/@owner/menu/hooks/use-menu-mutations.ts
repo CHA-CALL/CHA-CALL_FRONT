@@ -7,9 +7,9 @@ import {
   deleteFoodTruckMenu,
   editMenuStatus,
   uploadImage,
-  getPresignedUrl
+  getPresignedUrl,
 } from '@pages/@owner/menu/api';
-import { MENUS_QUERY_KEY } from '@shared/querykey/owner/menus';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 import useToast from '@shared/hooks/use-toast';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 
@@ -48,14 +48,14 @@ export const useRegisterMenuMutation = (foodTruckId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
       toast.success('메뉴가 등록되었습니다.');
     },
     onError: () => {
       toast.error('메뉴 등록에 실패했습니다.');
-    }
+    },
   });
 };
 
@@ -90,7 +90,7 @@ export const useEditMenuMutation = (foodTruckId: number, menuId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
       toast.success('메뉴가 수정되었습니다.');
@@ -111,7 +111,7 @@ export const useDeleteMenuMutation = (foodTruckId: number, menuId: number) => {
     mutationFn: () => deleteFoodTruckMenu({ foodTruckId, menuId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
       toast.success('메뉴가 삭제되었습니다.');
@@ -129,7 +129,7 @@ export const useUpdateMenuStatusMutation = (foodTruckId: number) => {
 
   return useMutation({
     mutationFn: (changedMenus: { menuId: number; status: 'ON' | 'OFF' }[]) => {
-      const mutationPromises = changedMenus.map((menu) =>
+      const mutationPromises = changedMenus.map(menu =>
         editMenuStatus({
           foodTruckId,
           menuId: menu.menuId,
@@ -140,12 +140,12 @@ export const useUpdateMenuStatusMutation = (foodTruckId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: MENUS_QUERY_KEY.LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
       });
       toast.success('메뉴 표시 상태가 저장되었습니다.');
     },
     onError: () => {
       toast.error('메뉴 표시 상태 저장에 실패했습니다.');
-    }
+    },
   });
 };

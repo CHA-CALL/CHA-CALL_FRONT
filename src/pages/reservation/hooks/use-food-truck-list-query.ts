@@ -12,11 +12,7 @@ import {
   updateFoodTruckSaveStatus,
   type FoodTrucksFilterType,
 } from '@pages/reservation/api';
-import {
-  FOOD_TRUCK_DETAIL,
-  FOOD_TRUCKS_MUTATION_KEY,
-  FOOD_TRUCKS_QUERY_KEY,
-} from '@shared/querykey/food-trucks/food-trucks';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 
 const FALLBACK: CursorPagingResponseFoodTruckResponse = {
   content: [],
@@ -27,7 +23,7 @@ const FALLBACK: CursorPagingResponseFoodTruckResponse = {
 export const useFoodTruckListQuery = (filter: FoodTrucksFilterType) => {
   const { data, isPending, isFetchingNextPage, fetchNextPage } =
     useInfiniteQuery<CursorPagingResponseFoodTruckResponse>({
-      queryKey: FOOD_TRUCKS_QUERY_KEY.FILTER(filter),
+      queryKey: FOOD_TRUCKS_QUERY_KEY.LIST(filter),
       initialPageParam: null,
       queryFn: async ({ pageParam }) => {
         const cursor =
@@ -69,7 +65,7 @@ export const useUpdateFoodTruckSaveStatus = (foodTruckId?: number) => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationKey: FOOD_TRUCKS_MUTATION_KEY.UPDATE_SAVE_STATUS,
+    mutationKey: FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId ?? 0),
     mutationFn: ({
       foodTruckId,
       isSavedRequest,
@@ -83,7 +79,7 @@ export const useUpdateFoodTruckSaveStatus = (foodTruckId?: number) => {
       });
       if (foodTruckId) {
         qc.invalidateQueries({
-          queryKey: FOOD_TRUCK_DETAIL.DETAIL(foodTruckId),
+          queryKey: FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId ?? 0),
           refetchType: 'all',
         });
       }
