@@ -40,7 +40,6 @@ export default function FoodTruckForm() {
   const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
 
   // TODO: 등록된 정보가 있을 때, 푸드트럭 정보 가져오기
-  console.info(foodTruckId);
   const { isFormValid, reset, handleSubmit, ...methods } = useFoodTruckForm();
 
   useEffect(() => {

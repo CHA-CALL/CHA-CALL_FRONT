@@ -29,7 +29,7 @@ export default function RegionSection({ foodTruckId }: RegionSectionProps) {
       state: getNavigateState(formData),
     });
   };
-  const { regionCodes } = useRegion();
+  const { regionCodes } = useRegion(foodTruckId);
 
   return (
     <FormLayout isRequired={true} title='활동 가능 지역'>
