@@ -40,7 +40,7 @@ export const useReservationDetail = () => {
   } = useQuery<
     MemberReservationDetailResponse | OwnerReservationDetailResponse | undefined
   >({
-    queryKey: USER_INFO.RESERVATION(Number(reservationId)),
+    queryKey: [...USER_INFO.RESERVATION(Number(reservationId)), isProvider],
     queryFn: () => {
       if (!reservationId) {
         throw new Error('요청이 잘못되었습니다.');

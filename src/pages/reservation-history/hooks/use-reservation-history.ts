@@ -8,7 +8,7 @@ export const useReservations = (
   viewType: ReservationState
 ) => {
   const query = useInfiniteQuery({
-    queryKey: USER_INFO.RESERVATIONS(),
+    queryKey: [...USER_INFO.RESERVATIONS(), isProvider, viewType],
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getReservationHistory(isProvider, {
         viewType,
