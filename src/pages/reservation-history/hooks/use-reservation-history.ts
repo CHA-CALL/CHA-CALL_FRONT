@@ -1,14 +1,14 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { ReservationState } from '@pages/reservation-history/types/reservation-history';
 import { getReservationHistory } from '@pages/reservation-history/api';
-import { RESERVATION_QUERY_KEY } from '@shared/querykey/reservations';
+import { USER_INFO } from '@shared/querykey/user-info';
 
 export const useReservations = (
   isProvider: boolean,
   viewType: ReservationState
 ) => {
   const query = useInfiniteQuery({
-    queryKey: RESERVATION_QUERY_KEY.LIST(isProvider, viewType),
+    queryKey: USER_INFO.RESERVATIONS(),
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getReservationHistory(isProvider, {
         viewType,
