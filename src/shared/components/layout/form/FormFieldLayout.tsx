@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@utils/cn';
 
 interface FormFieldLayoutProps {
-  isRequired: boolean;
+  isRequired?: boolean;
   title: string;
   subTitle?: string;
   description?: string;
@@ -13,7 +13,7 @@ interface FormFieldLayoutProps {
 }
 
 export default function FormFieldLayout({
-  isRequired,
+  isRequired = true,
   title,
   subTitle,
   description,
