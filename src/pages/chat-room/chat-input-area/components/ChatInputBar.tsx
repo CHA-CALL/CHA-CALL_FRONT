@@ -6,19 +6,21 @@ import React, {
   type KeyboardEvent,
 } from 'react';
 import { cn } from '@utils/cn';
-import { Icon } from '@components/icon/Icon';
+import { Icon } from '@icon/Icon';
 import useAutosizeTextarea from '@pages/chat-room/chat-input-area/hooks/use-autosize-textarea';
 
 interface ChatInputBarProps {
   isOpenMenu: boolean;
   selectedQuickMessage?: string;
   setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSendMessage: (_message: string) => void;
 }
 
 export default function ChatInputBar({
   isOpenMenu,
   selectedQuickMessage,
   setIsOpenMenu,
+  handleSendMessage,
 }: ChatInputBarProps) {
   const [message, setMessage] = useState('');
 
@@ -29,8 +31,10 @@ export default function ChatInputBar({
     setMessage(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     if (!message.trim()) return;
+    handleSendMessage(message);
     setMessage('');
   };
 

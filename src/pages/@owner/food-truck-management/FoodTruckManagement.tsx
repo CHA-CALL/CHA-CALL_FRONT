@@ -69,7 +69,7 @@ export default function FoodTruckManagement() {
         handleClickConfirm={handleDeleteFoodTrucks}
       />
       <Navigation
-        text='나의 푸드트럭 관리'
+        centerContent='나의 푸드트럭 관리'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
         rightIcon={
@@ -85,7 +85,7 @@ export default function FoodTruckManagement() {
       <div
         className={cn('flex flex-col', foodTrucks.length > 0 && 'pb-[10rem]')}
       >
-        <div className='fixed-center top-0 bg-white px-[2rem] py-[2rem]'>
+        <div className='top-0 bg-white px-[2rem] py-[2rem] fixed-center'>
           <Information
             iconId='ic_chat_dot'
             text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'

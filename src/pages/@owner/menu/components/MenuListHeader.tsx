@@ -21,7 +21,7 @@ export default function MenuListHeader({
       <Navigation
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
-        text='메뉴 등록'
+        centerContent='메뉴 등록'
       />
 
       <div className='top-[4.8rem] z-10 flex w-full flex-col bg-white p-[2rem] fixed-center'>

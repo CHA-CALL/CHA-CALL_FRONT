@@ -1,4 +1,4 @@
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import Button from '@ui/button/Button';
 import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';

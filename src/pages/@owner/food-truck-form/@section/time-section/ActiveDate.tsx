@@ -2,7 +2,7 @@ import { useState } from 'react';
 import BottomSheet from '@layout/bottom-sheet/BottomSheet';
 import Calendar from '@components/calendar/Calendar';
 import type { SelectedDate } from '@type/calendar-types';
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import ButtonText from '@ui/button-text/ButtonText';
 import ButtonDate from '@ui/button-date/ButtonDate';
 import ErrorText from '@form/error-text/ErrorText';

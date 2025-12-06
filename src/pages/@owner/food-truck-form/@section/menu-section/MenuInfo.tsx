@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import { ROUTES } from '@router/constant/routes';
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitchButton';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
