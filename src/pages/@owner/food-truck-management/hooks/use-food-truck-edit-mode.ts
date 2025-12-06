@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { useDeleteOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
+import {
+  useChangeFoodTrucksViewedStatus,
+  useDeleteOwnerFoodTrucks,
+} from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
 import useToast from '@hooks/use-toast';
+import type { ViewedStatus } from '../constants/viewed-status';
 
 export const useFoodTruckEditMode = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,6 +14,7 @@ export const useFoodTruckEditMode = () => {
   const toast = useToast();
 
   const { mutate } = useDeleteOwnerFoodTrucks();
+  const { changeStatus } = useChangeFoodTrucksViewedStatus();
 
   const handleToggleEditing = () => {
     setIsEditing(!isEditing);
@@ -29,9 +34,11 @@ export const useFoodTruckEditMode = () => {
     console.info(foodTruckId, '번 푸드트럭 수정페이지로 이동');
   };
 
-  const handleToggleFoodTruckStatus = (foodTruckId: number) => {
-    // TODO: 나의 푸드트럭 표시 상태 변경 api 호출
-    console.info(foodTruckId, '번 푸드트럭 표시 상태 변경');
+  const handleToggleFoodTruckStatus = (
+    foodTruckId: number,
+    status: ViewedStatus
+  ) => {
+    changeStatus({ foodTruckId, status });
   };
 
   const handleCheckToDelete = (foodTruckId: number) => {

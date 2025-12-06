@@ -15,6 +15,7 @@ import { useFoodTruckEditMode } from '@pages/@owner/food-truck-management/hooks/
 import Spinner from '@components/spinner/Spinner';
 import type { MyFoodTruckResponse } from 'apis/data-contracts';
 import useToast from '@hooks/use-toast';
+import { VIEWED_STATUS } from './constants/viewed-status';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -102,10 +103,15 @@ export default function FoodTruckManagement() {
                 variant='foodtruckProvider'
                 isRemovable={isEditing}
                 isRemove={deleteFoodTruckIds.includes(item.foodTruckId ?? 0)}
-                isOn={item.status === 'ON'}
+                isOn={item.status === VIEWED_STATUS.ON}
                 data={item}
                 handleClickButton={() => {
-                  handleToggleFoodTruckStatus(item.foodTruckId ?? 0);
+                  handleToggleFoodTruckStatus(
+                    item.foodTruckId ?? 0,
+                    item.status === VIEWED_STATUS.ON
+                      ? VIEWED_STATUS.OFF
+                      : VIEWED_STATUS.ON
+                  );
                 }}
                 handleCardRemove={() => {
                   handleCheckToDelete(item.foodTruckId ?? 0);

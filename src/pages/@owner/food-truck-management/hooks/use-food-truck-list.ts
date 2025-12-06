@@ -8,12 +8,13 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
+  updateFoodTruckStatus,
   deleteOwnerFoodTrucks,
   getOwnerFoodTrucks,
 } from '@pages/@owner/food-truck-management/api';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/food-trucks';
 import useToast from '@hooks/use-toast';
-import { PAGE_SIZE } from '@constant/page-size';
+import type { ViewedStatus } from '../constants/viewed-status';
 
 const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
   content: [],
@@ -35,7 +36,6 @@ export const useGetOwnerFoodTrucks = () => {
       const cursor = pageParam === null ? undefined : Number(pageParam);
       const response = await getOwnerFoodTrucks({
         cursor,
-        size: PAGE_SIZE,
       });
       return response ?? FALLBACK;
     },
@@ -77,4 +77,33 @@ export const useDeleteOwnerFoodTrucks = () => {
       toast.error('푸드트럭 삭제에 실패했습니다.');
     },
   });
+};
+
+export const useChangeFoodTrucksViewedStatus = () => {
+  const queryClient = useQueryClient();
+
+  const toast = useToast();
+
+  const { mutate: changeStatus } = useMutation({
+    mutationFn: ({
+      foodTruckId,
+      status,
+    }: {
+      foodTruckId: number;
+      status: ViewedStatus;
+    }) => updateFoodTruckStatus({ foodTruckId, status }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+      });
+      toast.success('푸드트럭 표시상태가 변경되었습니다.');
+    },
+    onError: () => {
+      toast.error('표시 상태 변경에 실패했습니다.');
+    },
+  });
+
+  return {
+    changeStatus,
+  };
 };
