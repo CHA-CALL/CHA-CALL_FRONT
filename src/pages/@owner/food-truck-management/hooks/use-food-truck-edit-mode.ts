@@ -33,18 +33,22 @@ export const useFoodTruckEditMode = () => {
     setIsDeleteConfirmModalOpen(prev => !prev);
   };
 
-  const handleClickFoodTruck = (foodTruckId: number) => {
+  const handleClickFoodTruck = (foodTruckId?: number) => {
+    if (!foodTruckId) return;
     navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId}`);
   };
 
   const handleToggleFoodTruckStatus = (
-    foodTruckId: number,
-    status: ViewedStatus
+    status: ViewedStatus,
+    foodTruckId?: number
   ) => {
+    if (!foodTruckId) return;
+
     changeStatus({ foodTruckId, status });
   };
 
-  const handleCheckToDelete = (foodTruckId: number) => {
+  const handleCheckToDelete = (foodTruckId?: number) => {
+    if (!foodTruckId) return;
     if (deleteFoodTruckIds.includes(foodTruckId)) {
       setDeleteFoodTruckIds(
         deleteFoodTruckIds.filter(id => id !== foodTruckId)

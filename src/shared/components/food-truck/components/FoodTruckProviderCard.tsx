@@ -5,6 +5,7 @@ import Button from '@ui/button/Button';
 import ButtonCheck from '@ui/button-check/ButtonCheck';
 import type { FoodTruckProviderProps } from '@components/food-truck/types/food-truck-card-types';
 import { cn } from '@utils/cn';
+import type React from 'react';
 
 export default function FoodTruckProviderCard({
   data,
@@ -26,6 +27,13 @@ export default function FoodTruckProviderCard({
   const splitActiveTime = (activeTime ?? '')
     .split('-')
     .map(time => time.trim());
+
+  const handleCardClick: React.MouseEventHandler<HTMLDivElement> = event => {
+    const target = event.target as HTMLElement;
+    if (target.closest('button')) return;
+    handleClickCard(foodTruckId);
+  };
+
   return (
     <div
       role='button'
@@ -33,7 +41,7 @@ export default function FoodTruckProviderCard({
         'flex w-full items-start gap-[1.3rem] p-[2rem]',
         isRemove && 'bg-primary-25'
       )}
-      onClick={() => handleClickCard(foodTruckId)}
+      onClick={handleCardClick}
     >
       {isRemovable && handleCardRemove && (
         <ButtonCheck isChecked={isRemove} handleToggle={handleCardRemove} />

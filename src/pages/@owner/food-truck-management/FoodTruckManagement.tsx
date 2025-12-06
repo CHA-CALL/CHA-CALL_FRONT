@@ -107,14 +107,14 @@ export default function FoodTruckManagement() {
                 handleClickCard={!isEditing ? handleClickFoodTruck : () => {}}
                 handleClickButton={() => {
                   handleToggleFoodTruckStatus(
-                    item.foodTruckId ?? 0,
                     item.status === VIEWED_STATUS.ON
                       ? VIEWED_STATUS.OFF
-                      : VIEWED_STATUS.ON
+                      : VIEWED_STATUS.ON,
+                    item.foodTruckId
                   );
                 }}
                 handleCardRemove={() => {
-                  handleCheckToDelete(item.foodTruckId ?? 0);
+                  handleCheckToDelete(item.foodTruckId);
                 }}
               />
             ))}
