@@ -127,11 +127,11 @@ export const router = createBrowserRouter([
         element: <FoodTruckDetail />,
       },
       {
-        path: ROUTES.FOOD_TRUCK_FORM + '/:id?',
+        path: ROUTES.FOOD_TRUCK_FORM(':foodTruckId'),
         element: <FoodTruckForm />,
       },
       {
-        path: ROUTES.SET_REGION_FORM,
+        path: ROUTES.SET_REGION_FORM(':foodTruckId'),
         element: <SetRegion />,
       },
       {

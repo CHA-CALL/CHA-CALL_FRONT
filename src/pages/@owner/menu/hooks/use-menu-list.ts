@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
@@ -16,7 +15,8 @@ export const useMenuList = (foodTruckId: number) => {
   const toast = useToast();
 
   const { isSorted, handleSortByLatest, handleSortByOldest } = useMenuSort();
-  const { isBottomSheetOpen, handleOpenBottomSheet, handleCloseBottomSheet } = useBottomSheet();
+  const { isBottomSheetOpen, handleOpenBottomSheet, handleCloseBottomSheet } =
+    useBottomSheet();
 
   const handleSortByLatestWithClose = () => {
     handleSortByLatest();
@@ -36,7 +36,7 @@ export const useMenuList = (foodTruckId: number) => {
 
   useEffect(() => {
     if (query.data) {
-      setMenus(query.data.pages.flatMap((page) => page?.content || []));
+      setMenus(query.data.pages.flatMap(page => page?.content || []));
     }
   }, [query.data]);
 
@@ -47,7 +47,7 @@ export const useMenuList = (foodTruckId: number) => {
       ...formData,
       menus: menus.length > 0,
     };
-    navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId.toString()}`, {
+    navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)), {
       state: getNavigateState(updatedFormData),
     });
   };
@@ -76,8 +76,8 @@ export const useMenuList = (foodTruckId: number) => {
       return;
     }
 
-    setMenus((prevMenus) =>
-      prevMenus.map((menu) =>
+    setMenus(prevMenus =>
+      prevMenus.map(menu =>
         menu.menuId === menuId
           ? { ...menu, status: menu.status === 'ON' ? 'OFF' : 'ON' }
           : menu
@@ -85,28 +85,40 @@ export const useMenuList = (foodTruckId: number) => {
     );
   };
 
-  const isValidMenuStatus = (status: string | undefined): status is 'ON' | 'OFF' => {
+  const isValidMenuStatus = (
+    status: string | undefined
+  ): status is 'ON' | 'OFF' => {
     return status === 'ON' || status === 'OFF';
   };
 
   // 표시 상태 저장 핸들러
   const handleSave = () => {
-    const originalMenus = query.data?.pages.flatMap((page) => page?.content || []) || [];
-    const originalStatusMap = new Map(originalMenus.map((m) => [m.menuId, m.status]));
+    const originalMenus =
+      query.data?.pages.flatMap(page => page?.content || []) || [];
+    const originalStatusMap = new Map(
+      originalMenus.map(m => [m.menuId, m.status])
+    );
 
     const changedMenusPayload = menus
-      .filter((menu): menu is MyFoodTruckMenuResponse & { menuId: number; status: 'ON' | 'OFF' } => {
-        const originalStatus = originalStatusMap.get(menu.menuId);
-        return (
-          typeof menu.menuId === 'number' &&
-          originalStatus !== undefined &&
-          originalStatus !== menu.status &&
-          isValidMenuStatus(menu.status)
-        );
-      })
-      .map((menu) => ({
+      .filter(
+        (
+          menu
+        ): menu is MyFoodTruckMenuResponse & {
+          menuId: number;
+          status: 'ON' | 'OFF';
+        } => {
+          const originalStatus = originalStatusMap.get(menu.menuId);
+          return (
+            typeof menu.menuId === 'number' &&
+            originalStatus !== undefined &&
+            originalStatus !== menu.status &&
+            isValidMenuStatus(menu.status)
+          );
+        }
+      )
+      .map(menu => ({
         menuId: menu.menuId,
-        status: menu.status
+        status: menu.status,
       }));
 
     if (changedMenusPayload.length === 0) {

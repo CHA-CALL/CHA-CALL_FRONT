@@ -26,11 +26,12 @@ import RegionSection from '@pages/@owner/food-truck-form/@section/region-section
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
+import { ROUTES } from '@router/constant/routes';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
-  const { id } = useParams();
-  const foodTruckIdNumber = Number(id);
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,17 +40,17 @@ export default function FoodTruckForm() {
   const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
 
   // TODO: 등록된 정보가 있을 때, 푸드트럭 정보 가져오기
-  console.info(id);
-  const methods = useFoodTruckForm();
+  console.info(foodTruckId);
+  const { isFormValid, reset, handleSubmit, ...methods } = useFoodTruckForm();
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
-      methods.reset(location.state.formData);
+      reset(location.state.formData);
     }
-  }, [location.state, methods]);
+  }, [location.state, reset]);
 
   const handleNavigateBack = () => {
-    navigate(-1);
+    navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
   };
 
   return (
@@ -66,7 +67,7 @@ export default function FoodTruckForm() {
         <FoodTruckDescription />
         <FoodTruckPhoneNumber />
         <ActiveTime />
-        <RegionSection />
+        <RegionSection foodTruckId={foodTruckId} />
 
         <MenuCategory />
         <AvailableQuantity />
@@ -84,9 +85,9 @@ export default function FoodTruckForm() {
       <footer className='fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
-          buttonStyle={methods.isFormValid ? 'active' : 'disabled'}
-          handleClickButton={methods.handleSubmit}
-          disabled={!methods.isFormValid}
+          buttonStyle={isFormValid ? 'active' : 'disabled'}
+          handleClickButton={handleSubmit}
+          disabled={!isFormValid}
         >
           저장하기
         </Button>

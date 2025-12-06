@@ -5,7 +5,7 @@ import { ROUTES } from '@router/constant/routes';
 import { useNavigate } from 'react-router-dom';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 
-export const useRegion = () => {
+export const useRegion = (foodTruckId?: string) => {
   const navigate = useNavigate();
   const {
     setValue,
@@ -23,8 +23,9 @@ export const useRegion = () => {
   const handleSubmitRegion = (regions: RegionResponse[]) => {
     updateRegionCodes(regions);
     // setValue 후 최신 값을 가져오기 위해 getValues() 사용
+    if (!foodTruckId) return;
     const updatedFormData = getValues();
-    navigate(ROUTES.FOOD_TRUCK_FORM, {
+    navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
       state: getNavigateState(updatedFormData),
     });
   };

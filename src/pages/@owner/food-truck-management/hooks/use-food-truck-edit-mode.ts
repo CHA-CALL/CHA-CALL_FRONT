@@ -35,7 +35,7 @@ export const useFoodTruckEditMode = () => {
 
   const handleClickFoodTruck = (foodTruckId?: number) => {
     if (!foodTruckId) return;
-    navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId}`);
+    navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)));
   };
 
   const handleToggleFoodTruckStatus = (
