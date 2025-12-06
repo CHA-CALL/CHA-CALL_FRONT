@@ -10,11 +10,13 @@ export default function FoodTruckProviderCard({
   data,
   isRemovable,
   isRemove,
+  handleClickCard,
   handleCardRemove,
   handleClickButton,
   isOn,
 }: FoodTruckProviderProps) {
   const {
+    foodTruckId = 0,
     imageUrl = '',
     name = '',
     description = '',
@@ -26,10 +28,12 @@ export default function FoodTruckProviderCard({
     .map(time => time.trim());
   return (
     <div
+      role='button'
       className={cn(
         'flex w-full items-start gap-[1.3rem] p-[2rem]',
         isRemove && 'bg-primary-25'
       )}
+      onClick={() => handleClickCard(foodTruckId)}
     >
       {isRemovable && handleCardRemove && (
         <ButtonCheck isChecked={isRemove} handleToggle={handleCardRemove} />

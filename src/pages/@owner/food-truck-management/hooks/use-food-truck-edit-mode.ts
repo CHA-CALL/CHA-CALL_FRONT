@@ -5,8 +5,12 @@ import {
 } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
 import useToast from '@hooks/use-toast';
 import type { ViewedStatus } from '../constants/viewed-status';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 
 export const useFoodTruckEditMode = () => {
+  const navigate = useNavigate();
+
   const [isEditing, setIsEditing] = useState(false);
   const [deleteFoodTruckIds, setDeleteFoodTruckIds] = useState<number[]>([]);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
@@ -30,8 +34,7 @@ export const useFoodTruckEditMode = () => {
   };
 
   const handleClickFoodTruck = (foodTruckId: number) => {
-    // TODO: 카드 클릭 시 나의 푸드트럭 수정 페이지로 이동되도록
-    console.info(foodTruckId, '번 푸드트럭 수정페이지로 이동');
+    navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId}`);
   };
 
   const handleToggleFoodTruckStatus = (

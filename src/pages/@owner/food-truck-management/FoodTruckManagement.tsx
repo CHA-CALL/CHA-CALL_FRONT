@@ -26,7 +26,7 @@ export default function FoodTruckManagement() {
     navigate(-1);
   };
   const handleNavigateToAdd = () => {
-    navigate(ROUTES.FOOD_TRUCK_FORM);
+    navigate(ROUTES.FOOD_TRUCK_ONBOARDING);
   };
 
   const {
@@ -44,8 +44,7 @@ export default function FoodTruckManagement() {
     deleteFoodTruckIds,
     isDeleteConfirmModalOpen,
     handleConfirmModal,
-    // TODO: 푸드트럭 카드 클릭 시 수정페이지 이동되도록. FoodTruckProviderCard, FoodTruckCard 컴포넌트 수정 필요
-    // handleClickFoodTruck,
+    handleClickFoodTruck,
     handleToggleFoodTruckStatus,
     handleCheckToDelete,
     handleDeleteFoodTrucks,
@@ -105,6 +104,7 @@ export default function FoodTruckManagement() {
                 isRemove={deleteFoodTruckIds.includes(item.foodTruckId ?? 0)}
                 isOn={item.status === VIEWED_STATUS.ON}
                 data={item}
+                handleClickCard={!isEditing ? handleClickFoodTruck : () => {}}
                 handleClickButton={() => {
                   handleToggleFoodTruckStatus(
                     item.foodTruckId ?? 0,

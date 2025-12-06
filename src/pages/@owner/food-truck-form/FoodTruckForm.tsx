@@ -25,15 +25,20 @@ import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-se
 import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
   const { id } = useParams();
+  const foodTruckIdNumber = Number(id);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
+  // 서버에서 활동 가능 지역은 지역코드로 받아야함
+  const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
+
+  // TODO: 등록된 정보가 있을 때, 푸드트럭 정보 가져오기
   console.info(id);
   const methods = useFoodTruckForm();
 
@@ -50,7 +55,9 @@ export default function FoodTruckForm() {
   return (
     <FormProvider {...methods.methods}>
       <Navigation
-        centerContent='나의 푸드트럭 수정'
+        centerContent={
+          foodTruckDetailData ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'
+        }
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />

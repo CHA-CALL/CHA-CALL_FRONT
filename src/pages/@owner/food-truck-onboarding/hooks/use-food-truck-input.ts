@@ -19,6 +19,7 @@ import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 import { useNavigate } from 'react-router-dom';
 import useToast from '@shared/hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 
 export type OwnerFormData = OnboardingFormData;
 
@@ -36,11 +37,8 @@ export const useFoodTruckInput = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const {
-    isNameVerified,
-    handleCheckName,
-    resetVerification,
-  } = useFoodTruckName();
+  const { isNameVerified, handleCheckName, resetVerification } =
+    useFoodTruckName();
 
   const {
     handleSubmit,
@@ -68,8 +66,8 @@ export const useFoodTruckInput = () => {
     mutationKey: ONBOARDING_QUERY_KEY.UPLOAD_FILES(),
     mutationFn: async ({ bizRegCert, otherDocs }) => {
       const allFiles = [bizRegCert, ...otherDocs];
-      const fileExtensions = allFiles.map((file) =>
-        file.name.split('.').pop() || ''
+      const fileExtensions = allFiles.map(
+        file => file.name.split('.').pop() || ''
       );
 
       const imageInfos = await getPresignedUrls(fileExtensions);
@@ -87,11 +85,11 @@ export const useFoodTruckInput = () => {
       );
 
       const bizRegCertUrl = imageInfos[0].fileUrl || '';
-      const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
+      const otherDocsUrls = imageInfos.slice(1).map(info => info.fileUrl || '');
 
       return { bizRegCertUrl, otherDocsUrls };
     },
-    onError: (error) => {
+    onError: error => {
       console.error('파일 업로드 실패:', error);
       toast.error('파일 업로드에 실패했습니다.');
     },
@@ -103,14 +101,14 @@ export const useFoodTruckInput = () => {
     FoodTruckCreateRequest
   >({
     mutationKey: ONBOARDING_QUERY_KEY.CREATE(),
-    mutationFn: async (params) => {
+    mutationFn: async params => {
       await createNewFoodTruck(params);
     },
     onSuccess: () => {
       toast.success('푸드트럭이 등록되었습니다.');
-      navigate('/owner/food-truck-form');
+      navigate(ROUTES.FOOD_TRUCK_MANAGEMENT, { replace: true });
     },
-    onError: (error) => {
+    onError: error => {
       console.error('등록 실패:', error);
       toast.error('푸드트럭 등록에 실패했습니다.');
     },
@@ -174,10 +172,11 @@ export const useFoodTruckInput = () => {
     }
 
     try {
-      const { bizRegCertUrl, otherDocsUrls } = await uploadFilesMutation.mutateAsync({
-        bizRegCert,
-        otherDocs,
-      });
+      const { bizRegCertUrl, otherDocsUrls } =
+        await uploadFilesMutation.mutateAsync({
+          bizRegCert,
+          otherDocs,
+        });
 
       await createFoodTruckMutation.mutateAsync({
         name: formData.name,
