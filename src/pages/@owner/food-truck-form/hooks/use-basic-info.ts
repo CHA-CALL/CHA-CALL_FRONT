@@ -17,9 +17,9 @@ export const useBasicInfo = () => {
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
+  const name = watch('name') ?? '';
   // 중복체크 버튼을 누를 수 있는 상태: 이름이 있고, 중복체크가 완료되지 않은 경우
-  const canCheckNameDuplicate =
-    formData.name.trim() !== '' && !formData.nameDuplicate;
+  const canCheckNameDuplicate = name.trim() !== '' && !formData.nameDuplicate;
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
