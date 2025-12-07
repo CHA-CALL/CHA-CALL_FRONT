@@ -265,10 +265,10 @@ export interface UpdateFoodTruckInfoRequest {
    */
   paymentMethod: "무관" | "계좌이체" | "카드";
   /**
-   * 운영 가능 날짜 리스트
+   * 운영 가능 날짜 리스트 (형식: "yyyy.MM.dd ~ yyyy.MM.dd")
    * @maxItems 4
    * @minItems 1
-   * @example [{"startDate":"2024.10.01","endDate":"2024.10.10"}]
+   * @example ["2025.10.11 ~ 2025.11.10","2025.11.20 ~ 2025.11.22"]
    */
   availableDates?: DateRangeRequest[];
   /**
@@ -1461,6 +1461,11 @@ export interface FoodTruckDetailResponse {
    * @example "서울 광진구, 서울 강남구, 서울 영등포구"
    */
   serviceAreas?: string;
+  /**
+   * 호출 가능 지역 코드
+   * @example [1,2]
+   */
+  regionCodes?: number[];
   /**
    * 푸드트럭 메뉴 카테고리 (라벨 리스트)
    * @example ["한식","분식"]
