@@ -95,7 +95,10 @@ export const useBasicInfo = () => {
         shouldValidate: true,
       });
     } catch (error) {
-      const message = error instanceof Error ? error.message : '이미지 URL 요청 중 오류가 발생했습니다.';
+      const message =
+        error instanceof Error
+          ? error.message
+          : '이미지 URL 요청 중 오류가 발생했습니다.';
       setError('photoUrls', { message });
     } finally {
       e.target.value = '';
