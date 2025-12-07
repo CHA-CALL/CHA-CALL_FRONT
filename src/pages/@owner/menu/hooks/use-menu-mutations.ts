@@ -48,7 +48,7 @@ export const useRegisterMenuMutation = (foodTruckId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
       toast.success('메뉴가 등록되었습니다.');
@@ -90,7 +90,7 @@ export const useEditMenuMutation = (foodTruckId: number, menuId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
       toast.success('메뉴가 수정되었습니다.');
@@ -111,7 +111,7 @@ export const useDeleteMenuMutation = (foodTruckId: number, menuId: number) => {
     mutationFn: () => deleteFoodTruckMenu({ foodTruckId, menuId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
       navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
       toast.success('메뉴가 삭제되었습니다.');
@@ -140,7 +140,7 @@ export const useUpdateMenuStatusMutation = (foodTruckId: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId),
+        queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
       toast.success('메뉴 표시 상태가 저장되었습니다.');
     },

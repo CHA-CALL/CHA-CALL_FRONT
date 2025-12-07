@@ -29,7 +29,7 @@ export const useFoodTruckMenus = (foodTruckId: number) => {
     isFetchingNextPage,
     fetchNextPage,
   } = useInfiniteQuery<CursorPagingResponseFoodTruckMenuResponse>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SCROLL(foodTruckId),
+    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SCROLL(foodTruckId),
     initialPageParam: null,
     queryFn: async ({ pageParam }) => {
       const cursor =
@@ -72,7 +72,7 @@ export const useFoodTruckMenusPreview = (foodTruckId: number) => {
     isPending: isPendingMenusPreview,
     isError: isErrorMenusPreview,
   } = useQuery<CursorPagingResponseFoodTruckMenuResponse | undefined>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.menus.PREVIEW(foodTruckId),
+    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.PREVIEW(foodTruckId),
     queryFn: () => getFoodTruckMenus(foodTruckId, true),
     staleTime: 5000,
   });
@@ -106,7 +106,7 @@ export const useSearchFoodTruckMenus = (foodTruckId: number) => {
     isPending: isPendingMenusSearch,
     isError: isErrorMenusSearch,
   } = useQuery<FoodTruckMenuResponse[] | undefined>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SEARCH(foodTruckId, searchText),
+    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SEARCH(foodTruckId, searchText),
     queryFn: () => searchFoodTruckMenus(foodTruckId, searchText),
     enabled: !!searchText,
   });

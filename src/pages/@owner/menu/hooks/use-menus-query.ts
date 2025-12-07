@@ -5,7 +5,7 @@ import type { SortType } from '@pages/@owner/menu/constant/menu-list-sort';
 
 export const useMenusQuery = (foodTruckId: number, isSorted: SortType) => {
   return useInfiniteQuery({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.menus.SORTED_LIST(foodTruckId, isSorted),
+    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId, isSorted),
     queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
       return getFoodTruckMenus({
         foodTruckId,

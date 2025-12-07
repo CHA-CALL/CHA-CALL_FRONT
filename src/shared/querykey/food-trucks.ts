@@ -14,29 +14,29 @@ export const FOOD_TRUCKS_QUERY_KEY = {
 
   SAVED: () => ['foodTrucks', 'saved'] as const,
 
-  menus: {
+  MENUS: {
     ROOT: (foodTruckId: number) =>
       [...FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId), 'menus'] as const,
 
     SORTED_LIST: (foodTruckId: number, sort: string = 'default') =>
-      [...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId), 'list', sort] as const,
+      [...FOOD_TRUCKS_QUERY_KEY.MENUS.ROOT(foodTruckId), 'list', sort] as const,
 
     ITEM: (foodTruckId: number, menuId: number) =>
       [
-        ...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId),
+        ...FOOD_TRUCKS_QUERY_KEY.MENUS.ROOT(foodTruckId),
         'item',
         menuId,
       ] as const,
 
     SCROLL: (foodTruckId: number) =>
-      [...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId), 'scroll'] as const,
+      [...FOOD_TRUCKS_QUERY_KEY.MENUS.ROOT(foodTruckId), 'scroll'] as const,
 
     PREVIEW: (foodTruckId: number) =>
-      [...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId), 'preview'] as const,
+      [...FOOD_TRUCKS_QUERY_KEY.MENUS.ROOT(foodTruckId), 'preview'] as const,
 
     SEARCH: (foodTruckId: number, searchText: string) =>
       [
-        ...FOOD_TRUCKS_QUERY_KEY.menus.ROOT(foodTruckId),
+        ...FOOD_TRUCKS_QUERY_KEY.MENUS.ROOT(foodTruckId),
         'search',
         searchText,
       ] as const,

@@ -9,7 +9,7 @@ import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 
 export const useFoodTruckImage = () => {
   return useMutation<FoodTruckImageUrl[], Error, File[]>({
-    mutationKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+    mutationKey: FOOD_TRUCKS_QUERY_KEY.LIST(),
     mutationFn: async (files: File[]) => {
       const allImageInfos: FoodTruckImageUrl[] = [];
 
