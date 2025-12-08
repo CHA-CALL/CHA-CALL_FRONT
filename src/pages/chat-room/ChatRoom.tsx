@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@icon/Icon';
+import Tag from '@ui/tag/Tag';
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
 import Navigation from '@layout/navigation/Navigation';
 import ChatInputArea from '@pages/chat-room/chat-input-area/ChatInputArea';
-import ChatMessageList from '@pages/chat-room/components/ChatMessageList';
-import NewChatIndicator from '@pages/chat-room/components/NewChatIndicator';
-import LeaveChatBottomSheet from '@pages/chat-room/components/LeaveChatBottomSheet';
-import MessageListBottomSheet from '@pages/chat-room/chat-input-area/components/MessageListBottomSheet';
+import { MessageListBottomSheet } from '@pages/chat-room/chat-input-area/components';
+import {
+  ChatMessageList,
+  LeaveChatBottomSheet,
+  NewChatIndicator,
+} from '@pages/chat-room/components';
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
-import Tag from '@components/ui/tag/Tag';
 
 export default function ChatRoom() {
   const navigate = useNavigate();

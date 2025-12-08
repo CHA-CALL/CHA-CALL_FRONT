@@ -3,7 +3,7 @@ import { addMonths, format } from 'date-fns';
 
 import { Icon } from '@components/icon/Icon';
 
-import ScheduleCalendarDay from '@pages/food-truck-detail/components/ScheduleCalendarDay';
+import { ScheduleCalendarDay } from '@pages/food-truck-detail/components';
 import getScheduleDays from '@pages/food-truck-detail/utils/get-schedule-days';
 import { DAY_OF_THE_WEEK_LABELS } from '@shared/constant/day-of-week-labels';
 

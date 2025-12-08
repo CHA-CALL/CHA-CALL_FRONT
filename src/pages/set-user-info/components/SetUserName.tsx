@@ -1,8 +1,8 @@
+import { Controller, useFormContext } from 'react-hook-form';
 import { Icon } from '@icon/Icon';
 import Input from '@ui/input/Input';
-import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
-import { Controller, useFormContext } from 'react-hook-form';
 import ErrorText from '@form/error-text/ErrorText';
+import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
 
 export default function SetUserName() {
   const {

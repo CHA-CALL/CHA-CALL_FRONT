@@ -1,7 +1,7 @@
-import Button from '@ui/button/Button';
-import { cn } from '@shared/utils/cn';
-import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
 import { Controller, useFormContext } from 'react-hook-form';
+import { cn } from '@shared/utils/cn';
+import Button from '@ui/button/Button';
+import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
 
 export default function SetUserGender() {
   const { male, female } = SET_USER_GENDER_TEXT;

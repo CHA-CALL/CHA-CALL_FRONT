@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@components/icon/Icon';
 import { ROLE } from '@constant/role';
-import ChatInputBar from '@pages/chat-room/chat-input-area/components/ChatInputBar';
-import ExtensionMenuItem from '@pages/chat-room/chat-input-area/components/ExtensionMenuItem';
+import {
+  ChatInputBar,
+  ExtensionMenuItem,
+} from '@pages/chat-room/chat-input-area/components';
 import { ALL_MENU_ITEMS } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
 import { useOnClickOutside } from '@pages/chat-room/chat-input-area/hooks/use-click-outside';
 import { useExtensionMenu } from '@pages/chat-room/chat-input-area/hooks/use-extension-menu';
