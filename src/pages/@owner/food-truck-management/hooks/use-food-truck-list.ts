@@ -15,7 +15,7 @@ import {
   getOwnerFoodTrucks,
 } from '@pages/@owner/food-truck-management/api';
 import type { ViewedStatus } from '@pages/@owner/food-truck-management/constants/viewed-status';
-import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks/food-trucks';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 
 const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
   content: [],

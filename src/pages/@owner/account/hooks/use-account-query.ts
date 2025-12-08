@@ -11,7 +11,7 @@ import type {
   RegisterBankAccountRequest,
   UpdateBankAccountRequest,
 } from 'apis/data-contracts';
-import { ACCOUNT_INFO } from '@shared/querykey/owner/account';
+import { USER_INFO } from '@shared/querykey/user-info';
 
 interface UsePatchAccountDataOptions {
   onSuccess?: () => void;
@@ -20,7 +20,7 @@ interface UsePatchAccountDataOptions {
 
 export const useFetchAccountData = () => {
   return useQuery<GetBankAccountData, Error, BankAccountResponse | null>({
-    queryKey: ACCOUNT_INFO.ALL,
+    queryKey: USER_INFO.ACCOUNTS(),
     queryFn: () => getBankAccountInfo(),
     select: response => {
       if (!response.data) {
@@ -38,7 +38,7 @@ export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
     mutationFn: ({ data }: { data: RegisterBankAccountRequest }) =>
       postBankAccountInfo(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ACCOUNTS() });
       options?.onSuccess?.();
     },
     onError: error => {
@@ -59,7 +59,7 @@ export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
       data: UpdateBankAccountRequest;
     }) => updateBankAccountInfo(accountId, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ACCOUNTS() });
       options?.onSuccess?.();
     },
     onError: error => {
@@ -76,7 +76,7 @@ export const useDeleteAccount = (options?: UsePatchAccountDataOptions) => {
     mutationFn: ({ accountId }: { accountId: number }) =>
       deleteBankAccountInfo(accountId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ACCOUNTS() });
       options?.onSuccess?.();
     },
     onError: error => {
