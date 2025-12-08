@@ -1,4 +1,4 @@
-import type { EstimateFormData } from '@pages/@owner/estimate/utils/estimate.schema';
+import type { EstimateFormData } from '@pages/@owner/estimate/schema/estimate.schema';
 import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
 import {
   ESTIMATE_ERROR_MESSAGE,

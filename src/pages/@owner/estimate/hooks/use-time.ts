@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { UseFormSetError, UseFormSetValue } from 'react-hook-form';
 
-import type { EstimateFormData } from '@pages/@owner/estimate/utils/estimate.schema';
+import type { EstimateFormData } from '@pages/@owner/estimate/schema/estimate.schema';
 import type { TimeType } from '@type/time-types';
 import { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
 

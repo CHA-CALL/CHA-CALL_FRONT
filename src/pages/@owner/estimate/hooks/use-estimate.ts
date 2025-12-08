@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   estimateSchema,
   type EstimateFormData,
-} from '@pages/@owner/estimate/utils/estimate.schema';
+} from '@pages/@owner/estimate/schema/estimate.schema';
 import type { NeedElectricityKey } from '@constant/need-electricity';
 import {
   useEstimateDate,
