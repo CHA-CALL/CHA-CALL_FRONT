@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { ROUTES } from '@router/constant/routes';
+import useToast from '@hooks/use-toast';
 import {
   useChangeFoodTrucksViewedStatus,
   useDeleteOwnerFoodTrucks,
 } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
-import useToast from '@hooks/use-toast';
-import type { ViewedStatus } from '../constants/viewed-status';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
+import type { ViewedStatus } from '@pages/@owner/food-truck-management/constants/viewed-status';
 
 export const useFoodTruckEditMode = () => {
   const navigate = useNavigate();

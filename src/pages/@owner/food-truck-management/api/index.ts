@@ -5,7 +5,7 @@ import type {
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
 import { PAGE_SIZE } from '@constant/page-size';
-import type { ViewedStatus } from '../constants/viewed-status';
+import type { ViewedStatus } from '@pages/@owner/food-truck-management/constants/viewed-status';
 
 export interface GetOwnerFoodTrucksParams {
   cursor?: number;
