@@ -1,4 +1,4 @@
-import ConfirmModal from '@components/ui/modal/ConfirmModal';
+import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof ConfirmModal> = {

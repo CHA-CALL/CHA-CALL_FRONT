@@ -1,4 +1,4 @@
-import ConfirmModal from '@components/ui/modal/ConfirmModal';
+import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
 import ChatListManageBar from '@pages/chat-list/components/ChatListManageBar';

@@ -1,4 +1,4 @@
-import AlertModal from '@components/ui/modal/AlertModal';
+import AlertModal from '@components/ui/modal-alert/AlertModal';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof AlertModal> = {
