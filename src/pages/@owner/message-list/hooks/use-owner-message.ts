@@ -10,11 +10,11 @@ import {
   postOwnerChatTemplates,
   deleteOwnerChatTemplates,
 } from '@pages/@owner/message-list/api';
-import { OWNER_CHAT_TEMPLATES } from '@shared/querykey/owner/chat';
+import { USER_INFO } from '@shared/querykey/user-info';
 
 export const useOwnerChatTemplates = () => {
   return useQuery<GetChatTemplatesData>({
-    queryKey: OWNER_CHAT_TEMPLATES.ALL,
+    queryKey: USER_INFO.CHATS(),
     queryFn: () => getOwnerChatTemplates(),
   });
 };
@@ -26,7 +26,7 @@ export const usePostOwnerChatTemplates = () => {
     mutationFn: (content: string) => postOwnerChatTemplates(content),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: OWNER_CHAT_TEMPLATES.ALL,
+        queryKey: USER_INFO.CHATS(),
       });
     },
   });
@@ -40,7 +40,7 @@ export const useDeleteOwnerChatTemplates = () => {
       deleteOwnerChatTemplates(chatTemplateId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: OWNER_CHAT_TEMPLATES.ALL,
+        queryKey: USER_INFO.CHATS(),
       });
     },
     onError: error => {

@@ -10,15 +10,14 @@ import {
   getPresignedUrls,
   uploadImage,
 } from '@pages/@owner/food-truck-onboarding/api';
-import { useMutation } from '@tanstack/react-query';
-import { ONBOARDING_QUERY_KEY } from '@shared/querykey/food-truck-onboarding';
-import type { FoodTruckCreateRequest } from 'apis/data-contracts';
-
 import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 import { useNavigate } from 'react-router-dom';
 import useToast from '@shared/hooks/use-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
+import type { FoodTruckCreateRequest } from 'apis/data-contracts';
 
 export type OwnerFormData = OnboardingFormData;
 
@@ -35,12 +34,10 @@ interface UploadFilesResult {
 export const useFoodTruckInput = () => {
   const navigate = useNavigate();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
-  const {
-    isNameVerified,
-    handleCheckName,
-    resetVerification,
-  } = useFoodTruckName();
+  const { isNameVerified, handleCheckName, resetVerification } =
+    useFoodTruckName();
 
   const {
     handleSubmit,
@@ -65,11 +62,10 @@ export const useFoodTruckInput = () => {
     Error,
     UploadFilesParams
   >({
-    mutationKey: ONBOARDING_QUERY_KEY.UPLOAD_FILES(),
     mutationFn: async ({ bizRegCert, otherDocs }) => {
       const allFiles = [bizRegCert, ...otherDocs];
-      const fileExtensions = allFiles.map((file) =>
-        file.name.split('.').pop() || ''
+      const fileExtensions = allFiles.map(
+        file => file.name.split('.').pop() || ''
       );
 
       const imageInfos = await getPresignedUrls(fileExtensions);
@@ -87,11 +83,11 @@ export const useFoodTruckInput = () => {
       );
 
       const bizRegCertUrl = imageInfos[0].fileUrl || '';
-      const otherDocsUrls = imageInfos.slice(1).map((info) => info.fileUrl || '');
+      const otherDocsUrls = imageInfos.slice(1).map(info => info.fileUrl || '');
 
       return { bizRegCertUrl, otherDocsUrls };
     },
-    onError: (error) => {
+    onError: error => {
       console.error('파일 업로드 실패:', error);
       toast.error('파일 업로드에 실패했습니다.');
     },
@@ -102,15 +98,17 @@ export const useFoodTruckInput = () => {
     Error,
     FoodTruckCreateRequest
   >({
-    mutationKey: ONBOARDING_QUERY_KEY.CREATE(),
-    mutationFn: async (params) => {
+    mutationFn: async params => {
       await createNewFoodTruck(params);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+      });
       toast.success('푸드트럭이 등록되었습니다.');
       navigate('/owner/food-truck-form');
     },
-    onError: (error) => {
+    onError: error => {
       console.error('등록 실패:', error);
       toast.error('푸드트럭 등록에 실패했습니다.');
     },
@@ -174,10 +172,11 @@ export const useFoodTruckInput = () => {
     }
 
     try {
-      const { bizRegCertUrl, otherDocsUrls } = await uploadFilesMutation.mutateAsync({
-        bizRegCert,
-        otherDocs,
-      });
+      const { bizRegCertUrl, otherDocsUrls } =
+        await uploadFilesMutation.mutateAsync({
+          bizRegCert,
+          otherDocs,
+        });
 
       await createFoodTruckMutation.mutateAsync({
         name: formData.name,
