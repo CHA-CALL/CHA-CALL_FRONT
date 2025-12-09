@@ -4,12 +4,6 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { arrayMove } from '@dnd-kit/sortable';
 
-import { isAcceptableFile, isFileSizeValid } from '@shared/utils/image';
-import {
-  CANNOT_UPLOAD_FILE_MB,
-  NOT_ALLOWED_FILE_TYPE,
-} from '@shared/constant/image';
-
 import {
   useFoodTruckImage,
   useUploadImage,
@@ -18,6 +12,7 @@ import {
 
 import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-display';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
+import { imageFileSchema } from '@pages/@owner/upload-food-truck-images/schema/upload-food-truck-images.schema';
 
 export const useUploadImages = () => {
   const navigate = useNavigate();
@@ -68,14 +63,14 @@ export const useUploadImages = () => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
-    if (!isAcceptableFile(selectedFile) || !isFileSizeValid(selectedFile)) {
-      setError(
-        isAcceptableFile(selectedFile)
-          ? CANNOT_UPLOAD_FILE_MB
-          : NOT_ALLOWED_FILE_TYPE
-      );
+    const result = imageFileSchema.safeParse(selectedFile);
+
+    if (!result.success) {
+      setError(result.error.issues[0].message);
+      e.target.value = '';
       return;
     }
+
     setError(null);
 
     setImages(prev => [
