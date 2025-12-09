@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-
-import type { EstimateFormData } from '@pages/@owner/estimate/utils/estimate.schema';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import type { TimeType } from '@type/time-types';
-import { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
 
-export const useEstimateTime = () => {
+export const useActiveTime = () => {
   const {
     setValue,
     watch,
     formState: { errors },
     setError,
-  } = useFormContext<EstimateFormData>();
-  const formActiveTime = watch('activeTime');
+  } = useFormContext<FoodTruckFormData>();
 
-  //time 관련 로직
+  const formActiveTime = watch('activeTime');
+  const formTimeDiscussRequired = watch('timeDiscussRequired');
+
   const [startActiveTime, setStartActiveTime] = useState<TimeType | null>(null);
   const [endActiveTime, setEndActiveTime] = useState<TimeType | null>(null);
 
-  const updateStartActiveTime = (activeTime: TimeType | null) => {
+  const updateActiveTimeStart = (activeTime: TimeType | null) => {
     setStartActiveTime(activeTime);
   };
-  const updateEndActiveTime = (activeTime: TimeType | null) => {
+  const updateActiveTimeEnd = (activeTime: TimeType | null) => {
     setEndActiveTime(activeTime);
   };
 
@@ -38,20 +38,20 @@ export const useEstimateTime = () => {
     }
     if (!startActiveTime) {
       setError('activeTime', {
-        message: ESTIMATE_ERROR_MESSAGE.activeTime.start,
+        message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.start,
       });
       return;
     }
     if (!endActiveTime) {
       setError('activeTime', {
-        message: ESTIMATE_ERROR_MESSAGE.activeTime.end,
+        message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.end,
       });
       return;
     }
     if (startActiveTime && endActiveTime) {
       if (isInvalidTimeRange(startActiveTime, endActiveTime)) {
         setError('activeTime', {
-          message: ESTIMATE_ERROR_MESSAGE.activeTime.invalid,
+          message: FOOD_TRUCK_ERROR_MESSAGE.activeTime.invalid,
         });
         return;
       }
@@ -104,11 +104,24 @@ export const useEstimateTime = () => {
     });
   }, [formActiveTime]);
 
+  const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {
+    setValue('timeDiscussRequired', timeDiscussRequired, {
+      shouldValidate: true,
+    });
+  };
+
   return {
+    // Data
     startActiveTime,
     endActiveTime,
+    timeDiscussRequired: formTimeDiscussRequired,
+
+    // Errors
     activeTimeError: errors.activeTime?.message,
-    updateStartActiveTime,
-    updateEndActiveTime,
+
+    // Actions
+    updateActiveTimeStart,
+    updateActiveTimeEnd,
+    updateTimeDiscussRequired,
   };
 };
