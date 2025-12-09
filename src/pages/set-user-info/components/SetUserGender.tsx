@@ -2,18 +2,18 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { cn } from '@shared/utils/cn';
 import Button from '@ui/button/Button';
 import { SET_USER_GENDER_TEXT } from '@pages/set-user-info/constant/set-user-constant';
+import FormFieldLayout from '@layout/form/FormFieldLayout';
 
 export default function SetUserGender() {
   const { male, female } = SET_USER_GENDER_TEXT;
   const { control } = useFormContext();
 
   return (
-    <Controller
-      name='gender'
-      control={control}
-      render={({ field }) => (
-        <div className='flex flex-1 flex-col gap-[1rem]'>
-          <h2 className='title-sb-14 px-[0.5rem]'>성별</h2>
+    <FormFieldLayout title='성별' isRequired={false}>
+      <Controller
+        name='gender'
+        control={control}
+        render={({ field }) => (
           <div className='flex w-full gap-[1rem]'>
             <Button
               variant='cta'
@@ -42,8 +42,8 @@ export default function SetUserGender() {
               {female}
             </Button>
           </div>
-        </div>
-      )}
-    />
+        )}
+      />
+    </FormFieldLayout>
   );
 }

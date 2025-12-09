@@ -3,6 +3,7 @@ import { Icon } from '@icon/Icon';
 import Input from '@ui/input/Input';
 import ErrorText from '@form/error-text/ErrorText';
 import { USER_NAME_MAX_LENGTH } from '@pages/set-user-info/constant/set-user-constant';
+import FormFieldLayout from '@layout/form/FormFieldLayout';
 
 export default function SetUserName() {
   const {
@@ -15,32 +16,30 @@ export default function SetUserName() {
     setValue('name', '', { shouldValidate: true });
   };
   return (
-    <div className='flex flex-1 flex-col gap-[1rem]'>
-      <nav className='flex flex-col gap-[0.2rem] px-[0.5rem]'>
-        <h2 className='title-sb-14'>이름</h2>
-      </nav>
-
-      <Controller
-        name='name'
-        control={control}
-        render={({ field }) => (
-          <Input
-            value={field.value}
-            placeholder='이름 입력'
-            maxLength={field.value === '' ? undefined : USER_NAME_MAX_LENGTH}
-            rightComponent={
-              <button className='translate-y-[0.2rem]' type='button'>
-                <Icon name='ic_close' />
-              </button>
-            }
-            handleRightClick={handleClearName}
-            onChange={field.onChange}
-          />
+    <FormFieldLayout title='이름' isRequired={false}>
+      <div className='flex flex-col gap-[1rem]'>
+        <Controller
+          name='name'
+          control={control}
+          render={({ field }) => (
+            <Input
+              value={field.value}
+              placeholder={'이름을 입력해주세요.'}
+              maxLength={field.value === '' ? undefined : USER_NAME_MAX_LENGTH}
+              rightComponent={
+                <button className='translate-y-[0.2rem]' type='button'>
+                  <Icon name='ic_close' />
+                </button>
+              }
+              handleRightClick={handleClearName}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        {errors.name?.message && (
+          <ErrorText text={errors.name.message?.toString()} />
         )}
-      />
-      {errors.name?.message && (
-        <ErrorText text={errors.name.message?.toString()} />
-      )}
-    </div>
+      </div>
+    </FormFieldLayout>
   );
 }
