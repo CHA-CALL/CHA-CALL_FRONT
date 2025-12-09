@@ -9,7 +9,7 @@ import Reservation from '@/pages/reservation/Reservation';
 import FoodTruckOnboarding from '@pages/@owner/food-truck-onboarding/FoodTruckOnboarding';
 import SetRegionGlobal from '@pages/set-region-global/SetRegion';
 import MessageList from '@pages/@owner/message-list/MessageList';
-import MessageForm from '@pages/@owner/message-list/components/MessageForm';
+import MessageForm from '@pages/@owner/message-list/MessageForm';
 import MyPage from '@pages/mypage/MyPage';
 import ProfileSetting from '@pages/profile-setting/ProfileSetting';
 import Account from '@pages/@owner/account/Account';

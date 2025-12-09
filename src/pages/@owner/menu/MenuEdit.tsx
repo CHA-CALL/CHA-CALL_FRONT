@@ -3,13 +3,11 @@ import { useParams, useLocation } from 'react-router-dom';
 import Navigation from '@components/layout/navigation/Navigation';
 import Button from '@components/ui/button/Button';
 import { Icon } from '@components/icon/Icon';
-import { useFormValidation } from '@pages/@owner/menu/hooks/use-form-validation';
-import MenuForm from '@pages/@owner/menu/components/MenuForm';
-import MenuDeleteModal from '@pages/@owner/menu/components/MenuDeleteModal';
 import { convertURLtoFile } from '@utils/convert-image-url';
-import { useEditMenu } from '@pages/@owner/menu/hooks/use-menu-edit';
 import useToast from '@shared/hooks/use-toast';
 import { FormProvider } from 'react-hook-form';
+import { MenuDeleteModal, MenuForm } from '@pages/@owner/menu/components';
+import { useEditMenu, useFormValidation } from '@pages/@owner/menu/hooks';
 
 export default function MenuEdit() {
   const location = useLocation();
@@ -95,7 +93,7 @@ export default function MenuEdit() {
         updatePrice={updatePrice}
         updateImageUrl={updateImageUrl}
       />
-      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center'>
+      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
         <div className='flex gap-[1rem]'>
           <Button
             variant='cta'

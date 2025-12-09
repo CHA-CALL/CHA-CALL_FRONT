@@ -2,10 +2,9 @@ import { useParams } from 'react-router-dom';
 import Navigation from '@components/layout/navigation/Navigation';
 import Button from '@components/ui/button/Button';
 import { Icon } from '@shared/components/icon/Icon';
-import MenuForm from '@pages/@owner/menu/components/MenuForm';
-import { useFormValidation } from '@pages/@owner/menu/hooks/use-form-validation';
-import { useRegisterMenu } from '@pages/@owner/menu/hooks/use-menu-register';
 import { FormProvider } from 'react-hook-form';
+import { useFormValidation, useRegisterMenu } from '@pages/@owner/menu/hooks';
+import { MenuForm } from '@pages/@owner/menu/components';
 
 export default function MenuRegister() {
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
@@ -38,7 +37,7 @@ export default function MenuRegister() {
         updateImageUrl={updateImageUrl}
       />
 
-      <footer className='bottom-[0] w-full bg-white px-[2rem] py-[1.7rem] fixed-center'>
+      <footer className='fixed-center bottom-[0] w-full bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}

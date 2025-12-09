@@ -84,7 +84,7 @@ export default function MessageForm() {
           handleChange={handleChangeMessage}
         />
       </div>
-      <footer className='bottom-[0] bg-white px-[2rem] py-[1.7rem] fixed-center'>
+      <footer className='fixed-center bottom-[0] bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
           buttonStyle={message.length === 0 ? 'disabled' : 'active'}

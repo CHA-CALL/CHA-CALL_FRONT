@@ -11,19 +11,15 @@ import {
   FoodTruckOperatingInfo,
   FoodTruckOption,
   FoodTruckPhoto,
-} from '@pages/@owner/food-truck-form/@section/basic-info-section/index';
-import {
   ActiveTime,
   ActiveDate,
-} from '@pages/@owner/food-truck-form/@section/time-section/index';
-import {
+  RegionSection,
+  MenuCategory,
   AvailableQuantity,
   NeedElectricity,
   PaymentMethod,
-} from '@pages/@owner/food-truck-form/@section/category-section/index';
-import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-section';
-import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
-import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
+  MenuInfo,
+} from '@pages/@owner/food-truck-form/@section';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 
 // 메인 컴포넌트
