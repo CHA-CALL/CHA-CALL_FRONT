@@ -5,20 +5,10 @@ import {
   type EstimateFormData,
 } from '@pages/@owner/estimate/utils/estimate.schema';
 import type { NeedElectricityKey } from '@constant/need-electricity';
-import {
-  useEstimateDate,
-  useEstimateTime,
-} from '@pages/@owner/estimate/hooks/index';
+import { useEstimateDate } from '@pages/@owner/estimate/hooks/index';
 
 export const useEstimateForm = () => {
-  const {
-    handleSubmit,
-    setValue,
-    trigger,
-    formState: { errors, isValid },
-    setError,
-    watch,
-  } = useForm<EstimateFormData>({
+  const methods = useForm<EstimateFormData>({
     resolver: zodResolver(estimateSchema),
     defaultValues: {
       price: undefined,
@@ -32,15 +22,16 @@ export const useEstimateForm = () => {
     },
     mode: 'onChange',
   });
+  const {
+    handleSubmit,
+    setValue,
+    trigger,
+    formState: { errors, isValid },
+    setError,
+    watch,
+  } = methods;
 
   const formData = watch();
-
-  const {
-    startActiveTime,
-    endActiveTime,
-    updateStartActiveTime,
-    updateEndActiveTime,
-  } = useEstimateTime({ formData, setValue, setError });
 
   const {
     updateAvailableDateById,
@@ -108,18 +99,13 @@ export const useEstimateForm = () => {
   };
 
   return {
+    methods,
     handleSubmit: handleSubmit(onSubmit),
     formData: formDatas,
-    activeTime: {
-      startActiveTime,
-      endActiveTime,
-    },
     errors: combinedErrors,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateStartActiveTime,
-    updateEndActiveTime,
     updateAvailableDateById,
     removeAvailableDateById,
     updateFood,
