@@ -3,7 +3,12 @@ import type {
   RegisterChatTemplateData,
   DeleteChatTemplateData,
 } from 'apis/data-contracts';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import {
   getOwnerChatTemplates,
@@ -12,11 +17,16 @@ import {
 } from '@pages/@owner/message-list/api';
 import { USER_INFO } from '@shared/querykey/user-info';
 
+export const ownerChatQueries = {
+  list: () =>
+    queryOptions<GetChatTemplatesData>({
+      queryKey: USER_INFO.CHATS(),
+      queryFn: () => getOwnerChatTemplates(),
+    }),
+};
+
 export const useOwnerChatTemplates = () => {
-  return useQuery<GetChatTemplatesData>({
-    queryKey: USER_INFO.CHATS(),
-    queryFn: () => getOwnerChatTemplates(),
-  });
+  return useQuery(ownerChatQueries.list());
 };
 
 export const usePostOwnerChatTemplates = () => {

@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {
   postBankAccountInfo,
   deleteBankAccountInfo,
@@ -18,17 +23,22 @@ interface UsePatchAccountDataOptions {
   onError?: (_error: Error) => void;
 }
 
+export const accountQueries = {
+  detail: () =>
+    queryOptions<GetBankAccountData, Error, BankAccountResponse | null>({
+      queryKey: USER_INFO.ACCOUNTS(),
+      queryFn: () => getBankAccountInfo(),
+      select: response => {
+        if (!response.data) {
+          return null;
+        }
+        return response.data;
+      },
+    }),
+};
+
 export const useFetchAccountData = () => {
-  return useQuery<GetBankAccountData, Error, BankAccountResponse | null>({
-    queryKey: USER_INFO.ACCOUNTS(),
-    queryFn: () => getBankAccountInfo(),
-    select: response => {
-      if (!response.data) {
-        return null;
-      }
-      return response.data;
-    },
-  });
+  return useQuery(accountQueries.detail());
 };
 
 export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
@@ -68,7 +78,6 @@ export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
   });
 };
 
-/** 현재 삭제 버튼 없음. */
 export const useDeleteAccount = (options?: UsePatchAccountDataOptions) => {
   const queryClient = useQueryClient();
 
