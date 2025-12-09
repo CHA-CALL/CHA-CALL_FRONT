@@ -1,19 +1,23 @@
 import { useNavigate } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
 
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
-import { useEstimateForm, useEstimateTime } from '@pages/@owner/estimate/hooks';
+import {
+  useEstimateForm,
+  useEstimateTime,
+  useEstimateDate,
+} from '@pages/@owner/estimate/hooks';
 import {
   Food,
   Price,
   RegionSection,
-  ActiveDate,
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
-import { FormProvider } from 'react-hook-form';
 import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
 
 export default function Estimate() {
   const navigate = useNavigate();
@@ -25,13 +29,10 @@ export default function Estimate() {
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateAvailableDateById,
-    removeAvailableDateById,
     updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
   } = useEstimateForm();
 
   const handleNavigateBack = () => {
@@ -52,13 +53,7 @@ export default function Estimate() {
           updateDetailLocation={updateDetailLocation}
           error={errors.location || errors.detailLocation}
         />
-        <ActiveDate
-          availableDates={formData.availableDates}
-          updateAvailableDateById={updateAvailableDateById}
-          removeAvailableDateById={removeAvailableDateById}
-          handleAddAvailableDate={handleAddAvailableDate}
-          error={errors.availableDates}
-        />
+        <ActiveDate useActiveDateHook={useEstimateDate} />
         <ActiveTime useActiveTimeHook={useEstimateTime} />
         <Food
           food={formData.food}

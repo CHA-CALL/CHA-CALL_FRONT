@@ -12,7 +12,7 @@ import {
   FoodTruckOption,
   FoodTruckPhoto,
 } from '@pages/@owner/food-truck-form/@section/basic-info-section/index';
-import { ActiveDate } from '@pages/@owner/food-truck-form/@section/time-section/index';
+
 import {
   AvailableQuantity,
   NeedElectricity,
@@ -23,7 +23,9 @@ import RegionSection from '@pages/@owner/food-truck-form/@section/region-section
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { useFoodTruckFormTime } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-time';
+import { useFoodTruckFormDate } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-date';
 import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
@@ -57,7 +59,6 @@ export default function FoodTruckForm() {
         <FoodTruckName />
         <FoodTruckDescription />
         <FoodTruckPhoneNumber />
-        <RegionSection />
         <ActiveTime useActiveTimeHook={useFoodTruckFormTime} />
         <RegionSection />
         <MenuCategory />
@@ -66,9 +67,7 @@ export default function FoodTruckForm() {
         <PaymentMethod />
         <MenuInfo />
         <FoodTruckPhoto />
-
-        <ActiveDate />
-
+        <ActiveDate useActiveDateHook={useFoodTruckFormDate} />
         <FoodTruckOperatingInfo />
         <FoodTruckOption />
       </div>

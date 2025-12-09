@@ -1,14 +1,17 @@
 import { useFormContext } from 'react-hook-form';
+
+import type { AvailableDate } from '@type/available-date';
+import { DEFAULT_DATE } from '@components/active-date/constant/default-date';
+import { generateDateId } from '@utils/date/generate-date-Id';
+import { isDateOverlapping } from '@utils/date/is-date-over-lapping';
+
 import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-import type { AvailableDate } from '@type/available-date';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
-import { generateDateId } from '@pages/@owner/food-truck-form/utils/generate-date-Id';
-import { isDateOverlapping } from '@pages/@owner/food-truck-form/utils/is-date-over-lapping';
 
-export const useActiveDate = () => {
+export const useFoodTruckFormDate = () => {
   const {
     setValue,
     watch,
@@ -26,7 +29,7 @@ export const useActiveDate = () => {
   ) => {
     const currentDates = formData.availableDates ?? [];
 
-    if (id === 'default-date') {
+    if (id === DEFAULT_DATE) {
       const newId = generateDateId();
       setValue(
         'availableDates',

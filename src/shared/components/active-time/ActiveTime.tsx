@@ -4,7 +4,7 @@ import ButtonCheck from '@components/ui/button-check/ButtonCheck';
 import ErrorText from '@form/error-text/ErrorText';
 import type { TimeType } from '@type/time-types';
 
-interface ActiveTimeHook {
+interface ActiveTimeHookResult {
   startActiveTime: TimeType | null;
   endActiveTime: TimeType | null;
   timeDiscussRequired?: boolean;
@@ -15,7 +15,7 @@ interface ActiveTimeHook {
 }
 
 interface ActiveTimeProps {
-  useActiveTimeHook: () => ActiveTimeHook;
+  useActiveTimeHook: () => ActiveTimeHookResult;
 }
 
 export default function ActiveTime({ useActiveTimeHook }: ActiveTimeProps) {

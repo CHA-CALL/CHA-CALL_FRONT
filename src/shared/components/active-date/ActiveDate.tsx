@@ -1,32 +1,65 @@
 import { useState } from 'react';
-import BottomSheet from '@layout/bottom-sheet/BottomSheet';
-import Calendar from '@components/calendar/Calendar';
-import type { SelectedDate } from '@type/calendar-types';
-import FormLayout from '@components/layout/form-layout/FormLayout';
-import ButtonText from '@ui/button-text/ButtonText';
-import ButtonDate from '@ui/button-date/ButtonDate';
-import ErrorText from '@form/error-text/ErrorText';
-import { useActiveDate } from '@pages/@owner/food-truck-form/hooks/use-active-date';
 
-export default function ActiveDate() {
+import Calendar from '@components/calendar/Calendar';
+import BottomSheet from '@components/layout/bottom-sheet/BottomSheet';
+import FormLayout from '@components/layout/form-layout/FormLayout';
+import ButtonText from '@components/ui/button-text/ButtonText';
+import ButtonDate from '@components/ui/button-date/ButtonDate';
+import ErrorText from '@components/form/error-text/ErrorText';
+import type { AvailableDate } from '@type/available-date';
+import type { SelectedDate } from '@type/calendar-types';
+import { DEFAULT_DATE } from '@components/active-date/constant/default-date';
+import { formatDateToDot } from '@utils/date/date-formatter';
+
+interface ActiveDateHookResult {
+  availableDates: AvailableDate[];
+  updateAvailableDateById: (
+    _id: string,
+    _dateData: { startDate: string; endDate: string }
+  ) => void;
+  removeAvailableDateById: (_id: string) => void;
+  handleAddAvailableDate: () => void;
+  availableDatesError?: string;
+}
+
+interface ActiveDateProps {
+  useActiveDateHook: () => ActiveDateHookResult;
+}
+
+export default function ActiveDate({ useActiveDateHook }: ActiveDateProps) {
   const {
     availableDates,
     handleAddAvailableDate,
     updateAvailableDateById,
     removeAvailableDateById,
     availableDatesError,
-  } = useActiveDate();
+  } = useActiveDateHook();
+
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedDate = availableDates.find(date => date.id === selectedId);
+
+  const handleOpenCalendar = (dateId: string) => {
+    setSelectedId(dateId);
+    setIsCalendarOpen(true);
+  };
+  const handleCloseCalendar = () => {
+    setIsCalendarOpen(false);
+  };
+
+  const handleApplyDate = (date: SelectedDate) => {
+    updateAvailableDateById(selectedId ?? '', {
+      startDate: formatDateToDot(date.startDate),
+      endDate: formatDateToDot(date.endDate),
+    });
+    setIsCalendarOpen(false);
+  };
 
   return (
     <>
       <BottomSheet
         isOpen={isCalendarOpen}
-        handleCloseBottomSheet={() => {
-          setIsCalendarOpen(false);
-        }}
+        handleCloseBottomSheet={handleCloseCalendar}
         sheetHeight={490}
       >
         <Calendar
@@ -40,16 +73,8 @@ export default function ActiveDate() {
                 ? new Date(selectedDate.endDate)
                 : null,
           }}
-          handleApplyDate={(date: SelectedDate) => {
-            updateAvailableDateById(selectedId ?? '', {
-              startDate: date.startDate?.toISOString().split('T')[0] ?? '',
-              endDate: date.endDate?.toISOString().split('T')[0] ?? '',
-            });
-            setIsCalendarOpen(false);
-          }}
-          handleCloseBottomSheet={() => {
-            setIsCalendarOpen(false);
-          }}
+          handleApplyDate={(date: SelectedDate) => handleApplyDate(date)}
+          handleCloseBottomSheet={handleCloseCalendar}
           isOpen={isCalendarOpen}
         />
       </BottomSheet>
@@ -68,13 +93,8 @@ export default function ActiveDate() {
               key={date.id}
               startDate={date.startDate ? new Date(date.startDate) : null}
               endDate={date.endDate ? new Date(date.endDate) : null}
-              handleOpenCalendar={() => {
-                setSelectedId(date.id);
-                setIsCalendarOpen(true);
-              }}
-              handleDeleteSchedule={() => {
-                removeAvailableDateById(date.id);
-              }}
+              handleOpenCalendar={() => handleOpenCalendar(date.id)}
+              handleDeleteSchedule={() => removeAvailableDateById(date.id)}
             />
           ))
         ) : (
@@ -82,7 +102,7 @@ export default function ActiveDate() {
             startDate={null}
             endDate={null}
             handleOpenCalendar={() => {
-              setSelectedId('default-date');
+              setSelectedId(DEFAULT_DATE);
               setIsCalendarOpen(true);
             }}
             handleDeleteSchedule={() => {}}

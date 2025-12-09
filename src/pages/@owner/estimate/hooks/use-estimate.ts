@@ -5,7 +5,6 @@ import {
   type EstimateFormData,
 } from '@pages/@owner/estimate/utils/estimate.schema';
 import type { NeedElectricityKey } from '@constant/need-electricity';
-import { useEstimateDate } from '@pages/@owner/estimate/hooks/index';
 
 export const useEstimateForm = () => {
   const methods = useForm<EstimateFormData>({
@@ -27,17 +26,10 @@ export const useEstimateForm = () => {
     setValue,
     trigger,
     formState: { errors, isValid },
-    setError,
     watch,
   } = methods;
 
   const formData = watch();
-
-  const {
-    updateAvailableDateById,
-    removeAvailableDateById,
-    handleAddAvailableDate,
-  } = useEstimateDate({ formData, setValue, setError });
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -106,12 +98,9 @@ export const useEstimateForm = () => {
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateAvailableDateById,
-    removeAvailableDateById,
     updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
   };
 };
