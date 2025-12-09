@@ -3,31 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
-import { useEstimateForm } from '@pages/@owner/estimate/hooks';
+import { useEstimateForm, useEstimateTime } from '@pages/@owner/estimate/hooks';
 import {
   Food,
   Price,
   RegionSection,
   ActiveDate,
-  ActiveTime,
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
+import { FormProvider } from 'react-hook-form';
+import ActiveTime from '@components/active-time/ActiveTime';
 
 export default function Estimate() {
   const navigate = useNavigate();
   const {
+    methods,
     handleSubmit,
     formData,
     errors,
-    activeTime,
     isValid,
     updateLocation,
     updateDetailLocation,
     updateAvailableDateById,
     removeAvailableDateById,
-    updateStartActiveTime,
-    updateEndActiveTime,
     updateFood,
     updatePrice,
     updateNeedElectricity,
@@ -39,7 +38,7 @@ export default function Estimate() {
     navigate(-1);
   };
   return (
-    <>
+    <FormProvider {...methods}>
       <Navigation
         centerContent='예약 견적서 작성'
         leftIcon={<Icon name='ic_back' />}
@@ -60,12 +59,7 @@ export default function Estimate() {
           handleAddAvailableDate={handleAddAvailableDate}
           error={errors.availableDates}
         />
-        <ActiveTime
-          activeTime={activeTime}
-          updateStartActiveTime={updateStartActiveTime}
-          updateEndActiveTime={updateEndActiveTime}
-          error={errors.activeTime}
-        />
+        <ActiveTime useActiveTimeHook={useEstimateTime} />
         <Food
           food={formData.food}
           updateFood={updateFood}
@@ -93,6 +87,6 @@ export default function Estimate() {
           저장하기
         </Button>
       </footer>
-    </>
+    </FormProvider>
   );
 }
