@@ -102,10 +102,7 @@ export default function ActiveDate({ useActiveDateHook }: ActiveDateProps) {
           <ButtonDate
             startDate={null}
             endDate={null}
-            handleOpenCalendar={() => {
-              setSelectedId(DEFAULT_DATE);
-              setIsCalendarOpen(true);
-            }}
+            handleOpenCalendar={() => handleOpenCalendar(DEFAULT_DATE)}
             handleDeleteSchedule={() => {}}
           />
         )}

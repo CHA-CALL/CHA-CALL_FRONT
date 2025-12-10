@@ -64,6 +64,7 @@ export const useEstimateForm = () => {
       return;
     }
     if (formData) {
+      console.info(formData);
       alert('견적 요청 제출');
     }
   };
