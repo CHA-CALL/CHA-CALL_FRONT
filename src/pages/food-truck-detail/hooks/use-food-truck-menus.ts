@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useQuery,
+  type QueryFunctionContext,
+} from '@tanstack/react-query';
 import type {
   CursorPagingResponseFoodTruckMenuResponse,
   FoodTruckMenuResponse,
@@ -19,6 +23,36 @@ const FALLBACK: CursorPagingResponseFoodTruckMenuResponse = {
   hasNext: false,
 };
 
+const foodTruckMenusScrollQuery = (foodTruckId: number) => ({
+  queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SCROLL(foodTruckId),
+  queryFn: async ({
+    pageParam,
+  }: QueryFunctionContext<readonly unknown[], number | null>) => {
+    const cursor = pageParam ?? null;
+    const response = await getFoodTruckMenus(foodTruckId, false, cursor);
+    return response ?? FALLBACK;
+  },
+  initialPageParam: null as number | null,
+  getNextPageParam: (last: CursorPagingResponseFoodTruckMenuResponse) => {
+    if (last.hasNext) return last.lastCursor;
+    return undefined;
+  },
+  refetchOnWindowFocus: true,
+  staleTime: 5000,
+});
+
+const foodTruckMenusPreviewQuery = (foodTruckId: number) => ({
+  queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.PREVIEW(foodTruckId),
+  queryFn: () => getFoodTruckMenus(foodTruckId, true),
+  staleTime: 5000,
+});
+
+const searchFoodTruckMenusQuery = (foodTruckId: number, searchText: string) => ({
+  queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SEARCH(foodTruckId, searchText),
+  queryFn: () => searchFoodTruckMenus(foodTruckId, searchText),
+  enabled: !!searchText,
+});
+
 export const useFoodTruckMenus = (foodTruckId: number) => {
   const { ref: listBottomRef, inView } = useInView();
 
@@ -28,22 +62,8 @@ export const useFoodTruckMenus = (foodTruckId: number) => {
     isError: isErrorMenus,
     isFetchingNextPage,
     fetchNextPage,
-  } = useInfiniteQuery<CursorPagingResponseFoodTruckMenuResponse>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SCROLL(foodTruckId),
-    initialPageParam: null,
-    queryFn: async ({ pageParam }) => {
-      const cursor =
-        pageParam === null || typeof pageParam === 'number' ? pageParam : null;
+  } = useInfiniteQuery(foodTruckMenusScrollQuery(foodTruckId));
 
-      const response = await getFoodTruckMenus(foodTruckId, false, cursor);
-      return response ?? FALLBACK;
-    },
-    getNextPageParam: last => {
-      if (last.hasNext) return last.lastCursor;
-    },
-    refetchOnWindowFocus: true,
-    staleTime: 5000,
-  });
   const foodTruckMenusData: FoodTruckMenuResponse[] =
     menusData?.pages.flatMap(p => p.content ?? []) ?? [];
   const hasNextFoodTruckMenus = menusData?.pages.at(-1)?.hasNext ?? false;
@@ -71,11 +91,7 @@ export const useFoodTruckMenusPreview = (foodTruckId: number) => {
     data: menusPreviewData,
     isPending: isPendingMenusPreview,
     isError: isErrorMenusPreview,
-  } = useQuery<CursorPagingResponseFoodTruckMenuResponse | undefined>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.PREVIEW(foodTruckId),
-    queryFn: () => getFoodTruckMenus(foodTruckId, true),
-    staleTime: 5000,
-  });
+  } = useQuery<CursorPagingResponseFoodTruckMenuResponse | undefined>(foodTruckMenusPreviewQuery(foodTruckId));
 
   const menusPreview = menusPreviewData?.content;
 
@@ -105,11 +121,7 @@ export const useSearchFoodTruckMenus = (foodTruckId: number) => {
     data: searchedMenus,
     isPending: isPendingMenusSearch,
     isError: isErrorMenusSearch,
-  } = useQuery<FoodTruckMenuResponse[] | undefined>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SEARCH(foodTruckId, searchText),
-    queryFn: () => searchFoodTruckMenus(foodTruckId, searchText),
-    enabled: !!searchText,
-  });
+  } = useQuery<FoodTruckMenuResponse[] | undefined>(searchFoodTruckMenusQuery(foodTruckId, searchText));
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
