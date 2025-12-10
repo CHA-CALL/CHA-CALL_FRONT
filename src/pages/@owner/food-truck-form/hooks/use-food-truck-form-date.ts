@@ -19,7 +19,7 @@ export const useFoodTruckFormDate = () => {
     setError,
   } = useFormContext<FoodTruckFormData>();
 
-  const formData = watch();
+  const formAvailabledDates = watch('availableDates');
   const updateAvailableDateById = (
     id: string,
     dateData: {
@@ -27,7 +27,7 @@ export const useFoodTruckFormDate = () => {
       endDate: string;
     }
   ) => {
-    const currentDates = formData.availableDates ?? [];
+    const currentDates = formAvailabledDates ?? [];
 
     if (id === DEFAULT_DATE) {
       const newId = generateDateId();
@@ -67,7 +67,7 @@ export const useFoodTruckFormDate = () => {
   };
 
   const removeAvailableDateById = (id: string) => {
-    const currentDates = formData.availableDates ?? [];
+    const currentDates = formAvailabledDates ?? [];
     const filteredDates = currentDates.filter(date => date.id !== id);
 
     setValue('availableDates', filteredDates, {
@@ -76,7 +76,7 @@ export const useFoodTruckFormDate = () => {
   };
 
   const handleAddAvailableDate = () => {
-    const currentDates = formData.availableDates ?? [];
+    const currentDates = formAvailabledDates ?? [];
 
     const hasIncompleteDates = currentDates.some(date => !date.startDate);
     if (hasIncompleteDates) {
@@ -110,13 +110,13 @@ export const useFoodTruckFormDate = () => {
     );
   };
 
-  const availableDatesWithId: AvailableDate[] = (
-    formData.availableDates ?? []
-  ).map((date, index) => ({
-    id: date.id || `date_${index}`,
-    startDate: date.startDate,
-    endDate: date.endDate,
-  }));
+  const availableDatesWithId: AvailableDate[] = (formAvailabledDates ?? []).map(
+    (date, index) => ({
+      id: date.id || `date_${index}`,
+      startDate: date.startDate,
+      endDate: date.endDate,
+    })
+  );
 
   return {
     // Data

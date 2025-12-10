@@ -31,7 +31,7 @@ export default function ActiveTime({ useActiveTimeHook }: ActiveTimeProps) {
 
   return (
     <FormLayout
-      isRequired={true}
+      isRequired
       title='운영 가능 시간대'
       rightComponent={
         timeDiscussRequired !== undefined &&

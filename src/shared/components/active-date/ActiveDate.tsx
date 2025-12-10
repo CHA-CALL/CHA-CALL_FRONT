@@ -48,7 +48,8 @@ export default function ActiveDate({ useActiveDateHook }: ActiveDateProps) {
   };
 
   const handleApplyDate = (date: SelectedDate) => {
-    updateAvailableDateById(selectedId ?? '', {
+    if (!selectedId) return;
+    updateAvailableDateById(selectedId, {
       startDate: formatDateToDot(date.startDate),
       endDate: formatDateToDot(date.endDate),
     });
@@ -73,13 +74,13 @@ export default function ActiveDate({ useActiveDateHook }: ActiveDateProps) {
                 ? new Date(selectedDate.endDate)
                 : null,
           }}
-          handleApplyDate={(date: SelectedDate) => handleApplyDate(date)}
+          handleApplyDate={handleApplyDate}
           handleCloseBottomSheet={handleCloseCalendar}
           isOpen={isCalendarOpen}
         />
       </BottomSheet>
       <FormLayout
-        isRequired={true}
+        isRequired
         title='가능한 일정대'
         rightComponent={
           <ButtonText handleClick={handleAddAvailableDate}>
