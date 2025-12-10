@@ -24,7 +24,10 @@ import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuIn
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { useFoodTruckFormDate } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-date';
 import { useFoodTruckFormTime } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-time';
-import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import {
+  FOOD_TRUCK_ERROR_MESSAGE,
+  FOOD_TRUCK_MAX_LENGTH,
+} from '@pages/@owner/food-truck-form/constants/food-truck';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
 
@@ -47,6 +50,13 @@ export default function FoodTruckForm() {
     handleActiveTimeSetValue,
     handleTimeDiscussRequiredSetValue,
   } = useFoodTruckFormTime(methods);
+
+  const {
+    formAvailableDates,
+    availableDatesError,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  } = useFoodTruckFormDate(methods);
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
@@ -85,7 +95,14 @@ export default function FoodTruckForm() {
         <PaymentMethod />
         <MenuInfo />
         <FoodTruckPhoto />
-        <ActiveDate useActiveDateHook={useFoodTruckFormDate} />
+        <ActiveDate
+          formAvailableDates={formAvailableDates}
+          availableDatesError={availableDatesError}
+          errorMessages={FOOD_TRUCK_ERROR_MESSAGE}
+          maxLength={FOOD_TRUCK_MAX_LENGTH.availableDates.max}
+          handleActiveDateSetValue={handleActiveDateSetValue}
+          handleActiveDateError={handleActiveDateError}
+        />
         <FoodTruckOperatingInfo />
         <FoodTruckOption />
       </div>

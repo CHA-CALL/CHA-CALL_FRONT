@@ -1,133 +1,40 @@
-import { useFormContext } from 'react-hook-form';
+import { type UseFormReturn } from 'react-hook-form';
 
-import { DEFAULT_DATE } from '@components/active-date/constant/default-date';
-import { generateDateId } from '@utils/date/generate-date-Id';
-import { isDateOverlapping } from '@utils/date/is-date-over-lapping';
 import type { AvailableDate } from '@type/available-date';
 
 import type { EstimateFormData } from '@pages/@owner/estimate/utils/estimate.schema';
-import {
-  ESTIMATE_ERROR_MESSAGE,
-  ESTIMATE_MAX_LENGTH,
-} from '@pages/@owner/estimate/constants/estimate';
 
-export const useEstimateDate = () => {
+export const useEstimateDate = (methods: UseFormReturn<EstimateFormData>) => {
   const {
     setValue,
     watch,
     formState: { errors },
     setError,
-  } = useFormContext<EstimateFormData>();
+  } = methods;
 
   const formAvailableDates = watch('availableDates');
 
-  const updateAvailableDateById = (dateData: AvailableDate) => {
-    const currentDates = formAvailableDates ?? [];
-
-    if (dateData.id === DEFAULT_DATE) {
-      const newId = generateDateId();
-      setValue(
-        'availableDates',
-        [
-          ...currentDates,
-          {
-            id: newId,
-            startDate: dateData.startDate,
-            endDate: dateData.endDate,
-          },
-        ],
-        {
-          shouldValidate: true,
-        }
-      );
-      return;
-    }
-
-    const updatedDates = currentDates.map(date =>
-      date.id === dateData.id ? { ...date, ...dateData } : date
-    );
-
-    if (
-      isDateOverlapping(
-        dateData.id,
-        dateData.startDate,
-        dateData.endDate,
-        currentDates
-      )
-    ) {
-      setError('availableDates', {
-        message: ESTIMATE_ERROR_MESSAGE.availableDates.invalid,
-      });
-      return;
-    }
-
-    setValue('availableDates', updatedDates, {
+  const handleActiveDateSetValue = (value: AvailableDate[]) => {
+    setValue('availableDates', value, {
       shouldValidate: true,
     });
   };
 
-  const removeAvailableDateById = (id: string) => {
-    const currentDates = formAvailableDates ?? [];
-    const filteredDates = currentDates.filter(date => date.id !== id);
-
-    setValue('availableDates', filteredDates, {
-      shouldValidate: true,
+  const handleActiveDateError = (message: string) => {
+    setError('availableDates', {
+      message,
     });
   };
-
-  const handleAddAvailableDate = () => {
-    const currentDates = formAvailableDates ?? [];
-
-    const hasIncompleteDates = currentDates.some(date => !date.startDate);
-    if (hasIncompleteDates) {
-      setError('availableDates', {
-        message: ESTIMATE_ERROR_MESSAGE.availableDates.incomplete,
-      });
-      return;
-    }
-
-    if (currentDates.length >= ESTIMATE_MAX_LENGTH.availableDates.max) {
-      setError('availableDates', {
-        message: ESTIMATE_ERROR_MESSAGE.availableDates.max,
-      });
-      return;
-    }
-    const newId = generateDateId();
-
-    setValue(
-      'availableDates',
-      [
-        ...currentDates,
-        {
-          id: newId,
-          startDate: '',
-          endDate: '',
-        },
-      ],
-      {
-        shouldValidate: true,
-      }
-    );
-  };
-
-  const availableDatesWithId: AvailableDate[] = (formAvailableDates ?? []).map(
-    (date, index) => ({
-      id: date.id || `date_${index}`,
-      startDate: date.startDate,
-      endDate: date.endDate,
-    })
-  );
 
   return {
     // Data
-    availableDates: availableDatesWithId,
+    formAvailableDates,
 
     // Errors
     availableDatesError: errors.availableDates?.message,
 
     // Actions
-    updateAvailableDateById,
-    removeAvailableDateById,
-    handleAddAvailableDate,
+    handleActiveDateSetValue,
+    handleActiveDateError,
   };
 };

@@ -10,27 +10,41 @@ import type { AvailableDate } from '@type/available-date';
 import type { SelectedDate } from '@type/calendar-types';
 import { DEFAULT_DATE } from '@components/active-date/constant/default-date';
 import { formatDateToDot } from '@utils/date/date-formatter';
-
-interface ActiveDateHookResult {
-  availableDates: AvailableDate[];
-  updateAvailableDateById: (_dateData: AvailableDate) => void;
-  removeAvailableDateById: (_id: string) => void;
-  handleAddAvailableDate: () => void;
-  availableDatesError?: string;
-}
+import type { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import type { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
+import { useActiveDate } from './hooks/use-active-date';
 
 interface ActiveDateProps {
-  useActiveDateHook: () => ActiveDateHookResult;
+  formAvailableDates: AvailableDate[];
+  availableDatesError?: string;
+  errorMessages:
+    | typeof FOOD_TRUCK_ERROR_MESSAGE
+    | typeof ESTIMATE_ERROR_MESSAGE;
+  maxLength: number;
+  handleActiveDateSetValue: (_value: AvailableDate[]) => void;
+  handleActiveDateError: (_message: string) => void;
 }
 
-export default function ActiveDate({ useActiveDateHook }: ActiveDateProps) {
+export default function AvailableDate({
+  formAvailableDates,
+  availableDatesError,
+  errorMessages,
+  maxLength,
+  handleActiveDateSetValue,
+  handleActiveDateError,
+}: ActiveDateProps) {
   const {
     availableDates,
-    handleAddAvailableDate,
     updateAvailableDateById,
     removeAvailableDateById,
-    availableDatesError,
-  } = useActiveDateHook();
+    handleAddAvailableDate,
+  } = useActiveDate({
+    formAvailableDates,
+    errorMessages,
+    maxLength,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  });
 
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);

@@ -16,9 +16,12 @@ import {
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
+import {
+  ESTIMATE_ERROR_MESSAGE,
+  ESTIMATE_MAX_LENGTH,
+} from '@pages/@owner/estimate/constants/estimate';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
-import { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
 
 export default function Estimate() {
   const navigate = useNavigate();
@@ -43,6 +46,13 @@ export default function Estimate() {
     handleActiveTimeSetValue,
   } = useEstimateTime(methods);
 
+  const {
+    formAvailableDates,
+    availableDatesError,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  } = useEstimateDate(methods);
+
   const handleNavigateBack = () => {
     navigate(-1);
   };
@@ -61,7 +71,14 @@ export default function Estimate() {
           updateDetailLocation={updateDetailLocation}
           error={errors.location || errors.detailLocation}
         />
-        <ActiveDate useActiveDateHook={useEstimateDate} />
+        <ActiveDate
+          formAvailableDates={formAvailableDates}
+          availableDatesError={availableDatesError}
+          errorMessages={ESTIMATE_ERROR_MESSAGE}
+          maxLength={ESTIMATE_MAX_LENGTH.availableDates.max}
+          handleActiveDateSetValue={handleActiveDateSetValue}
+          handleActiveDateError={handleActiveDateError}
+        />
         <ActiveTime
           formActiveTime={formActiveTime}
           activeTimeError={activeTimeError}
