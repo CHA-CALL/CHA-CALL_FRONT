@@ -21,16 +21,10 @@ export const useEstimateDate = () => {
 
   const formAvailableDates = watch('availableDates');
 
-  const updateAvailableDateById = (
-    id: string,
-    dateData: {
-      startDate: string;
-      endDate: string;
-    }
-  ) => {
+  const updateAvailableDateById = (dateData: AvailableDate) => {
     const currentDates = formAvailableDates ?? [];
 
-    if (id === DEFAULT_DATE) {
+    if (dateData.id === DEFAULT_DATE) {
       const newId = generateDateId();
       setValue(
         'availableDates',
@@ -50,11 +44,16 @@ export const useEstimateDate = () => {
     }
 
     const updatedDates = currentDates.map(date =>
-      date.id === id ? { ...date, ...dateData } : date
+      date.id === dateData.id ? { ...date, ...dateData } : date
     );
 
     if (
-      isDateOverlapping(id, dateData.startDate, dateData.endDate, currentDates)
+      isDateOverlapping(
+        dateData.id,
+        dateData.startDate,
+        dateData.endDate,
+        currentDates
+      )
     ) {
       setError('availableDates', {
         message: ESTIMATE_ERROR_MESSAGE.availableDates.invalid,

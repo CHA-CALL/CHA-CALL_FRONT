@@ -13,10 +13,7 @@ import { formatDateToDot } from '@utils/date/date-formatter';
 
 interface ActiveDateHookResult {
   availableDates: AvailableDate[];
-  updateAvailableDateById: (
-    _id: string,
-    _dateData: { startDate: string; endDate: string }
-  ) => void;
+  updateAvailableDateById: (_dateData: AvailableDate) => void;
   removeAvailableDateById: (_id: string) => void;
   handleAddAvailableDate: () => void;
   availableDatesError?: string;
@@ -49,7 +46,8 @@ export default function ActiveDate({ useActiveDateHook }: ActiveDateProps) {
 
   const handleApplyDate = (date: SelectedDate) => {
     if (!selectedId) return;
-    updateAvailableDateById(selectedId, {
+    updateAvailableDateById({
+      id: selectedId,
       startDate: formatDateToDot(date.startDate),
       endDate: formatDateToDot(date.endDate),
     });
