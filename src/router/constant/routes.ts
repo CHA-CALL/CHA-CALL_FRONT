@@ -22,9 +22,12 @@ export const ROUTES = {
   FOOD_TRUCK_MANAGEMENT: '/owner/food-truck-management',
   MENU_LIST: (foodTruckId: string) => `/owner/menu-list/${foodTruckId}`,
   MENU_REGISTER: (foodTruckId: string) => `/owner/menu-register/${foodTruckId}`,
-  MENU_EDIT: (foodTruckId: string, menuId: string) => `/owner/menu-edit/${foodTruckId}/${menuId}`,
+  MENU_EDIT: (foodTruckId: string, menuId: string) =>
+    `/owner/menu-edit/${foodTruckId}/${menuId}`,
   FOOD_TRUCK_DETAIL: (foodTruckId: string) => `/food-truck/${foodTruckId}`,
-  FOOD_TRUCK_FORM: '/owner/food-truck-form',
-  SET_REGION_FORM: '/owner/food-truck-form/set-region',
+  FOOD_TRUCK_FORM: (foodTruckId: string) =>
+    `/owner/food-truck-form/${foodTruckId}`,
+  SET_REGION_FORM: (foodTruckId: string) =>
+    `/owner/food-truck-form/${foodTruckId}/set-region`,
   OWNER_ESTIMATE: '/owner/estimate',
 };

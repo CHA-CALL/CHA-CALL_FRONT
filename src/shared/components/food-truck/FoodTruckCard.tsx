@@ -51,6 +51,7 @@ export default function FoodTruckCard(props: FoodTruckCardProps) {
         isRemovable={isRemovable}
         isRemove={isRemove}
         isOn={isOn}
+        handleClickCard={handleClickCard}
         handleCardRemove={handleCardRemove}
         handleClickButton={handleClickButton}
       />

@@ -30,16 +30,18 @@ import {
 } from '@pages/@owner/food-truck-form/constants/food-truck';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
+import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
+import { ROUTES } from '@router/constant/routes';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
-  const { id } = useParams();
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
-  console.info(id);
   const { methods, reset, isFormValid, handleSubmit } = useFoodTruckForm();
 
   const {
@@ -57,6 +59,8 @@ export default function FoodTruckForm() {
     handleActiveDateSetValue,
     handleActiveDateError,
   } = useFoodTruckFormDate(methods);
+  // 서버에서 활동 가능 지역은 지역코드로 받아야함
+  const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
@@ -65,13 +69,15 @@ export default function FoodTruckForm() {
   }, [location.state, reset]);
 
   const handleNavigateBack = () => {
-    navigate(-1);
+    navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
   };
 
   return (
     <FormProvider {...methods}>
       <Navigation
-        centerContent='나의 푸드트럭 수정'
+        centerContent={
+          foodTruckDetailData ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'
+        }
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />

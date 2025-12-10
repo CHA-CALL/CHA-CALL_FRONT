@@ -9,7 +9,7 @@ import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/fo
 
 export default function MenuInfo() {
   const navigate = useNavigate();
-  const { id: foodTruckId } = useParams<{ id: string }>();
+  const { foodTruckId } = useParams();
 
   const { watch } = useFormContext<FoodTruckFormData>();
   const formData = watch();

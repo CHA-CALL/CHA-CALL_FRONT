@@ -1,17 +1,18 @@
 import type {
+  UpdateFoodTruckViewedStatusData,
   DeleteFoodTruckData,
   GetMyFoodTrucksData,
 } from 'apis/data-contracts';
 import { apiRequest } from '@api/apiRequest';
+import { PAGE_SIZE } from '@constant/page-size';
+import type { ViewedStatus } from '@pages/@owner/food-truck-management/constants/viewed-status';
 
 export interface GetOwnerFoodTrucksParams {
   cursor?: number;
-  size?: number;
 }
 
 export const getOwnerFoodTrucks = async ({
   cursor,
-  size,
 }: {
   cursor?: number;
   size?: number;
@@ -21,7 +22,7 @@ export const getOwnerFoodTrucks = async ({
     method: 'GET',
     params: {
       cursor,
-      size,
+      size: PAGE_SIZE,
     },
   });
   return response.data;
@@ -36,5 +37,23 @@ export const deleteOwnerFoodTrucks = async ({
     endPoint: `/owners/me/food-trucks/${foodTruckId}`,
     method: 'DELETE',
   });
+  return response.data;
+};
+
+export const updateFoodTruckStatus = async ({
+  foodTruckId,
+  status,
+}: {
+  foodTruckId: number;
+  status: ViewedStatus;
+}) => {
+  const response = await apiRequest<UpdateFoodTruckViewedStatusData>({
+    endPoint: `/owners/me/food-trucks/${foodTruckId}/change-status`,
+    method: 'PATCH',
+    data: {
+      status,
+    },
+  });
+
   return response.data;
 };
