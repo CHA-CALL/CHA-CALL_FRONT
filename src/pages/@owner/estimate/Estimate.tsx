@@ -18,6 +18,7 @@ import {
 } from '@pages/@owner/estimate/@section';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
+import { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
 
 export default function Estimate() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ export default function Estimate() {
         <ActiveTime
           formActiveTime={formActiveTime}
           activeTimeError={activeTimeError}
+          errorMessages={ESTIMATE_ERROR_MESSAGE}
           handleActiveTimeError={handleActiveTimeError}
           handleActiveTimeSetValue={handleActiveTimeSetValue}
         />

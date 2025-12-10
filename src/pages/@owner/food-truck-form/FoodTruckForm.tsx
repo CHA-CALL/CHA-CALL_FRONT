@@ -23,9 +23,10 @@ import RegionSection from '@pages/@owner/food-truck-form/@section/region-section
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { useFoodTruckFormDate } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-date';
+import { useFoodTruckFormTime } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-time';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
-import { useFoodTruckFormTime } from './hooks/use-food-truck-form-time';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
@@ -72,6 +73,7 @@ export default function FoodTruckForm() {
           formActiveTime={formActiveTime}
           formTimeDiscussRequired={formTimeDiscussRequired}
           activeTimeError={activeTimeError}
+          errorMessages={FOOD_TRUCK_ERROR_MESSAGE}
           handleActiveTimeError={handleActiveTimeError}
           handleActiveTimeSetValue={handleActiveTimeSetValue}
           handleTimeDiscussRequiredSetValue={handleTimeDiscussRequiredSetValue}

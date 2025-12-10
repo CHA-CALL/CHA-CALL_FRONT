@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import type { TimeType } from '@type/time-types';
+import type { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
 
 interface UseActiveTimeProps {
   formActiveTime: string;
   formTimeDiscussRequired?: boolean;
+  errorMessages:
+    | typeof FOOD_TRUCK_ERROR_MESSAGE
+    | typeof ESTIMATE_ERROR_MESSAGE;
   handleActiveTimeError: (_message: string) => void;
   handleActiveTimeSetValue: (_value: string) => void;
   handleTimeDiscussRequiredSetValue?: (_value: boolean) => void;
@@ -13,6 +17,7 @@ interface UseActiveTimeProps {
 export const useActiveTime = ({
   formActiveTime,
   formTimeDiscussRequired,
+  errorMessages,
   handleActiveTimeError,
   handleActiveTimeSetValue,
   handleTimeDiscussRequiredSetValue,
@@ -39,16 +44,16 @@ export const useActiveTime = ({
       return;
     }
     if (!startActiveTime) {
-      handleActiveTimeError(FOOD_TRUCK_ERROR_MESSAGE.activeTime.start);
+      handleActiveTimeError(errorMessages.activeTime.start);
       return;
     }
     if (!endActiveTime) {
-      handleActiveTimeError(FOOD_TRUCK_ERROR_MESSAGE.activeTime.end);
+      handleActiveTimeError(errorMessages.activeTime.end);
       return;
     }
     if (startActiveTime && endActiveTime) {
       if (isInvalidTimeRange(startActiveTime, endActiveTime)) {
-        handleActiveTimeError(FOOD_TRUCK_ERROR_MESSAGE.activeTime.invalid);
+        handleActiveTimeError(errorMessages.activeTime.invalid);
         return;
       }
       const startTimeString = `${startActiveTime.hour}:${startActiveTime.minute}`;
@@ -58,6 +63,7 @@ export const useActiveTime = ({
   }, [
     startActiveTime,
     endActiveTime,
+    errorMessages,
     handleActiveTimeError,
     handleActiveTimeSetValue,
   ]);
