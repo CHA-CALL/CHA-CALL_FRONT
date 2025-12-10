@@ -265,10 +265,10 @@ export interface UpdateFoodTruckInfoRequest {
    */
   paymentMethod: "무관" | "계좌이체" | "카드";
   /**
-   * 운영 가능 날짜 리스트
+   * 운영 가능 날짜 리스트 (형식: "yyyy.MM.dd ~ yyyy.MM.dd")
    * @maxItems 4
    * @minItems 1
-   * @example [{"startDate":"2024.10.01","endDate":"2024.10.10"}]
+   * @example ["2025.10.11 ~ 2025.11.10","2025.11.20 ~ 2025.11.22"]
    */
   availableDates?: DateRangeRequest[];
   /**
@@ -349,6 +349,12 @@ export interface CreateReservationRequest {
    * @example 1
    */
   foodTruckId: number;
+  /**
+   * 채팅방 ID
+   * @format int64
+   * @example 1
+   */
+  chatRoomId: number;
   /**
    * 예약자(일반 유저) ID
    * @format int64
@@ -557,6 +563,32 @@ export interface FoodTruckNameDuplicateCheckResponse {
    * @example true
    */
   duplicated?: boolean;
+}
+
+export interface CreateChatRoomRequest {
+  /**
+   * 푸드트럭 ID
+   * @format int64
+   * @example 1
+   */
+  foodTruckId: number;
+}
+
+export interface BaseResponseChatRoomIdResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ChatRoomIdResponse;
+}
+
+export interface ChatRoomIdResponse {
+  /**
+   * 생성된 채팅방 ID
+   * @format int64
+   * @example 1
+   */
+  chatRoomId?: number;
 }
 
 export interface AuthTokenRequest {
@@ -1430,6 +1462,11 @@ export interface FoodTruckDetailResponse {
    */
   serviceAreas?: string;
   /**
+   * 호출 가능 지역 코드
+   * @example [1,2]
+   */
+  regionCodes?: number[];
+  /**
    * 푸드트럭 메뉴 카테고리 (라벨 리스트)
    * @example ["한식","분식"]
    */
@@ -1571,6 +1608,115 @@ export interface FoodTruckTopRateResponse {
   averageRating?: number;
 }
 
+export interface BaseResponseCursorPagingResponseChatRoomResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: CursorPagingResponseChatRoomResponse;
+}
+
+export interface ChatRoomResponse {
+  /**
+   * 채팅방 ID
+   * @format int64
+   * @example 1
+   */
+  id?: number;
+  /**
+   * 상대방 이름
+   * @example "홍길동"
+   */
+  name?: string;
+  /**
+   * 푸드트럭 이름
+   * @example "맛있는 푸드트럭"
+   */
+  foodTruckName?: string;
+  /**
+   * 상대방 프로필 이미지 URL
+   * @example "https://example.com/profile.jpg"
+   */
+  profileImageUrl?: string;
+  /**
+   * 마지막 메시지 내용
+   * @example "안녕하세요!"
+   */
+  lastMessage?: string;
+  /**
+   * 마지막 메시지 전송 시간
+   * @example "오후 5:49 or 어제 or 9월 30일 or 2023년 10월"
+   */
+  lastMessageSendTime?: string;
+  /**
+   * 읽지 않은 메시지 수
+   * @format int64
+   * @example 3
+   */
+  unreadCount?: number;
+  /**
+   * 예약 확정 여부
+   * @example true
+   */
+  isReservationConfirmed?: boolean;
+}
+
+export interface CursorPagingResponseChatRoomResponse {
+  content?: ChatRoomResponse[];
+  /** @format int64 */
+  lastCursor?: number;
+  hasNext?: boolean;
+  /** @format int64 */
+  totalSize?: number;
+}
+
+export interface BaseResponseChatRoomMetaDataResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ChatRoomMetaDataResponse;
+}
+
+export interface ChatRoomMetaDataResponse {
+  /**
+   * 채팅 상대 이름 (일반 유저 -> 사장님 이름 / 사장님 -> 예약자 이름)
+   * @example "홍길동 or 푸드트럭사장"
+   */
+  name?: string;
+  /**
+   * 푸드트럭 이름 (일반 유저 -> null)
+   * @example "맛있는푸드트럭"
+   */
+  foodTruckName?: string;
+  /**
+   * 채팅방과 관련된 예약 ID (있는 경우: ID 반환, 없는 경우: null)
+   * @format int64
+   * @example 1
+   */
+  reservationId?: number;
+}
+
+export interface BaseResponseListChatMessageResponse {
+  isSuccess?: boolean;
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  data?: ChatMessageResponse[];
+}
+
+export interface ChatMessageResponse {
+  /** @format int64 */
+  roomId?: number;
+  /** @format int64 */
+  senderId?: number;
+  content?: string;
+  contentType?: string;
+  /** @format date-time */
+  sendTime?: string;
+  read?: boolean;
+}
+
 export interface DeleteFoodTruckImagesRequest {
   /**
    * 삭제할 이미지 URL 목록
@@ -1636,6 +1782,10 @@ export type CreateFoodTruckImagePresignedUrlData = BaseResponseImageResponse;
 export type IsNameDuplicatedData =
   BaseResponseFoodTruckNameDuplicateCheckResponse;
 
+export type GetChatRoomsData = BaseResponseCursorPagingResponseChatRoomResponse;
+
+export type CreateChatRoomData = BaseResponseChatRoomIdResponse;
+
 export type GetTokenData = BaseResponseAuthTokenResponse;
 
 export type ApproveFoodTruckStatusData = BaseResponseVoid;
@@ -1650,6 +1800,8 @@ export type UpdateFoodTruckViewedStatusData = BaseResponseVoid;
 
 export type UpdateFoodTruckSaveStatusData =
   BaseResponseSavedFoodTruckStatusResponse;
+
+export type MarkMessagesAsReadData = BaseResponseVoid;
 
 export type GetAllFoodTrucksData = BaseResponseListFoodTruckForAdminResponse;
 
@@ -1690,6 +1842,10 @@ export type SearchFoodTruckMenusData = BaseResponseListFoodTruckMenuResponse;
 
 export type GetTopRatedFoodTrucksData =
   BaseResponseListFoodTruckTopRateResponse;
+
+export type GetChatRoomMetaDataData = BaseResponseChatRoomMetaDataResponse;
+
+export type GetChatMessagesData = BaseResponseListChatMessageResponse;
 
 export type DeleteFoodTruckData = BaseResponseVoid;
 

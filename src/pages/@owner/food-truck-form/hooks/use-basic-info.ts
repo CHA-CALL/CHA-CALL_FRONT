@@ -1,17 +1,14 @@
 import { type ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
-import { ROUTES } from '@router/constant/routes';
 import { formatPhoneNumber } from '@utils/phone-number';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useFoodTruckImage } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
 
 //푸드트럭 이름, 한줄소개, 전화번호, 푸드트럭 사진, 운영정보, 기타 필드
 export const useBasicInfo = () => {
-  const navigate = useNavigate();
   const {
     setValue,
     watch,
@@ -20,9 +17,9 @@ export const useBasicInfo = () => {
   } = useFormContext<FoodTruckFormData>();
 
   const formData = watch();
+  const name = watch('name') ?? '';
   // 중복체크 버튼을 누를 수 있는 상태: 이름이 있고, 중복체크가 완료되지 않은 경우
-  const canCheckNameDuplicate =
-    formData.name.trim() !== '' && !formData.nameDuplicate;
+  const canCheckNameDuplicate = name.trim() !== '' && !formData.nameDuplicate;
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
@@ -113,16 +110,6 @@ export const useBasicInfo = () => {
     setValue('photoUrls', updatedFiles, { shouldValidate: true });
   };
 
-  const handleSubmit = () => {
-    const currentFormData = watch();
-    navigate(ROUTES.FOOD_TRUCK_FORM, {
-      state: {
-        formData: currentFormData,
-        from: 'food-truck-form',
-      },
-    });
-  };
-
   return {
     // Data
     name: formData.name,
@@ -150,6 +137,5 @@ export const useBasicInfo = () => {
     // Photo actions
     handleFileChange,
     handleRemoveFile,
-    handleSubmit,
   };
 };

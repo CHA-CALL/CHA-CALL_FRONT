@@ -7,8 +7,8 @@ import type {
 } from 'apis/data-contracts';
 
 export const createNewFoodTruck = async (params: {
-  name: string,
-  businessRegistrationUrl: string,
+  name: string;
+  businessRegistrationUrl: string;
   otherDocumentUrls?: string[];
 }) => {
   const response = await apiRequest<BaseResponseVoid>({
@@ -20,15 +20,18 @@ export const createNewFoodTruck = async (params: {
 };
 
 export const checkNameDuplicate = async (name: string) => {
-  const response = await apiRequest<BaseResponseFoodTruckNameDuplicateCheckResponse>({
-    endPoint: `/food-trucks/duplicate-check`,
-    method: 'POST',
-    data: { name },
-  });
+  const response =
+    await apiRequest<BaseResponseFoodTruckNameDuplicateCheckResponse>({
+      endPoint: `/food-trucks/duplicate-check`,
+      method: 'POST',
+      data: { name },
+    });
   return response.data;
 };
 
-export const getPresignedUrls = async (fileExtensions: string[]): Promise<ImageInfo[]> => {
+export const getPresignedUrls = async (
+  fileExtensions: string[]
+): Promise<ImageInfo[]> => {
   const response = await apiRequest<BaseResponseImageResponse>({
     // TODO: 엔드 포인트 수정
     endPoint: `/food-trucks/images`,

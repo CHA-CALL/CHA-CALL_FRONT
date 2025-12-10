@@ -6,27 +6,29 @@ import {
   type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
-export const useFoodTruckForm = (initialData?: FoodTruckFormData) => {
+const initialData = {
+  name: '',
+  nameDuplicate: false,
+  description: '',
+  phoneNumber: '',
+  regionCodes: [],
+  availableQuantity: undefined,
+  needElectricity: undefined,
+  paymentMethod: undefined,
+  menuCategories: [],
+  photoUrls: [],
+  operatingInfo: undefined,
+  option: undefined,
+  availableDates: [],
+  activeTime: '',
+  timeDiscussRequired: false,
+  menus: false,
+};
+
+export const useFoodTruckForm = (prevData?: FoodTruckFormData) => {
   const methods = useForm<FoodTruckFormData>({
     resolver: zodResolver(foodTruckSchema),
-    defaultValues: initialData ?? {
-      name: '',
-      nameDuplicate: false,
-      description: '',
-      phoneNumber: '',
-      regionCodes: [],
-      availableQuantity: undefined,
-      needElectricity: undefined,
-      paymentMethod: undefined,
-      menuCategories: [],
-      photoUrls: [],
-      operatingInfo: undefined,
-      option: undefined,
-      availableDates: [],
-      activeTime: '',
-      timeDiscussRequired: false,
-      menus: false,
-    },
+    defaultValues: prevData ?? initialData,
     mode: 'onChange',
   });
 

@@ -16,8 +16,9 @@ import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
 import { useNavigate } from 'react-router-dom';
 import useToast from '@shared/hooks/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 import type { FoodTruckCreateRequest } from 'apis/data-contracts';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
+import { ROUTES } from '@router/constant/routes';
 
 export type OwnerFormData = OnboardingFormData;
 
@@ -106,7 +107,7 @@ export const useFoodTruckInput = () => {
         queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
       });
       toast.success('푸드트럭이 등록되었습니다.');
-      navigate('/owner/food-truck-form');
+      navigate(ROUTES.FOOD_TRUCK_MANAGEMENT, { replace: true });
     },
     onError: error => {
       console.error('등록 실패:', error);

@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { FormProvider, useFormContext } from 'react-hook-form';
 
 import { Icon } from '@icon/Icon';
@@ -22,13 +22,18 @@ export default function SetRegion() {
 }
 
 function SetRegionContent() {
+  const { foodTruckId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { getValues } = useFormContext<FoodTruckFormData>();
 
   const handleLeftClick = () => {
+    if (!foodTruckId) {
+      navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+      return;
+    }
     const fromPage = location.state?.from;
-    navigate(ROUTES.FOOD_TRUCK_FORM, {
+    navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
       state: {
         from: fromPage || 'food-truck-form',
         formData: getValues(),
@@ -37,7 +42,7 @@ function SetRegionContent() {
   };
 
   const { regionCodes, handleSubmitRegion, handleResetRegionFoodTruck } =
-    useRegion();
+    useRegion(foodTruckId);
 
   return (
     <>
