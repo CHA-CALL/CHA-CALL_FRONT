@@ -2,32 +2,39 @@ import FormLayout from '@components/layout/form-layout/FormLayout';
 import TimePicker from '@components/time-picker/TimePicker';
 import ButtonCheck from '@components/ui/button-check/ButtonCheck';
 import ErrorText from '@form/error-text/ErrorText';
-import type { TimeType } from '@type/time-types';
-
-interface ActiveTimeHookResult {
-  startActiveTime: TimeType | null;
-  endActiveTime: TimeType | null;
-  timeDiscussRequired?: boolean;
-  activeTimeError?: string;
-  updateStartActiveTime: (_time: TimeType | null) => void;
-  updateEndActiveTime: (_time: TimeType | null) => void;
-  updateTimeDiscussRequired?: (_timeDiscussRequired: boolean) => void;
-}
+import { useActiveTime } from './hooks/use-active-time';
 
 interface ActiveTimeProps {
-  useActiveTimeHook: () => ActiveTimeHookResult;
+  formActiveTime: string;
+  formTimeDiscussRequired?: boolean;
+  activeTimeError?: string;
+  handleActiveTimeError: (_message: string) => void;
+  handleActiveTimeSetValue: (_value: string) => void;
+  handleTimeDiscussRequiredSetValue?: (_value: boolean) => void;
 }
 
-export default function ActiveTime({ useActiveTimeHook }: ActiveTimeProps) {
+export default function ActiveTime({
+  formActiveTime,
+  formTimeDiscussRequired,
+  activeTimeError,
+  handleActiveTimeError,
+  handleActiveTimeSetValue,
+  handleTimeDiscussRequiredSetValue,
+}: ActiveTimeProps) {
   const {
     startActiveTime,
     endActiveTime,
-    activeTimeError,
     timeDiscussRequired,
     updateStartActiveTime,
     updateEndActiveTime,
     updateTimeDiscussRequired,
-  } = useActiveTimeHook();
+  } = useActiveTime({
+    formActiveTime,
+    formTimeDiscussRequired,
+    handleActiveTimeError,
+    handleActiveTimeSetValue,
+    handleTimeDiscussRequiredSetValue,
+  });
 
   return (
     <FormLayout

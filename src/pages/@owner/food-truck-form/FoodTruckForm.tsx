@@ -22,10 +22,10 @@ import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-se
 import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
-import { useFoodTruckFormTime } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-time';
 import { useFoodTruckFormDate } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-date';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
+import { useFoodTruckFormTime } from './hooks/use-food-truck-form-time';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
@@ -36,20 +36,29 @@ export default function FoodTruckForm() {
 
   // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
   console.info(id);
-  const methods = useFoodTruckForm();
+  const { methods, reset, isFormValid, handleSubmit } = useFoodTruckForm();
+
+  const {
+    formActiveTime,
+    formTimeDiscussRequired,
+    activeTimeError,
+    handleActiveTimeError,
+    handleActiveTimeSetValue,
+    handleTimeDiscussRequiredSetValue,
+  } = useFoodTruckFormTime(methods);
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
-      methods.reset(location.state.formData);
+      reset(location.state.formData);
     }
-  }, [location.state, methods]);
+  }, [location.state, reset]);
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
   return (
-    <FormProvider {...methods.methods}>
+    <FormProvider {...methods}>
       <Navigation
         centerContent='나의 푸드트럭 수정'
         leftIcon={<Icon name='ic_back' />}
@@ -59,7 +68,14 @@ export default function FoodTruckForm() {
         <FoodTruckName />
         <FoodTruckDescription />
         <FoodTruckPhoneNumber />
-        <ActiveTime useActiveTimeHook={useFoodTruckFormTime} />
+        <ActiveTime
+          formActiveTime={formActiveTime}
+          formTimeDiscussRequired={formTimeDiscussRequired}
+          activeTimeError={activeTimeError}
+          handleActiveTimeError={handleActiveTimeError}
+          handleActiveTimeSetValue={handleActiveTimeSetValue}
+          handleTimeDiscussRequiredSetValue={handleTimeDiscussRequiredSetValue}
+        />
         <RegionSection />
         <MenuCategory />
         <AvailableQuantity />
@@ -75,9 +91,9 @@ export default function FoodTruckForm() {
       <footer className='fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
-          buttonStyle={methods.isFormValid ? 'active' : 'disabled'}
-          handleClickButton={methods.handleSubmit}
-          disabled={!methods.isFormValid}
+          buttonStyle={isFormValid ? 'active' : 'disabled'}
+          handleClickButton={handleSubmit}
+          disabled={!isFormValid}
         >
           저장하기
         </Button>

@@ -35,6 +35,13 @@ export default function Estimate() {
     updateEtc,
   } = useEstimateForm();
 
+  const {
+    formActiveTime,
+    activeTimeError,
+    handleActiveTimeError,
+    handleActiveTimeSetValue,
+  } = useEstimateTime(methods);
+
   const handleNavigateBack = () => {
     navigate(-1);
   };
@@ -54,7 +61,12 @@ export default function Estimate() {
           error={errors.location || errors.detailLocation}
         />
         <ActiveDate useActiveDateHook={useEstimateDate} />
-        <ActiveTime useActiveTimeHook={useEstimateTime} />
+        <ActiveTime
+          formActiveTime={formActiveTime}
+          activeTimeError={activeTimeError}
+          handleActiveTimeError={handleActiveTimeError}
+          handleActiveTimeSetValue={handleActiveTimeSetValue}
+        />
         <Food
           food={formData.food}
           updateFood={updateFood}
