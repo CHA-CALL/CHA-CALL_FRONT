@@ -19,7 +19,8 @@ export const useEstimateDate = () => {
     setError,
   } = useFormContext<EstimateFormData>();
 
-  const formData = watch();
+  const formAvailableDates = watch('availableDates');
+
   const updateAvailableDateById = (
     id: string,
     dateData: {
@@ -27,7 +28,7 @@ export const useEstimateDate = () => {
       endDate: string;
     }
   ) => {
-    const currentDates = formData.availableDates ?? [];
+    const currentDates = formAvailableDates ?? [];
 
     if (id === DEFAULT_DATE) {
       const newId = generateDateId();
@@ -67,7 +68,7 @@ export const useEstimateDate = () => {
   };
 
   const removeAvailableDateById = (id: string) => {
-    const currentDates = formData.availableDates ?? [];
+    const currentDates = formAvailableDates ?? [];
     const filteredDates = currentDates.filter(date => date.id !== id);
 
     setValue('availableDates', filteredDates, {
@@ -76,7 +77,7 @@ export const useEstimateDate = () => {
   };
 
   const handleAddAvailableDate = () => {
-    const currentDates = formData.availableDates ?? [];
+    const currentDates = formAvailableDates ?? [];
 
     const hasIncompleteDates = currentDates.some(date => !date.startDate);
     if (hasIncompleteDates) {
@@ -110,13 +111,13 @@ export const useEstimateDate = () => {
     );
   };
 
-  const availableDatesWithId: AvailableDate[] = (
-    formData.availableDates ?? []
-  ).map((date, index) => ({
-    id: date.id || `date_${index}`,
-    startDate: date.startDate,
-    endDate: date.endDate,
-  }));
+  const availableDatesWithId: AvailableDate[] = (formAvailableDates ?? []).map(
+    (date, index) => ({
+      id: date.id || `date_${index}`,
+      startDate: date.startDate,
+      endDate: date.endDate,
+    })
+  );
 
   return {
     // Data
