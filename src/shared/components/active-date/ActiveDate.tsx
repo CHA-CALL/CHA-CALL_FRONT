@@ -25,7 +25,7 @@ interface ActiveDateProps {
   handleActiveDateError: (_message: string) => void;
 }
 
-export default function AvailableDate({
+export default function ActiveDate({
   formAvailableDates,
   availableDatesError,
   errorMessages,
