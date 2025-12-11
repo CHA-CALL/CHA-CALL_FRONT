@@ -3,6 +3,7 @@ import { ROUTES } from '@router/constant/routes';
 import { lazy } from 'react';
 
 import Layout from '@router/Layout';
+
 const Home = lazy(() => import('@/pages/home/Home'));
 const SetRegionGlobal = lazy(
   () => import('@/pages/set-region-global/SetRegion')
