@@ -74,7 +74,7 @@ export default function Estimate() {
         <ActiveDate
           formAvailableDates={formAvailableDates}
           availableDatesError={availableDatesError}
-          errorMessages={ESTIMATE_ERROR_MESSAGE}
+          errorMessages={ESTIMATE_ERROR_MESSAGE.availableDates}
           maxLength={ESTIMATE_MAX_LENGTH.availableDates.max}
           handleActiveDateSetValue={handleActiveDateSetValue}
           handleActiveDateError={handleActiveDateError}
@@ -82,7 +82,7 @@ export default function Estimate() {
         <ActiveTime
           formActiveTime={formActiveTime}
           activeTimeError={activeTimeError}
-          errorMessages={ESTIMATE_ERROR_MESSAGE}
+          errorMessages={ESTIMATE_ERROR_MESSAGE.activeTime}
           handleActiveTimeError={handleActiveTimeError}
           handleActiveTimeSetValue={handleActiveTimeSetValue}
         />

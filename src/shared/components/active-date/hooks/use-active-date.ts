@@ -3,14 +3,14 @@ import { DEFAULT_DATE } from '@components/active-date/constant/default-date';
 import { generateDateId } from '@utils/date/generate-date-Id';
 import { isDateOverlapping } from '@utils/date/is-date-over-lapping';
 
-import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
-import type { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
-
 interface UseActiveDateProps {
   formAvailableDates: AvailableDate[];
-  errorMessages:
-    | typeof FOOD_TRUCK_ERROR_MESSAGE
-    | typeof ESTIMATE_ERROR_MESSAGE;
+  errorMessages: {
+    min: string;
+    max: string;
+    invalid: string;
+    incomplete: string;
+  };
   maxLength: number;
   handleActiveDateSetValue: (_value: AvailableDate[]) => void;
   handleActiveDateError: (_message: string) => void;
@@ -52,7 +52,7 @@ export const useActiveDate = ({
         currentDates
       )
     ) {
-      handleActiveDateError(errorMessages.availableDates.invalid);
+      handleActiveDateError(errorMessages.invalid);
 
       return;
     }
@@ -70,12 +70,12 @@ export const useActiveDate = ({
 
     const hasIncompleteDates = currentDates.some(date => !date.startDate);
     if (hasIncompleteDates) {
-      handleActiveDateError(errorMessages.availableDates.incomplete);
+      handleActiveDateError(errorMessages.incomplete);
       return;
     }
 
     if (currentDates.length >= maxLength) {
-      handleActiveDateError(errorMessages.availableDates.max);
+      handleActiveDateError(errorMessages.max);
       return;
     }
     const newId = generateDateId();

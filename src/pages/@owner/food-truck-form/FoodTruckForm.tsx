@@ -89,7 +89,7 @@ export default function FoodTruckForm() {
           formActiveTime={formActiveTime}
           formTimeDiscussRequired={formTimeDiscussRequired}
           activeTimeError={activeTimeError}
-          errorMessages={FOOD_TRUCK_ERROR_MESSAGE}
+          errorMessages={FOOD_TRUCK_ERROR_MESSAGE.activeTime}
           handleActiveTimeError={handleActiveTimeError}
           handleActiveTimeSetValue={handleActiveTimeSetValue}
           handleTimeDiscussRequiredSetValue={handleTimeDiscussRequiredSetValue}
@@ -104,7 +104,7 @@ export default function FoodTruckForm() {
         <ActiveDate
           formAvailableDates={formAvailableDates}
           availableDatesError={availableDatesError}
-          errorMessages={FOOD_TRUCK_ERROR_MESSAGE}
+          errorMessages={FOOD_TRUCK_ERROR_MESSAGE.availableDates}
           maxLength={FOOD_TRUCK_MAX_LENGTH.availableDates.max}
           handleActiveDateSetValue={handleActiveDateSetValue}
           handleActiveDateError={handleActiveDateError}

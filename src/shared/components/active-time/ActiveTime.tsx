@@ -2,17 +2,17 @@ import FormLayout from '@components/layout/form-layout/FormLayout';
 import TimePicker from '@components/time-picker/TimePicker';
 import ButtonCheck from '@components/ui/button-check/ButtonCheck';
 import ErrorText from '@form/error-text/ErrorText';
-import { useActiveTime } from './hooks/use-active-time';
-import type { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
-import type { ESTIMATE_ERROR_MESSAGE } from '@pages/@owner/estimate/constants/estimate';
+import { useActiveTime } from '@components/active-time/hooks/use-active-time';
 
 interface ActiveTimeProps {
   formActiveTime: string;
   formTimeDiscussRequired?: boolean;
   activeTimeError?: string;
-  errorMessages:
-    | typeof FOOD_TRUCK_ERROR_MESSAGE
-    | typeof ESTIMATE_ERROR_MESSAGE;
+  errorMessages: {
+    start: string;
+    end: string;
+    invalid: string;
+  };
   handleActiveTimeError: (_message: string) => void;
   handleActiveTimeSetValue: (_value: string) => void;
   handleTimeDiscussRequiredSetValue?: (_value: boolean) => void;
