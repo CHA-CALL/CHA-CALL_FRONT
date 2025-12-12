@@ -1,13 +1,12 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { FormProvider } from 'react-hook-form';
 
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
 import {
-  useEstimateForm,
   useEstimateTime,
   useEstimateDate,
+  useEstimateForm,
 } from '@pages/@owner/estimate/hooks';
 import {
   Food,
@@ -32,7 +31,7 @@ export default function Estimate() {
 
   const {
     methods,
-    handleSubmit,
+    handleCreate,
     formData,
     errors,
     isValid,
@@ -42,7 +41,7 @@ export default function Estimate() {
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-  } = useEstimateForm();
+  } = useEstimateForm(chatRoomId, state.foodTruckId, state.reservationUserId);
 
   const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
     useEstimateTime(methods);
@@ -70,7 +69,7 @@ export default function Estimate() {
   };
 
   return (
-    <FormProvider {...methods}>
+    <>
       <Navigation
         centerContent='예약 견적서 작성'
         leftIcon={<Icon name='ic_back' />}
@@ -119,12 +118,12 @@ export default function Estimate() {
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
-          handleClickButton={handleSubmit}
+          handleClickButton={handleCreate}
           disabled={!isValid}
         >
-          저장하기
+          대화창에 보내기
         </Button>
       </footer>
-    </FormProvider>
+    </>
   );
 }
