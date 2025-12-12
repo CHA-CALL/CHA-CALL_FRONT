@@ -77,7 +77,7 @@ export const useEstimateForm = (
           if (date.endDate) {
             return `${date.startDate} ~ ${date.endDate}`;
           }
-          return date.startDate;
+          return `${date.startDate} ~ ${date.startDate}`;
         });
 
       const estimateData: ReservationEstimateData = {
