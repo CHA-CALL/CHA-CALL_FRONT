@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@icon/Icon';
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
@@ -12,12 +12,16 @@ import MessageListBottomSheet from '@pages/chat-room/chat-input-area/components/
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
 import Tag from '@components/ui/tag/Tag';
 
+// TODO: 상대방 이름 받아오기. 견적서 작성을 위해 foodTruckId, chatRoomId, 상대 유저 id 필요함
+const otherName = '상대방 이름';
+const otherFoodTruckName = '상대방 푸드트럭';
+const foodTruckId = 1;
+// const reservationId = 1;
+const memberId = 2;
+
 export default function ChatRoom() {
   const navigate = useNavigate();
-
-  // TODO: 상대방 이름 받아오기
-  const otherName = '상대방 이름';
-  const otherFoodTruckName = '상대방 푸드트럭';
+  const { chatRoomId } = useParams();
 
   const { messages, handleSendMessage } = useSendMessage();
   const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(
@@ -68,6 +72,11 @@ export default function ChatRoom() {
       }
     }
   }, [messages, lastMessage, scrollElement]);
+
+  if (!chatRoomId) {
+    // TODO: 토스트로 접근 오류 보여주기
+    return;
+  }
 
   const handleOpenLeaveSheet = () => {
     setIsLeaveSheetOpen(true);
@@ -134,8 +143,11 @@ export default function ChatRoom() {
         handleCloseBottomSheet={handleCloseLeaveSheet}
       />
 
-      <footer className='bottom-[0] w-full fixed-center'>
+      <footer className='fixed-center bottom-[0] w-full'>
         <ChatInputArea
+          foodTruckId={foodTruckId}
+          chatRoomId={chatRoomId}
+          memberId={memberId}
           selectedQuickMessage={selectedQuickMessage}
           handleOpenMessageList={handleOpenMessageList}
           handleSendMessage={handleSendMessage}

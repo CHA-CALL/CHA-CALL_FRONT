@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
@@ -13,9 +13,13 @@ import {
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
+import { ROUTES } from '@router/constant/routes';
 
 export default function Estimate() {
   const navigate = useNavigate();
+  const { chatRoomId } = useParams();
+  const { state } = useLocation();
+
   const {
     handleSubmit,
     formData,
@@ -35,9 +39,21 @@ export default function Estimate() {
     handleAddAvailableDate,
   } = useEstimateForm();
 
+  if (!chatRoomId) {
+    navigate(ROUTES.CHATLIST);
+    return;
+  }
+  if (
+    state.foodTruckId === undefined ||
+    state.reservationUserId === undefined
+  ) {
+    navigate(ROUTES.CHATROOM(chatRoomId));
+  }
+
   const handleNavigateBack = () => {
-    navigate(-1);
+    navigate(ROUTES.CHATROOM(chatRoomId));
   };
+
   return (
     <>
       <Navigation

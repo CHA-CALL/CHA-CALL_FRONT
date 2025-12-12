@@ -1,12 +1,15 @@
 import { useRef, type RefObject } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import useToast from '@hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
 import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
-import useToast from '@hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
 
 export const useExtensionMenu = (
+  foodTruckId: number,
+  chatRoomId: string,
+  reservationUserId: number,
   handleOpenMessageList: () => void,
   closeMenu: () => void
 ) => {
@@ -61,7 +64,17 @@ export const useExtensionMenu = (
         .finally(closeMenu),
     write_paper: () => {
       // TODO: 견적서 작성 페이지로
-      navigate(ROUTES.MESSAGE_LIST);
+      if (!chatRoomId) {
+        toast.error('잘못된 접근입니다.');
+        return;
+      }
+      // TODO: foodTruckId, reservationUserId 받은거 넘겨줘야함
+      navigate(ROUTES.OWNER_ESTIMATE(chatRoomId), {
+        state: {
+          foodTruckId,
+          reservationUserId,
+        },
+      });
     },
     edit_paper: () => {
       // TODO: 견적서 수정 페이지로
