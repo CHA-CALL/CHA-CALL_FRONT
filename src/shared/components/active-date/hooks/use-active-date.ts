@@ -2,6 +2,7 @@ import type { AvailableDate } from '@type/available-date';
 import { DEFAULT_DATE } from '@components/active-date/constant/default-date';
 import { generateDateId } from '@utils/date/generate-date-Id';
 import { isDateOverlapping } from '@utils/date/is-date-over-lapping';
+import { useMemo } from 'react';
 
 interface UseActiveDateProps {
   formAvailableDates: AvailableDate[];
@@ -90,12 +91,14 @@ export const useActiveDate = ({
     ]);
   };
 
-  const availableDatesWithId: AvailableDate[] = (formAvailableDates ?? []).map(
-    (date, index) => ({
-      id: date.id || `date_${index}`,
-      startDate: date.startDate,
-      endDate: date.endDate,
-    })
+  const availableDatesWithId: AvailableDate[] = useMemo(
+    () =>
+      (formAvailableDates ?? []).map((date, index) => ({
+        id: date.id || `date_${index}`,
+        startDate: date.startDate,
+        endDate: date.endDate,
+      })),
+    [formAvailableDates]
   );
 
   return {
