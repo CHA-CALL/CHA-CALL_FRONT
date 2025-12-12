@@ -9,6 +9,7 @@ import {
   NEED_ELECTRICITY,
   type NeedElectricityKey,
 } from '@constant/need-electricity';
+import { validateEstimateTime } from '@pages/@owner/estimate/utils/validate-estimate-time';
 
 export const estimateSchema = z.object({
   location: z
@@ -26,7 +27,7 @@ export const estimateSchema = z.object({
       ESTIMATE_MAX_LENGTH.availableDates.max,
       ESTIMATE_ERROR_MESSAGE.availableDates.max
     ),
-  activeTime: z.string(),
+  activeTime: z.string().superRefine(validateEstimateTime),
   food: z
     .string()
     .min(ESTIMATE_MAX_LENGTH.food.min, ESTIMATE_ERROR_MESSAGE.food.required)

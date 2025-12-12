@@ -10,6 +10,7 @@ import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import { PAYMENT_METHOD } from '@constant/payment-method';
 import { FOOD_CATEGORIES } from '@constant/food-categories';
 import type { AvailableDate } from '@type/available-date';
+import { validateFoodTruckFormTime } from '@pages/@owner/food-truck-form/utils/validate-food-truck-form-time';
 
 export const foodTruckSchema = z.object({
   name: z
@@ -25,7 +26,7 @@ export const foodTruckSchema = z.object({
     )
     .max(FOOD_TRUCK_MAX_LENGTH.description.max),
   timeDiscussRequired: z.boolean(),
-  activeTime: z.string(),
+  activeTime: z.string().superRefine(validateFoodTruckFormTime),
   phoneNumber: z
     .string()
     .min(

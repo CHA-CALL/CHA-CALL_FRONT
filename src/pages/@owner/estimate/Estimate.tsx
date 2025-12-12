@@ -39,13 +39,8 @@ export default function Estimate() {
     updateEtc,
   } = useEstimateForm();
 
-  const {
-    formActiveTime,
-    activeTimeError,
-    hasTimeError,
-    handleActiveTimeError,
-    handleActiveTimeSetValue,
-  } = useEstimateTime(methods);
+  const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
+    useEstimateTime(methods);
 
   const {
     formAvailableDates,
@@ -83,8 +78,6 @@ export default function Estimate() {
         <ActiveTime
           formActiveTime={formActiveTime}
           activeTimeError={activeTimeError}
-          errorMessages={ESTIMATE_ERROR_MESSAGE.activeTime}
-          handleActiveTimeError={handleActiveTimeError}
           handleActiveTimeSetValue={handleActiveTimeSetValue}
         />
         <Food
@@ -107,9 +100,9 @@ export default function Estimate() {
       <footer className='fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
-          buttonStyle={isValid && !hasTimeError ? 'active' : 'disabled'}
+          buttonStyle={isValid ? 'active' : 'disabled'}
           handleClickButton={handleSubmit}
-          disabled={!isValid || hasTimeError}
+          disabled={!isValid}
         >
           저장하기
         </Button>

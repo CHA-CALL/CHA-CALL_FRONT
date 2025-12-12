@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   estimateSchema,
   type EstimateFormData,
-} from '@pages/@owner/estimate/utils/estimate.schema';
+} from '@pages/@owner/estimate/schemas/estimate.schema';
 import type { NeedElectricityKey } from '@constant/need-electricity';
 
 export const useEstimateForm = () => {
@@ -14,7 +14,7 @@ export const useEstimateForm = () => {
       needElectricity: undefined,
       etc: '',
       availableDates: [],
-      activeTime: '',
+      activeTime: undefined,
       food: '',
       location: '',
       detailLocation: '',

@@ -8,12 +8,6 @@ interface ActiveTimeProps {
   formActiveTime: string;
   formTimeDiscussRequired?: boolean;
   activeTimeError?: string;
-  errorMessages: {
-    start: string;
-    end: string;
-    invalid: string;
-  };
-  handleActiveTimeError: (_message: string) => void;
   handleActiveTimeSetValue: (_value: string) => void;
   handleTimeDiscussRequiredSetValue?: (_value: boolean) => void;
 }
@@ -22,8 +16,6 @@ export default function ActiveTime({
   formActiveTime,
   formTimeDiscussRequired,
   activeTimeError,
-  errorMessages,
-  handleActiveTimeError,
   handleActiveTimeSetValue,
   handleTimeDiscussRequiredSetValue,
 }: ActiveTimeProps) {
@@ -37,8 +29,6 @@ export default function ActiveTime({
   } = useActiveTime({
     formActiveTime,
     formTimeDiscussRequired,
-    errorMessages,
-    handleActiveTimeError,
     handleActiveTimeSetValue,
     handleTimeDiscussRequiredSetValue,
   });

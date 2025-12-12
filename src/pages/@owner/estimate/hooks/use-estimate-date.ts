@@ -2,7 +2,7 @@ import { type UseFormReturn } from 'react-hook-form';
 
 import type { AvailableDate } from '@type/available-date';
 
-import type { EstimateFormData } from '@pages/@owner/estimate/utils/estimate.schema';
+import type { EstimateFormData } from '@pages/@owner/estimate/schemas/estimate.schema';
 
 export const useEstimateDate = (methods: UseFormReturn<EstimateFormData>) => {
   const {

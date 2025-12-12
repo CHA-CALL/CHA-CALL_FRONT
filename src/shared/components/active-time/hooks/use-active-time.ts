@@ -5,12 +5,6 @@ import type { TimeType } from '@type/time-types';
 interface UseActiveTimeProps {
   formActiveTime: string;
   formTimeDiscussRequired?: boolean;
-  errorMessages: {
-    start: string;
-    end: string;
-    invalid: string;
-  };
-  handleActiveTimeError: (_message: string) => void;
   handleActiveTimeSetValue: (_value: string) => void;
   handleTimeDiscussRequiredSetValue?: (_value: boolean) => void;
 }
@@ -18,8 +12,6 @@ interface UseActiveTimeProps {
 export const useActiveTime = ({
   formActiveTime,
   formTimeDiscussRequired,
-  errorMessages,
-  handleActiveTimeError,
   handleActiveTimeSetValue,
   handleTimeDiscussRequiredSetValue,
 }: UseActiveTimeProps) => {
@@ -33,81 +25,55 @@ export const useActiveTime = ({
     setEndActiveTime(activeTime);
   };
 
-  const isInvalidTimeRange = (startTime: TimeType, endTime: TimeType) => {
-    const start = Number(startTime.hour) * 60 + Number(startTime.minute);
-    const end = Number(endTime.hour) * 60 + Number(endTime.minute);
+  useEffect(() => {
+    const start =
+      startActiveTime != null
+        ? `${startActiveTime.hour}:${startActiveTime.minute}`
+        : '';
+    const end =
+      endActiveTime != null
+        ? `${endActiveTime.hour}:${endActiveTime.minute}`
+        : '';
 
-    return start >= end;
-  };
+    handleActiveTimeSetValue(`${start}-${end}`);
+  }, [startActiveTime, endActiveTime, handleActiveTimeSetValue]);
 
   useEffect(() => {
-    if (!startActiveTime && !endActiveTime) {
-      return;
-    }
-    if (!startActiveTime) {
-      handleActiveTimeError(errorMessages.start);
-      return;
-    }
-    if (!endActiveTime) {
-      handleActiveTimeError(errorMessages.end);
-      return;
-    }
-    if (startActiveTime && endActiveTime) {
-      if (isInvalidTimeRange(startActiveTime, endActiveTime)) {
-        handleActiveTimeError(errorMessages.invalid);
-        return;
-      }
-      const startTimeString = `${startActiveTime.hour}:${startActiveTime.minute}`;
-      const endTimeString = `${endActiveTime.hour}:${endActiveTime.minute}`;
-      handleActiveTimeSetValue(`${startTimeString}-${endTimeString}`);
-    }
-  }, [
-    startActiveTime,
-    endActiveTime,
-    errorMessages,
-    handleActiveTimeError,
-    handleActiveTimeSetValue,
-  ]);
-
-  useEffect(() => {
-    const activeTime = formActiveTime;
-
-    if (!activeTime) {
+    if (!formActiveTime) {
       setStartActiveTime(null);
       setEndActiveTime(null);
       return;
     }
 
-    const [startTime, endTime] = activeTime.split('-');
-
-    if (!startTime || !endTime) {
-      // 형식이 깨졌을 경우 방어적으로 초기화
+    const [startTime, endTime] = formActiveTime.split('-');
+    if (!startTime && !endTime) {
       setStartActiveTime(null);
       setEndActiveTime(null);
       return;
     }
 
-    const [startHour, startMinute] = startTime.split(':');
-    const [endHour, endMinute] = endTime.split(':');
+    const [startHour, startMinute] = (startTime ?? '').split(':');
+    const [endHour, endMinute] = (endTime ?? '').split(':');
 
-    if (!startHour || !startMinute || !endHour || !endMinute) {
+    if (startHour && startMinute) {
+      setStartActiveTime(prev =>
+        prev?.hour === startHour && prev?.minute === startMinute
+          ? prev
+          : { hour: startHour, minute: startMinute }
+      );
+    } else {
       setStartActiveTime(null);
-      setEndActiveTime(null);
-      return;
     }
 
-    setStartActiveTime(prev => {
-      if (prev?.hour === startHour && prev?.minute === startMinute) {
-        return prev;
-      }
-      return { hour: startHour, minute: startMinute };
-    });
-    setEndActiveTime(prev => {
-      if (prev?.hour === endHour && prev?.minute === endMinute) {
-        return prev;
-      }
-      return { hour: endHour, minute: endMinute };
-    });
+    if (endHour && endMinute) {
+      setEndActiveTime(prev =>
+        prev?.hour === endHour && prev?.minute === endMinute
+          ? prev
+          : { hour: endHour, minute: endMinute }
+      );
+    } else {
+      setEndActiveTime(null);
+    }
   }, [formActiveTime]);
 
   const updateTimeDiscussRequired = (timeDiscussRequired: boolean) => {

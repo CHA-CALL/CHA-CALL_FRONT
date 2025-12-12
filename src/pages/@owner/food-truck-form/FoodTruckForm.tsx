@@ -48,7 +48,6 @@ export default function FoodTruckForm() {
     formActiveTime,
     formTimeDiscussRequired,
     activeTimeError,
-    handleActiveTimeError,
     handleActiveTimeSetValue,
     handleTimeDiscussRequiredSetValue,
   } = useFoodTruckFormTime(methods);
@@ -89,8 +88,6 @@ export default function FoodTruckForm() {
           formActiveTime={formActiveTime}
           formTimeDiscussRequired={formTimeDiscussRequired}
           activeTimeError={activeTimeError}
-          errorMessages={FOOD_TRUCK_ERROR_MESSAGE.activeTime}
-          handleActiveTimeError={handleActiveTimeError}
           handleActiveTimeSetValue={handleActiveTimeSetValue}
           handleTimeDiscussRequiredSetValue={handleTimeDiscussRequiredSetValue}
         />

@@ -9,18 +9,10 @@ export const useFoodTruckFormTime = (
     setValue,
     watch,
     formState: { errors },
-    setError,
   } = methods;
 
   const formActiveTime = watch('activeTime');
   const formTimeDiscussRequired = watch('timeDiscussRequired');
-
-  const handleActiveTimeError = useCallback(
-    (message: string) => {
-      setError('activeTime', { message });
-    },
-    [setError]
-  );
 
   const handleActiveTimeSetValue = useCallback(
     (value: string) => {
@@ -45,7 +37,6 @@ export const useFoodTruckFormTime = (
     formTimeDiscussRequired,
     activeTimeError: errors.activeTime?.message,
 
-    handleActiveTimeError,
     handleActiveTimeSetValue,
     handleTimeDiscussRequiredSetValue,
   };
