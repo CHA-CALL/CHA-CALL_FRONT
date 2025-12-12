@@ -3,50 +3,33 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   estimateSchema,
   type EstimateFormData,
-} from '@pages/@owner/estimate/utils/estimate.schema';
+} from '@pages/@owner/estimate/schemas/estimate.schema';
 import type { NeedElectricityKey } from '@constant/need-electricity';
-import {
-  useEstimateDate,
-  useEstimateTime,
-} from '@pages/@owner/estimate/hooks/index';
 
 export const useEstimateForm = () => {
-  const {
-    handleSubmit,
-    setValue,
-    trigger,
-    formState: { errors, isValid },
-    setError,
-    watch,
-  } = useForm<EstimateFormData>({
+  const methods = useForm<EstimateFormData>({
     resolver: zodResolver(estimateSchema),
     defaultValues: {
       price: undefined,
       needElectricity: undefined,
       etc: '',
       availableDates: [],
-      activeTime: '',
+      activeTime: undefined,
       food: '',
       location: '',
       detailLocation: '',
     },
     mode: 'onChange',
   });
+  const {
+    handleSubmit,
+    setValue,
+    trigger,
+    formState: { errors, isValid },
+    watch,
+  } = methods;
 
   const formData = watch();
-
-  const {
-    startActiveTime,
-    endActiveTime,
-    updateStartActiveTime,
-    updateEndActiveTime,
-  } = useEstimateTime({ formData, setValue, setError });
-
-  const {
-    updateAvailableDateById,
-    removeAvailableDateById,
-    handleAddAvailableDate,
-  } = useEstimateDate({ formData, setValue, setError });
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -81,6 +64,7 @@ export const useEstimateForm = () => {
       return;
     }
     if (formData) {
+      console.info(formData);
       alert('견적 요청 제출');
     }
   };
@@ -108,24 +92,16 @@ export const useEstimateForm = () => {
   };
 
   return {
+    methods,
     handleSubmit: handleSubmit(onSubmit),
     formData: formDatas,
-    activeTime: {
-      startActiveTime,
-      endActiveTime,
-    },
     errors: combinedErrors,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateStartActiveTime,
-    updateEndActiveTime,
-    updateAvailableDateById,
-    removeAvailableDateById,
     updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
   };
 };

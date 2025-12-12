@@ -12,10 +12,7 @@ import {
   FoodTruckOption,
   FoodTruckPhoto,
 } from '@pages/@owner/food-truck-form/@section/basic-info-section/index';
-import {
-  ActiveTime,
-  ActiveDate,
-} from '@pages/@owner/food-truck-form/@section/time-section/index';
+
 import {
   AvailableQuantity,
   NeedElectricity,
@@ -25,6 +22,14 @@ import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-se
 import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
 import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
+import { useFoodTruckFormDate } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-date';
+import { useFoodTruckFormTime } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-time';
+import {
+  FOOD_TRUCK_ERROR_MESSAGE,
+  FOOD_TRUCK_MAX_LENGTH,
+} from '@pages/@owner/food-truck-form/constants/food-truck';
+import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 import { ROUTES } from '@router/constant/routes';
 
@@ -36,11 +41,25 @@ export default function FoodTruckForm() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
+  const { methods, reset, isFormValid, handleSubmit } = useFoodTruckForm();
+
+  const {
+    formActiveTime,
+    formTimeDiscussRequired,
+    activeTimeError,
+    handleActiveTimeSetValue,
+    handleTimeDiscussRequiredSetValue,
+  } = useFoodTruckFormTime(methods);
+
+  const {
+    formAvailableDates,
+    availableDatesError,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  } = useFoodTruckFormDate(methods);
   // 서버에서 활동 가능 지역은 지역코드로 받아야함
   const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
-
-  // TODO: 등록된 정보가 있을 때, 푸드트럭 정보 가져오기
-  const { isFormValid, reset, handleSubmit, ...methods } = useFoodTruckForm();
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
@@ -53,7 +72,7 @@ export default function FoodTruckForm() {
   };
 
   return (
-    <FormProvider {...methods.methods}>
+    <FormProvider {...methods}>
       <Navigation
         centerContent={
           foodTruckDetailData ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'
@@ -65,18 +84,28 @@ export default function FoodTruckForm() {
         <FoodTruckName />
         <FoodTruckDescription />
         <FoodTruckPhoneNumber />
-        <ActiveTime />
-        <RegionSection foodTruckId={foodTruckId} />
-
+        <ActiveTime
+          formActiveTime={formActiveTime}
+          formTimeDiscussRequired={formTimeDiscussRequired}
+          activeTimeError={activeTimeError}
+          handleActiveTimeSetValue={handleActiveTimeSetValue}
+          handleTimeDiscussRequiredSetValue={handleTimeDiscussRequiredSetValue}
+        />
+        <RegionSection />
         <MenuCategory />
         <AvailableQuantity />
         <NeedElectricity />
         <PaymentMethod />
         <MenuInfo />
         <FoodTruckPhoto />
-
-        <ActiveDate />
-
+        <ActiveDate
+          formAvailableDates={formAvailableDates}
+          availableDatesError={availableDatesError}
+          errorMessages={FOOD_TRUCK_ERROR_MESSAGE.availableDates}
+          maxLength={FOOD_TRUCK_MAX_LENGTH.availableDates.max}
+          handleActiveDateSetValue={handleActiveDateSetValue}
+          handleActiveDateError={handleActiveDateError}
+        />
         <FoodTruckOperatingInfo />
         <FoodTruckOption />
       </div>

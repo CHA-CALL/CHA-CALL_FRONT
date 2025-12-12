@@ -1,45 +1,59 @@
 import { useNavigate } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
 
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
-import { useEstimateForm } from '@pages/@owner/estimate/hooks';
+import {
+  useEstimateForm,
+  useEstimateTime,
+  useEstimateDate,
+} from '@pages/@owner/estimate/hooks';
 import {
   Food,
   Price,
   RegionSection,
-  ActiveDate,
-  ActiveTime,
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
+import {
+  ESTIMATE_ERROR_MESSAGE,
+  ESTIMATE_MAX_LENGTH,
+} from '@pages/@owner/estimate/constants/estimate';
+import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
 
 export default function Estimate() {
   const navigate = useNavigate();
   const {
+    methods,
     handleSubmit,
     formData,
     errors,
-    activeTime,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateAvailableDateById,
-    removeAvailableDateById,
-    updateStartActiveTime,
-    updateEndActiveTime,
     updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
   } = useEstimateForm();
+
+  const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
+    useEstimateTime(methods);
+
+  const {
+    formAvailableDates,
+    availableDatesError,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  } = useEstimateDate(methods);
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
   return (
-    <>
+    <FormProvider {...methods}>
       <Navigation
         centerContent='예약 견적서 작성'
         leftIcon={<Icon name='ic_back' />}
@@ -54,17 +68,17 @@ export default function Estimate() {
           error={errors.location || errors.detailLocation}
         />
         <ActiveDate
-          availableDates={formData.availableDates}
-          updateAvailableDateById={updateAvailableDateById}
-          removeAvailableDateById={removeAvailableDateById}
-          handleAddAvailableDate={handleAddAvailableDate}
-          error={errors.availableDates}
+          formAvailableDates={formAvailableDates}
+          availableDatesError={availableDatesError}
+          errorMessages={ESTIMATE_ERROR_MESSAGE.availableDates}
+          maxLength={ESTIMATE_MAX_LENGTH.availableDates.max}
+          handleActiveDateSetValue={handleActiveDateSetValue}
+          handleActiveDateError={handleActiveDateError}
         />
         <ActiveTime
-          activeTime={activeTime}
-          updateStartActiveTime={updateStartActiveTime}
-          updateEndActiveTime={updateEndActiveTime}
-          error={errors.activeTime}
+          formActiveTime={formActiveTime}
+          activeTimeError={activeTimeError}
+          handleActiveTimeSetValue={handleActiveTimeSetValue}
         />
         <Food
           food={formData.food}
@@ -93,6 +107,6 @@ export default function Estimate() {
           저장하기
         </Button>
       </footer>
-    </>
+    </FormProvider>
   );
 }

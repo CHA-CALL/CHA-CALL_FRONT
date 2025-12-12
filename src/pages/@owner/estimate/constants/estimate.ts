@@ -32,6 +32,7 @@ export const ESTIMATE_ERROR_MESSAGE = {
     min: `가능한 일정대는 ${ESTIMATE_MAX_LENGTH.availableDates.min}개 이상 선택해주세요.`,
     max: `가능한 일정대는 ${ESTIMATE_MAX_LENGTH.availableDates.max}개 이하로 선택해주세요.`,
     invalid: '일정이 겹칩니다. 다른 일정을 선택해주세요.',
+    incomplete: '기존 일정을 완성한 후 새로운 일정을 추가해주세요.',
   },
   activeTime: {
     start: `운영 시작 시간을 선택해주세요.`,
