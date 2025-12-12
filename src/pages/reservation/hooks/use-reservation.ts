@@ -8,7 +8,6 @@ import {
   extractLocationCodes,
   extractLocationName,
 } from '@utils/extract-location';
-import { formatSelectedDateToSchedules } from '@utils/date-formatter';
 import { FOOD_TRUCK_CATEGORIES } from '@constant/food-truck-categories';
 import { filtersAtom, notFilteredAtom } from '@shared/store/filter-store';
 import { regionsAtom } from '@shared/store/regions-store';
@@ -18,6 +17,7 @@ import {
 } from '@pages/reservation/hooks/use-food-truck-list-query';
 import type { FoodTruckCategoryValue } from '@type/category-types';
 import { ROUTES } from '@router/constant/routes';
+import { formatSelectedDateToSchedules } from '@utils/date/date-formatter';
 
 export default function useReservation() {
   const navigate = useNavigate();

@@ -35,13 +35,9 @@ export const useFoodTruckForm = (prevData?: FoodTruckFormData) => {
   const {
     handleSubmit,
     reset,
-    trigger,
     formState: { isValid },
-    watch,
     setError,
   } = methods;
-
-  const formData = watch();
 
   const onSubmit = async (formData: FoodTruckFormData) => {
     if (!formData.nameDuplicate) {
@@ -61,10 +57,6 @@ export const useFoodTruckForm = (prevData?: FoodTruckFormData) => {
     methods,
     handleSubmit: handleSubmit(onSubmit),
     reset,
-    trigger,
     isFormValid: isValid,
-
-    // Form data
-    formData,
   };
 };
