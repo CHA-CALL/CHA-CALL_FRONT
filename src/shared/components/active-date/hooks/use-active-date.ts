@@ -93,7 +93,7 @@ export const useActiveDate = ({
 
   const availableDatesWithId: AvailableDate[] = useMemo(
     () =>
-      (formAvailableDates ?? []).map((date, index) => ({
+      formAvailableDates.map((date, index) => ({
         id: date.id || `date_${index}`,
         startDate: date.startDate,
         endDate: date.endDate,
