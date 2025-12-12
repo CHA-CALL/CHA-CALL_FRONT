@@ -4,7 +4,6 @@ import {
   estimateSchema,
   type EstimateFormData,
 } from '@pages/@owner/estimate/utils/estimate.schema';
-import type { NeedElectricityKey } from '@constant/need-electricity';
 import {
   useEstimateDate,
   useEstimateTime,
@@ -67,8 +66,8 @@ export const useEstimateForm = () => {
     setValue('price', numbersOnly, { shouldValidate: true });
   };
 
-  const updateNeedElectricity = (needElectricity: NeedElectricityKey) => {
-    setValue('needElectricity', needElectricity, {
+  const updateNeedElectricity = (isUseElectricity: boolean) => {
+    setValue('needElectricity', isUseElectricity, {
       shouldValidate: true,
     });
   };
@@ -83,7 +82,7 @@ export const useEstimateForm = () => {
       return;
     }
     if (formData) {
-      alert('견적 요청 제출');
+      console.info(formData);
     }
   };
 

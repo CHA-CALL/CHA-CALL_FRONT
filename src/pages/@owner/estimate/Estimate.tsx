@@ -67,7 +67,8 @@ export default function Estimate() {
           detailLocation={formData.detailLocation ?? ''}
           updateLocation={updateLocation}
           updateDetailLocation={updateDetailLocation}
-          error={errors.location || errors.detailLocation}
+          locationError={errors.location}
+          detailLocationError={errors.detailLocation}
         />
         <ActiveDate
           availableDates={formData.availableDates}
