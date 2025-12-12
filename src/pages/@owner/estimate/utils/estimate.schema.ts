@@ -15,7 +15,7 @@ export const estimateSchema = z.object({
     .string()
     .min(ESTIMATE_MAX_LENGTH.location.min, ESTIMATE_ERROR_MESSAGE.location.min)
     .max(ESTIMATE_MAX_LENGTH.location.max, ESTIMATE_ERROR_MESSAGE.location.max),
-  detailLocation: z.string().optional(),
+  detailLocation: z.string(),
   availableDates: z
     .array(z.custom<AvailableDate>())
     .min(

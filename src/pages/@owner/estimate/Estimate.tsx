@@ -42,6 +42,7 @@ export default function Estimate() {
   const {
     formActiveTime,
     activeTimeError,
+    hasTimeError,
     handleActiveTimeError,
     handleActiveTimeSetValue,
   } = useEstimateTime(methods);
@@ -106,9 +107,9 @@ export default function Estimate() {
       <footer className='fixed bottom-[0] mx-auto w-full max-w-[60rem] bg-white px-[2rem] py-[1.7rem]'>
         <Button
           variant='cta'
-          buttonStyle={isValid ? 'active' : 'disabled'}
+          buttonStyle={isValid && !hasTimeError ? 'active' : 'disabled'}
           handleClickButton={handleSubmit}
-          disabled={!isValid}
+          disabled={!isValid || hasTimeError}
         >
           저장하기
         </Button>
