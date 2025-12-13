@@ -67,7 +67,6 @@ export default function Estimate() {
 
   const handleNavigateBack = () => {
     navigate(ROUTES.CHATROOM(chatRoomId));
-    return null;
   };
 
   return (
