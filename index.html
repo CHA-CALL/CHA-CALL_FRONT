@@ -3,9 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 1. CDN 도메인 사전 연결 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+
+    <!-- 2. 폰트 CSS를 미리 받아두기 (preload) -->
     <link
+      rel="preload"
+      as="style"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
     <title>CHA CALL</title>
   </head>
