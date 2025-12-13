@@ -5,8 +5,7 @@ import {
   ESTIMATE_ERROR_MESSAGE,
   ESTIMATE_MAX_LENGTH,
 } from '@pages/@owner/estimate/constants/estimate';
-
-import { validateEstimateTime } from '@pages/@owner/estimate/utils/validate-estimate-time';
+import { validateEstimateTime } from '@pages/@owner/estimate/utils';
 
 export const estimateSchema = z.object({
   location: z

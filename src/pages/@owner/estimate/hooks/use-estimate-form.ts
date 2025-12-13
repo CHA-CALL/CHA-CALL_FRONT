@@ -5,7 +5,8 @@ import {
   type EstimateFormData,
 } from '@pages/@owner/estimate/schemas/estimate.schema';
 import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
-import type { ReservationEstimateData } from '../api';
+import type { CreateReservationEstimateRequest } from '@pages/@owner/estimate/api';
+import { formatEstimate } from '@pages/@owner/estimate/utils';
 
 export const useEstimateForm = (
   chatRoomId?: string,
@@ -71,29 +72,15 @@ export const useEstimateForm = (
       return;
     }
     if (formData) {
-      const formattedDates = formData.availableDates
-        .filter(date => date.startDate)
-        .map(date => {
-          if (date.endDate) {
-            return `${date.startDate} ~ ${date.endDate}`;
-          }
-          return `${date.startDate} ~ ${date.startDate}`;
-        });
+      const formattedEstimate = formatEstimate(formData);
 
-      const estimateData: ReservationEstimateData = {
+      const estimateRequestData: CreateReservationEstimateRequest = {
         foodTruckId: Number(foodTruckId),
         chatRoomId: Number(chatRoomId),
         reservationUserId: Number(reservationUserId),
-        address: formData.location,
-        detailAddress: formData.detailLocation,
-        reservationDates: formattedDates,
-        operationHour: formData.activeTime,
-        menu: formData.food,
-        deposit: formData.price,
-        isUseElectricity: formData.needElectricity,
-        etcRequest: formData.etc,
+        ...formattedEstimate,
       };
-      createEstimate(estimateData);
+      createEstimate(estimateRequestData);
     }
   };
 
