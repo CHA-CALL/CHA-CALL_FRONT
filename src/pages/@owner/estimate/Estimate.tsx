@@ -55,19 +55,19 @@ export default function Estimate() {
 
   if (!chatRoomId) {
     navigate(ROUTES.CHATLIST);
-    return;
+    return null;
   }
   if (
     state.foodTruckId === undefined ||
     state.reservationUserId === undefined
   ) {
     navigate(ROUTES.CHATROOM(chatRoomId));
-    return;
+    return null;
   }
 
   const handleNavigateBack = () => {
     navigate(ROUTES.CHATROOM(chatRoomId));
-    return;
+    return null;
   };
 
   return (
