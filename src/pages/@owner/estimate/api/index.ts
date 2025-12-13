@@ -25,6 +25,7 @@ export interface CreateReservationEstimateRequest
 
 export type UpdateReservationEstimateRequest = ReservationEstimateRequestData;
 
+// 예약 견적서 조회
 export const getReservation = async (
   reservationId: number,
   isOwner: boolean
@@ -37,6 +38,7 @@ export const getReservation = async (
   return response.data;
 };
 
+// 예약 견적서 작성
 export const createReservation = async (
   data: CreateReservationEstimateRequest
 ) => {
@@ -48,6 +50,7 @@ export const createReservation = async (
   return response.data;
 };
 
+// 예약 견적서 수정
 export const updateReservation = async (
   reservationId: number,
   data: UpdateReservationEstimateRequest
