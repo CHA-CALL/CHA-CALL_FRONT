@@ -3,7 +3,6 @@ import type {
   DeleteFoodTruckData,
 } from 'apis/data-contracts';
 import {
-  infiniteQueryOptions,
   useInfiniteQuery,
   useMutation,
   useQueryClient,
@@ -23,25 +22,24 @@ const FALLBACK: CursorPagingResponseMyFoodTruckResponse = {
 };
 
 export const ownerFoodTruckQueries = {
-  list: () =>
-    infiniteQueryOptions<CursorPagingResponseMyFoodTruckResponse>({
-      queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
-      queryFn: async ({ pageParam }) => {
-        const cursor = pageParam === null ? undefined : Number(pageParam);
-        const response = await getOwnerFoodTrucks({
-          cursor,
-          size: PAGE_SIZE,
-        });
-        return response ?? FALLBACK;
-      },
-      initialPageParam: null,
-      getNextPageParam: lastPage => {
-        if (lastPage?.hasNext && lastPage.lastCursor !== undefined) {
-          return lastPage.lastCursor;
-        }
-        return undefined;
-      },
-    }),
+  list: () => ({
+    queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+    queryFn: async ({ pageParam }: { pageParam: unknown }) => {
+      const cursor = pageParam === null ? undefined : Number(pageParam);
+      const response = await getOwnerFoodTrucks({
+        cursor,
+        size: PAGE_SIZE,
+      });
+      return response ?? FALLBACK;
+    },
+    initialPageParam: null,
+    getNextPageParam: (lastPage: CursorPagingResponseMyFoodTruckResponse) => {
+      if (lastPage?.hasNext && lastPage.lastCursor !== undefined) {
+        return lastPage.lastCursor;
+      }
+      return undefined;
+    },
+  }),
 };
 
 export const useGetOwnerFoodTrucks = () => {
@@ -52,7 +50,9 @@ export const useGetOwnerFoodTrucks = () => {
     isFetchingNextPage,
     fetchNextPage,
     isError,
-  } = useInfiniteQuery(ownerFoodTruckQueries.list());
+  } = useInfiniteQuery({
+    ...ownerFoodTruckQueries.list(),
+  });
 
   const foodTrucks = data?.pages.flatMap(page => page?.content || []) || [];
 

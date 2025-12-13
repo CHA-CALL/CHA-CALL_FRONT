@@ -1,9 +1,4 @@
-import {
-  queryOptions,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   postBankAccountInfo,
   deleteBankAccountInfo,
@@ -12,7 +7,6 @@ import {
 } from '@pages/@owner/account/api';
 import type {
   BankAccountResponse,
-  GetBankAccountData,
   RegisterBankAccountRequest,
   UpdateBankAccountRequest,
 } from 'apis/data-contracts';
@@ -24,21 +18,20 @@ interface UsePatchAccountDataOptions {
 }
 
 export const accountQueries = {
-  detail: () =>
-    queryOptions<GetBankAccountData, Error, BankAccountResponse | null>({
-      queryKey: USER_INFO.ACCOUNTS(),
-      queryFn: () => getBankAccountInfo(),
-      select: response => {
-        if (!response.data) {
-          return null;
-        }
-        return response.data;
-      },
-    }),
+  detail: () => ({
+    queryKey: USER_INFO.ACCOUNTS(),
+    queryFn: getBankAccountInfo,
+    select: (response: { data?: BankAccountResponse | null }) => {
+      if (!response.data) {
+        return null;
+      }
+      return response.data;
+    },
+  }),
 };
 
 export const useFetchAccountData = () => {
-  return useQuery(accountQueries.detail());
+  return useQuery({ ...accountQueries.detail() });
 };
 
 export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
