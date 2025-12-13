@@ -383,10 +383,10 @@ export interface CreateReservationRequest {
    */
   reservationDates: string[];
   /**
-   * 운영 시간 (형식: HH:MM ~ HH:MM)
+   * 운영 시간 (형식: HH:MM-HH:MM)
    * @minLength 1
-   * @pattern ^([01]\d|2[0-3]):([0-5]\d) ~ ([01]\d|2[0-3]):([0-5]\d)$
-   * @example "15:00 ~ 16:00"
+   * @pattern ^([01]\d|2[0-3]):([0-5]\d)-([01]\d|2[0-3]):([0-5]\d)$
+   * @example "15:00-16:00"
    */
   operationHour: string;
   /**
@@ -788,8 +788,8 @@ export interface ReservationResponse {
    */
   reservationDates?: string[];
   /**
-   * 운영 시간 (형식: HH:MM ~ HH:MM)
-   * @example "15:00 ~ 16:00"
+   * 운영 시간 (형식: HH:MM-HH:MM)
+   * @example "15:00-16:00"
    */
   operationHour?: string;
   /**
@@ -1461,11 +1461,8 @@ export interface FoodTruckDetailResponse {
    * @example "서울 광진구, 서울 강남구, 서울 영등포구"
    */
   serviceAreas?: string;
-  /**
-   * 호출 가능 지역 코드
-   * @example [1,2]
-   */
-  regionCodes?: number[];
+  /** 호출 가능 지역 정보 리스트 */
+  regionCodes?: RegionResponse[];
   /**
    * 푸드트럭 메뉴 카테고리 (라벨 리스트)
    * @example ["한식","분식"]
@@ -1690,11 +1687,23 @@ export interface ChatRoomMetaDataResponse {
    */
   foodTruckName?: string;
   /**
+   * 푸드트럭 식별자
+   * @format int64
+   * @example 1
+   */
+  foodTruckId?: number;
+  /**
    * 채팅방과 관련된 예약 ID (있는 경우: ID 반환, 없는 경우: null)
    * @format int64
    * @example 1
    */
   reservationId?: number;
+  /**
+   * 예약자(일반 유저) 식별자
+   * @format int64
+   * @example 2
+   */
+  memberId?: number;
 }
 
 export interface BaseResponseListChatMessageResponse {

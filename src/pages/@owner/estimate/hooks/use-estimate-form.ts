@@ -1,12 +1,19 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { CreateReservationRequest } from 'apis/data-contracts';
+
 import {
   estimateSchema,
   type EstimateFormData,
 } from '@pages/@owner/estimate/schemas/estimate.schema';
-import type { NeedElectricityKey } from '@constant/need-electricity';
+import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
+import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
 
-export const useEstimateForm = () => {
+export const useEstimateForm = (
+  chatRoomId?: string,
+  foodTruckId?: string,
+  reservationUserId?: string
+) => {
   const methods = useForm<EstimateFormData>({
     resolver: zodResolver(estimateSchema),
     defaultValues: {
@@ -31,6 +38,8 @@ export const useEstimateForm = () => {
 
   const formData = watch();
 
+  const { createEstimate } = useMutationEstimate();
+
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
   };
@@ -48,8 +57,8 @@ export const useEstimateForm = () => {
     setValue('price', numbersOnly, { shouldValidate: true });
   };
 
-  const updateNeedElectricity = (needElectricity: NeedElectricityKey) => {
-    setValue('needElectricity', needElectricity, {
+  const updateNeedElectricity = (isUseElectricity: boolean) => {
+    setValue('needElectricity', isUseElectricity, {
       shouldValidate: true,
     });
   };
@@ -58,14 +67,21 @@ export const useEstimateForm = () => {
     setValue('etc', etc, { shouldValidate: true });
   };
 
-  const onSubmit = async (formData: EstimateFormData) => {
+  const handleCreateEstimate = async (formData: EstimateFormData) => {
     const isValid = await trigger();
     if (!isValid) {
       return;
     }
     if (formData) {
-      console.info(formData);
-      alert('견적 요청 제출');
+      const estimateRequestData: CreateReservationRequest =
+        formatCreateEstimate(
+          Number(foodTruckId),
+          Number(chatRoomId),
+          Number(reservationUserId),
+          formData
+        );
+
+      createEstimate(estimateRequestData);
     }
   };
 
@@ -93,7 +109,7 @@ export const useEstimateForm = () => {
 
   return {
     methods,
-    handleSubmit: handleSubmit(onSubmit),
+    handleCreate: handleSubmit(handleCreateEstimate),
     formData: formDatas,
     errors: combinedErrors,
     isValid,

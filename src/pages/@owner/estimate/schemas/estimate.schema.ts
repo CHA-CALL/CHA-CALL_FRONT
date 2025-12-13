@@ -5,18 +5,19 @@ import {
   ESTIMATE_ERROR_MESSAGE,
   ESTIMATE_MAX_LENGTH,
 } from '@pages/@owner/estimate/constants/estimate';
-import {
-  NEED_ELECTRICITY,
-  type NeedElectricityKey,
-} from '@constant/need-electricity';
-import { validateEstimateTime } from '@pages/@owner/estimate/utils/validate-estimate-time';
+import { validateEstimateTime } from '@pages/@owner/estimate/utils';
 
 export const estimateSchema = z.object({
   location: z
     .string()
     .min(ESTIMATE_MAX_LENGTH.location.min, ESTIMATE_ERROR_MESSAGE.location.min)
     .max(ESTIMATE_MAX_LENGTH.location.max, ESTIMATE_ERROR_MESSAGE.location.max),
-  detailLocation: z.string(),
+  detailLocation: z
+    .string()
+    .min(
+      ESTIMATE_MAX_LENGTH.detailLocation.min,
+      ESTIMATE_ERROR_MESSAGE.detailLocation.min
+    ),
   availableDates: z
     .array(z.custom<AvailableDate>())
     .min(
@@ -35,12 +36,7 @@ export const estimateSchema = z.object({
   price: z
     .number()
     .refine(val => val > 0, ESTIMATE_ERROR_MESSAGE.price.required),
-  needElectricity: z.enum(
-    Object.keys(NEED_ELECTRICITY) as [
-      NeedElectricityKey,
-      ...NeedElectricityKey[],
-    ]
-  ),
+  needElectricity: z.boolean(),
   etc: z
     .string()
     .max(ESTIMATE_MAX_LENGTH.etc.max, ESTIMATE_ERROR_MESSAGE.etc.max),

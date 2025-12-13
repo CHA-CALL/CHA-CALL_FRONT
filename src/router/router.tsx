@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
         element: <ChatList />,
       },
       {
-        path: ROUTES.CHATROOM + '/:id?',
+        path: ROUTES.CHATROOM(':chatRoomId'),
         element: <ChatRoom />,
       },
       {
@@ -161,7 +161,7 @@ export const router = createBrowserRouter([
         element: <SetRegion />,
       },
       {
-        path: ROUTES.OWNER_ESTIMATE,
+        path: ROUTES.OWNER_ESTIMATE(':chatRoomId'),
         element: <Estimate />,
       },
     ],

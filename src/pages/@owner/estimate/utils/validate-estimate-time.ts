@@ -21,7 +21,10 @@ const parseTime = (time: string): number | null => {
 };
 
 // 예약 견적서 form의 time 에 대한 검증
-export const validateEstimateTime = (value: string, ctx: z.RefinementCtx) => {
+export default function validateEstimateTime(
+  value: string,
+  ctx: z.RefinementCtx
+) {
   const [startRaw, endRaw] = value.split('-');
 
   if (!startRaw && !endRaw) {
@@ -65,4 +68,4 @@ export const validateEstimateTime = (value: string, ctx: z.RefinementCtx) => {
       message: ESTIMATE_ERROR_MESSAGE.activeTime.invalid,
     });
   }
-};
+}

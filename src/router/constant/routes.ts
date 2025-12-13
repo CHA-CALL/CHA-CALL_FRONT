@@ -5,7 +5,7 @@ export const ROUTES = {
   FOOD_TRUCK_ONBOARDING: '/owner/food-truck-onboarding',
   SET_REGION_GLOBAL: '/set-region',
   CHATLIST: '/chat-list',
-  CHATROOM: '/chat-room',
+  CHATROOM: (chatRoomId: string) => `/chat-room/${chatRoomId}`,
   MESSAGE_LIST: '/owner/message-list',
   MESSAGE_FORM: '/owner/message-form',
   MYPAGE: '/mypage',
@@ -29,5 +29,5 @@ export const ROUTES = {
     `/owner/food-truck-form/${foodTruckId}`,
   SET_REGION_FORM: (foodTruckId: string) =>
     `/owner/food-truck-form/${foodTruckId}/set-region`,
-  OWNER_ESTIMATE: '/owner/estimate',
+  OWNER_ESTIMATE: (chatRoomId: string) => `/owner/estimate/${chatRoomId}`,
 };

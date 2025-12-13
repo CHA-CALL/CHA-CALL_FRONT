@@ -1,13 +1,12 @@
-import { useNavigate } from 'react-router-dom';
-import { FormProvider } from 'react-hook-form';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
 import {
-  useEstimateForm,
   useEstimateTime,
   useEstimateDate,
+  useEstimateForm,
 } from '@pages/@owner/estimate/hooks';
 import {
   Food,
@@ -16,6 +15,8 @@ import {
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
+
+import { ROUTES } from '@router/constant/routes';
 import {
   ESTIMATE_ERROR_MESSAGE,
   ESTIMATE_MAX_LENGTH,
@@ -25,9 +26,12 @@ import ActiveDate from '@components/active-date/ActiveDate';
 
 export default function Estimate() {
   const navigate = useNavigate();
+  const { chatRoomId } = useParams();
+  const { state } = useLocation();
+
   const {
     methods,
-    handleSubmit,
+    handleCreate,
     formData,
     errors,
     isValid,
@@ -37,7 +41,7 @@ export default function Estimate() {
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-  } = useEstimateForm();
+  } = useEstimateForm(chatRoomId, state.foodTruckId, state.reservationUserId);
 
   const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
     useEstimateTime(methods);
@@ -49,11 +53,24 @@ export default function Estimate() {
     handleActiveDateError,
   } = useEstimateDate(methods);
 
+  if (!chatRoomId) {
+    navigate(ROUTES.CHATLIST);
+    return null;
+  }
+  if (
+    state.foodTruckId === undefined ||
+    state.reservationUserId === undefined
+  ) {
+    navigate(ROUTES.CHATROOM(chatRoomId));
+    return null;
+  }
+
   const handleNavigateBack = () => {
-    navigate(-1);
+    navigate(ROUTES.CHATROOM(chatRoomId));
   };
+
   return (
-    <FormProvider {...methods}>
+    <>
       <Navigation
         centerContent='예약 견적서 작성'
         leftIcon={<Icon name='ic_back' />}
@@ -65,7 +82,8 @@ export default function Estimate() {
           detailLocation={formData.detailLocation ?? ''}
           updateLocation={updateLocation}
           updateDetailLocation={updateDetailLocation}
-          error={errors.location || errors.detailLocation}
+          locationError={errors.location}
+          detailLocationError={errors.detailLocation}
         />
         <ActiveDate
           formAvailableDates={formAvailableDates}
@@ -101,12 +119,12 @@ export default function Estimate() {
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
-          handleClickButton={handleSubmit}
+          handleClickButton={handleCreate}
           disabled={!isValid}
         >
-          저장하기
+          대화창에 보내기
         </Button>
       </footer>
-    </FormProvider>
+    </>
   );
 }
