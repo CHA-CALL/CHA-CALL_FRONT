@@ -4,40 +4,40 @@ import { lazy } from 'react';
 
 import Layout from '@router/Layout';
 
-const Home = lazy(() => import('@/pages/home/Home'));
+const Home = lazy(() => import('@pages/home/Home'));
 const SetRegionGlobal = lazy(
-  () => import('@/pages/set-region-global/SetRegion')
+  () => import('@pages/set-region-global/SetRegion')
 );
-const Filter = lazy(() => import('@/pages/filter/Filter'));
-const ChatList = lazy(() => import('@/pages/chat-list/ChatList'));
-const Reservation = lazy(() => import('@/pages/reservation/Reservation'));
+const Filter = lazy(() => import('@pages/filter/Filter'));
+const ChatList = lazy(() => import('@pages/chat-list/ChatList'));
+const Reservation = lazy(() => import('@pages/reservation/Reservation'));
 const FoodTruckOnboarding = lazy(
-  () => import('@/pages/@owner/food-truck-onboarding/FoodTruckOnboarding')
+  () => import('@pages/@owner/food-truck-onboarding/FoodTruckOnboarding')
 );
 const MessageList = lazy(
-  () => import('@/pages/@owner/message-list/MessageList')
+  () => import('@pages/@owner/message-list/MessageList')
 );
 const MessageForm = lazy(
-  () => import('@/pages/@owner/message-list/components/MessageForm')
+  () => import('@pages/@owner/message-list/components/MessageForm')
 );
-const MyPage = lazy(() => import('@/pages/mypage/MyPage'));
+const MyPage = lazy(() => import('@pages/mypage/MyPage'));
 const ProfileSetting = lazy(
-  () => import('@/pages/profile-setting/ProfileSetting')
+  () => import('@pages/profile-setting/ProfileSetting')
 );
-const Account = lazy(() => import('@/pages/@owner/account/Account'));
-const AccountForm = lazy(() => import('@/pages/@owner/account/AccountForm'));
+const Account = lazy(() => import('@pages/@owner/account/Account'));
+const AccountForm = lazy(() => import('@pages/@owner/account/AccountForm'));
 const ReservationHistory = lazy(
-  () => import('@/pages/reservation-history/ReservationHistory')
+  () => import('@pages/reservation-history/ReservationHistory')
 );
 const SaveFoodTruckList = lazy(
   () => import('@pages/save-food-truck-list/SaveFoodTruckList')
 );
 const UploadFoodTruckImages = lazy(
-  () => import('@/pages/@owner/upload-food-truck-images/UploadFoodTruckImages')
+  () => import('@pages/@owner/upload-food-truck-images/UploadFoodTruckImages')
 );
-const SetUserInfo = lazy(() => import('@/pages/set-user-info/SetUserInfo'));
+const SetUserInfo = lazy(() => import('@pages/set-user-info/SetUserInfo'));
 const ReservationDetail = lazy(
-  () => import('@/pages/reservation-detail/ReservationDetail')
+  () => import('@pages/reservation-detail/ReservationDetail')
 );
 const FoodTruckManagement = lazy(
   () => import('@pages/@owner/food-truck-management/FoodTruckManagement')
@@ -46,7 +46,7 @@ const MenuList = lazy(() => import('@pages/@owner/menu/MenuList'));
 const MenuRegister = lazy(() => import('@pages/@owner/menu/MenuRegister'));
 const MenuEdit = lazy(() => import('@pages/@owner/menu/MenuEdit'));
 const FoodTruckDetail = lazy(
-  () => import('@/pages/food-truck-detail/FoodTruckDetail')
+  () => import('@pages/food-truck-detail/FoodTruckDetail')
 );
 const FoodTruckForm = lazy(
   () => import('@pages/@owner/food-truck-form/FoodTruckForm')
