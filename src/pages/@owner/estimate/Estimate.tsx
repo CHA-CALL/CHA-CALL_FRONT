@@ -62,10 +62,12 @@ export default function Estimate() {
     state.reservationUserId === undefined
   ) {
     navigate(ROUTES.CHATROOM(chatRoomId));
+    return;
   }
 
   const handleNavigateBack = () => {
     navigate(ROUTES.CHATROOM(chatRoomId));
+    return;
   };
 
   return (
