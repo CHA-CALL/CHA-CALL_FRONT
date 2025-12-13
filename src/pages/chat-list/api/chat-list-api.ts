@@ -39,27 +39,27 @@ const patchChatRoom = async (chatRoomId: number) => {
 
 export const useGetChatList = (isOwner: boolean) => {
   return useQuery({
-    queryKey: USER_INFO.CHATS(),
+    queryKey: [...USER_INFO.CHATS(isOwner)],
     queryFn: () => getChatList(isOwner),
   });
 };
 
-export const usePostChatRoom = (foodTruckId: number) => {
+export const usePostChatRoom = (foodTruckId: number, isOwner: boolean) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => postChatRoom(foodTruckId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS() });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS(isOwner) });
     },
   });
 };
 
-export const usePatchChatRoom = (chatRoomId: number) => {
+export const usePatchChatRoom = (chatRoomId: number, isOwner: boolean) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => patchChatRoom(chatRoomId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS() });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS(isOwner) });
     },
   });
 };

@@ -10,7 +10,7 @@ const meta: Meta<typeof ChatListItem> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    profileImage: {
+    profileImageUrl: {
       control: 'text',
       description: '프로필 이미지 URL',
     },
@@ -19,19 +19,19 @@ const meta: Meta<typeof ChatListItem> = {
       description:
         '편집 모드 활성화 여부. true인 경우에 컴포넌트 전체에 클릭 이벤트 발생',
     },
-    clientName: {
+    name: {
       control: 'text',
       description: '고객 이름',
     },
-    tagTitle: {
+    foodTruckName: {
       control: 'text',
       description: '고객에게 붙은 태그',
     },
-    lastChat: {
+    lastMessage: {
       control: 'text',
       description: '마지막으로 수신된 채팅 메시지',
     },
-    lastChatTime: {
+    lastMessageSendTime: {
       control: 'text',
       description: '마지막 채팅 수신 시간',
     },
@@ -54,10 +54,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultArgs = {
-  profileImage: 'https://via.placeholder.com/52',
-  clientName: '고객이름',
-  tagTitle: '고고 푸드트럭',
-  lastChatTime: '오후 3:40',
+  profileImageUrl: 'https://via.placeholder.com/52',
+  name: '고객이름',
+  foodTruckName: '고고 푸드트럭',
+  lastMessageSendTime: '오후 3:40',
   isEditing: false,
   isChecked: false,
 };
@@ -65,7 +65,7 @@ const defaultArgs = {
 export const Default: Story = {
   args: {
     ...defaultArgs,
-    lastChat: '네, 확인했습니다. 내일 연락드리겠습니다.',
+    lastMessage: '네, 확인했습니다. 내일 연락드리겠습니다.',
     unreadCount: 3,
   },
 };
@@ -73,7 +73,7 @@ export const Default: Story = {
 export const Read: Story = {
   args: {
     ...defaultArgs,
-    lastChat: '감사합니다! 좋은 하루 되세요.',
+    lastMessage: '감사합니다! 좋은 하루 되세요.',
     unreadCount: 0,
   },
 };
@@ -81,8 +81,8 @@ export const Read: Story = {
 export const LongText: Story = {
   args: {
     ...defaultArgs,
-    clientName: '건국대학교 총학생회 축제준비위원회 부팀장 고객님',
-    lastChat:
+    name: '건국대학교 총학생회 축제준비위원회 부팀장 고객님',
+    lastMessage:
       '안녕하세요, 문의주신 내용에 대한 답변입니다. 저희 학교의 축제를 맞이하여 총 7대의 푸드트럭을 각 건물 앞에 요청드리려고 합니다.',
     unreadCount: 1,
   },
@@ -91,8 +91,8 @@ export const LongText: Story = {
 export const NoProfileImage: Story = {
   args: {
     ...defaultArgs,
-    profileImage: '',
-    lastChat: '프로필 이미지가 없는 사용자입니다.',
+    profileImageUrl: '',
+    lastMessage: '프로필 이미지가 없는 사용자입니다.',
     unreadCount: 0,
   },
 };
