@@ -1,12 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { CreateReservationRequest } from 'apis/data-contracts';
+
 import {
   estimateSchema,
   type EstimateFormData,
 } from '@pages/@owner/estimate/schemas/estimate.schema';
 import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
-import type { CreateReservationEstimateRequest } from '@pages/@owner/estimate/api';
-import { formatEstimate } from '@pages/@owner/estimate/utils';
+import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
 
 export const useEstimateForm = (
   chatRoomId?: string,
@@ -72,14 +73,14 @@ export const useEstimateForm = (
       return;
     }
     if (formData) {
-      const formattedEstimate = formatEstimate(formData);
+      const estimateRequestData: CreateReservationRequest =
+        formatCreateEstimate(
+          Number(foodTruckId),
+          Number(chatRoomId),
+          Number(reservationUserId),
+          formData
+        );
 
-      const estimateRequestData: CreateReservationEstimateRequest = {
-        foodTruckId: Number(foodTruckId),
-        chatRoomId: Number(chatRoomId),
-        reservationUserId: Number(reservationUserId),
-        ...formattedEstimate,
-      };
       createEstimate(estimateRequestData);
     }
   };
