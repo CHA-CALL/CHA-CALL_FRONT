@@ -3,24 +3,24 @@ import Tag from '@ui/tag/Tag';
 import { cn } from '@utils/cn';
 
 interface ChatListItemProps {
-  profileImage?: string;
+  profileImageUrl?: string;
   isEditing: boolean;
-  clientName: string;
-  tagTitle: string;
-  lastChat: string;
-  lastChatTime: string;
+  name: string;
+  foodTruckName: string;
+  lastMessage: string;
+  lastMessageSendTime: string;
   unreadCount: number;
   isChecked: boolean;
   handleCheckChange: (_checked: boolean) => void;
 }
 
 export default function ChatListItem({
-  profileImage,
+  profileImageUrl,
   isEditing,
-  clientName,
-  tagTitle,
-  lastChat,
-  lastChatTime,
+  name,
+  foodTruckName,
+  lastMessage,
+  lastMessageSendTime,
   unreadCount,
   isChecked,
   handleCheckChange,
@@ -51,10 +51,10 @@ export default function ChatListItem({
       )}
 
       <div className='border-grayscale-200 h-[5.2rem] w-[5.2rem] flex-shrink-0 overflow-hidden rounded-full border'>
-        {profileImage ? (
+        {profileImageUrl ? (
           <img
-            src={profileImage}
-            alt={`${clientName} profile`}
+            src={profileImageUrl}
+            alt={`${name} profile`}
             className='h-full w-full object-cover'
           />
         ) : (
@@ -66,20 +66,20 @@ export default function ChatListItem({
         <div className='flex flex-1 flex-col gap-[0.2rem] overflow-hidden'>
           <div className='flex items-center gap-[0.6rem] overflow-hidden'>
             <span className='text-grayscale-900 title-sb-16 block truncate'>
-              {clientName}
+              {name}
             </span>
-            <Tag title={tagTitle} />
+            <Tag title={foodTruckName} />
           </div>
           <span
             className={`caption-m-12 block truncate text-start ${unreadCount > 0 ? 'text-grayscale-900' : 'text-grayscale-500'}`}
           >
-            {lastChat}
+            {lastMessage}
           </span>
         </div>
 
         <div className='flex w-[5rem] flex-shrink-0 flex-col items-end gap-[0.6rem] pt-[0.3rem]'>
           <span className='text-grayscale-500 caption-m-11 whitespace-nowrap'>
-            {lastChatTime}
+            {lastMessageSendTime}
           </span>
           {unreadCount > 0 && (
             <div className='bg-primary-500 caption-m-12 flex h-[1.8rem] items-center justify-center whitespace-nowrap rounded-full px-[0.5rem] text-white'>
