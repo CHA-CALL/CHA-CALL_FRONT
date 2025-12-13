@@ -39,27 +39,28 @@ const patchChatRoom = async (chatRoomId: number) => {
 
 export const useGetChatList = (isOwner: boolean) => {
   return useQuery({
-    queryKey: [...USER_INFO.CHATS(isOwner)],
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey: USER_INFO.CHATS(),
     queryFn: () => getChatList(isOwner),
   });
 };
 
-export const usePostChatRoom = (foodTruckId: number, isOwner: boolean) => {
+export const usePostChatRoom = (foodTruckId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => postChatRoom(foodTruckId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS(isOwner) });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS() });
     },
   });
 };
 
-export const usePatchChatRoom = (chatRoomId: number, isOwner: boolean) => {
+export const usePatchChatRoom = (chatRoomId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => patchChatRoom(chatRoomId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS(isOwner) });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.CHATS() });
     },
   });
 };
