@@ -6,6 +6,12 @@ import { getFoodTruckDetail } from '@pages/food-truck-detail/api';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 import { useUpdateFoodTruckSaveStatus } from '@pages/reservation/hooks/use-food-truck-list-query';
 
+const foodTruckDetailQuery = (foodTruckId: number) => ({
+  queryKey: FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId),
+  queryFn: () => getFoodTruckDetail(foodTruckId),
+  staleTime: 5000,
+});
+
 export default function useFoodTruckDetail(foodTruckId: number) {
   const navigate = useNavigate();
 
@@ -13,11 +19,7 @@ export default function useFoodTruckDetail(foodTruckId: number) {
     data: foodTruckDetailData,
     isPending: isPendingFoodTruckDetail,
     isError: isErrorFoodTruckDetail,
-  } = useQuery<FoodTruckDetailResponse | undefined>({
-    queryKey: FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId),
-    queryFn: () => getFoodTruckDetail(foodTruckId),
-    staleTime: 5000,
-  });
+  } = useQuery<FoodTruckDetailResponse | undefined>(foodTruckDetailQuery(foodTruckId));
 
   const { mutate: updateSaveStatus } =
     useUpdateFoodTruckSaveStatus(foodTruckId);

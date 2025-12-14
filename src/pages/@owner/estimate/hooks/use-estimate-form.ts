@@ -1,52 +1,44 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { CreateReservationRequest } from 'apis/data-contracts';
+
+import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
+import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
 import {
   estimateSchema,
   type EstimateFormData,
 } from '@pages/@owner/estimate/schema/estimate.schema';
-import type { NeedElectricityKey } from '@constant/need-electricity';
-import {
-  useEstimateDate,
-  useEstimateTime,
-} from '@pages/@owner/estimate/hooks/index';
 
-export const useEstimateForm = () => {
-  const {
-    handleSubmit,
-    setValue,
-    trigger,
-    formState: { errors, isValid },
-    setError,
-    watch,
-  } = useForm<EstimateFormData>({
+export const useEstimateForm = (
+  chatRoomId?: string,
+  foodTruckId?: string,
+  reservationUserId?: string
+) => {
+  const methods = useForm<EstimateFormData>({
     resolver: zodResolver(estimateSchema),
     defaultValues: {
       price: undefined,
       needElectricity: undefined,
       etc: '',
       availableDates: [],
-      activeTime: '',
+      activeTime: undefined,
       food: '',
       location: '',
       detailLocation: '',
     },
     mode: 'onChange',
   });
+  const {
+    handleSubmit,
+    setValue,
+    trigger,
+    formState: { errors, isValid },
+    watch,
+  } = methods;
 
   const formData = watch();
 
-  const {
-    startActiveTime,
-    endActiveTime,
-    updateStartActiveTime,
-    updateEndActiveTime,
-  } = useEstimateTime({ formData, setValue, setError });
-
-  const {
-    updateAvailableDateById,
-    removeAvailableDateById,
-    handleAddAvailableDate,
-  } = useEstimateDate({ formData, setValue, setError });
+  const { createEstimate } = useMutationEstimate();
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -65,8 +57,8 @@ export const useEstimateForm = () => {
     setValue('price', numbersOnly, { shouldValidate: true });
   };
 
-  const updateNeedElectricity = (needElectricity: NeedElectricityKey) => {
-    setValue('needElectricity', needElectricity, {
+  const updateNeedElectricity = (isUseElectricity: boolean) => {
+    setValue('needElectricity', isUseElectricity, {
       shouldValidate: true,
     });
   };
@@ -75,13 +67,21 @@ export const useEstimateForm = () => {
     setValue('etc', etc, { shouldValidate: true });
   };
 
-  const onSubmit = async (formData: EstimateFormData) => {
+  const handleCreateEstimate = async (formData: EstimateFormData) => {
     const isValid = await trigger();
     if (!isValid) {
       return;
     }
     if (formData) {
-      alert('견적 요청 제출');
+      const estimateRequestData: CreateReservationRequest =
+        formatCreateEstimate(
+          Number(foodTruckId),
+          Number(chatRoomId),
+          Number(reservationUserId),
+          formData
+        );
+
+      createEstimate(estimateRequestData);
     }
   };
 
@@ -108,24 +108,16 @@ export const useEstimateForm = () => {
   };
 
   return {
-    handleSubmit: handleSubmit(onSubmit),
+    methods,
+    handleCreate: handleSubmit(handleCreateEstimate),
     formData: formDatas,
-    activeTime: {
-      startActiveTime,
-      endActiveTime,
-    },
     errors: combinedErrors,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateStartActiveTime,
-    updateEndActiveTime,
-    updateAvailableDateById,
-    removeAvailableDateById,
     updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
   };
 };

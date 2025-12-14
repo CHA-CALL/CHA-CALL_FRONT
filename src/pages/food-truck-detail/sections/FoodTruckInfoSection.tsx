@@ -1,7 +1,9 @@
 import { Icon } from '@components/icon/Icon';
 
-import FoodCategoryChipGroup from '@pages/food-truck-detail/components/FoodCategoryChipGroup';
-import ContentDivider from '@pages/food-truck-detail/components/ContentDivider';
+import {
+  ContentDivider,
+  FoodCategoryChipGroup,
+} from '@pages/food-truck-detail/components';
 
 interface FoodTruckInfoSectionProps {
   averageRating?: number;

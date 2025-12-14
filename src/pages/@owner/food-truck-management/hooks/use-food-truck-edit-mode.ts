@@ -1,8 +1,17 @@
 import { useState } from 'react';
-import { useDeleteOwnerFoodTrucks } from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
+import { useNavigate } from 'react-router-dom';
+
+import { ROUTES } from '@router/constant/routes';
 import useToast from '@hooks/use-toast';
+import {
+  useChangeFoodTrucksViewedStatus,
+  useDeleteOwnerFoodTrucks,
+} from '@pages/@owner/food-truck-management/hooks/use-food-truck-list';
+import type { ViewedStatus } from '@pages/@owner/food-truck-management/constants/viewed-status';
 
 export const useFoodTruckEditMode = () => {
+  const navigate = useNavigate();
+
   const [isEditing, setIsEditing] = useState(false);
   const [deleteFoodTruckIds, setDeleteFoodTruckIds] = useState<number[]>([]);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
@@ -10,6 +19,7 @@ export const useFoodTruckEditMode = () => {
   const toast = useToast();
 
   const { mutate } = useDeleteOwnerFoodTrucks();
+  const { changeStatus } = useChangeFoodTrucksViewedStatus();
 
   const handleToggleEditing = () => {
     setIsEditing(!isEditing);
@@ -24,7 +34,22 @@ export const useFoodTruckEditMode = () => {
     setIsDeleteConfirmModalOpen(prev => !prev);
   };
 
-  const handleClickFoodTruck = (foodTruckId: number) => {
+  const handleClickFoodTruck = (foodTruckId?: number) => {
+    if (!foodTruckId) return;
+    navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)));
+  };
+
+  const handleToggleFoodTruckStatus = (
+    status: ViewedStatus,
+    foodTruckId?: number
+  ) => {
+    if (!foodTruckId) return;
+
+    changeStatus({ foodTruckId, status });
+  };
+
+  const handleCheckToDelete = (foodTruckId?: number) => {
+    if (!foodTruckId) return;
     if (deleteFoodTruckIds.includes(foodTruckId)) {
       setDeleteFoodTruckIds(
         deleteFoodTruckIds.filter(id => id !== foodTruckId)
@@ -49,6 +74,8 @@ export const useFoodTruckEditMode = () => {
     isDeleteConfirmModalOpen,
     handleConfirmModal,
     handleClickFoodTruck,
+    handleToggleFoodTruckStatus,
+    handleCheckToDelete,
     handleDeleteFoodTrucks,
   };
 };

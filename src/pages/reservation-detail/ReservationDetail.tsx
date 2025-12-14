@@ -7,9 +7,11 @@ import { Icon } from '@components/icon/Icon';
 import Loading from '@layout/loading/Loading';
 import Button from '@ui/button/Button';
 import Tooltip from '@ui/tooltip/Tooltip';
-import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
-import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';
+import {
+  ReservationDetailRow,
+  ReservationDetailTopContent,
+} from '@pages/reservation-detail/components';
 
 export default function ReservationDetail() {
   // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리. 언제 보여줄지 애매해서 논의 필요.

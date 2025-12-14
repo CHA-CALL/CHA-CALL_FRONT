@@ -1,23 +1,25 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import useToast from '@shared/hooks/use-toast';
 import { cn } from '@shared/utils/cn';
 import Navigation from '@layout/navigation/Navigation';
+import { ROUTES } from '@router/constant/routes';
+import Loading from '@layout/loading/Loading';
 import { Icon } from '@components/icon/Icon';
 import Button from '@ui/button/Button';
 
-import FoodTruckHeaderSection from '@pages/food-truck-detail/sections/FoodTruckHeaderSection';
-import FoodTruckInfoSection from '@pages/food-truck-detail/sections/FoodTruckInfoSection';
-import FoodTruckMenuSection from '@pages/food-truck-detail/sections/FoodTruckMenuSection';
-import FoodTruckScheduleSection from '@pages/food-truck-detail/sections/FoodTruckScheduleSection';
-import FoodTruckOptionSection from '@pages/food-truck-detail/sections/FoodTruckOptionSection';
 import FoodTruckMenuSearch from '@pages/food-truck-detail/FoodTruckMenuSearch';
+import { SectionDivider } from '@pages/food-truck-detail/components';
+import {
+  FoodTruckHeaderSection,
+  FoodTruckInfoSection,
+  FoodTruckMenuSection,
+  FoodTruckOptionSection,
+  FoodTruckScheduleSection,
+} from '@pages/food-truck-detail/sections';
 
-import SectionDivider from '@pages/food-truck-detail/components/SectionDivider';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
 import useFoodTruckDetailView from '@pages/food-truck-detail/hooks/use-food-truck-detail-view';
 import { useFoodTruckMenusPreview } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
-import Loading from '@layout/loading/Loading';
-import useToast from '@shared/hooks/use-toast';
-import { ROUTES } from '@router/constant/routes';
 
 export default function FoodTruckDetail() {
   const { foodTruckId } = useParams();

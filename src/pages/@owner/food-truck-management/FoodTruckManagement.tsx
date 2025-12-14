@@ -15,6 +15,7 @@ import { useFoodTruckEditMode } from '@pages/@owner/food-truck-management/hooks/
 import Spinner from '@components/spinner/Spinner';
 import type { MyFoodTruckResponse } from 'apis/data-contracts';
 import useToast from '@hooks/use-toast';
+import { VIEWED_STATUS } from './constants/viewed-status';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function FoodTruckManagement() {
     navigate(-1);
   };
   const handleNavigateToAdd = () => {
-    navigate(ROUTES.FOOD_TRUCK_FORM);
+    navigate(ROUTES.FOOD_TRUCK_ONBOARDING);
   };
 
   const {
@@ -38,13 +39,15 @@ export default function FoodTruckManagement() {
   } = useGetOwnerFoodTrucks();
 
   const {
-    deleteFoodTruckIds,
-    handleClickFoodTruck,
-    handleDeleteFoodTrucks,
-    isDeleteConfirmModalOpen,
-    handleConfirmModal,
     isEditing,
     handleToggleEditing,
+    deleteFoodTruckIds,
+    isDeleteConfirmModalOpen,
+    handleConfirmModal,
+    handleClickFoodTruck,
+    handleToggleFoodTruckStatus,
+    handleCheckToDelete,
+    handleDeleteFoodTrucks,
   } = useFoodTruckEditMode();
 
   useEffect(() => {
@@ -85,7 +88,7 @@ export default function FoodTruckManagement() {
       <div
         className={cn('flex flex-col', foodTrucks.length > 0 && 'pb-[10rem]')}
       >
-        <div className='top-0 bg-white px-[2rem] py-[2rem] fixed-center'>
+        <div className='fixed-center top-0 bg-white px-[2rem] py-[2rem]'>
           <Information
             iconId='ic_chat_dot'
             text='푸드트럭 노출 상태를 ON/OFF 버튼으로 조정해보세요!'
@@ -95,17 +98,23 @@ export default function FoodTruckManagement() {
           {foodTrucks.length > 0 &&
             foodTrucks.map((item: MyFoodTruckResponse) => (
               <FoodTruckCard
+                key={item.foodTruckId}
                 variant='foodtruckProvider'
                 isRemovable={isEditing}
                 isRemove={deleteFoodTruckIds.includes(item.foodTruckId ?? 0)}
-                isOn={item.status === 'ON'}
-                key={item.foodTruckId}
+                isOn={item.status === VIEWED_STATUS.ON}
                 data={item}
+                handleClickCard={!isEditing ? handleClickFoodTruck : () => {}}
                 handleClickButton={() => {
-                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                  handleToggleFoodTruckStatus(
+                    item.status === VIEWED_STATUS.ON
+                      ? VIEWED_STATUS.OFF
+                      : VIEWED_STATUS.ON,
+                    item.foodTruckId
+                  );
                 }}
                 handleCardRemove={() => {
-                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                  handleCheckToDelete(item.foodTruckId);
                 }}
               />
             ))}

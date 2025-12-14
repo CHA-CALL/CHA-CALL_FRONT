@@ -1,4 +1,4 @@
-import ScheduleCalendar from '@pages/food-truck-detail/components/ScheduleCalendar';
+import { ScheduleCalendar } from '@pages/food-truck-detail/components';
 
 interface FoodTruckScheduleSectionProps {
   availableDates: string[];

@@ -1,4 +1,4 @@
-import ChatBubble from '@pages/chat-room/components/ChatBubble';
+import { ChatBubble } from '@pages/chat-room/components';
 import type { Message } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
 
 interface ChatMessageListProps {

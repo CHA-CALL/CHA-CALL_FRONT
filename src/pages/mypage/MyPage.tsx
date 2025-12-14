@@ -1,10 +1,12 @@
-import Navigation from '@layout/navigation/Navigation';
-import { Icon } from '@icon/Icon';
+import { useNavigate } from 'react-router-dom';
 import { ROLE } from '@constant/role';
 import { useRole } from '@hooks/use-role';
-import MyInfoSection from '@pages/mypage/components/MyInfoSection';
-import SettingMenuSection from '@pages/mypage/components/SettingMenuSection';
-import { useNavigate } from 'react-router-dom';
+import Navigation from '@layout/navigation/Navigation';
+import { Icon } from '@icon/Icon';
+import {
+  MyInfoSection,
+  SettingMenuSection,
+} from '@pages/mypage/components';
 
 export default function MyPage() {
   const navigate = useNavigate();

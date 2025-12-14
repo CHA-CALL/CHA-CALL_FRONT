@@ -145,7 +145,7 @@ export const useUploadImages = () => {
 
       setValue('photoUrls', finalOrderedUrls, { shouldValidate: true });
 
-      navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId.toString()}`, {
+      navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
         state: {
           formData: getValues(),
           from: 'upload-food-truck-images',
@@ -159,7 +159,8 @@ export const useUploadImages = () => {
   };
 
   const handleLeftClick = () => {
-    navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId?.toString()}`, {
+    if (!foodTruckId) return;
+    navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
       state: { formData: getValues(), from: location.pathname },
     });
   };

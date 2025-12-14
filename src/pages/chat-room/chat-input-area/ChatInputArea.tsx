@@ -2,21 +2,29 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@components/icon/Icon';
 import { ROLE } from '@constant/role';
-import ChatInputBar from '@pages/chat-room/chat-input-area/components/ChatInputBar';
-import ExtensionMenuItem from '@pages/chat-room/chat-input-area/components/ExtensionMenuItem';
+import {
+  ChatInputBar,
+  ExtensionMenuItem,
+} from '@pages/chat-room/chat-input-area/components';
 import { ALL_MENU_ITEMS } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
 import { useOnClickOutside } from '@pages/chat-room/chat-input-area/hooks/use-click-outside';
 import { useExtensionMenu } from '@pages/chat-room/chat-input-area/hooks/use-extension-menu';
 import { cn } from '@utils/cn';
 
 interface ChatInputAreaProps {
-  handleSendMessage: (_message: string) => void;
+  foodTruckId: number;
+  chatRoomId: string;
+  memberId: number;
   selectedQuickMessage?: string;
+  handleSendMessage: (_message: string) => void;
   handleOpenMessageList: () => void;
   onMenuToggle?: (_isOpen: boolean) => void;
 }
 
 export default function ChatInputArea({
+  foodTruckId,
+  chatRoomId,
+  memberId,
   handleSendMessage,
   selectedQuickMessage,
   handleOpenMessageList,
@@ -35,7 +43,13 @@ export default function ChatInputArea({
   }, [isOpenMenu, setIsOpenMenu]);
 
   const { disabledStates, handlers, handleGalleryRef, handleCameraRef } =
-    useExtensionMenu(handleOpenMessageList, closeMenu);
+    useExtensionMenu(
+      foodTruckId,
+      chatRoomId,
+      memberId,
+      handleOpenMessageList,
+      closeMenu
+    );
 
   useOnClickOutside(chatAreaRef, closeMenu);
 
@@ -91,7 +105,7 @@ export default function ChatInputArea({
         <div
           className={cn(
             'mx-auto grid justify-items-center',
-            'gap-x-[2.4rem] gap-y-[1.6rem] px-[4rem] py-[2rem] bg-white',
+            'gap-x-[2.4rem] gap-y-[1.6rem] bg-white px-[4rem] py-[2rem]',
             menuLayout
           )}
         >

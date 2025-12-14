@@ -1,43 +1,74 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
-import { useEstimateForm } from '@pages/@owner/estimate/hooks';
+import {
+  useEstimateTime,
+  useEstimateDate,
+  useEstimateForm,
+} from '@pages/@owner/estimate/hooks';
 import {
   Food,
   Price,
   RegionSection,
-  ActiveDate,
-  ActiveTime,
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
 
+import { ROUTES } from '@router/constant/routes';
+import {
+  ESTIMATE_ERROR_MESSAGE,
+  ESTIMATE_MAX_LENGTH,
+} from '@pages/@owner/estimate/constants/estimate';
+import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
+
 export default function Estimate() {
   const navigate = useNavigate();
+  const { chatRoomId } = useParams();
+  const { state } = useLocation();
+
   const {
-    handleSubmit,
+    methods,
+    handleCreate,
     formData,
     errors,
-    activeTime,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateAvailableDateById,
-    removeAvailableDateById,
-    updateStartActiveTime,
-    updateEndActiveTime,
     updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
-  } = useEstimateForm();
+  } = useEstimateForm(chatRoomId, state.foodTruckId, state.reservationUserId);
+
+  const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
+    useEstimateTime(methods);
+
+  const {
+    formAvailableDates,
+    availableDatesError,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  } = useEstimateDate(methods);
+
+  if (!chatRoomId) {
+    navigate(ROUTES.CHATLIST);
+    return null;
+  }
+  if (
+    state.foodTruckId === undefined ||
+    state.reservationUserId === undefined
+  ) {
+    navigate(ROUTES.CHATROOM(chatRoomId));
+    return null;
+  }
 
   const handleNavigateBack = () => {
-    navigate(-1);
+    navigate(ROUTES.CHATROOM(chatRoomId));
   };
+
   return (
     <>
       <Navigation
@@ -51,20 +82,21 @@ export default function Estimate() {
           detailLocation={formData.detailLocation ?? ''}
           updateLocation={updateLocation}
           updateDetailLocation={updateDetailLocation}
-          error={errors.location || errors.detailLocation}
+          locationError={errors.location}
+          detailLocationError={errors.detailLocation}
         />
         <ActiveDate
-          availableDates={formData.availableDates}
-          updateAvailableDateById={updateAvailableDateById}
-          removeAvailableDateById={removeAvailableDateById}
-          handleAddAvailableDate={handleAddAvailableDate}
-          error={errors.availableDates}
+          formAvailableDates={formAvailableDates}
+          availableDatesError={availableDatesError}
+          errorMessages={ESTIMATE_ERROR_MESSAGE.availableDates}
+          maxLength={ESTIMATE_MAX_LENGTH.availableDates.max}
+          handleActiveDateSetValue={handleActiveDateSetValue}
+          handleActiveDateError={handleActiveDateError}
         />
         <ActiveTime
-          activeTime={activeTime}
-          updateStartActiveTime={updateStartActiveTime}
-          updateEndActiveTime={updateEndActiveTime}
-          error={errors.activeTime}
+          formActiveTime={formActiveTime}
+          activeTimeError={activeTimeError}
+          handleActiveTimeSetValue={handleActiveTimeSetValue}
         />
         <Food
           food={formData.food}
@@ -87,10 +119,10 @@ export default function Estimate() {
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
-          handleClickButton={handleSubmit}
+          handleClickButton={handleCreate}
           disabled={!isValid}
         >
-          저장하기
+          대화창에 보내기
         </Button>
       </footer>
     </>

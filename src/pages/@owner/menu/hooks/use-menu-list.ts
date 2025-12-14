@@ -49,7 +49,7 @@ export const useMenuList = (foodTruckId: number) => {
       ...formData,
       menus: menus.length > 0,
     };
-    navigate(`${ROUTES.FOOD_TRUCK_FORM}/${foodTruckId.toString()}`, {
+    navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)), {
       state: getNavigateState(updatedFormData),
     });
   };

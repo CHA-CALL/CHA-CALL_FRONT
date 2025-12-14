@@ -12,7 +12,7 @@ export default function FoodTruckPhoto() {
   const { photoUrls } = useBasicInfo();
   const { watch } = useFormContext<FoodTruckFormData>();
   const navigate = useNavigate();
-  const { id: foodTruckId } = useParams<{ id: string }>();
+  const { foodTruckId } = useParams();
   const formData = watch();
 
   const handleClick = () => {
