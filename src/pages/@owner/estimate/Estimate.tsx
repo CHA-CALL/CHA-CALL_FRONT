@@ -54,19 +54,19 @@ export default function Estimate() {
   } = useEstimateDate(methods);
 
   if (!chatRoomId) {
-    navigate(ROUTES.CHATLIST);
+    navigate(ROUTES.CHAT_LIST);
     return null;
   }
   if (
     state.foodTruckId === undefined ||
     state.reservationUserId === undefined
   ) {
-    navigate(ROUTES.CHATROOM(chatRoomId));
+    navigate(ROUTES.CHAT_ROOM(chatRoomId));
     return null;
   }
 
   const handleNavigateBack = () => {
-    navigate(ROUTES.CHATROOM(chatRoomId));
+    navigate(ROUTES.CHAT_ROOM(chatRoomId));
   };
 
   return (

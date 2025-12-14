@@ -81,11 +81,11 @@ export const router = createBrowserRouter([
         element: <FoodTruckOnboarding />,
       },
       {
-        path: ROUTES.CHATLIST,
+        path: ROUTES.CHAT_LIST,
         element: <ChatList />,
       },
       {
-        path: ROUTES.CHATROOM(':chatRoomId'),
+        path: ROUTES.CHAT_ROOM(':chatRoomId'),
         element: <ChatRoom />,
       },
       {

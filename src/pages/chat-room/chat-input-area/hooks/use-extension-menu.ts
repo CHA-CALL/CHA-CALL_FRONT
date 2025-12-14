@@ -9,6 +9,7 @@ import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extensi
 export const useExtensionMenu = (
   foodTruckId: number,
   chatRoomId: string,
+  reservationId: number | null,
   reservationUserId: number,
   handleOpenMessageList: () => void,
   closeMenu: () => void
@@ -41,12 +42,12 @@ export const useExtensionMenu = (
     // 계좌 등록 안했을 시 disabled
     cash: !bankAccount,
     // 작성한 견적서가 있을 때 disabled
-    write_paper: false,
+    write_paper: reservationId !== null,
     // 작성한 견적서가 없을 때 disabled
-    edit_paper: false,
-    // 작성한 견적서가 없을 때 disabled
+    edit_paper: reservationId === null,
+    // 확정된 예약이 없을 때 disabled. 견적서 다운과 하나로 통합될 예정
     view_paper: false,
-    // 작성한 견적서가 없을 때 disabled
+    // 확정된 예약이 없을 때 disabled
     download_paper: false,
     // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
     cancel: false,
@@ -63,22 +64,30 @@ export const useExtensionMenu = (
         .catch(() => toast.error('클립보드 복사에 실패했습니다.'))
         .finally(closeMenu),
     write_paper: () => {
-      // TODO: 견적서 작성 페이지로
       if (!chatRoomId) {
         toast.error('잘못된 접근입니다.');
         return;
       }
-      // TODO: foodTruckId, reservationUserId 받은거 넘겨줘야함
       navigate(ROUTES.OWNER_ESTIMATE(chatRoomId), {
         state: {
           foodTruckId,
+          reservationId,
           reservationUserId,
         },
       });
     },
     edit_paper: () => {
-      // TODO: 견적서 수정 페이지로
-      navigate(ROUTES.MESSAGE_LIST);
+      if (!chatRoomId) {
+        toast.error('잘못된 접근입니다.');
+        return;
+      }
+      navigate(ROUTES.OWNER_ESTIMATE(chatRoomId), {
+        state: {
+          foodTruckId,
+          reservationId,
+          reservationUserId,
+        },
+      });
     },
     // TODO : 견적서 pdf 띄우도록
     view_paper: () => alert('견적서 보기'),
