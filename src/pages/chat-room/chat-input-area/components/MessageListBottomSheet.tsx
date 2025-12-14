@@ -1,5 +1,5 @@
-import BottomSheet from '@components/layout/bottom-sheet/BottomSheet';
-import Button from '@components/ui/button/Button';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
+import Button from '@ui/button/Button';
 import { useOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
 import { ROUTES } from '@router/constant/routes';
 import { useNavigate } from 'react-router-dom';

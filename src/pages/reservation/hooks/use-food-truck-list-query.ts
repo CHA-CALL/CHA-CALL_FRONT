@@ -6,6 +6,7 @@ import {
   useInfiniteQuery,
   useMutation,
   useQueryClient,
+  type QueryFunctionContext,
 } from '@tanstack/react-query';
 import {
   getFoodTrucksData,
@@ -20,28 +21,30 @@ const FALLBACK: CursorPagingResponseFoodTruckResponse = {
   hasNext: false,
 };
 
+const foodTruckListQuery = (filter: FoodTrucksFilterType) => ({
+  queryKey: FOOD_TRUCKS_QUERY_KEY.LIST(filter),
+  queryFn: async ({
+    pageParam,
+  }: QueryFunctionContext<readonly unknown[], number | null>) => {
+    const cursor = pageParam ?? null;
+
+    const response = await getFoodTrucksData({
+      filter,
+      cursor,
+    });
+    return response ?? FALLBACK;
+  },
+  initialPageParam: null as number | null,
+  getNextPageParam: (last: CursorPagingResponseFoodTruckResponse) => {
+    if (last.hasNext) return last.lastCursor;
+    return undefined;
+  },
+  refetchOnWindowFocus: true,
+});
+
 export const useFoodTruckListQuery = (filter: FoodTrucksFilterType) => {
   const { data, isPending, isFetchingNextPage, fetchNextPage } =
-    useInfiniteQuery<CursorPagingResponseFoodTruckResponse>({
-      queryKey: FOOD_TRUCKS_QUERY_KEY.LIST(filter),
-      initialPageParam: null,
-      queryFn: async ({ pageParam }) => {
-        const cursor =
-          pageParam === null || typeof pageParam === 'number'
-            ? pageParam
-            : null;
-
-        const response = await getFoodTrucksData({
-          filter,
-          cursor,
-        });
-        return response ?? FALLBACK;
-      },
-      getNextPageParam: last => {
-        if (last.hasNext) return last.lastCursor;
-      },
-      refetchOnWindowFocus: true,
-    });
+    useInfiniteQuery(foodTruckListQuery(filter));
 
   const foodTruckData: FoodTruckResponse[] =
     data?.pages.flatMap(p => p.content ?? []) ?? [];

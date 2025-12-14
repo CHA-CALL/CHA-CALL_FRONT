@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@icon/Icon';
+import Tag from '@ui/tag/Tag';
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
 import Navigation from '@layout/navigation/Navigation';
 import ChatInputArea from '@pages/chat-room/chat-input-area/ChatInputArea';
-import ChatMessageList from '@pages/chat-room/components/ChatMessageList';
-import NewChatIndicator from '@pages/chat-room/components/NewChatIndicator';
-import LeaveChatBottomSheet from '@pages/chat-room/components/LeaveChatBottomSheet';
-import MessageListBottomSheet from '@pages/chat-room/chat-input-area/components/MessageListBottomSheet';
+import { MessageListBottomSheet } from '@pages/chat-room/chat-input-area/components';
+import {
+  ChatMessageList,
+  LeaveChatBottomSheet,
+  NewChatIndicator,
+} from '@pages/chat-room/components';
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
-import Tag from '@components/ui/tag/Tag';
 
 // TODO: 상대방 이름 받아오기. 견적서 작성을 위해 foodTruckId, chatRoomId, 상대 유저 id 필요함
 const otherName = '상대방 이름';

@@ -17,6 +17,22 @@ import {
 } from '@pages/reservation-detail/api';
 import type { ReservationDetailTopContentProps } from '@pages/reservation-detail/components/ReservationDetailTopContent';
 
+const reservationDetailQuery = (
+  reservationId: string,
+  isProvider: boolean
+) => ({
+  queryKey: [...USER_INFO.RESERVATION(Number(reservationId)), isProvider],
+  queryFn: () => {
+    if (!reservationId) {
+      throw new Error('요청이 잘못되었습니다.');
+    }
+    return isProvider
+      ? getOwnerReservationDetail(reservationId)
+      : getMemberReservationDetail(reservationId);
+  },
+  enabled: Boolean(reservationId),
+});
+
 export interface ReservationPartialInfo {
   label: string;
   data: string | string[] | undefined;
@@ -39,19 +55,7 @@ export const useReservationDetail = () => {
     isError,
   } = useQuery<
     MemberReservationDetailResponse | OwnerReservationDetailResponse | undefined
-  >({
-    queryKey: [...USER_INFO.RESERVATION(Number(reservationId)), isProvider],
-    queryFn: () => {
-      if (!reservationId) {
-        throw new Error('요청이 잘못되었습니다.');
-      }
-
-      return isProvider
-        ? getOwnerReservationDetail(reservationId)
-        : getMemberReservationDetail(reservationId);
-    },
-    enabled: Boolean(reservationId),
-  });
+  >(reservationDetailQuery(reservationId!, isProvider));
 
   let topContents: ReservationDetailTopContentProps;
 

@@ -1,11 +1,11 @@
-import { DEFAULT_PROFILE_IMAGE } from '@pages/mypage/hooks/use-user-data';
-import BottomSheet from '@layout/bottom-sheet/BottomSheet';
-import Button from '@ui/button/Button';
-import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
-import useToast from '@hooks/use-toast';
-import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import React, { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
+import useToast from '@hooks/use-toast';
+import BottomSheet from '@layout/bottom-sheet/BottomSheet';
+import Button from '@ui/button/Button';
+import { DEFAULT_PROFILE_IMAGE } from '@pages/mypage/hooks/use-user-data';
+import { MAX_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
+import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 
 interface ProfileImageBottomSheetProps {
   isBottomSheetOpen: boolean;
