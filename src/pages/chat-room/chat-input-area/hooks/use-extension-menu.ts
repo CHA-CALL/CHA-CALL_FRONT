@@ -19,6 +19,7 @@ export const useExtensionMenu = (
   const navigate = useNavigate();
   const { data: bankAccount } = useFetchAccountData();
   const { reservationStatus } = useReservationStatus(reservationId);
+  const isConfirmed = reservationStatus?.reservationStatus === '예약 확정';
   // TODO: reservationStatus 관련 타입 만들기
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -37,10 +38,6 @@ export const useExtensionMenu = (
     return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
   };
 
-  if (!reservationStatus) {
-    throw Error();
-  }
-
   const disabledStates: Record<MenuKey, boolean> = {
     gallery: false,
     // 웹 환경에서 disabled
@@ -53,11 +50,11 @@ export const useExtensionMenu = (
     // 작성한 견적서가 없을 때 disabled
     edit_paper: reservationId === null,
     // 확정된 예약이 없을 때 disabled. 견적서 다운과 하나로 통합될 예정
-    view_paper: reservationStatus.reservationStatus !== '예약 확정',
+    view_paper: !isConfirmed,
     // 확정된 예약이 없을 때 disabled
-    download_paper: reservationStatus.reservationStatus !== '예약 확정',
+    download_paper: !isConfirmed,
     // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
-    cancel: reservationStatus.reservationStatus !== '예약 확정',
+    cancel: !isConfirmed,
   };
 
   const handlers: Record<MenuKey, () => void> = {
