@@ -154,11 +154,11 @@ export default function ChatRoom() {
       />
 
       <footer className='fixed-center bottom-[0] w-full'>
-        {foodTruckId && memberId && reservationId && (
+        {foodTruckId && memberId && (
           <ChatInputArea
             foodTruckId={foodTruckId}
             chatRoomId={chatRoomId}
-            reservationId={reservationId}
+            reservationId={reservationId ?? null}
             memberId={memberId}
             selectedQuickMessage={selectedQuickMessage}
             handleOpenMessageList={handleOpenMessageList}

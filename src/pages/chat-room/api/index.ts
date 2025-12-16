@@ -21,6 +21,9 @@ export const getChatRoomMetaData = async (
 
 // 채팅방 예약 상태 조회
 export const getReservationStatus = async (reservationId: number | null) => {
+  if (reservationId === null) {
+    throw new Error('reservationId는 null일 수 없습니다.');
+  }
   const response = await apiRequest<GetReservationStatusData>({
     endPoint: `/reservations/${reservationId}/status`,
     method: 'GET',
