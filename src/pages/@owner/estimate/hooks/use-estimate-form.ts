@@ -1,14 +1,24 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { CreateReservationRequest } from 'apis/data-contracts';
+import type {
+  CreateReservationRequest,
+  UpdateReservationRequest,
+} from 'apis/data-contracts';
 
+import { formatEstimateDatesToAvailableDates } from '@utils/date';
 import {
   estimateSchema,
   type EstimateFormData,
 } from '@pages/@owner/estimate/schemas/estimate.schema';
-import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
-import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
-import { useQueryEstimate } from './use-query-estimate';
+import {
+  useMutationEstimate,
+  useQueryEstimate,
+} from '@pages/@owner/estimate/hooks';
+import {
+  formatCreateEstimate,
+  formatUpdateEstimate,
+} from '@pages/@owner/estimate/utils';
 
 export const useEstimateForm = (
   chatRoomId?: string,
@@ -33,6 +43,7 @@ export const useEstimateForm = (
   const {
     handleSubmit,
     setValue,
+    reset,
     trigger,
     formState: { errors, isValid },
     watch,
@@ -44,9 +55,30 @@ export const useEstimateForm = (
 
   const { estimateData } = useQueryEstimate(reservationIdNumber);
 
-  console.info(estimateData);
-
   const { createEstimate, updateEstimate } = useMutationEstimate();
+
+  // 기존 estimateData가 있다면(= 예약 견적서 수정) formData 갱신
+  useEffect(() => {
+    if (!estimateData) return;
+    reset(
+      {
+        location: estimateData.address ?? '',
+        detailLocation: estimateData.detailAddress ?? '',
+        availableDates: formatEstimateDatesToAvailableDates(
+          estimateData.reservationDates ?? []
+        ),
+        activeTime: estimateData.operationHour ?? undefined,
+        food: estimateData.menu ?? '',
+        price: estimateData.deposit ?? undefined,
+        needElectricity: estimateData.isUseElectricity ?? undefined,
+        etc: estimateData.etcRequest ?? '',
+      },
+      {
+        keepDirty: false,
+        keepTouched: false,
+      }
+    );
+  }, [estimateData, reset]);
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -99,13 +131,8 @@ export const useEstimateForm = (
       return;
     }
     if (formData) {
-      const estimateRequestData: CreateReservationRequest =
-        formatCreateEstimate(
-          Number(foodTruckId),
-          Number(chatRoomId),
-          Number(reservationUserId),
-          formData
-        );
+      const estimateRequestData: UpdateReservationRequest =
+        formatUpdateEstimate(formData);
 
       updateEstimate({
         reservationId: reservationIdNumber,
