@@ -5,7 +5,8 @@ import useToast from '@hooks/use-toast';
 import { ROUTES } from '@router/constant/routes';
 import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
 import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
-import useReservationStatus from './use-reservation-status';
+import { useReservationStatus } from '@pages/chat-room/hooks';
+import { RESERVATION_STATUS } from '@constant/reservation-status';
 
 export const useExtensionMenu = (
   foodTruckId: number,
@@ -21,7 +22,8 @@ export const useExtensionMenu = (
     useFetchAccountData();
   const { reservationStatus, isReservationStatusFetching } =
     useReservationStatus(reservationId);
-  const isConfirmed = reservationStatus?.reservationStatus === '예약 확정';
+  const isConfirmed =
+    reservationStatus?.reservationStatus === RESERVATION_STATUS.CONFIRMED;
   // TODO: reservationStatus 관련 타입 만들기
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
