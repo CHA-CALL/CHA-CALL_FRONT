@@ -104,8 +104,10 @@ export default function ChatRoom() {
   };
 
   if (!chatRoomId || !metaData) {
-    toast.error('잘못된 접근입니다.');
-    navigate(ROUTES.CHAT_LIST);
+    if (!isMetaDataPending) {
+      toast.error('잘못된 접근입니다.');
+      navigate(ROUTES.CHAT_LIST);
+    }
     return;
   }
 

@@ -17,8 +17,10 @@ export const useExtensionMenu = (
 ) => {
   const toast = useToast();
   const navigate = useNavigate();
-  const { data: bankAccount } = useFetchAccountData();
-  const { reservationStatus } = useReservationStatus(reservationId);
+  const { data: bankAccount, isFetching: isBankAccountFetching } =
+    useFetchAccountData();
+  const { reservationStatus, isReservationStatusFetching } =
+    useReservationStatus(reservationId);
   const isConfirmed = reservationStatus?.reservationStatus === '예약 확정';
   // TODO: reservationStatus 관련 타입 만들기
 
@@ -44,17 +46,17 @@ export const useExtensionMenu = (
     camera: !isMobile(),
     ment: false,
     // 계좌 등록 안했을 시 disabled
-    cash: !bankAccount,
+    cash: isBankAccountFetching ? true : !bankAccount,
     // 작성한 견적서가 있을 때 disabled
     write_paper: reservationId !== null,
     // 작성한 견적서가 없을 때 disabled
     edit_paper: reservationId === null,
     // 확정된 예약이 없을 때 disabled. 견적서 다운과 하나로 통합될 예정
-    view_paper: !isConfirmed,
+    view_paper: isReservationStatusFetching ? true : !isConfirmed,
     // 확정된 예약이 없을 때 disabled
-    download_paper: !isConfirmed,
+    download_paper: isReservationStatusFetching ? true : !isConfirmed,
     // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
-    cancel: !isConfirmed,
+    cancel: isReservationStatusFetching ? true : !isConfirmed,
   };
 
   const handlers: Record<MenuKey, () => void> = {
@@ -68,10 +70,6 @@ export const useExtensionMenu = (
         .catch(() => toast.error('클립보드 복사에 실패했습니다.'))
         .finally(closeMenu),
     write_paper: () => {
-      if (!chatRoomId) {
-        toast.error('잘못된 접근입니다.');
-        return;
-      }
       navigate(ROUTES.OWNER_ESTIMATE(chatRoomId), {
         state: {
           foodTruckId,
@@ -81,10 +79,6 @@ export const useExtensionMenu = (
       });
     },
     edit_paper: () => {
-      if (!chatRoomId) {
-        toast.error('잘못된 접근입니다.');
-        return;
-      }
       navigate(ROUTES.OWNER_ESTIMATE(chatRoomId), {
         state: {
           foodTruckId,
