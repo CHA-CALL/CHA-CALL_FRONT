@@ -103,16 +103,19 @@ export default function ChatRoom() {
     setIsExtensionMenuOpen(isOpen);
   };
 
-  if (!chatRoomId || !metaData) {
-    if (!isMetaDataPending) {
+  useEffect(() => {
+    if ((!chatRoomId || !metaData) && !isMetaDataPending) {
       toast.error('잘못된 접근입니다.');
       navigate(ROUTES.CHAT_LIST);
     }
-    return;
-  }
+  }, [chatRoomId, metaData, isMetaDataPending, toast, navigate]);
 
   const { name, foodTruckName, foodTruckId, reservationId, memberId } =
-    metaData;
+    metaData ?? {};
+
+  if (!chatRoomId || !metaData) {
+    return null;
+  }
 
   return (
     <div className='flex h-[100dvh] w-full flex-col overflow-hidden bg-white'>
