@@ -48,9 +48,11 @@ export const useExtensionMenu = (
     // 계좌 등록 안했을 시 disabled
     cash: isBankAccountFetching ? true : !bankAccount,
     // 작성한 견적서가 있을 때 disabled
-    write_paper: reservationId !== null,
+    write_paper:
+      reservationId !== null || isReservationStatusFetching || isConfirmed,
     // 작성한 견적서가 없을 때 disabled
-    edit_paper: reservationId === null,
+    edit_paper:
+      reservationId === null || isReservationStatusFetching || isConfirmed,
     // 확정된 예약이 없을 때 disabled. 견적서 다운과 하나로 통합될 예정
     view_paper: isReservationStatusFetching ? true : !isConfirmed,
     // 확정된 예약이 없을 때 disabled
