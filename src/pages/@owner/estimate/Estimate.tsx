@@ -32,6 +32,7 @@ export default function Estimate() {
   const {
     methods,
     handleCreate,
+    handleUpdate,
     formData,
     errors,
     isValid,
@@ -41,7 +42,12 @@ export default function Estimate() {
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-  } = useEstimateForm(chatRoomId, state.foodTruckId, state.reservationUserId);
+  } = useEstimateForm(
+    chatRoomId,
+    state.foodTruckId,
+    state.reservationId,
+    state.reservationUserId
+  );
 
   const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
     useEstimateTime(methods);
@@ -59,6 +65,7 @@ export default function Estimate() {
   }
   if (
     state.foodTruckId === undefined ||
+    state.reservationId === undefined ||
     state.reservationUserId === undefined
   ) {
     navigate(ROUTES.CHAT_ROOM(chatRoomId));
@@ -72,7 +79,9 @@ export default function Estimate() {
   return (
     <>
       <Navigation
-        centerContent='예약 견적서 작성'
+        centerContent={
+          state.reservationId ? '예약 견적서 수정' : '예약 견적서 작성'
+        }
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />
@@ -119,10 +128,10 @@ export default function Estimate() {
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
-          handleClickButton={handleCreate}
+          handleClickButton={state.reservationId ? handleUpdate : handleCreate}
           disabled={!isValid}
         >
-          대화창에 보내기
+          {state.reservationId ? '견적서 수정하기' : '대화창에 보내기'}
         </Button>
       </footer>
     </>

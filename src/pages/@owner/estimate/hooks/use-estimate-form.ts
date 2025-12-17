@@ -8,10 +8,12 @@ import {
 } from '@pages/@owner/estimate/schemas/estimate.schema';
 import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
 import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
+import { useQueryEstimate } from './use-query-estimate';
 
 export const useEstimateForm = (
   chatRoomId?: string,
   foodTruckId?: string,
+  reservationId?: string | null,
   reservationUserId?: string
 ) => {
   const methods = useForm<EstimateFormData>({
@@ -38,7 +40,13 @@ export const useEstimateForm = (
 
   const formData = watch();
 
-  const { createEstimate } = useMutationEstimate();
+  const reservationIdNumber = reservationId ? Number(reservationId) : null;
+
+  const { estimateData } = useQueryEstimate(reservationIdNumber);
+
+  console.info(estimateData);
+
+  const { createEstimate, updateEstimate } = useMutationEstimate();
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -85,6 +93,27 @@ export const useEstimateForm = (
     }
   };
 
+  const handleUpdateEstimate = async (formData: EstimateFormData) => {
+    const isValid = await trigger();
+    if (!isValid) {
+      return;
+    }
+    if (formData) {
+      const estimateRequestData: CreateReservationRequest =
+        formatCreateEstimate(
+          Number(foodTruckId),
+          Number(chatRoomId),
+          Number(reservationUserId),
+          formData
+        );
+
+      updateEstimate({
+        reservationId: reservationIdNumber,
+        data: estimateRequestData,
+      });
+    }
+  };
+
   const formDatas = {
     location: formData.location,
     detailLocation: formData.detailLocation,
@@ -110,6 +139,7 @@ export const useEstimateForm = (
   return {
     methods,
     handleCreate: handleSubmit(handleCreateEstimate),
+    handleUpdate: handleSubmit(handleUpdateEstimate),
     formData: formDatas,
     errors: combinedErrors,
     isValid,

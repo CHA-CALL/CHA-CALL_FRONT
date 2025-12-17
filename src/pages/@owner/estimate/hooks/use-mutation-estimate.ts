@@ -1,9 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import type { CreateReservationRequest } from 'apis/data-contracts';
+import type {
+  CreateReservationRequest,
+  UpdateReservationRequest,
+} from 'apis/data-contracts';
 
 import useToast from '@hooks/use-toast';
-import { createReservation } from '@pages/@owner/estimate/api';
+import {
+  createReservation,
+  updateReservation,
+} from '@pages/@owner/estimate/api';
 
 export const useMutationEstimate = () => {
   const toast = useToast();
@@ -22,7 +28,24 @@ export const useMutationEstimate = () => {
     },
   });
 
+  const { mutate: updateEstimate } = useMutation({
+    mutationFn: ({
+      reservationId,
+      data,
+    }: {
+      reservationId: number | null;
+      data: UpdateReservationRequest;
+    }) => updateReservation(reservationId, data),
+    onSuccess: () => {
+      navigate(-1);
+    },
+    onError: error => {
+      toast.error(error.message);
+    },
+  });
+
   return {
     createEstimate,
+    updateEstimate,
   };
 };
