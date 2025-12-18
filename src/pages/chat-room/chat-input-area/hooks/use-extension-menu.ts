@@ -27,7 +27,8 @@ export const useExtensionMenu = (
     useReservationStatus(reservationId);
   const isConfirmed =
     reservationStatus?.reservationStatus === RESERVATION_STATUS.CONFIRMED;
-  const { changeReservationStatus } = useMutationReservationStatus();
+  const { changeReservationStatus } =
+    useMutationReservationStatus(reservationId);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraRef = useRef<HTMLInputElement | null>(null);
@@ -101,10 +102,7 @@ export const useExtensionMenu = (
     // TODO : 예약 취소 신청 로직
     cancel: () => {
       changeReservationStatus({
-        reservationId,
-        reservationStatus: {
-          reservationStatus: RESERVATION_STATUS.CANCELLED_REQUESTED,
-        },
+        reservationStatus: RESERVATION_STATUS.CANCELLED_REQUESTED,
       });
     },
   };
