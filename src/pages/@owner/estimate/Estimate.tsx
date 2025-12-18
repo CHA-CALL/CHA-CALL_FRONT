@@ -23,11 +23,13 @@ import {
   ESTIMATE_ERROR_MESSAGE,
   ESTIMATE_MAX_LENGTH,
 } from '@pages/@owner/estimate/constants/estimate';
+import useToast from '@hooks/use-toast';
 
 export default function Estimate() {
   const navigate = useNavigate();
   const { chatRoomId } = useParams();
   const { state } = useLocation();
+  const toast = useToast();
 
   const {
     methods,
@@ -44,9 +46,9 @@ export default function Estimate() {
     updateEtc,
   } = useEstimateForm(
     chatRoomId,
-    state.foodTruckId,
-    state.reservationId,
-    state.reservationUserId
+    state?.foodTruckId,
+    state?.reservationId,
+    state?.reservationUserId
   );
 
   const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
@@ -59,7 +61,8 @@ export default function Estimate() {
     handleActiveDateError,
   } = useEstimateDate(methods);
 
-  if (!chatRoomId) {
+  if (!chatRoomId || !state) {
+    toast.error('잘못된 접근입니다.');
     navigate(ROUTES.CHAT_LIST);
     return null;
   }
