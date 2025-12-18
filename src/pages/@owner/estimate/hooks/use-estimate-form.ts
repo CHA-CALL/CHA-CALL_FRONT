@@ -51,11 +51,16 @@ export const useEstimateForm = (
 
   const formData = watch();
 
+  // chatRoomId가 undefined 일 경우 Estimate.tsx에서 예외 처리됨.
+  const chatRoomIdNumber = chatRoomId ? Number(chatRoomId) : 0;
   const reservationIdNumber = reservationId ? Number(reservationId) : null;
 
   const { estimateData } = useQueryEstimate(reservationIdNumber);
 
-  const { createEstimate, updateEstimate } = useMutationEstimate();
+  const { createEstimate, updateEstimate } = useMutationEstimate(
+    chatRoomIdNumber,
+    reservationIdNumber
+  );
 
   // 기존 estimateData가 있다면(= 예약 견적서 수정) formData 갱신
   useEffect(() => {
