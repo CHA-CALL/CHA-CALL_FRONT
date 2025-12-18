@@ -19,7 +19,7 @@ export default function useMutationReservationStatus(
         queryKey: CHAT_QUERY_KEY.RESERVATION_STATUS(reservationId),
       });
       toast.success(
-        `예약 상태가 ${response?.reservationStatus}로 변경되었습니다.`
+        `예약 상태가 ${response?.reservationStatus}(으)로 변경되었습니다.`
       );
     },
     onError: error => {
