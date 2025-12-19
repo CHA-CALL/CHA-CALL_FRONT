@@ -1,5 +1,5 @@
 import Overlay from '@layout/overlay/Overlay';
-import { type AccountFormData } from '@pages/@owner/account/schema/account.schema';
+import { type AccountFormData } from '@pages/@owner/account/schemas/account.schema';
 
 import Button from '@ui/button/Button';
 

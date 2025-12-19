@@ -7,7 +7,7 @@ import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
 import {
   estimateSchema,
   type EstimateFormData,
-} from '@pages/@owner/estimate/schema/estimate.schema';
+} from '@pages/@owner/estimate/schemas/estimate.schema';
 
 export const useEstimateForm = (
   chatRoomId?: string,

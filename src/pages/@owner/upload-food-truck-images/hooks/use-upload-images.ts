@@ -12,7 +12,7 @@ import {
 
 import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-display';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
-import { imageFileSchema } from '@pages/@owner/upload-food-truck-images/schema/upload-food-truck-images.schema';
+import { imageFileSchema } from '@pages/@owner/upload-food-truck-images/schemas/upload-food-truck-images.schema';
 
 export const useUploadImages = () => {
   const navigate = useNavigate();

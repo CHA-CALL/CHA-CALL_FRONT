@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ONBOARDING_SCHEMA,
   type OnboardingFormData,
-} from '@pages/@owner/food-truck-onboarding/schema/onboarding-validator.schema';
+} from '@pages/@owner/food-truck-onboarding/schemas/onboarding-validator.schema';
 import { useFoodTruckName } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import {
   createNewFoodTruck,

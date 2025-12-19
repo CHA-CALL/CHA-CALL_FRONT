@@ -11,7 +11,7 @@ import Textarea from '@ui/text-area/Textarea';
 import {
   chatTemplateSchema,
   type ChatTemplateFormType,
-} from '@pages/@owner/message-list/schema/message-list.schema';
+} from '@pages/@owner/message-list/schemas/message-list.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 

@@ -1,4 +1,4 @@
-import type { EstimateFormData } from '@pages/@owner/estimate/schema/estimate.schema';
+import type { EstimateFormData } from '@pages/@owner/estimate/schemas/estimate.schema';
 import { useCallback } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
 

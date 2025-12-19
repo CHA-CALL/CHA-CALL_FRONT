@@ -1,4 +1,4 @@
-import type { EstimateFormData } from '@pages/@owner/estimate/schema/estimate.schema';
+import type { EstimateFormData } from '@pages/@owner/estimate/schemas/estimate.schema';
 import type { CreateReservationRequest } from 'apis/data-contracts';
 
 // 서버에 알맞은 형식으로 포맷

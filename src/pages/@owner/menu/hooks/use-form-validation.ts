@@ -6,7 +6,7 @@ import {
   MENU_DESCRIPTION_VALIDATOR,
   MENU_PRICE_VALIDATOR,
   MENU_IMAGE_VALIDATOR,
-} from '@pages/@owner/menu/schema/menu-form-validator.schema';
+} from '@pages/@owner/menu/schemas/menu-form-validator.schema';
 
 const menuSchema = z.object({
   name: MENU_NAME_VALIDATOR,
