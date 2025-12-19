@@ -1,5 +1,4 @@
 import type {
-  GetChatTemplatesData,
   RegisterChatTemplateData,
   DeleteChatTemplateData,
 } from 'apis/data-contracts';
@@ -12,11 +11,15 @@ import {
 } from '@pages/@owner/message-list/api';
 import { USER_INFO } from '@shared/querykey/user-info';
 
-export const useOwnerChatTemplates = () => {
-  return useQuery<GetChatTemplatesData>({
+export const ownerChatQueries = {
+  list: () => ({
     queryKey: USER_INFO.CHATS(),
-    queryFn: () => getOwnerChatTemplates(),
-  });
+    queryFn: getOwnerChatTemplates,
+  }),
+};
+
+export const useOwnerChatTemplates = () => {
+  return useQuery({ ...ownerChatQueries.list() });
 };
 
 export const usePostOwnerChatTemplates = () => {
