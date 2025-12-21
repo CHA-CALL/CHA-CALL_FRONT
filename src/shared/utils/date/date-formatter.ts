@@ -84,6 +84,14 @@ export const formatEstimateDatesToAvailableDates = (
       // startDate가 없으면 버림
       if (!startDate) return null;
 
+      if (startDate === endDate) {
+        return {
+          id: `${generateDateId()}/${index}`,
+          startDate,
+          endDate: '',
+        };
+      }
+
       return {
         id: `${generateDateId()}/${index}`,
         startDate,
