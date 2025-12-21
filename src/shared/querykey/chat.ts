@@ -13,7 +13,7 @@ export const CHAT_QUERY_KEY = {
     reservationId,
   ],
   ESTIMATE: (reservationId: number | null) => [
-    'chat',
+    ...CHAT_QUERY_KEY.ALL,
     'estimate',
     reservationId,
   ],
