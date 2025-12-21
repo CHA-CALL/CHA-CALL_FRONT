@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@router/constant/routes';
+
+import useToast from '@hooks/use-toast';
 import { Icon } from '@icon/Icon';
 import Tag from '@ui/tag/Tag';
 import ButtonFloating from '@ui/button-floating/ButtonFloating';
@@ -13,17 +15,17 @@ import {
   NewChatIndicator,
 } from '@pages/chat-room/components';
 import { useSendMessage } from '@pages/chat-room/chat-input-area/hooks/use-send-message';
+import { useChatRoomQuery } from '@pages/chat-room/hooks';
 
-// TODO: 상대방 이름 받아오기. 견적서 작성을 위해 foodTruckId, chatRoomId, 상대 유저 id 필요함
-const otherName = '상대방 이름';
-const otherFoodTruckName = '상대방 푸드트럭';
-const foodTruckId = 1;
-// const reservationId = 1;
-const memberId = 2;
+// TODO: 사장님인지 일반 유저인지 여부
+const isOwner = true;
 
 export default function ChatRoom() {
   const navigate = useNavigate();
   const { chatRoomId } = useParams();
+  const toast = useToast();
+
+  const { metaData, isMetaDataPending } = useChatRoomQuery(isOwner, chatRoomId);
 
   const { messages, handleSendMessage } = useSendMessage();
   const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(
@@ -75,11 +77,6 @@ export default function ChatRoom() {
     }
   }, [messages, lastMessage, scrollElement]);
 
-  if (!chatRoomId) {
-    // TODO: 토스트로 접근 오류 보여주기
-    return;
-  }
-
   const handleOpenLeaveSheet = () => {
     setIsLeaveSheetOpen(true);
   };
@@ -87,7 +84,7 @@ export default function ChatRoom() {
     setIsLeaveSheetOpen(false);
   };
   const handleClickBack = () => {
-    navigate(ROUTES.CHATLIST);
+    navigate(ROUTES.CHAT_LIST);
   };
   const handleLeaveChat = () => {
     // TODO: 채팅방 나가기
@@ -106,16 +103,32 @@ export default function ChatRoom() {
     setIsExtensionMenuOpen(isOpen);
   };
 
+  useEffect(() => {
+    if ((!chatRoomId || !metaData) && !isMetaDataPending) {
+      toast.error('잘못된 접근입니다.');
+      navigate(ROUTES.CHAT_LIST);
+    }
+  }, [chatRoomId, metaData, isMetaDataPending, toast, navigate]);
+
+  const { name, foodTruckName, foodTruckId, reservationId, memberId } =
+    metaData ?? {};
+
+  if (!chatRoomId || !metaData) {
+    return null;
+  }
+
   return (
     <div className='flex h-[100dvh] w-full flex-col overflow-hidden bg-white'>
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         rightIcon={<Icon name='ic_dot' className='text-grayscale-900' />}
         centerContent={
-          <div className='flex flex-row items-center gap-[1rem]'>
-            <span className='title-sb-16'>{otherName}</span>
-            <Tag title={otherFoodTruckName} />
-          </div>
+          !isMetaDataPending && (
+            <div className='flex flex-row items-center gap-[1rem]'>
+              <span className='title-sb-16'>{name}</span>
+              {foodTruckName && <Tag title={foodTruckName} />}
+            </div>
+          )
         }
         handleLeftClick={handleClickBack}
         handleRightClick={handleOpenLeaveSheet}
@@ -123,10 +136,10 @@ export default function ChatRoom() {
 
       <ChatMessageList messages={messages} scrollRef={setScrollElement} />
 
-      {showNewChatIndicator && lastMessage && !lastMessage.isMine ? (
+      {name && showNewChatIndicator && lastMessage && !lastMessage.isMine ? (
         <NewChatIndicator
           profileImage={lastMessage.profileImage || 'https://placehold.co/40'}
-          name={otherName}
+          name={name}
           message={lastMessage.message || '새로운 메시지'}
           container={scrollElement!}
           className={isExtensionMenuOpen ? 'bottom-[27rem]' : 'bottom-[7.4rem]'}
@@ -146,15 +159,18 @@ export default function ChatRoom() {
       />
 
       <footer className='fixed-center bottom-[0] w-full'>
-        <ChatInputArea
-          foodTruckId={foodTruckId}
-          chatRoomId={chatRoomId}
-          memberId={memberId}
-          selectedQuickMessage={selectedQuickMessage}
-          handleOpenMessageList={handleOpenMessageList}
-          handleSendMessage={handleSendMessage}
-          onMenuToggle={handleExtensionMenuToggle}
-        />
+        {foodTruckId && memberId && (
+          <ChatInputArea
+            foodTruckId={foodTruckId}
+            chatRoomId={chatRoomId}
+            reservationId={reservationId ?? null}
+            memberId={memberId}
+            selectedQuickMessage={selectedQuickMessage}
+            handleOpenMessageList={handleOpenMessageList}
+            handleSendMessage={handleSendMessage}
+            onMenuToggle={handleExtensionMenuToggle}
+          />
+        )}
       </footer>
 
       {isMessageListOpen && (

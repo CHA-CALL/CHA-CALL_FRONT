@@ -14,6 +14,7 @@ import { cn } from '@utils/cn';
 interface ChatInputAreaProps {
   foodTruckId: number;
   chatRoomId: string;
+  reservationId: number | null;
   memberId: number;
   selectedQuickMessage?: string;
   handleSendMessage: (_message: string) => void;
@@ -24,6 +25,7 @@ interface ChatInputAreaProps {
 export default function ChatInputArea({
   foodTruckId,
   chatRoomId,
+  reservationId,
   memberId,
   handleSendMessage,
   selectedQuickMessage,
@@ -46,6 +48,7 @@ export default function ChatInputArea({
     useExtensionMenu(
       foodTruckId,
       chatRoomId,
+      reservationId,
       memberId,
       handleOpenMessageList,
       closeMenu

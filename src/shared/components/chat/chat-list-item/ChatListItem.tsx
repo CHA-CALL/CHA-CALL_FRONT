@@ -34,7 +34,7 @@ export default function ChatListItem({
       return;
     }
     // TODO : 대화창 페이지, API 추가 시 연결 예정. chatRoomId 넣기
-    navigate(ROUTES.CHATROOM('1'));
+    navigate(ROUTES.CHAT_ROOM('1'));
   };
 
   return (

@@ -73,7 +73,7 @@ export default function SideBar({ isOpen, handleSideBarClose }: SideBarProps) {
   };
 
   const handleClickChat = () => {
-    navigate(ROUTES.CHATLIST);
+    navigate(ROUTES.CHAT_LIST);
     handleSideBarClose();
   };
 
