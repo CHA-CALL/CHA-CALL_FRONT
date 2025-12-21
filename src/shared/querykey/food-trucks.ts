@@ -4,15 +4,15 @@ export const FOOD_TRUCKS_QUERY_KEY = {
   ALL: ['foodTrucks'] as const,
 
   LIST: (filter?: FoodTrucksFilterType) =>
-    ['foodTrucks', 'list', filter ?? {}] as const,
+    [...FOOD_TRUCKS_QUERY_KEY.ALL, 'list', filter ?? {}] as const,
 
   DETAIL: (foodTruckId: number) =>
-    ['foodTrucks', 'detail', foodTruckId] as const,
+    [...FOOD_TRUCKS_QUERY_KEY.ALL, 'detail', foodTruckId] as const,
 
   IMAGE: (foodTruckId: number) =>
     [...FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId), 'image'] as const,
 
-  SAVED: () => ['foodTrucks', 'saved'] as const,
+  SAVED: () => [...FOOD_TRUCKS_QUERY_KEY.ALL, 'saved'] as const,
 
   MENUS: {
     ROOT: (foodTruckId: number) =>
