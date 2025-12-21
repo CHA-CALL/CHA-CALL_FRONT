@@ -7,6 +7,7 @@ import { ROUTES } from '@router/constant/routes';
 import { CHAT_QUERY_KEY } from '@shared/querykey/chat';
 import { getReservationStatus } from '@pages/chat-room/api';
 
+// TODO: #209 머지 이후 useChatRoomQuery로 통합하기
 export default function useReservationStatus(reservationId: number | null) {
   const navigate = useNavigate();
   const toast = useToast();

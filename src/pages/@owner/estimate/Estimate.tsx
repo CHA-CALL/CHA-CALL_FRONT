@@ -1,8 +1,12 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { ROUTES } from '@router/constant/routes';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
+import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
+
 import {
   useEstimateTime,
   useEstimateDate,
@@ -15,23 +19,22 @@ import {
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
-
-import { ROUTES } from '@router/constant/routes';
 import {
   ESTIMATE_ERROR_MESSAGE,
   ESTIMATE_MAX_LENGTH,
 } from '@pages/@owner/estimate/constants/estimate';
-import ActiveTime from '@components/active-time/ActiveTime';
-import ActiveDate from '@components/active-date/ActiveDate';
+import useToast from '@hooks/use-toast';
 
 export default function Estimate() {
   const navigate = useNavigate();
   const { chatRoomId } = useParams();
   const { state } = useLocation();
+  const toast = useToast();
 
   const {
     methods,
     handleCreate,
+    handleUpdate,
     formData,
     errors,
     isValid,
@@ -41,7 +44,12 @@ export default function Estimate() {
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-  } = useEstimateForm(chatRoomId, state.foodTruckId, state.reservationUserId);
+  } = useEstimateForm(
+    chatRoomId,
+    state?.foodTruckId,
+    state?.reservationId,
+    state?.reservationUserId
+  );
 
   const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
     useEstimateTime(methods);
@@ -53,12 +61,14 @@ export default function Estimate() {
     handleActiveDateError,
   } = useEstimateDate(methods);
 
-  if (!chatRoomId) {
+  if (!chatRoomId || !state) {
+    toast.error('잘못된 접근입니다.');
     navigate(ROUTES.CHAT_LIST);
     return null;
   }
   if (
     state.foodTruckId === undefined ||
+    state.reservationId === undefined ||
     state.reservationUserId === undefined
   ) {
     navigate(ROUTES.CHAT_ROOM(chatRoomId));
@@ -72,7 +82,9 @@ export default function Estimate() {
   return (
     <>
       <Navigation
-        centerContent='예약 견적서 작성'
+        centerContent={
+          state.reservationId ? '예약 견적서 수정' : '예약 견적서 작성'
+        }
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />
@@ -119,10 +131,10 @@ export default function Estimate() {
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
-          handleClickButton={handleCreate}
+          handleClickButton={state.reservationId ? handleUpdate : handleCreate}
           disabled={!isValid}
         >
-          대화창에 보내기
+          {state.reservationId ? '견적서 수정하기' : '대화창에 보내기'}
         </Button>
       </footer>
     </>

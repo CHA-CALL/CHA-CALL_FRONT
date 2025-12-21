@@ -1,17 +1,27 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import type {
+  CreateReservationRequest,
+  UpdateReservationRequest,
+} from 'apis/data-contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { CreateReservationRequest } from 'apis/data-contracts';
 
-import { useMutationEstimate } from '@pages/@owner/estimate/hooks';
-import { formatCreateEstimate } from '@pages/@owner/estimate/utils';
+import { formatEstimateDatesToAvailableDates } from '@utils/date';
 import {
   estimateSchema,
   type EstimateFormData,
 } from '@pages/@owner/estimate/schemas/estimate.schema';
+import { useQueryEstimate } from '@pages/@owner/estimate/hooks/use-query-estimate';
+import { useMutationEstimate } from '@pages/@owner/estimate/hooks/use-mutation-estimate';
+import {
+  formatCreateEstimate,
+  formatUpdateEstimate,
+} from '@pages/@owner/estimate/utils';
 
 export const useEstimateForm = (
   chatRoomId?: string,
   foodTruckId?: string,
+  reservationId?: string | null,
   reservationUserId?: string
 ) => {
   const methods = useForm<EstimateFormData>({
@@ -31,6 +41,7 @@ export const useEstimateForm = (
   const {
     handleSubmit,
     setValue,
+    reset,
     trigger,
     formState: { errors, isValid },
     watch,
@@ -38,7 +49,39 @@ export const useEstimateForm = (
 
   const formData = watch();
 
-  const { createEstimate } = useMutationEstimate();
+  // chatRoomId가 undefined 일 경우 Estimate.tsx에서 예외 처리됨.
+  const chatRoomIdNumber = chatRoomId ? Number(chatRoomId) : 0;
+  const reservationIdNumber = reservationId ? Number(reservationId) : null;
+
+  const { estimateData } = useQueryEstimate(reservationIdNumber);
+
+  const { createEstimate, updateEstimate } = useMutationEstimate(
+    chatRoomIdNumber,
+    reservationIdNumber
+  );
+
+  // 기존 estimateData가 있다면(= 예약 견적서 수정) formData 갱신
+  useEffect(() => {
+    if (!estimateData) return;
+    reset(
+      {
+        location: estimateData.address ?? '',
+        detailLocation: estimateData.detailAddress ?? '',
+        availableDates: formatEstimateDatesToAvailableDates(
+          estimateData.reservationDates ?? []
+        ),
+        activeTime: estimateData.operationHour ?? undefined,
+        food: estimateData.menu ?? '',
+        price: estimateData.deposit ?? undefined,
+        needElectricity: estimateData.isUseElectricity ?? undefined,
+        etc: estimateData.etcRequest ?? '',
+      },
+      {
+        keepDirty: false,
+        keepTouched: false,
+      }
+    );
+  }, [estimateData, reset]);
 
   const updateLocation = (location: string) => {
     setValue('location', location, { shouldValidate: true });
@@ -85,6 +128,22 @@ export const useEstimateForm = (
     }
   };
 
+  const handleUpdateEstimate = async (formData: EstimateFormData) => {
+    const isValid = await trigger();
+    if (!isValid) {
+      return;
+    }
+    if (formData) {
+      const estimateRequestData: UpdateReservationRequest =
+        formatUpdateEstimate(formData);
+
+      updateEstimate({
+        reservationId: reservationIdNumber,
+        data: estimateRequestData,
+      });
+    }
+  };
+
   const formDatas = {
     location: formData.location,
     detailLocation: formData.detailLocation,
@@ -110,6 +169,7 @@ export const useEstimateForm = (
   return {
     methods,
     handleCreate: handleSubmit(handleCreateEstimate),
+    handleUpdate: handleSubmit(handleUpdateEstimate),
     formData: formDatas,
     errors: combinedErrors,
     isValid,

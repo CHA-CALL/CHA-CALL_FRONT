@@ -6,10 +6,15 @@ export const CHAT_QUERY_KEY = {
     'meta-data',
     isOwner,
   ],
-  // 예약 상태 조회 쿼리키 위치를 고민중.. 채팅방 내부에서만 사용할 것 같긴함
+  // 예약 상태 조회, 예약 견적서 조회 쿼리키 위치를 고민중.. 채팅방 내부에서만 사용할 것 같긴함
   RESERVATION_STATUS: (reservationId: number | null) => [
     ...CHAT_QUERY_KEY.ALL,
     'reservation-status',
+    reservationId,
+  ],
+  ESTIMATE: (reservationId: number | null) => [
+    ...CHAT_QUERY_KEY.ALL,
+    'estimate',
     reservationId,
   ],
 } as const;

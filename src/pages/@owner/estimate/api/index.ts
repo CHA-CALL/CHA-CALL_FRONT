@@ -8,14 +8,15 @@ import type {
 } from 'apis/data-contracts';
 
 // 예약 견적서 조회
-export const getReservation = async (
-  reservationId: number,
-  isOwner: boolean
-) => {
+export const getReservation = async (reservationId: number | null) => {
+  if (reservationId === null) {
+    throw new Error(
+      'reservationId가 null일 때는 해당 함수를 실행할 수 없습니다.'
+    );
+  }
   const response = await apiRequest<GetReservationData>({
     endPoint: `/reservations/${reservationId}`,
     method: 'GET',
-    params: { isOwner },
   });
   return response.data;
 };
@@ -32,9 +33,15 @@ export const createReservation = async (data: CreateReservationRequest) => {
 
 // 예약 견적서 수정
 export const updateReservation = async (
-  reservationId: number,
+  reservationId: number | null,
   data: UpdateReservationRequest
 ) => {
+  if (reservationId === null) {
+    throw new Error(
+      'reservationId가 null일 때는 해당 함수를 실행할 수 없습니다.'
+    );
+  }
+
   const response = await apiRequest<UpdateReservationData>({
     endPoint: `/reservations/${reservationId}`,
     method: 'PUT',

@@ -15,7 +15,7 @@ export const ESTIMATE_MAX_LENGTH = {
   },
   availableDates: {
     min: 1,
-    max: 4,
+    max: 2,
   },
 } as const;
 

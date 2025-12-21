@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import useToast from '@hooks/use-toast';
 import { ROUTES } from '@router/constant/routes';
+import { RESERVATION_STATUS } from '@constant/reservation-status';
 import { useFetchAccountData } from '@pages/@owner/account/hooks/use-account-query';
 import type { MenuKey } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
-import useReservationStatus from '@pages/chat-room/chat-input-area/hooks/use-reservation-status';
+import {
+  useMutationReservationStatus,
+  useReservationStatus,
+} from '@pages/chat-room/hooks';
 
 export const useExtensionMenu = (
   foodTruckId: number,
@@ -21,8 +25,10 @@ export const useExtensionMenu = (
     useFetchAccountData();
   const { reservationStatus, isReservationStatusPending } =
     useReservationStatus(reservationId);
-  const isConfirmed = reservationStatus?.reservationStatus === '예약 확정';
-  // TODO: reservationStatus 관련 타입 만들기
+  const isConfirmed =
+    reservationStatus?.reservationStatus === RESERVATION_STATUS.CONFIRMED;
+  const { changeReservationStatus } =
+    useMutationReservationStatus(reservationId);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraRef = useRef<HTMLInputElement | null>(null);
@@ -94,7 +100,11 @@ export const useExtensionMenu = (
     // TODO : 견적서 pdf 다운로드 되도록
     download_paper: () => alert('견적서 다운'),
     // TODO : 예약 취소 신청 로직
-    cancel: () => alert('예약 취소'),
+    cancel: () => {
+      changeReservationStatus({
+        reservationStatus: RESERVATION_STATUS.CANCELLED_REQUESTED,
+      });
+    },
   };
 
   return {

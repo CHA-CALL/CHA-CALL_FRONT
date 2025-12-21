@@ -17,7 +17,7 @@ import {
 } from '@pages/reservation/hooks/use-food-truck-list-query';
 import type { FoodTruckCategoryValue } from '@type/category-types';
 import { ROUTES } from '@router/constant/routes';
-import { formatSelectedDateToSchedules } from '@utils/date/date-formatter';
+import { formatSelectedDateToSchedules } from '@utils/date';
 
 export default function useReservation() {
   const navigate = useNavigate();
