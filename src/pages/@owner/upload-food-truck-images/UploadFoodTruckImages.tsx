@@ -6,9 +6,11 @@ import { Icon } from '@components/icon/Icon';
 import ErrorText from '@components/form/error-text/ErrorText';
 import { useFoodTruckForm } from '@pages/@owner//food-truck-form/hooks/use-food-truck-form';
 import { useUploadImages } from '@pages/@owner/upload-food-truck-images/hooks/use-upload-images';
-import UploadDescription from '@pages/@owner/upload-food-truck-images/components/UploadDescription';
-import UploadImagesGrid from '@pages/@owner/upload-food-truck-images/components/UploadImagesGrid';
-import UploadFooter from '@pages/@owner/upload-food-truck-images/components/UploadFooter';
+import {
+  UploadDescription,
+  UploadFooter,
+  UploadImagesGrid,
+} from '@pages/@owner/upload-food-truck-images/components';
 
 export default function UploadFoodTruckImages() {
   const location = useLocation();

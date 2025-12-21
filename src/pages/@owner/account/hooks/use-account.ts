@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import {
   accountSchema,
   type AccountFormData,
-} from '@pages/@owner/account/schema/account.schema';
+} from '@pages/@owner/account/schemas/account.schema';
 
 import { type Bank } from '@pages/@owner/account/constants/bank';
 import { formatAccountNumber } from '@pages/@owner/account/utils/format-account-number';

@@ -7,7 +7,6 @@ import {
 } from '@pages/@owner/account/api';
 import type {
   BankAccountResponse,
-  GetBankAccountData,
   RegisterBankAccountRequest,
   UpdateBankAccountRequest,
 } from 'apis/data-contracts';
@@ -18,17 +17,21 @@ interface UsePatchAccountDataOptions {
   onError?: (_error: Error) => void;
 }
 
-export const useFetchAccountData = () => {
-  return useQuery<GetBankAccountData, Error, BankAccountResponse | null>({
+export const accountQueries = {
+  detail: () => ({
     queryKey: USER_INFO.ACCOUNTS(),
-    queryFn: () => getBankAccountInfo(),
-    select: response => {
+    queryFn: getBankAccountInfo,
+    select: (response: { data?: BankAccountResponse | null }) => {
       if (!response.data) {
         return null;
       }
       return response.data;
     },
-  });
+  }),
+};
+
+export const useFetchAccountData = () => {
+  return useQuery({ ...accountQueries.detail() });
 };
 
 export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
@@ -68,7 +71,6 @@ export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
   });
 };
 
-/** 현재 삭제 버튼 없음. */
 export const useDeleteAccount = (options?: UsePatchAccountDataOptions) => {
   const queryClient = useQueryClient();
 

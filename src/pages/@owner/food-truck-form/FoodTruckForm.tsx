@@ -17,10 +17,10 @@ import {
   AvailableQuantity,
   NeedElectricity,
   PaymentMethod,
-} from '@pages/@owner/food-truck-form/@section/category-section/index';
-import { MenuCategory } from '@pages/@owner/food-truck-form/@section/category-section';
-import RegionSection from '@pages/@owner/food-truck-form/@section/region-section/RegionSection';
-import MenuInfo from '@pages/@owner/food-truck-form/@section/menu-section/MenuInfo';
+  MenuInfo,
+  RegionSection,
+  MenuCategory,
+} from '@pages/@owner/food-truck-form/@section';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { useFoodTruckFormDate } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-date';
 import { useFoodTruckFormTime } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form-time';

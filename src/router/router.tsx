@@ -18,7 +18,7 @@ const MessageList = lazy(
   () => import('@pages/@owner/message-list/MessageList')
 );
 const MessageForm = lazy(
-  () => import('@pages/@owner/message-list/components/MessageForm')
+  () => import('@pages/@owner/message-list/MessageForm')
 );
 const MyPage = lazy(() => import('@pages/mypage/MyPage'));
 const ProfileSetting = lazy(
