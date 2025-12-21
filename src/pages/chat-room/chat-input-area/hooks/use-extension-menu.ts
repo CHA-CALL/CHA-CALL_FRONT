@@ -17,9 +17,9 @@ export const useExtensionMenu = (
 ) => {
   const toast = useToast();
   const navigate = useNavigate();
-  const { data: bankAccount, isFetching: isBankAccountFetching } =
+  const { data: bankAccount, isPending: isBankAccountPending } =
     useFetchAccountData();
-  const { reservationStatus, isReservationStatusFetching } =
+  const { reservationStatus, isReservationStatusPending } =
     useReservationStatus(reservationId);
   const isConfirmed = reservationStatus?.reservationStatus === '예약 확정';
   // TODO: reservationStatus 관련 타입 만들기
@@ -46,19 +46,19 @@ export const useExtensionMenu = (
     camera: !isMobile(),
     ment: false,
     // 계좌 등록 안했을 시 disabled
-    cash: isBankAccountFetching ? true : !bankAccount,
+    cash: isBankAccountPending ? true : !bankAccount,
     // 작성한 견적서가 있을 때 disabled
     write_paper:
-      reservationId !== null || isReservationStatusFetching || isConfirmed,
+      reservationId !== null || isReservationStatusPending || isConfirmed,
     // 작성한 견적서가 없을 때 disabled
     edit_paper:
-      reservationId === null || isReservationStatusFetching || isConfirmed,
+      reservationId === null || isReservationStatusPending || isConfirmed,
     // 확정된 예약이 없을 때 disabled. 견적서 다운과 하나로 통합될 예정
-    view_paper: isReservationStatusFetching ? true : !isConfirmed,
+    view_paper: isReservationStatusPending ? true : !isConfirmed,
     // 확정된 예약이 없을 때 disabled
-    download_paper: isReservationStatusFetching ? true : !isConfirmed,
+    download_paper: isReservationStatusPending ? true : !isConfirmed,
     // 확정된 예약이 없을 때 disabled. 채팅방과 관련된 예약에 대한 예약상태조회 후 확정 상태가 아니라면 disabled
-    cancel: isReservationStatusFetching ? true : !isConfirmed,
+    cancel: isReservationStatusPending ? true : !isConfirmed,
   };
 
   const handlers: Record<MenuKey, () => void> = {
