@@ -1,11 +1,9 @@
-import { mockup } from '@pages/chat-list/constant/mocks';
-import type { Chat } from '@pages/chat-list/types/chat-list-type';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const useChatList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [activeFilter, setActiveFilter] = useState('전체보기');
-  const [chatList, setChatList] = useState<Chat[]>([]);
+
   const [selectChatList, setSelectChatList] = useState(new Set<number>());
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -36,16 +34,10 @@ export const useChatList = () => {
 
   const handleCloseModal = () => setIsDeleteModalOpen(false);
 
-  useEffect(() => {
-    /** API 준비 전 더미 데이터 사용*/
-    setChatList(mockup);
-  }, []);
-
   return {
     isEditing,
     activeFilter,
     setActiveFilter,
-    chatList,
     selectChatList,
     handleToggleEdit,
     handleCheckChange,

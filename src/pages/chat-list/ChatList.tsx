@@ -6,16 +6,21 @@ import { Icon } from '@icon/Icon';
 import OverlayModal from '@layout/overlay/Overlay';
 import Navigation from '@layout/navigation/Navigation';
 import Button from '@ui/button/Button';
+import { useGetChatList } from '@pages/chat-list/api/chat-list-api';
+import Loading from '@layout/loading/Loading';
 
 export default function ChatList() {
   const navigate = useNavigate();
   const handleClickBack = () => navigate(-1);
 
+  //TODO: 유저,오너 구분 확인 로직 필요
+  const isOwner = true;
+  const { data: chatListData, isPending, isError } = useGetChatList(isOwner);
+
   const {
     isEditing,
     activeFilter,
     setActiveFilter,
-    chatList,
     selectChatList,
     handleToggleEdit,
     handleCheckChange,
@@ -25,6 +30,13 @@ export default function ChatList() {
     handleCloseModal,
   } = useChatList();
 
+  //TODO: 에러 처리 필요
+  if (isPending) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <div>채팅 목록을 불러오는 중에 오류가 발생했습니다.</div>;
+  }
   return (
     <>
       <Navigation
@@ -69,19 +81,19 @@ export default function ChatList() {
           </div>
         </div>
       </OverlayModal>
-      <div className='flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem] scrollbar-hide'>
-        {(chatList ?? []).map(item => {
+      <div className='scrollbar-hide flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem]'>
+        {(chatListData?.content ?? []).map(item => {
           return (
             <ChatListItem
-              key={item.clientId}
+              key={item.id}
               isEditing={isEditing}
-              clientName={item.clientName}
-              tagTitle={item.tagTitle}
-              lastChat={item.lastChat}
-              lastChatTime={item.lastChatTime}
-              unreadCount={item.unreadCount}
-              isChecked={selectChatList.has(item.clientId)}
-              handleCheckChange={() => handleCheckChange(item.clientId)}
+              name={item.name ?? ''}
+              foodTruckName={item.foodTruckName ?? ''}
+              lastMessage={item.lastMessage ?? ''}
+              lastMessageSendTime={item.lastMessageSendTime ?? ''}
+              unreadCount={item.unreadCount ?? 0}
+              isChecked={selectChatList.has(item.id ?? 0)}
+              handleCheckChange={() => handleCheckChange(item.id ?? 0)}
             />
           );
         })}
