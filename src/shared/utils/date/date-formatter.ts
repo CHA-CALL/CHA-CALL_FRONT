@@ -66,11 +66,11 @@ export const formatSelectedDateToSchedules = (
 };
 
 /**
- * 기존 견적서의 날짜를 AvailableDates 형식으로 포맷하는 함수
+ * string[] 형식의 날짜를 AvailableDates 형식으로 포맷하는 함수
  * ["2025.09.20 ~ 2025.09.20", "2025.09.25 ~ 2025.09.25"]
  *  -> AvailableDate[]
  */
-export const formatEstimateDatesToAvailableDates = (
+export const formatStringDatesToAvailableDates = (
   estimateDates: string[]
 ): AvailableDate[] => {
   return estimateDates

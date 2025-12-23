@@ -4,6 +4,9 @@ import { FormProvider } from 'react-hook-form';
 import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@icon/Icon';
 import Button from '@ui/button/Button';
+import { ROUTES } from '@router/constant/routes';
+import useToast from '@hooks/use-toast';
+
 import {
   FoodTruckName,
   FoodTruckDescription,
@@ -12,7 +15,6 @@ import {
   FoodTruckOption,
   FoodTruckPhoto,
 } from '@pages/@owner/food-truck-form/@section/basic-info-section/index';
-
 import {
   AvailableQuantity,
   NeedElectricity,
@@ -30,8 +32,6 @@ import {
 } from '@pages/@owner/food-truck-form/constants/food-truck';
 import ActiveTime from '@components/active-time/ActiveTime';
 import ActiveDate from '@components/active-date/ActiveDate';
-import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
-import { ROUTES } from '@router/constant/routes';
 
 // 메인 컴포넌트
 export default function FoodTruckForm() {
@@ -40,9 +40,10 @@ export default function FoodTruckForm() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
 
-  // TODO: id 값이 있을 시 푸드트럭 정보 가져오기
-  const { methods, reset, isFormValid, handleSubmit } = useFoodTruckForm();
+  const { isEdit, methods, reset, isFormValid, handleSubmit } =
+    useFoodTruckForm(foodTruckIdNumber);
 
   const {
     formActiveTime,
@@ -58,14 +59,18 @@ export default function FoodTruckForm() {
     handleActiveDateSetValue,
     handleActiveDateError,
   } = useFoodTruckFormDate(methods);
-  // 서버에서 활동 가능 지역은 지역코드로 받아야함
-  const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
 
   useEffect(() => {
     if (location.state?.formData && location.state?.from) {
       reset(location.state.formData);
     }
   }, [location.state, reset]);
+
+  if (!foodTruckId || isNaN(foodTruckIdNumber)) {
+    toast.error('잘못된 접근입니다.');
+    navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+    return null;
+  }
 
   const handleNavigateBack = () => {
     navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
@@ -74,9 +79,7 @@ export default function FoodTruckForm() {
   return (
     <FormProvider {...methods}>
       <Navigation
-        centerContent={
-          foodTruckDetailData ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'
-        }
+        centerContent={isEdit ? '나의 푸드트럭 수정' : '나의 푸드트럭 등록'}
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />

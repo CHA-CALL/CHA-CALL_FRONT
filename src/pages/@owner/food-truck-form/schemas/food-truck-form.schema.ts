@@ -5,10 +5,7 @@ import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
-import { NEED_ELECTRICITY } from '@constant/need-electricity';
-import { PAYMENT_METHOD } from '@constant/payment-method';
-import { FOOD_CATEGORIES } from '@constant/food-categories';
+
 import type { AvailableDate } from '@type/available-date';
 import { validateFoodTruckFormTime } from '@pages/@owner/food-truck-form/utils/validate-food-truck-form-time';
 
@@ -34,10 +31,10 @@ export const foodTruckSchema = z.object({
       FOOD_TRUCK_ERROR_MESSAGE.phoneNumber.required
     ),
   regionCodes: z.array(z.custom<RegionResponse>()),
-  availableQuantity: z.nativeEnum(AVAILABLE_QUANTITY),
-  needElectricity: z.nativeEnum(NEED_ELECTRICITY),
-  paymentMethod: z.nativeEnum(PAYMENT_METHOD),
-  menuCategories: z.array(z.nativeEnum(FOOD_CATEGORIES)),
+  availableQuantity: z.string(),
+  needElectricity: z.string(),
+  paymentMethod: z.string(),
+  menuCategories: z.array(z.string()),
   photoUrls: z.array(z.string()).min(1, {
     message: FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required,
   }),

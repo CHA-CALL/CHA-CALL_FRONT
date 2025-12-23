@@ -6,7 +6,7 @@ import type {
 } from 'apis/data-contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { formatEstimateDatesToAvailableDates } from '@utils/date';
+import { formatStringDatesToAvailableDates } from '@utils/date';
 import {
   estimateSchema,
   type EstimateFormData,
@@ -67,7 +67,7 @@ export const useEstimateForm = (
       {
         location: estimateData.address ?? '',
         detailLocation: estimateData.detailAddress ?? '',
-        availableDates: formatEstimateDatesToAvailableDates(
+        availableDates: formatStringDatesToAvailableDates(
           estimateData.reservationDates ?? []
         ),
         activeTime: estimateData.operationHour ?? undefined,
