@@ -9,6 +9,7 @@ import {
   type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
+import { useMenusQuery } from '@pages/@owner/menu/hooks/use-menus-query';
 
 const initialData = {
   name: '',
@@ -43,11 +44,14 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
     setError,
   } = methods;
 
+  // 기존 데이터가 있다면 수정 mode
   const [isEdit, setIsEdit] = useState(false);
 
+  // 기존 등록 푸드트럭 데이터 조회
   const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
 
-  // TODO: 메뉴 리스트 조회 필요. 있다면 활성화, 없다면 비활성화
+  // 메뉴 등록 여부를 위한 조회
+  const { data: menuData } = useMenusQuery(foodTruckIdNumber, '최신순');
 
   useEffect(() => {
     if (foodTruckDetailData) {
@@ -71,10 +75,10 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
         activeTime: foodTruckDetailData.activeTime,
         timeDiscussRequired: foodTruckDetailData.timeDiscussRequired,
         // TODO : 메뉴 리스트 있을 때 true
-        menus: true,
+        menus: menuData !== undefined,
       });
     }
-  }, [foodTruckDetailData, reset]);
+  }, [foodTruckDetailData, menuData, reset]);
 
   const onSubmit = async (formData: FoodTruckFormData) => {
     if (!formData.nameDuplicate) {

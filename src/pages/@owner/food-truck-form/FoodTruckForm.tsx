@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FormProvider } from 'react-hook-form';
 import Navigation from '@layout/navigation/Navigation';
 import { Icon } from '@icon/Icon';
@@ -39,10 +38,9 @@ export default function FoodTruckForm() {
   const foodTruckIdNumber = Number(foodTruckId);
 
   const navigate = useNavigate();
-  const location = useLocation();
   const toast = useToast();
 
-  const { isEdit, methods, reset, isFormValid, handleSubmit } =
+  const { isEdit, methods, isFormValid, handleSubmit } =
     useFoodTruckForm(foodTruckIdNumber);
 
   const {
@@ -59,12 +57,6 @@ export default function FoodTruckForm() {
     handleActiveDateSetValue,
     handleActiveDateError,
   } = useFoodTruckFormDate(methods);
-
-  useEffect(() => {
-    if (location.state?.formData && location.state?.from) {
-      reset(location.state.formData);
-    }
-  }, [location.state, reset]);
 
   if (!foodTruckId || isNaN(foodTruckIdNumber)) {
     toast.error('잘못된 접근입니다.');
