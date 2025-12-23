@@ -74,7 +74,6 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
         ),
         activeTime: foodTruckDetailData.activeTime,
         timeDiscussRequired: foodTruckDetailData.timeDiscussRequired,
-        // TODO : 메뉴 리스트 있을 때 true
         menus: menuData !== undefined,
       });
     }
@@ -88,7 +87,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
       return;
     }
     if (isValid && formData) {
-      //TODO: 계좌 등록 제출
+      // TODO: 푸드트럭 등록 api 호출
       alert('푸드트럭 등록 제출');
     }
   };

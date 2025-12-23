@@ -4,6 +4,7 @@ import { ROUTES } from '@router/constant/routes';
 import FormLayout from '@components/layout/form-layout/FormLayout';
 import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitchButton';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
 import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
 export default function MenuInfo() {
@@ -14,7 +15,9 @@ export default function MenuInfo() {
   const formData = watch();
   const handleClick = () => {
     if (foodTruckId) {
-      navigate(ROUTES.MENU_LIST(foodTruckId));
+      navigate(ROUTES.MENU_LIST(foodTruckId), {
+        state: getNavigateState(formData),
+      });
     }
   };
 
