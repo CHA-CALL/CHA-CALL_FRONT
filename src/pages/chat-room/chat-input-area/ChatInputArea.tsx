@@ -1,38 +1,114 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+
 import { Icon } from '@components/icon/Icon';
 import { ROLE } from '@constant/role';
-import ChatInputBar from '@pages/chat-room/chat-input-area/components/ChatInputBar';
-import ExtensionMenuItem from '@pages/chat-room/chat-input-area/components/ExtensionMenuItem';
+import {
+  ChatInputBar,
+  ExtensionMenuItem,
+} from '@pages/chat-room/chat-input-area/components';
 import { ALL_MENU_ITEMS } from '@pages/chat-room/chat-input-area/constants/extension-menu-info';
 import { useOnClickOutside } from '@pages/chat-room/chat-input-area/hooks/use-click-outside';
 import { useExtensionMenu } from '@pages/chat-room/chat-input-area/hooks/use-extension-menu';
 import { cn } from '@utils/cn';
-import { useCallback, useRef, useState } from 'react';
 
-export default function ChatInputArea() {
+interface ChatInputAreaProps {
+  foodTruckId: number;
+  chatRoomId: string;
+  reservationId: number | null;
+  memberId: number;
+  selectedQuickMessage?: string;
+  handleSendMessage: (_message: string) => void;
+  handleOpenMessageList: () => void;
+  onMenuToggle?: (_isOpen: boolean) => void;
+}
+
+export default function ChatInputArea({
+  foodTruckId,
+  chatRoomId,
+  reservationId,
+  memberId,
+  handleSendMessage,
+  selectedQuickMessage,
+  handleOpenMessageList,
+  onMenuToggle,
+}: ChatInputAreaProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const { disabledStates, handlers } = useExtensionMenu();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const chatAreaRef = useRef<HTMLDivElement>(null);
+
   const closeMenu = useCallback(() => {
     if (isOpenMenu) {
       setIsOpenMenu(false);
     }
   }, [isOpenMenu, setIsOpenMenu]);
+
+  const { disabledStates, handlers, handleGalleryRef, handleCameraRef } =
+    useExtensionMenu(
+      foodTruckId,
+      chatRoomId,
+      reservationId,
+      memberId,
+      handleOpenMessageList,
+      closeMenu
+    );
+
   useOnClickOutside(chatAreaRef, closeMenu);
 
-  const role = 'provider';
+  const role = ROLE.PROVIDER;
   const menuLayout = role === ROLE.PROVIDER ? 'grid-cols-4' : 'grid-cols-3';
 
   const items = ALL_MENU_ITEMS.filter(item => item.roles.includes(role));
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    console.info('선택된 파일:', file);
+
+    // TODO: 파일 업로드 로직, 미리보기, 서버 전송 등
+  };
+
+  useEffect(() => {
+    handleGalleryRef(fileInputRef);
+    handleCameraRef(cameraInputRef);
+  }, [handleGalleryRef, handleCameraRef]);
+
+  useEffect(() => {
+    onMenuToggle?.(isOpenMenu);
+  }, [isOpenMenu, onMenuToggle]);
+
   return (
     <div className='w-full' ref={chatAreaRef}>
-      <ChatInputBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+      <ChatInputBar
+        selectedQuickMessage={selectedQuickMessage}
+        isOpenMenu={isOpenMenu}
+        setIsOpenMenu={setIsOpenMenu}
+        handleSendMessage={handleSendMessage}
+      />
+      {/* 파일 ref */}
+      <input
+        type='file'
+        accept='image/*'
+        ref={fileInputRef}
+        onChange={handleFileSelect}
+        className='hidden'
+      />
+      {/* 카메라 ref */}
+      <input
+        type='file'
+        accept='image/*'
+        capture='environment'
+        ref={cameraInputRef}
+        onChange={handleFileSelect}
+        className='hidden'
+      />
       {isOpenMenu && (
         <div
           className={cn(
             'mx-auto grid justify-items-center',
-            'gap-x-[2.4rem] gap-y-[1.6rem] px-[4rem] py-[2rem]',
+            'gap-x-[2.4rem] gap-y-[1.6rem] bg-white px-[4rem] py-[2rem]',
             menuLayout
           )}
         >

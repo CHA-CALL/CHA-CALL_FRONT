@@ -1,5 +1,5 @@
-import { Icon } from '@components/icon/Icon';
 import { useFormContext } from 'react-hook-form';
+import { Icon } from '@components/icon/Icon';
 
 interface SetUserImageProps {
   handleOpenBottomSheet: () => void;

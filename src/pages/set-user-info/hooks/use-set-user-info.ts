@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import {
   userSchema,
   type UserFormData,
-} from '@pages/set-user-info/utils/user-schema';
+} from '@pages/set-user-info/schema/user-info.schema';
 
 export const useSetUserInfo = () => {
   const { data: userData, isPending: isInitialLoading } = useGetUserInfo();

@@ -1,6 +1,8 @@
+import TimePicker from '@components/time-picker/TimePicker';
 import AlertModal from '@components/ui/modal-alert/AlertModal';
 import { Icon } from '@icon/Icon';
 import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
+import type { TimeType } from '@type/time-types';
 import Button from '@ui/button/Button';
 import Input from '@ui/input/Input';
 import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
@@ -11,13 +13,16 @@ const Home = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const [isAgreementBottomSheetOpen, setIsAgreementBottomSheetOpen] =
-    useState(true);
+    useState(false);
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Search states
   const [searchValue, setSearchValue] = useState('');
+
+  // Time states
+  const [activeTime, setActiveTime] = useState<TimeType | null>(null);
 
   const handleOpenBottomSheet = () => {
     setIsBottomSheetOpen(true);
@@ -37,6 +42,10 @@ const Home = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleTimeChange = (time: TimeType | null) => {
+    setActiveTime(time);
   };
 
   return (
@@ -88,6 +97,11 @@ const Home = () => {
         </div>
       </section>
       <Icon name='ic_chat_dot' className='text-primary-500' />
+      <TimePicker
+        timeTitle='운영 시작'
+        time={activeTime}
+        handleTimeChange={handleTimeChange}
+      />
       <AgreeToTermsBottomSheet
         isAgreed={!isAgreementBottomSheetOpen}
         isForOwner={false}

@@ -1,132 +1,71 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { ROUTES } from '@/router/constant/routes';
-import { Icon } from '@components/icon/Icon';
-import Navigation from '@layout/navigation/Navigation';
-import Button from '@ui/button/Button';
-import ButtonFloating from '@ui/button-floating/ButtonFloating';
-import BottomSheet from '@layout/bottom-sheet/BottomSheet';
-import MenuItem from '@pages/@owner/menu/components/MenuItem';
-import { type MyFoodTruckMenuResponse } from 'apis/data-contracts';
+import { useParams } from 'react-router-dom';
+import Button from '@components/ui/button/Button';
+import ButtonFloating from '@components/ui/button-floating/ButtonFloating';
 import {
-  SORT_TYPES,
-  type SortType,
-} from '@pages/@owner/menu/constant/menu-list-sort';
-import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
+  MenuListHeader,
+  Menus,
+  ListSortBottomSheet,
+} from '@pages/@owner/menu/components';
+import { useMenuList } from '@pages/@owner/menu/hooks';
+import useToast from '@shared/hooks/use-toast';
 
 export default function MenuList() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { foodTruckId } = useParams();
-  const [menus, setMenus] = useState<MyFoodTruckMenuResponse[]>([]);
-  const [sortOption, setSortOption] = useState<SortType>(SORT_TYPES.LATEST);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const formData = location.state?.formData;
-  useEffect(() => {
-    if (foodTruckId) {
-      //TODO: 메뉴 목록 조회 로직 구현
-      setMenus([]);
-    }
-  }, [foodTruckId]);
+  const toast = useToast();
 
-  const handleClickBack = () => {
-    const updatedFormData = {
-      ...formData,
-      menus: true,
-    };
-    navigate(ROUTES.FOOD_TRUCK_FORM, {
-      state: getNavigateState(updatedFormData),
-    });
+  const { foodTruckId } = useParams<{ foodTruckId: string }>();
+  const parsedFoodTruckId = Number(foodTruckId);
+
+  const {
+    menus,
+    fetchNextPage,
+    hasNextPage,
+    isPending,
+    isFetchingNextPage,
+
+    isSorted,
+    handleSortByLatest,
+    handleSortByOldest,
+
+    isBottomSheetOpen,
+    handleOpenBottomSheet,
+    handleCloseBottomSheet,
+
+    handleClickBack,
+    handleRegister,
+
+    handleMenuClick,
+    handleClickToggle,
+    handleSave,
+  } = useMenuList(parsedFoodTruckId);
+
+  if (!foodTruckId) {
+    toast.error('잘못된 접근입니다.');
+    return null;
+  }
+
+  const handleClickRegister = () => {
+    handleRegister(foodTruckId);
   };
-
-  const handleRegister = () => {
-    navigate(ROUTES.MENU_REGISTER);
-  };
-
-  const handleOpenBottomSheet = () => {
-    setIsBottomSheetOpen(true);
-  };
-
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleSortByType = (type: SortType) => {
-    setSortOption(type);
-    if (foodTruckId) {
-      //TODO: api 요청 로직 구현 (정렬 기준 최신순)
-    }
-
-    handleCloseBottomSheet();
-  };
-
-  const handleClickToggle = () => {
-    alert('메뉴가 등록되었습니다.');
-  };
-
-  const handleSave = () => {};
 
   return (
     <>
-      <Navigation
-        leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={handleClickBack}
-        text='메뉴 등록'
+      <MenuListHeader
+        isSorted={isSorted}
+        handleClickBack={handleClickBack}
+        handleRegister={handleClickRegister}
+        handleOpenBottomSheet={handleOpenBottomSheet}
       />
 
-      <div className='fixed-center top-[4.8rem] z-10 flex w-full flex-col bg-white p-[2rem]'>
-        <span className='text-grayscale-900 title-sb-16'>
-          푸드트럭 메뉴 등록
-        </span>
-        <span className='text-grayscale-500 caption-m-12'>
-          숨김처리 이외의 모든 저장된 음식은 전부 노출 됩니다
-        </span>
-      </div>
-
-      <div className='border-grayscale-100 fixed-center top-[12.8rem] z-10 flex w-full justify-between border-b bg-white px-[2rem] pb-[1rem]'>
-        <Button
-          variant='default'
-          buttonStyle='edit'
-          handleClickButton={handleRegister}
-        >
-          + 추가하기
-        </Button>
-        <button
-          type='button'
-          onClick={handleOpenBottomSheet}
-          className='text-grayscale-700 caption-m-12 flex items-center'
-        >
-          {sortOption}
-          <Icon name='ic_down' />
-        </button>
-      </div>
-
-      <div className='flex flex-col bg-white px-[2rem] pb-[8.5rem] pt-[11.9rem]'>
-        {menus.length > 0 ? (
-          menus.map((menu, index) => (
-            <MenuItem
-              key={menu.menuId}
-              imageUrl={menu.imageUrl || ''}
-              name={menu.name || ''}
-              description={menu.description || ''}
-              price={menu.price ? Number(menu.price) : 0}
-              handleToggle={handleClickToggle}
-              isLast={index === menus.length - 1}
-            />
-          ))
-        ) : (
-          <div className='flex flex-col items-center justify-center'>
-            <img
-              src='https://placehold.co/140'
-              alt='No Menu Items'
-              className='mb-[1.6rem] mt-[50%] h-[14rem] w-[14rem] object-cover'
-            />
-            <span className='text-grayscale-500 body-m-14'>
-              등록된 메뉴가 없습니다.
-            </span>
-          </div>
-        )}
-      </div>
+      <Menus
+        foodTruckId={parsedFoodTruckId}
+        menus={menus}
+        isPending={isPending}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        handleMenuClick={handleMenuClick}
+        handleClickToggle={handleClickToggle}
+      />
 
       <footer className='fixed-center bottom-[0] z-10 w-full bg-white px-[2rem] py-[1.7rem] shadow-[0_-4px_10px_0_rgba(0,0,0,0.04)]'>
         <Button
@@ -140,35 +79,12 @@ export default function MenuList() {
 
       <ButtonFloating className='bottom-[10rem]' />
 
-      <BottomSheet
-        isOpen={isBottomSheetOpen}
+      <ListSortBottomSheet
+        isBottomSheetOpen={isBottomSheetOpen}
         handleCloseBottomSheet={handleCloseBottomSheet}
-        sheetHeight={200}
-      >
-        <>
-          <button
-            type='button'
-            onClick={() => handleSortByType(SORT_TYPES.LATEST)}
-            className='border-grayscale-100 text-grayscale-700 title-sb-14 w-full border-b p-[2rem]'
-          >
-            {SORT_TYPES.LATEST}
-          </button>
-          <button
-            type='button'
-            onClick={() => handleSortByType(SORT_TYPES.OLDEST)}
-            className='text-grayscale-700 title-sb-14 w-full p-[2rem]'
-          >
-            {SORT_TYPES.OLDEST}
-          </button>
-          <Button
-            variant='cta'
-            buttonStyle='sub'
-            handleClickButton={handleCloseBottomSheet}
-          >
-            취소
-          </Button>
-        </>
-      </BottomSheet>
+        handleSortByLatest={handleSortByLatest}
+        handleSortByOldest={handleSortByOldest}
+      />
     </>
   );
 }

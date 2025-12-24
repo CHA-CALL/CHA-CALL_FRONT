@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import ButtonCheck from '@ui/button-check/ButtonCheck';
 import Tag from '@ui/tag/Tag';
 import { cn } from '@utils/cn';
+import { ROUTES } from '@router/constant/routes';
 
 interface ChatListItemProps {
   profileImage?: string;
@@ -25,17 +27,19 @@ export default function ChatListItem({
   isChecked,
   handleCheckChange,
 }: ChatListItemProps) {
+  const navigate = useNavigate();
   const handleClickItem = () => {
     if (isEditing) {
       handleCheckChange(!isChecked);
       return;
     }
-    // TODO : 대화창 페이지, API 추가 시 연결 예정.
-    alert('대화창으로 이동');
+    // TODO : 대화창 페이지, API 추가 시 연결 예정. chatRoomId 넣기
+    navigate(ROUTES.CHAT_ROOM('1'));
   };
 
   return (
-    <button
+    <div
+      role='button'
       className={cn(
         'flex w-full items-center gap-[1.8rem] px-[2rem] py-[1.4rem]',
         'transition-colors duration-200',
@@ -88,6 +92,6 @@ export default function ChatListItem({
           )}
         </div>
       </div>
-    </button>
+    </div>
   );
 }

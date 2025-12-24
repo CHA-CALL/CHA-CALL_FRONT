@@ -3,9 +3,11 @@ import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 import Loading from '@layout/loading/Loading';
 import Navigation from '@layout/navigation/Navigation';
 import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
-import AgreementSection from '@pages/profile-setting/components/AgreementSection';
-import ProfileImageSection from '@pages/profile-setting/components/ProfileImageSection';
-import UserDataSection from '@pages/profile-setting/components/UserDataSection';
+import {
+  AgreementSection,
+  ProfileImageSection,
+  UserDataSection,
+} from '@pages/profile-setting/components';
 import { ROUTES } from '@router/constant/routes';
 import Button from '@ui/button/Button';
 import { useState } from 'react';
@@ -62,7 +64,7 @@ export default function ProfileSetting() {
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
-        text='프로필 설정'
+        centerContent='프로필 설정'
         rightIcon={
           <Button
             variant='default'

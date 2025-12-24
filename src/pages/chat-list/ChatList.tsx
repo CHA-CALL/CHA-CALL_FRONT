@@ -27,7 +27,7 @@ export default function ChatList() {
   return (
     <>
       <Navigation
-        text='채팅'
+        centerContent='채팅'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />

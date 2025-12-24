@@ -15,6 +15,7 @@ import type { MyFoodTruckResponse } from 'apis/data-contracts';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
+import { VIEWED_STATUS } from './constants/viewed-status';
 
 export default function FoodTruckManagement() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function FoodTruckManagement() {
     navigate(-1);
   };
   const handleNavigateToAdd = () => {
-    navigate(ROUTES.FOOD_TRUCK_FORM);
+    navigate(ROUTES.FOOD_TRUCK_ONBOARDING);
   };
 
   const {
@@ -38,13 +39,15 @@ export default function FoodTruckManagement() {
   } = useGetOwnerFoodTrucks();
 
   const {
-    deleteFoodTruckIds,
-    handleClickFoodTruck,
-    handleDeleteFoodTrucks,
-    isDeleteConfirmModalOpen,
-    handleConfirmModal,
     isEditing,
     handleToggleEditing,
+    deleteFoodTruckIds,
+    isDeleteConfirmModalOpen,
+    handleConfirmModal,
+    handleClickFoodTruck,
+    handleToggleFoodTruckStatus,
+    handleCheckToDelete,
+    handleDeleteFoodTrucks,
   } = useFoodTruckEditMode();
 
   useEffect(() => {
@@ -73,7 +76,7 @@ export default function FoodTruckManagement() {
         handleCancel={handleConfirmModal}
       />
       <Navigation
-        text='나의 푸드트럭 관리'
+        centerContent='나의 푸드트럭 관리'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
         rightIcon={
@@ -99,17 +102,23 @@ export default function FoodTruckManagement() {
           {foodTrucks.length > 0 &&
             foodTrucks.map((item: MyFoodTruckResponse) => (
               <FoodTruckCard
+                key={item.foodTruckId}
                 variant='foodtruckProvider'
                 isRemovable={isEditing}
                 isRemove={deleteFoodTruckIds.includes(item.foodTruckId ?? 0)}
-                isOn={item.status === 'ON'}
-                key={item.foodTruckId}
+                isOn={item.status === VIEWED_STATUS.ON}
                 data={item}
+                handleClickCard={!isEditing ? handleClickFoodTruck : () => {}}
                 handleClickButton={() => {
-                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                  handleToggleFoodTruckStatus(
+                    item.status === VIEWED_STATUS.ON
+                      ? VIEWED_STATUS.OFF
+                      : VIEWED_STATUS.ON,
+                    item.foodTruckId
+                  );
                 }}
                 handleCardRemove={() => {
-                  handleClickFoodTruck(item.foodTruckId ?? 0);
+                  handleCheckToDelete(item.foodTruckId);
                 }}
               />
             ))}

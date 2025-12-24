@@ -26,6 +26,7 @@ export type FoodTruckProviderProps = BaseFoodTruckCardProps & {
   isRemovable: boolean;
   isRemove: boolean;
   isOn: boolean;
+  handleClickCard: (_foodTruckId: number) => void;
   handleCardRemove: () => void;
 };
 

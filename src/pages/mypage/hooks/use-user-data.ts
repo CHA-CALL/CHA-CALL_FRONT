@@ -13,18 +13,20 @@ import { ROUTES } from '@router/constant/routes';
 export const DEFAULT_PROFILE_IMAGE =
   'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg';
 
+const userInfoQuery = {
+  queryKey: USER_INFO.ALL,
+  queryFn: getUserInfo,
+  staleTime: Infinity,
+  select: (response: GetUserInfoData) => {
+    if (!response.data) {
+      throw new Error('불러온 유저 정보가 없습니다.');
+    }
+    return response.data;
+  },
+}
+
 export const useGetUserInfo = () => {
-  return useQuery<GetUserInfoData, Error, UserResponse>({
-    queryKey: USER_INFO.ALL,
-    queryFn: () => getUserInfo(),
-    staleTime: Infinity,
-    select: response => {
-      if (!response.data) {
-        throw new Error('불러온 유저 정보가 없습니다.');
-      }
-      return response.data;
-    },
-  });
+  return useQuery<GetUserInfoData, Error, UserResponse>(userInfoQuery);
 };
 
 export const useUpdateUserInfo = () => {

@@ -31,7 +31,7 @@ export default function ReservationHistory() {
 
   return (
     <>
-      <Navigation leftIcon={<Icon name='ic_back' />} text='예약내역' />
+      <Navigation leftIcon={<Icon name='ic_back' />} centerContent='예약내역' />
       <ButtonTabGroup
         tabs={
           isProvider ? OwnerReservationHistoryTabs : UserReservationHistoryTabs

@@ -1,47 +1,53 @@
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  BIZ_REG_CERT_FILE_VALIDATOR,
-  OTHER_DOCS_FILES_VALIDATOR,
-} from '@pages/@owner/food-truck-onboarding/hooks/use-file-upload';
+  ONBOARDING_SCHEMA,
+  type OnboardingFormData,
+} from '@pages/@owner/food-truck-onboarding/schemas/onboarding-validator.schema';
+import { useFoodTruckName } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 import {
-  FOOD_TRUCK_NAME_VALIDATOR,
-  useFoodTruckName,
-} from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
-import {
-  OWNER_MEDIA_ERROR_MESSAGE,
-  OWNER_MEDIA_MIN_COUNT,
-  OWNER_TEXT_ERROR_MESSAGE,
-} from '@pages/@owner/food-truck-onboarding/constants/owner';
+  createNewFoodTruck,
+  getPresignedUrls,
+  uploadImage,
+} from '@pages/@owner/food-truck-onboarding/api';
+import { OWNER_TEXT_ERROR_MESSAGE } from '@pages/@owner/food-truck-onboarding/constants/owner';
 import { isAcceptableFile, isFileSizeValid } from '@utils/image';
 import { NOT_ALLOWED_FILE_TYPE, CANNOT_UPLOAD_FILE_MB } from '@constant/image';
+import { useNavigate } from 'react-router-dom';
+import useToast from '@shared/hooks/use-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { FoodTruckCreateRequest } from 'apis/data-contracts';
+import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
+import { ROUTES } from '@router/constant/routes';
 
-const ownerSchema = z.object({
-  name: FOOD_TRUCK_NAME_VALIDATOR,
-  bizRegCert: BIZ_REG_CERT_FILE_VALIDATOR,
-  otherDocs: OTHER_DOCS_FILES_VALIDATOR,
-});
+export type OwnerFormData = OnboardingFormData;
 
-export type OwnerFormData = z.infer<typeof ownerSchema>;
+interface UploadFilesParams {
+  bizRegCert: File;
+  otherDocs: File[];
+}
+
+interface UploadFilesResult {
+  bizRegCertUrl: string;
+  otherDocsUrls: string[];
+}
 
 export const useFoodTruckInput = () => {
-  const {
-    isNameVerified,
-    isCheckingDuplicate,
-    handleCheckNameDuplicate,
-    resetVerification,
-  } = useFoodTruckName();
+  const navigate = useNavigate();
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const { isNameVerified, handleCheckName, resetVerification } =
+    useFoodTruckName();
 
   const {
     handleSubmit,
     setValue,
-    reset,
     formState: { errors, isValid },
     watch,
     setError,
-  } = useForm<OwnerFormData>({
-    resolver: zodResolver(ownerSchema),
+  } = useForm<OnboardingFormData>({
+    resolver: zodResolver(ONBOARDING_SCHEMA),
     defaultValues: {
       name: '',
       bizRegCert: undefined,
@@ -52,20 +58,80 @@ export const useFoodTruckInput = () => {
 
   const formData = watch();
 
+  const uploadFilesMutation = useMutation<
+    UploadFilesResult,
+    Error,
+    UploadFilesParams
+  >({
+    mutationFn: async ({ bizRegCert, otherDocs }) => {
+      const allFiles = [bizRegCert, ...otherDocs];
+      const fileExtensions = allFiles.map(
+        file => file.name.split('.').pop() || ''
+      );
+
+      const imageInfos = await getPresignedUrls(fileExtensions);
+      if (imageInfos.length !== allFiles.length) {
+        throw new Error('Presigned URL 발급 실패');
+      }
+
+      await Promise.all(
+        imageInfos.map((info, index) => {
+          if (!info.presignedUrl) {
+            throw new Error('Presigned URL 누락');
+          }
+          return uploadImage(info.presignedUrl, allFiles[index]);
+        })
+      );
+
+      const bizRegCertUrl = imageInfos[0].fileUrl || '';
+      const otherDocsUrls = imageInfos.slice(1).map(info => info.fileUrl || '');
+
+      return { bizRegCertUrl, otherDocsUrls };
+    },
+    onError: error => {
+      console.error('파일 업로드 실패:', error);
+      toast.error('파일 업로드에 실패했습니다.');
+    },
+  });
+
+  const createFoodTruckMutation = useMutation<
+    void,
+    Error,
+    FoodTruckCreateRequest
+  >({
+    mutationFn: async params => {
+      await createNewFoodTruck(params);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: FOOD_TRUCKS_QUERY_KEY.ALL,
+      });
+      toast.success('푸드트럭이 등록되었습니다.');
+      navigate(ROUTES.FOOD_TRUCK_MANAGEMENT, { replace: true });
+    },
+    onError: error => {
+      console.error('등록 실패:', error);
+      toast.error('푸드트럭 등록에 실패했습니다.');
+    },
+  });
+
   const updateName = (name: string) => {
-    setValue('name', name, { shouldValidate: true });
+    const trimmedName = name.replace(/\s{2,}/g, ' ').trimStart();
+    setValue('name', trimmedName, { shouldValidate: true });
     resetVerification();
   };
 
-  const updateBizRegCertFile = (bizRegCert: File | undefined) => {
-    if (!bizRegCert) {
-      setError('bizRegCert', {
-        message: OWNER_MEDIA_ERROR_MESSAGE.MAX_COUNT(
-          OWNER_MEDIA_MIN_COUNT.BIZ_REG_CERT
-        ),
-      });
-      return;
+  const handleCheckNameDuplicate = async () => {
+    const name = formData.name;
+    const response = await handleCheckName(name);
+
+    if (response?.duplicated) {
+      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
     }
+  };
+
+  const updateBizRegCertFile = (bizRegCert: File) => {
+    if (!bizRegCert) return;
     if (!isAcceptableFile(bizRegCert)) {
       setError('bizRegCert', { message: NOT_ALLOWED_FILE_TYPE });
       return;
@@ -74,18 +140,12 @@ export const useFoodTruckInput = () => {
       setError('bizRegCert', { message: CANNOT_UPLOAD_FILE_MB });
       return;
     }
+
     setValue('bizRegCert', bizRegCert, { shouldValidate: true });
   };
 
   const updateOtherDocsFiles = (otherDocs: File[] | undefined) => {
-    if (!otherDocs) {
-      setError('otherDocs', {
-        message: OWNER_MEDIA_ERROR_MESSAGE.MIN_COUNT(
-          OWNER_MEDIA_MIN_COUNT.OTHER_DOCS
-        ),
-      });
-      return;
-    }
+    if (!otherDocs) return;
     for (const doc of otherDocs) {
       if (!isAcceptableFile(doc)) {
         setError('otherDocs', { message: NOT_ALLOWED_FILE_TYPE });
@@ -96,59 +156,36 @@ export const useFoodTruckInput = () => {
         return;
       }
     }
+
     setValue('otherDocs', otherDocs, { shouldValidate: true });
   };
 
-  const parsePresignedUrl = (rawPresignedUrl: string) => {
-    return rawPresignedUrl.split('?')[0] || '';
-  };
-
   const onSubmit = async (formData: OwnerFormData) => {
-    if (!isCheckingDuplicate) {
+    if (!isNameVerified) {
       setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.NOT_VERIFIED });
       return;
     }
-    if (!isNameVerified) {
-      setError('name', { message: OWNER_TEXT_ERROR_MESSAGE.DUPLICATE });
+
+    const { bizRegCert, otherDocs } = formData;
+    if (!bizRegCert || !otherDocs || otherDocs.length === 0) {
+      toast.error('모든 필수 항목을 업로드해주세요.');
       return;
     }
 
     try {
-      // 1. 사업자 등록증 파일 presigned URL 요청
-      let bizRegCertUrl: string = '';
-      if (formData.bizRegCert) {
-        //TODO: 사업자 등록증 파일 presigned URL 요청
-        bizRegCertUrl = '';
-      }
+      const { bizRegCertUrl, otherDocsUrls } =
+        await uploadFilesMutation.mutateAsync({
+          bizRegCert,
+          otherDocs,
+        });
 
-      // 2. 영수증 파일 presigned URL 요청
-      let otherDocsUrls: string[] = [];
-      if (formData.otherDocs) {
-        //TODO: 기타 서류 파일 presigned URL 요청
-        otherDocsUrls = [''];
-      }
-
-      // 3. Presigned URL로 파일 업로드
-      if (bizRegCertUrl.length > 0 && formData.bizRegCert) {
-        //TODO: 사업자 등록증 파일 업로드
-      }
-
-      if (otherDocsUrls.length > 0 && formData.otherDocs) {
-        //TODO: 기타 서류 파일 업로드
-      }
-
-      // 4. 오너 등록 제출
-      const ownerRequest = {
+      await createFoodTruckMutation.mutateAsync({
         name: formData.name,
-        bizRegCertUrl: parsePresignedUrl(bizRegCertUrl),
-        otherDocsUrls: otherDocsUrls.map(url => parsePresignedUrl(url)),
-      };
-
-      if (ownerRequest) {
-        //TODO: 오너 등록 제출
-      }
+        businessRegistrationUrl: bizRegCertUrl,
+        otherDocumentUrls: otherDocsUrls,
+      });
     } catch (error) {
-      console.error('오너 등록 실패:', error);
+      console.error('등록 실패:', error);
     }
   };
 
@@ -167,12 +204,12 @@ export const useFoodTruckInput = () => {
   return {
     formData: compatibleFormData,
     errors: compatibleErrors,
-    reset,
     updateName,
     updateBizRegCertFile,
     updateOtherDocsFiles,
     handleCheckNameDuplicate,
     handleSubmit: handleSubmit(onSubmit),
     isFormValid: isValid && isNameVerified,
+    isNameVerified,
   };
 };

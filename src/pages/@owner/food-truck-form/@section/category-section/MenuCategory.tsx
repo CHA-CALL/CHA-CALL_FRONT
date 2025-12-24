@@ -1,4 +1,4 @@
-import FormLayout from '@pages/@owner/food-truck-form/components/FormLayout';
+import FormLayout from '@components/layout/form-layout/FormLayout';
 import Button from '@ui/button/Button';
 import { useCategories } from '@pages/@owner/food-truck-form/hooks/use-categories';
 import { FOOD_CATEGORIES } from '@constant/food-categories';
@@ -17,7 +17,7 @@ export default function MenuCategory() {
           {Object.values(FOOD_CATEGORIES).map(foodCategory => (
             <Button
               buttonStyle={
-                menuCategories.some(
+                menuCategories?.some(
                   (category: string) => category === foodCategory
                 )
                   ? 'selected2'
