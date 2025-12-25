@@ -1,8 +1,8 @@
-import { ROUTES } from '@router/constant/routes';
 import { useNavigate } from 'react-router-dom';
+import { Controller, useFormContext } from 'react-hook-form';
+import { ROUTES } from '@router/constant/routes';
 import ButtonCheck from '@ui/button-check/ButtonCheck';
 import { Icon } from '@icon/Icon';
-import { Controller, useFormContext } from 'react-hook-form';
 
 export default function SetAgreement() {
   const navigate = useNavigate();

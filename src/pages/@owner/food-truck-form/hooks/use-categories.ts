@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import { PAYMENT_METHOD } from '@constant/payment-method';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { FOOD_CATEGORIES } from '@constant/food-categories';
 
 export const useCategories = () => {

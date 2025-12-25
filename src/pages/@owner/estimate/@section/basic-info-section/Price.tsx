@@ -5,7 +5,7 @@ import { formatPrice } from '@utils/price-formatter';
 
 interface PriceProps {
   price: number;
-  updatePrice: (price: string) => void;
+  updatePrice: (_price: string) => void;
   error?: string;
 }
 export default function Price({ price, updatePrice, error }: PriceProps) {

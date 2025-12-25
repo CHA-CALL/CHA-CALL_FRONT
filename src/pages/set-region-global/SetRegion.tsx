@@ -14,7 +14,7 @@ export default function SetRegion() {
   return (
     <>
       <Navigation
-        text='위치설정'
+        centerContent='위치설정'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />

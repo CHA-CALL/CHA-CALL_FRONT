@@ -9,13 +9,29 @@ import type {
 
 import useToast from '@shared/hooks/use-toast';
 import { ROUTES } from '@router/constant/routes';
-import { RESERVATION_DETAIL_KEY } from '@shared/querykey/reservation-detail';
+import { USER_INFO } from '@shared/querykey/user-info';
 import { ROLE } from '@constant/role';
 import {
   getMemberReservationDetail,
   getOwnerReservationDetail,
 } from '@pages/reservation-detail/api';
 import type { ReservationDetailTopContentProps } from '@pages/reservation-detail/components/ReservationDetailTopContent';
+
+const reservationDetailQuery = (
+  reservationId: string,
+  isProvider: boolean
+) => ({
+  queryKey: [...USER_INFO.RESERVATION(Number(reservationId)), isProvider],
+  queryFn: () => {
+    if (!reservationId) {
+      throw new Error('요청이 잘못되었습니다.');
+    }
+    return isProvider
+      ? getOwnerReservationDetail(reservationId)
+      : getMemberReservationDetail(reservationId);
+  },
+  enabled: Boolean(reservationId),
+});
 
 export interface ReservationPartialInfo {
   label: string;
@@ -26,6 +42,7 @@ export const useReservationDetail = () => {
   const navigate = useNavigate();
   const { reservationId } = useParams<{ reservationId: string }>();
   const toast = useToast();
+
   // TODO : useRole 동작 시, 주석 해제. (현재 logout으로 적용됨.)
   // const { role } = useRole();
   // const isProvider = role === ROLE.PROVIDER;
@@ -37,25 +54,15 @@ export const useReservationDetail = () => {
     error,
     isError,
   } = useQuery<
-    | (MemberReservationDetailResponse | OwnerReservationDetailResponse)
-    | undefined
-  >({
-    queryKey: RESERVATION_DETAIL_KEY.DETAIL(isProvider, reservationId),
-    queryFn: () => {
-      if (!reservationId) {
-        throw new Error('요청이 잘못되었습니다.');
-      }
-      return isProvider
-        ? getOwnerReservationDetail(reservationId)
-        : getMemberReservationDetail(reservationId);
-    },
-    enabled: Boolean(reservationId),
-  });
+    MemberReservationDetailResponse | OwnerReservationDetailResponse | undefined
+  >(reservationDetailQuery(reservationId!, isProvider));
 
   let topContents: ReservationDetailTopContentProps;
 
   if (isProvider) {
-    const ownerData = reservationDetailData as OwnerReservationDetailResponse;
+    const ownerData = reservationDetailData as
+      | OwnerReservationDetailResponse
+      | undefined;
     topContents = {
       role: ROLE.PROVIDER,
       foodTruckName: ownerData?.foodTruckName,
@@ -63,7 +70,9 @@ export const useReservationDetail = () => {
       profileImage: ownerData?.profileImage,
     };
   } else {
-    const memberData = reservationDetailData as MemberReservationDetailResponse;
+    const memberData = reservationDetailData as
+      | MemberReservationDetailResponse
+      | undefined;
     topContents = {
       role: ROLE.CLIENT,
       photoUrl: memberData?.photoUrl,
@@ -73,7 +82,7 @@ export const useReservationDetail = () => {
     };
   }
 
-  const reservationInfo = [
+  const reservationInfo: ReservationPartialInfo[] = [
     {
       label: '장소',
       data: reservationDetailData?.address,
@@ -84,7 +93,7 @@ export const useReservationDetail = () => {
     },
   ];
 
-  const operationInfo = [
+  const operationInfo: ReservationPartialInfo[] = [
     {
       label: '음식',
       data: reservationDetailData?.menu,
@@ -93,12 +102,12 @@ export const useReservationDetail = () => {
       label: '결제금',
       data:
         reservationDetailData?.deposit !== undefined
-          ? `${reservationDetailData?.deposit.toLocaleString()} 원`
+          ? `${reservationDetailData.deposit.toLocaleString()} 원`
           : undefined,
     },
   ];
 
-  const etcInfo = [
+  const etcInfo: ReservationPartialInfo[] = [
     {
       label: '전기 사용 유무',
       data: reservationDetailData?.electricityInfo,
@@ -114,8 +123,9 @@ export const useReservationDetail = () => {
       toast.error('현재 견적서가 없어 다운로드할 수 없습니다.');
       return;
     }
+
     window.open(
-      reservationDetailData?.pdfUrl,
+      reservationDetailData.pdfUrl,
       '예약 견적서 다운로드',
       'noopener,noreferrer'
     );

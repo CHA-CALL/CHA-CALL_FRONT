@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import useToast from '@shared/hooks/use-toast';
+
+import Navigation from '@layout/navigation/Navigation';
+import { ROUTES } from '@router/constant/routes';
 
 import { Icon } from '@components/icon/Icon';
 import Input from '@ui/input/Input';
-import Navigation from '@layout/navigation/Navigation';
+import ButtonFloating from '@ui/button-floating/ButtonFloating';
+import Loading from '@layout/loading/Loading';
+import MenuItem from '@components/menu-item/MenuItem';
+import { SearchMenuEmptyView } from '@pages/food-truck-detail/components';
 
 import {
   useFoodTruckMenus,
   useSearchFoodTruckMenus,
 } from '@pages/food-truck-detail/hooks/use-food-truck-menus';
-import ButtonFloating from '@ui/button-floating/ButtonFloating';
-import Loading from '@layout/loading/Loading';
-import MenuItem from '@shared/components/menu-item/MenuItem';
-import SearchMenuEmptyView from '@pages/food-truck-detail/components/SearchMenuEmptyView';
-import useToast from '@shared/hooks/use-toast';
-import { ROUTES } from '@router/constant/routes';
 
 interface FoodTruckMenusProps {
   handleCloseSearchMode: () => void;
@@ -74,9 +75,9 @@ export default function FoodTruckMenuSearch({
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleCloseSearchMode}
-        text='메뉴 검색'
+        centerContent='메뉴 검색'
       />
-      <div className='fixed-center bg-white px-[2rem] py-[1.6rem]'>
+      <div className='bg-white px-[2rem] py-[1.6rem] fixed-center'>
         <Input
           type='search'
           value={inputText}

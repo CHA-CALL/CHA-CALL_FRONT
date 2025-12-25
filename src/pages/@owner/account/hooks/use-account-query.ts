@@ -7,28 +7,31 @@ import {
 } from '@pages/@owner/account/api';
 import type {
   BankAccountResponse,
-  GetBankAccountData,
   RegisterBankAccountRequest,
   UpdateBankAccountRequest,
 } from 'apis/data-contracts';
-import { ACCOUNT_INFO } from '@shared/querykey/owner/account';
+import { USER_INFO } from '@shared/querykey/user-info';
 
 interface UsePatchAccountDataOptions {
   onSuccess?: () => void;
   onError?: (_error: Error) => void;
 }
 
-export const useFetchAccountData = () => {
-  return useQuery<GetBankAccountData, Error, BankAccountResponse | null>({
-    queryKey: ACCOUNT_INFO.ALL,
-    queryFn: () => getBankAccountInfo(),
-    select: response => {
+export const accountQueries = {
+  detail: () => ({
+    queryKey: USER_INFO.ACCOUNTS(),
+    queryFn: getBankAccountInfo,
+    select: (response: { data?: BankAccountResponse | null }) => {
       if (!response.data) {
         return null;
       }
       return response.data;
     },
-  });
+  }),
+};
+
+export const useFetchAccountData = () => {
+  return useQuery({ ...accountQueries.detail() });
 };
 
 export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
@@ -38,7 +41,7 @@ export const usePostNewAccount = (options?: UsePatchAccountDataOptions) => {
     mutationFn: ({ data }: { data: RegisterBankAccountRequest }) =>
       postBankAccountInfo(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ACCOUNTS() });
       options?.onSuccess?.();
     },
     onError: error => {
@@ -59,7 +62,7 @@ export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
       data: UpdateBankAccountRequest;
     }) => updateBankAccountInfo(accountId, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ACCOUNTS() });
       options?.onSuccess?.();
     },
     onError: error => {
@@ -68,7 +71,6 @@ export const useUpdateAccount = (options?: UsePatchAccountDataOptions) => {
   });
 };
 
-/** 현재 삭제 버튼 없음. */
 export const useDeleteAccount = (options?: UsePatchAccountDataOptions) => {
   const queryClient = useQueryClient();
 
@@ -76,7 +78,7 @@ export const useDeleteAccount = (options?: UsePatchAccountDataOptions) => {
     mutationFn: ({ accountId }: { accountId: number }) =>
       deleteBankAccountInfo(accountId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ACCOUNT_INFO.ALL });
+      queryClient.invalidateQueries({ queryKey: USER_INFO.ACCOUNTS() });
       options?.onSuccess?.();
     },
     onError: error => {

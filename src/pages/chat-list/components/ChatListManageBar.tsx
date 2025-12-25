@@ -1,10 +1,7 @@
 import { FILTERS } from '@pages/chat-list/constant/chat-list-constant';
-import { Icon } from '@shared/components/icon/Icon';
 import ButtonIcon from '@ui/button-icon/ButtonIcon';
 import Button from '@ui/button/Button';
 import { cn } from '@utils/cn';
-import Navigation from '@layout/navigation/Navigation';
-import { useNavigate } from 'react-router-dom';
 
 interface ChatListManageBarProps {
   activeFilter: string;
@@ -32,26 +29,18 @@ export default function ChatListManageBar({
   handleSelectOff,
   handleDeleteChat,
 }: ChatListManageBarProps) {
-  const navigate = useNavigate();
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
   };
-  const handleClickBack = () => {
-    navigate(-1);
-  };
+
   const handleClickTrash = () => {
     if (selectChatList.size !== 0) handleDeleteChat();
   };
 
   return (
     <>
-      <Navigation
-        text='채팅'
-        leftIcon={<Icon name='ic_back' />}
-        handleLeftClick={handleClickBack}
-      />
-      <div className='fixed-center border-grayscale-100 top-[4.8rem] flex justify-between border-b-[0.1rem] bg-white px-[2rem] pt-[2.8rem]'>
-        <div className='text-grayscale-900 title-sb-14 flex w-full gap-[1rem] pt-[0.2rem]'>
+      <div className='top-[4.8rem] flex justify-between border-b-[0.1rem] border-grayscale-100 bg-white px-[2rem] pt-[2.8rem] fixed-center'>
+        <div className='flex w-full gap-[1rem] pt-[0.2rem] text-grayscale-900 title-sb-14'>
           {FILTERS.map(filter => {
             return (
               <button

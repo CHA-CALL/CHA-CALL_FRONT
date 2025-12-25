@@ -7,9 +7,11 @@ import { Icon } from '@components/icon/Icon';
 import Loading from '@layout/loading/Loading';
 import Button from '@ui/button/Button';
 import Tooltip from '@ui/tooltip/Tooltip';
-import ReservationDetailRow from '@pages/reservation-detail/components/ReservationDetailRow';
 import { useReservationDetail } from '@pages/reservation-detail/hooks/use-reservation-detail';
-import ReservationDetailTopContent from '@pages/reservation-detail/components/ReservationDetailTopContent';
+import {
+  ReservationDetailRow,
+  ReservationDetailTopContent,
+} from '@pages/reservation-detail/components';
 
 export default function ReservationDetail() {
   // TODO : 추후 툴팁 관련 커스텀 훅 만들어 관리. 언제 보여줄지 애매해서 논의 필요.
@@ -38,7 +40,7 @@ export default function ReservationDetail() {
   return (
     <>
       <Navigation
-        text='상세예약'
+        centerContent='상세예약'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
         rightIcon={
@@ -51,7 +53,7 @@ export default function ReservationDetail() {
             >
               <Icon
                 name='ic_download'
-                className='text-grayscale-500 h-[1.2rem] w-[1.1rem]'
+                className='h-[1.2rem] w-[1.1rem] text-grayscale-500'
               />
             </Button>
             <Tooltip
@@ -71,9 +73,9 @@ export default function ReservationDetail() {
         {topContents && <ReservationDetailTopContent {...topContents} />}
         <div className='p-[2rem]'>
           <ReservationDetailRow title='예약 내역' infoList={reservationInfo} />
-          <div className='border-grayscale-100 my-[2.4rem] border' />
+          <div className='my-[2.4rem] border border-grayscale-100' />
           <ReservationDetailRow title='운영 내용' infoList={operationInfo} />
-          <div className='border-grayscale-100 my-[2.4rem] border' />
+          <div className='my-[2.4rem] border border-grayscale-100' />
           <ReservationDetailRow title='기타 내용' infoList={etcInfo} />
         </div>
       </div>

@@ -1,46 +1,90 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { ROUTES } from '@router/constant/routes';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import Button from '@components/ui/button/Button';
-import { useEstimateForm } from '@pages/@owner/estimate/hooks/use-estimate';
+import ActiveTime from '@components/active-time/ActiveTime';
+import ActiveDate from '@components/active-date/ActiveDate';
+
 import {
-  Menu,
+  useEstimateTime,
+  useEstimateDate,
+  useEstimateForm,
+} from '@pages/@owner/estimate/hooks';
+import {
+  Food,
   Price,
   RegionSection,
-  ActiveDate,
-  ActiveTime,
   NeedElectricity,
   Etc,
 } from '@pages/@owner/estimate/@section';
+import {
+  ESTIMATE_ERROR_MESSAGE,
+  ESTIMATE_MAX_LENGTH,
+} from '@pages/@owner/estimate/constants/estimate';
+import useToast from '@hooks/use-toast';
 
 export default function Estimate() {
   const navigate = useNavigate();
+  const { chatRoomId } = useParams();
+  const { state } = useLocation();
+  const toast = useToast();
+
   const {
-    handleSubmit,
+    methods,
+    handleCreate,
+    handleUpdate,
     formData,
     errors,
     isValid,
     updateLocation,
     updateDetailLocation,
-    updateAvailableDateById,
-    removeAvailableDateById,
-    updateStartActiveTime,
-    updateEndActiveTime,
-    updateMenu,
+    updateFood,
     updatePrice,
     updateNeedElectricity,
     updateEtc,
-    handleAddAvailableDate,
-  } = useEstimateForm();
+  } = useEstimateForm(
+    chatRoomId,
+    state?.foodTruckId,
+    state?.reservationId,
+    state?.reservationUserId
+  );
+
+  const { formActiveTime, activeTimeError, handleActiveTimeSetValue } =
+    useEstimateTime(methods);
+
+  const {
+    formAvailableDates,
+    availableDatesError,
+    handleActiveDateSetValue,
+    handleActiveDateError,
+  } = useEstimateDate(methods);
+
+  if (!chatRoomId || !state) {
+    toast.error('잘못된 접근입니다.');
+    navigate(ROUTES.CHAT_LIST);
+    return null;
+  }
+  if (
+    state.foodTruckId === undefined ||
+    state.reservationId === undefined ||
+    state.reservationUserId === undefined
+  ) {
+    navigate(ROUTES.CHAT_ROOM(chatRoomId));
+    return null;
+  }
 
   const handleNavigateBack = () => {
-    navigate(-1);
+    navigate(ROUTES.CHAT_ROOM(chatRoomId));
   };
+
   return (
     <>
       <Navigation
-        text='예약 견적서 작성'
+        centerContent={
+          state.reservationId ? '예약 견적서 수정' : '예약 견적서 작성'
+        }
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleNavigateBack}
       />
@@ -50,25 +94,26 @@ export default function Estimate() {
           detailLocation={formData.detailLocation ?? ''}
           updateLocation={updateLocation}
           updateDetailLocation={updateDetailLocation}
-          error={errors.location || errors.detailLocation}
+          locationError={errors.location}
+          detailLocationError={errors.detailLocation}
         />
         <ActiveDate
-          availableDates={formData.availableDates}
-          updateAvailableDateById={updateAvailableDateById}
-          removeAvailableDateById={removeAvailableDateById}
-          handleAddAvailableDate={handleAddAvailableDate}
-          error={errors.availableDates}
+          formAvailableDates={formAvailableDates}
+          availableDatesError={availableDatesError}
+          errorMessages={ESTIMATE_ERROR_MESSAGE.availableDates}
+          maxLength={ESTIMATE_MAX_LENGTH.availableDates.max}
+          handleActiveDateSetValue={handleActiveDateSetValue}
+          handleActiveDateError={handleActiveDateError}
         />
         <ActiveTime
-          activeTime={formData.activeTime}
-          updateStartActiveTime={updateStartActiveTime}
-          updateEndActiveTime={updateEndActiveTime}
-          error={errors.activeTime}
+          formActiveTime={formActiveTime}
+          activeTimeError={activeTimeError}
+          handleActiveTimeSetValue={handleActiveTimeSetValue}
         />
-        <Menu
-          menu={formData.menu}
-          updateMenu={updateMenu}
-          error={errors.menu}
+        <Food
+          food={formData.food}
+          updateFood={updateFood}
+          error={errors.food}
         />
         <Price
           price={formData.price}
@@ -86,10 +131,10 @@ export default function Estimate() {
         <Button
           variant='cta'
           buttonStyle={isValid ? 'active' : 'disabled'}
-          handleClickButton={handleSubmit}
+          handleClickButton={state.reservationId ? handleUpdate : handleCreate}
           disabled={!isValid}
         >
-          저장하기
+          {state.reservationId ? '견적서 수정하기' : '대화창에 보내기'}
         </Button>
       </footer>
     </>

@@ -54,12 +54,15 @@ export default function Overlay({
 
   return (
     <div
+      data-overlay='true'
       onClick={handleOverlayClick}
       className={cn(
         'fixed left-1/2 top-[0] z-50 flex h-dvh w-full max-w-[60rem] -translate-x-1/2 bg-black/50',
         getPositionClasses(),
         'transition-opacity duration-300 ease-in-out',
-        isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
+        isOpen
+          ? 'pointer-events-auto opacity-100'
+          : 'pointer-events-none opacity-0',
         className
       )}
       {...props}

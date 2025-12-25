@@ -5,7 +5,7 @@ import { ESTIMATE_MAX_LENGTH } from '@pages/@owner/estimate/constants/estimate';
 
 interface EtcProps {
   etc: string;
-  updateEtc: (etc: string) => void;
+  updateEtc: (_etc: string) => void;
   error?: string;
 }
 

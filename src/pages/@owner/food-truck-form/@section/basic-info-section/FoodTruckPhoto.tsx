@@ -3,21 +3,24 @@ import PageSwitchButton from '@pages/@owner/food-truck-form/components/PageSwitc
 import { useBasicInfo } from '@pages/@owner/food-truck-form/hooks/use-basic-info';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { ROUTES } from '@router/constant/routes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/utils/use-food-truck-form';
 import { getNavigateState } from '@pages/@owner/food-truck-form/utils/navigate-state';
+import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
 export default function FoodTruckPhoto() {
   const { photoUrls } = useBasicInfo();
   const { watch } = useFormContext<FoodTruckFormData>();
   const navigate = useNavigate();
+  const { foodTruckId } = useParams();
   const formData = watch();
 
   const handleClick = () => {
-    navigate(ROUTES.UPLOAD_FOOD_TRUCK_IMAGES, {
-      state: getNavigateState(formData),
-    });
+    if (foodTruckId) {
+      navigate(ROUTES.UPLOAD_FOOD_TRUCK_IMAGES(foodTruckId), {
+        state: getNavigateState(formData),
+      });
+    }
   };
 
   return (

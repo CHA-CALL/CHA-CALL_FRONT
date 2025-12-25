@@ -17,7 +17,7 @@ export default function MenuCategory() {
           {Object.values(FOOD_CATEGORIES).map(foodCategory => (
             <Button
               buttonStyle={
-                menuCategories.some(
+                menuCategories?.some(
                   (category: string) => category === foodCategory
                 )
                   ? 'selected2'

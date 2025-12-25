@@ -30,12 +30,12 @@ export default function SaveFoodTruckList() {
   return (
     <>
       <Navigation
-        text='저장한 푸드트럭'
+        centerContent='저장한 푸드트럭'
         leftIcon={<Icon name='ic_back' />}
         handleLeftClick={handleClickBack}
       />
       <div className='flex flex-col gap-[1rem] p-[2rem]'>
-        <p className='caption-m-12 text-grayscale-500'>
+        <p className='text-grayscale-500 caption-m-12'>
           총 {data ? data.totalSize : '0'}개
         </p>
         {isPending || !data ? (

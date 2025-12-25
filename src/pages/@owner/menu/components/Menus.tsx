@@ -1,0 +1,63 @@
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import Loading from '@components/layout/loading/Loading';
+import MenuItem from '@components/menu-item/MenuItem';
+import MenuListEmptyView from '@pages/@owner/menu/components/MenuListEmptyView';
+import type { MyFoodTruckMenuResponse } from 'apis/data-contracts';
+
+interface MenusProps {
+  foodTruckId: number;
+  menus: MyFoodTruckMenuResponse[];
+  isPending: boolean;
+  isFetchingNextPage: boolean;
+  hasNextPage: boolean | undefined;
+  fetchNextPage: () => void;
+  handleMenuClick: (_foodTruckId?: string, _menuId?: string) => () => void;
+  handleClickToggle: (_menuId?: number) => () => void;
+}
+
+export default function Menus({
+  foodTruckId,
+  menus,
+  isPending,
+  isFetchingNextPage,
+  hasNextPage,
+  fetchNextPage,
+  handleMenuClick,
+  handleClickToggle,
+}: MenusProps) {
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  if (isPending) {
+    return <Loading />;
+  }
+
+  if (!menus || menus.length === 0) {
+    return <MenuListEmptyView />;
+  }
+
+  return (
+    <div className='flex flex-col bg-white px-[2rem] pb-[15.5rem] pt-[11.9rem]'>
+      {menus.map((menu, index) => (
+        <MenuItem
+          key={menu.menuId ?? `menu-${index}`}
+          hasToggleSwitch={true}
+          menu={menu}
+          isToggled={menu.status === 'ON'}
+          handleMenuClick={handleMenuClick(foodTruckId.toString(), menu.menuId?.toString())}
+          handleToggle={handleClickToggle(menu.menuId)}
+          isLast={index === menus.length - 1}
+        />
+      ))}
+
+      {isFetchingNextPage && <Loading />}
+      {hasNextPage && <div ref={ref} className='h-[10rem] w-full' />}
+    </div>
+  );
+}

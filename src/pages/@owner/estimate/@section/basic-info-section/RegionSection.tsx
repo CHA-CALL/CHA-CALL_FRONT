@@ -8,7 +8,8 @@ interface RegionSectionProps {
   detailLocation: string;
   updateLocation: (_location: string) => void;
   updateDetailLocation: (_detailLocation: string) => void;
-  error?: string;
+  locationError?: string;
+  detailLocationError?: string;
 }
 
 export default function RegionSection({
@@ -16,7 +17,8 @@ export default function RegionSection({
   detailLocation,
   updateLocation,
   updateDetailLocation,
-  error,
+  locationError,
+  detailLocationError,
 }: RegionSectionProps) {
   return (
     <FormLayout
@@ -30,11 +32,11 @@ export default function RegionSection({
         </span>
         <Input
           placeholder='Ex) 서울특별시 광진구 화양동'
-          error={!!error}
+          error={!!locationError}
           value={location}
           onChange={e => updateLocation(e.target.value)}
           maxLength={ESTIMATE_MAX_LENGTH.location.max}
-          className='flex-shrink-1'
+          className='flex-shrink-1 min-w-0'
         />
       </div>
       <div className='flex items-center gap-[1.2rem]'>
@@ -43,12 +45,14 @@ export default function RegionSection({
         </span>
         <Input
           placeholder='Ex) 차콜로 123'
+          error={!!detailLocationError}
           value={detailLocation}
           onChange={e => updateDetailLocation(e.target.value)}
-          className='flex-shrink-1'
+          className='flex-shrink-1 min-w-0'
         />
       </div>
-      {error && <ErrorText text={error} />}
+      {locationError && <ErrorText text={locationError} />}
+      {detailLocationError && <ErrorText text={detailLocationError} />}
     </FormLayout>
   );
 }
