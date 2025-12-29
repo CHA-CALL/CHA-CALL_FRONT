@@ -9,7 +9,7 @@ import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
 import Button from '@ui/button/Button';
 import Input from '@ui/input/Input';
 import { cn } from '@utils/cn';
-import AccountModals from './@account-modals/AccountModals';
+import AccountModals from './@modal/AccountModals';
 
 export default function Account() {
   const {
