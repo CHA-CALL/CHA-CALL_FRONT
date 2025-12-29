@@ -15,7 +15,7 @@ const meta: Meta<typeof AlertModal> = {
   args: {
     isOpen: true,
     handleClose: () =>
-      console.log('AlertModal: handleClose (확인/닫기 클릭됨)'),
+      console.info('AlertModal: handleClose (확인/닫기 클릭됨)'),
     confirmLabel: '확인',
   },
   argTypes: {

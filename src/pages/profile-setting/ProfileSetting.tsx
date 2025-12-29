@@ -44,7 +44,7 @@ export default function ProfileSetting() {
   const handleDeleteAccount = () => {
     // TODO: 회원탈퇴 api 및 토스트 메시지 추가
     alert('회원탈퇴 되셨습니다.');
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   const handleEditProfile = () => {

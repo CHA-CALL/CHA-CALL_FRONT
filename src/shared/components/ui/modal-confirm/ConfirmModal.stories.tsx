@@ -15,11 +15,11 @@ const meta: Meta<typeof ConfirmModal> = {
   },
   args: {
     isOpen: true,
-    handleClose: () => console.log('ConfirmModal: handleClose (배경 클릭 등)'),
+    handleClose: () => console.info('ConfirmModal: handleClose (배경 클릭 등)'),
     handleClickRight: () =>
-      console.log('ConfirmModal: handleClickRight (확인 클릭)'),
+      console.info('ConfirmModal: handleClickRight (확인 클릭)'),
     handleClickLeft: () =>
-      console.log('ConfirmModal: handleClickLeft (취소 클릭)'),
+      console.info('ConfirmModal: handleClickLeft (취소 클릭)'),
   },
   argTypes: {
     description: { control: 'text' },

@@ -45,7 +45,7 @@ export const CommonLayout: Story = {
     title: '프로젝트 삭제',
     description:
       '이 프로젝트를 정말 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.',
-    handleClose: () => console.log('Close requested'),
+    handleClose: () => console.info('Close requested'),
     footer: (
       <>
         <button className='rounded-md bg-gray-200 px-4 py-2 text-sm text-gray-700'>
@@ -86,7 +86,7 @@ export const CompositionExample: Story = {
         </span>
         <button
           className='rounded-md bg-black px-4 py-2 text-white hover:bg-gray-800'
-          onClick={() => console.log('커스텀 버튼 클릭')}
+          onClick={() => console.info('커스텀 버튼 클릭')}
         >
           확인
         </button>
@@ -95,6 +95,6 @@ export const CompositionExample: Story = {
   ),
   args: {
     isOpen: true,
-    handleClose: () => console.log('Modal: handleClose (Overlay 클릭)'),
+    handleClose: () => console.info('Modal: handleClose (Overlay 클릭)'),
   },
 };
