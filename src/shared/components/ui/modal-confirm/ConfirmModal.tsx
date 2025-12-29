@@ -6,10 +6,10 @@ interface ConfirmModalProps {
   handleClose: () => void;
   title: string;
   description: string | ReactNode;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  handleConfirm: () => void;
-  handleCancel: () => void;
+  leftLabel?: string;
+  rightLabel?: string;
+  handleClickRight: () => void;
+  handleClickLeft: () => void;
 }
 
 export default function ConfirmModal({
@@ -17,26 +17,26 @@ export default function ConfirmModal({
   handleClose,
   title,
   description,
-  confirmLabel = '확인',
-  cancelLabel = '취소',
-  handleConfirm,
-  handleCancel,
+  rightLabel = '확인',
+  leftLabel = '취소',
+  handleClickRight,
+  handleClickLeft,
 }: ConfirmModalProps) {
   const footer = (
     <>
       <button
         type='button'
         className='title-sb-14 text-grayscale-700 border-grayscale-200 w-full rounded-[0.8rem] border bg-white py-[0.85rem] text-center'
-        onClick={handleCancel}
+        onClick={handleClickLeft}
       >
-        {cancelLabel}
+        {leftLabel}
       </button>
       <button
         type='button'
         className='title-sb-14 bg-primary-700 w-full rounded-[0.8rem] py-[0.85rem] text-white'
-        onClick={handleConfirm}
+        onClick={handleClickRight}
       >
-        {confirmLabel}
+        {rightLabel}
       </button>
     </>
   );

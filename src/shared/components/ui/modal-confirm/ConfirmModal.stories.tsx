@@ -16,15 +16,17 @@ const meta: Meta<typeof ConfirmModal> = {
   args: {
     isOpen: true,
     handleClose: () => console.log('ConfirmModal: handleClose (배경 클릭 등)'),
-    handleConfirm: () => console.log('ConfirmModal: handleConfirm (확인 클릭)'),
-    handleCancel: () => console.log('ConfirmModal: handleCancel (취소 클릭)'),
+    handleClickRight: () =>
+      console.log('ConfirmModal: handleClickRight (확인 클릭)'),
+    handleClickLeft: () =>
+      console.log('ConfirmModal: handleClickLeft (취소 클릭)'),
   },
   argTypes: {
     description: { control: 'text' },
     isOpen: { control: 'boolean' },
     handleClose: { table: { disable: true } },
-    handleConfirm: { table: { disable: true } },
-    handleCancel: { table: { disable: true } },
+    handleClickRight: { table: { disable: true } },
+    handleClickLeft: { table: { disable: true } },
   },
 };
 
@@ -35,8 +37,8 @@ export const Default: Story = {
   args: {
     title: '작성 취소',
     description: '작성 중인 내용이 있습니다. 정말로 나가시겠습니까?',
-    confirmLabel: '나가기',
-    cancelLabel: '취소',
+    rightLabel: '나가기',
+    leftLabel: '취소',
   },
 };
 
@@ -44,7 +46,7 @@ export const DestructiveAction: Story = {
   args: {
     title: '계좌번호 삭제',
     description: '삭제된 계좌번호는 복구할 수 없습니다. 계속하시겠습니까?',
-    confirmLabel: '삭제',
-    cancelLabel: '취소',
+    rightLabel: '삭제',
+    leftLabel: '취소',
   },
 };

@@ -79,12 +79,12 @@ export default function MenuEdit() {
       <ConfirmModal
         isOpen={isModalOpen}
         handleClose={handleCloseModal}
-        title="이 메뉴를 삭제할까요?"
-        description="삭제 후에는 되돌릴 수 없습니다."
-        confirmLabel="삭제"
-        cancelLabel="취소"
-        handleConfirm={handleConfirmDelete}
-        handleCancel={handleCloseModal}
+        title='이 메뉴를 삭제할까요?'
+        description='삭제 후에는 되돌릴 수 없습니다.'
+        rightLabel='삭제'
+        leftLabel='취소'
+        handleClickRight={handleConfirmDelete}
+        handleClickLeft={handleCloseModal}
       />
 
       <Navigation

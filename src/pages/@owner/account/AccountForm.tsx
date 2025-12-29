@@ -53,9 +53,9 @@ export default function Account() {
         handleClose={exitModal.handleClose}
         title={'정말 나가시겠어요?'}
         description={`작성 중인 내용은 저장되지 않으며,\n나가면 모두 삭제됩니다.`}
-        confirmLabel='나가기'
-        handleConfirm={exitModal.handleConfirm}
-        handleCancel={exitModal.handleCancel}
+        rightLabel='나가기'
+        handleClickRight={exitModal.handleConfirm}
+        handleClickLeft={exitModal.handleCancel}
       />
       {/* 저장 전 확인 모달 */}
       <ConfirmModal
@@ -87,9 +87,9 @@ export default function Account() {
             </div>
           </>
         }
-        confirmLabel='저장'
-        handleConfirm={saveModal.handleConfirm}
-        handleCancel={saveModal.handleCancel}
+        rightLabel='저장'
+        handleClickRight={saveModal.handleConfirm}
+        handleClickLeft={saveModal.handleCancel}
       />
       {/* 계좌 삭제 재확인 모달 */}
       <ConfirmModal
@@ -97,9 +97,9 @@ export default function Account() {
         handleClose={deleteModal.handleClose}
         title='이 계좌를 삭제할까요?'
         description='삭제 후에는 되돌릴 수 없습니다.'
-        confirmLabel='삭제'
-        handleConfirm={deleteModal.handleConfirm}
-        handleCancel={deleteModal.handleCancel}
+        rightLabel='삭제'
+        handleClickRight={deleteModal.handleConfirm}
+        handleClickLeft={deleteModal.handleCancel}
       />
       <Navigation
         centerContent={isEditMode ? '계좌 수정' : '계좌 등록'}

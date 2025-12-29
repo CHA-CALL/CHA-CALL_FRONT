@@ -58,8 +58,8 @@ export default function ProfileSetting() {
         handleClose={handleCloseModal}
         title={'정말 탈퇴하시겠어요?'}
         description={`탈퇴하면 모든 정보가 삭제되며, \n복구할 수 없습니다.`}
-        handleConfirm={handleDeleteAccount}
-        handleCancel={handleCloseModal}
+        handleClickRight={handleDeleteAccount}
+        handleClickLeft={handleCloseModal}
       />
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}

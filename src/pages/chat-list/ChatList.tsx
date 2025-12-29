@@ -45,8 +45,8 @@ export default function ChatList() {
         handleClose={handleCloseModal}
         title={'선택한 대화를 삭제할까요?'}
         description={`${selectChatList.size}건이 삭제되며 되돌릴 수 없습니다.`}
-        handleConfirm={handleCloseModal}
-        handleCancel={handleCloseModal}
+        handleClickRight={handleCloseModal}
+        handleClickLeft={handleCloseModal}
       />
       <div className='scrollbar-hide flex flex-col overflow-y-scroll pb-[2.4rem] pt-[7.8rem]'>
         {(chatList ?? []).map(item => {

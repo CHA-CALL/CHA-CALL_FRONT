@@ -71,9 +71,9 @@ export default function FoodTruckManagement() {
         handleClose={handleConfirmModal}
         title='이 푸드트럭을 삭제할까요?'
         description='삭제 후에는 되돌릴 수 없습니다.'
-        confirmLabel='삭제'
-        handleConfirm={handleDeleteFoodTrucks}
-        handleCancel={handleConfirmModal}
+        rightLabel='삭제'
+        handleClickRight={handleDeleteFoodTrucks}
+        handleClickLeft={handleConfirmModal}
       />
       <Navigation
         centerContent='나의 푸드트럭 관리'

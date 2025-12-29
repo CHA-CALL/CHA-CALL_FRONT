@@ -83,8 +83,8 @@ export default function MessageForm() {
         handleClose={handleCloseModal}
         title='저장하지 않고 나가시겠습니까?'
         description={`작성 중인 내용은 저장되지 않으며, \n나가면 모두 삭제됩니다.`}
-        handleConfirm={handleClickConfirm}
-        handleCancel={handleClickCancel}
+        handleClickRight={handleClickConfirm}
+        handleClickLeft={handleClickCancel}
       />
       <Navigation
         centerContent='자주 쓰는 메세지 설정'
