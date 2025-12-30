@@ -29,9 +29,10 @@ export default function AccountModals({
         handleClose={exitModal.handleClose}
         title={'정말 나가시겠어요?'}
         description={`작성 중인 내용은 저장되지 않으며,\n나가면 모두 삭제됩니다.`}
-        rightLabel='나가기'
-        handleClickRight={exitModal.handleConfirm}
-        handleClickLeft={exitModal.handleCancel}
+        leftLabel='나가기'
+        rightLabel='취소'
+        handleClickLeft={exitModal.handleConfirm}
+        handleClickRight={exitModal.handleCancel}
       />
       {/* 저장 전 확인 모달 */}
       <ConfirmModal
