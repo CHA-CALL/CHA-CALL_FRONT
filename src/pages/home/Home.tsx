@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import Button from '@ui/button/Button';
-import Overlay from '@layout/overlay/Overlay';
-import Input from '@ui/input/Input';
-import { Icon } from '@icon/Icon';
-import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
-import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
 import TimePicker from '@components/time-picker/TimePicker';
+import AlertModal from '@components/ui/modal-alert/AlertModal';
+import { Icon } from '@icon/Icon';
+import AgreeToTermsBottomSheet from '@shared/components/agree-to-terms/AgreeToTermsBottomSheet';
 import type { TimeType } from '@type/time-types';
+import Button from '@ui/button/Button';
+import Input from '@ui/input/Input';
+import RatingBottomSheet from '@ui/rating-bottom-sheet/RatingBottomSheet';
+import { useState } from 'react';
 
 const Home = () => {
   // BottomSheet states
@@ -51,32 +51,13 @@ const Home = () => {
   return (
     <div>
       {/* Modal */}
-      <Overlay
+      <AlertModal
         isOpen={isModalOpen}
-        position='center'
         handleClose={handleCloseModal}
-      >
-        <div>
-          <h3 className='mb-[2rem] text-[1.8rem] font-bold'>모달 제목</h3>
-          <p className='mb-[2rem]'>모달 내용입니다.</p>
-          <div className='flex gap-[1rem]'>
-            <Button
-              variant='cta'
-              buttonStyle='sub'
-              handleClickButton={handleCloseModal}
-            >
-              취소
-            </Button>
-            <Button
-              variant='cta'
-              buttonStyle='active'
-              handleClickButton={handleCloseModal}
-            >
-              확인
-            </Button>
-          </div>
-        </div>
-      </Overlay>
+        title={'모달 제목'}
+        description={'모달 내용입니다.'}
+      />
+
       {/* BottomSheet */}
       <RatingBottomSheet
         reservationId={4}
