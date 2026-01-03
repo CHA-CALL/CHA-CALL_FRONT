@@ -24,6 +24,7 @@ export default function UploadFoodTruckImages() {
   if (!foodTruckId || isNaN(foodTruckIdNumber)) {
     toast.error('잘못된 접근입니다.');
     navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+    return;
   }
 
   return (

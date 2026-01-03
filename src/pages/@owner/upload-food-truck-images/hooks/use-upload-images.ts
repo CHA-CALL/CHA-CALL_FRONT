@@ -1,8 +1,9 @@
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
 import { arrayMove } from '@dnd-kit/sortable';
 
+import useToast from '@hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 import {
   useFoodTruckImage,
   useUploadImage,
@@ -13,6 +14,7 @@ import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/
 import { imageFileSchema } from '@pages/@owner/upload-food-truck-images/schemas/upload-food-truck-images.schema';
 
 export const useUploadImages = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
@@ -26,6 +28,11 @@ export const useUploadImages = () => {
   const { mutateAsync: getPresignedUrl } = useFoodTruckImage();
   const { mutateAsync: uploadToS3 } = useUploadImage();
   const { mutateAsync: deleteFromS3 } = useDeleteImage();
+
+  if (!formData) {
+    toast.error('잘못된 접근입니다.');
+    navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+  }
 
   useEffect(() => {
     const existingUrls: string[] = formData.photoUrls || [];
