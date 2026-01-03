@@ -3,6 +3,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { formatStringDatesToAvailableDates } from '@utils/date';
+import { normalizeEnumValue } from '@utils/normalize-enum-value';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
+import { NEED_ELECTRICITY } from '@constant/need-electricity';
+import { PAYMENT_METHOD } from '@constant/payment-method';
+
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import {
   foodTruckSchema,
@@ -55,6 +60,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
 
   useEffect(() => {
     if (foodTruckDetailData) {
+      const menus = menuData?.pages.flatMap(page => page?.content || []);
       setIsEdit(true);
       reset({
         name: foodTruckDetailData.name,
@@ -62,9 +68,18 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
         description: foodTruckDetailData.description,
         phoneNumber: foodTruckDetailData.phoneNumber,
         regionCodes: foodTruckDetailData.regionCodes,
-        availableQuantity: foodTruckDetailData.availableQuantity,
-        needElectricity: foodTruckDetailData.needElectricity,
-        paymentMethod: foodTruckDetailData.paymentMethod,
+        availableQuantity: normalizeEnumValue(
+          AVAILABLE_QUANTITY,
+          foodTruckDetailData.availableQuantity
+        ),
+        needElectricity: normalizeEnumValue(
+          NEED_ELECTRICITY,
+          foodTruckDetailData.needElectricity
+        ),
+        paymentMethod: normalizeEnumValue(
+          PAYMENT_METHOD,
+          foodTruckDetailData.paymentMethod
+        ),
         menuCategories: foodTruckDetailData.menuCategories,
         photoUrls: foodTruckDetailData.photoUrl,
         operatingInfo: foodTruckDetailData.operatingInfo,
@@ -74,7 +89,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
         ),
         activeTime: foodTruckDetailData.activeTime,
         timeDiscussRequired: foodTruckDetailData.timeDiscussRequired,
-        menus: menuData !== undefined,
+        menus: menus !== undefined && menus.length !== 0,
       });
     }
   }, [foodTruckDetailData, menuData, reset]);

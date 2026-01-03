@@ -8,6 +8,9 @@ import {
 
 import type { AvailableDate } from '@type/available-date';
 import { validateFoodTruckFormTime } from '@pages/@owner/food-truck-form/utils/validate-food-truck-form-time';
+import { NEED_ELECTRICITY } from '@constant/need-electricity';
+import { PAYMENT_METHOD } from '@constant/payment-method';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 
 export const foodTruckSchema = z.object({
   name: z
@@ -31,9 +34,11 @@ export const foodTruckSchema = z.object({
       FOOD_TRUCK_ERROR_MESSAGE.phoneNumber.required
     ),
   regionCodes: z.array(z.custom<RegionResponse>()),
-  availableQuantity: z.string(),
-  needElectricity: z.string(),
-  paymentMethod: z.string(),
+  availableQuantity: z.enum(
+    Object.values(AVAILABLE_QUANTITY).map(item => item)
+  ),
+  needElectricity: z.enum(Object.values(NEED_ELECTRICITY).map(item => item)),
+  paymentMethod: z.enum(Object.values(PAYMENT_METHOD).map(item => item)),
   menuCategories: z.array(z.string()),
   photoUrls: z.array(z.string()).min(1, {
     message: FOOD_TRUCK_ERROR_MESSAGE.photoUrls.required,
