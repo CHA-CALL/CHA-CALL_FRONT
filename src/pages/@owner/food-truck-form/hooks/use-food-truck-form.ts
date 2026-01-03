@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import useToast from '@hooks/use-toast';
 import { formatStringDatesToAvailableDates } from '@utils/date';
 import { normalizeEnumValue } from '@utils/normalize-enum-value';
 import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
@@ -36,6 +37,7 @@ const initialData = {
 };
 
 export const useFoodTruckForm = (foodTruckIdNumber: number) => {
+  const toast = useToast();
   const methods = useForm<FoodTruckFormData>({
     resolver: zodResolver(foodTruckSchema),
     defaultValues: initialData,
@@ -61,6 +63,22 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
   useEffect(() => {
     if (foodTruckDetailData) {
       const menus = menuData?.pages.flatMap(page => page?.content || []);
+      const availableQuantity = normalizeEnumValue(
+        AVAILABLE_QUANTITY,
+        foodTruckDetailData.availableQuantity
+      );
+      const needElectricity = normalizeEnumValue(
+        NEED_ELECTRICITY,
+        foodTruckDetailData.needElectricity
+      );
+      const payment = normalizeEnumValue(
+        PAYMENT_METHOD,
+        foodTruckDetailData.paymentMethod
+      );
+      if (!availableQuantity || !needElectricity || !payment) {
+        toast.error('잘못된 정보입니다. 다시 시도해주세요.');
+        return;
+      }
       setIsEdit(true);
       reset({
         name: foodTruckDetailData.name,
@@ -68,18 +86,9 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
         description: foodTruckDetailData.description,
         phoneNumber: foodTruckDetailData.phoneNumber,
         regionCodes: foodTruckDetailData.regionCodes,
-        availableQuantity: normalizeEnumValue(
-          AVAILABLE_QUANTITY,
-          foodTruckDetailData.availableQuantity
-        ),
-        needElectricity: normalizeEnumValue(
-          NEED_ELECTRICITY,
-          foodTruckDetailData.needElectricity
-        ),
-        paymentMethod: normalizeEnumValue(
-          PAYMENT_METHOD,
-          foodTruckDetailData.paymentMethod
-        ),
+        availableQuantity: availableQuantity,
+        needElectricity: needElectricity,
+        paymentMethod: payment,
         menuCategories: foodTruckDetailData.menuCategories,
         photoUrls: foodTruckDetailData.photoUrl,
         operatingInfo: foodTruckDetailData.operatingInfo,
