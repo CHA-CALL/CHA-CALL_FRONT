@@ -1,19 +1,15 @@
-import Button from '@ui/button/Button';
 import Information from '@components/information/Information';
-import Navigation from '@layout/navigation/Navigation';
-import Input from '@ui/input/Input';
-import { Icon } from '@icon/Icon';
-import { cn } from '@utils/cn';
-import ErrorText from '@form/error-text/ErrorText';
-import Loading from '@layout/loading/Loading';
-import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
-import {
-  SelectBankBottomSheet,
-  ConfirmExitModal,
-  SaveAccountModal,
-  ConfirmDeleteModal,
-} from '@pages/@owner/account/@modal';
 import FormFieldLayout from '@components/layout/form/FormFieldLayout';
+import ErrorText from '@form/error-text/ErrorText';
+import { Icon } from '@icon/Icon';
+import Loading from '@layout/loading/Loading';
+import Navigation from '@layout/navigation/Navigation';
+import SelectBankBottomSheet from '@pages/@owner/account/@bottom-sheet/SelectBankBottomSheet';
+import { useAccountPage } from '@pages/@owner/account/hooks/use-account-page';
+import Button from '@ui/button/Button';
+import Input from '@ui/input/Input';
+import { cn } from '@utils/cn';
+import AccountModals from './@modal/AccountModals';
 
 export default function Account() {
   const {
@@ -51,24 +47,11 @@ export default function Account() {
         handleChange={bankModal.handleChange}
         bank={formData.bankName}
       />
-      <ConfirmExitModal
-        isOpen={exitModal.isOpen}
-        handleClose={exitModal.handleClose}
-        handleClickConfirm={exitModal.handleConfirm}
-        handleClickCancel={exitModal.handleCancel}
-      />
-      <SaveAccountModal
-        isOpen={saveModal.isOpen}
-        handleClose={saveModal.handleClose}
-        handleConfirm={saveModal.handleConfirm}
-        handleCancel={saveModal.handleCancel}
+      <AccountModals
         formData={formData}
-      />
-      <ConfirmDeleteModal
-        isOpen={deleteModal.isOpen}
-        handleClose={deleteModal.handleClose}
-        handleClickConfirm={deleteModal.handleConfirm}
-        handleClickCancel={deleteModal.handleCancel}
+        exitModal={exitModal}
+        saveModal={saveModal}
+        deleteModal={deleteModal}
       />
       <Navigation
         centerContent={isEditMode ? '계좌 수정' : '계좌 등록'}

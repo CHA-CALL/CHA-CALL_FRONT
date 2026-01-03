@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navigation from '@layout/navigation/Navigation';
-import { ROUTES } from '@router/constant/routes';
 import { Icon } from '@components/icon/Icon';
-import Button from '@ui/button/Button';
+import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 import Loading from '@layout/loading/Loading';
-import DeleteAccountModal from '@pages/profile-setting/@modal/(.)delete-account-modal/DeleteAccountModal';
+import Navigation from '@layout/navigation/Navigation';
+import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
 import {
   AgreementSection,
   ProfileImageSection,
   UserDataSection,
 } from '@pages/profile-setting/components';
-import { useGetUserInfo } from '@pages/mypage/hooks/use-user-data';
+import { ROUTES } from '@router/constant/routes';
+import Button from '@ui/button/Button';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileSetting() {
   const navigate = useNavigate();
@@ -41,12 +41,26 @@ export default function ProfileSetting() {
     setIsModalOpen(false);
   };
 
+  const handleDeleteAccount = () => {
+    // TODO: 회원탈퇴 api 및 토스트 메시지 추가
+    alert('회원탈퇴 되셨습니다.');
+    navigate(ROUTES.HOME);
+  };
+
   const handleEditProfile = () => {
     navigate(ROUTES.PROFILE_SETTING_EDIT);
   };
 
   return (
     <>
+      <ConfirmModal
+        isOpen={isModalOpen}
+        handleClose={handleCloseModal}
+        title={'정말 탈퇴하시겠어요?'}
+        description={`탈퇴하면 모든 정보가 삭제되며, \n복구할 수 없습니다.`}
+        handleClickRight={handleDeleteAccount}
+        handleClickLeft={handleCloseModal}
+      />
       <Navigation
         leftIcon={<Icon name='ic_back' className='text-grayscale-900' />}
         handleLeftClick={handleGoBack}
@@ -68,25 +82,24 @@ export default function ProfileSetting() {
           <UserDataSection userInfo={userData || null} />
           <AgreementSection termAgreed={userData?.termAgreed} />
         </div>
-        <footer className='bottom-[3rem] flex flex-row items-center justify-center caption-m-12 fixed-center'>
+        <footer className='caption-m-12 fixed-center bottom-[3rem] flex flex-row items-center justify-center'>
           <button
             type='button'
-            className='px-[1rem] py-[0.6rem] text-grayscale-500'
+            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
             onClick={handleLogout}
           >
             로그아웃
           </button>
-          <div className='mx-[0.4rem] h-[1rem] w-[0.1rem] bg-grayscale-500' />
+          <div className='bg-grayscale-500 mx-[0.4rem] h-[1rem] w-[0.1rem]' />
           <button
             type='button'
-            className='px-[1rem] py-[0.6rem] text-grayscale-500'
+            className='text-grayscale-500 px-[1rem] py-[0.6rem]'
             onClick={handleOpenModal}
           >
             회원탈퇴
           </button>
         </footer>
       </div>
-      <DeleteAccountModal isOpen={isModalOpen} handleClose={handleCloseModal} />
     </>
   );
 }

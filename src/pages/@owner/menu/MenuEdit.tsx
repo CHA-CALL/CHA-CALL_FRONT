@@ -6,8 +6,9 @@ import { Icon } from '@components/icon/Icon';
 import { convertURLtoFile } from '@utils/convert-image-url';
 import useToast from '@shared/hooks/use-toast';
 import { FormProvider } from 'react-hook-form';
-import { MenuDeleteModal, MenuForm } from '@pages/@owner/menu/components';
+import { MenuForm } from '@pages/@owner/menu/components';
 import { useEditMenu, useFormValidation } from '@pages/@owner/menu/hooks';
+import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
 
 export default function MenuEdit() {
   const location = useLocation();
@@ -75,10 +76,15 @@ export default function MenuEdit() {
 
   return (
     <FormProvider {...methods}>
-      <MenuDeleteModal
-        isModalOpen={isModalOpen}
-        handleCloseModal={handleCloseModal}
-        handleConfirmDelete={handleConfirmDelete}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        handleClose={handleCloseModal}
+        title='이 메뉴를 삭제할까요?'
+        description='삭제 후에는 되돌릴 수 없습니다.'
+        rightLabel='삭제'
+        leftLabel='취소'
+        handleClickRight={handleConfirmDelete}
+        handleClickLeft={handleCloseModal}
       />
 
       <Navigation

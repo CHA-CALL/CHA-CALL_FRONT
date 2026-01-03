@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '@ui/button/Button';
-import { Icon } from '@icon/Icon';
-import Navigation from '@layout/navigation/Navigation';
-import ConfirmModal from '@pages/@owner/message-list/@modal/(.)confirm-modal/ConfirmModal';
-import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
+import ConfirmModal from '@components/ui/modal-confirm/ConfirmModal';
+import { zodResolver } from '@hookform/resolvers/zod';
 import useToast from '@hooks/use-toast';
+import { Icon } from '@icon/Icon';
 import Loading from '@layout/loading/Loading';
-import Textarea from '@ui/text-area/Textarea';
+import Navigation from '@layout/navigation/Navigation';
+import { usePostOwnerChatTemplates } from '@pages/@owner/message-list/hooks/use-owner-message';
 import {
   chatTemplateSchema,
   type ChatTemplateFormType,
 } from '@pages/@owner/message-list/schemas/message-list.schema';
-import { zodResolver } from '@hookform/resolvers/zod';
+import Button from '@ui/button/Button';
+import Textarea from '@ui/text-area/Textarea';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export default function MessageForm() {
   const navigate = useNavigate();
@@ -81,8 +81,10 @@ export default function MessageForm() {
       <ConfirmModal
         isOpen={isOpen}
         handleClose={handleCloseModal}
-        handleClickConfirm={handleClickConfirm}
-        handleClickCancel={handleClickCancel}
+        title='저장하지 않고 나가시겠습니까?'
+        description={`작성 중인 내용은 저장되지 않으며, \n나가면 모두 삭제됩니다.`}
+        handleClickRight={handleClickConfirm}
+        handleClickLeft={handleClickCancel}
       />
       <Navigation
         centerContent='자주 쓰는 메세지 설정'
