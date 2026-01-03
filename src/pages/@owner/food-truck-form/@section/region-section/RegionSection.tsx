@@ -25,8 +25,6 @@ export default function RegionSection({ foodTruckId }: RegionSectionProps) {
       return;
     }
 
-    console.info('바깥쪽, ', formData);
-
     navigate(ROUTES.SET_REGION_FORM(foodTruckId), {
       state: getNavigateState(formData),
     });
