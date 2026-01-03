@@ -1,5 +1,5 @@
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { FormProvider, useFormContext } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 import { Icon } from '@icon/Icon';
 import Navigation from '@layout/navigation/Navigation';
@@ -7,12 +7,11 @@ import Region from '@shared/components/region/Region';
 import { ROUTES } from '@router/constant/routes';
 import { useRegion } from '@pages/@owner/set-region/hooks/use-region';
 import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 
 export default function SetRegion() {
-  const location = useLocation();
-  const formData = location.state?.formData;
-  const methods = useFoodTruckForm(formData);
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
+  const methods = useFoodTruckForm(foodTruckIdNumber);
 
   return (
     <FormProvider {...methods.methods}>
@@ -25,7 +24,7 @@ function SetRegionContent() {
   const { foodTruckId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { getValues } = useFormContext<FoodTruckFormData>();
+  const formData = location.state.formData;
 
   const handleLeftClick = () => {
     if (!foodTruckId) {
@@ -36,13 +35,15 @@ function SetRegionContent() {
     navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
       state: {
         from: fromPage || 'food-truck-form',
-        formData: getValues(),
+        formData: formData,
       },
     });
   };
 
-  const { regionCodes, handleSubmitRegion, handleResetRegionFoodTruck } =
-    useRegion(foodTruckId);
+  const { handleSubmitRegion, handleResetRegionFoodTruck } = useRegion(
+    formData,
+    foodTruckId
+  );
 
   return (
     <>
@@ -52,7 +53,7 @@ function SetRegionContent() {
         handleLeftClick={handleLeftClick}
       />
       <Region
-        initialRegions={regionCodes}
+        initialRegions={formData.regionCodes}
         handleConfirmRegion={handleSubmitRegion}
         handleResetRegion={handleResetRegionFoodTruck}
       />

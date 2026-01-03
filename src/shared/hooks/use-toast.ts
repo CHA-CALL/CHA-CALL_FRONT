@@ -1,18 +1,35 @@
 import { useSetAtom } from 'jotai';
 import { ToastAtom } from '@utils/toast';
 import { TOAST_TYPE } from '@constant/toast';
+import { useCallback, useMemo } from 'react';
 
 const useToast = () => {
   const addToast = useSetAtom(ToastAtom);
 
-  return {
-    success: (message: string) =>
-      addToast({ type: TOAST_TYPE.SUCCESS, message }),
-    error: (message: string) => addToast({ type: TOAST_TYPE.ERROR, message }),
-    warning: (message: string) =>
-      addToast({ type: TOAST_TYPE.WARNING, message }),
-    info: (message: string) => addToast({ type: TOAST_TYPE.INFO, message }),
-  };
+  const success = useCallback(
+    (message: string) => addToast({ type: TOAST_TYPE.SUCCESS, message }),
+    [addToast]
+  );
+
+  const error = useCallback(
+    (message: string) => addToast({ type: TOAST_TYPE.ERROR, message }),
+    [addToast]
+  );
+
+  const warning = useCallback(
+    (message: string) => addToast({ type: TOAST_TYPE.WARNING, message }),
+    [addToast]
+  );
+
+  const info = useCallback(
+    (message: string) => addToast({ type: TOAST_TYPE.INFO, message }),
+    [addToast]
+  );
+
+  return useMemo(
+    () => ({ success, error, warning, info }),
+    [success, error, warning, info]
+  );
 };
 
 export default useToast;

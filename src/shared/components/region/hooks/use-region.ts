@@ -19,11 +19,20 @@ export default function useRegion({
   const toast = useToast();
 
   const handleSelectRegion = (region: RegionResponse) => {
-    if (selectedRegions.length >= MAX_SELECTED) {
-      toast.error('최대 선택 개수를 초과했습니다.');
-      return;
-    }
-    setSelectedRegions(prev => [...prev, region]);
+    setSelectedRegions(prev => {
+      const alreadySelected = prev.some(r => r.code === region.code);
+
+      if (alreadySelected) {
+        return prev.filter(r => r.code !== region.code);
+      }
+
+      if (prev.length >= MAX_SELECTED) {
+        toast.error('최대 선택 개수를 초과했습니다.');
+        return prev;
+      }
+
+      return [...prev, region];
+    });
   };
   const handleDeleteRegion = (region: RegionResponse) => {
     setSelectedRegions(prev => prev.filter(r => r.code !== region.code));

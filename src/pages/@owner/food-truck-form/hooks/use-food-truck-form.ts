@@ -1,21 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import useToast from '@hooks/use-toast';
-import { formatStringDatesToAvailableDates } from '@utils/date';
-import { normalizeEnumValue } from '@utils/normalize-enum-value';
-import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
-import { NEED_ELECTRICITY } from '@constant/need-electricity';
-import { PAYMENT_METHOD } from '@constant/payment-method';
 
-import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
+import { useMenusQuery } from '@pages/@owner/menu/hooks/use-menus-query';
 import {
   foodTruckSchema,
   type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
-import useFoodTruckDetail from '@pages/food-truck-detail/hooks/use-food-truck-detail';
-import { useMenusQuery } from '@pages/@owner/menu/hooks/use-menus-query';
+import { resetFoodTruckFormValue } from '@pages/@owner/food-truck-form/utils/reset-food-truck-form-value';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 
 const initialData = {
   name: '',
@@ -51,57 +47,26 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
     setError,
   } = methods;
 
-  // 기존 데이터가 있다면 수정 mode
-  const [isEdit, setIsEdit] = useState(false);
-
   // 기존 등록 푸드트럭 데이터 조회
   const { foodTruckDetailData } = useFoodTruckDetail(foodTruckIdNumber);
 
   // 메뉴 등록 여부를 위한 조회
   const { data: menuData } = useMenusQuery(foodTruckIdNumber, '최신순');
 
+  const isEdit = !!foodTruckDetailData;
+
   useEffect(() => {
-    if (foodTruckDetailData) {
-      const menus = menuData?.pages.flatMap(page => page?.content || []);
-      const availableQuantity = normalizeEnumValue(
-        AVAILABLE_QUANTITY,
-        foodTruckDetailData.availableQuantity
-      );
-      const needElectricity = normalizeEnumValue(
-        NEED_ELECTRICITY,
-        foodTruckDetailData.needElectricity
-      );
-      const payment = normalizeEnumValue(
-        PAYMENT_METHOD,
-        foodTruckDetailData.paymentMethod
-      );
-      if (!availableQuantity || !needElectricity || !payment) {
-        toast.error('잘못된 정보입니다. 다시 시도해주세요.');
-        return;
-      }
-      setIsEdit(true);
-      reset({
-        name: foodTruckDetailData.name,
-        nameDuplicate: true,
-        description: foodTruckDetailData.description,
-        phoneNumber: foodTruckDetailData.phoneNumber,
-        regionCodes: foodTruckDetailData.regionCodes,
-        availableQuantity: availableQuantity,
-        needElectricity: needElectricity,
-        paymentMethod: payment,
-        menuCategories: foodTruckDetailData.menuCategories,
-        photoUrls: foodTruckDetailData.photoUrl,
-        operatingInfo: foodTruckDetailData.operatingInfo,
-        option: foodTruckDetailData.option,
-        availableDates: formatStringDatesToAvailableDates(
-          foodTruckDetailData.availableDates ?? []
-        ),
-        activeTime: foodTruckDetailData.activeTime,
-        timeDiscussRequired: foodTruckDetailData.timeDiscussRequired,
-        menus: menus !== undefined && menus.length !== 0,
-      });
+    if (!foodTruckDetailData) return;
+
+    const menus = menuData?.pages.flatMap(page => page?.content || []);
+    const result = resetFoodTruckFormValue(foodTruckDetailData, menus);
+
+    if (result.isError) {
+      toast.error('잘못된 정보입니다. 다시 시도해주세요.');
+      return;
     }
-  }, [foodTruckDetailData, menuData, reset]);
+    reset(result.values);
+  }, [foodTruckDetailData, menuData, reset, toast]);
 
   const onSubmit = async (formData: FoodTruckFormData) => {
     if (!formData.nameDuplicate) {

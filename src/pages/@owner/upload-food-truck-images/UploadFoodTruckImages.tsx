@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FormProvider } from 'react-hook-form';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
@@ -13,9 +13,9 @@ import {
 } from '@pages/@owner/upload-food-truck-images/components';
 
 export default function UploadFoodTruckImages() {
-  const location = useLocation();
-  const formData = location.state?.formData;
-  const methods = useFoodTruckForm(formData);
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
+  const methods = useFoodTruckForm(foodTruckIdNumber);
 
   return (
     <FormProvider {...methods.methods}>
