@@ -19,13 +19,13 @@ export default function UploadFoodTruckImages() {
   const toast = useToast();
   const { foodTruckId } = useParams();
   const foodTruckIdNumber = Number(foodTruckId);
-  const methods = useFoodTruckForm(foodTruckIdNumber);
 
   if (!foodTruckId || isNaN(foodTruckIdNumber)) {
     toast.error('잘못된 접근입니다.');
     navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
-    return;
   }
+
+  const methods = useFoodTruckForm(foodTruckIdNumber);
 
   return (
     <FormProvider {...methods.methods}>
