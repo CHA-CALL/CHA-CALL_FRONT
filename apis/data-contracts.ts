@@ -76,7 +76,6 @@ export interface UpdateReservationRequest {
   /**
    * 운영 시간 (형식: HH:MM ~ HH:MM)
    * @minLength 1
-   * @pattern ^([01]\d|2[0-3]):([0-5]\d) ~ ([01]\d|2[0-3]):([0-5]\d)$
    * @example "15:00 ~ 16:00"
    */
   operationHour: string;
