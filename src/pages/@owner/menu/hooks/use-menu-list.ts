@@ -15,6 +15,7 @@ export const useMenuList = (foodTruckId: number) => {
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
+  const foodTruckFormData = location.state?.formData;
 
   const { isSorted, handleSortByLatest, handleSortByOldest } = useMenuSort();
   const { isBottomSheetOpen, handleOpenBottomSheet, handleCloseBottomSheet } =
@@ -44,20 +45,14 @@ export const useMenuList = (foodTruckId: number) => {
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
-    const formData = location.state?.formData;
-    const updatedFormData = {
-      ...formData,
-      menus: menus.length > 0,
-    };
     navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)), {
-      state: getNavigateState(updatedFormData),
+      state: getNavigateState(foodTruckFormData),
     });
   };
 
   const handleRegister = (foodTruckId: string) => {
-    const formData = location.state?.formData;
     navigate(ROUTES.MENU_REGISTER(foodTruckId), {
-      state: getNavigateState(formData),
+      state: getNavigateState(foodTruckFormData),
     });
   };
 
