@@ -11,8 +11,9 @@ import {
   type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { resetFoodTruckFormValue } from '@pages/@owner/food-truck-form/utils/reset-food-truck-form-value';
-import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
-import { useMutationFoodTruckForm } from './use-mutation-food-truck-form';
+// import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import { useMutationFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-mutation-food-truck-form';
+import { formatFoodTruckForm } from '@pages/@owner/food-truck-form/utils/format-food-truck-form';
 
 const initialData = {
   name: '',
@@ -46,7 +47,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
     reset,
     setValue,
     formState: { isValid },
-    setError,
+    // setError,
   } = methods;
 
   // 기존 등록 푸드트럭 데이터 조회
@@ -80,37 +81,23 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
   }, [foodTruckDetailData, menus, toast, reset, setValue]);
 
   const handleSubmitFoodTruckInfo = async (formData: FoodTruckFormData) => {
-    if (!formData.nameDuplicate) {
-      setError('name', {
-        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
-      });
-      return;
-    }
-    if (isValid && formData) {
-      // TODO: 서버에 필요한 형식에 맞게 포맷하여 보내기. 타입 만들어야 함
-      alert('푸드트럭 등록 제출');
-      updateFoodTruckInfo({
-        foodTruckId: foodTruckIdNumber,
-        data: {
-          name: formData.name,
-          description: formData.description,
-          phoneNumber: formData.phoneNumber,
-          activeTime: formData.activeTime,
-          timeDiscussRequired: formData.timeDiscussRequired,
-          foodTruckServiceAreas: formData.regionCodes.map(
-            region => region.code!
-          ),
-          menuCategories: ['MEAL'],
-          availableQuantity: formData.availableQuantity,
-          needElectricity: formData.needElectricity,
-          paymentMethod: formData.paymentMethod,
-          availableDates: formData.availableDates,
-          photoUrls: formData.photoUrls,
-          operatingInfo: formData.operatingInfo,
-          option: formData.option,
-        },
-      });
-    }
+    // TODO: 추후 아래 유효성 검증 알맞게 수정해서 추가하기
+    // if (!formData.nameDuplicate) {
+    //   setError('name', {
+    //     message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
+    //   });
+    //   return;
+    // }
+    // if (isValid && formData) {
+    //   updateFoodTruckInfo({
+    //     foodTruckId: foodTruckIdNumber,
+    //     data: formatFoodTruckForm(formData),
+    //   });
+    // }
+    updateFoodTruckInfo({
+      foodTruckId: foodTruckIdNumber,
+      data: formatFoodTruckForm(formData),
+    });
   };
 
   return {

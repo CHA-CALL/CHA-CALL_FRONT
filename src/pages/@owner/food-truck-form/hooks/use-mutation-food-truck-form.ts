@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import type { UpdateFoodTruckInfoRequest } from 'apis/data-contracts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import useToast from '@hooks/use-toast';
-import { updateMyFoodTruckInfoApi } from '@pages/@owner/food-truck-form/api';
+import {
+  updateMyFoodTruckInfoApi,
+  type UpdateFoodTruckInfoApiRequest,
+} from '@pages/@owner/food-truck-form/api';
 import { ROUTES } from '@router/constant/routes';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
 
@@ -18,7 +20,7 @@ export const useMutationFoodTruckForm = () => {
       data,
     }: {
       foodTruckId: number;
-      data: UpdateFoodTruckInfoRequest;
+      data: UpdateFoodTruckInfoApiRequest;
     }) => updateMyFoodTruckInfoApi(foodTruckId, data),
     onSuccess: () => {
       toast.success('푸드트럭 정보가 업데이트 되었습니다.');

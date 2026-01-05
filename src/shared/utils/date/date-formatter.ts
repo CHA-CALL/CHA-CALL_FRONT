@@ -66,14 +66,14 @@ export const formatSelectedDateToSchedules = (
 };
 
 /**
- * string[] 형식의 날짜를 AvailableDates 형식으로 포맷하는 함수
+ * string[] 형식의 날짜를 AvailableDate[] 형식으로 포맷하는 함수
  * ["2025.09.20 ~ 2025.09.20", "2025.09.25 ~ 2025.09.25"]
  *  -> AvailableDate[]
  */
 export const formatStringDatesToAvailableDates = (
-  estimateDates: string[]
+  dates: string[]
 ): AvailableDate[] => {
-  return estimateDates
+  return dates
     .map((raw, index) => {
       // "YYYY.MM.DD ~ YYYY.MM.DD" 또는 "YYYY.MM.DD" 둘 다 대응
       const [startRaw, endRaw] = raw.split('~').map(s => s.trim());
@@ -99,4 +99,20 @@ export const formatStringDatesToAvailableDates = (
       };
     })
     .filter((v): v is AvailableDate => v !== null);
+};
+
+/**
+ * AvailableDate[] 형식의 날짜를 string[] 형식으로 포맷하는 함수
+ */
+export const formatAvailableDatesToString = (
+  dates: AvailableDate[]
+): string[] => {
+  return dates
+    .filter(date => date.startDate)
+    .map(date => {
+      if (date.endDate) {
+        return `${date.startDate} ~ ${date.endDate}`;
+      }
+      return `${date.startDate} ~ ${date.startDate}`;
+    });
 };
