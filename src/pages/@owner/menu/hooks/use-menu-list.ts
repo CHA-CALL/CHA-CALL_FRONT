@@ -45,8 +45,12 @@ export const useMenuList = (foodTruckId: number) => {
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
+    const updatedFormData = {
+      ...foodTruckFormData,
+      menus: menus.length > 0,
+    };
     navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)), {
-      state: getNavigateState(foodTruckFormData),
+      state: getNavigateState(updatedFormData),
     });
   };
 
@@ -64,7 +68,7 @@ export const useMenuList = (foodTruckId: number) => {
 
     const selectedMenu = menus.find(menu => menu.menuId === Number(menuId));
     navigate(ROUTES.MENU_EDIT(foodTruckId, menuId), {
-      state: { menuData: selectedMenu },
+      state: { menuData: selectedMenu, formData: foodTruckFormData },
     });
   };
 

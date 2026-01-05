@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -12,6 +12,7 @@ import {
 } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { resetFoodTruckFormValue } from '@pages/@owner/food-truck-form/utils/reset-food-truck-form-value';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import { useMutationFoodTruckForm } from './use-mutation-food-truck-form';
 
 const initialData = {
   name: '',
@@ -43,6 +44,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
   const {
     handleSubmit,
     reset,
+    setValue,
     formState: { isValid },
     setError,
   } = methods;
@@ -52,13 +54,22 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
 
   // 메뉴 등록 여부를 위한 조회
   const { data: menuData } = useMenusQuery(foodTruckIdNumber, '최신순');
+  const menus = useMemo(
+    () => menuData?.pages.flatMap(page => page?.content ?? []) ?? [],
+    [menuData?.pages]
+  );
+
+  // 나의 푸드트럭 정보 업데이트
+  const { updateFoodTruckInfo } = useMutationFoodTruckForm();
 
   const isEdit = !!foodTruckDetailData;
 
   useEffect(() => {
-    if (!foodTruckDetailData) return;
+    if (!foodTruckDetailData) {
+      setValue('menus', menus && menus.length > 0, { shouldValidate: true });
+      return;
+    }
 
-    const menus = menuData?.pages.flatMap(page => page?.content || []);
     const result = resetFoodTruckFormValue(foodTruckDetailData, menus);
 
     if (result.isError) {
@@ -66,9 +77,9 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
       return;
     }
     reset(result.values);
-  }, [foodTruckDetailData, menuData, reset, toast]);
+  }, [foodTruckDetailData, menus, toast, reset, setValue]);
 
-  const onSubmit = async (formData: FoodTruckFormData) => {
+  const handleSubmitFoodTruckInfo = async (formData: FoodTruckFormData) => {
     if (!formData.nameDuplicate) {
       setError('name', {
         message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
@@ -76,8 +87,29 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
       return;
     }
     if (isValid && formData) {
-      // TODO: 푸드트럭 등록 api 호출
+      // TODO: 서버에 필요한 형식에 맞게 포맷하여 보내기. 타입 만들어야 함
       alert('푸드트럭 등록 제출');
+      updateFoodTruckInfo({
+        foodTruckId: foodTruckIdNumber,
+        data: {
+          name: formData.name,
+          description: formData.description,
+          phoneNumber: formData.phoneNumber,
+          activeTime: formData.activeTime,
+          timeDiscussRequired: formData.timeDiscussRequired,
+          foodTruckServiceAreas: formData.regionCodes.map(
+            region => region.code!
+          ),
+          menuCategories: ['MEAL'],
+          availableQuantity: formData.availableQuantity,
+          needElectricity: formData.needElectricity,
+          paymentMethod: formData.paymentMethod,
+          availableDates: formData.availableDates,
+          photoUrls: formData.photoUrls,
+          operatingInfo: formData.operatingInfo,
+          option: formData.option,
+        },
+      });
     }
   };
 
@@ -85,7 +117,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
     // Form methods
     isEdit,
     methods,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit: handleSubmit(handleSubmitFoodTruckInfo),
     reset,
     isFormValid: isValid,
   };
