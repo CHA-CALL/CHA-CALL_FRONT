@@ -45,6 +45,10 @@ export const useMenuList = (foodTruckId: number) => {
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
+    if (!foodTruckFormData) {
+      navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+      return;
+    }
     const updatedFormData = {
       ...foodTruckFormData,
       menus: menus.length > 0,
