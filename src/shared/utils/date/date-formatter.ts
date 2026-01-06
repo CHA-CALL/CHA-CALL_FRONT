@@ -75,8 +75,10 @@ export const formatStringDatesToAvailableDates = (
 ): AvailableDate[] => {
   return dates
     .map((raw, index) => {
+      // "YYYY-MM-DD ~ YYYY-MM-DD" 형태로 들어왔을 때 변환. 나의 푸드트럭 등록/수정에서 사용
+      const normalized = raw.replaceAll('-', '.');
       // "YYYY.MM.DD ~ YYYY.MM.DD" 또는 "YYYY.MM.DD" 둘 다 대응
-      const [startRaw, endRaw] = raw.split('~').map(s => s.trim());
+      const [startRaw, endRaw] = normalized.split('~').map(s => s.trim());
 
       const startDate = startRaw ?? '';
       const endDate = endRaw ?? '';
