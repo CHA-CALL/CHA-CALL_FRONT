@@ -12,7 +12,7 @@ export const formatFoodTruckForm = (
     phoneNumber: formData.phoneNumber,
     activeTime: formData.activeTime,
     timeDiscussRequired: formData.timeDiscussRequired,
-    foodTruckServiceAreas: formData.regionCodes.map(region => region.code!),
+    foodTruckServiceAreas: formData.regionCodes.map(region => region.id!),
     menuCategories: formData.menuCategories,
     availableQuantity: formData.availableQuantity,
     needElectricity: formData.needElectricity,
