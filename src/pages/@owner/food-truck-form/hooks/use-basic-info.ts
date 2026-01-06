@@ -6,6 +6,7 @@ import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
 import { formatPhoneNumber } from '@utils/phone-number';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useFoodTruckImage } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
+import { useFoodTruckName } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 
 //푸드트럭 이름, 한줄소개, 전화번호, 푸드트럭 사진, 운영정보, 기타 필드
 export const useBasicInfo = () => {
@@ -16,12 +17,15 @@ export const useBasicInfo = () => {
     setError,
   } = useFormContext<FoodTruckFormData>();
 
+  const { handleCheckName, resetVerification } = useFoodTruckName();
+
   const formData = watch();
   const name = watch('name') ?? '';
   // 중복체크 버튼을 누를 수 있는 상태: 이름이 있고, 중복체크가 완료되지 않은 경우
   const canCheckNameDuplicate = name.trim() !== '' && !formData.nameDuplicate;
 
   const updateName = (name: string) => {
+    resetVerification();
     setValue('name', name, { shouldValidate: true });
     setValue('nameDuplicate', false, { shouldValidate: true });
   };
@@ -30,11 +34,11 @@ export const useBasicInfo = () => {
     setValue('description', description, { shouldValidate: true });
   };
 
-  const checkNameDuplicated = () => {
-    //TODO: 추후 중복확인 로직 추가
-    const isDuplicateSuccess = Math.random() > 0.5;
+  const checkNameDuplicated = async () => {
+    const name = formData.name;
+    const response = await handleCheckName(name);
 
-    if (isDuplicateSuccess) {
+    if (!response?.duplicated) {
       setValue('nameDuplicate', true, { shouldValidate: true });
     } else {
       setValue('nameDuplicate', false, { shouldValidate: true });
