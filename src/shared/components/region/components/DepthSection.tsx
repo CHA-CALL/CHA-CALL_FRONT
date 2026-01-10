@@ -65,6 +65,7 @@ export default function DepthSection({
                   handleSelectDepth3={() =>
                     handleToggleRegion({
                       name: fullName,
+                      id: item.id,
                       code: item.code,
                     })
                   }

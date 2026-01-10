@@ -1,10 +1,12 @@
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FormProvider } from 'react-hook-form';
+
+import useToast from '@hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
-
 import ErrorText from '@components/form/error-text/ErrorText';
-import { useFoodTruckForm } from '@pages/@owner//food-truck-form/hooks/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { useUploadImages } from '@pages/@owner/upload-food-truck-images/hooks/use-upload-images';
 import {
   UploadDescription,
@@ -13,9 +15,17 @@ import {
 } from '@pages/@owner/upload-food-truck-images/components';
 
 export default function UploadFoodTruckImages() {
-  const location = useLocation();
-  const formData = location.state?.formData;
-  const methods = useFoodTruckForm(formData);
+  const navigate = useNavigate();
+  const toast = useToast();
+  const { foodTruckId } = useParams();
+  const foodTruckIdNumber = Number(foodTruckId);
+
+  if (!foodTruckId || isNaN(foodTruckIdNumber)) {
+    toast.error('잘못된 접근입니다.');
+    navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+  }
+
+  const methods = useFoodTruckForm(foodTruckIdNumber);
 
   return (
     <FormProvider {...methods.methods}>

@@ -1,9 +1,9 @@
 import { useEffect, useState, type ChangeEvent } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { ROUTES } from '@router/constant/routes';
 import { arrayMove } from '@dnd-kit/sortable';
 
+import useToast from '@hooks/use-toast';
+import { ROUTES } from '@router/constant/routes';
 import {
   useFoodTruckImage,
   useUploadImage,
@@ -11,15 +11,14 @@ import {
 } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
 
 import type { DisplayImage } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-display';
-import type { FoodTruckFormData } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { imageFileSchema } from '@pages/@owner/upload-food-truck-images/schemas/upload-food-truck-images.schema';
 
 export const useUploadImages = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const { foodTruckId } = useParams<{ foodTruckId: string }>();
-
-  const { setValue, getValues } = useFormContext<FoodTruckFormData>();
+  const formData = location.state.formData;
 
   const [initialImageUrls, setInitialImageUrls] = useState<string[]>([]);
   const [images, setImages] = useState<DisplayImage[]>([]);
@@ -30,8 +29,13 @@ export const useUploadImages = () => {
   const { mutateAsync: uploadToS3 } = useUploadImage();
   const { mutateAsync: deleteFromS3 } = useDeleteImage();
 
+  if (!formData) {
+    toast.error('잘못된 접근입니다.');
+    navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+  }
+
   useEffect(() => {
-    const existingUrls: string[] = getValues('photoUrls') || [];
+    const existingUrls: string[] = formData.photoUrls || [];
     setInitialImageUrls(existingUrls);
 
     const displayImages = existingUrls.map(url => ({
@@ -40,7 +44,7 @@ export const useUploadImages = () => {
       url: url,
     }));
     setImages(displayImages);
-  }, [getValues]);
+  }, [formData]);
 
   useEffect(() => {
     const previews = images.map(image => {
@@ -143,12 +147,13 @@ export const useUploadImages = () => {
         })
         .filter((url): url is string => !!url);
 
-      setValue('photoUrls', finalOrderedUrls, { shouldValidate: true });
-
       navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
         state: {
-          formData: getValues(),
           from: 'upload-food-truck-images',
+          formData: {
+            ...formData,
+            photoUrls: finalOrderedUrls,
+          },
         },
       });
     } catch (error) {
@@ -161,7 +166,7 @@ export const useUploadImages = () => {
   const handleLeftClick = () => {
     if (!foodTruckId) return;
     navigate(ROUTES.FOOD_TRUCK_FORM(foodTruckId), {
-      state: { formData: getValues(), from: location.pathname },
+      state: { from: location.pathname, formData: formData },
     });
   };
 

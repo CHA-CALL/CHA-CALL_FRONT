@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/router/constant/routes';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ROUTES } from '@router/constant/routes';
 import {
   postFoodTruckMenu,
   editFoodTruckMenu,
@@ -18,6 +18,9 @@ export const useRegisterMenuMutation = (foodTruckId: number) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const toast = useToast();
+  const location = useLocation();
+
+  const foodTruckFormData = location.state?.formData;
 
   return useMutation({
     mutationFn: async (formData: MenuFormData) => {
@@ -50,7 +53,9 @@ export const useRegisterMenuMutation = (foodTruckId: number) => {
       queryClient.invalidateQueries({
         queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
-      navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
+      navigate(ROUTES.MENU_LIST(foodTruckId.toString()), {
+        state: { formData: foodTruckFormData },
+      });
       toast.success('메뉴가 등록되었습니다.');
     },
     onError: () => {
@@ -64,6 +69,9 @@ export const useEditMenuMutation = (foodTruckId: number, menuId: number) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const toast = useToast();
+  const location = useLocation();
+
+  const foodTruckFormData = location.state?.formData;
 
   return useMutation({
     mutationFn: async (formData: MenuFormData) => {
@@ -92,7 +100,9 @@ export const useEditMenuMutation = (foodTruckId: number, menuId: number) => {
       queryClient.invalidateQueries({
         queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
-      navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
+      navigate(ROUTES.MENU_LIST(foodTruckId.toString()), {
+        state: { formData: foodTruckFormData },
+      });
       toast.success('메뉴가 수정되었습니다.');
     },
     onError: () => {
@@ -106,6 +116,9 @@ export const useDeleteMenuMutation = (foodTruckId: number, menuId: number) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const toast = useToast();
+  const location = useLocation();
+
+  const foodTruckFormData = location.state?.formData;
 
   return useMutation({
     mutationFn: () => deleteFoodTruckMenu({ foodTruckId, menuId }),
@@ -113,7 +126,9 @@ export const useDeleteMenuMutation = (foodTruckId: number, menuId: number) => {
       queryClient.invalidateQueries({
         queryKey: FOOD_TRUCKS_QUERY_KEY.MENUS.SORTED_LIST(foodTruckId),
       });
-      navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
+      navigate(ROUTES.MENU_LIST(foodTruckId.toString()), {
+        state: { formData: foodTruckFormData },
+      });
       toast.success('메뉴가 삭제되었습니다.');
     },
     onError: () => {

@@ -23,7 +23,7 @@ export const FOOD_TRUCK_MAX_LENGTH = {
   },
   availableDates: {
     min: 1,
-    max: 2,
+    max: 4,
   },
   photoUrls: {
     min: 1,

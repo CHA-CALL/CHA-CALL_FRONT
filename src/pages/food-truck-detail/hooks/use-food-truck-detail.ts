@@ -10,6 +10,7 @@ const foodTruckDetailQuery = (foodTruckId: number) => ({
   queryKey: FOOD_TRUCKS_QUERY_KEY.DETAIL(foodTruckId),
   queryFn: () => getFoodTruckDetail(foodTruckId),
   staleTime: 5000,
+  enabled: !!foodTruckId,
 });
 
 export default function useFoodTruckDetail(foodTruckId: number) {
@@ -19,7 +20,9 @@ export default function useFoodTruckDetail(foodTruckId: number) {
     data: foodTruckDetailData,
     isPending: isPendingFoodTruckDetail,
     isError: isErrorFoodTruckDetail,
-  } = useQuery<FoodTruckDetailResponse | undefined>(foodTruckDetailQuery(foodTruckId));
+  } = useQuery<FoodTruckDetailResponse | undefined>(
+    foodTruckDetailQuery(foodTruckId)
+  );
 
   const { mutate: updateSaveStatus } =
     useUpdateFoodTruckSaveStatus(foodTruckId);

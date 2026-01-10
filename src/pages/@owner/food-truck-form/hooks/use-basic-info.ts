@@ -6,41 +6,60 @@ import { CANNOT_UPLOAD_FILE_MB, NOT_ALLOWED_FILE_TYPE } from '@constant/image';
 import { formatPhoneNumber } from '@utils/phone-number';
 import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useFoodTruckImage } from '@pages/@owner/upload-food-truck-images/hooks/use-food-truck-image';
+import { useFoodTruckName } from '@pages/@owner/food-truck-onboarding/hooks/use-food-truck-name';
 
 //푸드트럭 이름, 한줄소개, 전화번호, 푸드트럭 사진, 운영정보, 기타 필드
-export const useBasicInfo = () => {
+export const useBasicInfo = (previousName?: string) => {
   const {
     setValue,
     watch,
     formState: { errors },
     setError,
+    clearErrors,
   } = useFormContext<FoodTruckFormData>();
+
+  const { handleCheckName } = useFoodTruckName();
 
   const formData = watch();
   const name = watch('name') ?? '';
+  const isChecked = watch('isNameChecked');
   // 중복체크 버튼을 누를 수 있는 상태: 이름이 있고, 중복체크가 완료되지 않은 경우
-  const canCheckNameDuplicate = name.trim() !== '' && !formData.nameDuplicate;
+  const canCheckNameDuplicate =
+    name.trim() !== '' && name !== previousName && !isChecked;
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
-    setValue('nameDuplicate', false, { shouldValidate: true });
+    if (previousName && name === previousName) {
+      setValue('isNameChecked', true, { shouldValidate: true });
+      setValue('isNameDuplicated', false, { shouldValidate: true });
+    } else {
+      setValue('isNameChecked', false, { shouldValidate: true });
+      setValue('isNameDuplicated', false, { shouldValidate: true });
+    }
   };
 
   const updateDescription = (description: string) => {
     setValue('description', description, { shouldValidate: true });
   };
 
-  const checkNameDuplicated = () => {
-    //TODO: 추후 중복확인 로직 추가
-    const isDuplicateSuccess = Math.random() > 0.5;
+  const checkNameDuplicated = async () => {
+    const name = formData.name;
+    try {
+      const response = await handleCheckName(name);
 
-    if (isDuplicateSuccess) {
-      setValue('nameDuplicate', true, { shouldValidate: true });
-    } else {
-      setValue('nameDuplicate', false, { shouldValidate: true });
-      setError('name', {
-        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.duplicated,
-      });
+      if (response?.duplicated) {
+        setValue('isNameDuplicated', true, { shouldValidate: true });
+        setValue('isNameChecked', true, { shouldValidate: true });
+        setError('name', {
+          message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.duplicated,
+        });
+      } else {
+        setValue('isNameChecked', true, { shouldValidate: true });
+        setValue('isNameDuplicated', false, { shouldValidate: true });
+        clearErrors('name');
+      }
+    } catch {
+      // useFoodTruckName의 onError에서 토스트 처리됨
     }
   };
 
@@ -118,7 +137,8 @@ export const useBasicInfo = () => {
     photoUrls: formData.photoUrls,
     operatingInfo: formData.operatingInfo,
     option: formData.option,
-    nameDuplicate: formData.nameDuplicate,
+    isNameChecked: formData.isNameChecked,
+    isNameDuplicated: formData.isNameDuplicated,
     canCheckNameDuplicate,
     // Errors
     nameError: errors.name?.message,

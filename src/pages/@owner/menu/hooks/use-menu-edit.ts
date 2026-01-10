@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/constant/routes';
 import type { MenuFormData } from '@pages/@owner/menu/hooks/use-form-validation';
 import {
@@ -7,11 +7,11 @@ import {
   useDeleteMenuMutation,
 } from '@pages/@owner/menu/hooks/use-menu-mutations';
 
-export const useEditMenu = (
-  foodTruckId: number,
-  menuId: number,
-) => {
+export const useEditMenu = (foodTruckId: number, menuId: number) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const foodTruckFormData = location.state?.formData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,7 +23,7 @@ export const useEditMenu = (
   };
 
   const handleCloseModal = () => {
-      setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const handleClickDelete = () => {
@@ -36,8 +36,10 @@ export const useEditMenu = (
   };
 
   const handleClickBack = () => {
-    navigate(ROUTES.MENU_LIST(foodTruckId.toString()));
-  }
+    navigate(ROUTES.MENU_LIST(foodTruckId.toString()), {
+      state: { formData: foodTruckFormData },
+    });
+  };
 
   return {
     isModalOpen,

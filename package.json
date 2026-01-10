@@ -17,7 +17,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=chpt_b45a4ae4e58f49f",
-    "swagger-typescript-api": "swagger-typescript-api generate -p http://52.79.221.101:8000/v3/api-docs -r -o ./apis --modular -d --extract-request-body --extract-response-body --extract-response-error --axios --clean-output",
+    "swagger-typescript-api": "swagger-typescript-api generate -p http://13.125.207.84:8000/v3/api-docs -r -o ./apis --modular -d --extract-request-body --extract-response-body --extract-response-error --axios --clean-output",
     "update-icon-ids": "tsx src/shared/utils/extract-icon-ids.ts"
   },
   "dependencies": {

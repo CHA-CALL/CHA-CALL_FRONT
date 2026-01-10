@@ -15,6 +15,7 @@ export const useMenuList = (foodTruckId: number) => {
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
+  const foodTruckFormData = location.state?.formData;
 
   const { isSorted, handleSortByLatest, handleSortByOldest } = useMenuSort();
   const { isBottomSheetOpen, handleOpenBottomSheet, handleCloseBottomSheet } =
@@ -44,9 +45,12 @@ export const useMenuList = (foodTruckId: number) => {
 
   // 네비게이션 핸들러
   const handleClickBack = () => {
-    const formData = location.state?.formData;
+    if (!foodTruckFormData) {
+      navigate(ROUTES.FOOD_TRUCK_MANAGEMENT);
+      return;
+    }
     const updatedFormData = {
-      ...formData,
+      ...foodTruckFormData,
       menus: menus.length > 0,
     };
     navigate(ROUTES.FOOD_TRUCK_FORM(String(foodTruckId)), {
@@ -55,9 +59,8 @@ export const useMenuList = (foodTruckId: number) => {
   };
 
   const handleRegister = (foodTruckId: string) => {
-    const formData = location.state?.formData;
     navigate(ROUTES.MENU_REGISTER(foodTruckId), {
-      state: getNavigateState(formData),
+      state: getNavigateState(foodTruckFormData),
     });
   };
 
@@ -69,7 +72,7 @@ export const useMenuList = (foodTruckId: number) => {
 
     const selectedMenu = menus.find(menu => menu.menuId === Number(menuId));
     navigate(ROUTES.MENU_EDIT(foodTruckId, menuId), {
-      state: { menuData: selectedMenu },
+      state: { menuData: selectedMenu, formData: foodTruckFormData },
     });
   };
 

@@ -5,26 +5,31 @@ import {
   FOOD_TRUCK_ERROR_MESSAGE,
   FOOD_TRUCK_MAX_LENGTH,
 } from '@pages/@owner/food-truck-form/constants/food-truck';
-import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
-import { NEED_ELECTRICITY } from '@constant/need-electricity';
-import { PAYMENT_METHOD } from '@constant/payment-method';
-import { FOOD_CATEGORIES } from '@constant/food-categories';
+
 import type { AvailableDate } from '@type/available-date';
 import { validateFoodTruckFormTime } from '@pages/@owner/food-truck-form/utils/validate-food-truck-form-time';
+import { NEED_ELECTRICITY } from '@constant/need-electricity';
+import { PAYMENT_METHOD } from '@constant/payment-method';
+import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
+import { FOOD_CATEGORIES } from '@constant/food-categories';
 
 export const foodTruckSchema = z.object({
   name: z
     .string()
     .min(FOOD_TRUCK_MAX_LENGTH.name.min, FOOD_TRUCK_ERROR_MESSAGE.name.required)
-    .max(FOOD_TRUCK_MAX_LENGTH.name.max),
-  nameDuplicate: z.boolean(),
+    .max(FOOD_TRUCK_MAX_LENGTH.name.max, FOOD_TRUCK_ERROR_MESSAGE.name.max),
+  isNameChecked: z.boolean().refine(v => v === true),
+  isNameDuplicated: z.boolean().refine(v => v === false),
   description: z
     .string()
     .min(
       FOOD_TRUCK_MAX_LENGTH.description.min,
       FOOD_TRUCK_ERROR_MESSAGE.description.required
     )
-    .max(FOOD_TRUCK_MAX_LENGTH.description.max),
+    .max(
+      FOOD_TRUCK_MAX_LENGTH.description.max,
+      FOOD_TRUCK_ERROR_MESSAGE.description.max
+    ),
   timeDiscussRequired: z.boolean(),
   activeTime: z.string().superRefine(validateFoodTruckFormTime),
   phoneNumber: z

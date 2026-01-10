@@ -6,6 +6,7 @@ import {
 } from '@pages/@owner/upload-food-truck-images/api';
 import type { FoodTruckImageUrl } from '@pages/@owner/upload-food-truck-images/types/food-truck-image-url';
 import { FOOD_TRUCKS_QUERY_KEY } from '@shared/querykey/food-trucks';
+import useToast from '@hooks/use-toast';
 
 export const useFoodTruckImage = () => {
   return useMutation<FoodTruckImageUrl[], Error, File[]>({
@@ -39,9 +40,16 @@ export const useFoodTruckImage = () => {
 };
 
 export const useUploadImage = () => {
+  const toast = useToast();
   return useMutation<void, Error, { presignedUrl: string; file: File }>({
     mutationFn: async ({ presignedUrl, file }) => {
       await uploadImage(presignedUrl, file);
+    },
+    onSuccess: () => {
+      toast.success('이미지 추가 완료');
+    },
+    onError: () => {
+      toast.error('이미지 업로드 오류');
     },
   });
 };
