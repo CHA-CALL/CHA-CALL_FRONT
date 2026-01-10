@@ -4,10 +4,11 @@ import type {
 } from 'apis/data-contracts';
 
 import { normalizeEnumValue } from '@utils/normalize-enum-value';
+import { formatStringDatesToAvailableDates } from '@utils/date';
 import { AVAILABLE_QUANTITY } from '@constant/available-quantity';
 import { NEED_ELECTRICITY } from '@constant/need-electricity';
 import { PAYMENT_METHOD } from '@constant/payment-method';
-import { formatStringDatesToAvailableDates } from '@utils/date';
+import type { FOOD_CATEGORIES } from '@constant/food-categories';
 
 export const resetFoodTruckFormValue = (
   foodTruckDetailData: FoodTruckDetailResponse,
@@ -40,10 +41,14 @@ export const resetFoodTruckFormValue = (
       description: foodTruckDetailData.description,
       phoneNumber: foodTruckDetailData.phoneNumber,
       regionCodes: foodTruckDetailData.regionCodes,
-      availableQuantity: availableQuantity,
-      needElectricity: needElectricity,
-      paymentMethod: payment,
-      menuCategories: foodTruckDetailData.menuCategories,
+      availableQuantity:
+        availableQuantity as (typeof AVAILABLE_QUANTITY)[keyof typeof AVAILABLE_QUANTITY],
+      needElectricity:
+        needElectricity as (typeof NEED_ELECTRICITY)[keyof typeof NEED_ELECTRICITY],
+      paymentMethod:
+        payment as (typeof PAYMENT_METHOD)[keyof typeof PAYMENT_METHOD],
+      menuCategories:
+        foodTruckDetailData.menuCategories as (typeof FOOD_CATEGORIES)[keyof typeof FOOD_CATEGORIES][],
       photoUrls: foodTruckDetailData.photoUrl,
       operatingInfo: foodTruckDetailData.operatingInfo ?? '',
       option: foodTruckDetailData.option ?? '',
