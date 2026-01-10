@@ -11,13 +11,14 @@ import {
   type FoodTruckFormData,
 } from '@pages/@owner/food-truck-form/schemas/food-truck-form.schema';
 import { resetFoodTruckFormValue } from '@pages/@owner/food-truck-form/utils/reset-food-truck-form-value';
-// import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
+import { FOOD_TRUCK_ERROR_MESSAGE } from '@pages/@owner/food-truck-form/constants/food-truck';
 import { useMutationFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-mutation-food-truck-form';
 import { formatFoodTruckForm } from '@pages/@owner/food-truck-form/utils/format-food-truck-form';
 
 const initialData = {
   name: '',
-  nameDuplicate: false,
+  isNameChecked: false,
+  isNameDuplicated: true,
   description: '',
   phoneNumber: '',
   regionCodes: [],
@@ -47,7 +48,7 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
     reset,
     setValue,
     formState: { isValid },
-    // setError,
+    setError,
   } = methods;
 
   // 기존 등록 푸드트럭 데이터 조회
@@ -81,19 +82,12 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
   }, [foodTruckDetailData, menus, toast, reset, setValue]);
 
   const handleSubmitFoodTruckInfo = async (formData: FoodTruckFormData) => {
-    // TODO: 추후 아래 유효성 검증 알맞게 수정해서 추가하기
-    // if (!formData.nameDuplicate) {
-    //   setError('name', {
-    //     message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
-    //   });
-    //   return;
-    // }
-    // if (isValid && formData) {
-    //   updateFoodTruckInfo({
-    //     foodTruckId: foodTruckIdNumber,
-    //     data: formatFoodTruckForm(formData),
-    //   });
-    // }
+    if (!formData.isNameChecked) {
+      setError('name', {
+        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.required,
+      });
+      return;
+    }
     updateFoodTruckInfo({
       foodTruckId: foodTruckIdNumber,
       data: formatFoodTruckForm(formData),
@@ -107,5 +101,6 @@ export const useFoodTruckForm = (foodTruckIdNumber: number) => {
     handleSubmit: handleSubmit(handleSubmitFoodTruckInfo),
     reset,
     isFormValid: isValid,
+    previousName: foodTruckDetailData?.name,
   };
 };

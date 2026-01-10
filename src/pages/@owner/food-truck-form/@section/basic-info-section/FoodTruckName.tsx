@@ -6,15 +6,22 @@ import Button from '@ui/button/Button';
 import ErrorText from '@form/error-text/ErrorText';
 import { Icon } from '@icon/Icon';
 
-export default function FoodTruckNameInput() {
+interface FoodTruckNameInputProps {
+  previousName?: string;
+}
+
+export default function FoodTruckNameInput({
+  previousName,
+}: FoodTruckNameInputProps) {
   const {
     name,
     nameError,
     updateName,
     checkNameDuplicated,
     canCheckNameDuplicate,
-    nameDuplicate,
-  } = useBasicInfo();
+    isNameDuplicated,
+    isNameChecked,
+  } = useBasicInfo(previousName);
   return (
     <FormLayout isRequired={true} title='푸드트럭 이름'>
       <Input
@@ -35,7 +42,7 @@ export default function FoodTruckNameInput() {
         }
       />
       {nameError && <ErrorText text={nameError} />}
-      {nameDuplicate && (
+      {isNameChecked && !isNameDuplicated && (
         <div className='flex w-full items-center gap-[0.2rem]'>
           <Icon name='ic_check' />
           <p className='caption-m-12 text-green-500'>사용 가능한 이름입니다.</p>

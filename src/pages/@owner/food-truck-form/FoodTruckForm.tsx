@@ -42,7 +42,7 @@ export default function FoodTruckForm() {
   const location = useLocation();
   const toast = useToast();
 
-  const { isEdit, methods, reset, isFormValid, handleSubmit } =
+  const { isEdit, methods, reset, isFormValid, handleSubmit, previousName } =
     useFoodTruckForm(foodTruckIdNumber);
 
   const {
@@ -83,7 +83,7 @@ export default function FoodTruckForm() {
         handleLeftClick={handleNavigateBack}
       />
       <div className='flex flex-col px-[2rem] pb-[12rem]'>
-        <FoodTruckName />
+        <FoodTruckName previousName={previousName} />
         <FoodTruckDescription />
         <FoodTruckPhoneNumber />
         <ActiveTime

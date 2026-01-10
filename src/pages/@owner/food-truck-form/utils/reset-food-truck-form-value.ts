@@ -35,7 +35,8 @@ export const resetFoodTruckFormValue = (
     isError: false,
     values: {
       name: foodTruckDetailData.name,
-      nameDuplicate: true,
+      isNameChecked: true,
+      isNameDuplicated: false,
       description: foodTruckDetailData.description,
       phoneNumber: foodTruckDetailData.phoneNumber,
       regionCodes: foodTruckDetailData.regionCodes,
