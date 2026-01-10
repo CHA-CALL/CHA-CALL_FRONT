@@ -18,7 +18,7 @@ export const foodTruckSchema = z.object({
     .string()
     .min(FOOD_TRUCK_MAX_LENGTH.name.min, FOOD_TRUCK_ERROR_MESSAGE.name.required)
     .max(FOOD_TRUCK_MAX_LENGTH.name.max, FOOD_TRUCK_ERROR_MESSAGE.name.max),
-  isNameChecked: z.boolean(),
+  isNameChecked: z.boolean().refine(v => v === true),
   isNameDuplicated: z.boolean().refine(v => v === false),
   description: z
     .string()

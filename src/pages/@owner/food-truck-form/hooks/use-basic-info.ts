@@ -29,8 +29,13 @@ export const useBasicInfo = (previousName?: string) => {
 
   const updateName = (name: string) => {
     setValue('name', name, { shouldValidate: true });
-    setValue('isNameChecked', false, { shouldValidate: true });
-    setValue('isNameDuplicated', false, { shouldValidate: true });
+    if (previousName && name === previousName) {
+      setValue('isNameChecked', true, { shouldValidate: true });
+      setValue('isNameDuplicated', false, { shouldValidate: true });
+    } else {
+      setValue('isNameChecked', false, { shouldValidate: true });
+      setValue('isNameDuplicated', false, { shouldValidate: true });
+    }
   };
 
   const updateDescription = (description: string) => {
@@ -39,18 +44,22 @@ export const useBasicInfo = (previousName?: string) => {
 
   const checkNameDuplicated = async () => {
     const name = formData.name;
-    const response = await handleCheckName(name);
+    try {
+      const response = await handleCheckName(name);
 
-    if (response?.duplicated) {
-      setValue('isNameDuplicated', true, { shouldValidate: true });
-      setValue('isNameChecked', true, { shouldValidate: true });
-      setError('name', {
-        message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.duplicated,
-      });
-    } else {
-      setValue('isNameChecked', true, { shouldValidate: true });
-      setValue('isNameDuplicated', false, { shouldValidate: true });
-      clearErrors('name');
+      if (response?.duplicated) {
+        setValue('isNameDuplicated', true, { shouldValidate: true });
+        setValue('isNameChecked', true, { shouldValidate: true });
+        setError('name', {
+          message: FOOD_TRUCK_ERROR_MESSAGE.nameDuplicate.duplicated,
+        });
+      } else {
+        setValue('isNameChecked', true, { shouldValidate: true });
+        setValue('isNameDuplicated', false, { shouldValidate: true });
+        clearErrors('name');
+      }
+    } catch {
+      // useFoodTruckName의 onError에서 토스트 처리됨
     }
   };
 

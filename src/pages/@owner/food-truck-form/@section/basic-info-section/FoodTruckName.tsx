@@ -30,15 +30,18 @@ export default function FoodTruckNameInput({
         maxLength={FOOD_TRUCK_MAX_LENGTH.name.max}
         error={!!nameError}
         value={name}
-        handleRightClick={checkNameDuplicated}
         onChange={e => updateName(e.target.value)}
         rightComponent={
           <Button
             buttonStyle={canCheckNameDuplicate ? 'active' : 'disabled'}
             variant='verify'
+            disabled={!canCheckNameDuplicate}
           >
             중복확인
           </Button>
+        }
+        handleRightClick={
+          canCheckNameDuplicate ? checkNameDuplicated : undefined
         }
       />
       {nameError && <ErrorText text={nameError} />}

@@ -6,7 +6,7 @@ import { ROUTES } from '@router/constant/routes';
 import Navigation from '@components/layout/navigation/Navigation';
 import { Icon } from '@components/icon/Icon';
 import ErrorText from '@components/form/error-text/ErrorText';
-import { useFoodTruckForm } from '@pages/@owner//food-truck-form/hooks/use-food-truck-form';
+import { useFoodTruckForm } from '@pages/@owner/food-truck-form/hooks/use-food-truck-form';
 import { useUploadImages } from '@pages/@owner/upload-food-truck-images/hooks/use-upload-images';
 import {
   UploadDescription,
