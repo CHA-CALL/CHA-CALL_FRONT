@@ -45,8 +45,8 @@ export const resetFoodTruckFormValue = (
       paymentMethod: payment,
       menuCategories: foodTruckDetailData.menuCategories,
       photoUrls: foodTruckDetailData.photoUrl,
-      operatingInfo: foodTruckDetailData.operatingInfo,
-      option: foodTruckDetailData.option,
+      operatingInfo: foodTruckDetailData.operatingInfo ?? '',
+      option: foodTruckDetailData.option ?? '',
       availableDates: formatStringDatesToAvailableDates(
         foodTruckDetailData.availableDates ?? []
       ),
